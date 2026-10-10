@@ -1,6 +1,7 @@
 import { err, escapeAttr, escapeText, safeToken, safeUrl, toStr, type Diagnostic, type IRNode, type IRValue, type TagRegistry } from '@hekana/sneferu-core';
 import type { RenderContext, Scope } from './context';
 import { evaluate } from './evaluate';
+import { translate } from './translate';
 import { Budget } from './budget';
 export { Budget } from './budget';
 
@@ -22,7 +23,7 @@ function noteExceeded(env: Env): void {
   if (b.exceeded && !b.reported) { b.reported = true; env.diagnostics.push(err('SN4001', `render stopped: ${b.exceeded} budget exceeded`)); }
 }
 
-const tr = (env: Env, key: string): string => own(env.ctx.translations, key) ?? own(env.ctx.fallbackTranslations, key) ?? key;
+const tr = (env: Env, key: string): string => translate(env.ctx, key);
 
 function resolveValue(v: IRValue, scope: Scope, env: Env): unknown {
   if (v.k === 'static') return v.v;

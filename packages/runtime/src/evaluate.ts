@@ -1,6 +1,7 @@
 import type { Expr } from '@hekana/sneferu-core';
 import type { RenderContext, Scope } from './context';
 import { FILTER_IMPLS } from './filters';
+import { translate } from './translate';
 
 const BLOCKED = new Set(['__proto__', 'prototype', 'constructor']);
 const own = (o: object, k: string | number) => Object.prototype.hasOwnProperty.call(o, k);
@@ -21,7 +22,7 @@ function lookup(fn: string, args: unknown[], ctx: RenderContext): unknown {
   switch (fn) {
     case 'collection': return own(ctx.collections, a0) ? ctx.collections[a0] : { products: [] };
     case 'product': return own(ctx.products, a0) ? ctx.products[a0] : undefined;
-    case 't': return (own(ctx.translations, a0) ? ctx.translations[a0] : undefined) ?? (own(ctx.fallbackTranslations, a0) ? ctx.fallbackTranslations[a0] : undefined) ?? a0;
+    case 't': return translate(ctx, a0);
     case 'settings': return get(ctx.settings, a0);
     case 'asset_url': return ctx.assetUrl(a0);
     default: return undefined;

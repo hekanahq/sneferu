@@ -1,5 +1,6 @@
 import { toStr, type FilterName } from '@hekana/sneferu-core';
 import type { RenderContext } from './context';
+import { translate } from './translate';
 
 const num = (v: unknown) => (typeof v === 'number' ? v : typeof v === 'string' && v.trim() !== '' ? Number(v) : NaN);
 const money = (minor: unknown, ctx: RenderContext) => {
@@ -14,7 +15,7 @@ export const FILTER_IMPLS: Record<FilterName, (input: unknown, args: unknown[], 
   money: (i, _a, c) => money(i, c),
   img: (i, a, c) => c.imageUrl(i, typeof a[0] === 'number' ? a[0] : undefined),
   date: (i, _a, c) => { const d = new Date(toStr(i)); return Number.isNaN(d.getTime()) ? '' : d.toLocaleDateString(c.locale === 'ar' ? 'ar-EG-u-nu-latn' : 'en-GB', { year: 'numeric', month: 'long', day: 'numeric' }); },
-  t: (i, _a, c) => c.translations[toStr(i)] ?? c.fallbackTranslations[toStr(i)] ?? toStr(i),
+  t: (i, _a, c) => translate(c, toStr(i)),
   escape: (i) => toStr(i),
   upcase: (i) => toStr(i).toUpperCase(),
   downcase: (i) => toStr(i).toLowerCase(),

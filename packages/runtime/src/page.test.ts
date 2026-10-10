@@ -116,4 +116,15 @@ describe('renderPage', () => {
     expect(r.diagnostics.filter((d) => d.code === 'SN4002').length).toBeLessThanOrEqual(1);
     expect(r.diagnostics.length).toBeLessThanOrEqual(2);
   });
+  it('never throws on non-string translations, and t lookups use own properties only (I4)', () => {
+    const bad = { hi: { x: 1 }, n: 5, arr: ['a'] } as unknown as Record<string, string>;
+    const ir: IRNode[] = [{ k: 't', key: 'hi' }, { k: 't', key: 'n' }, { k: 'text', e: { k: 'lookup', fn: 't', args: [{ k: 'lit', v: 'arr' }] } },
+      { k: 'text', e: { k: 'filter', name: 't', input: { k: 'lit', v: '__proto__' }, args: [] } },
+      { k: 'text', e: { k: 'filter', name: 't', input: { k: 'lit', v: 'toString' }, args: [] } },
+      { k: 'text', e: { k: 'filter', name: 't', input: { k: 'lit', v: 'n' }, args: [] } }];
+    const art: ArtifactLike = { ...artifact, sections: { hero: { ir, schema: { settings: {} } } } };
+    const r = renderPage(art, { template: 'index', ctx: { ...ctx, translations: bad, fallbackTranslations: bad }, registry: new TagRegistry() });
+    expect(r.diagnostics).toEqual([]);
+    expect(r.html).toContain('<div data-hk-section="default-0">hinarr__proto__toStringn</div>');
+  });
 });

@@ -127,7 +127,12 @@ export function compileTheme(files: ThemeFile[], registry: TagRegistry): { artif
 
   const locales: Artifact['locales'] = {};
   for (const p of [...text.keys()].filter((x) => x.startsWith('locales/')).sort()) {
-    try { locales[nameOf(p.replace(/\.json$/, '.sneferu'))] = JSON.parse(text.get(p)!); } catch { diagnostics.push(err('SN3025', 'locale is not valid JSON', { file: p })); }
+    let parsed: unknown;
+    try { parsed = JSON.parse(text.get(p)!); } catch { diagnostics.push(err('SN3025', 'locale is not valid JSON', { file: p })); continue; }
+    const json = parsed;
+    const bad = !isObj(json) ? '(root)' : Object.keys(json).find((k) => typeof json[k] !== 'string');
+    if (bad !== undefined) { diagnostics.push(err('SN3025', `locale must be a flat object of strings; "${bad}" is not a string`, { file: p })); continue; }
+    locales[nameOf(p.replace(/\.json$/, '.sneferu'))] = json as Record<string, string>;
   }
   const assets = files.filter((f) => f.path.startsWith('assets/')).sort((a, b) => (a.path < b.path ? -1 : a.path > b.path ? 1 : 0)).map((f) => ({ path: f.path, size: f.bytes.byteLength, hash: hash64(Array.from(f.bytes, (b) => String.fromCharCode(b)).join('')) }));
 

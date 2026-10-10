@@ -82,4 +82,10 @@ describe('compileTheme', () => {
     expect(codes([f('snippets/a.sneferu', "{% if x %}<p>{% render 'a' %}</p>{% endif %}")]).map((d) => d.message)).toEqual(['snippet include cycle: a → a']);
     expect(codes([f('snippets/a.sneferu', "{% render 'b' %}{% render 'b' %}"), f('snippets/b.sneferu', 'x')])).toEqual([]);
   });
+  it('requires locale files to be flat string maps (I4)', () => {
+    for (const body of ['{"hi":{"x":1}}', '{"n":5}', '[]', '"x"', 'null']) {
+      const files = base().map((x) => (x.path === 'locales/ar.json' ? f(x.path, body) : x));
+      expect(compileTheme(files, reg).diagnostics.filter((d) => d.severity === 'error').map((d) => d.code), body).toEqual(['SN3025']);
+    }
+  });
 });
