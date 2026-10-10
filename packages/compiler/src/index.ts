@@ -1,4 +1,4 @@
-export { compileTheme, hash64, type Artifact, type SectionSchema, type ThemeFile } from './compile';
+export { compileTheme, snippetCycles, hash64, type Artifact, type SectionSchema, type ThemeFile } from './compile';
 export { validateManifest, satisfies, type Manifest } from './manifest';
 export { parseTemplate } from './parser';
 export { parseExpr } from './expr';

@@ -109,4 +109,11 @@ describe('renderPage', () => {
       expect(r.diagnostics.map((d) => d.code)).toEqual(['SN9014']);
     }
   });
+  it('reports SN4002 at most once per page, across sections (C2)', () => {
+    const fan = { k: 'render' as const, snippet: 'a', args: {} };
+    const art: ArtifactLike = { ...artifact, snippets: { a: [fan, fan, fan, fan, fan] }, sections: { s: { ir: [fan], schema: { settings: {} } } } };
+    const r = renderPage(art, { template: 'index', ctx, registry: new TagRegistry(), sections: [{ id: 'x', type: 's' }, { id: 'y', type: 's' }, { id: 'z', type: 's' }] });
+    expect(r.diagnostics.filter((d) => d.code === 'SN4002').length).toBeLessThanOrEqual(1);
+    expect(r.diagnostics.length).toBeLessThanOrEqual(2);
+  });
 });

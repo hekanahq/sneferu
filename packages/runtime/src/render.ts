@@ -35,8 +35,13 @@ function resolveValue(v: IRValue, scope: Scope, env: Env): unknown {
   return out;
 }
 
+/** Push a diagnostic at most once per page. */
+function reportOnce(env: Env, code: string, message: string): void {
+  if (env.budget.once(code)) env.diagnostics.push(err(code, message));
+}
+
 export function renderNodes(nodes: IRNode[], scope: Scope, env: Env): string {
-  if (env.depth > env.budget.maxDepth) { env.diagnostics.push(err('SN4003', 'maximum nesting depth reached')); return ''; }
+  if (env.depth > env.budget.maxDepth) { reportOnce(env, 'SN4003', 'maximum nesting depth reached'); return ''; }
   let html = '';
   // add: a counted leaf write. raw: output already counted by a nested render.
   const add = (s: string): boolean => { if (env.budget.out(s.length)) { html += s; return true; } noteExceeded(env); return false; };
@@ -62,12 +67,14 @@ export function renderNodes(nodes: IRNode[], scope: Scope, env: Env): string {
         break;
       }
       case 'if': {
+        if (!env.budget.node()) { noteExceeded(env); break; }
         const branch = n.branches.find((b) => !!evaluate(b.test, scope, env.ctx));
         const body = branch ? branch.body : n.else;
         if (body) raw(renderNodes(body, scope, env));
         break;
       }
       case 'loop': {
+        if (!env.budget.node()) { noteExceeded(env); break; }
         const src = evaluate(n.src, scope, env.ctx);
         const list = Array.isArray(src) ? src.slice(0, n.limit) : [];
         list.forEach((item, index) => {
@@ -77,11 +84,15 @@ export function renderNodes(nodes: IRNode[], scope: Scope, env: Env): string {
         noteExceeded(env);
         break;
       }
-      case 'slot': { const fill = own(env.slots, n.name); if (fill) raw(fill()); break; }
+      case 'slot': {
+        if (!env.budget.node()) { noteExceeded(env); break; }
+        const fill = own(env.slots, n.name); if (fill) raw(fill()); break;
+      }
       case 'render': {
+        if (!env.budget.node()) { noteExceeded(env); break; }
         const body = own(env.snippets, n.snippet);
         if (!body) { env.diagnostics.push(err('SN4004', `snippet '${n.snippet}' not found`)); break; }
-        if (env.include >= env.budget.maxInclude) { env.diagnostics.push(err('SN4002', `include depth exceeded at '${n.snippet}'`)); break; }
+        if (env.include >= env.budget.maxInclude) { reportOnce(env, 'SN4002', `include depth exceeded at '${n.snippet}'`); break; }
         const args = Object.fromEntries(Object.entries(n.args).map(([k, e]) => [k, evaluate(e, scope, env.ctx)]));
         raw(renderNodes(body, { ...scope, ...args }, { ...env, include: env.include + 1 }));
         break;
@@ -92,7 +103,7 @@ export function renderNodes(nodes: IRNode[], scope: Scope, env: Env): string {
           const b = evaluate(n.props.of && n.props.of.k === 'expr' ? n.props.of.e : { k: 'path', p: [] }, scope, env.ctx) as { id?: unknown; type?: unknown } | undefined;
           const def = b && typeof b.type === 'string' ? own(env.blocks, b.type) : undefined;
           if (!b || !def) break;
-          if (env.include >= env.budget.maxInclude) { env.diagnostics.push(err('SN4002', 'block include depth exceeded')); break; }
+          if (env.include >= env.budget.maxInclude) { reportOnce(env, 'SN4002', 'block include depth exceeded'); break; }
           const open = `<div data-hk-block="${escapeAttr(toStr(b.id))}">`;
           if (!add(open)) break;
           raw(renderNodes(def.ir, { ...scope, block: b }, { ...env, depth: env.depth + 1, include: env.include + 1 }));

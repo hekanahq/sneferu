@@ -39,6 +39,35 @@ function asSchema(raw: unknown, file: string, out: Diagnostic[]): SectionSchema 
   return { name: nameOk ? s.name! : { ar: file, en: file }, version: typeof s.version === 'number' ? s.version : 1, settings: (isObj(s.settings) ? s.settings : {}) as FieldSchema, ...(s.blocks ? { blocks: s.blocks } : {}), ...(s.presets ? { presets: s.presets } : {}) };
 }
 
+/** Snippet names a tree renders, in order of first appearance. */
+function rendersOf(nodes: IRNode[], out = new Set<string>()): Set<string> {
+  for (const n of nodes) {
+    if (n.k === 'render') out.add(n.snippet);
+    else if (n.k === 'el' || n.k === 'comp') rendersOf(n.children, out);
+    else if (n.k === 'loop') rendersOf(n.body, out);
+    else if (n.k === 'if') { for (const b of n.branches) rendersOf(b.body, out); if (n.else) rendersOf(n.else, out); }
+  }
+  return out;
+}
+
+/** Every include cycle among snippets, each reported once, e.g. a → b → a. */
+export function snippetCycles(snippets: Record<string, IRNode[]>): string[][] {
+  const edges = new Map(Object.entries(snippets).map(([k, ir]) => [k, [...rendersOf(ir)].filter((t) => Object.hasOwn(snippets, t))]));
+  const state = new Map<string, 1 | 2>();
+  const stack: string[] = [];
+  const cycles: string[][] = [];
+  const visit = (n: string): void => {
+    state.set(n, 1); stack.push(n);
+    for (const m of edges.get(n) ?? []) {
+      if (state.get(m) === 1) cycles.push([...stack.slice(stack.indexOf(m)), m]);
+      else if (!state.has(m)) visit(m);
+    }
+    stack.pop(); state.set(n, 2);
+  };
+  for (const n of [...edges.keys()].sort()) if (!state.has(n)) visit(n);
+  return cycles;
+}
+
 export function compileTheme(files: ThemeFile[], registry: TagRegistry): { artifact?: Artifact; diagnostics: Diagnostic[] } {
   const diagnostics: Diagnostic[] = checkFiles(files);
   const text = new Map<string, string>();
@@ -77,6 +106,7 @@ export function compileTheme(files: ThemeFile[], registry: TagRegistry): { artif
   for (const p of byDir('blocks')) { const c = compileOne(p, 'block'); blocks[nameOf(p)] = { ir: c.ir, schema: asSchema(c.schema, p, diagnostics) }; }
   const snippets: Artifact['snippets'] = {};
   for (const p of byDir('snippets')) snippets[nameOf(p)] = compileOne(p, 'snippet').ir;
+  for (const c of snippetCycles(snippets)) diagnostics.push(err('SN3027', `snippet include cycle: ${c.join(' → ')}`, { file: `snippets/${c[0]}.sneferu` }));
   const templates: Artifact['templates'] = {};
   const templateSections: Artifact['templateSections'] = {};
   for (const p of byDir('templates')) {

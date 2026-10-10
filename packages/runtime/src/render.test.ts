@@ -39,4 +39,24 @@ describe('renderNodes', () => {
     renderNodes([{ k: 'render', snippet: 'a', args: {} }], {}, e);
     expect(e.diagnostics.map((d) => d.code)).toContain('SN4002');
   });
+  it('charges snippet fan-out against the node budget and reports SN4002 once (C2)', () => {
+    for (const k of [3, 5, 8]) {
+      const e = env({ snippets: { a: Array.from({ length: k }, () => ({ k: 'render' as const, snippet: 'a', args: {} })) } });
+      const t0 = Date.now();
+      renderNodes([{ k: 'render', snippet: 'a', args: {} }], {}, e);
+      expect(Date.now() - t0).toBeLessThan(1000);
+      expect(e.budget.nodes).toBeLessThanOrEqual(LIMITS.renderNodes + 1);
+      expect(e.diagnostics.filter((d) => d.code === 'SN4002').length).toBeLessThanOrEqual(1);
+      expect(e.diagnostics.length).toBeLessThanOrEqual(2);
+    }
+  });
+  it('charges if, loop and slot nodes too', () => {
+    const e = env({ budget: new Budget({ ...LIMITS, renderNodes: 5 }), slots: { s: () => 'x' } });
+    const html = renderNodes(Array.from({ length: 10 }, () => ({ k: 'slot' as const, name: 's' })), {}, e);
+    expect(html).toBe('xxxxx');
+    expect(e.diagnostics.map((d) => d.code)).toEqual(['SN4001']);
+    const e2 = env({ budget: new Budget({ ...LIMITS, renderNodes: 3 }) });
+    renderNodes(Array.from({ length: 10 }, () => ({ k: 'if' as const, branches: [{ test: { k: 'lit' as const, v: true }, body: [{ k: 'html' as const, s: 'y' }] }] })), {}, e2);
+    expect(e2.budget.exceeded).toBe('render nodes');
+  });
 });

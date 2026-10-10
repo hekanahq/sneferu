@@ -3,9 +3,15 @@ export type Limits = { [K in keyof typeof LIMITS]: number };
 export class Budget {
   nodes = 0; iters = 0; chars = 0; exceeded?: string;
   /** Shared with child budgets so SN4001 is reported once per page. */
-  constructor(private readonly limits: Limits = LIMITS, private readonly shared: { reported: boolean } = { reported: false }) {}
+  constructor(private readonly limits: Limits = LIMITS, private readonly shared: { reported: boolean; codes?: Set<string> } = { reported: false }) {}
   get reported(): boolean { return this.shared.reported; }
   set reported(v: boolean) { this.shared.reported = v; }
+  /** True the first time `code` is seen on this page (shared with child budgets). */
+  once(code: string): boolean {
+    const seen = (this.shared.codes ??= new Set());
+    if (seen.has(code)) return false;
+    seen.add(code); return true;
+  }
   node(): boolean { if (++this.nodes > this.limits.renderNodes) this.exceeded ??= 'render nodes'; return !this.exceeded; }
   iter(): boolean { if (++this.iters > this.limits.loopIterations) this.exceeded ??= 'loop iterations'; return !this.exceeded; }
   out(n: number): boolean { this.chars += n; if (this.chars > this.limits.outputChars) this.exceeded ??= 'output size'; return !this.exceeded; }

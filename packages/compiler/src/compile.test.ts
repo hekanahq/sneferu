@@ -74,4 +74,12 @@ describe('compileTheme', () => {
     expect(ds.map((d) => d.code)).toEqual(['SN9014']);
     expect(ds[0]!.file).toBe('sections/hero.sneferu');
   });
+  it('rejects snippet include cycles (C2)', () => {
+    const codes = (extra: ThemeFile[]) => compileTheme([...base(), ...extra], reg).diagnostics.filter((d) => d.severity === 'error');
+    const two = codes([f('snippets/a.sneferu', "{% render 'b' %}"), f('snippets/b.sneferu', "{% render 'a' %}")]);
+    expect(two.map((d) => d.code)).toEqual(['SN3027']);
+    expect(two[0]!.message).toBe('snippet include cycle: a → b → a');
+    expect(codes([f('snippets/a.sneferu', "{% if x %}<p>{% render 'a' %}</p>{% endif %}")]).map((d) => d.message)).toEqual(['snippet include cycle: a → a']);
+    expect(codes([f('snippets/a.sneferu', "{% render 'b' %}{% render 'b' %}"), f('snippets/b.sneferu', 'x')])).toEqual([]);
+  });
 });
