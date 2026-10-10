@@ -1,9 +1,7 @@
-import { err, FORBIDDEN_ATTRIBUTES, FORBIDDEN_ELEMENTS, LIMITS, safeUrl, URL_ATTRIBUTES, type Diagnostic, type TagRegistry } from '@hekana/sneferu-core';
+import { err, isAllowedElement, isForbiddenAttribute, isForbiddenElement, isUrlAttribute, LIMITS, safeUrl, type Diagnostic, type TagRegistry } from '@hekana/sneferu-core';
 import type { AstNode } from './ast';
 
-const FORBIDDEN_EL = new Set<string>(FORBIDDEN_ELEMENTS);
-const FORBIDDEN_ATTR = new Set<string>(FORBIDDEN_ATTRIBUTES);
-const URL_ATTRS = new Set<string>(URL_ATTRIBUTES);
+const ATTR_NAME = /^[a-z_:][a-z0-9_:.-]*$/;
 const PASSTHROUGH = (a: string) => a === 'class' || a === 'id' || a === 'role' || a === 'title' || a.startsWith('data-') || a.startsWith('aria-');
 const BUILTIN_HK = new Set(['hk-slot', 'hk-sections', 'hk-block']);
 
@@ -49,11 +47,13 @@ export function validateTemplate(
       } else if (n.t === 'render') {
         if (!opts.snippets.has(n.snippet)) out.push(err('SN2008', `unknown snippet '${n.snippet}'${suggest(n.snippet, opts.snippets)}`, at(n)));
       } else if (n.t === 'el') {
-        if (FORBIDDEN_EL.has(n.tag)) out.push(err('SN2001', `<${n.tag}> is not allowed in themes`, at(n)));
+        if (!n.tag.startsWith('hk-') && !isAllowedElement(n.tag)) {
+          out.push(err('SN2001', isForbiddenElement(n.tag) ? `<${n.tag}> is not allowed in themes` : `<${n.tag}> is not on the element allow-list`, at(n)));
+        }
         for (const a of n.attrs) {
-          if (a.name.startsWith('on') || FORBIDDEN_ATTR.has(a.name)) out.push(err('SN2002', `attribute '${a.name}' is not allowed`, { file: opts.file, ...a.loc }));
+          if (isForbiddenAttribute(a.name) || !ATTR_NAME.test(a.name)) out.push(err('SN2002', `attribute '${a.name}' is not allowed`, { file: opts.file, ...a.loc }));
           if (a.name === 'style' && a.parts.some((p) => typeof p !== 'string')) out.push(err('SN2009', 'style attributes cannot contain {{ }}; use classes, tokens or component props', { file: opts.file, ...a.loc }));
-          if (URL_ATTRS.has(a.name) && a.parts.length > 0 && a.parts.every((p) => typeof p === 'string')) {
+          if (isUrlAttribute(a.name) && a.parts.length > 0 && a.parts.every((p) => typeof p === 'string')) {
             const v = (a.parts as string[]).join('');
             if (a.name !== 'srcset' && safeUrl(v) === '#' && v.trim() !== '#') out.push(err('SN2010', `unsafe URL in ${a.name}`, { file: opts.file, ...a.loc }));
           }

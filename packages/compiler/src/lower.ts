@@ -1,9 +1,8 @@
-import { LIMITS, URL_ATTRIBUTES, escapeAttr, escapeText, type IRAttr, type IRNode, type IRValue, type TagRegistry } from '@hekana/sneferu-core';
+import { LIMITS, isUrlAttribute, escapeAttr, escapeText, type IRAttr, type IRNode, type IRValue, type TagRegistry } from '@hekana/sneferu-core';
 import { VOID_ELEMENTS, type AstNode } from './ast';
 import { propOf } from './validate';
 
-const URL_ATTRS = new Set<string>(URL_ATTRIBUTES);
-const sinkOf = (name: string): IRAttr['sink'] => (URL_ATTRS.has(name) ? 'url' : name === 'class' || name === 'id' ? 'token' : 'text');
+const sinkOf = (name: string): IRAttr['sink'] => (isUrlAttribute(name) ? 'url' : name === 'class' || name === 'id' ? 'token' : 'text');
 
 const isStatic = (n: AstNode): boolean =>
   n.t === 'text' || (n.t === 'el' && !n.tag.startsWith('hk-') && n.attrs.every((a) => a.parts.every((p) => typeof p === 'string')) && n.children.every(isStatic));

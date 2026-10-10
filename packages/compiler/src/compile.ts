@@ -1,4 +1,4 @@
-import { IR_VERSION, ENGINE_VERSION, err, hasErrors, type Diagnostic, type FieldSchema, type IRNode, type TagRegistry } from '@hekana/sneferu-core';
+import { IR_VERSION, ENGINE_VERSION, err, hasErrors, validateIR, type Diagnostic, type FieldSchema, type IRNode, type TagRegistry } from '@hekana/sneferu-core';
 import { checkFiles, type ThemeFile } from './files';
 import { validateManifest, type Manifest } from './manifest';
 import { parseTemplate } from './parser';
@@ -56,12 +56,17 @@ export function compileTheme(files: ThemeFile[], registry: TagRegistry): { artif
   const byDir = (dir: string) => [...text.keys()].filter((p) => p.startsWith(`${dir}/`) && p.endsWith('.sneferu')).sort();
   const nameOf = (p: string) => p.split('/').pop()!.replace(/\.sneferu$/, '');
   const snippetNames = new Set(byDir('snippets').map(nameOf));
+  const knownTags = new Set([...registry.names(), 'hk-block']);
 
   const compileOne = (path: string, kind: 'layout' | 'template' | 'section' | 'block' | 'snippet') => {
     const parsed = parseTemplate(text.get(path)!, path);
     diagnostics.push(...parsed.diagnostics);
-    if (!hasErrors(parsed.diagnostics)) diagnostics.push(...validateTemplate(parsed.nodes, { file: path, registry, snippets: snippetNames, kind }));
-    return { ir: lower(parsed.nodes, registry), schema: parsed.schema };
+    const checked = hasErrors(parsed.diagnostics) ? [] : validateTemplate(parsed.nodes, { file: path, registry, snippets: snippetNames, kind });
+    diagnostics.push(...checked);
+    const ir = lower(parsed.nodes, registry);
+    // the runtime re-checks every artifact; refuse here anything it would refuse there
+    if (!hasErrors(parsed.diagnostics) && !hasErrors(checked)) diagnostics.push(...validateIR(ir, knownTags).map((d) => ({ ...d, file: path })));
+    return { ir, schema: parsed.schema };
   };
 
   if (!text.has('layout/theme.sneferu')) diagnostics.push(err('SN3023', 'layout/theme.sneferu is missing'));

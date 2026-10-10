@@ -59,4 +59,19 @@ describe('compileTheme', () => {
     const files = base().map((x) => (x.path === 'sections/hero.sneferu' ? f(x.path, '<section />' + '<hk-schema>{"name":{"ar":"ب","en":"H"},"settings":[]}</hk-schema>') : x));
     expect(compileTheme(files, reg).diagnostics.map((d) => d.code)).toContain('SN3030');
   });
+  it('refuses SVG URL smuggling at compile time (C1)', () => {
+    const sec = (body: string) => base().map((x) => (x.path === 'sections/hero.sneferu' ? f(x.path, body + '<hk-schema>{"name":{"ar":"ب","en":"H"},"settings":{}}</hk-schema>') : x));
+    const codes = (body: string) => compileTheme(sec(body), reg).diagnostics.filter((d) => d.severity === 'error').map((d) => d.code);
+    expect(codes('<svg><a xlink:href="javascript:alert(1)"><text>x</text></a></svg>')).toContain('SN2010');
+    expect(codes('<svg><a><animate attributename="href" values="javascript:alert(1)"></animate></a></svg>')).toContain('SN2001');
+    expect(compileTheme(sec('<svg><use xlink:href="{{ section.settings.icon }}"></use></svg>'), reg).artifact!.sections.hero!.ir).toEqual([
+      { k: 'el', tag: 'svg', attrs: [], children: [{ k: 'el', tag: 'use', attrs: [{ name: 'xlink:href', sink: 'url', parts: [{ k: 'path', p: ['section', 'settings', 'icon'] }] }], children: [] }] },
+    ]);
+  });
+  it('re-checks its own IR so the runtime never refuses a compiled theme (C3)', () => {
+    const sec = base().map((x) => (x.path === 'sections/hero.sneferu' ? f(x.path, '<p>learn javascript: today</p><hk-schema>{"name":{"ar":"ب","en":"H"},"settings":{}}</hk-schema>') : x));
+    const ds = compileTheme(sec, reg).diagnostics.filter((d) => d.severity === 'error');
+    expect(ds.map((d) => d.code)).toEqual(['SN9014']);
+    expect(ds[0]!.file).toBe('sections/hero.sneferu');
+  });
 });

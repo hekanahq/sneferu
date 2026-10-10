@@ -37,4 +37,9 @@ describe('lower', () => {
       { k: 'comp', tag: 'hk-block', props: { of: { k: 'expr', e: { k: 'path', p: ['block'] } } }, children: [] },
     ]);
   });
+  it('routes data-bound xlink:href through the url sink (C1)', () => {
+    expect(ir('<svg><use xlink:href="{{ p.icon }}"></use></svg>')).toEqual([
+      { k: 'el', tag: 'svg', attrs: [], children: [{ k: 'el', tag: 'use', attrs: [{ name: 'xlink:href', sink: 'url', parts: [{ k: 'path', p: ['p', 'icon'] }] }], children: [] }] },
+    ]);
+  });
 });

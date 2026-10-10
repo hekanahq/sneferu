@@ -10,6 +10,27 @@ export const FILTERS = ['money', 'img', 'date', 't', 'escape', 'upcase', 'downca
 export const LOOKUPS = ['collection', 'product', 't', 'settings', 'asset_url'] as const;
 export type FilterName = (typeof FILTERS)[number];
 export type LookupName = (typeof LOOKUPS)[number];
-export const FORBIDDEN_ELEMENTS = ['script', 'style', 'iframe', 'object', 'embed', 'base', 'link', 'meta', 'form'] as const;
-export const FORBIDDEN_ATTRIBUTES = ['srcdoc', 'formaction'] as const;
-export const URL_ATTRIBUTES = ['href', 'src', 'action', 'poster', 'srcset'] as const;
+/** Elements a theme may use. Anything not listed here is rejected (allow-list, not deny-list). */
+export const ALLOWED_ELEMENTS = [
+  // sectioning and grouping
+  'address', 'article', 'aside', 'blockquote', 'dd', 'details', 'div', 'dl', 'dt', 'figcaption', 'figure', 'footer',
+  'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'header', 'hgroup', 'hr', 'li', 'main', 'menu', 'nav', 'ol', 'p', 'pre', 'search',
+  'section', 'summary', 'ul',
+  // text-level
+  'a', 'abbr', 'b', 'bdi', 'bdo', 'br', 'cite', 'code', 'data', 'del', 'dfn', 'em', 'i', 'ins', 'kbd', 'mark', 'meter',
+  'progress', 'q', 'rp', 'rt', 'ruby', 's', 'samp', 'small', 'span', 'strong', 'sub', 'sup', 'time', 'u', 'var', 'wbr',
+  // media
+  'audio', 'img', 'picture', 'source', 'track', 'video',
+  // tables
+  'caption', 'col', 'colgroup', 'table', 'tbody', 'td', 'tfoot', 'th', 'thead', 'tr',
+  // SVG presentation
+  'svg', 'g', 'path', 'circle', 'ellipse', 'line', 'polyline', 'polygon', 'rect', 'text', 'tspan', 'defs',
+  'lineargradient', 'radialgradient', 'stop', 'clippath', 'mask', 'pattern', 'symbol', 'use', 'title', 'desc', 'image',
+] as const;
+/** Kept for error messages: elements that are dangerous rather than merely unsupported. */
+export const FORBIDDEN_ELEMENTS = [
+  'script', 'style', 'iframe', 'object', 'embed', 'base', 'link', 'meta', 'form', 'animate', 'set', 'animatemotion',
+  'animatetransform', 'foreignobject', 'plaintext', 'xmp', 'noembed', 'noscript', 'frameset', 'frame', 'template', 'slot', 'portal',
+] as const;
+export const FORBIDDEN_ATTRIBUTES = ['srcdoc', 'formaction', 'attributename', 'xml:base'] as const;
+export const URL_ATTRIBUTES = ['href', 'src', 'action', 'poster', 'srcset', 'formaction', 'xlink:href'] as const;

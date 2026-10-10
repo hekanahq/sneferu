@@ -40,4 +40,14 @@ describe('validateTemplate', () => {
     expect(run('<hk-slot name="content" />', 'section')).toEqual(['SN2011']);
     expect(run('<hk-slot name="content" />', 'layout')).toEqual([]);
   });
+  it('uses an element allow-list and treats *:href as URLs (C1)', () => {
+    expect(run('<svg><a xlink:href="javascript:alert(1)"><text>x</text></a></svg>')).toEqual(['SN2010']);
+    expect(run('<svg><a><animate attributename="href" values="javascript:alert(1)"></animate></a></svg>')).toEqual(['SN2001', 'SN2002']);
+    expect(run('<svg><set attributename="href" to="javascript:x"></set></svg>')).toEqual(['SN2001', 'SN2002']);
+    expect(run('<svg><foreignobject><p>x</p></foreignobject></svg>')).toEqual(['SN2001']);
+    expect(run('<my-widget></my-widget>')).toEqual(['SN2001']);
+    expect(run('<template><p>x</p></template><noscript></noscript>')).toEqual(['SN2001', 'SN2001']);
+    expect(run('<div a<b="1"></div>')).toEqual(['SN2002']);
+    expect(run('<svg viewBox="0 0 8 8"><use xlink:href="#i"></use><path d="M0 0"></path></svg>')).toEqual([]);
+  });
 });

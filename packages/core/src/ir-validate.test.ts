@@ -78,3 +78,42 @@ describe('validateIR hardening', () => {
     expect(codes([{ k: 'html', s: 5 }])).toEqual(['SN9010']);
   });
 });
+
+describe('element allow-list and raw html (C1, C3)', () => {
+  const codes = (ir: unknown) => validateIR(ir, tags).map((d) => d.code);
+  const el = (tag: string, attrs: unknown[] = []) => [{ k: 'el', tag, attrs, children: [] }];
+  const a = (name: string, sink: string, parts: unknown[] = [{ k: 'path', p: ['x'] }]) => ({ name, sink, parts });
+
+  it('rejects elements outside the allow-list, including SVG animation and foreignObject', () => {
+    for (const tag of ['animate', 'set', 'animatemotion', 'animatetransform', 'foreignobject', 'template', 'noscript', 'my-widget', 'math', 'input'])
+      expect(codes(el(tag)), tag).toEqual(['SN9011']);
+    for (const tag of ['svg', 'g', 'path', 'use', 'lineargradient', 'image', 'section', 'table', 'video'])
+      expect(codes(el(tag)), tag).toEqual([]);
+  });
+  it('treats every *:href as a URL attribute and refuses attributename', () => {
+    expect(codes(el('use', [a('xlink:href', 'text')]))).toEqual(['SN9013']);
+    expect(codes(el('use', [a('xlink:href', 'url')]))).toEqual([]);
+    expect(codes(el('a', [a('foo:href', 'token')]))).toEqual(['SN9013']);
+    expect(codes(el('a', [a('attributename', 'text', ['href'])]))).toEqual(['SN9012']);
+  });
+  it('rejects raw html that smuggles markup the compiler never emits', () => {
+    const bad = [
+      '<script>alert(1)</script>', '< script>x', '</ script>', '<SCRIPT>', '<svg><animate attributename="href" values="x"></animate></svg>',
+      '<img src="/a.png" onerror="alert(1)">', '<svg/onload=alert(1)>', '<img src="x"onerror=alert(1)>',
+      '<a href="javascript:alert(1)">x</a>', '<a href="java\nscript:alert(1)">x</a>', '<a href="&#106;avascript:alert(1)">x</a>',
+      '<a href="javascript&colon;alert(1)">x</a>', '<a xlink:href="/ok" href="vbscript:x">x</a>', '<svg><a xlink:href="http://evil">x</a></svg>',
+      '<a href="data:text/html,x">x</a>', '<iframe>', '<img src="x', '<img src=x ', 'text <', '<math><mi>',
+      '<div title="x" attributename="y">', '<a srcdoc="x">', '<use xml:base="https://e/">',
+    ];
+    for (const s of bad) expect(codes([{ k: 'html', s }]), s).toEqual(['SN9014']);
+  });
+  it('accepts what the compiler emits', () => {
+    const good = [
+      '<section class="hero"><h1>كروت &amp; ألعاب</h1><br></section>', '<a href="/products?a=1&amp;b=2">x</a>',
+      '<a href="javascript&amp;colon;alert(1)">x</a>', '<a href="#">x</a>', '<a href="https://x.com/a">x</a>',
+      '<svg viewBox="0 0 10 10"><use xlink:href="#icon"></use><lineargradient id="g"><stop offset="0"></stop></lineargradient></svg>',
+      '<img src="/a.png" alt="&quot;x&quot;" loading="lazy">', 'a &lt; b and c &gt; d', '<p data-online="1">x</p>', '<a href>x</a>',
+    ];
+    for (const s of good) expect(codes([{ k: 'html', s }]), s).toEqual([]);
+  });
+});

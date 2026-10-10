@@ -1,13 +1,11 @@
 import { err, type Diagnostic } from './diagnostics';
-import { FILTERS, FORBIDDEN_ATTRIBUTES, FORBIDDEN_ELEMENTS, LIMITS, LOOKUPS, URL_ATTRIBUTES } from './version';
+import { FILTERS, LIMITS, LOOKUPS } from './version';
+import { checkRawHtml, isAllowedElement, isForbiddenAttribute, isUrlAttribute } from './policy';
 
 const KINDS = new Set(['html', 'text', 'el', 'if', 'loop', 'comp', 'slot', 'render', 't']);
 const EXPR_KINDS = new Set(['lit', 'path', 'lookup', 'cmp', 'and', 'or', 'not', 'filter']);
 const FILTER_SET = new Set<string>(FILTERS);
 const LOOKUP_SET = new Set<string>(LOOKUPS);
-const FORBIDDEN_EL = new Set<string>(FORBIDDEN_ELEMENTS);
-const FORBIDDEN_ATTR = new Set<string>(FORBIDDEN_ATTRIBUTES);
-const URL_ATTR = new Set<string>(URL_ATTRIBUTES);
 const SINKS = new Set(['text', 'url', 'token']);
 const TAG_RE = /^[a-z][a-z0-9-]*$/;
 const ATTR_RE = /^[a-z_:][a-z0-9_:.-]*$/;
@@ -53,9 +51,9 @@ export function validateIR(nodes: unknown, knownTags: ReadonlySet<string>): Diag
   const attr = (a: unknown, d: number): void => {
     if (!isObj(a) || typeof a.name !== 'string' || !Array.isArray(a.parts)) { out.push(err('SN9008', 'invalid attribute')); return; }
     const name = a.name;
-    if (!ATTR_RE.test(name) || name.startsWith('on') || FORBIDDEN_ATTR.has(name)) out.push(err('SN9012', `attribute not allowed: ${name}`));
+    if (!ATTR_RE.test(name) || isForbiddenAttribute(name)) out.push(err('SN9012', `attribute not allowed: ${name}`));
     if (typeof a.sink !== 'string' || !SINKS.has(a.sink)) out.push(err('SN9013', `invalid sink for ${name}`));
-    else if (URL_ATTR.has(name) && a.sink !== 'url') out.push(err('SN9013', `attribute ${name} requires url sink`));
+    else if (isUrlAttribute(name) && a.sink !== 'url') out.push(err('SN9013', `attribute ${name} requires url sink`));
     if (name === 'style' && a.parts.some((p) => typeof p !== 'string')) out.push(err('SN9012', 'style attribute must be static'));
     a.parts.forEach((p) => typeof p !== 'string' && expr(p, d + 1));
   };
@@ -65,10 +63,15 @@ export function validateIR(nodes: unknown, knownTags: ReadonlySet<string>): Diag
     for (const n of list) {
       if (!isObj(n) || !KINDS.has(String(n.k))) { out.push(err('SN9001', `unknown IR node ${String(JSON.stringify(isObj(n) ? n.k : n))}`)); continue; }
       switch (n.k) {
-        case 'html': if (typeof n.s !== 'string') out.push(err('SN9010', 'html node needs a string')); break;
+        case 'html': {
+          if (typeof n.s !== 'string') { out.push(err('SN9010', 'html node needs a string')); break; }
+          const why = checkRawHtml(n.s);
+          if (why) out.push(err('SN9014', `unsafe html: ${why}`));
+          break;
+        }
         case 'text': expr(n.e, d + 1); break;
         case 'el':
-          if (typeof n.tag !== 'string' || !TAG_RE.test(n.tag) || FORBIDDEN_EL.has(n.tag)) out.push(err('SN9011', `element not allowed: ${String(n.tag)}`));
+          if (typeof n.tag !== 'string' || !TAG_RE.test(n.tag) || !isAllowedElement(n.tag)) out.push(err('SN9011', `element not allowed: ${String(n.tag)}`));
           if (!Array.isArray(n.attrs)) out.push(err('SN9008', 'el attrs must be an array')); else n.attrs.forEach((a) => attr(a, d + 1));
           walk(n.children, d + 1); break;
         case 'if':

@@ -101,4 +101,12 @@ describe('renderPage', () => {
     expect(r.html.match(/unavailable/g)).toHaveLength(4);
     expect(r.diagnostics.filter((d) => d.code === 'SN4001')).toHaveLength(1);
   });
+  it('refuses raw html that hides markup the compiler never emits (C3)', () => {
+    for (const s of ['<script>alert(1)</script>', '<img src=x onerror=alert(1)>', '<svg><a xlink:href="javascript:alert(1)">x</a></svg>']) {
+      const bad = { ...artifact, sections: { hero: { ir: [{ k: 'html', s }], schema: { settings: {} } } } } as unknown as ArtifactLike;
+      const r = renderPage(bad, { template: 'index', ctx, registry: new TagRegistry() });
+      expect(r.html).toBe('');
+      expect(r.diagnostics.map((d) => d.code)).toEqual(['SN9014']);
+    }
+  });
 });

@@ -4,6 +4,7 @@ import { join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { compileTheme, type ThemeFile } from '@hekana/sneferu-compiler';
 import { renderPage } from '@hekana/sneferu-runtime';
+import { validateIR } from '@hekana/sneferu-core';
 import { createDefaultRegistry } from '@hekana/sneferu-components';
 import { sampleContext } from './sample-data';
 
@@ -18,6 +19,13 @@ describe('starter theme end to end', () => {
   it('compiles cleanly', () => {
     expect(diagnostics.filter((d) => d.severity === 'error')).toEqual([]);
     expect(Object.keys(artifact!.sections).sort()).toEqual(['featured', 'hero']);
+  });
+
+  it('produces IR that passes the load-time integrity check (C3)', () => {
+    const a = artifact!;
+    const known = new Set([...registry.names(), 'hk-block']);
+    const trees = [a.layout, ...Object.values(a.templates), ...Object.values(a.snippets), ...Object.values(a.sections).map((s) => s.ir), ...Object.values(a.blocks).map((b) => b.ir)];
+    expect(trees.flatMap((t) => validateIR(t, known))).toEqual([]);
   });
 
   it('renders the home page in Arabic with real sample products', () => {
