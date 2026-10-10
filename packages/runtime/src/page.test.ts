@@ -92,4 +92,13 @@ describe('renderPage', () => {
     const r = renderPage(rec, { template: 'index', ctx, registry: new TagRegistry(), sections: [{ id: 's1', type: 'hero', children: [{ id: 'b1', type: 'chip' }] }] });
     expect(r.diagnostics.some((d) => d.code === 'SN4002' || d.code === 'SN4003')).toBe(true);
   });
+  it('charges failed sections to the page budget and reports once', () => {
+    const runaway: ArtifactLike = { ...artifact, sections: { ...artifact.sections, loopy: { ir: [
+      { k: 'loop', as: 'x', src: { k: 'path', p: ['xs'] }, limit: 250, body: [{ k: 'html', s: '<i></i>' }] }], schema: { settings: {} } } } };
+    const r = renderPage(runaway, { template: 'index', ctx, registry: new TagRegistry(), scope: { xs: Array(100).fill(0) }, limits: { ...LIMITS, loopIterations: 120 },
+      sections: [1, 2, 3, 4, 5].map((n) => ({ id: `s${n}`, type: 'loopy' })) });
+    expect(r.html.match(/<i><\/i>/g)?.length ?? 0).toBeLessThanOrEqual(120);
+    expect(r.html.match(/unavailable/g)).toHaveLength(4);
+    expect(r.diagnostics.filter((d) => d.code === 'SN4001')).toHaveLength(1);
+  });
 });

@@ -50,7 +50,7 @@ export function renderPage(
     // section degrades alone and the surrounding layout stays balanced
     const sub = env.budget.child();
     const html = renderNodes(def.ir, scope, { ...env, budget: sub, slots: {}, depth: 0 });
-    if (sub.exceeded) return unavailable;
+    if (sub.exceeded) { env.budget.absorbFailed(sub); return unavailable; }
     const out = `<div data-hk-section="${escapeAttr(node.id)}">${html}</div>`;
     env.budget.absorb(sub, out.length);
     if (env.budget.exceeded && !env.budget.reported) { env.budget.reported = true; env.diagnostics.push(err('SN4001', `render stopped: ${env.budget.exceeded} budget exceeded`)); }
