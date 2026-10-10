@@ -39,7 +39,7 @@ Every problem Sneferu reports has a stable code. The format is `file:line:col se
 | SN2007 | Loop limit outside 1..250 | Use a limit between 1 and 250. |
 | SN2008 | `{% render %}` names a snippet that does not exist | Create `snippets/<name>.sneferu` or fix the name. |
 | SN2009 | `style` attribute contains `{{ }}` | Use a class, a token or a component prop. |
-| SN2010 | Unsafe static URL (for example `javascript:`) | Use an http(s), mailto, tel or relative URL. |
+| SN2010 | Unsafe static URL (for example `javascript:`) | Only `https:`, `mailto:`, `tel:` or relative URLs are allowed; plain `http:`, protocol-relative `//…` and anything containing `\` are rejected. |
 | SN2011 | `<hk-slot>` used outside a layout or template | Move it into the layout or a template. |
 
 ## SN3xxx Package, manifest and compile

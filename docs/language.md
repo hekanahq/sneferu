@@ -48,7 +48,7 @@ Notes:
 
 | Directive | Example |
 |---|---|
-| `{% if expr %}` / `{% elsif expr %}` / `{% else %}` / `{% endif %}` | `{% if product.compare_price > product.price %}<hk-badge text="{{ 'sale' \| t }}" />{% endif %}` |
+| `{% if expr %}` / `{% elsif expr %}` / `{% else %}` / `{% endif %}` | `{% if product.compare_at > product.price %}<hk-badge text="{{ 'sale' \| t }}" />{% endif %}` |
 | `{% for x in expr [limit:n] %}` / `{% endfor %}` | `{% for p in collection('featured').products limit: 8 %}{{ p.title }}{% endfor %}` |
 | `{% render 'snippet', key: expr %}` | `{% render 'price-tag', amount: p.price %}` renders `snippets/price-tag.sneferu` with `amount` in scope |
 | `<hk-slot name="content" />` | layout and templates only: where the template (in a layout) or the sections (in a template) go |
@@ -78,6 +78,7 @@ Each block is rendered from `blocks/<type>.sneferu` with `block` in scope (`bloc
 | `section` | in sections: `section.id`, `section.type`, `section.settings.*`, `section.blocks` |
 | `block` | in blocks: `block.id`, `block.type`, `block.settings.*` |
 | `locale`, `dir` | `ar` / `en`, `rtl` / `ltr` |
+| `forloop` | inside `{% for %}`: `forloop.index` (from 1), `forloop.first`, `forloop.last` |
 | loop variable, `render` arguments | as named by the template |
 
 `x.size` works on strings and arrays.
@@ -169,7 +170,7 @@ File and folder names are lower-case letters, digits, `.`, `_`, `-`. Symlinks, `
 | Template | page type; usually just `<hk-sections />` plus a `<hk-schema>` listing default sections | `templates/index.sneferu` |
 | Section | rendered inside `<div data-hk-section="<id>">`; has a `<hk-schema>` | `sections/hero.sneferu` |
 | Block | a repeatable item inside a section | `blocks/chip.sneferu` |
-| Snippet | a partial, no schema | `snippets/*.sneferu` |
+| Snippet | a partial, no schema (the starter has none) | `snippets/<name>.sneferu` |
 
 Template example (default sections for the page):
 
@@ -195,11 +196,11 @@ A section or block schema needs `name` with both `ar` and `en` (SN3030). A secti
 
 Required: `id` (3-41 chars: lowercase letters, digits, dashes, starting with a letter), `name` and `description` (`{ar,en}`), `version` (x.y.z), `author`, `category`, `engine: "hk2"`, `engineCompatibility` (`^2.0.0` or exact; the current engine is 2.0.0), `defaultLocale`, `locales` (must include the default), `settings` (a field schema), and `tokens.colors` with `primary`, `secondary`, `accent`, `background`, `text` as `#RRGGBB`.
 
-## Field types (`<hk-schema>` settings and tag props)
+## Field types (`<hk-schema>` settings)
 
 Each field is `{ "type", "label": {"ar","en"}, "default"?, "required"?, "min"?, "max"?, "step"?, "options"?, "responsive"?, "visible_if"?, "maxLength"? }`.
 
-| Type | Value | Coercion at render |
+| Type | Value | Coercion of stored setting values |
 |---|---|---|
 | `text` | short string | string, cut to `maxLength` |
 | `textarea` | long string | as `text` |
@@ -213,7 +214,7 @@ Each field is `{ "type", "label": {"ar","en"}, "default"?, "required"?, "min"?, 
 | `product`, `collection` | handle string | string, else default |
 | `spacing`, `typography` | string | string, else default |
 
-Settings are always coerced, so a bad stored value falls back to the default instead of breaking the page.
+Coercion (clamping, defaults, select fallback, colour checks, `maxLength`) applies only to section and block settings declared in `<hk-schema>`: a bad stored value falls back to the default instead of breaking the page. Props on `hk-*` tags are not coerced by the schema; they receive the evaluated value as-is and each tag validates its own props (for example `hk-product-grid` accepts an array or `{products}`).
 
 ## Responsive attributes
 
