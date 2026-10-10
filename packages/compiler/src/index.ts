@@ -3,3 +3,4 @@ export * from './expr';
 export * from './ast';
 export * from './parser';
 export * from './validate';
+export * from './lower';
