@@ -1,1 +1,88 @@
-export async function runDev(_dir: string, _port: number): Promise<void> {}
+import { createServer, type Server, type ServerResponse } from 'node:http';
+import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
+import { extname, join, resolve, sep } from 'node:path';
+import { watch } from 'chokidar';
+import { escapeText, formatDiagnostic } from '@hekana/sneferu-core';
+import { compileTheme, type Artifact } from '@hekana/sneferu-compiler';
+import { renderPage } from '@hekana/sneferu-runtime';
+import { createDefaultRegistry } from '@hekana/sneferu-components';
+import { loadTheme } from '../load';
+import { sampleContext } from '../sample-data';
+import { devPage } from '../dev-page';
+
+const TYPES: Record<string, string> = { '.css': 'text/css', '.js': 'text/javascript', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.woff': 'font/woff' };
+
+/** Resolve a URL-supplied asset path inside `assets`; undefined when unsafe. */
+export function resolveAsset(assets: string, raw: string): string | undefined {
+  let rel = raw;
+  // decode repeatedly so double-encoded dots cannot slip through
+  for (let i = 0; i < 3 && /%/.test(rel); i++) {
+    try { rel = decodeURIComponent(rel); } catch { return undefined; }
+  }
+  if (/%/.test(rel) || rel.includes('\0') || rel.includes('\\') || rel.startsWith('/')) return undefined;
+  if (rel.split('/').some((s) => s === '..')) return undefined;
+  const base = resolve(assets);
+  const file = resolve(base, rel);
+  return file.startsWith(base + sep) ? file : undefined;
+}
+
+export async function startDev(dir: string, port: number): Promise<{ server: Server; close: () => void }> {
+  const root = resolve(dir);
+  const registry = createDefaultRegistry();
+  let artifact: Artifact | undefined;
+  let problems = '';
+  const clients = new Set<ServerResponse>();
+  const compile = () => {
+    try {
+      const r = compileTheme(loadTheme(root), registry);
+      artifact = r.artifact;
+      problems = r.artifact ? '' : r.diagnostics.map(formatDiagnostic).join('\n');
+    } catch (e) { artifact = undefined; problems = (e as Error).message; }
+  };
+  compile();
+  const themeCss = () => (existsSync(join(root, 'assets')) ? readdirSync(join(root, 'assets')).filter((f) => f.endsWith('.css')).map((f) => readFileSync(join(root, 'assets', f), 'utf8')).join('\n') : '');
+  const errorPage = (msg: string) => `<!doctype html><meta charset="utf-8"><title>Sneferu: errors</title><pre style="padding:24px;font:14px/1.5 monospace;white-space:pre-wrap">${escapeText(msg)}</pre><script>new EventSource('/__events').onmessage=e=>{if(e.data==='reload')location.reload()}</script>`;
+
+  const server = createServer((req, res) => {
+    try {
+      const url = new URL(req.url ?? '/', 'http://localhost');
+      if (url.pathname === '/__events') {
+        res.writeHead(200, { 'content-type': 'text/event-stream', 'cache-control': 'no-cache', connection: 'keep-alive' });
+        res.write(': ok\n\n'); clients.add(res); req.on('close', () => clients.delete(res)); return;
+      }
+      // WHATWG URL folds %2e%2e dot-segments, so take the raw path for assets
+      const rawPath = (req.url ?? '/').split(/[?#]/)[0] ?? '/';
+      if (rawPath.startsWith('/__assets/')) {
+        const file = resolveAsset(join(root, 'assets'), rawPath.slice('/__assets/'.length));
+        if (!file || !existsSync(file) || !statSync(file).isFile()) { res.writeHead(404).end(); return; }
+        res.writeHead(200, { 'content-type': TYPES[extname(file).toLowerCase()] ?? 'application/octet-stream' }).end(readFileSync(file)); return;
+      }
+      if (!artifact) { res.writeHead(500, { 'content-type': 'text/html; charset=utf-8' }).end(errorPage(problems)); return; }
+      const locale = url.searchParams.get('locale') === 'en' ? 'en' : 'ar';
+      let template = 'index';
+      if (url.pathname.startsWith('/__template/')) {
+        try { template = decodeURIComponent(url.pathname.slice('/__template/'.length)); } catch { template = ''; }
+      }
+      const r = renderPage(artifact, { template, ctx: sampleContext(locale, artifact.locales, artifact.manifest.defaultLocale), registry });
+      const body = r.html || `<pre style="padding:24px;white-space:pre-wrap">${escapeText(r.diagnostics.map(formatDiagnostic).join('\n') || 'empty page')}</pre>`;
+      res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' }).end(devPage(artifact, { body, locale, css: r.css, themeCss: themeCss(), reloadScript: true }));
+    } catch (e) {
+      if (!res.headersSent) res.writeHead(500, { 'content-type': 'text/html; charset=utf-8' });
+      res.end(errorPage((e as Error).message));
+    }
+  });
+
+  let timer: NodeJS.Timeout | undefined;
+  const watcher = watch(root, { ignored: (p) => /(^|[/\\])(node_modules|dist|\.git|\.sneferu-dev)([/\\]|$)/.test(p), ignoreInitial: true })
+    .on('all', () => { clearTimeout(timer); timer = setTimeout(() => { compile(); for (const c of clients) c.write('data: reload\n\n'); }, 120); });
+
+  await new Promise<void>((ok) => server.listen(port, '127.0.0.1', ok));
+  const addr = server.address();
+  const actual = typeof addr === 'object' && addr ? addr.port : port;
+  console.log(`Sneferu dev → http://127.0.0.1:${actual}  (ar · /?locale=en)${artifact ? '' : '\n' + problems}`);
+  return { server, close: () => { clearTimeout(timer); void watcher.close(); for (const c of clients) c.end(); server.close(); } };
+}
+
+export async function runDev(dir: string, port: number): Promise<void> {
+  await startDev(dir, port);
+}
