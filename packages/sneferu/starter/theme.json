@@ -1,0 +1,8 @@
+{
+  "id": "starter", "name": { "ar": "قالب البداية", "en": "Starter" }, "version": "0.1.0", "author": "Hekana",
+  "description": { "ar": "نقطة بداية لبناء قالب بسنفرو", "en": "A starting point for a Sneferu theme" },
+  "category": "general", "engine": "hk2", "engineCompatibility": "^2.0.0",
+  "defaultLocale": "ar", "locales": ["ar", "en"],
+  "settings": { "accent": { "type": "color", "label": { "ar": "لون مميز", "en": "Accent" }, "default": "#7C3AED" } },
+  "tokens": { "colors": { "primary": "#111827", "secondary": "#1F2937", "accent": "#7C3AED", "background": "#FFFFFF", "text": "#111827" }, "layout": { "contentWidth": "1200px" } }
+}

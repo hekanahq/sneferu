@@ -1,0 +1,2 @@
+<hk-badge text="{{ block.settings.label }}" tone="accent" />
+<hk-schema>{"name":{"ar":"شريحة","en":"Chip"},"version":1,"settings":{"label":{"type":"text","label":{"ar":"النص","en":"Label"},"default":"جديد"}}}</hk-schema>

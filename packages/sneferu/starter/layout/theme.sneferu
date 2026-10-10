@@ -1,0 +1,3 @@
+<header class="site-header"><hk-container><a href="/" class="logo">{{ store.name }}</a></hk-container></header>
+<main><hk-slot name="content" /></main>
+<footer class="site-footer"><hk-container><hk-text text="{{ store.name }}" size="14" /></hk-container></footer>

@@ -1,0 +1,10 @@
+<hk-section background="theme:secondary" padding-y="96" mobile-padding-y="48">
+  <hk-stack gap="16" align="start">
+    <hk-heading text="{{ section.settings.title }}" level="h1" size="56" mobile-size="32" color="#FFFFFF" />
+    <hk-text text="{{ section.settings.subtitle }}" size="20" color="#E5E7EB" />
+    <hk-button label="{{ t('shop_now') }}" href="/products" />
+  </hk-stack>
+</hk-section>
+<hk-schema>{"name":{"ar":"واجهة","en":"Hero"},"version":1,"settings":{
+  "title":{"type":"text","label":{"ar":"العنوان","en":"Title"},"default":"Hello","maxLength":80},
+  "subtitle":{"type":"textarea","label":{"ar":"الوصف","en":"Subtitle"},"default":"","maxLength":200}}}</hk-schema>
