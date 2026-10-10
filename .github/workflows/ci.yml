@@ -10,5 +10,6 @@ jobs:
         with: { node-version: 22, cache: pnpm }
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
+      - run: pnpm smoke:cjs
       - run: pnpm typecheck
       - run: pnpm test
