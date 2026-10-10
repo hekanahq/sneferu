@@ -61,7 +61,7 @@ Notes:
 
 Loops: the default limit is 50 iterations, the maximum is 250. A limit below 1 or above 250 is an error (SN2007). A page may run at most 2,000 loop iterations in total.
 
-Snippets: `{% render %}` may nest up to 8 deep. Snippets may not include each other in a cycle (`a` renders `b`, `b` renders `a`, or `a` renders itself): that is a compile error (SN3027, `snippet include cycle: a → b → a`). Every `render`, `if`, `for`, slot and component counts against the page's node budget, so wide fan-out (a snippet rendering another several times, several levels deep) stops at the budget instead of growing exponentially.
+Snippets: `{% render %}` may nest up to 8 deep. Snippets may not include each other in a cycle (`a` renders `b`, `b` renders `a`, or `a` renders itself): that is a compile error (SN3027, `snippet include cycle: a → b → a`). Every node rendered (text, markup, `render`, `if`, `for`, slot, component) counts against the page's node budget, so wide fan-out (a snippet rendering another several times, several levels deep) stops at the budget instead of growing exponentially.
 
 ### Blocks
 
@@ -141,7 +141,7 @@ Also rejected:
 
 URL attributes are `href`, every `*:href` (`xlink:href`, ...), `src`, `action`, `poster`, `srcset` and `formaction`. Their dynamic values are always passed through the safe-URL filter at render time, and static values must already be safe (SN2010). Styling lives in `assets/*.css` and in component props.
 
-Because a theme is untrusted input, the runtime re-validates the compiled artifact before rendering and refuses anything that does not pass (SN9xxx). That check also scans the static HTML chunks for anything the compiler never emits (a disallowed element, an `on*=` handler, `javascript:`/`vbscript:`/`data:text/html`, `attributename`, an unsafe URL, a tag left open). The compiler runs the same check on its own output, so a theme that compiles always renders; as a side effect, literal text such as `javascript:` in static copy is rejected (SN9014) — put such text in a setting or a translation instead.
+Because a theme is untrusted input, the runtime re-validates the compiled artifact before rendering and refuses anything that does not pass (SN9xxx). That check also requires every static HTML chunk to match the compiler's own output grammar: escaped text, and complete tags `<name attr="value">` / `</name>` with allow-listed names and double-quoted values (no comments, `<!…>`, `<?…>`, CDATA, unquoted values, or markup inside `<title>`). Attributes are checked by name (`on*`, forbidden names) and by value (`javascript:`, `vbscript:`, `data:text/html`, unsafe URLs, including `srcset` candidates); text itself is never pattern-matched, so prose such as "Buy one = get one free" or "javascript:" is fine. The compiler runs the same check on its own output, so a theme that compiles always renders (SN9014 otherwise; e.g. `style="background:url(javascript:…)"`).
 
 ## Limits
 

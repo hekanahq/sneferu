@@ -69,10 +69,16 @@ describe('compileTheme', () => {
     ]);
   });
   it('re-checks its own IR so the runtime never refuses a compiled theme (C3)', () => {
-    const sec = base().map((x) => (x.path === 'sections/hero.sneferu' ? f(x.path, '<p>learn javascript: today</p><hk-schema>{"name":{"ar":"ب","en":"H"},"settings":{}}</hk-schema>') : x));
-    const ds = compileTheme(sec, reg).diagnostics.filter((d) => d.severity === 'error');
+    const sec = (body: string) => base().map((x) => (x.path === 'sections/hero.sneferu' ? f(x.path, body + '<hk-schema>{"name":{"ar":"ب","en":"H"},"settings":{}}</hk-schema>') : x));
+    const ds = compileTheme(sec('<div style="background:url(javascript:alert(1))">x</div>'), reg).diagnostics.filter((d) => d.severity === 'error');
     expect(ds.map((d) => d.code)).toEqual(['SN9014']);
     expect(ds[0]!.file).toBe('sections/hero.sneferu');
+  });
+  it('compiles prose that merely looks like code (R-C3 false positives)', () => {
+    const sec = (body: string) => base().map((x) => (x.path === 'sections/hero.sneferu' ? f(x.path, body + '<hk-schema>{"name":{"ar":"ب","en":"H"},"settings":{}}</hk-schema>') : x));
+    for (const body of ['<p>Buy one = get one free</p>', '<p>add-ons = extras</p>', '<img alt="price on = 5" src="/a.png">', '<p>Use data:text/html carefully</p>',
+      '<p>attributeName</p>', '<p>learn javascript: today</p>', '<p title="a`b">x</p>', '<p>a &gt; b &amp; c</p>', '<svg viewBox="0 0 8 8"><path d="M0 0"/></svg>'])
+      expect(compileTheme(sec(body), reg).diagnostics.filter((d) => d.severity === 'error'), body).toEqual([]);
   });
   it('rejects snippet include cycles (C2)', () => {
     const codes = (extra: ThemeFile[]) => compileTheme([...base(), ...extra], reg).diagnostics.filter((d) => d.severity === 'error');

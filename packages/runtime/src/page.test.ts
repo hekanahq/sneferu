@@ -180,4 +180,24 @@ describe('renderPage', () => {
     expect(at({ accent: 'red;}body{x', cols: 99 })).toContain('>#7C3AED|4<');
     expect(at({ accent: '#000000', cols: '2' })).toContain('>#000000|2<');
   });
+  it('charges every node kind, so text fan-out stops at the budget with SN4001 (R-C2 probe)', () => {
+    const r40k: IRNode[] = Array.from({ length: 40000 }, () => ({ k: 'text' as const, e: { k: 'path' as const, p: ['x'] } }));
+    const fan: IRNode[] = Array.from({ length: 15000 }, () => ({ k: 'render' as const, snippet: 'a', args: {} }));
+    const art: ArtifactLike = { ...artifact, snippets: { a: r40k, b: fan }, sections: { s: { ir: [{ k: 'render', snippet: 'b', args: {} }], schema: { settings: {} } } } };
+    const t0 = Date.now();
+    const r = renderPage(art, { template: 'index', ctx, registry: new TagRegistry(), sections: [{ id: 'x', type: 's' }] });
+    expect(Date.now() - t0).toBeLessThan(1000);
+    expect(r.diagnostics.map((d) => d.code)).toEqual(['SN4001']);
+  });
+  it('bounds hk-block self-recursion fan-out (R-C2 probe)', () => {
+    const blk: IRNode = { k: 'comp', tag: 'hk-block', props: { of: { k: 'expr', e: { k: 'path', p: ['block'] } } }, children: [] };
+    const art: ArtifactLike = { ...artifact,
+      sections: { s: { ir: [{ k: 'loop', as: 'block', src: { k: 'path', p: ['section', 'blocks'] }, limit: 50, body: [blk] }], schema: { settings: {} } } },
+      blocks: { r: { ir: Array.from({ length: 6 }, () => blk), schema: { settings: {} } } } };
+    const t0 = Date.now();
+    const r = renderPage(art, { template: 'index', ctx, registry: new TagRegistry(), sections: [{ id: 'x', type: 's', children: [{ id: 'k', type: 'r' }] }] });
+    expect(Date.now() - t0).toBeLessThan(1000);
+    expect(r.diagnostics.length).toBeLessThanOrEqual(2);
+    expect(r.diagnostics.some((d) => d.code === 'SN4001' || d.code === 'SN4002')).toBe(true);
+  });
 });

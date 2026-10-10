@@ -116,4 +116,23 @@ describe('element allow-list and raw html (C1, C3)', () => {
     ];
     for (const s of good) expect(codes([{ k: 'html', s }]), s).toEqual([]);
   });
+  it('rejects html that desynchronises a tokenizer from the browser (R-C3 probes)', () => {
+    const payload = '<a href=javascript&colon;alert(1)>x</a>';
+    const bad = [
+      '<!<a title=">' + payload + '">', '<!-- <a title=" -->' + payload + '">', '<?<a title=">' + payload + '">',
+      '</ <a title=">' + payload + '">', '<svg><![CDATA[<a title="]]><a href=javascript&colon;alert(1)><text>x</text></a>"]]></svg>',
+      '<!-- <a title=" --><img src=x onerror=alert(1)>">', '<!-- <a title=" --><img src=x>">',
+      '<title><a title="</title><a href=javascript&colon;alert(1)>x</a>">', '<a href="&#106avascript&#58alert(1)">x</a>',
+      '<a href="java&#9;script:alert(1)">x</a>', '<a href="&#x80;">x</a>', '<img srcset="javascript:alert(1)">', '<img srcset="/a.png 1x, http://e/b.png 2x">',
+      '<a href="/x" title="a>b">x</a>', "<a title='x'>x</a>", '<a href=/x>x</a>', '<br/>', '<p>a > b</p>', '<!---->', '<title><b>x</b></title>',
+      '<div style="background:url(javascript:alert(1))">x</div>', '<div data-x="&#106;avascript:alert(1)">x</div>',
+    ];
+    for (const s of bad) expect(codes([{ k: 'html', s }]), s).toEqual(['SN9014']);
+  });
+  it('does not pattern-match prose (R-C3 false positives)', () => {
+    for (const s of ['<p>Buy one = get one free</p>', '<p>add-ons = extras</p>', '<img alt="price on = 5" src="/a.png">', '<p>Use data:text/html carefully</p>',
+      '<p>attributeName</p>', '<p>learn javascript: today</p>', '<p>onclick=alert(1)</p>', '<title>Shop &amp; more</title>', '<p title="a`b">x</p>',
+      '<img srcset="/a.png 1x, https://cdn.x/b.png 2x" src="/a.png">'])
+      expect(codes([{ k: 'html', s }]), s).toEqual([]);
+  });
 });

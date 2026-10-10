@@ -48,7 +48,8 @@ export function renderNodes(nodes: IRNode[], scope: Scope, env: Env): string {
   const add = (s: string): boolean => { if (env.budget.out(s.length)) { html += s; return true; } noteExceeded(env); return false; };
   const raw = (s: string) => { html += s; };
   for (const n of nodes) {
-    if (env.budget.exceeded) break;
+    // every node visited, of every kind, is charged: fan-out cannot outrun the budget
+    if (env.budget.exceeded || !env.budget.node()) { noteExceeded(env); break; }
     switch (n.k) {
       case 'html': add(n.s); break;
       case 'text': add(escapeText(toStr(evaluate(n.e, scope, env.ctx)))); break;
@@ -68,14 +69,12 @@ export function renderNodes(nodes: IRNode[], scope: Scope, env: Env): string {
         break;
       }
       case 'if': {
-        if (!env.budget.node()) { noteExceeded(env); break; }
         const branch = n.branches.find((b) => truthy(evaluate(b.test, scope, env.ctx)));
         const body = branch ? branch.body : n.else;
         if (body) raw(renderNodes(body, scope, env));
         break;
       }
       case 'loop': {
-        if (!env.budget.node()) { noteExceeded(env); break; }
         const src = evaluate(n.src, scope, env.ctx);
         const list = Array.isArray(src) ? src.slice(0, n.limit) : [];
         list.forEach((item, index) => {
@@ -86,11 +85,9 @@ export function renderNodes(nodes: IRNode[], scope: Scope, env: Env): string {
         break;
       }
       case 'slot': {
-        if (!env.budget.node()) { noteExceeded(env); break; }
         const fill = own(env.slots, n.name); if (fill) raw(fill()); break;
       }
       case 'render': {
-        if (!env.budget.node()) { noteExceeded(env); break; }
         const body = own(env.snippets, n.snippet);
         if (!body) { env.diagnostics.push(err('SN4004', `snippet '${n.snippet}' not found`)); break; }
         if (env.include >= env.budget.maxInclude) { reportOnce(env, 'SN4002', `include depth exceeded at '${n.snippet}'`); break; }
@@ -100,8 +97,7 @@ export function renderNodes(nodes: IRNode[], scope: Scope, env: Env): string {
       }
       case 'comp': {
         if (n.tag === 'hk-block' && env.blocks) {
-          if (!env.budget.node()) { noteExceeded(env); break; }
-          const b = evaluate(n.props.of && n.props.of.k === 'expr' ? n.props.of.e : { k: 'path', p: [] }, scope, env.ctx) as { id?: unknown; type?: unknown } | undefined;
+            const b = evaluate(n.props.of && n.props.of.k === 'expr' ? n.props.of.e : { k: 'path', p: [] }, scope, env.ctx) as { id?: unknown; type?: unknown } | undefined;
           if (typeof b !== 'object' || b === null) break;
           const def = typeof b.type === 'string' ? own(env.blocks, b.type) : undefined;
           if (!def) { env.diagnostics.push(err('SN4012', `block type '${toStr(b.type)}' is not in this theme`)); break; }
@@ -115,7 +111,6 @@ export function renderNodes(nodes: IRNode[], scope: Scope, env: Env): string {
         }
         const tag = env.registry.get(n.tag);
         if (!tag) { env.diagnostics.push(err('SN4005', `component ${n.tag} not available`)); break; }
-        if (!env.budget.node()) { noteExceeded(env); break; }
         const props: Record<string, unknown> = {};
         for (const [k, v] of Object.entries(n.props)) props[k] = resolveValue(v, scope, env);
         const id = `${env.ids.prefix ?? ''}c${++env.ids.n}`;
