@@ -1,5 +1,5 @@
 import { escapeAttr, escapeText, safeUrl, toStr, type HkTag, type TagRenderContext } from '@hekana/sneferu-core';
-import { px, responsiveCss } from './css';
+import { px, responsiveCss, safeImageSrc } from './css';
 import { passthrough } from './attrs';
 
 type Extra = { cls: string; attrs: string };
@@ -33,7 +33,7 @@ type ProductView = { title?: unknown; url?: unknown; price?: unknown; compare_at
 const card = (prod: ProductView, id: string, c: TagRenderContext, x: Extra = NONE) => {
   const url = safeUrl(toStr(prod.url) || '#');
   const img = typeof prod.image === 'object' && prod.image !== null ? toStr((prod.image as { url?: unknown }).url) : toStr(prod.image);
-  const imgHtml = img.startsWith('https://') || img.startsWith('/') ? `<img src="${escapeAttr(img)}" alt="${escapeAttr(toStr(prod.title))}" loading="lazy" decoding="async">` : '';
+  const imgHtml = safeImageSrc(img) ? `<img src="${escapeAttr(img)}" alt="${escapeAttr(toStr(prod.title))}" loading="lazy" decoding="async">` : '';
   return `<a class="sn-product-card${x.cls}"${x.attrs} href="${escapeAttr(url)}">${imgHtml}<span class="sn-title">${escapeText(toStr(prod.title))}</span>${priceHtml(`${id}-p`, prod.price, prod.compare_at, c)}</a>`;
 };
 
@@ -57,9 +57,8 @@ export const hkProductGrid: HkTag = {
     const limit = Math.min(48, Math.max(1, Number(p.limit) || 8));
     const s = `.sn-${c.id}`;
     const cols = (v: unknown) => { const n = Number(v); return Number.isInteger(n) && n >= 1 && n <= 6 ? `repeat(${n},minmax(0,1fr))` : null; };
-    const rules = responsiveCss(s, 'grid-template-columns', p.columns ?? 4, cols);
-    if (rules[0]) rules[0] = rules[0].replace(`${s}{`, `${s}{display:grid;gap:${px(16)};`);
-    rules.forEach(c.css);
+    c.css(`${s}{display:grid;gap:${px(16)}}`);
+    responsiveCss(s, 'grid-template-columns', p.columns ?? 4, cols).forEach(c.css);
     const x = passthrough(p);
     return `<div class="sn-${c.id}${x.cls}"${x.attrs}>${list.slice(0, limit).map((x, i) => card(x as ProductView, `${c.id}-${i}`, c)).join('')}</div>`;
   },

@@ -82,9 +82,9 @@ export const hkGrid: HkTag = {
     if (min) c.css(`${s}{display:grid;grid-template-columns:repeat(auto-fill,minmax(${min},1fr))}`);
     else {
       const cols = (v: unknown) => { const n = typeof v === 'number' ? v : Number(v); return Number.isInteger(n) && n >= 1 && n <= 12 ? `repeat(${n},minmax(0,1fr))` : null; };
-      const rules = responsiveCss(s, 'grid-template-columns', p.columns ?? 3, cols);
-      if (rules[0]) rules[0] = rules[0].replace(`${s}{`, `${s}{display:grid;`);
-      rules.forEach(c.css);
+      // display:grid is its own rule so the grid holds even when only tablet/mobile columns are valid
+      c.css(`${s}{display:grid}`);
+      responsiveCss(s, 'grid-template-columns', p.columns ?? 3, cols).forEach(c.css);
     }
     responsiveCss(s, 'gap', p.gap ?? 24, (v) => px(v, 160)).forEach(c.css);
     const x = passthrough(p);

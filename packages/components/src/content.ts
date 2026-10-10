@@ -1,5 +1,5 @@
 import { escapeAttr, escapeText, safeUrl, toStr, type HkTag } from '@hekana/sneferu-core';
-import { colorVar, oneOf, px, responsiveCss } from './css';
+import { colorVar, oneOf, px, responsiveCss, safeImageSrc } from './css';
 import { passthrough } from './attrs';
 
 const L = (ar: string, en: string) => ({ ar, en });
@@ -58,7 +58,7 @@ export const hkImage: HkTag = {
   allowedParents: '*', allowedChildren: [], responsive: [], bindable: '*', editor: ed('صورة', 'Image', 'media'),
   render(p, c) {
     const raw = typeof p.src === 'string' ? p.src : typeof p.src === 'object' && p.src !== null ? toStr((p.src as { url?: unknown }).url) : '';
-    if (!(raw.startsWith('https://') || raw.startsWith('/')) || safeUrl(raw) === '#') return '';
+    if (!safeImageSrc(raw)) return '';
     const s = `.sn-${c.id}`;
     c.css(`${s}{display:block;width:100%;height:auto;object-fit:${p.fit === 'contain' ? 'contain' : 'cover'}}`);
     const ar = ASPECT(p.aspectRatio); if (ar) c.css(`${s}{aspect-ratio:${ar}}`);
@@ -101,7 +101,7 @@ export const hkCard: HkTag = {
   render(p, c) {
     const s = `.sn-${c.id}`;
     const bg = colorVar(p.background); if (bg) c.css(`${s}{background:${bg}}`);
-    c.css(`${s}{border-radius:${px(p.radius ?? 12, 64)};position:relative;overflow:hidden}`);
+    c.css(`${s}{border-radius:${px(p.radius ?? 12, 64) ?? '12px'};position:relative;overflow:hidden}`);
     responsiveCss(s, 'padding', p.padding ?? 16, (v) => px(v, 96)).forEach(c.css);
     if (p.border === true) c.css(`${s}{border:1px solid color-mix(in srgb,var(--hk-color-text) 14%,transparent)}`);
     const sh = typeof p.shadow === 'string' ? SHADOW[p.shadow] : undefined; if (sh) c.css(`${s}{box-shadow:${sh}}`);

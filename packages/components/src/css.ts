@@ -1,3 +1,5 @@
+import { safeUrl } from '@hekana/sneferu-core';
+
 export const BP_MEDIA = { tablet: '@media (max-width:1023px)', mobile: '@media (max-width:639px)' } as const;
 
 export function px(v: unknown, max = 400): string | null {
@@ -24,3 +26,6 @@ export function responsiveCss(selector: string, prop: string, value: unknown, to
   }
   return out;
 }
+
+/** Image sources: https URLs or site-relative paths only; never protocol-relative (//host) or backslashes. */
+export const safeImageSrc = (raw: string): boolean => (raw.startsWith('https://') || (raw.startsWith('/') && !raw.startsWith('//'))) && safeUrl(raw) !== '#';

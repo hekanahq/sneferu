@@ -48,4 +48,23 @@ describe('content and commerce tags', () => {
       expect(html, name).not.toContain('onclick');
     }
   });
+  it('product grid keeps display:grid and gap when only breakpoint columns are valid (M2)', () => {
+    const { css } = render('hk-product-grid', { products: [], columns: { base: 'x', tablet: 2 } });
+    expect(css[0]).toBe('.sn-c1{display:grid;gap:16px}');
+    expect(css).toContain('@media (max-width:1023px){.sn-c1{grid-template-columns:repeat(2,minmax(0,1fr))}}');
+  });
+  it('card falls back to a 12px radius instead of printing null (M3)', () => {
+    for (const radius of ['abc', null, {}, NaN]) expect(render('hk-card', { radius }).css.join('')).toContain('border-radius:12px;');
+    expect(render('hk-card', { radius: 4 }).css.join('')).toContain('border-radius:4px;');
+    expect(render('hk-card', { radius: 'abc' }).css.join('')).not.toContain('null');
+  });
+  it('image and product-card images reject protocol-relative and backslash sources (M4)', () => {
+    for (const src of ['//evil.com/a.png', '/\\evil.com/a.png', 'http://x/a.png', 'javascript:x'])
+      expect(render('hk-image', { src }).html, src).toBe('');
+    for (const url of ['//evil.com/a.png', '/\\evil.com/a.png']) {
+      const { html } = render('hk-product-card', { product: { title: 'P', url: '/p', image: { url } } });
+      expect(html, url).not.toContain('<img');
+    }
+    expect(render('hk-product-card', { product: { title: 'P', url: '/p', image: '/a.png' } }).html).toContain('<img src="/a.png"');
+  });
 });
