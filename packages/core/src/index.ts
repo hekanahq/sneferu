@@ -3,3 +3,6 @@ export * from './version';
 export * from './ir';
 export * from './ir-validate';
 export * from './escape';
+export * from './fields';
+export * from './tags';
+export * from './registry';
