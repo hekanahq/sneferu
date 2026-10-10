@@ -1,0 +1,195 @@
+# 5. Styling and responsive design
+
+A theme is styled in three layers:
+
+1. **Design tokens** in `theme.json` become CSS variables.
+2. **Tag props** (`padding-y`, `columns`, `size`, `color`, …) generate scoped CSS
+   for each `hk-*` tag, with tablet and mobile variants.
+3. **Your stylesheet** in `assets/*.css` styles everything else.
+
+## Tokens → CSS variables
+
+```json
+"tokens": {
+  "colors": { "primary": "#111827", "secondary": "#1F2937", "accent": "#7C3AED",
+              "background": "#FFFFFF", "text": "#111827", "muted": "#6B7280" },
+  "layout": { "contentWidth": "1200px" }
+}
+```
+
+becomes one rule on the theme's root element:
+
+```css
+[data-hk-theme="my-theme"] {
+  --hk-color-primary: #111827;
+  --hk-color-secondary: #1F2937;
+  --hk-color-accent: #7C3AED;
+  --hk-color-background: #FFFFFF;
+  --hk-color-text: #111827;
+  --hk-color-muted: #6B7280;
+  --hk-content-width: 1200px;
+  --color-primary: var(--hk-color-primary);   /* also secondary, accent, background, text */
+  background: var(--hk-color-background);
+  color: var(--hk-color-text);
+}
+```
+
+| Token | Variable | Use |
+|---|---|---|
+| `colors.<key>` (key: lower-case letters, digits, `-`) | `--hk-color-<key>` | in CSS: `var(--hk-color-accent)`; in colour props and settings: `theme:accent` |
+| `layout.contentWidth` (`"1200px"`, 3-4 digits) | `--hk-content-width` | max width of `hk-section` content and `hk-container` (fallback 1280px) |
+
+Use tokens instead of hard-coded colours so one change in `theme.json` restyles
+the whole theme:
+
+```html
+<hk-section background="theme:primary">
+  <hk-heading text="{{ section.settings.title }}" color="theme:background" />
+</hk-section>
+```
+
+```css
+.promo-hero .sn-btn-solid { background: var(--hk-color-accent); color: var(--hk-color-background); }
+```
+
+A `color` setting (`"default": "theme:primary"`) lets the merchant pick either a
+token or a hex colour, and passes straight into a colour prop:
+`background="{{ section.settings.background }}"`.
+
+## Your CSS: `assets/*.css`
+
+Every `.css` file at the top level of `assets/` is the theme stylesheet. It is
+loaded after the tokens and after the tags' own CSS, so with equal specificity
+your rules win.
+
+Write styles for:
+
+- your own markup (`header`, `.logo`, `.tier-price`);
+- classes you put on `hk-*` tags with `class="…"`;
+- the stable hooks the tags render:
+
+| Tag | Stable classes |
+|---|---|
+| `hk-button` | `sn-btn`, `sn-btn-solid` / `sn-btn-outline` / `sn-btn-ghost` |
+| `hk-card` | `sn-card` |
+| `hk-badge` | `sn-badge`, `sn-badge-accent` / `-neutral` / `-success` / `-warning` |
+| `hk-price` | `sn-price`, `sn-now`, `sn-was` |
+| `hk-product-card`, `hk-product-grid` items | `sn-product-card`, `sn-title`, plus `sn-price` |
+| `hk-grid` | `sn-grid` |
+| `hk-section` | inner wrapper `sn-inner` |
+
+Do not target the numbered classes (`sn-c3`, `sn-s-hero-c2`): they depend on
+position and change when the page changes.
+
+`hk-button`, `hk-badge` and the product card come with structure but no visual
+style, so every theme needs base rules for them. A starting point:
+
+```css
+.sn-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px;
+  padding-inline: 20px; border-radius: 10px; font-weight: 600; text-decoration: none;
+  border: 2px solid var(--hk-color-accent); }
+.sn-btn-solid { background: var(--hk-color-accent); color: var(--hk-color-background); }
+.sn-btn-outline { background: transparent; color: var(--hk-color-accent); }
+.sn-btn-ghost { background: transparent; border-color: transparent; color: inherit; }
+.sn-badge { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 13px; font-weight: 600; }
+.sn-badge-accent { background: var(--hk-color-accent); color: var(--hk-color-background); }
+.sn-badge-neutral { background: color-mix(in srgb, var(--hk-color-text) 10%, transparent); }
+.sn-product-card { display: flex; flex-direction: column; gap: 8px; color: inherit; text-decoration: none; }
+.sn-product-card img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 12px; }
+.sn-was { opacity: .6; margin-inline-start: 6px; }
+```
+
+Keep touch targets at least 44px high on mobile (the `min-height` above).
+
+What CSS cannot do in a theme:
+
+- `<style>` and `<link>` elements are not allowed (SN2001); CSS lives in `assets/`.
+- A `style="…"` attribute may be static on plain HTML elements, but never contain
+  `{{ }}` (SN2009). `style` is not accepted on `hk-*` tags (SN2004): use props or
+  a class.
+- In the dev preview the stylesheet is inlined in the page, so a relative `url()`
+  inside CSS does not point at `assets/`. Use `asset_url()` in templates for
+  images (`<img src="{{ asset_url('logo.svg') }}" alt="">`) and fonts that are
+  already available to the page.
+- All theme CSS together may be at most 512 KB.
+
+## Responsive props
+
+Breakpoints are desktop-first:
+
+| Prefix | Applies at |
+|---|---|
+| none | every width (the base value) |
+| `tablet-` | 1023px and below |
+| `mobile-` | 639px and below |
+
+A prop marked responsive in the [tag reference](../reference/tags.md) takes the
+prefixes:
+
+```html
+<hk-grid columns="4" tablet-columns="2" mobile-columns="1" gap="24" mobile-gap="12">…</hk-grid>
+<hk-heading text="{{ section.settings.title }}" size="56" tablet-size="40" mobile-size="28" />
+<hk-section padding-y="96" mobile-padding-y="48">…</hk-section>
+<hk-stack direction="row" mobile-direction="column" gap="16">…</hk-stack>
+```
+
+Responsive props today: `hk-section` `padding-y`; `hk-container` `padding-x`;
+`hk-stack` `direction`, `gap`; `hk-grid` `columns`, `gap`; `hk-heading` and
+`hk-text` `size`; `hk-card` `padding`; `hk-product-grid` `columns`. A prefix on
+any other prop is SN2004 (with a "did you mean" hint).
+
+For anything else, use a media query with the same widths in your CSS:
+
+```css
+@media (max-width: 639px) { .bento-wide { grid-column: auto; } }
+```
+
+## Right-to-left and Arabic first
+
+Hekana stores are Arabic first. The default page is Arabic and right-to-left; the
+English page is left-to-right. The renderer sets both on the theme root:
+
+```html
+<div data-hk-theme="my-theme" dir="rtl" lang="ar">…</div>
+```
+
+Rules that keep one stylesheet correct in both directions:
+
+| Do | Instead of |
+|---|---|
+| `margin-inline-start`, `padding-inline`, `inset-inline-end` | `margin-left`, `padding-right`, `right` |
+| `text-align: start` / `end` (and `align="start"` on tags) | `text-align: left` / `right` |
+| `border-inline-start` | `border-left` |
+| flex and grid (they follow `dir` automatically) | floats and absolute left/right offsets |
+| `[dir="rtl"] .arrow { transform: scaleX(-1); }` for icons that point | a separate RTL stylesheet |
+
+- The `hk-*` tags already use logical properties (`margin-inline`,
+  `padding-inline`, `padding-block`) and `start`/`end` alignment.
+- `dir` and `locale` are available in templates (`{{ dir }}`, `{% if locale == 'en' %}`)
+  for the rare case where markup must differ.
+- Arabic text needs more line height than Latin: 1.6-1.8 for body text is a good
+  default. Do not use letter-spacing on Arabic.
+- Test both: `http://127.0.0.1:4100` and `http://127.0.0.1:4100/?locale=en`.
+- Write numbers with Western digits (`1,290.00 ج.م`), as `money` and `date` do.
+
+## Passthrough attributes on `hk-*` tags
+
+Every `hk-*` tag accepts these attributes and writes them on its root element:
+
+| Attribute | Behaviour |
+|---|---|
+| `class` | added after the tag's own classes, reduced to letters, digits, `-`, `_` |
+| `id` | one safe token |
+| `role`, `title` | written as given (escaped) |
+| `data-*` | written as given (escaped); `data-hk-*` is reserved for the platform and dropped |
+| `aria-*` | written as given (escaped) |
+
+They are the main styling hook for tags:
+
+```html
+<hk-card class="tier" data-best="{{ best }}" aria-label="{{ name }}">…</hk-card>
+```
+
+```css
+.tier[data-best="true"] { outline: 2px solid var(--hk-color-accent); }
+```

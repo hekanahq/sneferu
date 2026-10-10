@@ -1,0 +1,131 @@
+# 6. Security and limits
+
+A theme is untrusted input that runs on every store that installs it. Sneferu
+is built so that a theme **cannot** run code, read data it was not given, or
+make one page slow for everyone. The compiler enforces the rules below, and the
+runtime checks the compiled artifact again before rendering it (SN9xxx), so a
+hand-edited artifact cannot bypass them.
+
+## Elements
+
+Plain HTML elements are checked against an **allow-list**. Anything not on it is
+SN2001, including custom elements.
+
+| Group | Allowed |
+|---|---|
+| Sectioning and grouping | `address article aside blockquote dd details div dl dt figcaption figure footer h1 h2 h3 h4 h5 h6 header hgroup hr li main menu nav ol p pre search section summary ul` |
+| Text | `a abbr b bdi bdo br cite code data del dfn em i ins kbd mark meter progress q rp rt ruby s samp small span strong sub sup time u var wbr` |
+| Media | `audio img picture source track video` |
+| Tables | `caption col colgroup table tbody td tfoot th thead tr` |
+| SVG (presentation only) | `svg g path circle ellipse line polyline polygon rect text tspan defs lineargradient radialgradient stop clippath mask pattern symbol use title desc image` |
+
+Never allowed: `script`, `style`, `iframe`, `object`, `embed`, `base`, `link`,
+`meta`, `form`, `animate`, `set`, `animatemotion`, `animatetransform`,
+`foreignobject`, `plaintext`, `xmp`, `noembed`, `noscript`, `frameset`, `frame`,
+`template`, `slot`, `portal`.
+
+Form controls (`button`, `input`, `select`, `textarea`) are not on the list.
+
+## What a theme cannot do (yet)
+
+| Not available | Instead |
+|---|---|
+| JavaScript: no `<script>`, no `on*` handlers | Interactive parts come from platform tags. `.js` files are accepted in `assets/` but nothing can load them in this release |
+| Forms and inputs | `hk-button` for links that look like buttons. Cart, checkout and search tags arrive in later releases |
+| Inline `<style>` or `<link rel="stylesheet">` | `assets/*.css` |
+| Dynamic `style="…{{ }}…"` (SN2009) | classes, `data-*` + CSS, tokens, tag props |
+| Embeds (`iframe`, `object`, `embed`) | none |
+| Reading arbitrary data | only the scope in [chapter 4](04-data-and-expressions.md) |
+
+## Attributes
+
+Rejected (SN2002):
+
+- every attribute starting with `on` (`onclick`, `onload`, `onerror`, …);
+- `srcdoc`, `formaction`, `attributename`, `xml:base`;
+- any name outside `[a-z_:][a-z0-9_:.-]*`.
+
+Also rejected: `style` containing `{{ }}` (SN2009).
+
+## URLs
+
+URL attributes are `href`, every `*:href` (`xlink:href`), `src`, `action`,
+`poster`, `srcset` and `formaction`.
+
+| Allowed | Rejected |
+|---|---|
+| `https://…` | `http://…` |
+| `mailto:…` | `javascript:`, `vbscript:`, `data:` and every other scheme |
+| `tel:…` | protocol-relative `//host/…` |
+| relative: `/products`, `#reviews`, `?page=2`, `sale` | anything containing `\` or control characters |
+
+- A **static** unsafe URL is a compile error (SN2010).
+- A **dynamic** URL (`href="{{ section.settings.link }}"`) is checked when the
+  page renders; an unsafe value becomes `#`.
+- Images in `hk-image` and product cards must be `https://` or start with `/`;
+  anything else renders no image.
+
+```html
+<a href="https://wa.me/201001234567">واتساب</a>   <!-- ok -->
+<a href="tel:01001234567">اتصل بينا</a>              <!-- ok -->
+<a href="http://example.com">…</a>                  <!-- SN2010 -->
+```
+
+## Escaping
+
+All `{{ }}` output is escaped for its position (text, attribute, URL), and
+dynamic `class`/`id` values are reduced to safe tokens. Merchant settings and
+product data can never inject markup. Comments `<!-- -->` in templates are
+dropped at compile time.
+
+## Render budgets
+
+Every page render is metered. The limits are fixed by the platform:
+
+| Budget | Limit |
+|---|---|
+| Rendered nodes per page (text, markup, tags, `if`, `for`, `render`, …) | 20,000 |
+| Loop iterations per page, all loops | 2,000 |
+| Output size per page | 1,500,000 characters |
+| Loop `limit:` | 1-250, default 50 (SN2007 outside) |
+| Snippet and block include depth | 8 (SN4002) |
+| Element and directive nesting | 64 (SN1108 at compile time, SN4003 at render) |
+
+What happens when a budget runs out:
+
+- Each section renders against what is left of the page budget. If a section
+  runs out, **that section is replaced by `<!-- section <id> unavailable -->`**,
+  SN4001 is reported once, and the layout and the sections before it are kept.
+- Sections after the point where the page budget is spent are also replaced.
+- Include depth and nesting beyond the limit drop the deeper part (SN4002, SN4003,
+  each reported once per page).
+
+To stay well inside the budget: give every loop an explicit, small `limit:`,
+avoid loops inside loops, and use `hk-product-grid` (one tag) rather than
+rebuilding a grid from many small tags.
+
+## Include cycles
+
+A snippet may not render itself, directly or through others:
+
+```
+snippets/a.sneferu:  {% render 'b' %}
+snippets/b.sneferu:  {% render 'a' %}
+```
+
+is a compile error: `SN3027 snippet include cycle: a → b → a`. Rendering a
+snippet that does not exist is SN2008.
+
+## Diagnostics
+
+Every problem has a stable code; the series tells you the stage:
+
+| Series | Stage |
+|---|---|
+| SN1xxx | parsing |
+| SN2xxx | template rules (elements, attributes, tags, URLs) |
+| SN3xxx | files, manifest, compile |
+| SN4xxx | rendering (the page still renders; the bad part is dropped) |
+| SN9xxx | artifact integrity (rebuild) |
+
+The full list with fixes: [diagnostics.md](../diagnostics.md).

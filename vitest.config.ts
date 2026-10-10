@@ -6,5 +6,5 @@ export default defineConfig({
     '@hekana/sneferu-core': src('core'), '@hekana/sneferu-compiler': src('compiler'),
     '@hekana/sneferu-runtime': src('runtime'), '@hekana/sneferu-components': src('components'),
   } },
-  test: { include: ['packages/*/src/**/*.test.ts'] },
+  test: { include: ['packages/*/src/**/*.test.ts', 'scripts/**/*.test.ts'] },
 });

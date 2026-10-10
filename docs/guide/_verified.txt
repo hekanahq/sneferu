@@ -1,0 +1,43 @@
+Sneferu developer guide: validation record, 2026-10-10 (sneferu f5d2e0c, CLI built from this repo)
+
+Each cookbook recipe (docs/guide/08-cookbook.md) was placed in a fresh copy of the starter theme
+(node packages/sneferu/dist/cli.js init <dir>) and validated:
+
+# recipe (a) promo-hero
+$ node packages/sneferu/dist/cli.js validate /tmp/recipe-a-promo-hero
+✔ theme recipe-a-promo-hero@0.1.0 is valid
+exit 0
+
+# recipe (b) pricing
+$ node packages/sneferu/dist/cli.js validate /tmp/recipe-b-pricing
+✔ theme recipe-b-pricing@0.1.0 is valid
+exit 0
+
+# recipe (c) product-grid
+$ node packages/sneferu/dist/cli.js validate /tmp/recipe-c-product-grid
+✔ theme recipe-c-product-grid@0.1.0 is valid
+exit 0
+
+# recipe (d) bento
+$ node packages/sneferu/dist/cli.js validate /tmp/recipe-d-bento
+✔ theme recipe-d-bento@0.1.0 is valid
+exit 0
+
+# all four recipes together, rebuilt from the code blocks in docs/guide/08-cookbook.md
+$ node packages/sneferu/dist/cli.js validate /tmp/snf-fromdocs
+✔ theme snf-fromdocs@0.1.0 is valid
+exit 0
+
+# examples from chapters 2-6 (theme.json from chapter 2, field types, blocks, expressions, filters, URLs) in one theme
+$ node packages/sneferu/dist/cli.js validate /tmp/snf-cookbook
+✔ theme nile-fashion@1.0.0 is valid
+exit 0
+
+# documented error cases (chapter 1, 5, 6) produce the documented codes
+$ node packages/sneferu/dist/cli.js validate /tmp/neg
+sections/bad.sneferu:1:4 error SN2010 unsafe URL in href
+sections/bad.sneferu:1:47 error SN2004 unknown property "colour" on <hk-heading>. Did you mean "color"?
+sections/bad.sneferu:1:75 error SN2004 unknown property "style" on <hk-section>.
+snippets/a.sneferu error SN3027 snippet include cycle: a → b → a
+✖ 4 errors, 0 warnings
+exit 1

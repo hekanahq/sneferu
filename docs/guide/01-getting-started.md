@@ -1,0 +1,125 @@
+# 1. Getting started
+
+Sneferu is the language and SDK for Hekana store themes. A theme is a folder of
+HTML-like `.sneferu` templates with `hk-*` tags, a `theme.json` manifest, locale
+files and CSS. The CLI checks it, previews it with sample data and compiles it to
+one JSON artifact that Hekana renders.
+
+## Prerequisites
+
+| Need | Version |
+|---|---|
+| Node.js | 20 or newer (`node -v`) |
+| pnpm | 9 (only when running the CLI from a clone, see below) |
+| An editor | any; `.sneferu` files are HTML, so HTML highlighting works |
+
+## Create a theme
+
+```bash
+npx @hekana/sneferu init my-theme
+cd my-theme
+```
+
+`init` copies the starter theme into `my-theme/` and sets `theme.json` `id` from
+the folder name (`my-theme`). It refuses a non-empty folder unless you pass
+`--force`.
+
+> **The npm package is not published yet.** Until it is, run the CLI from a clone
+> of the SDK repository:
+>
+> ```bash
+> git clone <sneferu repo> sneferu && cd sneferu
+> pnpm install && pnpm build
+> node packages/sneferu/dist/cli.js init ~/themes/my-theme
+> node packages/sneferu/dist/cli.js dev ~/themes/my-theme
+> ```
+>
+> Every `npx @hekana/sneferu <command>` in this guide is
+> `node packages/sneferu/dist/cli.js <command> <theme folder>` from the clone.
+> The binary is also installed as `sneferu` and `snf` once the package is published.
+
+## Preview: `dev`
+
+```bash
+npx @hekana/sneferu dev            # current folder
+npx @hekana/sneferu dev ./my-theme --port 4200
+```
+
+| What | Detail |
+|---|---|
+| Address | `http://127.0.0.1:4100` (local only; `--port` changes the port) |
+| Language | Arabic, right-to-left, by default. Add `?locale=en` for English, left-to-right |
+| Other templates | `http://127.0.0.1:4100/__template/<name>` renders `templates/<name>.sneferu` |
+| Live reload | Saving any file recompiles and reloads the open page |
+| Errors | A theme that does not compile shows the diagnostics list instead of the page |
+| CSS | Every `assets/*.css` file (top level of `assets/`) is inlined after the token variables |
+| Assets | `asset_url('logo.svg')` points at `/__assets/logo.svg` |
+
+The preview uses sample data, not a real store:
+
+| Data | Sample value |
+|---|---|
+| `store.name` | `متجر تجريبي` (Arabic) / `Sample store` (English) |
+| Currency | EGP, so `money` prints `520.00 ج.م` / `EGP 520.00` |
+| `collection('featured')` | 6 products with `title`, `url`, `price` (piastres), `compare_at`, `image.url` |
+| `product('sample-1')` | the first of those products |
+| Theme settings | every setting at its `default` |
+| Sections | the default sections listed in the template's `<hk-schema>` (see [chapter 3](03-sections-and-blocks.md)) |
+
+Any other collection is empty and any other product is nothing, which is a good
+way to check your empty states.
+
+## Check: `validate`
+
+```bash
+npx @hekana/sneferu validate
+```
+
+```
+✔ theme my-theme@0.1.0 is valid
+```
+
+or, with problems, one line per diagnostic and a non-zero exit code:
+
+```
+sections/hero.sneferu:3:5 error SN2004 unknown property "colour" on <hk-heading>. Did you mean "color"?
+✖ 1 error, 0 warnings
+```
+
+Format: `file:line:col severity CODE message`. Every code is listed in
+[diagnostics.md](../diagnostics.md). `validate` exits `0` when valid and `1` when
+not, so it can gate CI.
+
+## Compile: `build`
+
+```bash
+npx @hekana/sneferu build            # → dist/my-theme-0.1.0.sneferu.json
+npx @hekana/sneferu build --out out  # another output folder
+```
+
+`build` runs the same checks as `validate`, writes
+`<out>/<id>-<version>.sneferu.json` (the artifact) and copies `assets/` to
+`<out>/assets/`. It prints the artifact hash. You do not upload this file:
+`sneferu push` sends the source and Hekana compiles it itself (see
+[chapter 7](07-publishing.md)).
+
+## Commands
+
+| Command | Arguments | Options |
+|---|---|---|
+| `init [dir]` | folder to create, default `my-theme` | `--force` write into a non-empty folder |
+| `dev [dir]` | theme folder, default `.` | `--port <n>` default `4100` |
+| `validate [dir]` | theme folder, default `.` | |
+| `build [dir]` | theme folder, default `.` | `--out <dir>` default `dist` |
+| `push [dir]` | theme folder, default `.` | `--package <slug>` required; env `HEKANA_API_URL`, `HEKANA_TOKEN` |
+
+## Next
+
+1. [Theme structure](02-theme-structure.md): what every file does.
+2. [Sections and blocks](03-sections-and-blocks.md): the parts merchants edit.
+3. [Data and expressions](04-data-and-expressions.md): `{{ }}`, filters, loops.
+4. [Styling and responsive](05-styling-and-responsive.md): tokens, CSS, RTL.
+5. [Security and limits](06-security-and-limits.md): what a theme cannot do.
+6. [Publishing](07-publishing.md): `sneferu push`.
+7. [Cookbook](08-cookbook.md): four complete sections.
+8. [Tag reference](../reference/tags.md): every `hk-*` tag and prop.

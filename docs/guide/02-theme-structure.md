@@ -1,0 +1,146 @@
+# 2. Theme structure
+
+```
+my-theme/
+├── theme.json              manifest (required)
+├── layout/
+│   └── theme.sneferu       page frame (required)
+├── templates/
+│   └── index.sneferu       home page (required); one file per page type
+├── sections/*.sneferu      page parts merchants add, reorder and configure
+├── blocks/*.sneferu        repeatable items inside a section
+├── snippets/*.sneferu      partials for {% render %}
+├── assets/                 css, js, images, fonts
+├── locales/
+│   ├── ar.json             UI strings, Arabic
+│   └── en.json             UI strings, English
+└── migrations/*.json       settings migrations (reserved)
+```
+
+`node_modules/`, `dist/`, `.git/`, `.sneferu-dev/` and `.DS_Store` are ignored by
+the CLI. Anything else in the folder is part of the theme and is checked.
+
+## Files and what they are for
+
+| Path | Role | Notes |
+|---|---|---|
+| `theme.json` | Identity, version, design tokens, theme-wide settings | See the field table below |
+| `layout/theme.sneferu` | Wraps every page: header, footer, and `<hk-slot name="content" />` where the page goes | Exactly this file name |
+| `templates/<name>.sneferu` | A page type. Usually `<hk-sections />` plus a `<hk-schema>` listing the default sections | `index` is required. On the platform only `index` (route `/`) is served during phase 1b |
+| `sections/<type>.sneferu` | A section type. File name = type (`sections/hero.sneferu` is type `hero`). Has a `<hk-schema>` with `name` and `settings` | Rendered inside `<div data-hk-section="<id>">` |
+| `blocks/<type>.sneferu` | An item a merchant can add inside a section (a quote, a slide, a feature) | Rendered inside `<div data-hk-block="<id>">` |
+| `snippets/<name>.sneferu` | A reusable partial, no schema | `{% render 'name', key: value %}` |
+| `assets/` | CSS, JS, images, fonts: `.css .js .png .jpg .jpeg .webp .avif .gif .svg .woff .woff2 .ttf .otf .ico` | The only folder that may have sub-folders. `assets/*.css` is the theme stylesheet |
+| `locales/<xx>.json` | Flat `{ "key": "text" }` maps, values strings only | Used by `t('key')` and `\| t` |
+| `migrations/*.json` | Settings migrations between theme versions | Accepted, not used yet |
+
+A minimal layout:
+
+```html
+<header class="site-header">
+  <hk-container><a href="/" class="logo">{{ store.name }}</a></hk-container>
+</header>
+<main><hk-slot name="content" /></main>
+<footer class="site-footer">
+  <hk-container><hk-text text="{{ store.name }}" size="14" /></hk-container>
+</footer>
+```
+
+A template:
+
+```html
+<hk-sections />
+<hk-schema>{"sections":[
+  {"type":"hero","settings":{"title":"أهلًا بيك"}},
+  {"type":"featured"}
+]}</hk-schema>
+```
+
+`<hk-slot>` and `<hk-sections />` are allowed only in the layout and in
+templates (SN2011).
+
+## theme.json
+
+```json
+{
+  "id": "nile-fashion",
+  "name": { "ar": "نيل فاشون", "en": "Nile Fashion" },
+  "description": { "ar": "قالب لمتاجر الملابس", "en": "A theme for clothing stores" },
+  "version": "1.0.0",
+  "author": "Hekana",
+  "category": "fashion",
+  "engine": "hk2",
+  "engineCompatibility": "^2.0.0",
+  "defaultLocale": "ar",
+  "locales": ["ar", "en"],
+  "settings": {
+    "accent": { "type": "color", "label": { "ar": "لون مميز", "en": "Accent" }, "default": "#7C3AED" }
+  },
+  "tokens": {
+    "colors": {
+      "primary": "#111827", "secondary": "#1F2937", "accent": "#7C3AED",
+      "background": "#FFFFFF", "text": "#111827", "muted": "#6B7280"
+    },
+    "layout": { "contentWidth": "1200px" }
+  }
+}
+```
+
+| Field | Required | Rule | Error |
+|---|---|---|---|
+| `id` | yes | 3-41 characters, lower-case letters, digits, `-`, starts with a letter. Equals the package slug you push to | SN3012 |
+| `name` | yes | `{ "ar": "…", "en": "…" }` | SN3013 |
+| `description` | yes | `{ "ar": "…", "en": "…" }` | SN3016 |
+| `version` | yes | `x.y.z`. Bump it for every push; a pushed version cannot be replaced | SN3014 |
+| `author` | yes | non-empty string | SN3015 |
+| `category` | yes | non-empty string (`general`, `fashion`, `electronics`, …) | SN3017 |
+| `engine` | yes | exactly `"hk2"` | SN3010 |
+| `engineCompatibility` | yes | `^2.0.0` or an exact version; must include the current engine 2.0.0 | SN3011 |
+| `defaultLocale` | yes | `"ar"` or `"en"`. Use `"ar"`: Hekana stores are Arabic-first | SN3018 |
+| `locales` | yes | array that includes `defaultLocale`, e.g. `["ar", "en"]` | SN3018 |
+| `settings` | yes | object of fields (may be `{}`), same field format as sections. Merchants edit these for the whole theme; read them as `settings.accent` or `settings('accent')` | SN3021 |
+| `tokens.colors` | yes | `primary`, `secondary`, `accent`, `background`, `text` as `#RRGGBB`. Extra keys (`muted`, `border`, …) are allowed | SN3019 |
+| `tokens.layout.contentWidth` | no | `"<3-4 digits>px"`, e.g. `"1200px"`; becomes `--hk-content-width` | ignored if malformed |
+| `tokens.fonts`, `tokens.radius` | no | accepted in the manifest, not turned into CSS yet | |
+| `previews` | no | array of preview image names | |
+
+How tokens become CSS variables is in [chapter 5](05-styling-and-responsive.md).
+
+## Locales
+
+```json
+// locales/ar.json
+{ "shop_now": "تسوق دلوقتي", "view_all": "عرض الكل" }
+```
+
+```json
+// locales/en.json
+{ "shop_now": "Shop now", "view_all": "View all" }
+```
+
+- Keys are flat; every value must be a string (SN3025). No nesting, no plurals.
+- A missing key falls back to the default locale's file, then to the key itself.
+- Put interface words (buttons, empty states, labels) in locales. Put content the
+  merchant should change (titles, descriptions) in section settings instead.
+
+## Names and paths
+
+- File and folder names: lower-case letters, digits, `.`, `_`, `-`; must start
+  with a letter or digit. No spaces, upper case, `..`, absolute paths,
+  backslashes or symlinks (SN3002).
+- Only the folders above, one level deep (except `assets/`), with the listed
+  extensions (SN3003). `sections/hero/hero.sneferu` is rejected.
+- Every text file must be UTF-8 (SN3022).
+
+## Size limits
+
+| Limit | Value | Error |
+|---|---|---|
+| Files per theme | 400 | SN3005 |
+| Whole theme | 25 MB | SN3006 |
+| One asset | 2 MB | SN3007 |
+| One template (`.sneferu`) | 300 KB | SN3008 |
+| All `assets/*.css` together (checked by the platform on push) | 512 KB | `HK2_CSS_TOO_LARGE` |
+
+Compress images before adding them (WebP or AVIF), and prefer the platform's
+product images over bundled photos.

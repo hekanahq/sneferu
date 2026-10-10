@@ -10,6 +10,24 @@ artifact and previewed locally.
     npx @hekana/sneferu validate
     npx @hekana/sneferu build      # dist/<id>-<version>.sneferu.json
 
-Commands: `init`, `dev`, `validate`, `build`. `push` arrives with the platform release.
+Commands: `init`, `dev`, `validate`, `build`, `push` (admin only during phase 1b).
 
-Docs: docs/language.md · docs/diagnostics.md
+The npm package is not published yet. From a clone: `pnpm install && pnpm build`,
+then `node packages/sneferu/dist/cli.js <command> <theme folder>`.
+
+## Developer guide
+
+1. [Getting started](docs/guide/01-getting-started.md): install, `init`, `dev`, `validate`, `build`
+2. [Theme structure](docs/guide/02-theme-structure.md): every folder and file, `theme.json`, limits
+3. [Sections and blocks](docs/guide/03-sections-and-blocks.md): `<hk-schema>`, field types, settings coercion, blocks
+4. [Data and expressions](docs/guide/04-data-and-expressions.md): scope, lookups, filters, truthiness, loops
+5. [Styling and responsive](docs/guide/05-styling-and-responsive.md): tokens, theme CSS, breakpoints, RTL
+6. [Security and limits](docs/guide/06-security-and-limits.md): allow-list, URLs, render budgets
+7. [Publishing](docs/guide/07-publishing.md): `sneferu push`, versions, install and publish
+8. [Cookbook](docs/guide/08-cookbook.md): hero, pricing tiers, product grid, bento grid
+
+## Reference
+
+- [Tag reference](docs/reference/tags.md): every `hk-*` tag and prop (generated: `pnpm docs:tags`)
+- [Language reference](docs/language.md): grammar, directives, scope, filters
+- [Diagnostics](docs/diagnostics.md): every SN code and its fix
