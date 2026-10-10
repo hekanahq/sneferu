@@ -39,6 +39,10 @@ Notes:
 
 - Strings use `'single'` or `"double"` quotes. There is no arithmetic, no assignment and no method calls (`a.b()` is rejected).
 - Comparison operators `>`, `<`, `>=`, `<=` are true only when both sides are numbers. `==` and `!=` are strict.
+- Truthiness (in `{% if %}`, `{% elsif %}`, `and`, `or`, `not`): `nil`, `false`, `0`, an empty string `''` and an empty array `[]` are false; everything else (including `{}` and `'0'`) is true. `{% if collection('x').products %}` is therefore false for an empty collection.
+- `{% else %}` may appear once per `{% if %}`, after every `{% elsif %}` (SN1109 otherwise).
+- `render` arguments are separated by commas outside quotes and parentheses, so `{% render 'tag', label: 'a, b' %}` passes one string.
+- Element and directive nesting is limited to 64 levels (SN1108).
 - Missing data never throws: it evaluates to nothing and renders as an empty string. Properties named `__proto__`, `prototype` and `constructor` are always undefined, and only own properties are read.
 - `{{ }}` output is escaped for its position: text, attribute, or URL (URLs go through a safe-URL check, so `javascript:` becomes `#`).
 - An attribute may mix text and expressions: `class="card {{ section.settings.tone }}"`.
@@ -57,7 +61,7 @@ Notes:
 
 Loops: the default limit is 50 iterations, the maximum is 250. A limit below 1 or above 250 is an error (SN2007). A page may run at most 2,000 loop iterations in total.
 
-Snippets: `{% render %}` may nest up to 8 deep.
+Snippets: `{% render %}` may nest up to 8 deep. Snippets may not include each other in a cycle (`a` renders `b`, `b` renders `a`, or `a` renders itself): that is a compile error (SN3027, `snippet include cycle: a → b → a`). Every `render`, `if`, `for`, slot and component counts against the page's node budget, so wide fan-out (a snippet rendering another several times, several levels deep) stops at the budget instead of growing exponentially.
 
 ### Blocks
 
@@ -67,14 +71,14 @@ A section lists its blocks with a loop over `section.blocks` and renders each wi
 {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
 ```
 
-Each block is rendered from `blocks/<type>.sneferu` with `block` in scope (`block.id`, `block.type`, `block.settings.*`) and wrapped in `<div data-hk-block="<id>">`.
+Each block is rendered from `blocks/<type>.sneferu` with `block` in scope (`block.id`, `block.type`, `block.settings.*`) and wrapped in `<div data-hk-block="<id>">`. A block whose type is not in the theme is skipped with SN4012.
 
 ## Scope
 
 | Name | Contains |
 |---|---|
 | `store` | the store (e.g. `store.name`) |
-| `settings` | the theme-level settings from `theme.json` |
+| `settings` | the theme-level settings declared in `theme.json` `settings`: defaults filled in and stored values coerced like section settings |
 | `section` | in sections: `section.id`, `section.type`, `section.settings.*`, `section.blocks` |
 | `block` | in blocks: `block.id`, `block.type`, `block.settings.*` |
 | `locale`, `dir` | `ar` / `en`, `rtl` / `ltr` |
@@ -89,7 +93,7 @@ Apply with `|`, arguments after `:` (`{{ title | truncate: 40 }}`).
 
 | Filter | Input | Args | Example |
 |---|---|---|---|
-| `money` | price in minor units (piastres) | none | `129000` gives `1,290.00 ج.م` (Arabic) or `EGP 1,290.00` (English) |
+| `money` | price in minor units (piastres, cents) | none | EGP: `129000` gives `1,290.00 ج.م` (Arabic) or `EGP 1,290.00` (English). Other store currencies use the ISO code: `1,290.00 USD` (Arabic, code after) or `USD 1,290.00` (English, code before). Always two decimals, Western digits, `,` grouping. |
 | `img` | image reference | optional width | `{{ p.image \| img: 400 }}` gives a sized image URL |
 | `date` | ISO date string | none | `2026-10-10` gives `10 October 2026` (English) or the Arabic date with Western numerals |
 | `t` | translation key | none | `{{ 'shop_now' \| t }}` gives the text from `locales/<locale>.json`, falling back to the default locale, then the key |
@@ -116,20 +120,28 @@ Called like functions with literal arguments only.
 
 A lookup may be followed by property access: `collection('featured').products`.
 
-## Forbidden in themes
+## Allowed elements and forbidden attributes
 
-Elements (SN2001): `script`, `style`, `iframe`, `object`, `embed`, `base`, `link`, `meta`, `form`.
+Plain elements are checked against an allow-list; anything not on it is an error (SN2001), including custom elements.
 
-Attributes (SN2002): `srcdoc`, `formaction`, and every attribute starting with `on` (`onclick`, ...).
+- Sectioning and grouping: `address article aside blockquote dd details div dl dt figcaption figure footer h1`–`h6 header hgroup hr li main menu nav ol p pre search section summary ul`
+- Text: `a abbr b bdi bdo br cite code data del dfn em i ins kbd mark meter progress q rp rt ruby s samp small span strong sub sup time u var wbr`
+- Media: `audio img picture source track video`
+- Tables: `caption col colgroup table tbody td tfoot th thead tr`
+- SVG presentation: `svg g path circle ellipse line polyline polygon rect text tspan defs lineargradient radialgradient stop clippath mask pattern symbol use title desc image`
+
+Never allowed (the message names these explicitly): `script`, `style`, `iframe`, `object`, `embed`, `base`, `link`, `meta`, `form`, `animate`, `set`, `animatemotion`, `animatetransform`, `foreignobject`, `plaintext`, `xmp`, `noembed`, `noscript`, `frameset`, `frame`, `template`, `slot`, `portal`. Form controls (`button`, `input`, `select`, `textarea`) are not on the list either; use `hk-button` for actions.
+
+Attributes (SN2002): `srcdoc`, `formaction`, `attributename`, `xml:base`, every attribute starting with `on` (`onclick`, ...), and names outside `[a-z_:][a-z0-9_:.-]*`.
 
 Also rejected:
 
 - `style="..."` containing `{{ }}` (SN2009). Use classes, tokens or component props.
 - A static URL that is unsafe (SN2010).
 
-URL attributes are `href`, `src`, `action`, `poster`, `srcset`. Their dynamic values are always passed through the safe-URL filter at render time. Styling lives in `assets/*.css` and in component props.
+URL attributes are `href`, every `*:href` (`xlink:href`, ...), `src`, `action`, `poster`, `srcset` and `formaction`. Their dynamic values are always passed through the safe-URL filter at render time, and static values must already be safe (SN2010). Styling lives in `assets/*.css` and in component props.
 
-Because a theme is untrusted input, the runtime re-validates the compiled artifact before rendering and refuses anything that does not pass (SN9xxx).
+Because a theme is untrusted input, the runtime re-validates the compiled artifact before rendering and refuses anything that does not pass (SN9xxx). That check also scans the static HTML chunks for anything the compiler never emits (a disallowed element, an `on*=` handler, `javascript:`/`vbscript:`/`data:text/html`, `attributename`, an unsafe URL, a tag left open). The compiler runs the same check on its own output, so a theme that compiles always renders; as a side effect, literal text such as `javascript:` in static copy is rejected (SN9014) — put such text in a setting or a translation instead.
 
 ## Limits
 
@@ -146,7 +158,7 @@ Because a theme is untrusted input, the runtime re-validates the compiled artifa
 | One asset | 2 MB |
 | One template | 300 KB |
 
-When a render budget is exceeded, the offending section degrades to a comment and the rest of the page is kept (SN4001).
+When a render budget is exceeded, the offending section degrades to a comment and the rest of the page is kept (SN4001). SN4002 and SN4003 are reported at most once per page.
 
 ## File roles and layout
 
@@ -158,7 +170,7 @@ sections/*.sneferu   reusable page parts with settings and blocks
 blocks/*.sneferu     items inside a section, rendered with hk-block
 snippets/*.sneferu   partials used with {% render %}
 assets/              css, js, images, fonts (png jpg webp avif gif svg woff woff2 ttf otf ico)
-locales/<xx>.json    flat key to text maps (ar.json, en.json)
+locales/<xx>.json    flat key to text maps (ar.json, en.json); every value must be a string (SN3025)
 migrations/*.json    settings migrations
 ```
 
@@ -190,7 +202,7 @@ Section example:
   "title":{"type":"text","label":{"ar":"العنوان","en":"Title"},"default":"Hello","maxLength":80}}}</hk-schema>
 ```
 
-A section or block schema needs `name` with both `ar` and `en` (SN3030). A section schema may also carry `blocks` (`{ "allowed": [...], "max": n }`) and `presets`. A rendered page wraps the whole output in `<div data-hk-theme="<id>" dir="rtl|ltr" lang="ar|en">`.
+A section or block schema needs `name` with both `ar` and `en` (SN3030). A section schema may also carry `blocks` (`{ "allowed": [...], "max": n }`) and `presets`. A rendered page wraps the whole output in `<div data-hk-theme="<id>" dir="rtl|ltr" lang="ar|en">`. `lang` is the render locale when it is two lower-case letters (otherwise the theme's default locale, otherwise `ar`), and `dir` is derived from it: `rtl` for `ar`, `ltr` for everything else. Components inside a section get ids `s-<sectionId>-c<n>` (CSS class `sn-s-<sectionId>-c<n>`), so re-rendering one section produces the same ids it had on the full page; components in the layout use `c<n>`.
 
 ## theme.json
 
@@ -226,4 +238,4 @@ A prop declared `responsive` accepts `tablet-` and `mobile-` prefixed variants; 
 
 ## Built-in tags
 
-Layout: `hk-section`, `hk-container`, `hk-stack`, `hk-grid`. Typography: `hk-heading`, `hk-text`, `hk-badge`. Media: `hk-image`. UI: `hk-button`, `hk-card`. Commerce: `hk-price`, `hk-product-card`, `hk-product-grid`. Passthrough attributes on tags: `class`, `id`, `role`, `title`, `data-*`, `aria-*`. Unknown tags and props get a "did you mean" hint (SN2003, SN2004); required props are checked (SN2005) and child rules enforced (SN2006).
+Layout: `hk-section`, `hk-container`, `hk-stack`, `hk-grid`. Typography: `hk-heading`, `hk-text`, `hk-badge`. Media: `hk-image`. UI: `hk-button`, `hk-card`. Commerce: `hk-price`, `hk-product-card`, `hk-product-grid`. Passthrough attributes on tags: `class`, `id`, `role`, `title`, `data-*`, `aria-*`. Every built-in tag writes them on its root element: `class` is appended to the component's own `sn-…` class (reduced to letters, digits, `-`, `_`), `id` becomes one such token, and `role`, `title`, `data-*`, `aria-*` are attribute-escaped. `data-hk-*` is reserved for the platform and dropped. Unknown tags and props get a "did you mean" hint (SN2003, SN2004); required props are checked (SN2005) and child rules enforced (SN2006).

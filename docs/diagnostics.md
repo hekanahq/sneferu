@@ -25,13 +25,15 @@ Every problem Sneferu reports has a stable code. The format is `file:line:col se
 | SN1105 | Invalid expression, `for` header or `render` argument | Check the grammar in language.md; `for` is `x in expr [limit:n]`, `render` is `'name', key: expr`. |
 | SN1106 | Unknown directive | Use `if`, `elsif`, `else`, `endif`, `for`, `endfor`, `render`. |
 | SN1107 | `<hk-schema>` is not valid JSON | Fix the JSON (double quotes, no trailing commas). |
+| SN1108 | Elements and `{% if %}` / `{% for %}` nested deeper than 64 levels; the deeper part is not compiled | Flatten the markup or move parts into snippets. |
+| SN1109 | A second `{% else %}`, or `{% elsif %}` after `{% else %}` | Keep one `{% else %}`, last in the `{% if %}`. |
 
 ## SN2xxx Template validation
 
 | Code | Meaning | Fix |
 |---|---|---|
-| SN2001 | Forbidden element (`script`, `style`, `iframe`, `object`, `embed`, `base`, `link`, `meta`, `form`) | Remove it; put styles in `assets/*.css`. |
-| SN2002 | Forbidden attribute (`on*` handlers, `srcdoc`, `formaction`) | Remove it. |
+| SN2001 | Element not on the allow-list (see language.md), for example `script`, `style`, `iframe`, `form`, SVG `animate`/`set`/`foreignobject`, form controls or custom elements | Remove it; put styles in `assets/*.css`; use `hk-*` tags. |
+| SN2002 | Forbidden attribute (`on*` handlers, `srcdoc`, `formaction`, `attributename`, `xml:base`) or an invalid attribute name | Remove it. |
 | SN2003 | Unknown `hk-*` tag | Check the spelling; the message suggests the closest tag. |
 | SN2004 | Unknown property on a tag, or `tablet-` / `mobile-` on a prop that is not responsive | Use a declared prop; only responsive props take prefixes. |
 | SN2005 | A required property is missing | Add the property. |
@@ -39,7 +41,7 @@ Every problem Sneferu reports has a stable code. The format is `file:line:col se
 | SN2007 | Loop limit outside 1..250 | Use a limit between 1 and 250. |
 | SN2008 | `{% render %}` names a snippet that does not exist | Create `snippets/<name>.sneferu` or fix the name. |
 | SN2009 | `style` attribute contains `{{ }}` | Use a class, a token or a component prop. |
-| SN2010 | Unsafe static URL (for example `javascript:`) | Only `https:`, `mailto:`, `tel:` or relative URLs are allowed; plain `http:`, protocol-relative `//…` and anything containing `\` are rejected. |
+| SN2010 | Unsafe static URL in a URL attribute (`href`, any `*:href` such as `xlink:href`, `src`, `poster`, `action`, `formaction`) | Only `https:`, `mailto:`, `tel:` or relative URLs are allowed; plain `http:`, protocol-relative `//…` and anything containing `\` are rejected. |
 | SN2011 | `<hk-slot>` used outside a layout or template | Move it into the layout or a template. |
 
 ## SN3xxx Package, manifest and compile
@@ -70,7 +72,8 @@ Every problem Sneferu reports has a stable code. The format is `file:line:col se
 | SN3022 | File is not valid UTF-8 | Re-save as UTF-8. |
 | SN3023 | `layout/theme.sneferu` is missing | Add the layout. |
 | SN3024 | `templates/index.sneferu` is missing | Add the index template. |
-| SN3025 | A locale file is not valid JSON | Fix the JSON. |
+| SN3025 | A locale file is not valid JSON, or is not a flat object whose values are all strings | Use `{ "key": "text", ... }` with string values only. |
+| SN3027 | Snippet include cycle, e.g. `snippet include cycle: a → b → a` | Break the cycle; a snippet may not (indirectly) render itself. |
 | SN3026 | A template's schema `sections` is malformed | Use an array of `{ "type": "...", "settings": {...} }`. |
 | SN3030 | A section or block `<hk-schema>` lacks `name` `{ar,en}` or has bad `settings` | Add both names; `settings` must be an object. |
 
@@ -81,13 +84,14 @@ These are reported by the runtime while rendering a page. The page still renders
 | Code | Meaning | Fix |
 |---|---|---|
 | SN4001 | Render budget exceeded (nodes, loop iterations or output size); the section degrades | Lower loop limits or simplify the section. |
-| SN4002 | Snippet or block include depth exceeded (8) | Remove recursive or deeply nested includes. |
-| SN4003 | Maximum nesting depth (64) reached | Flatten the markup. |
+| SN4002 | Snippet or block include depth exceeded (8); reported once per page | Remove recursive or deeply nested includes. |
+| SN4003 | Maximum nesting depth (64) reached; reported once per page | Flatten the markup. |
 | SN4004 | Snippet not found at render time | Create the snippet. |
 | SN4005 | Component not available in the registry | Use a tag the platform provides. |
 | SN4006 | A component failed while rendering | Check the props passed to it. |
 | SN4010 | Template not found | Create `templates/<name>.sneferu`. |
-| SN4011 | A page section's type does not exist in the theme | Add the section or remove it from the page. |
+| SN4011 | A page section's type does not exist in the theme, or the page section is malformed | Add the section or remove it from the page. |
+| SN4012 | A block's type does not exist in the theme; the block is skipped | Add `blocks/<type>.sneferu` or remove the block. |
 
 ## SN9xxx Artifact integrity
 
@@ -105,6 +109,8 @@ The runtime re-checks a compiled artifact before rendering. These indicate a cor
 | SN9008 | Malformed IR structure (expected array or object) | Rebuild. |
 | SN9009 | IR nested too deeply | Flatten the templates and rebuild. |
 | SN9010 | An `html` node is not a string | Rebuild. |
-| SN9011 | Element not allowed in the IR | Rebuild; the element is forbidden. |
-| SN9012 | Attribute not allowed in the IR (`on*`, `srcdoc`, `formaction`, dynamic `style`) | Rebuild. |
-| SN9013 | Invalid attribute sink, or a URL attribute without the url sink | Rebuild. |
+| SN9011 | Element not on the allow-list in the IR | Rebuild; the element is not allowed. |
+| SN9012 | Attribute not allowed in the IR (`on*`, `srcdoc`, `formaction`, `attributename`, `xml:base`, dynamic `style`) | Rebuild. |
+| SN9013 | Invalid attribute sink, or a URL attribute (`href`, `*:href`, `src`, …) without the url sink | Rebuild. |
+| SN9014 | A static HTML chunk contains something the compiler never emits: a disallowed element, an `on*=` handler, `javascript:` / `vbscript:` / `data:text/html`, `attributename`, an unsafe URL, or a tag left open. The compiler also reports this for its own output, e.g. literal `javascript:` in static text | Rebuild; if it comes from `sneferu build`, move that text into a setting or translation. |
+| SN9015 | The artifact's structure is malformed (missing or wrong-typed manifest, sections, schemas, fields, …), or rendering failed unexpectedly; the page is not rendered | Rebuild with `sneferu build`; report the message if it persists. |
