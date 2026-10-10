@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { TagRegistry, LIMITS, type IRNode } from '@hekana/sneferu-core';
+import { TagRegistry, LIMITS, type HkTag, type IRNode } from '@hekana/sneferu-core';
 import { renderPage, type ArtifactLike, type PageNode } from './page';
 import type { RenderContext } from './context';
 
@@ -156,5 +156,28 @@ describe('renderPage', () => {
     expect(at({ locale: 'fr' as never, dir: 'rtl' })).toMatch(/^<div data-hk-theme="esports" dir="ltr" lang="fr">/);
     expect(at({ locale: 'en" x="1' as never })).toMatch(/^<div data-hk-theme="esports" dir="rtl" lang="ar">/);
     expect(at({ locale: 'EN' as never }, { ...artifact, manifest: { id: 'esports', defaultLocale: 'en' } as never })).toMatch(/^<div data-hk-theme="esports" dir="ltr" lang="en">/);
+  });
+  it('scopes component ids to their section so one section re-renders identically (I9b)', () => {
+    const box: HkTag = { name: 'hk-box', version: 1, category: 'layout', props: {}, allowedParents: '*', allowedChildren: '*', responsive: [], bindable: '*',
+      editor: { label: { ar: 'ص', en: 'B' }, group: 'layout', insertable: true }, render: (_p, c) => { c.css(`.sn-${c.id}{x:1}`); return `<b class="sn-${c.id}"></b>`; } };
+    const registry = new TagRegistry().register(box);
+    const art: ArtifactLike = { ...artifact, layout: [{ k: 'comp', tag: 'hk-box', props: {}, children: [] }, { k: 'slot', name: 'content' }],
+      sections: { s: { ir: [{ k: 'comp', tag: 'hk-box', props: {}, children: [] }, { k: 'comp', tag: 'hk-box', props: {}, children: [] }], schema: { settings: {} } } } };
+    const all = renderPage(art, { template: 'index', ctx, registry, sections: [{ id: 'a', type: 's' }, { id: 'b 2"x', type: 's' }] });
+    expect(all.html).toContain('<div data-hk-section="a"><b class="sn-s-a-c1"></b><b class="sn-s-a-c2"></b></div>');
+    expect(all.html).toContain('<b class="sn-s-b-2-x-c1"></b><b class="sn-s-b-2-x-c2"></b>');
+    expect(all.html).toContain('<b class="sn-c1"></b>');
+    const one = renderPage(art, { template: 'index', ctx, registry, sections: [{ id: 'b 2"x', type: 's' }] });
+    expect(one.css).toContain('.sn-s-b-2-x-c1{x:1}');
+    expect(one.html).toContain('<b class="sn-s-b-2-x-c1"></b><b class="sn-s-b-2-x-c2"></b>');
+  });
+  it('applies theme-level settings defaults and coercion to ctx.settings (I9c)', () => {
+    const art: ArtifactLike = { ...artifact,
+      manifest: { id: 'esports', settings: { accent: { type: 'color', label: { ar: 'ل', en: 'A' }, default: '#7C3AED' }, cols: { type: 'range', label: { ar: 'ع', en: 'C' }, min: 1, max: 4, default: 3 } } },
+      sections: { s: { ir: [{ k: 'text', e: { k: 'lookup', fn: 'settings', args: [{ k: 'lit', v: 'accent' }] } }, { k: 'html', s: '|' }, { k: 'text', e: { k: 'path', p: ['settings', 'cols'] } }], schema: { settings: {} } } } };
+    const at = (settings: Record<string, unknown>) => renderPage(art, { template: 'index', ctx: { ...ctx, settings }, registry: new TagRegistry(), sections: [{ id: 'a', type: 's' }] }).html;
+    expect(at({})).toContain('>#7C3AED|3<');
+    expect(at({ accent: 'red;}body{x', cols: 99 })).toContain('>#7C3AED|4<');
+    expect(at({ accent: '#000000', cols: '2' })).toContain('>#000000|2<');
   });
 });

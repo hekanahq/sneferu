@@ -1,4 +1,4 @@
-import { coerceSetting, defaultsOf, err, escapeAttr, toStr, validateIR, type Diagnostic, type FieldSchema, type HkTag, type IRNode, type TagRegistry } from '@hekana/sneferu-core';
+import { coerceSetting, defaultsOf, err, escapeAttr, safeToken, toStr, validateIR, type Diagnostic, type FieldSchema, type HkTag, type IRNode, type TagRegistry } from '@hekana/sneferu-core';
 import type { RenderContext, Scope } from './context';
 import { Budget, own, renderNodes, type Env } from './render';
 import type { Limits } from './budget';
@@ -6,7 +6,7 @@ import { checkArtifactShape } from './shape';
 
 interface Schemaed { ir: IRNode[]; schema: { settings: FieldSchema } }
 export interface ArtifactLike {
-  manifest: { id: string };
+  manifest: { id: string; settings?: FieldSchema; defaultLocale?: string; tokens?: unknown };
   layout: IRNode[];
   templates: Record<string, IRNode[]>;
   templateSections: Record<string, { type: string; settings: Record<string, unknown> }[]>;
@@ -26,6 +26,39 @@ const settingsFor = (schema: FieldSchema, props: unknown = {}) => {
   return out;
 };
 const LOCALE = /^[a-z]{2}$/;
+const PREPARED = new WeakMap<object, TagRegistry>();
+const deepFreeze = <T>(v: T): T => {
+  if (typeof v === 'object' && v !== null && !Object.isFrozen(v)) { Object.freeze(v); for (const x of Object.values(v)) deepFreeze(x); }
+  return v;
+};
+const validateTrees = (artifact: ArtifactLike, registry: TagRegistry): Diagnostic[] => {
+  const known = new Set([...registry.names(), 'hk-block']);
+  const trees: IRNode[][] = [artifact.layout, ...Object.values(artifact.templates), ...Object.values(artifact.snippets),
+    ...Object.values(artifact.sections).map((s) => s.ir), ...Object.values(artifact.blocks).map((b) => b.ir)];
+  return trees.flatMap((t) => validateIR(t, known));
+};
+/** Section ids become part of component class names: one safe token. */
+const sectionToken = (id: unknown) => safeToken(toStr(id)).replace(/ /g, '-');
+
+/**
+ * Validate a stored artifact once (shape + IR) and return a frozen copy that
+ * renderPage trusts without re-validating, as long as the same registry is used.
+ */
+export function prepareArtifact(artifact: unknown, registry: TagRegistry): { ok: boolean; diagnostics: Diagnostic[]; artifact?: ArtifactLike } {
+  try {
+    const first = checkArtifactShape(artifact);
+    if (first.length) return { ok: false, diagnostics: first };
+    const copy = JSON.parse(JSON.stringify(artifact)) as ArtifactLike;
+    const diagnostics = [...checkArtifactShape(copy), ...validateTrees(copy, registry)];
+    if (diagnostics.length) return { ok: false, diagnostics };
+    deepFreeze(copy);
+    PREPARED.set(copy, registry);
+    return { ok: true, diagnostics: [], artifact: copy };
+  } catch (e) {
+    return { ok: false, diagnostics: [err('SN9015', `artifact could not be prepared: ${(e as Error)?.message ?? String(e)}`)] };
+  }
+}
+
 const failed = (diagnostics: Diagnostic[]): RenderResult => ({ html: '', css: '', controllers: [], diagnostics });
 
 /** Renders a page. Never throws: malformed artifacts or page data come back as diagnostics. */
@@ -38,13 +71,12 @@ export function renderPage(artifact: ArtifactLike, opts: RenderOptions): RenderR
 }
 
 function render(artifact: ArtifactLike, opts: RenderOptions): RenderResult {
-  const shape = checkArtifactShape(artifact);
-  if (shape.length) return failed(shape);
-  const known = new Set([...opts.registry.names(), 'hk-block']);
-  const trees: IRNode[][] = [artifact.layout, ...Object.values(artifact.templates), ...Object.values(artifact.snippets),
-    ...Object.values(artifact.sections).map((s) => s.ir), ...Object.values(artifact.blocks).map((b) => b.ir)];
-  const bad = trees.flatMap((t) => validateIR(t, known));
-  if (bad.length) return { html: '', css: '', controllers: [], diagnostics: bad };
+  if (PREPARED.get(artifact) !== opts.registry) {
+    const shape = checkArtifactShape(artifact);
+    if (shape.length) return failed(shape);
+    const bad = validateTrees(artifact, opts.registry);
+    if (bad.length) return failed(bad);
+  }
 
   const template = own(artifact.templates, opts.template);
   if (!template) return { html: '', css: '', controllers: [], diagnostics: [err('SN4010', `template '${opts.template}' not found`)] };
@@ -53,7 +85,9 @@ function render(artifact: ArtifactLike, opts: RenderOptions): RenderResult {
   const fallback = (artifact.manifest as { defaultLocale?: unknown }).defaultLocale;
   const locale = (LOCALE.test(String(opts.ctx.locale)) ? opts.ctx.locale : LOCALE.test(String(fallback)) ? fallback : 'ar') as RenderContext['locale'];
   const dir: RenderContext['dir'] = locale === 'ar' ? 'rtl' : 'ltr';
-  const ctx: RenderContext = { ...opts.ctx, locale, dir };
+  const themeSettings = (artifact.manifest as { settings?: unknown }).settings;
+  const settings = isObj(themeSettings) ? settingsFor(themeSettings as FieldSchema, opts.ctx.settings) : opts.ctx.settings;
+  const ctx: RenderContext = { ...opts.ctx, locale, dir, settings };
   const env: Env = { ctx, registry: opts.registry, snippets: artifact.snippets, slots: {}, budget: new Budget(opts.limits), css: [], controllers: new Set(), diagnostics: [], ids: { n: 0 }, depth: 0, include: 0 };
   const base: Scope = { ...(opts.scope ?? {}), store: ctx.store, locale, dir };
 
@@ -71,7 +105,7 @@ function render(artifact: ArtifactLike, opts: RenderOptions): RenderResult {
     // each section renders against what is left of the page budget, so one runaway
     // section degrades alone and the surrounding layout stays balanced
     const sub = env.budget.child();
-    const html = renderNodes(def.ir, scope, { ...env, budget: sub, slots: {}, depth: 0 });
+    const html = renderNodes(def.ir, scope, { ...env, budget: sub, slots: {}, depth: 0, ids: { n: 0, prefix: `s-${sectionToken(node.id)}-` } });
     if (sub.exceeded) { env.budget.absorbFailed(sub); return unavailable; }
     const out = `<div data-hk-section="${escapeAttr(toStr(node.id))}">${html}</div>`;
     env.budget.absorb(sub, out.length);

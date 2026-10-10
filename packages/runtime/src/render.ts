@@ -8,7 +8,7 @@ export { Budget } from './budget';
 export interface Env {
   ctx: RenderContext; registry: TagRegistry; snippets: Record<string, IRNode[]>;
   slots: Record<string, () => string>; budget: Budget; css: string[]; controllers: Set<string>;
-  diagnostics: Diagnostic[]; ids: { n: number }; depth: number; include: number;
+  diagnostics: Diagnostic[]; ids: { n: number; prefix?: string }; depth: number; include: number;
   /** Block definitions; when present, <hk-block of="…"/> renders them with the caller's env. */
   blocks?: Record<string, { ir: IRNode[] }>;
 }
@@ -117,7 +117,7 @@ export function renderNodes(nodes: IRNode[], scope: Scope, env: Env): string {
         if (!env.budget.node()) { noteExceeded(env); break; }
         const props: Record<string, unknown> = {};
         for (const [k, v] of Object.entries(n.props)) props[k] = resolveValue(v, scope, env);
-        const id = `c${++env.ids.n}`;
+        const id = `${env.ids.prefix ?? ''}c${++env.ids.n}`;
         if (tag.controller) env.controllers.add(tag.controller);
         let childLen = 0;
         try {
