@@ -29,6 +29,9 @@ function lookup(fn: string, args: unknown[], ctx: RenderContext): unknown {
   }
 }
 
+/** Template truthiness: nil, false, 0, NaN, '' and empty arrays are false. */
+export const truthy = (v: unknown): boolean => (Array.isArray(v) ? v.length > 0 : !!v);
+
 function run(e: Expr, scope: Scope, ctx: RenderContext): unknown {
   switch (e.k) {
     case 'lit': return e.v;
@@ -45,9 +48,9 @@ function run(e: Expr, scope: Scope, ctx: RenderContext): unknown {
       return typeof v === 'function' ? undefined : v;
     }
     case 'lookup': return lookup(e.fn, e.args.map((a) => evaluate(a, scope, ctx)), ctx);
-    case 'not': return !evaluate(e.a, scope, ctx);
-    case 'and': return !!evaluate(e.a, scope, ctx) && !!evaluate(e.b, scope, ctx);
-    case 'or': return !!evaluate(e.a, scope, ctx) || !!evaluate(e.b, scope, ctx);
+    case 'not': return !truthy(evaluate(e.a, scope, ctx));
+    case 'and': return truthy(evaluate(e.a, scope, ctx)) && truthy(evaluate(e.b, scope, ctx));
+    case 'or': return truthy(evaluate(e.a, scope, ctx)) || truthy(evaluate(e.b, scope, ctx));
     case 'cmp': {
       const a = evaluate(e.a, scope, ctx);
       const b = evaluate(e.b, scope, ctx);

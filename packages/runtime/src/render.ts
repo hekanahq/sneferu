@@ -1,6 +1,6 @@
 import { err, escapeAttr, escapeText, safeToken, safeUrl, toStr, type Diagnostic, type IRNode, type IRValue, type TagRegistry } from '@hekana/sneferu-core';
 import type { RenderContext, Scope } from './context';
-import { evaluate } from './evaluate';
+import { evaluate, truthy } from './evaluate';
 import { translate } from './translate';
 import { Budget } from './budget';
 export { Budget } from './budget';
@@ -69,7 +69,7 @@ export function renderNodes(nodes: IRNode[], scope: Scope, env: Env): string {
       }
       case 'if': {
         if (!env.budget.node()) { noteExceeded(env); break; }
-        const branch = n.branches.find((b) => !!evaluate(b.test, scope, env.ctx));
+        const branch = n.branches.find((b) => truthy(evaluate(b.test, scope, env.ctx)));
         const body = branch ? branch.body : n.else;
         if (body) raw(renderNodes(body, scope, env));
         break;
@@ -102,8 +102,9 @@ export function renderNodes(nodes: IRNode[], scope: Scope, env: Env): string {
         if (n.tag === 'hk-block' && env.blocks) {
           if (!env.budget.node()) { noteExceeded(env); break; }
           const b = evaluate(n.props.of && n.props.of.k === 'expr' ? n.props.of.e : { k: 'path', p: [] }, scope, env.ctx) as { id?: unknown; type?: unknown } | undefined;
-          const def = b && typeof b.type === 'string' ? own(env.blocks, b.type) : undefined;
-          if (!b || !def) break;
+          if (typeof b !== 'object' || b === null) break;
+          const def = typeof b.type === 'string' ? own(env.blocks, b.type) : undefined;
+          if (!def) { env.diagnostics.push(err('SN4012', `block type '${toStr(b.type)}' is not in this theme`)); break; }
           if (env.include >= env.budget.maxInclude) { reportOnce(env, 'SN4002', 'block include depth exceeded'); break; }
           const open = `<div data-hk-block="${escapeAttr(toStr(b.id))}">`;
           if (!add(open)) break;

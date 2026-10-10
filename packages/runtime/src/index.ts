@@ -1,5 +1,5 @@
 export type { RenderContext, Scope } from './context';
-export { evaluate } from './evaluate';
+export { evaluate, truthy } from './evaluate';
 export { FILTER_IMPLS } from './filters';
 export { Budget } from './budget';
 export { renderNodes, type Env } from './render';

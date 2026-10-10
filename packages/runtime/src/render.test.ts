@@ -59,4 +59,20 @@ describe('renderNodes', () => {
     renderNodes(Array.from({ length: 10 }, () => ({ k: 'if' as const, branches: [{ test: { k: 'lit' as const, v: true }, body: [{ k: 'html' as const, s: 'y' }] }] })), {}, e2);
     expect(e2.budget.exceeded).toBe('render nodes');
   });
+  it('treats empty arrays and empty strings as false in if/and/or/not (M1)', () => {
+    const t = (test: unknown) => renderNodes([{ k: 'if', branches: [{ test: test as never, body: [{ k: 'html', s: 'y' }] }], else: [{ k: 'html', s: 'n' }] }], { e: [], s: '', a: [1], z: 0, w: 'x' }, env());
+    expect([path('e'), path('s'), path('z'), path('missing'), path('a'), path('w')].map(t).join('')).toBe('nnnnyy');
+    expect(t({ k: 'not', a: path('e') })).toBe('y');
+    expect(t({ k: 'and', a: path('a'), b: path('e') })).toBe('n');
+    expect(t({ k: 'or', a: path('e'), b: path('s') })).toBe('n');
+  });
+  it('reports an unknown block type as SN4012 (M1)', () => {
+    const e = env({ blocks: { chip: { ir: [{ k: 'html', s: 'c' }] } } });
+    const node: IRNode = { k: 'comp', tag: 'hk-block', props: { of: { k: 'expr', e: path('b') } }, children: [] };
+    expect(renderNodes([node], { b: { id: '1', type: 'ghost' } }, e)).toBe('');
+    expect(e.diagnostics.map((d) => d.code)).toEqual(['SN4012']);
+    expect(renderNodes([node], { b: { id: '2', type: 'chip' } }, e)).toBe('<div data-hk-block="2">c</div>');
+    expect(renderNodes([node], {}, e)).toBe('');
+    expect(e.diagnostics).toHaveLength(1);
+  });
 });
