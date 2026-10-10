@@ -1,0 +1,92 @@
+import { err, FORBIDDEN_ATTRIBUTES, FORBIDDEN_ELEMENTS, LIMITS, safeUrl, URL_ATTRIBUTES, type Diagnostic, type TagRegistry } from '@hekana/sneferu-core';
+import type { AstNode } from './ast';
+
+const FORBIDDEN_EL = new Set<string>(FORBIDDEN_ELEMENTS);
+const FORBIDDEN_ATTR = new Set<string>(FORBIDDEN_ATTRIBUTES);
+const URL_ATTRS = new Set<string>(URL_ATTRIBUTES);
+const PASSTHROUGH = (a: string) => a === 'class' || a === 'id' || a === 'role' || a === 'title' || a.startsWith('data-') || a.startsWith('aria-');
+const BUILTIN_HK = new Set(['hk-slot', 'hk-sections', 'hk-block']);
+
+export const camel = (s: string) => s.replace(/-([a-z])/g, (_, c: string) => c.toUpperCase());
+
+/** `mobile-columns` -> { prop: 'columns', bp: 'mobile' }. */
+export function propOf(attr: string): { prop: string; bp: 'base' | 'tablet' | 'mobile' } {
+  const m = /^(tablet|mobile)-(.+)$/.exec(attr);
+  return m ? { prop: camel(m[2]!), bp: m[1] as 'tablet' | 'mobile' } : { prop: camel(attr), bp: 'base' };
+}
+
+function distance(a: string, b: string): number {
+  const d: number[][] = Array.from({ length: a.length + 1 }, (_, i) => [i, ...Array<number>(b.length).fill(0)]);
+  for (let j = 1; j <= b.length; j++) d[0]![j] = j;
+  for (let i = 1; i <= a.length; i++)
+    for (let j = 1; j <= b.length; j++)
+      d[i]![j] = Math.min(d[i - 1]![j]! + 1, d[i]![j - 1]! + 1, d[i - 1]![j - 1]! + (a[i - 1] === b[j - 1] ? 0 : 1));
+  return d[a.length]![b.length]!;
+}
+const suggest = (x: string, options: Iterable<string>) => {
+  let best = ''; let score = Infinity;
+  for (const o of options) { const s = distance(x, o); if (s < score) { score = s; best = o; } }
+  return score <= 3 ? ` Did you mean "${best}"?` : '';
+};
+const kebab = (s: string) => s.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`);
+
+export function validateTemplate(
+  nodes: AstNode[],
+  opts: { file: string; registry: TagRegistry; snippets: ReadonlySet<string>; kind: 'layout' | 'template' | 'section' | 'block' | 'snippet' },
+): Diagnostic[] {
+  const out: Diagnostic[] = [];
+  const at = (n: { loc: { line: number; col: number } }) => ({ file: opts.file, line: n.loc.line, col: n.loc.col });
+
+  const visit = (list: AstNode[]): void => {
+    for (const n of list) {
+      if (n.t === 'for') {
+        const lim = n.limit ?? LIMITS.loopDefault;
+        if (lim > LIMITS.loopMax || lim < 1) out.push(err('SN2007', `loop limit ${lim} is invalid: loop limit must be between 1 and ${LIMITS.loopMax}`, at(n)));
+        visit(n.body);
+      } else if (n.t === 'if') {
+        n.branches.forEach((b) => visit(b.body));
+        if (n.else) visit(n.else);
+      } else if (n.t === 'render') {
+        if (!opts.snippets.has(n.snippet)) out.push(err('SN2008', `unknown snippet '${n.snippet}'${suggest(n.snippet, opts.snippets)}`, at(n)));
+      } else if (n.t === 'el') {
+        if (FORBIDDEN_EL.has(n.tag)) out.push(err('SN2001', `<${n.tag}> is not allowed in themes`, at(n)));
+        for (const a of n.attrs) {
+          if (a.name.startsWith('on') || FORBIDDEN_ATTR.has(a.name)) out.push(err('SN2002', `attribute '${a.name}' is not allowed`, { file: opts.file, ...a.loc }));
+          if (a.name === 'style' && a.parts.some((p) => typeof p !== 'string')) out.push(err('SN2009', 'style attributes cannot contain {{ }}; use classes, tokens or component props', { file: opts.file, ...a.loc }));
+          if (URL_ATTRS.has(a.name) && a.parts.length > 0 && a.parts.every((p) => typeof p === 'string')) {
+            const v = (a.parts as string[]).join('');
+            if (a.name !== 'srcset' && safeUrl(v) === '#' && v.trim() !== '#') out.push(err('SN2010', `unsafe URL in ${a.name}`, { file: opts.file, ...a.loc }));
+          }
+        }
+        if (n.tag === 'hk-slot' && opts.kind !== 'layout' && opts.kind !== 'template') out.push(err('SN2011', '<hk-slot> is only allowed in layout and templates', at(n)));
+        if (n.tag.startsWith('hk-') && !BUILTIN_HK.has(n.tag)) {
+          const tag = opts.registry.get(n.tag);
+          if (!tag) { out.push(err('SN2003', `unknown tag <${n.tag}>.${suggest(n.tag, opts.registry.names())}`, at(n))); visit(n.children); continue; }
+          const seen = new Set<string>();
+          for (const a of n.attrs) {
+            if (PASSTHROUGH(a.name)) continue;
+            const { prop, bp } = propOf(a.name);
+            if (!tag.props[prop] || (bp !== 'base' && !tag.responsive.includes(prop))) {
+              const options = Object.keys(tag.props).flatMap((p) => [kebab(p), ...(tag.responsive.includes(p) ? [`tablet-${kebab(p)}`, `mobile-${kebab(p)}`] : [])]);
+              out.push(err('SN2004', `unknown property "${a.name}" on <${n.tag}>.${suggest(a.name, options)}`, { file: opts.file, ...a.loc }));
+              continue;
+            }
+            seen.add(prop);
+          }
+          for (const [p, f] of Object.entries(tag.props)) if (f.required && !seen.has(p)) out.push(err('SN2005', `<${n.tag}> requires "${kebab(p)}"`, at(n)));
+          const allowed = tag.allowedChildren;
+          if (allowed !== '*') {
+            for (const c of n.children) {
+              if (c.t === 'text' && c.v.trim() === '') continue;
+              const ok = (c.t === 'el' && allowed.includes(c.tag)) || (allowed.includes('#text') && (c.t === 'text' || c.t === 'interp'));
+              if (!ok) out.push(err('SN2006', `<${n.tag}> does not accept ${c.t === 'el' ? `<${c.tag}>` : 'this content'} as a child`, at(c)));
+            }
+          }
+        }
+        visit(n.children);
+      }
+    }
+  };
+  visit(nodes);
+  return out;
+}
