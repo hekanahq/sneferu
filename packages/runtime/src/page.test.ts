@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { TagRegistry, LIMITS, type IRNode } from '@hekana/sneferu-core';
-import { renderPage, type ArtifactLike } from './page';
+import { renderPage, type ArtifactLike, type PageNode } from './page';
 import type { RenderContext } from './context';
 
 const ctx: RenderContext = { locale: 'ar', dir: 'rtl', currency: 'EGP', store: { name: 'متجر' }, settings: {}, data: {}, collections: {}, products: {},
@@ -126,5 +126,27 @@ describe('renderPage', () => {
     const r = renderPage(art, { template: 'index', ctx: { ...ctx, translations: bad, fallbackTranslations: bad }, registry: new TagRegistry() });
     expect(r.diagnostics).toEqual([]);
     expect(r.html).toContain('<div data-hk-section="default-0">hinarr__proto__toStringn</div>');
+  });
+  it('returns SN9015 for malformed stored artifacts instead of throwing (I5)', () => {
+    const sec = (v: unknown) => ({ ...artifact, sections: { hero: v } }) as unknown as ArtifactLike;
+    const shapes: unknown[] = [
+      sec({ ir: [] }), sec({ ir: [], schema: { settings: null } }), sec({ ir: [], schema: { settings: { a: null } } }), sec(null), sec({ schema: { settings: {} } }),
+      { ...artifact, manifest: null }, { ...artifact, manifest: { id: 'x', settings: { a: 5 } } }, { ...artifact, sections: null }, { ...artifact, blocks: [] },
+      { ...artifact, templates: { index: 'x' } }, { ...artifact, templateSections: { index: [null] } }, { ...artifact, snippets: { a: {} } }, null, 'x', [],
+    ];
+    for (const a of shapes) {
+      let r: ReturnType<typeof renderPage> | undefined;
+      expect(() => { r = renderPage(a as ArtifactLike, { template: 'index', ctx, registry: new TagRegistry() }); }).not.toThrow();
+      expect(r!.html).toBe('');
+      expect(r!.diagnostics.map((d) => d.code), JSON.stringify(a)?.slice(0, 80)).toContain('SN9015');
+    }
+  });
+  it('turns unexpected exceptions into SN9015 and tolerates malformed page nodes (I5)', () => {
+    const throwing = { ...ctx, get store(): Record<string, unknown> { throw new Error('boom'); } };
+    const r = renderPage(artifact, { template: 'index', ctx: throwing, registry: new TagRegistry() });
+    expect(r.diagnostics.map((d) => d.code)).toEqual(['SN9015']);
+    const nodes = [null, 5, { id: 'a' }, { id: 'b', type: 'hero', children: 'x', props: 7 }, { id: 'c', type: 'hero', children: [null, { id: 'k' }] }] as unknown as PageNode[];
+    const ok = renderPage(artifact, { template: 'index', ctx, registry: new TagRegistry(), sections: nodes });
+    expect(ok.html.match(/<h1>Hi<\/h1>/g)).toHaveLength(2);
   });
 });
