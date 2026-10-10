@@ -10,3 +10,6 @@ export const FILTERS = ['money', 'img', 'date', 't', 'escape', 'upcase', 'downca
 export const LOOKUPS = ['collection', 'product', 't', 'settings', 'asset_url'] as const;
 export type FilterName = (typeof FILTERS)[number];
 export type LookupName = (typeof LOOKUPS)[number];
+export const FORBIDDEN_ELEMENTS = ['script', 'style', 'iframe', 'object', 'embed', 'base', 'link', 'meta', 'form'] as const;
+export const FORBIDDEN_ATTRIBUTES = ['srcdoc', 'formaction'] as const;
+export const URL_ATTRIBUTES = ['href', 'src', 'action', 'poster', 'srcset'] as const;
