@@ -32,4 +32,24 @@ describe('parseTemplate', () => {
     expect(codes('{% while x %}')).toEqual(['SN1106@1:1']);
     expect(codes('<hk-schema>{bad</hk-schema>')).toEqual(['SN1107@1:1']);
   });
+  it('bounds nesting with SN1108 instead of building an unbounded tree (I6)', () => {
+    const deep = (n: number, open: string, close: string) => open.repeat(n) + '{{ x }}' + close.repeat(n);
+    for (const src of [deep(70, '<b>', '</b>'), deep(70, '{% if a %}', '{% endif %}'), deep(70, '{% for x in y %}', '{% endfor %}'), deep(20000, '<b>', '</b>')]) {
+      const r = parseTemplate(src, 'f');
+      expect(r.diagnostics.map((d) => d.code)).toEqual(['SN1108']);
+      let depth = 0; let n: any = r.nodes[0];
+      while (n) { depth++; n = (n.children ?? n.body ?? n.branches?.[0]?.body)?.[0]; }
+      expect(depth).toBeLessThanOrEqual(65);
+    }
+    expect(parseTemplate(deep(64, '<b>', '</b>'), 'f').diagnostics).toEqual([]);
+    const after = parseTemplate(deep(70, '<b>', '</b>') + '<p>tail</p><hk-schema>{"a":1}</hk-schema>', 'f');
+    expect(after.nodes.at(-1)).toMatchObject({ t: 'el', tag: 'p' });
+    expect(after.schema).toEqual({ a: 1 });
+  });
+  it('closes tags in linear time', () => {
+    const t0 = Date.now();
+    parseTemplate('<b>'.repeat(40000) + '</b>'.repeat(40000), 'f');
+    parseTemplate('</a>'.repeat(70000), 'f');
+    expect(Date.now() - t0).toBeLessThan(2000);
+  });
 });

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { TagRegistry } from '@hekana/sneferu-core';
+import { TagRegistry, validateIR } from '@hekana/sneferu-core';
 import { compileTheme, type ThemeFile } from './compile';
 
 const enc = new TextEncoder();
@@ -86,6 +86,17 @@ describe('compileTheme', () => {
     for (const body of ['{"hi":{"x":1}}', '{"n":5}', '[]', '"x"', 'null']) {
       const files = base().map((x) => (x.path === 'locales/ar.json' ? f(x.path, body) : x));
       expect(compileTheme(files, reg).diagnostics.filter((d) => d.severity === 'error').map((d) => d.code), body).toEqual(['SN3025']);
+    }
+  });
+  it('never throws on deep nesting and never emits IR the runtime refuses (I6)', () => {
+    for (const depth of [60, 64, 100, 20000]) {
+      const files = base().map((x) => (x.path === 'templates/index.sneferu' ? f(x.path, '<b>'.repeat(depth) + '{{ x }}' + '</b>'.repeat(depth) + '<hk-sections />') : x));
+      let r: ReturnType<typeof compileTheme> | undefined;
+      expect(() => { r = compileTheme(files, reg); }).not.toThrow();
+      if (r!.artifact) {
+        const t = r!.artifact.templates.index!;
+        expect(validateIR(t, new Set(['hk-block']))).toEqual([]);
+      } else expect(r!.diagnostics.map((d) => d.code).some((c) => c === 'SN1108' || c === 'SN9009')).toBe(true);
     }
   });
 });

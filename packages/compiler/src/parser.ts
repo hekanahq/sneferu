@@ -1,4 +1,4 @@
-import { err, type Diagnostic, type Expr } from '@hekana/sneferu-core';
+import { err, LIMITS, type Diagnostic, type Expr } from '@hekana/sneferu-core';
 import { lex, type Loc, type RawAttr } from './lexer';
 import { parseExpr, parseFor } from './expr';
 import { VOID_ELEMENTS, type AstAttr, type AstNode } from './ast';
@@ -38,7 +38,29 @@ export function parseTemplate(src: string, file: string): { nodes: AstNode[]; sc
     return parts;
   };
 
+  // nesting guard: past LIMITS.renderDepth we stop building the tree and only
+  // track open/close balance until we are back at a legal depth
+  let skip = 0;
+  let deepReported = false;
+  const tooDeep = (l: Loc): boolean => {
+    if (stack.length - 1 < LIMITS.renderDepth) return false;
+    if (!deepReported) { deepReported = true; diagnostics.push(err('SN1108', `nesting deeper than ${LIMITS.renderDepth} levels`, at(l))); }
+    return true;
+  };
+
   for (const tok of tokens) {
+    if (skip > 0) {
+      if (tok.t === 'open' && !tok.selfClosing && !VOID_ELEMENTS.has(tok.name)) skip++;
+      else if (tok.t === 'close' && !VOID_ELEMENTS.has(tok.name)) skip--;
+      else if (tok.t === 'dir') {
+        const kw = tok.src.split(/\s+/)[0];
+        if (kw === 'if' || kw === 'for') skip++;
+        else if (kw === 'endif' || kw === 'endfor') skip--;
+      } else if (tok.t === 'schema') {
+        try { schema = JSON.parse(tok.json); } catch { diagnostics.push(err('SN1107', '<hk-schema> is not valid JSON', at(tok.loc))); }
+      }
+      continue;
+    }
     switch (tok.t) {
       case 'text': push({ t: 'text', v: tok.v, loc: tok.loc }); break;
       case 'interp': { const e = expr(tok.src, tok.loc); if (e) push({ t: 'interp', expr: e, loc: tok.loc }); break; }
@@ -46,6 +68,7 @@ export function parseTemplate(src: string, file: string): { nodes: AstNode[]; sc
         try { schema = JSON.parse(tok.json); } catch { diagnostics.push(err('SN1107', '<hk-schema> is not valid JSON', at(tok.loc))); }
         break;
       case 'open': {
+        if (tooDeep(tok.loc)) { if (!tok.selfClosing && !VOID_ELEMENTS.has(tok.name)) skip = 1; break; }
         const attrs: AstAttr[] = tok.attrs.map((a) => ({ name: a.name, parts: attrParts(a), loc: a.loc }));
         const node: Extract<AstNode, { t: 'el' }> = { t: 'el', tag: tok.name, attrs, children: [], selfClosing: tok.selfClosing, loc: tok.loc };
         push(node);
@@ -54,7 +77,11 @@ export function parseTemplate(src: string, file: string): { nodes: AstNode[]; sc
       }
       case 'close': {
         if (VOID_ELEMENTS.has(tok.name)) break;
-        const idx = [...stack].reverse().findIndex((f) => f.kind === 'el' && f.node.tag === tok.name);
+        let idx = -1;
+        for (let k = stack.length - 1; k > 0; k--) {
+          const fr = stack[k]!;
+          if (fr.kind === 'el' && fr.node.tag === tok.name) { idx = stack.length - 1 - k; break; }
+        }
         if (idx === -1) { diagnostics.push(err('SN1104', `</${tok.name}> has no matching opening tag`, at(tok.loc))); break; }
         const f = top();
         if (f.kind !== 'el' || f.node.tag !== tok.name) {
@@ -68,6 +95,7 @@ export function parseTemplate(src: string, file: string): { nodes: AstNode[]; sc
       case 'dir': {
         const kw = tok.src.split(/\s+/)[0];
         const arg = tok.src.slice((kw ?? '').length).trim();
+        if ((kw === 'if' || kw === 'for') && tooDeep(tok.loc)) { skip = 1; break; }
         if (kw === 'if') {
           const e = expr(arg, tok.loc);
           const node: Extract<AstNode, { t: 'if' }> = { t: 'if', branches: [{ test: e ?? { k: 'lit', v: false }, body: [] }], loc: tok.loc };
