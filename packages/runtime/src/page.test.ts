@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { TagRegistry } from '@hekana/sneferu-core';
+import { TagRegistry, LIMITS, type IRNode } from '@hekana/sneferu-core';
 import { renderPage, type ArtifactLike } from './page';
 import type { RenderContext } from './context';
 
@@ -52,5 +52,44 @@ describe('renderPage', () => {
     expect(r.diagnostics).toEqual([]);
     expect(r.html).toContain('data-hk-block="b1"');
     expect(r.html).toContain('جديد');
+  });
+
+  it('degrades only the runaway section, once, and stays balanced', () => {
+    const runaway: ArtifactLike = { ...artifact, sections: { ...artifact.sections, loopy: { ir: [{ k: 'html', s: '<p>' },
+      { k: 'loop', as: 'x', src: { k: 'path', p: ['xs'] }, limit: 250, body: [{ k: 'html', s: '<i></i>' }] }, { k: 'html', s: '</p>' }],
+      schema: { settings: {} } } } };
+    const r = renderPage(runaway, { template: 'index', ctx, registry: new TagRegistry(), scope: { xs: Array(100).fill(0) }, limits: { ...LIMITS, loopIterations: 80 }, sections: [
+      { id: 's1', type: 'hero' }, { id: 's2', type: 'loopy' }, { id: 's3', type: 'hero' },
+    ] });
+    expect(r.html).toContain('<h1>Hi</h1>');
+    expect(r.html).toContain('<!-- section s2 unavailable -->');
+    expect(r.diagnostics.filter((d) => d.code === 'SN4001')).toHaveLength(1);
+    expect(r.html.startsWith('<div data-hk-theme="esports" dir="rtl" lang="ar"><main>')).toBe(true);
+    expect(r.html.endsWith('</main></div>')).toBe(true);
+  });
+  it('counts nested output once', () => {
+    let nodes: IRNode[] = [{ k: 'html', s: 'x'.repeat(10) }];
+    for (let i = 0; i < 6; i++) nodes = [{ k: 'el', tag: 'div', attrs: [], children: nodes }];
+    const art: ArtifactLike = { ...artifact, sections: { deep: { ir: nodes, schema: { settings: {} } } } };
+    const full = renderPage(art, { template: 'index', ctx, registry: new TagRegistry(), sections: [{ id: 'a', type: 'deep' }] });
+    const need = full.html.length;
+    const tight = renderPage(art, { template: 'index', ctx, registry: new TagRegistry(), limits: { ...LIMITS, outputChars: need }, sections: [{ id: 'a', type: 'deep' }] });
+    expect(tight.diagnostics).toEqual([]);
+    expect(tight.html).toBe(full.html);
+  });
+  it('treats prototype keys as unknown sections', () => {
+    for (const type of ['constructor', '__proto__', 'toString']) {
+      const r = renderPage(artifact, { template: 'index', ctx, registry: new TagRegistry(), sections: [{ id: 's', type }] });
+      expect(r.html).toContain('<!-- section s unavailable -->');
+    }
+  });
+  it('stops self-recursive blocks without throwing', () => {
+    const rec: ArtifactLike = { ...artifact,
+      sections: { hero: { ir: [{ k: 'loop', as: 'block', src: { k: 'path', p: ['section', 'blocks'] }, limit: 20,
+        body: [{ k: 'comp', tag: 'hk-block', props: { of: { k: 'expr', e: { k: 'path', p: ['block'] } } }, children: [] }] }], schema: { settings: {} } } },
+      blocks: { chip: { ir: [{ k: 'loop', as: 'block', src: { k: 'path', p: ['section', 'blocks'] }, limit: 20,
+        body: [{ k: 'comp', tag: 'hk-block', props: { of: { k: 'expr', e: { k: 'path', p: ['block'] } } }, children: [] }] }], schema: { settings: {} } } } };
+    const r = renderPage(rec, { template: 'index', ctx, registry: new TagRegistry(), sections: [{ id: 's1', type: 'hero', children: [{ id: 'b1', type: 'chip' }] }] });
+    expect(r.diagnostics.some((d) => d.code === 'SN4002' || d.code === 'SN4003')).toBe(true);
   });
 });

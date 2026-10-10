@@ -8,7 +8,21 @@ export interface Env {
   ctx: RenderContext; registry: TagRegistry; snippets: Record<string, IRNode[]>;
   slots: Record<string, () => string>; budget: Budget; css: string[]; controllers: Set<string>;
   diagnostics: Diagnostic[]; ids: { n: number }; depth: number; include: number;
+  /** Block definitions; when present, <hk-block of="…"/> renders them with the caller's env. */
+  blocks?: Record<string, { ir: IRNode[] }>;
 }
+
+/** Own-property lookup: author/merchant strings must never reach Object.prototype. */
+export function own<T>(obj: Record<string, T> | undefined, key: string): T | undefined {
+  return obj && Object.hasOwn(obj, key) ? obj[key] : undefined;
+}
+
+function noteExceeded(env: Env): void {
+  const b = env.budget;
+  if (b.exceeded && !b.reported) { b.reported = true; env.diagnostics.push(err('SN4001', `render stopped: ${b.exceeded} budget exceeded`)); }
+}
+
+const tr = (env: Env, key: string): string => own(env.ctx.translations, key) ?? own(env.ctx.fallbackTranslations, key) ?? key;
 
 function resolveValue(v: IRValue, scope: Scope, env: Env): unknown {
   if (v.k === 'static') return v.v;
@@ -24,13 +38,15 @@ function resolveValue(v: IRValue, scope: Scope, env: Env): unknown {
 export function renderNodes(nodes: IRNode[], scope: Scope, env: Env): string {
   if (env.depth > env.budget.maxDepth) { env.diagnostics.push(err('SN4003', 'maximum nesting depth reached')); return ''; }
   let html = '';
-  const add = (s: string) => { if (env.budget.out(s.length)) html += s; };
+  // add: a counted leaf write. raw: output already counted by a nested render.
+  const add = (s: string): boolean => { if (env.budget.out(s.length)) { html += s; return true; } noteExceeded(env); return false; };
+  const raw = (s: string) => { html += s; };
   for (const n of nodes) {
     if (env.budget.exceeded) break;
     switch (n.k) {
       case 'html': add(n.s); break;
       case 'text': add(escapeText(toStr(evaluate(n.e, scope, env.ctx)))); break;
-      case 't': add(escapeText(env.ctx.translations[n.key] ?? env.ctx.fallbackTranslations[n.key] ?? n.key)); break;
+      case 't': add(escapeText(tr(env, n.key))); break;
       case 'el': {
         const attrs = n.attrs.map((a) => {
           if (a.parts.length === 0) return ` ${a.name}`;
@@ -38,16 +54,17 @@ export function renderNodes(nodes: IRNode[], scope: Scope, env: Env): string {
           const val = a.sink === 'url' ? safeUrl(raw) : a.sink === 'token' ? safeToken(raw) : raw;
           return ` ${a.name}="${escapeAttr(val)}"`;
         }).join('');
-        add(`<${n.tag}${attrs}>`);
+        if (!add(`<${n.tag}${attrs}>`)) break;
         if (n.void) break;
-        add(renderNodes(n.children, scope, { ...env, depth: env.depth + 1 }));
-        add(`</${n.tag}>`);
+        raw(renderNodes(n.children, scope, { ...env, depth: env.depth + 1 }));
+        const close = `</${n.tag}>`;
+        env.budget.force(close.length); raw(close);
         break;
       }
       case 'if': {
         const branch = n.branches.find((b) => !!evaluate(b.test, scope, env.ctx));
         const body = branch ? branch.body : n.else;
-        if (body) add(renderNodes(body, scope, env));
+        if (body) raw(renderNodes(body, scope, env));
         break;
       }
       case 'loop': {
@@ -55,36 +72,52 @@ export function renderNodes(nodes: IRNode[], scope: Scope, env: Env): string {
         const list = Array.isArray(src) ? src.slice(0, n.limit) : [];
         list.forEach((item, index) => {
           if (env.budget.exceeded || !env.budget.iter()) return;
-          add(renderNodes(n.body, { ...scope, [n.as]: item, forloop: { index: index + 1, first: index === 0, last: index === list.length - 1 } }, env));
+          raw(renderNodes(n.body, { ...scope, [n.as]: item, forloop: { index: index + 1, first: index === 0, last: index === list.length - 1 } }, env));
         });
-        if (env.budget.exceeded && !env.diagnostics.some((d) => d.code === 'SN4001')) env.diagnostics.push(err('SN4001', `render stopped: ${env.budget.exceeded} budget exceeded`));
+        noteExceeded(env);
         break;
       }
-      case 'slot': { const fill = env.slots[n.name]; if (fill) add(fill()); break; }
+      case 'slot': { const fill = own(env.slots, n.name); if (fill) raw(fill()); break; }
       case 'render': {
-        const body = env.snippets[n.snippet];
+        const body = own(env.snippets, n.snippet);
         if (!body) { env.diagnostics.push(err('SN4004', `snippet '${n.snippet}' not found`)); break; }
         if (env.include >= env.budget.maxInclude) { env.diagnostics.push(err('SN4002', `include depth exceeded at '${n.snippet}'`)); break; }
         const args = Object.fromEntries(Object.entries(n.args).map(([k, e]) => [k, evaluate(e, scope, env.ctx)]));
-        add(renderNodes(body, { ...scope, ...args }, { ...env, include: env.include + 1 }));
+        raw(renderNodes(body, { ...scope, ...args }, { ...env, include: env.include + 1 }));
         break;
       }
       case 'comp': {
+        if (n.tag === 'hk-block' && env.blocks) {
+          if (!env.budget.node()) { noteExceeded(env); break; }
+          const b = evaluate(n.props.of && n.props.of.k === 'expr' ? n.props.of.e : { k: 'path', p: [] }, scope, env.ctx) as { id?: unknown; type?: unknown } | undefined;
+          const def = b && typeof b.type === 'string' ? own(env.blocks, b.type) : undefined;
+          if (!b || !def) break;
+          if (env.include >= env.budget.maxInclude) { env.diagnostics.push(err('SN4002', 'block include depth exceeded')); break; }
+          const open = `<div data-hk-block="${escapeAttr(toStr(b.id))}">`;
+          if (!add(open)) break;
+          raw(renderNodes(def.ir, { ...scope, block: b }, { ...env, depth: env.depth + 1, include: env.include + 1 }));
+          const close = '</div>';
+          env.budget.force(close.length); raw(close);
+          break;
+        }
         const tag = env.registry.get(n.tag);
         if (!tag) { env.diagnostics.push(err('SN4005', `component ${n.tag} not available`)); break; }
-        if (!env.budget.node()) break;
+        if (!env.budget.node()) { noteExceeded(env); break; }
         const props: Record<string, unknown> = {};
         for (const [k, v] of Object.entries(n.props)) props[k] = resolveValue(v, scope, env);
         const id = `c${++env.ids.n}`;
         if (tag.controller) env.controllers.add(tag.controller);
+        let childLen = 0;
         try {
-          add(tag.render(props, {
+          const out = tag.render(props, {
             id, locale: env.ctx.locale, dir: env.ctx.dir, data: scope,
             css: (rule) => env.css.push(rule),
             controller: (name) => env.controllers.add(name),
-            t: (key) => env.ctx.translations[key] ?? env.ctx.fallbackTranslations[key] ?? key,
-            renderChildren: () => renderNodes(n.children, scope, { ...env, depth: env.depth + 1 }),
-          }));
+            t: (key) => tr(env, key),
+            renderChildren: () => { const r = renderNodes(n.children, scope, { ...env, depth: env.depth + 1 }); childLen += r.length; return r; },
+          });
+          // children were counted by their own render; count only the component's own markup
+          if (env.budget.out(Math.max(0, out.length - childLen))) raw(out); else noteExceeded(env);
         } catch (e) {
           env.diagnostics.push(err('SN4006', `${n.tag} failed: ${(e as Error).message}`));
         }
