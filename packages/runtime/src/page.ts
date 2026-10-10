@@ -25,6 +25,7 @@ const settingsFor = (schema: FieldSchema, props: unknown = {}) => {
   for (const [k, f] of Object.entries(schema)) if (Object.hasOwn(props, k) && props[k] !== undefined) out[k] = coerceSetting(f, props[k]);
   return out;
 };
+const LOCALE = /^[a-z]{2}$/;
 const failed = (diagnostics: Diagnostic[]): RenderResult => ({ html: '', css: '', controllers: [], diagnostics });
 
 /** Renders a page. Never throws: malformed artifacts or page data come back as diagnostics. */
@@ -48,8 +49,13 @@ function render(artifact: ArtifactLike, opts: RenderOptions): RenderResult {
   const template = own(artifact.templates, opts.template);
   if (!template) return { html: '', css: '', controllers: [], diagnostics: [err('SN4010', `template '${opts.template}' not found`)] };
 
-  const env: Env = { ctx: opts.ctx, registry: opts.registry, snippets: artifact.snippets, slots: {}, budget: new Budget(opts.limits), css: [], controllers: new Set(), diagnostics: [], ids: { n: 0 }, depth: 0, include: 0 };
-  const base: Scope = { ...(opts.scope ?? {}), store: opts.ctx.store, locale: opts.ctx.locale, dir: opts.ctx.dir };
+  // dir is derived from the locale, never taken from the caller, and both are validated
+  const fallback = (artifact.manifest as { defaultLocale?: unknown }).defaultLocale;
+  const locale = (LOCALE.test(String(opts.ctx.locale)) ? opts.ctx.locale : LOCALE.test(String(fallback)) ? fallback : 'ar') as RenderContext['locale'];
+  const dir: RenderContext['dir'] = locale === 'ar' ? 'rtl' : 'ltr';
+  const ctx: RenderContext = { ...opts.ctx, locale, dir };
+  const env: Env = { ctx, registry: opts.registry, snippets: artifact.snippets, slots: {}, budget: new Budget(opts.limits), css: [], controllers: new Set(), diagnostics: [], ids: { n: 0 }, depth: 0, include: 0 };
+  const base: Scope = { ...(opts.scope ?? {}), store: ctx.store, locale, dir };
 
   const sections: PageNode[] = Array.isArray(opts.sections) ? opts.sections : (own(artifact.templateSections, opts.template) ?? []).map((s, i) => ({ id: `default-${i}`, type: s.type, props: s.settings }));
 
@@ -77,6 +83,6 @@ function render(artifact: ArtifactLike, opts: RenderOptions): RenderResult {
 
   const content = () => renderNodes(template, base, { ...env, slots: { sections: () => sections.filter((s) => !(isObj(s) && s.hidden)).map(renderSection).join('') } });
   const inner = renderNodes(artifact.layout, base, { ...env, slots: { content } });
-  const html = `<div data-hk-theme="${escapeAttr(artifact.manifest.id)}" dir="${opts.ctx.dir}" lang="${opts.ctx.locale}">${inner}</div>`;
+  const html = `<div data-hk-theme="${escapeAttr(artifact.manifest.id)}" dir="${escapeAttr(dir)}" lang="${escapeAttr(locale)}">${inner}</div>`;
   return { html, css: env.css.join('\n'), controllers: [...env.controllers], diagnostics: env.diagnostics };
 }

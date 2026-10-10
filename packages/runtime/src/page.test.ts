@@ -149,4 +149,12 @@ describe('renderPage', () => {
     const ok = renderPage(artifact, { template: 'index', ctx, registry: new TagRegistry(), sections: nodes });
     expect(ok.html.match(/<h1>Hi<\/h1>/g)).toHaveLength(2);
   });
+  it('derives dir from a validated locale and escapes both (I8)', () => {
+    const at = (c: Partial<RenderContext>, a: ArtifactLike = artifact) => renderPage(a, { template: 'index', ctx: { ...ctx, ...c } as RenderContext, registry: new TagRegistry() }).html;
+    expect(at({ dir: 'rtl" onmouseover="alert(1)' as never })).toMatch(/^<div data-hk-theme="esports" dir="rtl" lang="ar">/);
+    expect(at({ locale: 'en', dir: 'rtl' })).toMatch(/^<div data-hk-theme="esports" dir="ltr" lang="en">/);
+    expect(at({ locale: 'fr' as never, dir: 'rtl' })).toMatch(/^<div data-hk-theme="esports" dir="ltr" lang="fr">/);
+    expect(at({ locale: 'en" x="1' as never })).toMatch(/^<div data-hk-theme="esports" dir="rtl" lang="ar">/);
+    expect(at({ locale: 'EN' as never }, { ...artifact, manifest: { id: 'esports', defaultLocale: 'en' } as never })).toMatch(/^<div data-hk-theme="esports" dir="ltr" lang="en">/);
+  });
 });
