@@ -16,6 +16,11 @@ describe('escaping', () => {
     for (const bad of ['javascript:alert(1)', ' JavaScript:alert(1)', 'data:text/html,x', 'vbscript:x', 'http://x.com', 'java\nscript:x', '//evil.com'])
       expect(safeUrl(bad)).toBe('#');
   });
+  it('rejects backslash and empty URLs', () => {
+    expect(safeUrl('/\\evil.com')).toBe('#');
+    expect(safeUrl('\\\\evil.com')).toBe('#');
+    expect(safeUrl('')).toBe('#');
+  });
   it('sanitises class/id tokens and serialises JSON for attributes', () => {
     expect(safeToken('card "x" <y> hero-1')).toBe('card x y hero-1');
     expect(jsonAttr({ a: '<"x">' })).toBe('{&quot;a&quot;:&quot;\\u003c\\&quot;x\\&quot;\\u003e&quot;}');

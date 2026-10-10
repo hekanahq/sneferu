@@ -11,6 +11,7 @@ export function safeUrl(raw: string): string {
   const s = raw.trim();
   if (s === '') return '#';
   if (/[\u0000-\u001F\u007F]/.test(s)) return '#';
+  if (s.includes('\\')) return '#'; // browsers treat \ as /
   if (s.startsWith('//')) return '#';
   const scheme = /^([a-zA-Z][a-zA-Z0-9+.-]*):/.exec(s);
   if (!scheme) return s; // relative: /x, #x, ?x, x/y
