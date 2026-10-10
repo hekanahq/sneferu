@@ -44,4 +44,19 @@ describe('compileTheme', () => {
     expect(codes([...base(), f('templates/index.sneferu', 'dup')])).toEqual(['SN3004']);
     expect(codes(base().map((x) => (x.path === 'templates/index.sneferu' ? f(x.path, '<hk-sections /><hk-schema>{"sections":[{"type":"ghost"}]}</hk-schema>') : x)))).toEqual(['SN3020']);
   });
+  it('hash does not depend on file order', () => {
+    const files = [...base(), f('assets/a.css', 'a{}'), f('assets/b.css', 'b{}')];
+    expect(compileTheme([...files].reverse(), reg).artifact!.hash).toBe(compileTheme(files, reg).artifact!.hash);
+  });
+  it('reports malformed template schemas without throwing', () => {
+    for (const schema of ['{"sections":{}}', '{"sections":[null]}', '{"sections":[{"type":5}]}', '{"sections":[{"type":"hero","settings":[]}]}']) {
+      const files = base().map((x) => (x.path === 'templates/index.sneferu' ? f(x.path, `<hk-sections /><hk-schema>${schema}</hk-schema>`) : x));
+      const codes = compileTheme(files, reg).diagnostics.filter((d) => d.severity === 'error').map((d) => d.code);
+      expect(codes).toEqual(['SN3026']);
+    }
+  });
+  it('rejects a section schema with bad settings', () => {
+    const files = base().map((x) => (x.path === 'sections/hero.sneferu' ? f(x.path, '<section />' + '<hk-schema>{"name":{"ar":"ب","en":"H"},"settings":[]}</hk-schema>') : x));
+    expect(compileTheme(files, reg).diagnostics.map((d) => d.code)).toContain('SN3030');
+  });
 });

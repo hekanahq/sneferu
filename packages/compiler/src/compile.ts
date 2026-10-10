@@ -29,10 +29,14 @@ export function hash64(text: string): string {
   return h.toString(16).padStart(16, '0');
 }
 
+const isObj = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v);
+
 function asSchema(raw: unknown, file: string, out: Diagnostic[]): SectionSchema {
-  const s = (raw ?? {}) as Partial<SectionSchema>;
-  if (!s.name || typeof s.name !== 'object') out.push(err('SN3030', '<hk-schema> needs name {ar,en}', { file }));
-  return { name: s.name ?? { ar: file, en: file }, version: typeof s.version === 'number' ? s.version : 1, settings: (s.settings ?? {}) as FieldSchema, ...(s.blocks ? { blocks: s.blocks } : {}), ...(s.presets ? { presets: s.presets } : {}) };
+  const s = (isObj(raw) ? raw : {}) as Partial<SectionSchema>;
+  const nameOk = isObj(s.name) && typeof (s.name as { ar?: unknown }).ar === 'string' && typeof (s.name as { en?: unknown }).en === 'string';
+  if (!nameOk) out.push(err('SN3030', '<hk-schema> needs name {ar,en}', { file }));
+  if (s.settings !== undefined && !isObj(s.settings)) out.push(err('SN3030', '<hk-schema> settings must be an object', { file }));
+  return { name: nameOk ? s.name! : { ar: file, en: file }, version: typeof s.version === 'number' ? s.version : 1, settings: (isObj(s.settings) ? s.settings : {}) as FieldSchema, ...(s.blocks ? { blocks: s.blocks } : {}), ...(s.presets ? { presets: s.presets } : {}) };
 }
 
 export function compileTheme(files: ThemeFile[], registry: TagRegistry): { artifact?: Artifact; diagnostics: Diagnostic[] } {
@@ -74,19 +78,23 @@ export function compileTheme(files: ThemeFile[], registry: TagRegistry): { artif
     const c = compileOne(p, 'template');
     const name = nameOf(p);
     templates[name] = c.ir;
-    const declared = ((c.schema as { sections?: { type: string; settings?: Record<string, unknown> }[] } | undefined)?.sections ?? []);
-    templateSections[name] = declared.map((s) => {
+    const rawSections = isObj(c.schema) ? c.schema.sections : undefined;
+    const declared: { type: string; settings: Record<string, unknown> }[] = [];
+    if (rawSections !== undefined && !Array.isArray(rawSections)) diagnostics.push(err('SN3026', `template ${name}: schema sections must be an array`, { file: p }));
+    else for (const s of rawSections ?? []) {
+      if (!isObj(s) || typeof s.type !== 'string' || (s.settings !== undefined && !isObj(s.settings))) { diagnostics.push(err('SN3026', `template ${name}: each section needs a string type and object settings`, { file: p })); continue; }
       if (!sections[s.type]) diagnostics.push(err('SN3020', `template ${name} references unknown section '${s.type}'`, { file: p }));
-      return { type: s.type, settings: s.settings ?? {} };
-    });
+      declared.push({ type: s.type, settings: (s.settings ?? {}) as Record<string, unknown> });
+    }
+    templateSections[name] = declared;
   }
   if (!templates.index) diagnostics.push(err('SN3024', 'templates/index.sneferu is missing'));
 
   const locales: Artifact['locales'] = {};
-  for (const p of [...text.keys()].filter((x) => x.startsWith('locales/'))) {
+  for (const p of [...text.keys()].filter((x) => x.startsWith('locales/')).sort()) {
     try { locales[nameOf(p.replace(/\.json$/, '.sneferu'))] = JSON.parse(text.get(p)!); } catch { diagnostics.push(err('SN3025', 'locale is not valid JSON', { file: p })); }
   }
-  const assets = files.filter((f) => f.path.startsWith('assets/')).map((f) => ({ path: f.path, size: f.bytes.byteLength, hash: hash64(Array.from(f.bytes, (b) => String.fromCharCode(b)).join('')) }));
+  const assets = files.filter((f) => f.path.startsWith('assets/')).sort((a, b) => (a.path < b.path ? -1 : a.path > b.path ? 1 : 0)).map((f) => ({ path: f.path, size: f.bytes.byteLength, hash: hash64(Array.from(f.bytes, (b) => String.fromCharCode(b)).join('')) }));
 
   if (hasErrors(diagnostics) || !mv.manifest) return { diagnostics };
   const body = { schema: 'sneferu/artifact@1' as const, irVersion: IR_VERSION, engineVersion: ENGINE_VERSION, manifest: mv.manifest, layout, templates, sections, blocks, snippets, templateSections, locales, assets };
