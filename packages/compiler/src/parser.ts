@@ -6,8 +6,24 @@ import { VOID_ELEMENTS, type AstAttr, type AstNode } from './ast';
 type Frame =
   | { kind: 'root'; body: AstNode[] }
   | { kind: 'el'; node: Extract<AstNode, { t: 'el' }>; body: AstNode[] }
-  | { kind: 'if'; node: Extract<AstNode, { t: 'if' }>; body: AstNode[] }
+  | { kind: 'if'; node: Extract<AstNode, { t: 'if' }>; body: AstNode[]; sawElse?: boolean }
   | { kind: 'for'; node: Extract<AstNode, { t: 'for' }>; body: AstNode[] };
+
+/** Split on commas that are not inside quotes or parentheses. */
+export function splitArgs(s: string): string[] {
+  const out: string[] = [];
+  let cur = ''; let quote = ''; let depth = 0;
+  for (const ch of s) {
+    if (quote) { cur += ch; if (ch === quote) quote = ''; continue; }
+    if (ch === "'" || ch === '"') { quote = ch; cur += ch; continue; }
+    if (ch === '(') depth++;
+    else if (ch === ')') depth = Math.max(0, depth - 1);
+    if (ch === ',' && depth === 0) { out.push(cur); cur = ''; continue; }
+    cur += ch;
+  }
+  out.push(cur);
+  return out.map((x) => x.trim()).filter(Boolean);
+}
 
 export function parseTemplate(src: string, file: string): { nodes: AstNode[]; schema?: unknown; diagnostics: Diagnostic[] } {
   const { tokens, diagnostics } = lex(src, file);
@@ -104,11 +120,12 @@ export function parseTemplate(src: string, file: string): { nodes: AstNode[]; sc
         } else if (kw === 'elsif' || kw === 'else') {
           const f = top();
           if (f.kind !== 'if') { diagnostics.push(err('SN1102', `{% ${kw} %} outside {% if %}`, at(tok.loc))); break; }
+          if (f.sawElse) { diagnostics.push(err('SN1109', kw === 'else' ? 'duplicate {% else %}' : '{% elsif %} after {% else %}', at(tok.loc))); break; }
           if (kw === 'elsif') {
             const e = expr(arg, tok.loc);
             const b = { test: e ?? ({ k: 'lit', v: false } as Expr), body: [] as AstNode[] };
             f.node.branches.push(b); f.body = b.body;
-          } else { f.node.else = []; f.body = f.node.else; }
+          } else { f.node.else = []; f.body = f.node.else; f.sawElse = true; }
         } else if (kw === 'endif' || kw === 'endfor') {
           const want = kw === 'endif' ? 'if' : 'for';
           const f = top();
@@ -124,7 +141,7 @@ export function parseTemplate(src: string, file: string): { nodes: AstNode[]; sc
           const m = /^'([a-z0-9-]+)'\s*(?:,\s*(.*))?$/.exec(arg);
           if (!m) { diagnostics.push(err('SN1105', "expected {% render 'name', key: expr %}", at(tok.loc))); break; }
           const args: Record<string, Expr> = {};
-          for (const pair of (m[2] ?? '').split(',').map((s) => s.trim()).filter(Boolean)) {
+          for (const pair of splitArgs(m[2] ?? '')) {
             const pm = /^([A-Za-z_][A-Za-z0-9_]*)\s*:\s*(.+)$/.exec(pair);
             const e = pm ? expr(pm[2]!, tok.loc) : undefined;
             if (pm && e) args[pm[1]!] = e;

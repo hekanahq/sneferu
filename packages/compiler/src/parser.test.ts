@@ -52,4 +52,18 @@ describe('parseTemplate', () => {
     parseTemplate('</a>'.repeat(70000), 'f');
     expect(Date.now() - t0).toBeLessThan(2000);
   });
+  it('splits render arguments outside quotes and parentheses (M6)', () => {
+    const r = parseTemplate(`{% render 'price', label: 'a, b', p: collection('x,y').products, n: 2 %}`, 'f');
+    expect(r.diagnostics).toEqual([]);
+    expect(r.nodes[0]).toMatchObject({ t: 'render', snippet: 'price', args: {
+      label: { k: 'lit', v: 'a, b' }, p: { k: 'path', p: ['products'], from: { k: 'lookup', fn: 'collection', args: [{ k: 'lit', v: 'x,y' }] } }, n: { k: 'lit', v: 2 },
+    } });
+  });
+  it('rejects a second else and elsif after else (M6)', () => {
+    const codes = (s: string) => parseTemplate(s, 'f').diagnostics.map((d) => d.code);
+    expect(codes('{% if a %}1{% else %}2{% else %}3{% endif %}')).toEqual(['SN1109']);
+    expect(codes('{% if a %}1{% else %}2{% elsif b %}3{% endif %}')).toEqual(['SN1109']);
+    expect(codes('{% if a %}1{% elsif b %}2{% else %}3{% endif %}')).toEqual([]);
+    expect(codes('{% if a %}{% if b %}{% else %}{% endif %}{% else %}{% endif %}')).toEqual([]);
+  });
 });
