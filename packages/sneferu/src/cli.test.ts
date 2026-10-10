@@ -45,4 +45,21 @@ describe('cli commands', () => {
     symlinkSync('/etc/passwd', join(dir, 'assets', 'leak.css'));
     expect(() => loadTheme(dir)).toThrow(/symlink/);
   });
+  it('build reports loadTheme errors instead of throwing (M5)', () => {
+    runInit(dir, {});
+    symlinkSync('/etc/passwd', join(dir, 'assets', 'leak.css'));
+    let b: ReturnType<typeof runBuild> | undefined;
+    expect(() => { b = runBuild(dir); }).not.toThrow();
+    expect(b!.ok).toBe(false);
+    expect(b!.output).toContain('SN3002 symlinks are not allowed');
+  });
+  it('build never reads its own --out folder (M5)', () => {
+    runInit(dir, {});
+    mkdirSync(join(dir, 'out', 'nested'), { recursive: true });
+    writeFileSync(join(dir, 'out', 'nested', 'junk.exe'), 'x');
+    expect(runBuild(dir, 'out').ok).toBe(true);
+    expect(runBuild(dir, 'out').ok).toBe(true);
+    expect(loadTheme(dir, { exclude: [join(dir, 'out')] }).some((f) => f.path.startsWith('out/'))).toBe(false);
+    expect(loadTheme(dir).some((f) => f.path.startsWith('out/'))).toBe(true);
+  });
 });

@@ -7,10 +7,12 @@ import { loadTheme } from '../load';
 
 export function runBuild(dir: string, outDir = 'dist'): { ok: boolean; output: string; artifactPath?: string } {
   const root = resolve(dir);
-  const { artifact, diagnostics } = compileTheme(loadTheme(root), createDefaultRegistry());
+  const dist = resolve(root, outDir);
+  let files;
+  try { files = loadTheme(root, { exclude: [dist] }); } catch (e) { return { ok: false, output: `error ${(e as Error).message}\n✖ build failed` }; }
+  const { artifact, diagnostics } = compileTheme(files, createDefaultRegistry());
   const out = diagnostics.map(formatDiagnostic);
   if (!artifact) return { ok: false, output: [...out, '✖ build failed'].join('\n') };
-  const dist = resolve(root, outDir);
   mkdirSync(dist, { recursive: true });
   const artifactPath = join(dist, `${artifact.manifest.id}-${artifact.manifest.version}.sneferu.json`);
   writeFileSync(artifactPath, JSON.stringify(artifact));
