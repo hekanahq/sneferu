@@ -5,7 +5,7 @@
   "type": "module",
   "bin": { "sneferu": "./dist/cli.js", "snf": "./dist/cli.js" },
   "files": ["dist", "starter"],
-  "scripts": { "build": "tsup src/cli.ts --format esm --clean --banner.js \"#!/usr/bin/env node\"", "typecheck": "tsc --noEmit" },
+  "scripts": { "build": "tsup", "typecheck": "tsc --noEmit" },
   "dependencies": {
     "@hekana/sneferu-compiler": "workspace:^", "@hekana/sneferu-runtime": "workspace:^",
     "@hekana/sneferu-components": "workspace:^", "@hekana/sneferu-core": "workspace:^",
