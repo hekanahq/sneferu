@@ -1,0 +1,11 @@
+{
+  "name": "@hekana/sneferu-core",
+  "version": "0.1.0",
+  "description": "Sneferu contracts: IR, diagnostics, escaping, tag registry",
+  "type": "module",
+  "sideEffects": false,
+  "exports": { ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js" } },
+  "files": ["dist"],
+  "scripts": { "build": "tsup src/index.ts --format esm --dts --clean", "typecheck": "tsc --noEmit" },
+  "license": "SEE LICENSE IN ../../LICENSE"
+}

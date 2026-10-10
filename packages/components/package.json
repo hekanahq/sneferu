@@ -1,0 +1,11 @@
+{
+  "name": "@hekana/sneferu-components",
+  "version": "0.1.0",
+  "description": "Sneferu built-in components",
+  "type": "module",
+  "sideEffects": false,
+  "exports": { ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js" } },
+  "files": ["dist"],
+  "scripts": { "build": "tsup src/index.ts --format esm --dts --clean", "typecheck": "tsc --noEmit" },
+  "license": "SEE LICENSE IN ../../LICENSE", "dependencies": { "@hekana/sneferu-core": "workspace:^" }
+}
