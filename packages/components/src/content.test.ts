@@ -31,4 +31,21 @@ describe('content and commerce tags', () => {
     expect(html).toContain('href="/products/p1"');
     expect(html).toContain('10.00 ج.م');
   });
+  it('every base tag carries pass-through attributes on its root (I7)', () => {
+    const extra = { class: 'lead "x" <y>', id: 'top one', role: 'region', title: '"><script>', 'aria-label': 'عن "المتجر"', 'data-x': '1', 'data-hk-section': 'spoof', 'data-a<b': 'z', onclick: 'alert(1)' };
+    const need: Record<string, Record<string, unknown>> = { 'hk-image': { src: '/a.png' }, 'hk-product-card': { product: { title: 'P', url: '/p' } } };
+    for (const name of r.names()) {
+      const { html } = render(name, { ...need[name], ...extra }, '<i></i>');
+      const root = /^<[a-z0-9]+([^>]*)>/.exec(html)![1]!;
+      expect(root, name).toMatch(/class="[^"]*\blead x y"/);
+      expect(root, name).toContain(' id="top-one"');
+      expect(root, name).toContain(' role="region"');
+      expect(root, name).toContain(' title="&quot;&gt;&lt;script&gt;"');
+      expect(root, name).toContain(' aria-label="عن &quot;المتجر&quot;"');
+      expect(root, name).toContain(' data-x="1"');
+      expect(html, name).not.toContain('data-hk-section');
+      expect(html, name).not.toContain('data-a<b');
+      expect(html, name).not.toContain('onclick');
+    }
+  });
 });

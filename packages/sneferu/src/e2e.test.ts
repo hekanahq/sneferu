@@ -46,4 +46,13 @@ describe('starter theme end to end', () => {
     expect(r.html).toContain('Shop now');
     expect(r.html).not.toContain('sn-product-card');
   });
+
+  it('keeps class/id/aria/data written on hk tags (I7)', () => {
+    const extra: ThemeFile[] = files.map((x) => (x.path === 'sections/hero.sneferu'
+      ? { path: x.path, bytes: new TextEncoder().encode('<hk-section class="hero" id="top" aria-label="x" data-x="1"><hk-text text="a" class="lead" /></hk-section><hk-schema>{"name":{"ar":"a","en":"a"},"settings":{}}</hk-schema>') } : x));
+    const c = compileTheme(extra, registry);
+    const r = renderPage(c.artifact!, { template: 'index', ctx: sampleContext('ar', c.artifact!.locales, 'ar'), registry });
+    expect(r.html).toMatch(/<section class="sn-[^"]* hero" id="top" aria-label="x" data-x="1">/);
+    expect(r.html).toMatch(/<p class="sn-[^"]* lead">a<\/p>/);
+  });
 });

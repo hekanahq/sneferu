@@ -11,6 +11,7 @@ export function createDefaultRegistry(): TagRegistry {
 }
 export { formatMoney };
 export * from './css';
+export * from './attrs';
 export * from './layout';
 export * from './content';
 export * from './commerce';

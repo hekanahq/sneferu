@@ -1,5 +1,6 @@
 import { escapeAttr, escapeText, safeUrl, toStr, type HkTag } from '@hekana/sneferu-core';
 import { colorVar, oneOf, px, responsiveCss } from './css';
+import { passthrough } from './attrs';
 
 const L = (ar: string, en: string) => ({ ar, en });
 const ed = (ar: string, en: string, group = 'content') => ({ label: L(ar, en), group, insertable: true });
@@ -25,7 +26,8 @@ export const hkHeading: HkTag = {
   render(p, c) {
     const h = LEVEL(p.level) ?? 'h2';
     textCss(`.sn-${c.id}`, p, c.css);
-    return `<${h} class="sn-${c.id}">${escapeText(toStr(p.text))}</${h}>`;
+    const x = passthrough(p);
+    return `<${h} class="sn-${c.id}${x.cls}"${x.attrs}>${escapeText(toStr(p.text))}</${h}>`;
   },
 };
 
@@ -38,7 +40,7 @@ export const hkText: HkTag = {
     color: { type: 'color', label: L('اللون', 'Colour') },
   },
   allowedParents: '*', allowedChildren: [], responsive: ['size'], bindable: '*', editor: ed('نص', 'Text'),
-  render(p, c) { textCss(`.sn-${c.id}`, p, c.css); return `<p class="sn-${c.id}">${escapeText(toStr(p.text))}</p>`; },
+  render(p, c) { textCss(`.sn-${c.id}`, p, c.css); const x = passthrough(p); return `<p class="sn-${c.id}${x.cls}"${x.attrs}>${escapeText(toStr(p.text))}</p>`; },
 };
 
 const ASPECT = oneOf(['1/1', '4/5', '3/4', '16/9', '21/9'] as const);
@@ -63,7 +65,8 @@ export const hkImage: HkTag = {
     const w = px(p.width, 2400); if (w) c.css(`${s}{max-width:${w}}`);
     const r = px(p.radius, 200); if (r) c.css(`${s}{border-radius:${r}}`);
     const eager = p.loading === 'eager';
-    return `<img class="sn-${c.id}" src="${escapeAttr(raw)}" alt="${escapeAttr(toStr(p.alt))}" loading="${eager ? 'eager' : 'lazy'}" decoding="async"${eager ? ' fetchpriority="high"' : ''}>`;
+    const x = passthrough(p);
+    return `<img class="sn-${c.id}${x.cls}"${x.attrs} src="${escapeAttr(raw)}" alt="${escapeAttr(toStr(p.alt))}" loading="${eager ? 'eager' : 'lazy'}" decoding="async"${eager ? ' fetchpriority="high"' : ''}>`;
   },
 };
 
@@ -79,7 +82,8 @@ export const hkButton: HkTag = {
   allowedParents: '*', allowedChildren: [], responsive: [], bindable: '*', editor: ed('زر', 'Button', 'ui'),
   render(p, c) {
     const v = VARIANT(p.variant) ?? 'solid';
-    return `<a class="sn-${c.id} sn-btn sn-btn-${v}" href="${escapeAttr(safeUrl(toStr(p.href) || '#'))}">${escapeText(toStr(p.label))}</a>`;
+    const x = passthrough(p);
+    return `<a class="sn-${c.id} sn-btn sn-btn-${v}${x.cls}"${x.attrs} href="${escapeAttr(safeUrl(toStr(p.href) || '#'))}">${escapeText(toStr(p.label))}</a>`;
   },
 };
 
@@ -101,7 +105,8 @@ export const hkCard: HkTag = {
     responsiveCss(s, 'padding', p.padding ?? 16, (v) => px(v, 96)).forEach(c.css);
     if (p.border === true) c.css(`${s}{border:1px solid color-mix(in srgb,var(--hk-color-text) 14%,transparent)}`);
     const sh = typeof p.shadow === 'string' ? SHADOW[p.shadow] : undefined; if (sh) c.css(`${s}{box-shadow:${sh}}`);
-    return `<div class="sn-${c.id} sn-card">${c.renderChildren()}</div>`;
+    const x = passthrough(p);
+    return `<div class="sn-${c.id} sn-card${x.cls}"${x.attrs}>${c.renderChildren()}</div>`;
   },
 };
 
@@ -112,6 +117,7 @@ export const hkBadge: HkTag = {
   allowedParents: '*', allowedChildren: ['#text'], responsive: [], bindable: '*', editor: ed('شارة', 'Badge'),
   render(p, c) {
     const body = p.text !== undefined ? escapeText(toStr(p.text)) : c.renderChildren();
-    return `<span class="sn-${c.id} sn-badge sn-badge-${TONE(p.tone) ?? 'accent'}">${body}</span>`;
+    const x = passthrough(p);
+    return `<span class="sn-${c.id} sn-badge sn-badge-${TONE(p.tone) ?? 'accent'}${x.cls}"${x.attrs}>${body}</span>`;
   },
 };

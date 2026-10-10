@@ -1,5 +1,6 @@
 import type { HkTag } from '@hekana/sneferu-core';
 import { colorVar, oneOf, px, responsiveCss } from './css';
+import { passthrough } from './attrs';
 
 const L = (ar: string, en: string) => ({ ar, en });
 const editor = (ar: string, en: string, group = 'layout') => ({ label: L(ar, en), group, insertable: true });
@@ -18,7 +19,8 @@ export const hkSection: HkTag = {
     if (bg) c.css(`${s}{background:${bg}}`);
     if (p.fullBleed !== true) c.css(`${s}>.sn-inner{max-width:var(--hk-content-width,1280px);margin-inline:auto;padding-inline:16px}`);
     responsiveCss(s, 'padding-block', p.paddingY ?? 64, (v) => px(v, 240)).forEach(c.css);
-    return `<section class="sn-${c.id}"><div class="sn-inner">${c.renderChildren()}</div></section>`;
+    const x = passthrough(p);
+    return `<section class="sn-${c.id}${x.cls}"${x.attrs}><div class="sn-inner">${c.renderChildren()}</div></section>`;
   },
 };
 
@@ -34,7 +36,8 @@ export const hkContainer: HkTag = {
     const mw = px(p.maxWidth, 1920);
     c.css(`${s}{margin-inline:auto;max-width:${mw ?? 'var(--hk-content-width,1280px)'}}`);
     responsiveCss(s, 'padding-inline', p.paddingX ?? 16, (v) => px(v, 120)).forEach(c.css);
-    return `<div class="sn-${c.id}">${c.renderChildren()}</div>`;
+    const x = passthrough(p);
+    return `<div class="sn-${c.id}${x.cls}"${x.attrs}>${c.renderChildren()}</div>`;
   },
 };
 
@@ -60,7 +63,8 @@ export const hkStack: HkTag = {
     const a = ALIGN(p.align); if (a) c.css(`${s}{align-items:${a === 'start' || a === 'end' ? `flex-${a}` : a}}`);
     const j = typeof p.justify === 'string' ? JUSTIFY[p.justify] : undefined; if (j) c.css(`${s}{justify-content:${j}}`);
     if (p.wrap === true) c.css(`${s}{flex-wrap:wrap}`);
-    return `<div class="sn-${c.id}">${c.renderChildren()}</div>`;
+    const x = passthrough(p);
+    return `<div class="sn-${c.id}${x.cls}"${x.attrs}>${c.renderChildren()}</div>`;
   },
 };
 
@@ -83,6 +87,7 @@ export const hkGrid: HkTag = {
       rules.forEach(c.css);
     }
     responsiveCss(s, 'gap', p.gap ?? 24, (v) => px(v, 160)).forEach(c.css);
-    return `<div class="sn-${c.id} sn-grid">${c.renderChildren()}</div>`;
+    const x = passthrough(p);
+    return `<div class="sn-${c.id} sn-grid${x.cls}"${x.attrs}>${c.renderChildren()}</div>`;
   },
 };
