@@ -20,12 +20,12 @@ const render = (tag: string, props: Record<string, unknown>, children: Kids = ''
 };
 /** hk-product-card's markup in 0.2, before parts existed. */
 const CARD_02 = '<a class="sn-product-card" href="/p"><img src="https://cdn.x/1.webp" alt="P &quot;1&quot;" loading="lazy" decoding="async"><span class="sn-title">P "1"</span><span class="sn-c1-p sn-price"><span class="sn-now">10.00 ج.م</span> <s class="sn-was">12.00 ج.م</s></span></a>';
-const OWN_A11Y = new Set(['hk-icon']);
+const OWN_A11Y = new Set(['hk-icon', 'hk-search-form']);
 const PROD = { title: 'P "1"', url: '/p', price: 1000, compare_at: 1200, image: { url: 'https://cdn.x/1.webp' } };
 
 describe('content and commerce tags', () => {
   it('registers the base set', () => {
-    expect([...r.names()].sort()).toEqual(['hk-badge', 'hk-button', 'hk-card', 'hk-container', 'hk-grid', 'hk-heading', 'hk-icon', 'hk-image', 'hk-price', 'hk-product-card', 'hk-product-grid', 'hk-rich-text', 'hk-section', 'hk-stack', 'hk-text']);
+    expect([...r.names()].sort()).toEqual(['hk-badge', 'hk-button', 'hk-card', 'hk-container', 'hk-grid', 'hk-heading', 'hk-icon', 'hk-image', 'hk-price', 'hk-product-card', 'hk-product-grid', 'hk-rich-text', 'hk-search-form', 'hk-section', 'hk-stack', 'hk-text']);
   });
   it('heading/text escape and choose level', () => {
     expect(render('hk-heading', { text: '<b>كروت</b>', level: 'h1' }).html).toBe('<h1 class="sn-c1">&lt;b&gt;كروت&lt;/b&gt;</h1>');

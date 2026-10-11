@@ -853,6 +853,65 @@
       ]
     },
     {
+      "name": "hk-search-form",
+      "category": "ui",
+      "label": {
+        "en": "Search form"
+      },
+      "allowedChildren": [],
+      "responsive": [],
+      "props": [
+        {
+          "name": "placeholder",
+          "attr": "placeholder",
+          "type": "text",
+          "responsive": false,
+          "label": {
+            "en": "Placeholder"
+          }
+        },
+        {
+          "name": "label",
+          "attr": "label",
+          "type": "text",
+          "default": "",
+          "responsive": false,
+          "label": {
+            "en": "Label"
+          }
+        },
+        {
+          "name": "buttonLabel",
+          "attr": "button-label",
+          "type": "text",
+          "responsive": false,
+          "label": {
+            "en": "Button text"
+          }
+        },
+        {
+          "name": "showLabel",
+          "attr": "show-label",
+          "type": "boolean",
+          "default": false,
+          "responsive": false,
+          "label": {
+            "en": "Show label"
+          }
+        },
+        {
+          "name": "icon",
+          "attr": "icon",
+          "type": "boolean",
+          "default": true,
+          "responsive": false,
+          "label": {
+            "en": "Search icon"
+          }
+        }
+      ]
+    },
+    {
       "name": "hk-price",
       "category": "commerce",
       "label": {

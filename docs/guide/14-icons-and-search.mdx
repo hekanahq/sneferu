@@ -71,3 +71,60 @@ The names match Lucide's, so [lucide.dev/icons](https://lucide.dev/icons) shows
 what each one looks like. Icons that are not in this table are not available;
 a theme cannot load other SVG files as icons, but it can still draw its own
 `<svg>` with the allowed SVG elements (see [Security and limits](06-security-and-limits.mdx)).
+
+## Search form
+
+`<hk-search-form>` is a search box that sends the shopper to the store's search
+page. It is the only way a theme renders form controls: `<form>`, `<input>` and
+`<button>` written directly in a template are SN2001.
+
+```html
+<hk-search-form placeholder="{{ t('search_placeholder') }}" />
+```
+
+renders, on an English page:
+
+```html
+<form class="sn-c1 sn-search" role="search" method="get" action="/en/search">
+  <label class="sn-search-label sn-visually-hidden" for="c1-q">Search</label>
+  <input id="c1-q" type="search" name="q" maxlength="100" autocomplete="off" enterkeyhint="search" placeholder="Find a gift card">
+  <button type="submit" class="sn-search-button" aria-label="Search"><svg class="sn-icon" …></svg></button>
+</form>
+```
+
+(on one line in the real output).
+
+| Prop | Type | Default | Notes |
+| - | - | - | - |
+| `placeholder` | text | none | Hint inside the box |
+| `label` | text | `''` | What the box is for. Empty: the theme's `search` translation, else "بحث" / "Search" |
+| `show-label` | boolean | `false` | Show the label above the box; otherwise it is hidden on screen and still read by screen readers |
+| `button-label` | text | none | Text in the button, after the icon |
+| `icon` | boolean | `true` | The `search` icon in the button |
+
+The button is never empty: with `icon="false"` and no `button-label` it shows
+the label.
+
+### What is fixed
+
+The form always goes to the store's `/search` page with `GET` (on English
+pages `/en/search`), and has exactly one field, `q`, limited to 100 characters.
+There is no `action`, `method` or field prop, no hidden fields, and `role` and
+`aria-*` on the tag are ignored (the form is `role="search"`). Writing any other
+attribute that is not a prop is SN2004. This keeps a theme from sending
+shoppers' input anywhere but the store.
+
+### Styling
+
+The tag writes a small scoped stylesheet: the form is a row with an 8px gap,
+the box grows to fill it, and the box and the button are at least 44px tall
+(the button at least 44px wide), so both are easy to tap. Everything else, such
+as borders, radius and colours, is yours to style:
+
+```css
+.sn-search input { border: 1px solid var(--hk-color-text); border-radius: 8px; padding: 0 12px; }
+.sn-search .sn-search-button { background: var(--hk-color-primary); color: var(--hk-color-background); border: 0; border-radius: 8px; }
+```
+
+Add a `search` key to `locales/ar.json` and `locales/en.json` to name the box
+for screen readers in your theme's words.

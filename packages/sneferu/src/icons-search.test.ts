@@ -40,3 +40,17 @@ describe('icons end to end', () => {
     expect(render('<p>a</p><hk-icon name="{{ \'no\' | upcase }}" /><hk-icon name="nope" /><p>b</p>').html).toContain('<p>a</p><p>b</p>');
   });
 });
+
+describe('hk-search-form end to end', () => {
+  it('renders a localised GET form with the theme translation as label', () => {
+    const en = render('<hk-search-form placeholder="Find a card" show-label="true" />', 'en');
+    expect(en.html).toMatch(/<form class="sn-[a-z0-9-]+ sn-search" role="search" method="get" action="\/en\/search"><label class="sn-search-label" for="[a-z0-9-]+-q">Search<\/label><input [^>]*name="q"[^>]*placeholder="Find a card">/);
+    expect(render('<hk-search-form />').html).toContain('action="/search"><label class="sn-search-label sn-visually-hidden" for="c1-q">بحث</label>');
+    expect(en.css).toContain('min-height:44px');
+  });
+  it('action, method and unknown props are compile errors (SN2004); raw form controls stay SN2001', () => {
+    const codes = (src: string) => compile(src).diagnostics.filter((d) => d.severity === 'error').map((d) => d.code);
+    for (const attr of ['action="https://evil.example"', 'method="post"', 'name="x"', 'hidden="y"']) expect(codes(`<hk-search-form ${attr} />`), attr).toContain('SN2004');
+    for (const html of ['<form action="/search"><input name="q"></form>', '<button>x</button>']) expect(codes(html), html).toContain('SN2001');
+  });
+});

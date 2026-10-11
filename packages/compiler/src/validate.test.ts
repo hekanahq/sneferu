@@ -58,6 +58,10 @@ describe('validateTemplate', () => {
     expect(run('<div style="color: {{ c }}"></div>')).toEqual(['SN2009']);
     expect(run('<a href="javascript:alert(1)">x</a>')).toEqual(['SN2010']);
   });
+  it('form controls exist only through hk-search-form: <form>, <input>, <button>, <select>, <textarea> are rejected', () => {
+    for (const html of ['<form action="/x"></form>', '<input name="q">', '<button>x</button>', '<select></select>', '<textarea></textarea>'])
+      expect(run(html), html).toContain('SN2001');
+  });
   it('checks hk tags, props and children with suggestions', () => {
     const r = validateTemplate(parseTemplate('<hk-grdi></hk-grdi><hk-grid mobile-colums="1"></hk-grid>', 'f').nodes, { file: 'f', registry, snippets: new Set(), kind: 'section' });
     expect(r.map((d) => d.code)).toEqual(['SN2003', 'SN2004']);
