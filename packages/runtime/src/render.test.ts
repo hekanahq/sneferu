@@ -79,4 +79,20 @@ describe('renderNodes', () => {
     expect(renderNodes([node], {}, e)).toBe('');
     expect(e.diagnostics).toHaveLength(1);
   });
+  it('loop limit from a setting is clamped', () => {
+    const loop: IRNode[] = [{ k: 'loop', as: 'x', src: path('xs'), limit: { k: 'path', p: ['section', 'settings', 'count'] }, body: [{ k: 'html', s: 'i' }] }];
+    const count = (c: unknown) => renderNodes(loop, { xs: Array(300).fill(0), section: { settings: { count: c } } }, env()).length;
+    expect(count(3)).toBe(3);
+    expect(count('7')).toBe(7);
+    expect(count(999)).toBe(LIMITS.loopMax);
+    for (const fallback of ['x', '', 0, -2, 2.5, null, undefined, true, [3], { n: 3 }]) expect(count(fallback), String(fallback)).toBe(LIMITS.loopDefault);
+  });
+  it('collection() with an empty setting renders nothing', () => {
+    const c: RenderContext = { ...ctx, collections: { '': { products: [1, 2] }, featured: { products: [1, 2, 3] } } };
+    const loop: IRNode[] = [{ k: 'loop', as: 'p', src: { k: 'path', p: ['products'], from: { k: 'lookup', fn: 'collection', args: [path('section', 'settings', 'list')] } }, limit: 50, body: [{ k: 'html', s: 'i' }] }];
+    const run = (list: unknown) => renderNodes(loop, { section: { settings: { list } } }, env({ ctx: c }));
+    expect(run('')).toBe('');
+    expect(run(undefined)).toBe('');
+    expect(run('featured')).toBe('iii');
+  });
 });

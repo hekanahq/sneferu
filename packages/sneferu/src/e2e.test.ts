@@ -67,3 +67,24 @@ describe('starter theme end to end', () => {
     expect(r.html).toMatch(/<p class="sn-[^"]* lead">a<\/p>/);
   });
 });
+
+describe('merchant-chosen collections end to end', () => {
+  const registry = createDefaultRegistry();
+  const section = `<ul>{% for p in collection(section.settings.list).products limit: section.settings.count %}<li>{{ p.title }}</li>{% endfor %}</ul>`
+    + `<nav>{% for c in collections() %}<a href="{{ c.url }}">{{ c.title }} ({{ c.count }})</a>{% endfor %}</nav>`
+    + `<hk-schema>{"name":"Shelf","settings":{"list":{"type":"collection","label":"Collection","default":"featured"},"count":{"type":"range","label":"Count","min":1,"max":12,"default":2}}}</hk-schema>`;
+  const themed = [...files.filter((f) => f.path !== 'sections/hero.sneferu'), { path: 'sections/hero.sneferu', bytes: new TextEncoder().encode(section) }];
+  const { artifact, diagnostics } = compileTheme(themed, registry);
+
+  it('compiles, renders the chosen collection at the chosen count, and an unpicked one as empty', () => {
+    expect(diagnostics.filter((d) => d.severity === 'error')).toEqual([]);
+    const ctx = sampleContext('en', artifact!.locales, 'en');
+    const page = (props: Record<string, unknown>) => renderPage(artifact!, { template: 'index', ctx, registry, sections: [{ id: 's', type: 'hero', props }] });
+    const items = (html: string) => (html.match(/<li>/g) ?? []).length;
+    expect(items(page({}).html)).toBe(2);
+    expect(page({ list: 'subscriptions', count: 3 }).html).toContain('<li>One-month subscription</li>');
+    expect(items(page({ list: 'subscriptions', count: 3 }).html)).toBe(3);
+    expect(items(page({ list: '' }).html)).toBe(0);
+    expect(page({}).html).toContain('<a href="/en/collections/gift-cards">Gift cards (6)</a>');
+  });
+});

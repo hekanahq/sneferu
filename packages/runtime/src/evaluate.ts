@@ -3,6 +3,7 @@ import type { RenderContext, Scope } from './context';
 import { FILTER_IMPLS } from './filters';
 import { translate } from './translate';
 
+const MAX_CATEGORIES = 50;
 const BLOCKED = new Set(['__proto__', 'prototype', 'constructor']);
 const own = (o: object, k: string | number) => Object.prototype.hasOwnProperty.call(o, k);
 
@@ -20,7 +21,9 @@ function get(base: unknown, key: string | number): unknown {
 function lookup(fn: string, args: unknown[], ctx: RenderContext): unknown {
   const a0 = String(args[0] ?? '');
   switch (fn) {
-    case 'collection': return own(ctx.collections, a0) ? ctx.collections[a0] : { products: [] };
+    // a merchant who never picked a collection gives '' or undefined: an empty list, never a lookup
+    case 'collection': return typeof args[0] === 'string' && args[0] !== '' && own(ctx.collections, args[0]) ? ctx.collections[args[0]] : { products: [] };
+    case 'collections': return Array.isArray(ctx.categories) ? ctx.categories.slice(0, MAX_CATEGORIES) : [];
     case 'product': return own(ctx.products, a0) ? ctx.products[a0] : undefined;
     case 't': return translate(ctx, a0);
     case 'settings': return get(ctx.settings, a0);

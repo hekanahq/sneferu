@@ -135,4 +135,15 @@ describe('element allow-list and raw html (C1, C3)', () => {
       '<img srcset="/a.png 1x, https://cdn.x/b.png 2x" src="/a.png">'])
       expect(codes([{ k: 'html', s }]), s).toEqual([]);
   });
+  it('accepts a loop limit read from a setting path, and nothing else that is not a number', () => {
+    const loop = (limit: unknown) => [{ k: 'loop', as: 'p', src: { k: 'path', p: ['xs'] }, limit, body: [] }];
+    for (const ok of [{ k: 'path', p: ['section', 'settings', 'count'] }, { k: 'path', p: ['block', 'settings', 'n'] }, { k: 'path', p: ['settings', 'n'] }])
+      expect(validateIR(loop(ok), tags), JSON.stringify(ok)).toEqual([]);
+    for (const bad of [{ k: 'path', p: ['product', 'count'] }, { k: 'path', p: [] }, { k: 'path', p: 'section' }, { k: 'path', p: ['section', { x: 1 }] },
+      { k: 'path', p: ['settings', 'n'], from: { k: 'lookup', fn: 'collections', args: [] } }, { k: 'lit', v: 3 }, { k: 'lookup', fn: 'settings', args: [] }, '12', null, 0, 251, 2.5])
+      expect(validateIR(loop(bad), tags).map((d) => d.code), JSON.stringify(bad)).toContain('SN9004');
+  });
+  it('knows the collections lookup', () => {
+    expect(validateIR([{ k: 'text', e: { k: 'path', p: ['size'], from: { k: 'lookup', fn: 'collections', args: [] } } }], tags)).toEqual([]);
+  });
 });

@@ -43,3 +43,30 @@ describe('parseFor', () => {
     expect('error' in parseFor('p in x limit:abc')).toBe(true);
   });
 });
+
+describe('collection settings and collections()', () => {
+  it('collection() takes a handle or a collection setting', () => {
+    expect(parseExpr("collection(section.settings.list).products").expr).toEqual({ k: 'path', p: ['products'], from: { k: 'lookup', fn: 'collection', args: [{ k: 'path', p: ['section', 'settings', 'list'] }] } });
+    expect(parseExpr("collection(block.settings.list)").expr).toEqual({ k: 'lookup', fn: 'collection', args: [{ k: 'path', p: ['block', 'settings', 'list'] }] });
+    expect(parseExpr("collection(settings.home_list)").expr).toEqual({ k: 'lookup', fn: 'collection', args: [{ k: 'path', p: ['settings', 'home_list'] }] });
+    for (const bad of ['collection(product.title)', 'collection(section.title)', 'collection(section.settings)', 'collection(section.settings.a.b)', 'collection(settings.a.b)', 'collection(settings)',
+      'collection(section.settings[0])', 'collection(5)', 'collection()', "collection('a', 'b')", "collection(section.settings.list | upcase)", "collection(collection('x').handle)"])
+      expect(parseExpr(bad).error, bad).toMatch(/handle or a collection setting/);
+  });
+  it('other lookups still take literal arguments', () => {
+    expect(parseExpr('t(section.settings.key)').error).toMatch(/literal arguments/);
+    expect(parseExpr('product(settings.p)').error).toMatch(/literal arguments/);
+  });
+  it('collections() takes no arguments', () => {
+    expect(parseExpr("collections()").expr).toEqual({ k: 'lookup', fn: 'collections', args: [] });
+    expect(parseExpr("collections()[0].title").expr).toEqual({ k: 'path', p: [0, 'title'], from: { k: 'lookup', fn: 'collections', args: [] } });
+    expect(parseExpr("collections('x')").error).toMatch(/takes no arguments/);
+  });
+  it('for limit may be a setting', () => {
+    expect(parseFor('p in xs limit: section.settings.count')).toEqual({ as: 'p', src: { k: 'path', p: ['xs'] }, limitExpr: { k: 'path', p: ['section', 'settings', 'count'] } });
+    expect(parseFor('p in xs limit:settings.count')).toEqual({ as: 'p', src: { k: 'path', p: ['xs'] }, limitExpr: { k: 'path', p: ['settings', 'count'] } });
+    expect(parseFor('p in xs limit: block.settings.n')).toMatchObject({ limitExpr: { k: 'path', p: ['block', 'settings', 'n'] } });
+    for (const bad of ['p in xs limit: product.x', 'p in xs limit: section.settings', 'p in xs limit: settings', 'p in xs limit: -1', 'p in xs limit: 1.5', 'p in xs limit: section.settings.a.b'])
+      expect('error' in parseFor(bad), bad).toBe(true);
+  });
+});

@@ -9,6 +9,15 @@ const LOOKUP_SET = new Set<string>(LOOKUPS);
 const SINKS = new Set(['text', 'url', 'token']);
 const TAG_RE = /^[a-z][a-z0-9-]*$/;
 const ATTR_RE = /^[a-z_:][a-z0-9_:.-]*$/;
+/** A loop limit: a whole number in range, or a plain path into section, block or theme settings. */
+const LIMIT_ROOTS = new Set(['section', 'block', 'settings']);
+const validLimit = (l: unknown): boolean => {
+  if (typeof l === 'number') return Number.isInteger(l) && l >= 1 && l <= LIMITS.loopMax;
+  if (typeof l !== 'object' || l === null || Array.isArray(l)) return false;
+  const e = l as Record<string, unknown>;
+  return e.k === 'path' && e.from === undefined && Array.isArray(e.p) && e.p.length >= 2 && LIMIT_ROOTS.has(e.p[0] as string)
+    && e.p.every((x) => typeof x === 'string' || (typeof x === 'number' && Number.isInteger(x) && x >= 0));
+};
 const isObj = (x: unknown): x is Record<string, unknown> => typeof x === 'object' && x !== null && !Array.isArray(x);
 
 /**
@@ -83,7 +92,7 @@ export function validateIR(nodes: unknown, knownTags: ReadonlySet<string>): Diag
           if (n.else !== undefined) walk(n.else, d + 1);
           break;
         case 'loop':
-          if (typeof n.limit !== 'number' || !Number.isInteger(n.limit) || n.limit < 1 || n.limit > LIMITS.loopMax) out.push(err('SN9004', `loop limit ${String(n.limit)} outside 1..${LIMITS.loopMax}`));
+          if (!validLimit(n.limit)) out.push(err('SN9004', `loop limit ${String(JSON.stringify(n.limit) ?? n.limit).slice(0, 60)}: expected 1..${LIMITS.loopMax} or a section, block or theme setting`));
           expr(n.src, d + 1); walk(n.body, d + 1); break;
         case 'comp':
           if (!knownTags.has(String(n.tag))) out.push(err('SN9002', `unknown component ${String(n.tag)}`));

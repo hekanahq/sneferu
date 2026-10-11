@@ -16,6 +16,14 @@ describe('sample data', () => {
     expect((en.collections['new']!.products[0] as { url: string }).url).toMatch(/^\/en\/products\//);
     expect((sampleContext('ar', {}, 'ar').collections['new']!.products[0] as { url: string }).url).toMatch(/^\/products\//);
   });
+  it('lists the three category collections for collections(), locale-aware', () => {
+    const en = sampleContext('en', {}, 'ar');
+    const ar = sampleContext('ar', {}, 'ar');
+    expect(en.categories!.map((c) => c.handle)).toEqual(['new', 'gift-cards', 'subscriptions']);
+    expect(en.categories![1]).toEqual({ handle: 'gift-cards', title: 'Gift cards', url: '/en/collections/gift-cards', image: en.collections['gift-cards']!.products[0] && (en.collections['gift-cards']!.products[0] as { image: unknown }).image, count: 6 });
+    expect(ar.categories![0]).toMatchObject({ handle: 'new', title: 'وصل حديثا', url: '/collections/new', count: 6 });
+    expect(ar.categories![2]!.image).toEqual({ url: expect.stringContaining('placehold.co') });
+  });
   it('adds collections and products, and overrides the store name', () => {
     const ctx = withSampleData(sampleContext('en', {}, 'en'), pickSampleData({ store: { name: 'Pages' }, collections: { ebooks: { title: 'E-books', products: [book] } }, products: { notes: book } }, 'en'));
     expect(ctx.store.name).toBe('Pages');

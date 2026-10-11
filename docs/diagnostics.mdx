@@ -22,7 +22,7 @@ Every problem Sneferu reports has a stable code. The format is `file:line:col se
 | SN1102 | `{% elsif %}` / `{% else %}` outside `{% if %}`, or `{% endif %}` / `{% endfor %}` without a matching opener | Check nesting of directives. |
 | SN1103 | A closing tag closes a different element than the innermost open one | Close inner elements first. |
 | SN1104 | A closing tag has no matching opening tag | Remove it or add the opener. |
-| SN1105 | Invalid expression, `for` header or `render` argument | Check the grammar in language.md; `for` is `x in expr [limit:n]`, `render` is `'name', key: expr`. |
+| SN1105 | Invalid expression, `for` header or `render` argument | Check the grammar in language.md; `for` is `x in expr [limit:n]` (or `limit: section.settings.x`), `render` is `'name', key: expr`. `collection()` takes a handle or a collection setting; `collections()` takes no arguments. |
 | SN1106 | Unknown directive | Use `if`, `elsif`, `else`, `endif`, `for`, `endfor`, `render`. |
 | SN1107 | `<hk-schema>` is not valid JSON | Fix the JSON (double quotes, no trailing commas). |
 | SN1108 | Elements and `{% if %}` / `{% for %}` nested deeper than 64 levels; the deeper part is not compiled | Flatten the markup or move parts into snippets. |
@@ -43,6 +43,7 @@ Every problem Sneferu reports has a stable code. The format is `file:line:col se
 | SN2009 | `style` attribute contains `{{ }}` | Use a class, a token or a component prop. |
 | SN2010 | Unsafe static URL in a URL attribute (`href`, any `*:href` such as `xlink:href`, `src`, `poster`, `action`, `formaction`) | Only `https:`, `mailto:`, `tel:` or relative URLs are allowed; plain `http:`, protocol-relative `//…` and anything containing `\` are rejected. |
 | SN2011 | `<hk-slot>` used outside a layout or template | Move it into the layout or a template. |
+| SN2012 | `collection(…)` or `limit:` reads a setting that does not exist in the file's `<hk-schema>` (or in theme.json for `settings.*`), or that has the wrong type | Add the setting, or fix its type: `collection` for `collection()`, `number` or `range` for `limit:`. |
 
 ## SN3xxx Package, manifest and compile
 
@@ -105,7 +106,7 @@ The runtime re-checks a compiled artifact before rendering. These indicate a cor
 | SN9001 | Unknown IR node kind | Rebuild with the current SDK. |
 | SN9002 | Unknown component in the IR | Rebuild; check the tag exists. |
 | SN9003 | Unknown filter in the IR | Rebuild. |
-| SN9004 | Loop limit outside 1..250 in the IR | Rebuild. |
+| SN9004 | Loop limit in the IR is neither a whole number in 1..250 nor a section, block or theme setting path | Rebuild. |
 | SN9005 | Invalid expression in the IR | Rebuild. |
 | SN9006 | Unknown lookup in the IR | Rebuild. |
 | SN9007 | Invalid property value in the IR | Rebuild. |

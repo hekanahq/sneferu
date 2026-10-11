@@ -135,7 +135,7 @@ export function parseTemplate(src: string, file: string): { nodes: AstNode[]; sc
         } else if (kw === 'for') {
           const h = parseFor(arg);
           if ('error' in h) { diagnostics.push(err('SN1105', `invalid for: ${h.error}`, at(tok.loc))); break; }
-          const node: Extract<AstNode, { t: 'for' }> = { t: 'for', as: h.as, src: h.src, ...(h.limit !== undefined ? { limit: h.limit } : {}), body: [], loc: tok.loc };
+          const node: Extract<AstNode, { t: 'for' }> = { t: 'for', as: h.as, src: h.src, ...(h.limit !== undefined ? { limit: h.limit } : {}), ...(h.limitExpr ? { limitExpr: h.limitExpr } : {}), body: [], loc: tok.loc };
           push(node);
           stack.push({ kind: 'for', node, body: node.body });
         } else if (kw === 'render') {
