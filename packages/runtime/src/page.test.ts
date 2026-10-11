@@ -173,11 +173,11 @@ describe('renderPage', () => {
   });
   it('applies theme-level settings defaults and coercion to ctx.settings (I9c)', () => {
     const art: ArtifactLike = { ...artifact,
-      manifest: { id: 'esports', settings: { accent: { type: 'color', label: { ar: 'ل', en: 'A' }, default: '#7C3AED' }, cols: { type: 'range', label: { ar: 'ع', en: 'C' }, min: 1, max: 4, default: 3 } } },
+      manifest: { id: 'esports', settings: { accent: { type: 'color', label: { ar: 'ل', en: 'A' }, default: '#B45309' }, cols: { type: 'range', label: { ar: 'ع', en: 'C' }, min: 1, max: 4, default: 3 } } },
       sections: { s: { ir: [{ k: 'text', e: { k: 'lookup', fn: 'settings', args: [{ k: 'lit', v: 'accent' }] } }, { k: 'html', s: '|' }, { k: 'text', e: { k: 'path', p: ['settings', 'cols'] } }], schema: { settings: {} } } } };
     const at = (settings: Record<string, unknown>) => renderPage(art, { template: 'index', ctx: { ...ctx, settings }, registry: new TagRegistry(), sections: [{ id: 'a', type: 's' }] }).html;
-    expect(at({})).toContain('>#7C3AED|3<');
-    expect(at({ accent: 'red;}body{x', cols: 99 })).toContain('>#7C3AED|4<');
+    expect(at({})).toContain('>#B45309|3<');
+    expect(at({ accent: 'red;}body{x', cols: 99 })).toContain('>#B45309|4<');
     expect(at({ accent: '#000000', cols: '2' })).toContain('>#000000|2<');
   });
   it('charges every node kind, so text fan-out stops at the budget with SN4001 (R-C2 probe)', () => {

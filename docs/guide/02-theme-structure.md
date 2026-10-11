@@ -74,11 +74,11 @@ templates (SN2011).
   "defaultLocale": "ar",
   "locales": ["ar", "en"],
   "settings": {
-    "accent": { "type": "color", "label": { "ar": "لون مميز", "en": "Accent" }, "default": "#7C3AED" }
+    "accent": { "type": "color", "label": { "ar": "لون مميز", "en": "Accent" }, "default": "#B45309" }
   },
   "tokens": {
     "colors": {
-      "primary": "#111827", "secondary": "#1F2937", "accent": "#7C3AED",
+      "primary": "#111827", "secondary": "#1F2937", "accent": "#B45309",
       "background": "#FFFFFF", "text": "#111827", "muted": "#6B7280"
     },
     "layout": { "contentWidth": "1200px" }

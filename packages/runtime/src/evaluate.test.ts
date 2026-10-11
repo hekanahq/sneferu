@@ -3,7 +3,7 @@ import { evaluate } from './evaluate';
 import type { RenderContext } from './context';
 
 const ctx = (over: Partial<RenderContext> = {}): RenderContext => ({
-  locale: 'ar', dir: 'rtl', currency: 'EGP', store: { name: 'متجر' }, settings: { accent: '#7C3AED' }, data: {},
+  locale: 'ar', dir: 'rtl', currency: 'EGP', store: { name: 'متجر' }, settings: { accent: '#B45309' }, data: {},
   collections: { 'top-ups': { title: 'شحن', products: [{ title: 'A' }, { title: 'B' }] } }, products: { ps: { title: 'PS' } },
   translations: { buy: 'اشتري' }, fallbackTranslations: { buy: 'Buy', only_en: 'Only' },
   assetUrl: (p) => `https://cdn.test/${p}`, imageUrl: (r, w) => `https://img.test/${String((r as { url?: string })?.url ?? r)}?w=${w ?? 'auto'}`, ...over,
@@ -18,7 +18,7 @@ describe('evaluate', () => {
     expect(evaluate({ k: 'path', p: ['products', 1, 'title'], from: { k: 'lookup', fn: 'collection', args: [lit('top-ups')] } }, {}, ctx())).toBe('B');
     expect(evaluate({ k: 'path', p: ['products'], from: { k: 'lookup', fn: 'collection', args: [lit('missing')] } }, {}, ctx())).toEqual([]);
     expect(evaluate({ k: 'lookup', fn: 'product', args: [lit('ps')] }, {}, ctx())).toEqual({ title: 'PS' });
-    expect(evaluate({ k: 'lookup', fn: 'settings', args: [lit('accent')] }, {}, ctx())).toBe('#7C3AED');
+    expect(evaluate({ k: 'lookup', fn: 'settings', args: [lit('accent')] }, {}, ctx())).toBe('#B45309');
   });
   it('does not expose prototype or functions', () => {
     expect(evaluate(p('x', 'constructor'), { x: {} }, ctx())).toBeUndefined();
