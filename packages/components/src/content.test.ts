@@ -1,24 +1,31 @@
 import { describe, it, expect } from 'vitest';
-import type { TagRenderContext } from '@hekana/sneferu-core';
-import { createDefaultRegistry } from './index';
+import { defaultUrl, type TagRenderContext } from '@hekana/sneferu-core';
+import { createDefaultRegistry, formatMoney } from './index';
 
 type Kids = string | Record<string, string>;
 /** children: a string for renderChildren(), or { '': default, <part>: html } */
-const mk = (children: Kids = '') => {
+type Opts = { locale?: 'ar' | 'en'; money?: 'decimal' | 'whole'; url?: (p: string) => string };
+const mk = (children: Kids = '', o: Opts = {}) => {
   const css: string[] = [];
   const kids = typeof children === 'string' ? { '': children } : children;
-  const c: TagRenderContext = { id: 'c1', css: (r) => css.push(r), controller: () => {}, data: {}, locale: 'ar', dir: 'rtl', t: (k) => (k === 'add_to_cart' ? 'أضف للسلة' : k), renderChildren: (part?: string) => kids[part ?? ''] ?? '' };
+  const locale = o.locale ?? 'ar';
+  const c: TagRenderContext = { id: 'c1', css: (r) => css.push(r), controller: () => {}, data: {}, locale, dir: locale === 'ar' ? 'rtl' : 'ltr', t: (k) => (k === 'add_to_cart' ? 'أضف للسلة' : k), renderChildren: (part?: string) => kids[part ?? ''] ?? '',
+    url: o.url ?? ((p) => defaultUrl(p, locale)), ...(o.money ? { money: o.money } : {}) };
   return { c, css };
 };
 const r = createDefaultRegistry();
-const render = (tag: string, props: Record<string, unknown>, children: Kids = '') => { const { c, css } = mk(children); return { html: r.get(tag)!.render(props, c), css }; };
+const render = (tag: string, props: Record<string, unknown>, children: Kids = '', opts: Opts = {}) => {
+  const { c, css } = mk(children, opts);
+  return { html: r.get(tag)!.render(props, c), css };
+};
 /** hk-product-card's markup in 0.2, before parts existed. */
 const CARD_02 = '<a class="sn-product-card" href="/p"><img src="https://cdn.x/1.webp" alt="P &quot;1&quot;" loading="lazy" decoding="async"><span class="sn-title">P "1"</span><span class="sn-c1-p sn-price"><span class="sn-now">10.00 ج.م</span> <s class="sn-was">12.00 ج.م</s></span></a>';
+const OWN_A11Y = new Set(['hk-icon', 'hk-search-form']);
 const PROD = { title: 'P "1"', url: '/p', price: 1000, compare_at: 1200, image: { url: 'https://cdn.x/1.webp' } };
 
 describe('content and commerce tags', () => {
   it('registers the base set', () => {
-    expect([...r.names()].sort()).toEqual(['hk-badge', 'hk-button', 'hk-card', 'hk-container', 'hk-grid', 'hk-heading', 'hk-image', 'hk-price', 'hk-product-card', 'hk-product-grid', 'hk-rich-text', 'hk-section', 'hk-stack', 'hk-text']);
+    expect([...r.names()].sort()).toEqual(['hk-badge', 'hk-button', 'hk-card', 'hk-container', 'hk-grid', 'hk-heading', 'hk-icon', 'hk-image', 'hk-price', 'hk-product-card', 'hk-product-grid', 'hk-rich-text', 'hk-search-form', 'hk-section', 'hk-stack', 'hk-text']);
   });
   it('heading/text escape and choose level', () => {
     expect(render('hk-heading', { text: '<b>كروت</b>', level: 'h1' }).html).toBe('<h1 class="sn-c1">&lt;b&gt;كروت&lt;/b&gt;</h1>');
@@ -43,15 +50,21 @@ describe('content and commerce tags', () => {
   });
   it('every base tag carries pass-through attributes on its root (I7)', () => {
     const extra = { class: 'lead "x" <y>', id: 'top one', role: 'region', title: '"><script>', 'aria-label': 'عن "المتجر"', 'data-x': '1', 'data-hk-section': 'spoof', 'data-a<b': 'z', onclick: 'alert(1)' };
-    const need: Record<string, Record<string, unknown>> = { 'hk-image': { src: '/a.png' }, 'hk-product-card': { product: { title: 'P', url: '/p' } }, 'hk-rich-text': { html: '<p>x</p>' } };
+    const need: Record<string, Record<string, unknown>> = { 'hk-icon': { name: 'search' }, 'hk-image': { src: '/a.png' }, 'hk-product-card': { product: { title: 'P', url: '/p' } }, 'hk-rich-text': { html: '<p>x</p>' } };
     for (const name of r.names()) {
       const { html } = render(name, { ...need[name], ...extra }, '<i></i>');
       const root = /^<[a-z0-9]+([^>]*)>/.exec(html)![1]!;
       expect(root, name).toMatch(/class="[^"]*\blead x y"/);
       expect(root, name).toContain(' id="top-one"');
-      expect(root, name).toContain(' role="region"');
       expect(root, name).toContain(' title="&quot;&gt;&lt;script&gt;"');
-      expect(root, name).toContain(' aria-label="عن &quot;المتجر&quot;"');
+      if (OWN_A11Y.has(name)) {
+        // tags that set their own role/aria-* never take them from the template
+        expect(root, name).not.toContain('role="region"');
+        expect(root, name).not.toContain('aria-label="عن');
+      } else {
+        expect(root, name).toContain(' role="region"');
+        expect(root, name).toContain(' aria-label="عن &quot;المتجر&quot;"');
+      }
       expect(root, name).toContain(' data-x="1"');
       expect(html, name).not.toContain('data-hk-section');
       expect(html, name).not.toContain('data-a<b');
@@ -96,5 +109,35 @@ describe('content and commerce tags', () => {
       expect(html, url).not.toContain('<img');
     }
     expect(render('hk-product-card', { product: { title: 'P', url: '/p', image: '/a.png' } }).html).toContain('<img src="/a.png"');
+  });
+  it('button localises store-relative links through ctx.url', () => {
+    expect(render('hk-button', { label: 'Shop', href: '/products' }, '', { locale: 'en' }).html).toContain('href="/en/products"');
+    expect(render('hk-button', { label: 'Shop', href: '/products' }).html).toBe('<a class="sn-c1 sn-btn sn-btn-solid" href="/products">Shop</a>');
+    expect(render('hk-button', { label: 'Shop', href: 'https://x.com/a' }, '', { locale: 'en' }).html).toContain('href="https://x.com/a"');
+    expect(render('hk-button', { label: 'Shop', href: '/products' }, '', { url: () => 'javascript:alert(1)' }).html).toContain('href="#"');
+    expect(render('hk-button', { label: 'Shop' }, '', { locale: 'en' }).html).toContain('href="#"');
+    // input checked before the host resolver: a normalising resolver never sees //evil or /\evil
+    const calls: string[] = [];
+    const host = (p: string) => { calls.push(p); return new URL(p, 'https://shop.example').href; };
+    for (const href of ['//evil.com', '/\\evil.com']) expect(render('hk-button', { label: 'x', href }, '', { url: host }).html, href).toContain('href="#"');
+    expect(render('hk-button', { label: 'x', href: 'mailto:a@b.co' }, '', { url: host }).html).toContain('href="mailto:a@b.co"');
+    expect(render('hk-button', { label: 'x', href: '/p' }, '', { url: host }).html).toContain('href="https://shop.example/p"');
+    expect(calls).toEqual(['/p']);
+  });
+  it('price: format whole drops .00 and wraps the number in <bdi>; the default is 0.2 markup', () => {
+    expect(render('hk-price', { amount: 129000, format: 'whole' }).html).toBe('<span class="sn-c1 sn-price"><span class="sn-now"><bdi>1,290</bdi> ج.م</span></span>');
+    expect(render('hk-price', { amount: 129050, compareAt: 150000, format: 'whole' }).html).toBe('<span class="sn-c1 sn-price"><span class="sn-now"><bdi>1,290.50</bdi> ج.م</span> <s class="sn-was"><bdi>1,500</bdi> ج.م</s></span>');
+    expect(render('hk-price', { amount: 129000, format: 'whole' }, '', { locale: 'en' }).html).toContain('<span class="sn-now">EGP <bdi>1,290</bdi></span>');
+    // the theme default (ctx.money) applies, and a prop overrides it
+    expect(render('hk-price', { amount: 129000 }, '', { money: 'whole' }).html).toContain('<bdi>1,290</bdi>');
+    expect(render('hk-price', { amount: 129000, format: 'decimal' }, '', { money: 'whole' }).html).toBe('<span class="sn-c1 sn-price"><span class="sn-now">1,290.00 ج.م</span></span>');
+    expect(render('hk-price', { amount: 129000, format: 'bogus' }).html).toBe('<span class="sn-c1 sn-price"><span class="sn-now">1,290.00 ج.م</span></span>');
+    expect(render('hk-product-card', { product: PROD }, '', { money: 'whole' }).html).toContain('<span class="sn-now"><bdi>10</bdi> ج.م</span> <s class="sn-was"><bdi>12</bdi> ج.م</s>');
+  });
+  it('formatMoney whole/decimal', () => {
+    expect(formatMoney(129000, 'ar', 'EGP', 'whole')).toBe('1,290 ج.م');
+    expect(formatMoney(129050, 'ar', 'EGP', 'whole')).toBe('1,290.50 ج.م');
+    expect(formatMoney(129000, 'en')).toBe('EGP 1,290.00');
+    expect(formatMoney(100, 'en', 'USD', 'whole')).toBe('USD 1');
   });
 });

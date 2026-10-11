@@ -34,6 +34,7 @@ primary     = string | number | "true" | "false" | "nil"
             | ident { tail } ;
 lookup      = "collection(" ( string | setting ) ")"         (* setting: of type collection *)
             | "collections()"
+            | "url(" expr ")"                                     (* any one expression *)
             | lookupname "(" [ literal { "," literal } ] ")" ;   (* literal arguments only *)
 tail        = "." ident | "[" integer "]" ;
 ```
@@ -120,7 +121,7 @@ Apply with `|`, arguments after `:` (`{{ title | truncate: 40 }}`).
 
 | Filter | Input | Args | Example |
 | - | - | - | - |
-| `money` | price in minor units (piastres, cents) | none | EGP: `129000` gives `EGP 1,290.00`. Other store currencies use the ISO code: `USD 1,290.00`. On an Arabic page the currency comes after the number. Always two decimals, Western digits, `,` grouping. |
+| `money` | price in minor units (piastres, cents) | optional format `'decimal'` or `'whole'` (default: theme.json `money.format`, else `'decimal'`), optional unit `'minor'` or `'major'` | EGP: `129000` gives `EGP 1,290.00`; `money: 'whole'` gives `EGP 1,290` (two decimals kept when there are piastres); `{{ 120 \| money: 'whole', 'major' }}` gives `EGP 120`. Other store currencies use the ISO code: `USD 1,290.00`. On an Arabic page the currency comes after the number. Western digits, `,` grouping. |
 | `img` | image reference | optional width | `{{ p.image \| img: 400 }}` gives a sized image URL |
 | `date` | ISO date string | none | `2026-10-10` gives `10 October 2026` (English) or the Arabic date with Western numerals |
 | `t` | translation key | none | `{{ 'shop_now' \| t }}` gives the text from `locales/<locale>.json`, falling back to the default locale, then the key |
@@ -135,7 +136,7 @@ Apply with `|`, arguments after `:` (`{{ title | truncate: 40 }}`).
 
 ## Lookups
 
-Called like functions with literal arguments only, except `collection()`, which also takes a `collection` setting.
+Called like functions with literal arguments only, except `collection()`, which also takes a `collection` setting, and `url()`, which takes any one expression.
 
 | Lookup | Returns |
 | - | - |
@@ -146,6 +147,7 @@ Called like functions with literal arguments only, except `collection()`, which 
 | `t('key')` | the translation (same fallback as the `t` filter); the key if missing |
 | `settings('key')` | one theme setting |
 | `asset_url('file.css')` | URL of a file in `assets/` |
+| `url('/path')` | a link for the current page: store-relative paths get `/en` on English pages (and the store's own prefix on the store); `https:`, `mailto:`, `tel:` and `#…` pass through; anything unsafe is `#` |
 
 A lookup may be followed by property access: `collection('featured').products`.
 
@@ -159,7 +161,7 @@ Plain elements are checked against an allow-list; anything not on it is an error
 - Tables: `caption col colgroup table tbody td tfoot th thead tr`
 - SVG presentation: `svg g path circle ellipse line polyline polygon rect text tspan defs lineargradient radialgradient stop clippath mask pattern symbol use title desc image`
 
-Never allowed (the message names these explicitly): `script`, `style`, `iframe`, `object`, `embed`, `base`, `link`, `meta`, `form`, `animate`, `set`, `animatemotion`, `animatetransform`, `foreignobject`, `plaintext`, `xmp`, `noembed`, `noscript`, `frameset`, `frame`, `template`, `slot`, `portal`. Form controls (`button`, `input`, `select`, `textarea`) are not on the list either; use `hk-button` for actions.
+Never allowed (the message names these explicitly): `script`, `style`, `iframe`, `object`, `embed`, `base`, `link`, `meta`, `form`, `animate`, `set`, `animatemotion`, `animatetransform`, `foreignobject`, `plaintext`, `xmp`, `noembed`, `noscript`, `frameset`, `frame`, `template`, `slot`, `portal`. Form controls (`button`, `input`, `select`, `textarea`) are not on the list either; form controls exist only through `hk-search-form`, and `hk-button` covers actions.
 
 Attributes (SN2002): `srcdoc`, `formaction`, `attributename`, `xml:base`, every attribute starting with `on` (`onclick`, ...), and names outside `[a-z_:][a-z0-9_:.-]*`.
 
@@ -267,4 +269,4 @@ A prop declared `responsive` accepts `tablet-` and `mobile-` prefixed variants; 
 
 ## Built-in tags
 
-Layout: `hk-section`, `hk-container`, `hk-stack`, `hk-grid`. Typography: `hk-heading`, `hk-text`, `hk-badge`. Media: `hk-image`. UI: `hk-button`, `hk-card`. Commerce: `hk-price`, `hk-product-card`, `hk-product-grid`. Passthrough attributes on tags: `class`, `id`, `role`, `title`, `data-*`, `aria-*`. Every built-in tag writes them on its root element: `class` is appended to the component's own `sn-…` class (reduced to letters, digits, `-`, `_`), `id` becomes one such token, and `role`, `title`, `data-*`, `aria-*` are attribute-escaped. `data-hk-*` is reserved for the platform and dropped. Unknown tags and props get a "did you mean" hint (SN2003, SN2004); required props are checked (SN2005) and child rules enforced (SN2006).
+Layout: `hk-section`, `hk-container`, `hk-stack`, `hk-grid`. Typography: `hk-heading`, `hk-text`, `hk-badge`, `hk-rich-text`. Media: `hk-image`, `hk-icon`. UI: `hk-button`, `hk-card`, `hk-search-form`. Commerce: `hk-price`, `hk-product-card`, `hk-product-grid`. Passthrough attributes on tags: `class`, `id`, `role`, `title`, `data-*`, `aria-*` (`hk-icon` and `hk-search-form` set their own `role` and `aria-*` and drop those). Every built-in tag writes them on its root element: `class` is appended to the component's own `sn-…` class (reduced to letters, digits, `-`, `_`), `id` becomes one such token, and `role`, `title`, `data-*`, `aria-*` are attribute-escaped. `data-hk-*` is reserved for the platform and dropped. Unknown tags and props get a "did you mean" hint (SN2003, SN2004); required props are checked (SN2005) and child rules enforced (SN2006).

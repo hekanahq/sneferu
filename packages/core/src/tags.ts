@@ -5,11 +5,23 @@ export interface TagRenderContext {
   /** Stable, unique per rendered instance; used to scope CSS: `.sn-${id}`. */
   id: string;
   css(rule: string): void;
+  /**
+   * A page-wide constant rule shared by every instance (the icon flip, the visually-hidden
+   * helper): written once per page however many tags ask. Optional; fall back to css().
+   */
+  cssOnce?(rule: string): void;
   controller(name: string): void;
   data: Record<string, unknown>;
   locale: 'ar' | 'en';
   dir: 'rtl' | 'ltr';
   t(key: string): string;
+  /**
+   * A link for this page: store-relative paths get the locale prefix (and the
+   * host's store prefix); the result has passed safeUrl.
+   */
+  url(path: string): string;
+  /** The theme's default money format (theme.json `money.format`); absent means 'decimal'. */
+  money?: 'decimal' | 'whole';
   /**
    * No argument: the children, except `<hk-part>` markers. With a name: the
    * content of the `<hk-part name="…">` children with that name ('' when none).

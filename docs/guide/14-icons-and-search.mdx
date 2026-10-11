@@ -1,0 +1,136 @@
+# 14. Icons and search
+
+Two tags cover things a theme cannot build from plain elements: icons that
+need no image files, and a search box. Both work on Arabic and English pages
+without extra code.
+
+## Icons
+
+`<hk-icon>` draws an icon from a set bundled with Sneferu: 71 line icons from
+[Lucide](https://lucide.dev) (ISC licence). The icons are inline SVG, so they
+load with the page, take the text colour (`currentColor`) and need nothing in
+`assets/`.
+
+```html
+<hk-icon name="truck" />
+<hk-icon name="shield-check" size="32" stroke="1.5" />
+<hk-icon name="search" label="{{ t('search') }}" />
+```
+
+| Prop | Type | Default | Notes |
+| - | - | - | - |
+| `name` | one of the names below | (required) | An unknown name renders nothing |
+| `size` | `12`–`96` | `20` | Width and height in pixels; values outside the range are clamped |
+| `stroke` | `1`–`3`, steps of `0.5` | `2` | Line width |
+| `label` | text | none | What the icon means, for screen readers |
+
+### Decorative or meaningful
+
+An icon next to text that already says the same thing ("Free delivery" with a
+truck) is decorative: leave `label` out and the icon is hidden from screen
+readers (`aria-hidden="true"`). An icon on its own that carries meaning needs a
+`label`; it then gets `role="img"` and `aria-label`. `role` and `aria-*`
+written on `<hk-icon>` are ignored, so the two cannot conflict. `class`, `id`,
+`title` and `data-*` are kept, as on other tags.
+
+The colour comes from the surrounding text. To colour one icon, give it a class
+and set `color` in the theme stylesheet:
+
+```css
+.trust-icon { color: var(--hk-color-accent); }
+```
+
+### Right to left
+
+`arrow-left`, `arrow-right`, `chevron-left` and `chevron-right` point along the
+reading direction, so they are mirrored on Arabic pages: an `arrow-right` after
+"Shop now" points forward in both languages. Other icons are never mirrored.
+
+### Icons in buttons
+
+`<hk-button>` takes an icon too. It is decorative (the button's label names
+it) and sits before the label unless `icon-position="end"`:
+
+```html
+<hk-button label="{{ t('shop_now') }}" href="/products" icon="arrow-right" icon-position="end" />
+```
+
+### The icon set
+
+| Group | Names |
+| - | - |
+| Arrows | `arrow-left` `arrow-right` `arrow-up-right` `chevron-left` `chevron-right` `chevron-down` `chevron-up` |
+| Actions | `check` `x` `plus` `minus` `menu` `search` `download` `upload` `share-2` `external-link` `link` `copy` `trash-2` `settings` `filter` `sliders-horizontal` |
+| Shopping | `shopping-cart` `shopping-bag` `heart` `star` `tag` `gift` `package` `truck` `percent` `credit-card` `wallet` `banknote` `store` |
+| People and contact | `user` `mail` `phone` `map-pin` `message-circle` `globe` |
+| Status and trust | `lock` `shield-check` `info` `alert-circle` `help-circle` `clock` `calendar` |
+| Files and media | `file` `file-text` `image` `play` `pause` `volume-2` `grid` `list` `home` |
+| Digital and gaming | `sparkles` `zap` `flame` `trophy` `gamepad-2` `headphones` `monitor` `smartphone` `book-open` `graduation-cap` `code` `layers` `key` |
+
+The names match Lucide's, so [lucide.dev/icons](https://lucide.dev/icons) shows
+what each one looks like. Icons that are not in this table are not available;
+a theme cannot load other SVG files as icons, but it can still draw its own
+`<svg>` with the allowed SVG elements (see [Security and limits](06-security-and-limits.mdx)).
+
+## Search form
+
+`<hk-search-form>` is a search box that sends the shopper to the store's search
+page. It is the only way a theme renders form controls: `<form>`, `<input>` and
+`<button>` written directly in a template are SN2001.
+
+```html
+<hk-search-form placeholder="{{ t('search_placeholder') }}" />
+```
+
+renders, on an English page:
+
+```html
+<form class="sn-c1 sn-search" role="search" method="get" action="/en/search">
+  <label class="sn-search-label sn-visually-hidden" for="c1-q">Search</label>
+  <input id="c1-q" type="search" name="q" maxlength="100" autocomplete="off" enterkeyhint="search" placeholder="Find a gift card">
+  <button type="submit" class="sn-search-button" aria-label="Search"><svg class="sn-icon" …></svg></button>
+</form>
+```
+
+(on one line in the real output).
+
+| Prop | Type | Default | Notes |
+| - | - | - | - |
+| `placeholder` | text | none | Hint inside the box |
+| `label` | text | `''` | What the box is for. Empty: the theme's `search` translation, else "بحث" / "Search" |
+| `show-label` | boolean | `false` | Show the label above the box; otherwise it is hidden on screen and still read by screen readers |
+| `button-label` | text | none | Text in the button, after the icon |
+| `icon` | boolean | `true` | The `search` icon in the button |
+
+The button is never empty: with `icon="false"` and no `button-label` it shows
+the label. Its accessible name is its visible text; only an icon-only button
+gets `aria-label` (the label). Text props are trimmed and cut to 200 characters.
+
+### What is fixed
+
+The form always goes to the store's `/search` page with `GET` (on English
+pages `/en/search`), and has exactly one field, `q`, limited to 100 characters.
+There is no `action`, `method` or field prop, no hidden fields, and `role` and
+`aria-*` on the tag are ignored (the form is `role="search"`). Writing any other
+attribute that is not a prop is SN2004. This keeps a theme from sending
+shoppers' input anywhere but the store.
+
+A `GET` form replaces any query string in its `action` with the form's own
+fields, so in a dev setup that picks the store with a query string (`?store=…`)
+that parameter is dropped on submit. Stores addressed by their own host, as on
+Hekana, are not affected.
+
+### Styling
+
+The tag writes a small scoped stylesheet: the form is a row with an 8px gap,
+the box grows to fill it, and the box and the button are at least 44px tall
+(the button at least 44px wide), so both are easy to tap. Everything else, such
+as borders, radius and colours, is yours to style:
+
+```css
+.sn-search input { border: 1px solid var(--hk-color-text); border-radius: 8px; padding: 0 12px; }
+.sn-search .sn-search-button { background: var(--hk-color-primary); color: var(--hk-color-background); border: 0; border-radius: 8px; }
+```
+
+Add a `search` key to `locales/ar.json` and `locales/en.json` to name the box
+for screen readers in your theme's words.

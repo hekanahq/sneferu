@@ -41,6 +41,16 @@ describe('compileTheme', () => {
       expect(compileTheme(withFonts(bad), reg).diagnostics.filter((d) => d.severity === 'error').map((d) => d.code)).toEqual(['SN3032']);
     }
   });
+  it('accepts money.format decimal or whole and rejects anything else (SN3033)', () => {
+    const withMoney = (money: unknown) => base().map((x) => (x.path === 'theme.json' ? f(x.path, JSON.stringify({ ...manifest, money })) : x));
+    for (const ok of [{ format: 'whole' }, { format: 'decimal' }, {}]) {
+      const r = compileTheme(withMoney(ok), reg);
+      expect(r.diagnostics.filter((d) => d.severity === 'error'), JSON.stringify(ok)).toEqual([]);
+      expect(r.artifact!.manifest.money).toEqual(ok);
+    }
+    for (const bad of ['whole', { format: 'Whole' }, { format: 2 }, { format: 'whole', unit: 'major' }, null, []])
+      expect(compileTheme(withMoney(bad), reg).diagnostics.filter((d) => d.severity === 'error').map((d) => d.code), JSON.stringify(bad)).toEqual(['SN3033']);
+  });
   it('is deterministic: same input, same hash', () => {
     expect(compileTheme(base(), reg).artifact!.hash).toBe(compileTheme(base(), reg).artifact!.hash);
   });

@@ -74,6 +74,11 @@ class P {
         const args: Expr[] = [];
         if (t.v === 'collection') args.push(this.collectionArg());
         else if (t.v === 'collections') { if (!this.is('punc', ')')) throw new Error('collections() takes no arguments'); }
+        else if (t.v === 'url') {
+          if (this.is('punc', ')')) throw new Error('url() takes one argument: a path or an expression');
+          args.push(this.expr());
+          if (!this.is('punc', ')')) throw new Error('url() takes one argument: a path or an expression');
+        }
         else if (!this.is('punc', ')')) {
           do { const a = this.peek(); if (!a || (a.k !== 'str' && a.k !== 'num')) throw new Error(`${t.v}() takes literal arguments`); args.push(this.primary()); } while (this.is('punc', ',') && this.eat());
         }

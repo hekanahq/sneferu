@@ -66,3 +66,47 @@ describe('evaluate', () => {
     for (const empty of ['', undefined, null, 5, ['top-ups'], { handle: 'top-ups' }]) expect(col(empty), String(empty)).toEqual({ products: [] });
   });
 });
+
+describe('url() and money options', () => {
+  const url = (path: unknown, over: Partial<RenderContext> = {}) => evaluate({ k: 'lookup', fn: 'url', args: [lit(path as never)] }, {}, ctx(over));
+  const en = { locale: 'en' as const, dir: 'ltr' as const };
+  it('url() prefixes store-relative paths with /en on English pages', () => {
+    expect(url('/products', en)).toBe('/en/products');
+    expect(url('/en/products', en)).toBe('/en/products');
+    expect(url('/en', en)).toBe('/en');
+    expect(url('/', en)).toBe('/en');
+    expect(url('/products')).toBe('/products');
+    expect(url('https://x.com', en)).toBe('https://x.com');
+    for (const keep of ['mailto:a@b.co', 'tel:+201000000000', '#top', '?q=1']) expect(url(keep, en), keep).toBe(keep);
+    for (const bad of ['javascript:x', '//evil.com', '/\\evil.com', 'data:text/html,x', '', null, undefined]) expect(url(bad), String(bad)).toBe('#');
+  });
+  it('url() uses the host resolver when given one, and its result still passes safeUrl', () => {
+    expect(url('/products', { ...en, url: (p) => `/store-x${p}` })).toBe('/store-x/products');
+    expect(url('/products', { url: () => 'javascript:alert(1)' })).toBe('#');
+    expect(url('/products', { url: () => { throw new Error('x'); } })).toBe('#');
+    expect(url('/products', { url: () => 5 as never })).toBe('#');
+  });
+  it('only safe store-relative input reaches the host resolver (a normalising resolver cannot turn //evil into a link)', () => {
+    const calls: string[] = [];
+    const host = (p: string) => { calls.push(p); return new URL(p, 'https://shop.example').href; };
+    expect(url('/products', { url: host })).toBe('https://shop.example/products');
+    for (const bad of ['//evil.com', '/\\evil.com', 'javascript:x', ' //evil.com']) expect(url(bad, { url: host }), bad).toBe('#');
+    for (const keep of ['https://x.com/a', 'mailto:a@b.co', 'tel:+201000000000', '#top', '?q=1']) expect(url(keep, { url: host }), keep).toBe(keep);
+    expect(calls).toEqual(['/products']);
+  });
+  it('money takes whole/decimal and minor/major', () => {
+    const m = (input: unknown, args: unknown[], over: Partial<RenderContext> = {}) =>
+      evaluate({ k: 'filter', name: 'money', input: lit(input as never), args: args.map((a) => lit(a as never)) }, {}, ctx(over));
+    expect(m(129000, ['whole'])).toBe('1,290 ج.م');
+    expect(m(129050, ['whole'])).toBe('1,290.50 ج.م');
+    expect(m(120, ['whole', 'major'], en)).toBe('EGP 120');
+    expect(m(120.5, ['decimal', 'major'], en)).toBe('EGP 120.50');
+    expect(m(129000, [])).toBe('1,290.00 ج.م');
+    expect(m(129000, ['bogus'])).toBe('1,290.00 ج.م');
+    // the page default (theme.json money.format) applies when no format is given
+    expect(m(129000, [], { money: 'whole' })).toBe('1,290 ج.م');
+    expect(m(129000, ['decimal'], { money: 'whole' })).toBe('1,290.00 ج.م');
+    expect(m('x', ['whole'])).toBe('');
+    expect(m(1e308, ['decimal', 'major'])).toBe('');
+  });
+});

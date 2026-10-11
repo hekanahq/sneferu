@@ -496,6 +496,134 @@
       ]
     },
     {
+      "name": "hk-icon",
+      "category": "media",
+      "label": {
+        "en": "Icon"
+      },
+      "allowedChildren": [],
+      "responsive": [],
+      "props": [
+        {
+          "name": "name",
+          "attr": "name",
+          "type": "select",
+          "required": true,
+          "options": [
+            "arrow-left",
+            "arrow-right",
+            "arrow-up-right",
+            "chevron-left",
+            "chevron-right",
+            "chevron-down",
+            "chevron-up",
+            "check",
+            "x",
+            "plus",
+            "minus",
+            "menu",
+            "search",
+            "shopping-cart",
+            "shopping-bag",
+            "heart",
+            "star",
+            "user",
+            "mail",
+            "phone",
+            "map-pin",
+            "truck",
+            "package",
+            "gift",
+            "tag",
+            "credit-card",
+            "wallet",
+            "banknote",
+            "percent",
+            "clock",
+            "calendar",
+            "download",
+            "upload",
+            "file",
+            "file-text",
+            "image",
+            "play",
+            "pause",
+            "volume-2",
+            "globe",
+            "lock",
+            "shield-check",
+            "info",
+            "alert-circle",
+            "help-circle",
+            "message-circle",
+            "share-2",
+            "external-link",
+            "link",
+            "copy",
+            "trash-2",
+            "settings",
+            "filter",
+            "sliders-horizontal",
+            "grid",
+            "list",
+            "home",
+            "store",
+            "sparkles",
+            "zap",
+            "flame",
+            "trophy",
+            "gamepad-2",
+            "headphones",
+            "monitor",
+            "smartphone",
+            "book-open",
+            "graduation-cap",
+            "code",
+            "layers",
+            "key"
+          ],
+          "responsive": false,
+          "label": {
+            "en": "Icon"
+          }
+        },
+        {
+          "name": "size",
+          "attr": "size",
+          "type": "range",
+          "default": 20,
+          "min": 12,
+          "max": 96,
+          "responsive": false,
+          "label": {
+            "en": "Size"
+          }
+        },
+        {
+          "name": "stroke",
+          "attr": "stroke",
+          "type": "range",
+          "default": 2,
+          "min": 1,
+          "max": 3,
+          "step": 0.5,
+          "responsive": false,
+          "label": {
+            "en": "Stroke"
+          }
+        },
+        {
+          "name": "label",
+          "attr": "label",
+          "type": "text",
+          "responsive": false,
+          "label": {
+            "en": "Label"
+          }
+        }
+      ]
+    },
+    {
       "name": "hk-button",
       "category": "ui",
       "label": {
@@ -552,6 +680,102 @@
           "responsive": false,
           "label": {
             "en": "Size"
+          }
+        },
+        {
+          "name": "icon",
+          "attr": "icon",
+          "type": "select",
+          "options": [
+            "arrow-left",
+            "arrow-right",
+            "arrow-up-right",
+            "chevron-left",
+            "chevron-right",
+            "chevron-down",
+            "chevron-up",
+            "check",
+            "x",
+            "plus",
+            "minus",
+            "menu",
+            "search",
+            "shopping-cart",
+            "shopping-bag",
+            "heart",
+            "star",
+            "user",
+            "mail",
+            "phone",
+            "map-pin",
+            "truck",
+            "package",
+            "gift",
+            "tag",
+            "credit-card",
+            "wallet",
+            "banknote",
+            "percent",
+            "clock",
+            "calendar",
+            "download",
+            "upload",
+            "file",
+            "file-text",
+            "image",
+            "play",
+            "pause",
+            "volume-2",
+            "globe",
+            "lock",
+            "shield-check",
+            "info",
+            "alert-circle",
+            "help-circle",
+            "message-circle",
+            "share-2",
+            "external-link",
+            "link",
+            "copy",
+            "trash-2",
+            "settings",
+            "filter",
+            "sliders-horizontal",
+            "grid",
+            "list",
+            "home",
+            "store",
+            "sparkles",
+            "zap",
+            "flame",
+            "trophy",
+            "gamepad-2",
+            "headphones",
+            "monitor",
+            "smartphone",
+            "book-open",
+            "graduation-cap",
+            "code",
+            "layers",
+            "key"
+          ],
+          "responsive": false,
+          "label": {
+            "en": "Icon"
+          }
+        },
+        {
+          "name": "iconPosition",
+          "attr": "icon-position",
+          "type": "select",
+          "default": "start",
+          "options": [
+            "start",
+            "end"
+          ],
+          "responsive": false,
+          "label": {
+            "en": "Icon position"
           }
         }
       ]
@@ -629,6 +853,65 @@
       ]
     },
     {
+      "name": "hk-search-form",
+      "category": "ui",
+      "label": {
+        "en": "Search form"
+      },
+      "allowedChildren": [],
+      "responsive": [],
+      "props": [
+        {
+          "name": "placeholder",
+          "attr": "placeholder",
+          "type": "text",
+          "responsive": false,
+          "label": {
+            "en": "Placeholder"
+          }
+        },
+        {
+          "name": "label",
+          "attr": "label",
+          "type": "text",
+          "default": "",
+          "responsive": false,
+          "label": {
+            "en": "Label"
+          }
+        },
+        {
+          "name": "buttonLabel",
+          "attr": "button-label",
+          "type": "text",
+          "responsive": false,
+          "label": {
+            "en": "Button text"
+          }
+        },
+        {
+          "name": "showLabel",
+          "attr": "show-label",
+          "type": "boolean",
+          "default": false,
+          "responsive": false,
+          "label": {
+            "en": "Show label"
+          }
+        },
+        {
+          "name": "icon",
+          "attr": "icon",
+          "type": "boolean",
+          "default": true,
+          "responsive": false,
+          "label": {
+            "en": "Search icon"
+          }
+        }
+      ]
+    },
+    {
       "name": "hk-price",
       "category": "commerce",
       "label": {
@@ -653,6 +936,19 @@
           "responsive": false,
           "label": {
             "en": "Compare at"
+          }
+        },
+        {
+          "name": "format",
+          "attr": "format",
+          "type": "select",
+          "options": [
+            "decimal",
+            "whole"
+          ],
+          "responsive": false,
+          "label": {
+            "en": "Number format"
           }
         }
       ]

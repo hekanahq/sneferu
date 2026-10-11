@@ -2,6 +2,7 @@ import { err, LIMITS, escapeAttr, escapeText, safeToken, safeUrl, svgCase, toStr
 import type { RenderContext, Scope } from './context';
 import { evaluate, truthy } from './evaluate';
 import { translate } from './translate';
+import { resolveUrl } from './url';
 import { Budget } from './budget';
 export { Budget } from './budget';
 
@@ -23,6 +24,8 @@ export interface Env {
   ctx: RenderContext; registry: TagRegistry; snippets: Record<string, IRNode[]>;
   slots: Record<string, () => string>; budget: Budget; css: string[]; controllers: Set<string>;
   diagnostics: Diagnostic[]; ids: { n: number; prefix?: string }; depth: number; include: number;
+  /** Rules written through cssOnce on this page (shared constant rules such as the icon flip). Other css() output is never deduplicated. */
+  cssOnce?: Set<string>;
   /** Block definitions; when present, <hk-block of="…"/> renders them with the caller's env. */
   blocks?: Record<string, { ir: IRNode[] }>;
 }
@@ -136,8 +139,15 @@ export function renderNodes(nodes: IRNode[], scope: Scope, env: Env): string {
           const out = tag.render(props, {
             id, locale: env.ctx.locale, dir: env.ctx.dir, data: scope,
             css: (rule) => env.css.push(rule),
+            cssOnce: (rule) => {
+              const seen = env.cssOnce;
+              if (seen) { if (seen.has(rule)) return; seen.add(rule); }
+              env.css.push(rule);
+            },
             controller: (name) => env.controllers.add(name),
             t: (key) => tr(env, key),
+            url: (path) => resolveUrl(env.ctx, path),
+            ...(env.ctx.money === 'whole' || env.ctx.money === 'decimal' ? { money: env.ctx.money } : {}),
             renderChildren: (part?: string) => {
               const kids = part === undefined ? n.children.filter((c) => !isPart(c))
                 : n.children.flatMap((c) => (isPart(c) && partName(c) === part ? c.children : []));

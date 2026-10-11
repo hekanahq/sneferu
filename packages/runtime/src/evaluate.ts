@@ -2,6 +2,7 @@ import type { Expr } from '@hekana/sneferu-core';
 import type { RenderContext, Scope } from './context';
 import { FILTER_IMPLS } from './filters';
 import { translate } from './translate';
+import { resolveUrl } from './url';
 
 const MAX_CATEGORIES = 50;
 const BLOCKED = new Set(['__proto__', 'prototype', 'constructor']);
@@ -28,6 +29,7 @@ function lookup(fn: string, args: unknown[], ctx: RenderContext): unknown {
     case 't': return translate(ctx, a0);
     case 'settings': return get(ctx.settings, a0);
     case 'asset_url': return ctx.assetUrl(a0);
+    case 'url': return resolveUrl(ctx, args[0]);
     default: return undefined;
   }
 }

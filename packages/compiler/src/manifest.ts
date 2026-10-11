@@ -1,5 +1,5 @@
 import { closest } from './validate';
-import { ENGINE_VERSION, FONTS, err, normalizeFieldLabels, normalizeLabel, warn, type Diagnostic, type FieldSchema } from '@hekana/sneferu-core';
+import { ENGINE_VERSION, FONTS, err, isMoneyFormat, normalizeFieldLabels, normalizeLabel, warn, type Diagnostic, type FieldSchema } from '@hekana/sneferu-core';
 
 export interface Manifest {
   id: string; name: { ar: string; en: string }; version: string; author: string;
@@ -7,6 +7,8 @@ export interface Manifest {
   defaultLocale: 'ar' | 'en'; locales: ('ar' | 'en')[]; settings: FieldSchema;
   tokens: { colors: Record<string, string>; fonts?: { heading?: string; body?: string; mono?: string }; radius?: Record<string, string>; layout?: { contentWidth?: string } };
   previews?: string[];
+  /** Default money format for the `money` filter, `hk-price` and `hk-product-card`. */
+  money?: { format?: 'decimal' | 'whole' };
 }
 
 const SEMVER = /^(\d+)\.(\d+)\.(\d+)$/;
@@ -66,6 +68,12 @@ export function validateManifest(json: unknown): { manifest?: Manifest; diagnost
         }
       }
     }
+  }
+  const money = (m as { money?: unknown }).money;
+  if (money !== undefined) {
+    const ok = typeof money === 'object' && money !== null && !Array.isArray(money)
+      && Object.keys(money).every((k) => k === 'format') && ((money as { format?: unknown }).format === undefined || isMoneyFormat((money as { format?: unknown }).format));
+    if (!ok) out.push(err('SN3033', 'money must be { "format": "decimal" } or { "format": "whole" }', at));
   }
   if (typeof m.settings !== 'object' || m.settings === null) out.push(err('SN3021', 'settings must be an object', at));
   if (out.length) return { diagnostics: out };

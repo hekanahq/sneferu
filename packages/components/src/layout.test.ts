@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import type { TagRenderContext } from '@hekana/sneferu-core';
 import { hkGrid, hkSection, hkStack } from './layout';
 
-const mk = () => { const css: string[] = []; const c: TagRenderContext = { id: 'c1', css: (r) => css.push(r), controller: () => {}, data: {}, locale: 'ar', dir: 'rtl', t: (k) => k, renderChildren: () => '<i></i>' }; return { c, css }; };
+const mk = () => { const css: string[] = []; const c: TagRenderContext = { id: 'c1', css: (r) => css.push(r), controller: () => {}, data: {}, locale: 'ar', dir: 'rtl', t: (k) => k, renderChildren: () => '<i></i>', url: (p) => p }; return { c, css }; };
 
 describe('layout tags', () => {
   it('hk-grid emits responsive columns', () => {

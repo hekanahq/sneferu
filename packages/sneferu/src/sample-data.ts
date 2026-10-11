@@ -1,4 +1,4 @@
-import type { RenderContext } from '@hekana/sneferu-runtime';
+import { defaultUrl, type RenderContext } from '@hekana/sneferu-runtime';
 
 /** Sample catalogue for `sneferu dev`, in the language the page renders in. */
 const TITLES = {
@@ -77,6 +77,8 @@ export function sampleContext(locale: 'ar' | 'en', translations: Record<string, 
     products: { 'sample-1': products[0]! },
     translations: translations[locale] ?? {}, fallbackTranslations: translations[defaultLocale] ?? {},
     assetUrl: (p) => `/__assets/${p}`,
+    // what a host passes: the dev server has no store prefix, so the default rule (/en on English pages)
+    url: (p) => defaultUrl(p, locale),
     imageUrl: (ref, w) => { const u = typeof ref === 'string' ? ref : String((ref as { url?: string })?.url ?? ''); return w ? `${u}${u.includes('?') ? '&' : '?'}w=${w}` : u; },
   };
 }

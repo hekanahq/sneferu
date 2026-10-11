@@ -1,7 +1,9 @@
-import { escapeAttr, escapeText, safeUrl, toStr, type HkTag } from '@hekana/sneferu-core';
+import { escapeAttr, escapeText, safeUrl, toStr, type HkTag, type TagRenderContext } from '@hekana/sneferu-core';
 import { colorVar, oneOf, px, responsiveCss, safeImageSrc } from './css';
 import { passthrough } from './attrs';
 import { sanitizeRichText } from './sanitize';
+import { tagIcon } from './icon';
+import { ICON_NAMES } from './icons';
 
 const L = (ar: string, en: string) => ({ ar, en });
 const ed = (ar: string, en: string, group = 'content') => ({ label: L(ar, en), group, insertable: true });
@@ -71,6 +73,21 @@ export const hkImage: HkTag = {
   },
 };
 
+/**
+ * A merchant link through the page's resolver (locale prefix on store paths); always safe.
+ * The input is checked first and only store-relative paths reach ctx.url; its result is checked again.
+ */
+export const link = (c: TagRenderContext, href: unknown): string => {
+  const s = safeUrl(toStr(href));
+  if (s === '#' || !s.startsWith('/') || typeof c.url !== 'function') return s;
+  try {
+    const out = c.url(s);
+    return typeof out === 'string' ? safeUrl(out) : '#';
+  } catch {
+    return '#';
+  }
+};
+
 const VARIANT = oneOf(['solid', 'outline', 'ghost'] as const);
 export const hkButton: HkTag = {
   name: 'hk-button', version: 1, category: 'ui',
@@ -79,12 +96,19 @@ export const hkButton: HkTag = {
     href: { type: 'link', label: L('الرابط', 'Link'), default: '#' },
     variant: { type: 'select', label: L('النمط', 'Style'), options: ['solid', 'outline', 'ghost'], default: 'solid' },
     size: { type: 'select', label: L('الحجم', 'Size'), options: ['sm', 'md', 'lg'], default: 'md' },
+    icon: { type: 'select', label: L('أيقونة', 'Icon'), options: ICON_NAMES },
+    iconPosition: { type: 'select', label: L('مكان الأيقونة', 'Icon position'), options: ['start', 'end'], default: 'start' },
   },
   allowedParents: '*', allowedChildren: [], responsive: [], bindable: '*', editor: ed('زر', 'Button', 'ui'),
   render(p, c) {
     const v = VARIANT(p.variant) ?? 'solid';
     const x = passthrough(p);
-    return `<a class="sn-${c.id} sn-btn sn-btn-${v}${x.cls}"${x.attrs} href="${escapeAttr(safeUrl(toStr(p.href) || '#'))}">${escapeText(toStr(p.label))}</a>`;
+    const label = escapeText(toStr(p.label));
+    // decorative: the label names the button
+    const icon = tagIcon(c, p.icon, 20, 2);
+    if (icon) c.css(`.sn-${c.id}{display:inline-flex;align-items:center;gap:.5em}`);
+    const body = icon === '' ? label : p.iconPosition === 'end' ? `${label}${icon}` : `${icon}${label}`;
+    return `<a class="sn-${c.id} sn-btn sn-btn-${v}${x.cls}"${x.attrs} href="${escapeAttr(link(c, p.href))}">${body}</a>`;
   },
 };
 
