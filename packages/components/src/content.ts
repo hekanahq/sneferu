@@ -74,8 +74,7 @@ export const hkImage: HkTag = {
     const x = passthrough(p);
     const srcset = srcsetOf(p.src);
     const set = srcset === '' ? '' : ` srcset="${escapeAttr(srcset)}" sizes="${escapeAttr(sizesAttr(p.sizes))}"`;
-    const own = typeof p.src === 'object' && p.src !== null ? (p.src as { width?: unknown; height?: unknown }) : {};
-    const dw = dimAttr(p.width ?? own.width), dh = dimAttr(p.height ?? own.height);
+    const dw = dimAttr(p.width), dh = dimAttr(p.height);
     const dims = `${dw ? ` width="${dw}"` : ''}${dh ? ` height="${dh}"` : ''}`;
     return `<img class="sn-${c.id}${x.cls}"${x.attrs} src="${escapeAttr(raw)}"${set}${dims} alt="${escapeAttr(toStr(p.alt))}" loading="${eager ? 'eager' : 'lazy'}" decoding="async"${eager ? ' fetchpriority="high"' : ''}>`;
   },

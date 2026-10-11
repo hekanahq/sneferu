@@ -65,6 +65,7 @@ const CATEGORIES = ['new', 'gift-cards', 'subscriptions'] as const;
 
 export const sampleProducts = (locale: 'ar' | 'en', responsive = false) => Array.from({ length: 12 }, (_, i) => sampleProduct(locale, i, responsive));
 
+/** The sample srcset defaults off so the 0.2 golden fixture stays stable; `sneferu dev` turns it on. */
 export function sampleContext(locale: 'ar' | 'en', translations: Record<string, Record<string, string>>, defaultLocale: 'ar' | 'en', opts: { responsive?: boolean } = {}): RenderContext {
   const products = sampleProducts(locale, opts.responsive === true);
   return {

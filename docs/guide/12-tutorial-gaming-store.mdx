@@ -858,7 +858,7 @@ and cart pages use the store's regular theme.
 | Limit | What the three gaming themes do |
 | - | - |
 | no icon tag | one `icon` snippet of inline SVG |
-| `asset_url()` is empty on the live storefront for now | no bundled images: icons and hero art are inline SVG, product art comes from products |
+| images in `assets/` are served on the store from 0.3 (fonts, scripts and icons are not) | this theme bundles no images: icons and hero art are inline SVG, product art comes from products |
 | fonts in `assets/` are not served on the store (use `tokens.fonts`) | `@font-face` rules pointing at `https://fonts.gstatic.com` |
 | one value per setting for every language | text settings default to `""`, with `default: t('…')` |
 | links do not follow the locale | link paths in the locale files (`url_products`) |

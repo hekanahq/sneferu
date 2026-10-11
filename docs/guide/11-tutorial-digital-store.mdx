@@ -500,7 +500,7 @@ and cart pages use the store's regular theme.
 
 | Limit | What the three themes do |
 | - | - |
-| `asset_url()` is empty on the live storefront for now | no bundled images: art comes from products, inline SVG, or an `image` setting with an `https://` default |
+| images in `assets/` are served on the store from 0.3 (fonts, scripts and icons are not) | this theme bundles no images: art comes from products, inline SVG, or an `image` setting with an `https://` default |
 | fonts in `assets/` are not served on the store (use `tokens.fonts`) | `@font-face` rules pointing at `https://fonts.gstatic.com` |
 | a lookup takes fixed text | category handles are written in the templates |
 | one value per setting for every language | settings default to `""`, with `default: t('…')` |

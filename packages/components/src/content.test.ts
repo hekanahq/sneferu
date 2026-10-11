@@ -160,7 +160,7 @@ describe('content and commerce tags', () => {
       const { html, css } = render('hk-image', { src: 'https://cdn.x/a.webp', width: 640, height: 480 });
       expect(html).toBe('<img class="sn-c1" src="https://cdn.x/a.webp" width="640" height="480" alt="" loading="lazy" decoding="async">');
       expect(css.join('')).toContain('max-width:640px');
-      expect(render('hk-image', { src: { url: 'https://cdn.x/a.webp', width: 300, height: 200 } }).html).toContain(' width="300" height="200"');
+      expect(render('hk-image', { src: { url: 'https://cdn.x/a.webp', width: 300, height: 200 } }).html).not.toMatch(/width=|height=/);
       expect(render('hk-image', { src: 'https://cdn.x/a.webp', width: 'x" onload="y', height: -3 }).html).not.toMatch(/width=|height=|onload/);
     });
     it('product card gets srcset and sizes when the image has a srcset, and is 0.2 byte-identical when it has none', () => {
