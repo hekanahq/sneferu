@@ -20,11 +20,12 @@ const render = (tag: string, props: Record<string, unknown>, children: Kids = ''
 };
 /** hk-product-card's markup in 0.2, before parts existed. */
 const CARD_02 = '<a class="sn-product-card" href="/p"><img src="https://cdn.x/1.webp" alt="P &quot;1&quot;" loading="lazy" decoding="async"><span class="sn-title">P "1"</span><span class="sn-c1-p sn-price"><span class="sn-now">10.00 ج.م</span> <s class="sn-was">12.00 ج.م</s></span></a>';
+const OWN_A11Y = new Set(['hk-icon']);
 const PROD = { title: 'P "1"', url: '/p', price: 1000, compare_at: 1200, image: { url: 'https://cdn.x/1.webp' } };
 
 describe('content and commerce tags', () => {
   it('registers the base set', () => {
-    expect([...r.names()].sort()).toEqual(['hk-badge', 'hk-button', 'hk-card', 'hk-container', 'hk-grid', 'hk-heading', 'hk-image', 'hk-price', 'hk-product-card', 'hk-product-grid', 'hk-rich-text', 'hk-section', 'hk-stack', 'hk-text']);
+    expect([...r.names()].sort()).toEqual(['hk-badge', 'hk-button', 'hk-card', 'hk-container', 'hk-grid', 'hk-heading', 'hk-icon', 'hk-image', 'hk-price', 'hk-product-card', 'hk-product-grid', 'hk-rich-text', 'hk-section', 'hk-stack', 'hk-text']);
   });
   it('heading/text escape and choose level', () => {
     expect(render('hk-heading', { text: '<b>كروت</b>', level: 'h1' }).html).toBe('<h1 class="sn-c1">&lt;b&gt;كروت&lt;/b&gt;</h1>');
@@ -49,15 +50,21 @@ describe('content and commerce tags', () => {
   });
   it('every base tag carries pass-through attributes on its root (I7)', () => {
     const extra = { class: 'lead "x" <y>', id: 'top one', role: 'region', title: '"><script>', 'aria-label': 'عن "المتجر"', 'data-x': '1', 'data-hk-section': 'spoof', 'data-a<b': 'z', onclick: 'alert(1)' };
-    const need: Record<string, Record<string, unknown>> = { 'hk-image': { src: '/a.png' }, 'hk-product-card': { product: { title: 'P', url: '/p' } }, 'hk-rich-text': { html: '<p>x</p>' } };
+    const need: Record<string, Record<string, unknown>> = { 'hk-icon': { name: 'search' }, 'hk-image': { src: '/a.png' }, 'hk-product-card': { product: { title: 'P', url: '/p' } }, 'hk-rich-text': { html: '<p>x</p>' } };
     for (const name of r.names()) {
       const { html } = render(name, { ...need[name], ...extra }, '<i></i>');
       const root = /^<[a-z0-9]+([^>]*)>/.exec(html)![1]!;
       expect(root, name).toMatch(/class="[^"]*\blead x y"/);
       expect(root, name).toContain(' id="top-one"');
-      expect(root, name).toContain(' role="region"');
       expect(root, name).toContain(' title="&quot;&gt;&lt;script&gt;"');
-      expect(root, name).toContain(' aria-label="عن &quot;المتجر&quot;"');
+      if (OWN_A11Y.has(name)) {
+        // tags that set their own role/aria-* never take them from the template
+        expect(root, name).not.toContain('role="region"');
+        expect(root, name).not.toContain('aria-label="عن');
+      } else {
+        expect(root, name).toContain(' role="region"');
+        expect(root, name).toContain(' aria-label="عن &quot;المتجر&quot;"');
+      }
       expect(root, name).toContain(' data-x="1"');
       expect(html, name).not.toContain('data-hk-section');
       expect(html, name).not.toContain('data-a<b');

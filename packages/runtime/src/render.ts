@@ -24,6 +24,8 @@ export interface Env {
   ctx: RenderContext; registry: TagRegistry; snippets: Record<string, IRNode[]>;
   slots: Record<string, () => string>; budget: Budget; css: string[]; controllers: Set<string>;
   diagnostics: Diagnostic[]; ids: { n: number; prefix?: string }; depth: number; include: number;
+  /** CSS rules already written on this page: a rule written twice is kept once (shared rules such as the icon flip). */
+  cssSeen?: Set<string>;
   /** Block definitions; when present, <hk-block of="…"/> renders them with the caller's env. */
   blocks?: Record<string, { ir: IRNode[] }>;
 }
@@ -136,7 +138,10 @@ export function renderNodes(nodes: IRNode[], scope: Scope, env: Env): string {
         try {
           const out = tag.render(props, {
             id, locale: env.ctx.locale, dir: env.ctx.dir, data: scope,
-            css: (rule) => env.css.push(rule),
+            css: (rule) => {
+              if (env.cssSeen) { if (env.cssSeen.has(rule)) return; env.cssSeen.add(rule); }
+              env.css.push(rule);
+            },
             controller: (name) => env.controllers.add(name),
             t: (key) => tr(env, key),
             url: (path) => resolveUrl(env.ctx, path),

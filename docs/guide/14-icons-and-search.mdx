@@ -1,0 +1,73 @@
+# 14. Icons and search
+
+Two tags cover things a theme cannot build from plain elements: icons that
+need no image files, and a search box. Both work on Arabic and English pages
+without extra code.
+
+## Icons
+
+`<hk-icon>` draws an icon from a set bundled with Sneferu: 71 line icons from
+[Lucide](https://lucide.dev) (ISC licence). The icons are inline SVG, so they
+load with the page, take the text colour (`currentColor`) and need nothing in
+`assets/`.
+
+```html
+<hk-icon name="truck" />
+<hk-icon name="shield-check" size="32" stroke="1.5" />
+<hk-icon name="search" label="{{ t('search') }}" />
+```
+
+| Prop | Type | Default | Notes |
+| - | - | - | - |
+| `name` | one of the names below | (required) | An unknown name renders nothing |
+| `size` | `12`–`96` | `20` | Width and height in pixels; values outside the range are clamped |
+| `stroke` | `1`–`3`, steps of `0.5` | `2` | Line width |
+| `label` | text | none | What the icon means, for screen readers |
+
+### Decorative or meaningful
+
+An icon next to text that already says the same thing ("Free delivery" with a
+truck) is decorative: leave `label` out and the icon is hidden from screen
+readers (`aria-hidden="true"`). An icon on its own that carries meaning needs a
+`label`; it then gets `role="img"` and `aria-label`. `role` and `aria-*`
+written on `<hk-icon>` are ignored, so the two cannot conflict. `class`, `id`,
+`title` and `data-*` are kept, as on other tags.
+
+The colour comes from the surrounding text. To colour one icon, give it a class
+and set `color` in the theme stylesheet:
+
+```css
+.trust-icon { color: var(--hk-color-accent); }
+```
+
+### Right to left
+
+`arrow-left`, `arrow-right`, `chevron-left` and `chevron-right` point along the
+reading direction, so they are mirrored on Arabic pages: an `arrow-right` after
+"Shop now" points forward in both languages. Other icons are never mirrored.
+
+### Icons in buttons
+
+`<hk-button>` takes an icon too. It is decorative (the button's label names
+it) and sits before the label unless `icon-position="end"`:
+
+```html
+<hk-button label="{{ t('shop_now') }}" href="/products" icon="arrow-right" icon-position="end" />
+```
+
+### The icon set
+
+| Group | Names |
+| - | - |
+| Arrows | `arrow-left` `arrow-right` `arrow-up-right` `chevron-left` `chevron-right` `chevron-down` `chevron-up` |
+| Actions | `check` `x` `plus` `minus` `menu` `search` `download` `upload` `share-2` `external-link` `link` `copy` `trash-2` `settings` `filter` `sliders-horizontal` |
+| Shopping | `shopping-cart` `shopping-bag` `heart` `star` `tag` `gift` `package` `truck` `percent` `credit-card` `wallet` `banknote` `store` |
+| People and contact | `user` `mail` `phone` `map-pin` `message-circle` `globe` |
+| Status and trust | `lock` `shield-check` `info` `alert-circle` `help-circle` `clock` `calendar` |
+| Files and media | `file` `file-text` `image` `play` `pause` `volume-2` `grid` `list` `home` |
+| Digital and gaming | `sparkles` `zap` `flame` `trophy` `gamepad-2` `headphones` `monitor` `smartphone` `book-open` `graduation-cap` `code` `layers` `key` |
+
+The names match Lucide's, so [lucide.dev/icons](https://lucide.dev/icons) shows
+what each one looks like. Icons that are not in this table are not available;
+a theme cannot load other SVG files as icons, but it can still draw its own
+`<svg>` with the allowed SVG elements (see [Security and limits](06-security-and-limits.mdx)).
