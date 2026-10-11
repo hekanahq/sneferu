@@ -29,3 +29,50 @@ export function sampleContext(locale: 'ar' | 'en', translations: Record<string, 
     imageUrl: (ref, w) => { const u = typeof ref === 'string' ? ref : String((ref as { url?: string })?.url ?? ''); return w ? `${u}${u.includes('?') ? '&' : '?'}w=${w}` : u; },
   };
 }
+
+/**
+ * Your own sample data for `sneferu dev`: `.sneferu-dev/data.json` in the theme
+ * folder (dot-folders are never part of the theme or a push), or `--data <file>`.
+ *
+ *   { "store": { "name": "…" },
+ *     "collections": { "courses": { "title": "…", "products": [ { "title", "url", "price", "compare_at", "image": { "url" } } ] } },
+ *     "products": { "handle": { … } } }
+ *
+ * Any of the three keys may instead be split by locale: `{ "ar": { … }, "en": { … } }`
+ * at the top level picks the block for the page's locale. Collections and
+ * products are added to (and override) the built-in sample catalogue.
+ */
+export interface SampleData {
+  store?: Record<string, unknown>;
+  collections?: Record<string, { title?: string; products: unknown[] }>;
+  products?: Record<string, unknown>;
+}
+
+const obj = (v: unknown): Record<string, unknown> | undefined => (v && typeof v === 'object' && !Array.isArray(v) ? (v as Record<string, unknown>) : undefined);
+
+/** Validates the parsed JSON loosely: anything malformed is dropped, never thrown. */
+export function pickSampleData(raw: unknown, locale: 'ar' | 'en'): SampleData {
+  const top = obj(raw) ?? {};
+  const src = obj(top[locale]) ?? (('ar' in top || 'en' in top) ? {} : top);
+  const out: SampleData = {};
+  const store = obj(src.store); if (store) out.store = store;
+  const cols = obj(src.collections);
+  if (cols) {
+    out.collections = {};
+    for (const [h, c] of Object.entries(cols)) {
+      const co = obj(c); if (!co || !Array.isArray(co.products)) continue;
+      out.collections[h] = { ...(typeof co.title === 'string' ? { title: co.title } : {}), products: co.products };
+    }
+  }
+  const prods = obj(src.products); if (prods) out.products = prods;
+  return out;
+}
+
+export function withSampleData(ctx: RenderContext, data: SampleData): RenderContext {
+  return {
+    ...ctx,
+    store: { ...ctx.store, ...(data.store ?? {}) },
+    collections: { ...ctx.collections, ...(data.collections ?? {}) },
+    products: { ...ctx.products, ...(data.products ?? {}) },
+  };
+}

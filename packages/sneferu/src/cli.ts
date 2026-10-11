@@ -20,7 +20,8 @@ program.command('format').argument('[dir]', 'theme folder', '.').option('--check
   .description('format .sneferu files, theme.json and locales with Prettier and the Sneferu plugin')
   .action(async (dir: string, o: { check?: boolean }) => { const r = await runFormat(dir, { check: o.check === true }); (r.ok ? console.log : console.error)(r.output); process.exitCode = r.ok ? 0 : 1; });
 program.command('dev').argument('[dir]', 'theme folder', '.').option('--port <n>', 'port', '4100')
-  .action(async (dir: string, o: { port: string }) => { await runDev(dir, Number(o.port)); });
+  .option('--data <file>', 'sample data JSON (default: .sneferu-dev/data.json when it exists)')
+  .action(async (dir: string, o: { port: string; data?: string }) => { await runDev(dir, Number(o.port), { data: o.data }); });
 program.command('push').argument('[dir]', 'theme folder', '.')
   .requiredOption('--package <slug>', 'theme package on Hekana (must equal theme.json id)')
   .option('--dev-store', 'then install and publish the version on your dev store (developer key only)')

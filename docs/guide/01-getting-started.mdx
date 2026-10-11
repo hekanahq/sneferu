@@ -70,6 +70,38 @@ The preview uses sample data, not a real store:
 Any other collection is empty and any other product is nothing, which is a good
 way to check your empty states.
 
+### Your own sample data
+
+To preview with products like your store's, put a `.sneferu-dev/data.json` in
+the theme folder (or pass `--data <file>`). Folders starting with a dot are never
+part of the theme and are never pushed.
+
+```json title=".sneferu-dev/data.json"
+{
+  "store": { "name": "Pages" },
+  "collections": {
+    "ebooks": {
+      "title": "E-books",
+      "products": [
+        { "title": "Notes on design", "url": "/products/notes", "price": 9900,
+          "compare_at": null, "image": { "url": "https://example.com/notes.png" } }
+      ]
+    }
+  }
+}
+```
+
+| Key | Effect |
+| - | - |
+| `store` | merged over the sample store, e.g. `store.name` |
+| `collections` | added to the sample collections; a handle you list (even `featured`) replaces the sample one |
+| `products` | added to the `product('handle')` lookups |
+
+For different text per language, split the file by locale:
+`{ "ar": { "store": … }, "en": { "store": … } }`. The file is read on every
+request: save it and reload the page. A file that is not valid JSON shows an
+error page naming the file.
+
 ## Check: `validate`
 
 ```bash
@@ -109,7 +141,7 @@ npx @hekana/sneferu build --out out  # another output folder
 | Command | Arguments | Options |
 | - | - | - |
 | `init [dir]` | folder to create, default `my-theme` | `--force` write into a non-empty folder |
-| `dev [dir]` | theme folder, default `.` | `--port <n>` default `4100` |
+| `dev [dir]` | theme folder, default `.` | `--port <n>` default `4100`; `--data <file>` sample data JSON, default `.sneferu-dev/data.json` when it exists |
 | `validate [dir]` | theme folder, default `.` | |
 | `build [dir]` | theme folder, default `.` | `--out <dir>` default `dist` |
 | `format [dir]` | theme folder, default `.` | `--check` only report files that are not formatted and exit `1` (for CI). Formats `.sneferu` files, `theme.json` and `locales/` with Prettier and the Sneferu plugin; see [Format your theme](10-format-your-theme.mdx) |
