@@ -1,0 +1,27 @@
+{
+  "id": "esports",
+  "name": "Esports",
+  "version": "1.0.1",
+  "author": "Hekana",
+  "description": "A bold gaming top-up store: black and deep green, a lime accent, diagonal cuts, a wide hero and top-up cards with ribbons.",
+  "category": "gaming",
+  "engine": "hk2",
+  "engineCompatibility": "^2.0.0",
+  "defaultLocale": "ar",
+  "locales": ["ar", "en"],
+  "settings": {},
+  "tokens": {
+    "colors": {
+      "primary": "#C6F25A",
+      "secondary": "#0E2A1F",
+      "accent": "#C6F25A",
+      "background": "#070A09",
+      "text": "#F1F5F2",
+      "muted": "#93A39A",
+      "surface": "#101713",
+      "line": "#1D2A23",
+      "ribbon": "#F5B83D"
+    },
+    "layout": { "contentWidth": "1200px" }
+  }
+}

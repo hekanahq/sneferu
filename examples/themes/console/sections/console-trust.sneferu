@@ -1,0 +1,14 @@
+<hk-section padding-y="20" class="cc-trust">
+  <ul class="cc-trust-list">
+    {% render 'trust', icon: 'bolt', label: t('trust_instant') %}
+    {% render 'trust', icon: 'lock', label: t('trust_secure') %}
+    {% render 'trust', icon: 'pay', label: t('trust_egp') %}
+  </ul>
+</hk-section>
+<hk-schema>
+  {
+    "name": "Trust strip",
+    "version": 1,
+    "settings": {}
+  }
+</hk-schema>

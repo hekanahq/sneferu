@@ -1,0 +1,30 @@
+<hk-section padding-y="48" mobile-padding-y="32" class="es-faq">
+  <div id="faq" class="es-faq-wrap">
+    <hk-heading
+      text="{{ section.settings.heading | default: t('faq_heading') }}"
+      level="h2"
+      size="28"
+      mobile-size="20"
+      class="es-h2"
+    />
+    {% render 'faq-item', q: t('faq_1_q'), a: t('faq_1_a') %}
+    {% render 'faq-item', q: t('faq_2_q'), a: t('faq_2_a') %}
+    {% render 'faq-item', q: t('faq_3_q'), a: t('faq_3_a') %}
+    {% render 'faq-item', q: t('faq_4_q'), a: t('faq_4_a') %}
+    {% render 'faq-item', q: t('faq_5_q'), a: t('faq_5_a') %}
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": "FAQ",
+    "version": 1,
+    "settings": {
+      "heading": {
+        "type": "text",
+        "label": "Heading (empty = theme text)",
+        "default": "",
+        "maxLength": 60
+      }
+    }
+  }
+</hk-schema>

@@ -1,0 +1,135 @@
+<hk-section padding-y="24" mobile-padding-y="16" class="arc-cats">
+  {% if section.settings.heading %}
+    <hk-heading text="{{ section.settings.heading }}" level="h2" size="24" mobile-size="20" class="arc-h2" />
+  {% endif %}
+  <hk-grid columns="3" mobile-columns="2" gap="16" mobile-gap="12">
+    {% render 'tile', icon: section.settings.icon_1, handle: section.settings.handle_1, title: section.settings.title_1 | default: t('cat_gift_cards') %}
+    {% render 'tile', icon: section.settings.icon_2, handle: section.settings.handle_2, title: section.settings.title_2 | default: t('cat_currency') %}
+    {% render 'tile', icon: section.settings.icon_3, handle: section.settings.handle_3, title: section.settings.title_3 | default: t('cat_topups') %}
+    {% render 'tile', icon: section.settings.icon_4, handle: section.settings.handle_4, title: section.settings.title_4 | default: t('cat_subscriptions') %}
+    {% render 'tile', icon: section.settings.icon_5, handle: section.settings.handle_5, title: section.settings.title_5 | default: t('cat_console') %}
+    {% render 'tile', icon: section.settings.icon_6, handle: section.settings.handle_6, title: section.settings.title_6 | default: t('cat_mobile') %}
+  </hk-grid>
+</hk-section>
+<hk-schema>
+  {
+    "name": "Category tiles",
+    "version": 1,
+    "settings": {
+      "heading": {
+        "type": "text",
+        "label": "Heading (optional)",
+        "default": "",
+        "maxLength": 60
+      },
+      "title_1": {
+        "type": "text",
+        "label": "Tile 1 title",
+        "default": "",
+        "maxLength": 32
+      },
+      "handle_1": {
+        "type": "text",
+        "label": "Tile 1 category handle",
+        "default": "gift-cards",
+        "maxLength": 60
+      },
+      "icon_1": {
+        "type": "select",
+        "label": "Tile 1 icon",
+        "options": ["card", "coins", "gem", "bolt", "gamepad", "calendar", "phone", "trophy"],
+        "default": "card"
+      },
+      "title_2": {
+        "type": "text",
+        "label": "Tile 2 title",
+        "default": "",
+        "maxLength": 32
+      },
+      "handle_2": {
+        "type": "text",
+        "label": "Tile 2 category handle",
+        "default": "game-currency",
+        "maxLength": 60
+      },
+      "icon_2": {
+        "type": "select",
+        "label": "Tile 2 icon",
+        "options": ["card", "coins", "gem", "bolt", "gamepad", "calendar", "phone", "trophy"],
+        "default": "gem"
+      },
+      "title_3": {
+        "type": "text",
+        "label": "Tile 3 title",
+        "default": "",
+        "maxLength": 32
+      },
+      "handle_3": {
+        "type": "text",
+        "label": "Tile 3 category handle",
+        "default": "top-ups",
+        "maxLength": 60
+      },
+      "icon_3": {
+        "type": "select",
+        "label": "Tile 3 icon",
+        "options": ["card", "coins", "gem", "bolt", "gamepad", "calendar", "phone", "trophy"],
+        "default": "bolt"
+      },
+      "title_4": {
+        "type": "text",
+        "label": "Tile 4 title",
+        "default": "",
+        "maxLength": 32
+      },
+      "handle_4": {
+        "type": "text",
+        "label": "Tile 4 category handle",
+        "default": "subscriptions",
+        "maxLength": 60
+      },
+      "icon_4": {
+        "type": "select",
+        "label": "Tile 4 icon",
+        "options": ["card", "coins", "gem", "bolt", "gamepad", "calendar", "phone", "trophy"],
+        "default": "calendar"
+      },
+      "title_5": {
+        "type": "text",
+        "label": "Tile 5 title",
+        "default": "",
+        "maxLength": 32
+      },
+      "handle_5": {
+        "type": "text",
+        "label": "Tile 5 category handle",
+        "default": "gift-cards",
+        "maxLength": 60
+      },
+      "icon_5": {
+        "type": "select",
+        "label": "Tile 5 icon",
+        "options": ["card", "coins", "gem", "bolt", "gamepad", "calendar", "phone", "trophy"],
+        "default": "gamepad"
+      },
+      "title_6": {
+        "type": "text",
+        "label": "Tile 6 title",
+        "default": "",
+        "maxLength": 32
+      },
+      "handle_6": {
+        "type": "text",
+        "label": "Tile 6 category handle",
+        "default": "top-ups",
+        "maxLength": 60
+      },
+      "icon_6": {
+        "type": "select",
+        "label": "Tile 6 icon",
+        "options": ["card", "coins", "gem", "bolt", "gamepad", "calendar", "phone", "trophy"],
+        "default": "phone"
+      }
+    }
+  }
+</hk-schema>

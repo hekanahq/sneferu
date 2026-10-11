@@ -1,0 +1,7 @@
+{% if amount %}
+  <a class="arc-chip" href="{{ t('url_search') }}">
+    <span class="arc-chip-icon">{% render 'icon', name: 'coin' %}</span>
+    <span class="arc-chip-amount">{{ amount }}</span>
+    <span class="arc-chip-cur">{{ t('egp') }}</span>
+  </a>
+{% endif %}

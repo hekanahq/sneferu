@@ -1,0 +1,22 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "arcade-hero"
+      },
+      {
+        "type": "arcade-categories"
+      },
+      {
+        "type": "arcade-steps"
+      },
+      {
+        "type": "arcade-products"
+      },
+      {
+        "type": "arcade-faq"
+      }
+    ]
+  }
+</hk-schema>

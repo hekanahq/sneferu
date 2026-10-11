@@ -1,0 +1,51 @@
+<svg class="arc-defs" width="0" height="0" aria-hidden="true">
+  <defs>
+    <linearGradient id="arc-grad" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#22D3EE" />
+      <stop offset="1" stop-color="#A3E635" />
+    </linearGradient>
+  </defs>
+</svg>
+<header class="arc-header">
+  <hk-container>
+    <div class="arc-bar">
+      <details class="arc-menu">
+        <summary aria-label="{{ t('menu') }}">
+          {% render 'icon', name: 'menu' %}
+        </summary>
+        <nav class="arc-menu-panel">
+          <a href="{{ t('url_home') }}">{{ t('nav_home') }}</a>
+          <a href="{{ t('url_products') }}">{{ t('nav_all') }}</a>
+          <a href="{{ t('url_prefix') }}/category/gift-cards">{{ t('cat_gift_cards') }}</a>
+          <a href="{{ t('url_prefix') }}/category/game-currency">{{ t('cat_currency') }}</a>
+          <a href="#faq">{{ t('nav_faq') }}</a>
+        </nav>
+      </details>
+      <a class="arc-logo" href="{{ t('url_home') }}">{{ store.name }}</a>
+      <a class="arc-search" href="{{ t('url_search') }}">
+        <span>{{ t('search_placeholder') }}</span>
+        {% render 'icon', name: 'search' %}
+      </a>
+      <a class="arc-cart" href="{{ t('url_cart') }}" aria-label="{{ t('cart') }}">{% render 'icon', name: 'cart' %}</a>
+    </div>
+  </hk-container>
+</header>
+<main class="arc-main"><hk-slot name="content" /></main>
+<footer class="arc-footer">
+  <hk-container>
+    <div class="arc-footer-grid">
+      <div class="arc-footer-brand">
+        <span class="arc-logo">{{ store.name }}</span>
+        <p>{{ t('footer_about') }}</p>
+      </div>
+      <nav class="arc-footer-links" aria-label="{{ t('footer_links') }}">
+        <a href="{{ t('url_products') }}">{{ t('nav_all') }}</a>
+        <a href="{{ t('url_prefix') }}/category/gift-cards">{{ t('cat_gift_cards') }}</a>
+        <a href="{{ t('url_prefix') }}/category/game-currency">{{ t('cat_currency') }}</a>
+        <a href="{{ t('url_prefix') }}/category/top-ups">{{ t('cat_topups') }}</a>
+        <a href="#faq">{{ t('nav_faq') }}</a>
+      </nav>
+    </div>
+    <p class="arc-copy">© {{ store.name }}</p>
+  </hk-container>
+</footer>

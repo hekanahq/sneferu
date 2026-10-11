@@ -1,0 +1,4 @@
+<a class="arc-tile" href="{{ t('url_prefix') }}/category/{{ handle }}">
+  <span class="arc-tile-icon">{% render 'icon', name: icon %}</span>
+  <span class="arc-tile-title">{{ title }}</span>
+</a>

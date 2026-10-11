@@ -1,0 +1,19 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "esports-hero"
+      },
+      {
+        "type": "esports-products"
+      },
+      {
+        "type": "esports-steps"
+      },
+      {
+        "type": "esports-faq"
+      }
+    ]
+  }
+</hk-schema>
