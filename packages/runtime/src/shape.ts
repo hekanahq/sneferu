@@ -44,7 +44,8 @@ export function checkArtifactShape(a: unknown): Diagnostic[] {
     if (!isObj(ts)) bad('templateSections', 'must be an object');
     else for (const [k, list] of Object.entries(ts)) {
       if (!Array.isArray(list)) { bad(`templateSections.${k}`, 'must be an array'); continue; }
-      list.forEach((s, i) => { if (!isObj(s) || typeof s.type !== 'string' || (s.settings !== undefined && !isObj(s.settings))) bad(`templateSections.${k}[${i}]`, 'needs a string type and object settings'); });
+      list.forEach((s, i) => { if (!isObj(s) || typeof s.type !== 'string' || (s.settings !== undefined && !isObj(s.settings))) bad(`templateSections.${k}[${i}]`, 'needs a string type and object settings');
+        else if (s.blocks !== undefined && (!Array.isArray(s.blocks) || s.blocks.some((b) => !isObj(b) || typeof b.type !== 'string' || (b.settings !== undefined && !isObj(b.settings))))) bad(`templateSections.${k}[${i}].blocks`, 'must be an array of { type, settings? }'); });
     }
   }
   return out;

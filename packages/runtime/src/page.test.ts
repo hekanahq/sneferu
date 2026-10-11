@@ -200,4 +200,34 @@ describe('renderPage', () => {
     expect(r.diagnostics.length).toBeLessThanOrEqual(2);
     expect(r.diagnostics.some((d) => d.code === 'SN4001' || d.code === 'SN4002')).toBe(true);
   });
+  it('renders a localized section setting in the page locale', () => {
+    const loc: ArtifactLike = { ...artifact, sections: { hero: { ...artifact.sections.hero!, schema: { ...artifact.sections.hero!.schema,
+      settings: { title: { type: 'text', label: { ar: 'ع', en: 'T' }, localized: true, default: { ar: 'افتراضي', en: 'Default' } } } } } } };
+    const sections = [{ id: 's1', type: 'hero', props: { title: { ar: 'مرحبا', en: 'Hello' } } }, { id: 's2', type: 'hero', props: { title: { en: 'Only EN' } } }, { id: 's3', type: 'hero' }, { id: 's4', type: 'hero', props: { title: 'old' } }];
+    const ar = renderPage(loc, { template: 'index', ctx, registry: new TagRegistry(), sections });
+    const en = renderPage(loc, { template: 'index', ctx: { ...ctx, locale: 'en', dir: 'ltr' }, registry: new TagRegistry(), sections });
+    expect([...ar.html.matchAll(/<h1>(.*?)<\/h1>/g)].map((m) => m[1])).toEqual(['مرحبا', 'Only EN', 'افتراضي', 'old']);
+    expect([...en.html.matchAll(/<h1>(.*?)<\/h1>/g)].map((m) => m[1])).toEqual(['Hello', 'Only EN', 'Default', 'old']);
+    expect(ar.html + en.html).not.toContain('[object Object]');
+  });
+  it('resolves localized theme settings by locale', () => {
+    const art: ArtifactLike = { ...artifact, manifest: { ...artifact.manifest, settings: { tagline: { type: 'text', label: { ar: 'ع', en: 'T' }, localized: true } } },
+      layout: [{ k: 'text', e: { k: 'path', p: ['settings', 'tagline'] } }] };
+    const r = renderPage(art, { template: 'index', ctx: { ...ctx, locale: 'en', dir: 'ltr', settings: { tagline: { ar: 'س', en: 'Tag' } } }, registry: new TagRegistry() });
+    expect(r.html).toContain('>Tag<');
+  });
+  it('renders default blocks declared in the template schema', () => {
+    const withBlocks: ArtifactLike = {
+      ...artifact,
+      templateSections: { index: [{ type: 'faq', settings: {}, blocks: [{ type: 'q', settings: { text: 'A' } }, { type: 'q', settings: { text: 'B' } }] }] },
+      sections: { faq: { ir: [{ k: 'loop', as: 'block', src: { k: 'path', p: ['section', 'blocks'] }, limit: 20,
+        body: [{ k: 'comp', tag: 'hk-block', props: { of: { k: 'expr', e: { k: 'path', p: ['block'] } } }, children: [] }] }],
+        schema: { name: { ar: 'ب', en: 'F' }, version: 1, settings: {} } } },
+      blocks: { q: { ir: [{ k: 'text', e: { k: 'path', p: ['block', 'settings', 'text'] } }],
+        schema: { settings: { text: { type: 'text', label: { ar: 'ع', en: 'L' }, default: 'd' } } } } },
+    };
+    const r = renderPage(withBlocks, { template: 'index', ctx, registry: new TagRegistry() });
+    expect(r.diagnostics).toEqual([]);
+    expect(r.html).toMatch(/data-hk-block="default-0-0">A<.*data-hk-block="default-0-1">B</);
+  });
 });

@@ -13,7 +13,7 @@ export interface Artifact {
   sections: Record<string, { ir: IRNode[]; schema: SectionSchema }>;
   blocks: Record<string, { ir: IRNode[]; schema: SectionSchema }>;
   snippets: Record<string, IRNode[]>;
-  templateSections: Record<string, { type: string; settings: Record<string, unknown> }[]>;
+  templateSections: Record<string, { type: string; settings: Record<string, unknown>; blocks?: { type: string; settings: Record<string, unknown> }[] }[]>;
   locales: Record<string, Record<string, string>>;
   assets: { path: string; size: number; hash: string }[];
   hash: string;
@@ -125,12 +125,27 @@ export function compileTheme(files: ThemeFile[], registry: TagRegistry): { artif
     const name = nameOf(p);
     templates[name] = c.ir;
     const rawSections = isObj(c.schema) ? c.schema.sections : undefined;
-    const declared: { type: string; settings: Record<string, unknown> }[] = [];
+    const declared: Artifact['templateSections'][string] = [];
     if (rawSections !== undefined && !Array.isArray(rawSections)) diagnostics.push(err('SN3026', `template ${name}: schema sections must be an array`, { file: p }));
     else for (const s of rawSections ?? []) {
       if (!isObj(s) || typeof s.type !== 'string' || (s.settings !== undefined && !isObj(s.settings))) { diagnostics.push(err('SN3026', `template ${name}: each section needs a string type and object settings`, { file: p })); continue; }
       if (!sections[s.type]) diagnostics.push(err('SN3020', `template ${name} references unknown section '${s.type}'`, { file: p }));
-      declared.push({ type: s.type, settings: (s.settings ?? {}) as Record<string, unknown> });
+      const entry: Artifact['templateSections'][string][number] = { type: s.type, settings: (s.settings ?? {}) as Record<string, unknown> };
+      if (s.blocks !== undefined) {
+        if (!Array.isArray(s.blocks) || s.blocks.some((b) => !isObj(b) || typeof b.type !== 'string' || (b.settings !== undefined && !isObj(b.settings)))) {
+          diagnostics.push(err('SN3026', `template ${name}: section blocks must be an array of { type, settings? }`, { file: p })); continue;
+        }
+        const stype: string = s.type;
+        const allowed = sections[stype]?.schema.blocks;
+        entry.blocks = [];
+        s.blocks.forEach((b: { type: string; settings?: unknown }, j: number) => {
+          if (!blocks[b.type]) diagnostics.push(err('SN3028', `template ${name}: unknown block type '${b.type}'`, { file: p }));
+          else if (sections[stype] && (!allowed || !allowed.allowed.includes(b.type))) diagnostics.push(err('SN3029', `template ${name}: block '${b.type}' not allowed in section '${stype}'`, { file: p }));
+          else if (allowed && j >= allowed.max) diagnostics.push(err('SN3029', `template ${name}: section '${stype}' allows at most ${allowed.max} blocks`, { file: p }));
+          entry.blocks!.push({ type: b.type, settings: (b.settings ?? {}) as Record<string, unknown> });
+        });
+      }
+      declared.push(entry);
     }
     templateSections[name] = declared;
   }

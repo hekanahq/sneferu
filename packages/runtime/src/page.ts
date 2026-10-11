@@ -9,7 +9,7 @@ export interface ArtifactLike {
   manifest: { id: string; settings?: FieldSchema; defaultLocale?: string; tokens?: unknown };
   layout: IRNode[];
   templates: Record<string, IRNode[]>;
-  templateSections: Record<string, { type: string; settings: Record<string, unknown> }[]>;
+  templateSections: Record<string, { type: string; settings: Record<string, unknown>; blocks?: { type: string; settings: Record<string, unknown> }[] }[]>;
   sections: Record<string, Schemaed & { schema: { name?: unknown; version?: number; settings: FieldSchema } }>;
   blocks: Record<string, Schemaed>;
   snippets: Record<string, IRNode[]>;
@@ -19,10 +19,12 @@ export interface RenderResult { html: string; css: string; controllers: string[]
 export interface RenderOptions { template: string; sections?: PageNode[]; ctx: RenderContext; registry: TagRegistry; scope?: Scope; limits?: Limits }
 
 const isObj = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v);
-const settingsFor = (schema: FieldSchema, props: unknown = {}) => {
-  const out: Record<string, unknown> = { ...defaultsOf(schema) };
+const settingsFor = (schema: FieldSchema, props: unknown, locale: 'ar' | 'en') => {
+  // defaults go through coerceSetting too, so a localized { ar, en } default resolves
+  const out: Record<string, unknown> = {};
+  for (const k of Object.keys(defaultsOf(schema))) out[k] = coerceSetting(schema[k]!, undefined, locale);
   if (!isObj(props)) return out;
-  for (const [k, f] of Object.entries(schema)) if (Object.hasOwn(props, k) && props[k] !== undefined) out[k] = coerceSetting(f, props[k]);
+  for (const [k, f] of Object.entries(schema)) if (Object.hasOwn(props, k) && props[k] !== undefined) out[k] = coerceSetting(f, props[k], locale);
   return out;
 };
 const LOCALE = /^[a-z]{2}$/;
@@ -86,20 +88,20 @@ function render(artifact: ArtifactLike, opts: RenderOptions): RenderResult {
   const locale = (LOCALE.test(String(opts.ctx.locale)) ? opts.ctx.locale : LOCALE.test(String(fallback)) ? fallback : 'ar') as RenderContext['locale'];
   const dir: RenderContext['dir'] = locale === 'ar' ? 'rtl' : 'ltr';
   const themeSettings = (artifact.manifest as { settings?: unknown }).settings;
-  const settings = isObj(themeSettings) ? settingsFor(themeSettings as FieldSchema, opts.ctx.settings) : opts.ctx.settings;
+  const settings = isObj(themeSettings) ? settingsFor(themeSettings as FieldSchema, opts.ctx.settings, locale) : opts.ctx.settings;
   const ctx: RenderContext = { ...opts.ctx, locale, dir, settings };
   const env: Env = { ctx, registry: opts.registry, snippets: artifact.snippets, slots: {}, budget: new Budget(opts.limits), css: [], controllers: new Set(), diagnostics: [], ids: { n: 0 }, depth: 0, include: 0 };
   const base: Scope = { ...(opts.scope ?? {}), store: ctx.store, locale, dir };
 
-  const sections: PageNode[] = Array.isArray(opts.sections) ? opts.sections : (own(artifact.templateSections, opts.template) ?? []).map((s, i) => ({ id: `default-${i}`, type: s.type, props: s.settings }));
+  const sections: PageNode[] = Array.isArray(opts.sections) ? opts.sections : (own(artifact.templateSections, opts.template) ?? []).map((s, i) => ({ id: `default-${i}`, type: s.type, props: s.settings, ...(Array.isArray(s.blocks) ? { children: s.blocks.map((b, j) => ({ id: `default-${i}-${j}`, type: b.type, props: b.settings })) } : {}) }));
 
   const renderSection = (node: PageNode): string => {
     if (!isObj(node) || typeof node.type !== 'string') { env.diagnostics.push(err('SN4011', 'page section is malformed')); return '<!-- section unavailable -->'; }
     const def = own(artifact.sections, node.type);
     if (!def) { env.diagnostics.push(err('SN4011', `section '${node.type}' is not in this theme`)); return `<!-- section ${escapeAttr(toStr(node.id))} unavailable -->`; }
     const children = Array.isArray(node.children) ? node.children.filter((c): c is PageNode => isObj(c) && typeof c.type === 'string') : [];
-    const blocks = children.filter((c) => !c.hidden).map((c) => ({ id: c.id, type: c.type, settings: settingsFor(own(artifact.blocks, c.type)?.schema.settings ?? {}, c.props) }));
-    const scope: Scope = { ...base, section: { id: node.id, type: node.type, settings: settingsFor(def.schema.settings, node.props), blocks } };
+    const blocks = children.filter((c) => !c.hidden).map((c) => ({ id: c.id, type: c.type, settings: settingsFor(own(artifact.blocks, c.type)?.schema.settings ?? {}, c.props, locale) }));
+    const scope: Scope = { ...base, section: { id: node.id, type: node.type, settings: settingsFor(def.schema.settings, node.props, locale), blocks } };
     const unavailable = `<!-- section ${escapeAttr(toStr(node.id))} unavailable -->`;
     if (env.budget.exceeded) return unavailable;
     // each section renders against what is left of the page budget, so one runaway

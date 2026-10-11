@@ -162,4 +162,29 @@ describe('compileTheme', () => {
       expect(r.diagnostics.map((d) => [d.code, d.severity])).toEqual([['SN3031', 'warning']]);
     });
   });
+  describe('default section blocks', () => {
+    const withTpl = (sections: string): ThemeFile[] => [
+      ...base().filter((x) => x.path !== 'templates/index.sneferu'),
+      f('templates/index.sneferu', `<hk-sections /><hk-schema>{"sections":[${sections}]}</hk-schema>`),
+      f('blocks/q.sneferu', '<span>{{ block.settings.text }}</span><hk-schema>{"name":"Q","settings":{"text":{"type":"text","label":"T"}}}</hk-schema>'),
+      f('blocks/other.sneferu', '<i /><hk-schema>{"name":"O","settings":{}}</hk-schema>'),
+      f('sections/faq.sneferu', '<section /><hk-schema>{"name":"Faq","blocks":{"allowed":["q"],"max":2},"settings":{}}</hk-schema>'),
+    ];
+    const codes = (s: string) => compileTheme(withTpl(s), reg).diagnostics.map((d) => d.code);
+    it('keeps valid default blocks on the artifact', () => {
+      const r = compileTheme(withTpl('{"type":"faq","blocks":[{"type":"q","settings":{"text":"A"}},{"type":"q"}]}'), reg);
+      expect(r.diagnostics).toEqual([]);
+      expect(r.artifact!.templateSections.index![0]!.blocks).toEqual([{ type: 'q', settings: { text: 'A' } }, { type: 'q', settings: {} }]);
+    });
+    it('rejects unknown block types and disallowed blocks in template defaults', () => {
+      expect(codes('{"type":"faq","blocks":[{"type":"nope"}]}')).toContain('SN3028');
+      expect(codes('{"type":"faq","blocks":[{"type":"other"}]}')).toContain('SN3029');
+      expect(codes('{"type":"faq","blocks":[{"type":"q"},{"type":"q"},{"type":"q"}]}')).toContain('SN3029');
+      expect(codes('{"type":"faq","blocks":[{"type":"q"},{"type":"q"}]}')).toEqual([]);
+    });
+    it('rejects malformed blocks lists with SN3026', () => {
+      expect(codes('{"type":"faq","blocks":"x"}')).toContain('SN3026');
+      expect(codes('{"type":"faq","blocks":[{"settings":{}}]}')).toContain('SN3026');
+    });
+  });
 });

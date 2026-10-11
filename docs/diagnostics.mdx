@@ -74,7 +74,9 @@ Every problem Sneferu reports has a stable code. The format is `file:line:col se
 | SN3024 | `templates/index.sneferu` is missing | Add the index template. |
 | SN3025 | A locale file is not valid JSON, or is not a flat object whose values are all strings | Use `{ "key": "text", ... }` with string values only. |
 | SN3027 | Snippet include cycle, e.g. `snippet include cycle: a → b → a` | Break the cycle; a snippet may not (indirectly) render itself. |
-| SN3026 | A template's schema `sections` is malformed | Use an array of `{ "type": "...", "settings": {...} }`. |
+| SN3026 | A template's schema `sections` (or a section's `blocks`) is malformed | Use an array of `{ "type": "...", "settings": {...}, "blocks": [...] }`. |
+| SN3028 | A template's default section lists a block type that is not in `blocks/` | Create the block or fix the type. |
+| SN3029 | A template's default section lists a block its section does not allow, or more than `blocks.max` | Add the type to the section's `blocks.allowed`, or list fewer blocks. |
 | SN3030 | A section or block `<hk-schema>` lacks a `name` or has bad `settings` | Add a `name` string; `settings` must be an object. |
 | SN3031 | A setting's `label` is not a string (warning) | Write the label as a string. |
 
