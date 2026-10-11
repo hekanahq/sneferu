@@ -2,19 +2,37 @@ import type { RenderContext } from '@hekana/sneferu-runtime';
 
 /** Sample catalogue for `sneferu dev`, in the language the page renders in. */
 const TITLES = {
-  ar: ['كارت بلايستيشن', 'شدات ببجي', 'جواهر فري فاير', 'رصيد ستيم', 'اشتراك شهر', 'كارت إكس بوكس'],
-  en: ['PlayStation gift card', 'PUBG UC pack', 'Free Fire diamonds', 'Steam wallet credit', 'One-month subscription', 'Xbox gift card'],
+  ar: ['كارت بلايستيشن', 'شدات ببجي', 'جواهر فري فاير', 'رصيد ستيم', 'اشتراك شهر', 'كارت إكس بوكس',
+    'كارت نتفلكس', 'اشتراك سبوتيفاي', 'كارت جوجل بلاي', 'اشتراك يوتيوب بريميوم', 'كارت آيتونز', 'اشتراك لعبة شهري'],
+  en: ['PlayStation gift card', 'PUBG UC pack', 'Free Fire diamonds', 'Steam wallet credit', 'One-month subscription', 'Xbox gift card',
+    'Netflix gift card', 'Spotify subscription', 'Google Play gift card', 'YouTube Premium subscription', 'iTunes gift card', 'Monthly game pass'],
 } as const;
+const PRICES = [52000, 47500, 24900, 31500, 44900, 51500, 38000, 19900, 27500, 32900, 41000, 29900];
 const STORE = { ar: 'متجر تجريبي', en: 'Sample store' } as const;
-const COLLECTION = { ar: 'مختارات', en: 'Featured' } as const;
+const COLLECTION = {
+  featured: { ar: 'مختارات', en: 'Featured' },
+  new: { ar: 'وصل حديثا', en: 'New arrivals' },
+  'gift-cards': { ar: 'كروت الهدايا', en: 'Gift cards' },
+  subscriptions: { ar: 'الاشتراكات', en: 'Subscriptions' },
+} as const;
+/** Which of the 12 sample products each collection holds. */
+const MEMBERS: Record<keyof typeof COLLECTION, number[]> = {
+  featured: [0, 1, 2, 3, 4, 5],
+  new: [6, 7, 8, 9, 10, 11],
+  'gift-cards': [0, 3, 5, 6, 8, 10],
+  subscriptions: [4, 7, 9, 11],
+};
 
-export const sampleProducts = (locale: 'ar' | 'en') => Array.from({ length: 6 }, (_, i) => ({
+/** One sample product. Every field a collection or product page reads lives here. */
+export const sampleProduct = (locale: 'ar' | 'en', i: number) => ({
   title: TITLES[locale][i],
-  url: `/products/sample-${i + 1}`,
-  price: [52000, 47500, 24900, 31500, 44900, 51500][i],
+  url: `${locale === 'en' ? '/en' : ''}/products/sample-${i + 1}`,
+  price: PRICES[i],
   compare_at: i === 0 ? 60000 : null,
   image: { url: `https://placehold.co/600x600/png?text=${i + 1}` },
-}));
+});
+
+export const sampleProducts = (locale: 'ar' | 'en') => Array.from({ length: 12 }, (_, i) => sampleProduct(locale, i));
 
 export function sampleContext(locale: 'ar' | 'en', translations: Record<string, Record<string, string>>, defaultLocale: 'ar' | 'en'): RenderContext {
   const products = sampleProducts(locale);
@@ -22,7 +40,7 @@ export function sampleContext(locale: 'ar' | 'en', translations: Record<string, 
     locale, dir: locale === 'ar' ? 'rtl' : 'ltr', currency: 'EGP',
     store: { name: STORE[locale] },
     settings: {}, data: {},
-    collections: { featured: { title: COLLECTION[locale], products } },
+    collections: Object.fromEntries((Object.keys(COLLECTION) as (keyof typeof COLLECTION)[]).map((h) => [h, { title: COLLECTION[h][locale], products: MEMBERS[h].map((i) => products[i]!) }])),
     products: { 'sample-1': products[0]! },
     translations: translations[locale] ?? {}, fallbackTranslations: translations[defaultLocale] ?? {},
     assetUrl: (p) => `/__assets/${p}`,
