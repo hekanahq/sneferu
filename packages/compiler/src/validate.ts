@@ -1,4 +1,4 @@
-import { err, type Expr, isAllowedElement, isForbiddenAttribute, isForbiddenElement, isUrlAttribute, LIMITS, safeUrl, type Diagnostic, type HkTag, type TagRegistry } from '@hekana/sneferu-core';
+import { err, warn, type Expr, isAllowedElement, isForbiddenAttribute, isForbiddenElement, isUrlAttribute, LIMITS, safeUrl, type Diagnostic, type HkTag, type TagRegistry } from '@hekana/sneferu-core';
 import type { AstNode } from './ast';
 
 const ATTR_NAME = /^[a-z_:][a-z0-9_:.-]*$/;
@@ -94,6 +94,7 @@ export function validateTemplate(
         if (!opts.snippets.has(n.snippet)) out.push(err('SN2008', `unknown snippet '${n.snippet}'${suggest(n.snippet, opts.snippets)}`, at(n)));
       } else if (n.t === 'el') {
         if (inBadge > 0 && BADGE_INTERACTIVE.has(n.tag)) out.push(err('SN2014', `<${n.tag}> is interactive and cannot go inside the badge part of <hk-product-card>; the badge sits inside the card's link`, at(n)));
+        if (n.tag === 'img' && !(['width', 'height'] as const).every((d) => n.attrs.some((a) => a.name === d))) out.push(warn('SN2015', '<img> without width and height; set both so the page does not jump while the image loads', at(n)));
         if (!n.tag.startsWith('hk-') && !isAllowedElement(n.tag)) {
           out.push(err('SN2001', isForbiddenElement(n.tag) ? `<${n.tag}> is not allowed in themes` : `<${n.tag}> is not on the element allow-list`, at(n)));
         }

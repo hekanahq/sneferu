@@ -1,0 +1,121 @@
+# 15. Images and assets
+
+Files in `assets/` ship with your theme. This page covers which of them the
+store serves, how to point at them, and how images in a theme stay light on a
+phone.
+
+## What the store serves
+
+Only **images** in `assets/` are served on a live store:
+
+| Served | Not served |
+| - | - |
+| `.png`, `.jpg`/`.jpeg`, `.webp`, `.avif`, `.gif`, `.svg` | `.js`, `.woff`/`.woff2`/`.ttf`/`.otf`, `.ico` |
+
+Theme CSS (`assets/*.css`) is compiled into the page, so it is not served as a
+file either. Fonts, scripts and icons in `assets/` still pass `sneferu
+validate` so existing themes keep compiling, but each one produces the warning
+[SN3034](../diagnostics.mdx): `asset 'assets/app.js' is not served on the
+store (only images are)`. When you push, the server repeats the warning as
+`HK2_ASSET_NOT_SERVED`. Use `tokens.fonts` for fonts and `hk-icon` or inline
+SVG for icons.
+
+Limits: each image is at most 2 MB (SN3007), the whole package at most 25 MB
+(SN3006), and the first bytes of a file must match its extension (a `.png`
+that is not a PNG is rejected). The compiler exports the rule as
+`IMAGE_ASSET` from `@hekana/sneferu-compiler`, so the CLI and the server agree
+on what counts as an image.
+
+## `asset_url()`
+
+`asset_url('hero.webp')` gives the URL of `assets/hero.webp`. The `assets/`
+prefix is optional, and a leading `./` is ignored, so these are the same file:
+
+```
+{{ asset_url('hero.webp') }}
+{{ asset_url('assets/hero.webp') }}
+{{ asset_url('./hero.webp') }}
+```
+
+A path that is empty or unsafe (`..`, a leading `/`, a backslash, a URL)
+gives an empty string, and so does a file that was not stored. Check before
+you render a tag:
+
+```
+{% if asset_url('hero.webp') %}
+  <img src="{{ asset_url('hero.webp') }}" alt="" width="1200" height="600">
+{% endif %}
+```
+
+On the live store the URL is on the store's own address, under `/hk2/a/`, and
+carries the file's content hash. It is cached for a year; a changed image has
+a new URL. In `sneferu dev` it is `/__assets/<path>`.
+
+## Images in CSS
+
+In theme CSS, a `url(...)` that names a file in `assets/` is rewritten when you
+push, so `url(hero.webp)`, `url("./hero.webp")` and `url(../assets/hero.webp)`
+all work. Any other relative URL becomes `url()` with a warning; absolute
+`https://` URLs are left alone.
+
+## SVG
+
+SVG files are checked strictly. They cannot contain `<script>`,
+`<foreignObject>`, `<iframe>`, `<embed>`, `<object>`, animation elements,
+`on*` attributes, `javascript:` or `data:` URLs, external `href` or
+`xlink:href` (only `#fragment`), `<!DOCTYPE` or `<!ENTITY`. A failing image is
+a push error (`HK2_ASSET_INVALID`), never silently dropped. SVG is served with a
+locked-down content security policy, so it works in `<img>` and CSS but cannot
+run anything.
+
+## Responsive images
+
+A phone should not download a 1600 px photo for a 200 px card. Product images
+from Hekana carry the variants the upload pipeline made, as a `srcset`:
+
+```
+{ "url": "https://…/p.png",
+  "srcset": "https://…/p.w400.webp 400w, https://…/p.w800.webp 800w, https://…/p.w1600.webp 1600w" }
+```
+
+The `srcset` is only there when those variants exist. Sneferu never builds a
+variant URL itself, so it never points at a file that is not there.
+
+### `hk-image`
+
+When the image has a `srcset`, `<hk-image>` prints `srcset` and `sizes` with it:
+
+```
+<hk-image src="{{ product.image }}" alt="{{ product.title }}"
+          sizes="(max-width:639px) 100vw, 50vw" width="800" height="800" />
+```
+
+| Prop | What it does |
+| - | - |
+| `sizes` | how wide the image is at each breakpoint; default `100vw`. Ignored when the image has no `srcset` |
+| `width`, `height` | become `width` and `height` attributes, so the browser reserves the space. `width` also caps the image's width in CSS. |
+
+### Product cards
+
+`<hk-product-card>` prints `srcset` with `sizes="(max-width:639px) 50vw, 25vw"` when the
+product image has one: half the screen on a phone, a quarter on a wider one
+(a four-column grid). A product with no `srcset` renders exactly as it did in 0.2.
+
+### The `img` filter
+
+`{{ product.image | img: 400 }}` asks the host for the image at 400 px. The host
+picks the smallest listed variant at least that wide, or the widest when none is,
+or the image's own URL when there is no `srcset`:
+
+```
+<img src="{{ product.image | img: 400 }}" alt="{{ product.title }}" width="400" height="400">
+```
+
+### Plain `<img>` tags
+
+A literal `<img>` should have both `width` and `height`; without them the
+compiler warns with SN2015. This is a warning only: the theme still compiles
+and publishes.
+
+`sneferu dev` gives the sample products a `srcset` too, so you can see the
+`srcset` and `sizes` attributes while you work.

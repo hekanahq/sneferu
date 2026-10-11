@@ -140,4 +140,33 @@ describe('content and commerce tags', () => {
     expect(formatMoney(129000, 'en')).toBe('EGP 1,290.00');
     expect(formatMoney(100, 'en', 'USD', 'whole')).toBe('USD 1');
   });
+  describe('responsive images', () => {
+    const SET = 'https://cdn.x/a.w400.webp 400w, https://cdn.x/a.w800.webp 800w';
+    const SRC = { url: 'https://cdn.x/a.png', srcset: SET };
+    it('hk-image prints srcset and sizes (default 100vw) when the image object carries a srcset', () => {
+      expect(render('hk-image', { src: SRC, alt: 'a' }).html).toBe(`<img class="sn-c1" src="https://cdn.x/a.png" srcset="${SET}" sizes="100vw" alt="a" loading="lazy" decoding="async">`);
+      expect(render('hk-image', { src: SRC, sizes: '(max-width:639px) 100vw, 50vw' }).html).toContain('sizes="(max-width:639px) 100vw, 50vw"');
+    });
+    it('hk-image drops unsafe srcset candidates and never prints an empty srcset', () => {
+      const html = render('hk-image', { src: { url: 'https://cdn.x/a.png', srcset: `javascript:x 400w, ${SET}" onerror="x 900w` } }).html;
+      expect(html).not.toContain('javascript');
+      expect(html).not.toContain('onerror');
+      expect(render('hk-image', { src: { url: 'https://cdn.x/a.png', srcset: 'javascript:x 400w' } }).html).not.toContain('srcset');
+    });
+    it('hk-image without a srcset is unchanged, sizes is ignored', () => {
+      expect(render('hk-image', { src: { url: 'https://cdn.x/a.webp' }, alt: 'k', sizes: '50vw' }).html).toBe('<img class="sn-c1" src="https://cdn.x/a.webp" alt="k" loading="lazy" decoding="async">');
+    });
+    it('hk-image width and height become attributes (width still caps the CSS)', () => {
+      const { html, css } = render('hk-image', { src: 'https://cdn.x/a.webp', width: 640, height: 480 });
+      expect(html).toBe('<img class="sn-c1" src="https://cdn.x/a.webp" width="640" height="480" alt="" loading="lazy" decoding="async">');
+      expect(css.join('')).toContain('max-width:640px');
+      expect(render('hk-image', { src: { url: 'https://cdn.x/a.webp', width: 300, height: 200 } }).html).not.toMatch(/width=|height=/);
+      expect(render('hk-image', { src: 'https://cdn.x/a.webp', width: 'x" onload="y', height: -3 }).html).not.toMatch(/width=|height=|onload/);
+    });
+    it('product card gets srcset and sizes when the image has a srcset, and is 0.2 byte-identical when it has none', () => {
+      expect(render('hk-product-card', { product: { ...PROD, image: SRC } }).html).toBe(CARD_02.replace('src="https://cdn.x/1.webp"', `src="https://cdn.x/a.png" srcset="${SET}" sizes="(max-width:639px) 50vw, 25vw"`));
+      expect(render('hk-product-card', { product: { ...PROD, image: { url: 'https://cdn.x/1.webp', srcset: '' } } }).html).toBe(CARD_02);
+      expect(render('hk-product-card', { product: PROD }).html).toBe(CARD_02);
+    });
+  });
 });

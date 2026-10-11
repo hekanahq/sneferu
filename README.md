@@ -37,6 +37,7 @@ Install: `npx @hekana/sneferu <command>` (Node.js 20 or newer), or `npm install 
 12. [Tutorial: build a gaming store theme](docs/guide/12-tutorial-gaming-store.mdx): the Arcade example theme from mockup to live store; Console and Esports in [examples/themes](examples/themes)
 13. [Editor setup: VS Code](docs/guide/13-editor-setup-vscode.mdx): the Sneferu extension: completion, hover, live diagnostics, theme checks, formatting and a live preview ([packages/vscode-sneferu](packages/vscode-sneferu))
 14. [Icons and search](docs/guide/14-icons-and-search.mdx): `hk-icon` with the bundled Lucide set, icons in buttons, right-to-left mirroring; `hk-search-form`, the only form a theme can render
+15. [Images and assets](docs/guide/15-images-and-assets.mdx): which assets the store serves, `asset_url()`, images in CSS, SVG rules, responsive images with `srcset`
 
 ## Reference
 

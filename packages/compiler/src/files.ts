@@ -1,6 +1,9 @@
 import { err, LIMITS, type Diagnostic } from '@hekana/sneferu-core';
 export interface ThemeFile { path: string; bytes: Uint8Array }
 
+/** The asset types the store serves: the CLI and the server agree on this. Fonts, JS and .ico still compile but are not served. */
+export const IMAGE_ASSET = /\.(png|jpe?g|webp|avif|gif|svg)$/;
+
 const SEGMENT = /^[a-z0-9][a-z0-9._-]*$/;
 const ALLOWED: Record<string, RegExp> = {
   '': /^theme\.json$/,

@@ -2,6 +2,7 @@ import { escapeAttr, escapeText, safeUrl, toStr, type HkTag, type TagRenderConte
 import { colorVar, oneOf, px, responsiveCss, safeImageSrc } from './css';
 import { passthrough } from './attrs';
 import { sanitizeRichText } from './sanitize';
+import { dimAttr, sizesAttr, srcsetOf } from './image-src';
 import { tagIcon } from './icon';
 import { ICON_NAMES } from './icons';
 
@@ -53,6 +54,8 @@ export const hkImage: HkTag = {
     src: { type: 'image', label: L('الصورة', 'Image') },
     alt: { type: 'text', label: L('وصف الصورة', 'Alt text'), default: '' },
     width: { type: 'number', label: L('العرض', 'Width'), min: 16, max: 2400 },
+    height: { type: 'number', label: L('الارتفاع', 'Height'), min: 16, max: 2400 },
+    sizes: { type: 'text', label: L('أحجام الصورة', 'Image sizes'), default: '100vw' },
     aspectRatio: { type: 'select', label: L('النسبة', 'Aspect ratio'), options: ['1/1', '4/5', '3/4', '16/9', '21/9'] },
     fit: { type: 'select', label: L('الملاءمة', 'Fit'), options: ['cover', 'contain'], default: 'cover' },
     loading: { type: 'select', label: L('التحميل', 'Loading'), options: ['lazy', 'eager'], default: 'lazy' },
@@ -69,7 +72,11 @@ export const hkImage: HkTag = {
     const r = px(p.radius, 200); if (r) c.css(`${s}{border-radius:${r}}`);
     const eager = p.loading === 'eager';
     const x = passthrough(p);
-    return `<img class="sn-${c.id}${x.cls}"${x.attrs} src="${escapeAttr(raw)}" alt="${escapeAttr(toStr(p.alt))}" loading="${eager ? 'eager' : 'lazy'}" decoding="async"${eager ? ' fetchpriority="high"' : ''}>`;
+    const srcset = srcsetOf(p.src);
+    const set = srcset === '' ? '' : ` srcset="${escapeAttr(srcset)}" sizes="${escapeAttr(sizesAttr(p.sizes))}"`;
+    const dw = dimAttr(p.width), dh = dimAttr(p.height);
+    const dims = `${dw ? ` width="${dw}"` : ''}${dh ? ` height="${dh}"` : ''}`;
+    return `<img class="sn-${c.id}${x.cls}"${x.attrs} src="${escapeAttr(raw)}"${set}${dims} alt="${escapeAttr(toStr(p.alt))}" loading="${eager ? 'eager' : 'lazy'}" decoding="async"${eager ? ' fetchpriority="high"' : ''}>`;
   },
 };
 

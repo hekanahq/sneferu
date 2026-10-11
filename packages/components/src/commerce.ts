@@ -1,6 +1,7 @@
 import { escapeAttr, escapeText, formatAmount, isMoneyFormat, moneyText, safeUrl, toStr, type HkTag, type MoneyFormat, type TagRenderContext } from '@hekana/sneferu-core';
 import { px, responsiveCss, safeImageSrc } from './css';
 import { passthrough } from './attrs';
+import { srcsetOf } from './image-src';
 
 type Extra = { cls: string; attrs: string };
 const NONE: Extra = { cls: '', attrs: '' };
@@ -54,7 +55,9 @@ const filled = (s: string) => (s.trim() === '' ? '' : s);
 const card = (prod: ProductView, id: string, c: TagRenderContext, x: Extra = NONE, parts: Parts = NO_PARTS) => {
   const url = safeUrl(toStr(prod.url) || '#');
   const img = typeof prod.image === 'object' && prod.image !== null ? toStr((prod.image as { url?: unknown }).url) : toStr(prod.image);
-  const imgHtml = safeImageSrc(img) ? `<img src="${escapeAttr(img)}" alt="${escapeAttr(toStr(prod.title))}" loading="lazy" decoding="async">` : '';
+  const srcset = srcsetOf(prod.image);
+  const set = srcset === '' ? '' : ` srcset="${escapeAttr(srcset)}" sizes="(max-width:639px) 50vw, 25vw"`;
+  const imgHtml = safeImageSrc(img) ? `<img src="${escapeAttr(img)}"${set} alt="${escapeAttr(toStr(prod.title))}" loading="lazy" decoding="async">` : '';
   const inner = `${parts.badge}${imgHtml}<span class="sn-title">${escapeText(toStr(prod.title))}</span>${priceHtml(`${id}-p`, prod.price, prod.compare_at, c)}</a>`;
   if (parts.actions === '') return `<a class="sn-product-card${x.cls}"${x.attrs} href="${escapeAttr(url)}">${inner}`;
   return `<div class="sn-product-card-wrap${x.cls}"${x.attrs}><a class="sn-product-card" href="${escapeAttr(url)}">${inner}${parts.actions}</div>`;

@@ -126,6 +126,7 @@ version and the reason, and exits with an error.
   `approved`, which makes it installable by merchants, or `rejected`, with a note
   from the reviewer explaining why. Only approved versions are offered to
   merchants; `in_review` versions can only be used on your dev store.
+- Reports `HK2_ASSET_NOT_SERVED` (a warning) for every file in `assets/` the store does not serve: only images are (see [Images and assets](15-images-and-assets.mdx)).
 - Checks the theme CSS: all `assets/*.css` together at most 512 KB, valid UTF-8.
 - **Limits each developer.** 30 pushes per hour per key and 60 per hour per
   developer (`429`); at most 5 versions waiting for review (`409

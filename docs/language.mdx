@@ -146,7 +146,7 @@ Called like functions with literal arguments only, except `collection()`, which 
 | `product('handle')` | the product, or nothing |
 | `t('key')` | the translation (same fallback as the `t` filter); the key if missing |
 | `settings('key')` | one theme setting |
-| `asset_url('file.css')` | URL of a file in `assets/` |
+| `asset_url('hero.webp')` | URL of an image in `assets/` (the `assets/` prefix is optional; empty when unknown). See [Images and assets](guide/15-images-and-assets.mdx) |
 | `url('/path')` | a link for the current page: store-relative paths get `/en` on English pages (and the store's own prefix on the store); `https:`, `mailto:`, `tel:` and `#…` pass through; anything unsafe is `#` |
 
 A lookup may be followed by property access: `collection('featured').products`.

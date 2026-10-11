@@ -21,3 +21,4 @@ export { sanitizeRichText } from './sanitize';
 export { hkIcon, iconSvg, iconSize, iconStroke, isIconName, FLIP_CSS } from './icon';
 export { ICONS, ICON_NAMES, FLIP_ICONS } from './icons';
 export { hkSearchForm, VISUALLY_HIDDEN_CSS } from './search';
+export { pickVariant, srcsetOf, candidatesOf, type ImageRef, type ImageCandidate } from './image-src';

@@ -19,6 +19,18 @@ function get(base: unknown, key: string | number): unknown {
   return typeof v === 'function' ? undefined : v;
 }
 
+/**
+ * `asset_url('assets/x.png')` and `asset_url('x.png')` are the same asset: hosts key assets
+ * without the `assets/` prefix. Empty or unsafe paths give '' so no broken URL is ever built.
+ */
+function assetPath(raw: unknown): string {
+  if (typeof raw !== 'string') return '';
+  let p = raw.startsWith('./') ? raw.slice(2) : raw;
+  if (p.startsWith('assets/')) p = p.slice(7);
+  if (p === '' || p.startsWith('/') || p.includes('\\') || p.includes('//') || p.includes(':') || p.split('/').some((s) => s === '..' || s === '.' || s === '')) return '';
+  return p;
+}
+
 function lookup(fn: string, args: unknown[], ctx: RenderContext): unknown {
   const a0 = String(args[0] ?? '');
   switch (fn) {
@@ -28,7 +40,7 @@ function lookup(fn: string, args: unknown[], ctx: RenderContext): unknown {
     case 'product': return own(ctx.products, a0) ? ctx.products[a0] : undefined;
     case 't': return translate(ctx, a0);
     case 'settings': return get(ctx.settings, a0);
-    case 'asset_url': return ctx.assetUrl(a0);
+    case 'asset_url': { const p = assetPath(args[0]); return p === '' ? '' : ctx.assetUrl(p); }
     case 'url': return resolveUrl(ctx, args[0]);
     default: return undefined;
   }

@@ -1,4 +1,5 @@
 import { defaultUrl, type RenderContext } from '@hekana/sneferu-runtime';
+import { pickVariant, srcsetOf } from '@hekana/sneferu-components';
 
 /** Sample catalogue for `sneferu dev`, in the language the page renders in. */
 const TITLES = {
@@ -34,7 +35,7 @@ const categoryOf = (i: number): 'gift-cards' | 'subscriptions' | null =>
   MEMBERS['gift-cards'].includes(i) ? 'gift-cards' : MEMBERS.subscriptions.includes(i) ? 'subscriptions' : null;
 
 /** One sample product, in the theme product shape. Every field a collection or product page reads lives here. */
-export const sampleProduct = (locale: 'ar' | 'en', i: number) => {
+export const sampleProduct = (locale: 'ar' | 'en', i: number, responsive = false) => {
   const prefix = locale === 'en' ? '/en' : '';
   const title = TITLES[locale][i]!;
   const kind = DIGITAL_KIND(i);
@@ -46,7 +47,8 @@ export const sampleProduct = (locale: 'ar' | 'en', i: number) => {
     url: `${prefix}/products/sample-${i + 1}`,
     price: PRICES[i],
     compare_at: i === 0 ? 60000 : null,
-    image: { url: `https://placehold.co/600x600/png?text=${i + 1}` },
+    image: responsive ? { url: `https://placehold.co/600x600/png?text=${i + 1}`, srcset: [400, 800, 1600].map((w) => `https://placehold.co/${w}x${w}/png?text=${i + 1} ${w}w`).join(', ') }
+      : { url: `https://placehold.co/600x600/png?text=${i + 1}` },
     available: true,
     /** Sanitised HTML: print it with <hk-rich-text html="{{ product.description }}" />. */
     description: `<p><strong>${title}</strong> — ${DELIVERY[locale][kind]}</p>`,
@@ -61,10 +63,11 @@ export const sampleProduct = (locale: 'ar' | 'en', i: number) => {
 /** The collections `collections()` lists as the store's categories (featured is not one). */
 const CATEGORIES = ['new', 'gift-cards', 'subscriptions'] as const;
 
-export const sampleProducts = (locale: 'ar' | 'en') => Array.from({ length: 12 }, (_, i) => sampleProduct(locale, i));
+export const sampleProducts = (locale: 'ar' | 'en', responsive = false) => Array.from({ length: 12 }, (_, i) => sampleProduct(locale, i, responsive));
 
-export function sampleContext(locale: 'ar' | 'en', translations: Record<string, Record<string, string>>, defaultLocale: 'ar' | 'en'): RenderContext {
-  const products = sampleProducts(locale);
+/** The sample srcset defaults off so the 0.2 golden fixture stays stable; `sneferu dev` turns it on. */
+export function sampleContext(locale: 'ar' | 'en', translations: Record<string, Record<string, string>>, defaultLocale: 'ar' | 'en', opts: { responsive?: boolean } = {}): RenderContext {
+  const products = sampleProducts(locale, opts.responsive === true);
   return {
     locale, dir: locale === 'ar' ? 'rtl' : 'ltr', currency: 'EGP',
     store: { name: STORE[locale] },
@@ -79,7 +82,7 @@ export function sampleContext(locale: 'ar' | 'en', translations: Record<string, 
     assetUrl: (p) => `/__assets/${p}`,
     // what a host passes: the dev server has no store prefix, so the default rule (/en on English pages)
     url: (p) => defaultUrl(p, locale),
-    imageUrl: (ref, w) => { const u = typeof ref === 'string' ? ref : String((ref as { url?: string })?.url ?? ''); return w ? `${u}${u.includes('?') ? '&' : '?'}w=${w}` : u; },
+    imageUrl: (ref, w) => { if (srcsetOf(ref)) return pickVariant(ref, w); const u = typeof ref === 'string' ? ref : String((ref as { url?: string })?.url ?? ''); return w ? `${u}${u.includes('?') ? '&' : '?'}w=${w}` : u; },
   };
 }
 
