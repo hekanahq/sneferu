@@ -1,3 +1,9 @@
 .site-header{padding-block:16px;border-bottom:1px solid #e5e7eb}
 .logo{font-weight:700;font-size:20px;text-decoration:none;color:inherit}
 .site-footer{padding-block:32px;margin-top:64px;border-top:1px solid #e5e7eb}
+.sn-btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 24px;border-radius:8px;font-weight:600;text-decoration:none;border:2px solid var(--hk-color-accent);transition:opacity .15s}
+.sn-btn:hover{opacity:.9}
+.sn-btn:focus-visible{outline:2px solid var(--hk-color-accent);outline-offset:3px}
+.sn-btn-solid{background:var(--hk-color-accent);color:#FFFFFF}
+.sn-btn-outline{background:transparent;color:var(--hk-color-accent)}
+.sn-btn-ghost{background:transparent;border-color:transparent;color:var(--hk-color-accent)}

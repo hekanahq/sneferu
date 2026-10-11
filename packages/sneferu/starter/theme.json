@@ -1,5 +1,5 @@
 {
-  "id": "starter", "name": { "ar": "قالب البداية", "en": "Starter" }, "version": "0.1.0", "author": "Hekana",
+  "id": "starter", "name": { "ar": "قالب البداية", "en": "Starter" }, "version": "0.1.1", "author": "Hekana",
   "description": { "ar": "نقطة بداية لبناء قالب بسنفرو", "en": "A starting point for a Sneferu theme" },
   "category": "general", "engine": "hk2", "engineCompatibility": "^2.0.0",
   "defaultLocale": "ar", "locales": ["ar", "en"],
