@@ -1,0 +1,15 @@
+<nav class="bt-tabs" aria-label="{{ t('tabs_label') }}">
+  <div class="bt-wrap bt-tabs-row">
+    <a href="#shop" aria-current="page">{{ t('tab_all') }}</a>
+    <a href="#printables">{{ t('tab_printables') }}</a>
+    <a href="#templates">{{ t('tab_templates') }}</a>
+    <a href="{{ t('href_products') }}">{{ t('tab_everything') }}</a>
+  </div>
+</nav>
+<hk-schema>
+  {
+    "name": "Category tabs",
+    "version": 1,
+    "settings": {}
+  }
+</hk-schema>

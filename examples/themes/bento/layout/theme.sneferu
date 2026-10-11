@@ -1,0 +1,56 @@
+<div class="bt">
+  <header class="bt-header">
+    <div class="bt-wrap bt-header-row">
+      <div class="bt-start">
+        <a
+          class="bt-icon bt-user"
+          href="{{ t('href_account') }}"
+          aria-label="{{ t('account') }}"
+        >{% render 'icon', name: 'user' %}</a>
+        <a
+          class="bt-icon bt-hide-phone"
+          href="{{ t('href_wishlist') }}"
+          aria-label="{{ t('wishlist') }}"
+        >{% render 'icon', name: 'heart' %}</a>
+        <a
+          class="bt-icon bt-hide-phone"
+          href="{{ t('href_cart') }}"
+          aria-label="{{ t('cart') }}"
+        >{% render 'icon', name: 'bag' %}</a>
+        <a class="bt-logo" href="{{ store.url }}">{{ store.name }}</a>
+      </div>
+      <div class="bt-end">
+        <a
+          class="bt-icon bt-hide-phone"
+          href="{{ t('href_cart') }}"
+          aria-label="{{ t('cart') }}"
+        >{% render 'icon', name: 'bag' %}</a>
+        <a
+          class="bt-icon bt-hide-phone"
+          href="{{ t('href_search') }}"
+          aria-label="{{ t('search') }}"
+        >{% render 'icon', name: 'search' %}</a>
+        <a class="bt-pill" href="{{ t('href_products') }}">{{ t('all_products') }}</a>
+        <details class="bt-menu">
+          <summary class="bt-icon" aria-label="{{ t('menu') }}">
+            {% render 'icon', name: 'menu' %}
+          </summary>
+          <div class="bt-menu-panel">
+            <a href="{{ t('href_search') }}">{{ t('search') }}</a>
+            <a href="{{ t('href_cart') }}">{{ t('cart') }}</a>
+            <a href="{{ t('href_wishlist') }}">{{ t('wishlist') }}</a>
+            <a href="{{ t('href_other_locale') }}">{{ t('other_locale') }}</a>
+          </div>
+        </details>
+      </div>
+    </div>
+  </header>
+  <main><hk-slot name="content" /></main>
+  <footer class="bt-footer">
+    <div class="bt-wrap bt-footer-row">
+      <p class="bt-footer-name">{{ store.name }}</p>
+      <p class="bt-footer-note">{{ t('footer_note') }}</p>
+      <a href="{{ t('href_other_locale') }}">{{ t('other_locale') }}</a>
+    </div>
+  </footer>
+</div>

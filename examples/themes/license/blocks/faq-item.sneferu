@@ -1,0 +1,21 @@
+{% render 'faq-item', q: block.settings.question, a: block.settings.answer %}
+<hk-schema>
+  {
+    "name": "Question",
+    "version": 1,
+    "settings": {
+      "question": {
+        "type": "text",
+        "label": "Question",
+        "default": "How do I receive my licence?",
+        "maxLength": 120
+      },
+      "answer": {
+        "type": "textarea",
+        "label": "Answer",
+        "default": "By email, right after online payment.",
+        "maxLength": 600
+      }
+    }
+  }
+</hk-schema>

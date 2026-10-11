@@ -1,0 +1,48 @@
+<div class="ls">
+  <header class="ls-header">
+    <div class="ls-wrap ls-header-row">
+      <details class="ls-menu">
+        <summary class="ls-icon-link" aria-label="{{ t('menu') }}">
+          {% render 'icon', name: 'menu' %}
+        </summary>
+        <div class="ls-menu-panel">
+          <a href="#plans">{{ t('nav_plans') }}</a>
+          <a href="#apps">{{ t('nav_apps') }}</a>
+          <a href="#faq">{{ t('nav_faq') }}</a>
+          <a href="{{ t('href_other_locale') }}">{{ t('other_locale') }}</a>
+        </div>
+      </details>
+      <a class="ls-logo" href="{{ store.url }}">{{ store.name }}</a>
+      <nav class="ls-nav" aria-label="{{ t('nav_label') }}">
+        <a href="#plans">{{ t('nav_plans') }}</a>
+        <a href="#features">{{ t('nav_features') }}</a>
+        <a href="#apps">{{ t('nav_apps') }}</a>
+        <a href="#faq">{{ t('nav_faq') }}</a>
+      </nav>
+      <div class="ls-tools">
+        <a class="ls-search" href="{{ t('href_search') }}">
+          <span>{{ t('search') }}</span>
+          {% render 'icon', name: 'search' %}
+        </a>
+        <a
+          class="ls-icon-link"
+          href="{{ t('href_account') }}"
+          aria-label="{{ t('account') }}"
+        >{% render 'icon', name: 'user' %}</a>
+        <a
+          class="ls-icon-link"
+          href="{{ t('href_cart') }}"
+          aria-label="{{ t('cart') }}"
+        >{% render 'icon', name: 'bag' %}</a>
+      </div>
+    </div>
+  </header>
+  <main><hk-slot name="content" /></main>
+  <footer class="ls-footer">
+    <div class="ls-wrap ls-footer-row">
+      <p class="ls-footer-name">{{ store.name }}</p>
+      <p class="ls-footer-note">{{ t('footer_note') }}</p>
+      <a href="{{ t('href_other_locale') }}">{{ t('other_locale') }}</a>
+    </div>
+  </footer>
+</div>

@@ -1,0 +1,56 @@
+<section class="cr-author" id="about">
+  <div class="cr-wrap">
+    <div class="cr-author-row">
+      <div class="cr-person">
+        {% if section.settings.photo %}
+          <img class="cr-avatar" src="{{ section.settings.photo }}" alt="" width="56" height="56" loading="lazy" />
+        {% endif %}
+        <div>
+          <p class="cr-name">{{ section.settings.name | default: t('author_name') }}</p>
+          <p class="cr-role">{{ section.settings.role | default: t('author_role') }}</p>
+        </div>
+      </div>
+      <hk-button
+        label="{{ section.settings.button | default: t('author_cta') }}"
+        href="{{ section.settings.link | default: t('href_products') }}"
+        class="cr-cta"
+      />
+    </div>
+  </div>
+</section>
+<hk-schema>
+  {
+    "name": "Author",
+    "version": 1,
+    "settings": {
+      "photo": {
+        "type": "image",
+        "label": "Photo",
+        "default": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/author.webp"
+      },
+      "name": {
+        "type": "text",
+        "label": "Name (empty: the theme's own words)",
+        "default": "",
+        "maxLength": 60
+      },
+      "role": {
+        "type": "text",
+        "label": "One line about you",
+        "default": "",
+        "maxLength": 100
+      },
+      "button": {
+        "type": "text",
+        "label": "Button",
+        "default": "",
+        "maxLength": 30
+      },
+      "link": {
+        "type": "link",
+        "label": "Button link",
+        "default": ""
+      }
+    }
+  }
+</hk-schema>

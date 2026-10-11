@@ -1,0 +1,161 @@
+/* License: deep navy, blue plan cards, one lime accent. No violet: the plan cards are blue (hue ~215). */
+.ls {
+  font-family: 'Readex Pro', system-ui, sans-serif;
+  background:
+    radial-gradient(900px 420px at 15% -10%, color-mix(in srgb, var(--hk-color-tier) 35%, transparent), transparent 70%),
+    var(--hk-color-background);
+  color: var(--hk-color-text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+.ls a { color: inherit; text-decoration: none; }
+/* Text on lime is always the dark background colour (beats the link rule above). */
+.ls a.ls-btn, .ls a.ls-all, .ls a.ls-app-buy { color: var(--hk-color-background); }
+.ls-wrap { max-width: var(--hk-content-width); margin-inline: auto; padding-inline: 24px; }
+.ls-icon { display: block; flex: none; }
+
+/* Header */
+.ls-header { padding-block: 20px; }
+.ls-header-row { display: flex; align-items: center; gap: 28px; }
+.ls-logo { font-weight: 700; font-size: 18px; }
+.ls-nav { display: flex; gap: 22px; font-size: 13.5px; color: var(--hk-color-muted); }
+.ls-nav a:hover { color: var(--hk-color-text); }
+.ls-tools { margin-inline-start: auto; display: flex; align-items: center; gap: 6px; }
+.ls-search {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 210px; height: 32px;
+  padding-inline: 14px 10px; border-radius: 999px; border: 1px solid var(--hk-color-line);
+  font-size: 12.5px; color: var(--hk-color-muted);
+}
+.ls-search:hover { border-color: var(--hk-color-muted); }
+.ls-icon-link { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 10px; cursor: pointer; list-style: none; }
+.ls-icon-link::-webkit-details-marker { display: none; }
+.ls-icon-link:hover { background: var(--hk-color-secondary); }
+.ls-menu { display: none; position: relative; }
+.ls-menu-panel {
+  position: absolute; inset-inline-start: 0; top: 46px; z-index: 5; min-width: 200px; padding: 8px;
+  display: flex; flex-direction: column; border-radius: 14px; background: var(--hk-color-secondary); border: 1px solid var(--hk-color-line);
+}
+.ls-menu-panel a { min-height: 44px; display: flex; align-items: center; padding-inline: 12px; border-radius: 8px; }
+.ls-menu-panel a:hover { background: var(--hk-color-line); }
+
+/* Hero: copy on one side, three plan cards on the other */
+.ls-hero { padding-block: 48px 56px; }
+.ls-hero-row { display: grid; grid-template-columns: 1fr 1.05fr; gap: 40px; align-items: center; }
+.ls-h1 { margin: 0; display: flex; flex-direction: column; font-size: 34px; line-height: 1.35; font-weight: 700; }
+.ls-accent { color: var(--hk-color-accent); }
+.ls-lead { margin: 14px 0 22px; font-size: 13px; color: var(--hk-color-muted); max-width: 360px; }
+.ls-btn {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding-inline: 18px; border-radius: 8px;
+  background: var(--hk-color-accent); color: var(--hk-color-background); font-weight: 600; font-size: 13.5px;
+}
+.ls-btn:hover { filter: brightness(1.06); }
+.ls-tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.ls-tier {
+  display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; padding: 16px 10px 12px;
+  border-radius: 12px; background: linear-gradient(180deg, var(--hk-color-tier), var(--hk-color-tier-deep));
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .08);
+}
+.ls-tier[data-best="true"] { outline: 2px solid color-mix(in srgb, var(--hk-color-accent) 70%, transparent); outline-offset: -2px; }
+.ls-tier-name { font-size: 12px; font-weight: 600; }
+.ls-tier-price { display: flex; flex-direction: column; align-items: center; margin-block: 8px 2px; }
+.ls-tier-price .sn-now { font-size: 22px; font-weight: 700; line-height: 1.2; }
+.ls-tier-price .sn-was { font-size: 11px; color: var(--hk-color-muted); margin: 0; }
+.ls-tier-note { font-size: 10.5px; color: color-mix(in srgb, var(--hk-color-text) 70%, transparent); min-height: 2.4em; }
+.ls-tier-buy {
+  align-self: stretch; margin-top: auto; min-height: 30px; display: grid; place-items: center; border-radius: 999px;
+  background: var(--hk-color-accent); color: var(--hk-color-background); font-size: 12px; font-weight: 700;
+}
+.ls-tier:hover .ls-tier-buy { filter: brightness(1.06); }
+
+/* Section heads: title at the start, a side note at the end */
+.ls-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+.ls-h2 { margin: 0; font-size: 15px; font-weight: 600; }
+.ls-side { margin: 0; font-size: 13px; color: var(--hk-color-muted); }
+
+/* Features */
+.ls-features { padding-block: 20px 36px; }
+.ls-feature-grid { border-bottom: 1px solid var(--hk-color-line); padding-bottom: 24px; }
+.ls-feature-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px 24px; }
+.ls-feature { margin: 0; display: flex; align-items: center; gap: 8px; font-size: 12px; color: color-mix(in srgb, var(--hk-color-text) 85%, transparent); }
+.ls-feature .ls-icon { color: var(--hk-color-text); }
+
+/* Apps */
+.ls-apps { padding-block: 24px 48px; }
+.ls-apps-grid { display: grid; grid-template-columns: 1.9fr 1fr 1fr 1fr; gap: 14px; }
+.ls-all {
+  display: flex; align-items: center; justify-content: center; gap: 14px; min-height: 200px; border-radius: 16px;
+  background: var(--hk-color-accent); color: var(--hk-color-background); font-size: 17px; font-weight: 700;
+}
+.ls-all .ls-icon { width: 24px; height: 24px; }
+.ls-all:hover { filter: brightness(1.05); }
+.ls-app {
+  position: relative; display: flex; flex-direction: column; align-items: center; padding: 16px 12px 14px; border-radius: 12px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--hk-color-tier) 45%, var(--hk-color-secondary)), var(--hk-color-secondary));
+  border: 1px solid var(--hk-color-line);
+}
+.ls-app-card { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; width: 100%; }
+.ls-app-card img { width: 48px; height: 48px; object-fit: contain; display: block; margin-bottom: 8px; }
+.ls-app-card .sn-title { font-size: 12px; line-height: 1.5; min-height: 3em; }
+.ls-app-card .sn-price { font-size: 12px; color: var(--hk-color-muted); }
+.ls-app-buy {
+  margin-top: 10px; min-height: 30px; padding-inline: 18px; display: grid; place-items: center; border-radius: 999px;
+  background: var(--hk-color-accent); color: var(--hk-color-background); font-size: 12px; font-weight: 700;
+}
+
+/* FAQ */
+.ls-faq { padding-block: 8px 56px; }
+.ls-faq .ls-h2 { margin-bottom: 16px; font-size: 16px; }
+.ls-faq-list { display: flex; flex-direction: column; }
+.ls-faq-item { border: 1px solid var(--hk-color-line); border-bottom-width: 0; }
+.ls-faq-item:first-child { border-start-start-radius: 8px; border-start-end-radius: 8px; }
+.ls-faq-item:last-child { border-bottom-width: 1px; border-end-start-radius: 8px; border-end-end-radius: 8px; }
+.ls-faq-item summary {
+  list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  min-height: 44px; padding: 8px 14px; font-size: 13px;
+}
+.ls-faq-item summary::-webkit-details-marker { display: none; }
+.ls-faq-item[open] .ls-chevron { transform: rotate(180deg); }
+.ls-faq-item p { margin: 0; padding: 0 14px 14px; font-size: 13px; color: var(--hk-color-muted); }
+
+/* Footer */
+.ls-footer { border-top: 1px solid var(--hk-color-line); padding-block: 24px; }
+.ls-footer-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 24px; font-size: 13px; }
+.ls-footer-name { margin: 0; font-weight: 700; }
+.ls-footer-note { margin: 0; flex: 1 1 360px; color: var(--hk-color-muted); }
+.ls-footer-row > a { min-height: 44px; display: inline-flex; align-items: center; }
+
+/* Tablet */
+@media (max-width: 1023px) {
+  .ls-nav { display: none; }
+  .ls-menu { display: block; }
+}
+
+/* Phones: centred hero, three small plan cards in a row, three small app cards */
+@media (max-width: 639px) {
+  .ls-wrap { padding-inline: 14px; }
+  .ls-header { padding-block: 10px; }
+  .ls-header-row { gap: 8px; }
+  .ls-search { width: 40px; padding: 0; justify-content: center; border: 0; }
+  .ls-search span { display: none; }
+  .ls-hero { padding-block: 24px 28px; }
+  .ls-hero-row { grid-template-columns: 1fr; gap: 26px; }
+  .ls-hero-copy { text-align: center; display: flex; flex-direction: column; align-items: center; }
+  .ls-h1 { font-size: 27px; }
+  .ls-lead { margin: 10px 0 0; font-size: 12px; }
+  .ls-hero-copy .ls-btn { display: none; }
+  .ls-tiers { gap: 7px; }
+  .ls-tier { padding: 12px 6px 10px; }
+  .ls-tier-price .sn-now { font-size: 17px; }
+  .ls-head { flex-direction: column; align-items: center; gap: 2px; text-align: center; }
+  .ls-features { display: none; }
+  .ls-apps { padding-block: 4px 32px; }
+  .ls-apps .ls-head { display: none; }
+  .ls-apps-grid { grid-template-columns: repeat(3, 1fr); gap: 7px; }
+  .ls-all { grid-column: 1 / -1; justify-self: end; min-height: 44px; padding-inline: 18px; border-radius: 8px; font-size: 14px; flex-direction: row-reverse; margin-bottom: 14px; }
+  .ls-app { padding: 10px 6px; }
+  .ls-app-card img { width: 34px; height: 34px; }
+  .ls-app-card .sn-title { font-size: 10.5px; }
+  .ls-app-card .sn-price { font-size: 10.5px; }
+  .ls-app-buy { min-height: 26px; padding-inline: 10px; font-size: 11px; }
+  .ls-faq .ls-h2 { text-align: center; font-size: 18px; }
+}

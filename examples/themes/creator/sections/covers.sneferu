@@ -1,0 +1,41 @@
+<section class="cr-covers" id="shop">
+  <div class="cr-wrap">
+    <h2 class="cr-hidden">{{ t('shop_heading') }}</h2>
+    <div class="cr-track">
+      {% for p in collection('courses').products limit: 6 %}
+        {% render 'cover', p: p, kind: t('kind_course'), slot: 'course' %}
+      {% endfor %}
+      {% for p in collection('ebooks').products limit: 6 %}
+        {% render 'cover', p: p, kind: t('kind_ebook'), slot: 'ebook' %}
+      {% endfor %}
+      {% for p in collection('templates').products limit: 6 %}
+        {% render 'cover', p: p, kind: t('kind_template'), slot: 'template' %}
+      {% endfor %}
+    </div>
+    <nav class="cr-dots" aria-label="{{ t('shop_heading') }}">
+      {% for p in collection('courses').products limit: 6 %}
+        <a href="#course-{{ forloop.index }}" aria-label="{{ p.title }}"></a>
+      {% endfor %}
+      {% for p in collection('ebooks').products limit: 6 %}
+        <a href="#ebook-{{ forloop.index }}" aria-label="{{ p.title }}"></a>
+      {% endfor %}
+      {% for p in collection('templates').products limit: 6 %}
+        <a href="#template-{{ forloop.index }}" aria-label="{{ p.title }}"></a>
+      {% endfor %}
+    </nav>
+  </div>
+</section>
+<hk-schema>
+  {
+    "name": "Covers",
+    "version": 1,
+    "settings": {
+      "badge": {
+        "type": "text",
+        "label": "Badge on every cover (empty: the theme's own words)",
+        "default": "",
+        "maxLength": 30
+      }
+    }
+  }
+</hk-schema>

@@ -1,0 +1,30 @@
+{
+  "id": "bento",
+  "name": "Bento",
+  "version": "1.0.0",
+  "author": "Hekana",
+  "description": "A soft pastel bento-grid theme for printables, templates and e-books",
+  "category": "digital",
+  "engine": "hk2",
+  "engineCompatibility": "^2.0.0",
+  "defaultLocale": "ar",
+  "locales": ["ar", "en"],
+  "settings": {},
+  "tokens": {
+    "colors": {
+      "primary": "#1F2433",
+      "secondary": "#74B8AE",
+      "accent": "#E9946C",
+      "background": "#FFFFFF",
+      "text": "#1F2433",
+      "muted": "#6E7383",
+      "sage": "#CFE3D7",
+      "peach": "#F7C9AF",
+      "warm": "#FCF1EA",
+      "sky": "#E8F1FA",
+      "teal": "#74B8AE",
+      "line": "#E8E6E1"
+    },
+    "layout": { "contentWidth": "1040px" }
+  }
+}
