@@ -1,0 +1,15 @@
+.site-header{padding-block:16px;border-bottom:1px solid #e5e7eb}
+.logo{font-weight:700;font-size:20px;text-decoration:none;color:inherit}
+.site-footer{padding-block:32px;margin-top:64px;border-top:1px solid #e5e7eb}
+.sn-btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 24px;border-radius:8px;font-weight:600;text-decoration:none;border:2px solid var(--hk-color-accent);transition:opacity .15s}
+.sn-btn:hover{opacity:.9}
+.sn-btn:focus-visible{outline:2px solid var(--hk-color-accent);outline-offset:3px}
+.sn-btn-solid{background:var(--hk-color-accent);color:#FFFFFF}
+.sn-btn-outline{background:transparent;color:var(--hk-color-accent)}
+.sn-btn-ghost{background:transparent;border-color:transparent;color:var(--hk-color-accent)}
+.sn-badge{display:inline-block;padding:4px 12px;border-radius:999px;font-size:13px;font-weight:600}
+.sn-badge-accent{background:var(--hk-color-accent);color:#FFFFFF}
+.sn-badge-neutral{background:color-mix(in srgb,var(--hk-color-text) 10%,transparent)}
+.sn-product-card{display:flex;flex-direction:column;gap:6px;color:inherit;text-decoration:none}
+.sn-product-card img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:12px}
+.sn-was{opacity:.6;margin-inline-start:6px}

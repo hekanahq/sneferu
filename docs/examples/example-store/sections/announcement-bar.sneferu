@@ -1,0 +1,16 @@
+<hk-section background="{{ section.settings.background }}" padding-y="12" class="announcement">
+  <hk-stack direction="row" mobile-direction="column" gap="12" mobile-gap="4" align="center" justify="center">
+    <hk-text text="{{ section.settings.message }}" size="15" align="center" color="#FFFFFF" />
+    {% if section.settings.link_label %}<a class="announcement-link" href="{{ section.settings.link }}">{{ section.settings.link_label }}</a>{% endif %}
+  </hk-stack>
+</hk-section>
+<hk-schema>{
+  "name": { "ar": "شريط إعلان", "en": "Announcement bar" },
+  "version": 1,
+  "settings": {
+    "message":    { "type": "text",  "label": { "ar": "الرسالة", "en": "Message" }, "default": "Free delivery on orders over EGP 500", "maxLength": 90 },
+    "link_label": { "type": "text",  "label": { "ar": "نص الرابط", "en": "Link text" }, "default": "See details", "maxLength": 30 },
+    "link":       { "type": "link",  "label": { "ar": "الرابط", "en": "Link" }, "default": "/pages/delivery" },
+    "background": { "type": "color", "label": { "ar": "الخلفية", "en": "Background" }, "default": "theme:accent" }
+  }
+}</hk-schema>

@@ -7,9 +7,10 @@ template plus a `<hk-schema>` that declares their settings.
 
 ## A section
 
-`sections/hero.sneferu`:
+A hero: a dark band with a big heading, a sentence and a button. This is the
+smallest useful section.
 
-```html
+```html title="sections/hero.sneferu"
 <hk-section background="theme:secondary" padding-y="96" mobile-padding-y="48">
   <hk-stack gap="16" align="start">
     <hk-heading text="{{ section.settings.title }}" level="h1" size="56" mobile-size="32" color="#FFFFFF" />
@@ -26,6 +27,26 @@ template plus a `<hk-schema>` that declares their settings.
   }
 }</hk-schema>
 ```
+
+#### What each line does
+
+1. **Line 1** `<hk-section>` is the band. `background="theme:secondary"` paints
+   it with the theme's `secondary` colour from `theme.json`. `padding-y="96"` is
+   the space above and below the content; `mobile-padding-y="48"` halves it on
+   phones.
+2. **Line 2** `<hk-stack>` puts the heading, sentence and button in a column,
+   16 px apart, lined up at the start of the line.
+3. **Line 3** `<hk-heading>` is the title. `{{ section.settings.title }}` prints
+   the `title` setting: what the merchant typed, or the default.
+4. **Line 4** `<hk-text>` prints the `subtitle` setting.
+5. **Line 5** `<hk-button>` is a link drawn as a button. `t('shop_now')` takes
+   its words from `locales/ar.json` or `locales/en.json`.
+6. **Lines 8-15** `<hk-schema>` declares the settings the merchant edits in the
+   store builder.
+
+![A dark band with a large white Arabic heading, a line of text and an orange button](../images/starter-hero@2x.webp "This hero in the dev preview, Arabic (the default store language), 1080 px wide.")
+
+Rules for the file:
 
 - The file name is the section type: `hero`.
 - `<hk-schema>` is JSON (double quotes, no trailing commas; SN1107). Put it at the
@@ -70,7 +91,7 @@ Notes:
 - `product` and `collection` store a handle string. `product('…')` and
   `collection('…')` take **literal** arguments only, so
   `collection(section.settings.collection)` is a compile error (SN1105). Use a
-  fixed handle in the template (see the cookbook's product grid).
+  fixed handle in the template (see the [cookbook's product grid](08-cookbook.md#product-grid)).
 - `required`, `visible_if` (show this field only when another setting equals a
   value) and `responsive` are hints for the editor. Rendering does not enforce
   `required`; always set a sensible `default`.
@@ -120,37 +141,44 @@ A template's `<hk-schema>` lists the sections a new page starts with, in order:
 
 ## Blocks
 
-`blocks/quote.sneferu`:
+A customer quotes section: the merchant adds as many quotes as they like, up to
+six, and edits each one. Each quote is a block.
 
-```html
-<hk-card border="true" padding="20">
-  <blockquote class="quote">{{ block.settings.text }}</blockquote>
-  <hk-text text="— {{ block.settings.author }}" size="14" />
+```html title="blocks/quote.sneferu"
+<hk-card border="true" padding="20" radius="16">
+  <hk-stack gap="10">
+    <p class="quote">{{ block.settings.text }}</p>
+    <hk-text text="{{ block.settings.author }}" size="14" color="#4B5563" />
+  </hk-stack>
 </hk-card>
 <hk-schema>{
   "name": { "ar": "رأي", "en": "Quote" },
   "version": 1,
   "settings": {
-    "text":   { "type": "textarea", "label": { "ar": "الرأي", "en": "Quote" }, "default": "التوصيل كان سريع جدًا", "maxLength": 280 },
-    "author": { "type": "text",     "label": { "ar": "الاسم", "en": "Name" }, "default": "منى من الإسكندرية", "maxLength": 60 }
+    "text":   { "type": "textarea", "label": { "ar": "الرأي", "en": "Quote" }, "default": "Delivery was fast and the packaging was perfect.", "maxLength": 280 },
+    "author": { "type": "text",     "label": { "ar": "الاسم", "en": "Name" }, "default": "Mona, Alexandria", "maxLength": 60 }
   }
 }</hk-schema>
 ```
 
-`sections/testimonials.sneferu` renders whatever blocks the merchant added:
-
-```html
-<hk-section>
-  <hk-heading text="{{ section.settings.heading }}" level="h2" size="32" />
-  <hk-grid columns="3" mobile-columns="1" gap="16">
-    {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
-  </hk-grid>
+```html title="sections/testimonials.sneferu"
+<hk-section padding-y="64" mobile-padding-y="40">
+  <hk-stack gap="24">
+    <hk-heading text="{{ section.settings.heading }}" level="h2" size="32" mobile-size="24" />
+    {% if section.blocks %}
+      <hk-grid columns="3" mobile-columns="1" gap="16">
+        {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+      </hk-grid>
+    {% else %}
+      <hk-text text="{{ t('no_quotes_yet') }}" color="#4B5563" />
+    {% endif %}
+  </hk-stack>
 </hk-section>
 <hk-schema>{
   "name": { "ar": "آراء العملاء", "en": "Testimonials" },
   "version": 1,
   "settings": {
-    "heading": { "type": "text", "label": { "ar": "العنوان", "en": "Heading" }, "default": "عملاؤنا بيقولوا إيه" }
+    "heading": { "type": "text", "label": { "ar": "العنوان", "en": "Heading" }, "default": "What our customers say" }
   },
   "blocks": { "allowed": ["quote"], "max": 6 },
   "presets": [
@@ -159,6 +187,33 @@ A template's `<hk-schema>` lists the sections a new page starts with, in order:
   ]
 }</hk-schema>
 ```
+
+```css title="assets/quote.css"
+.quote { margin: 0; font-size: 17px; line-height: 1.6; }
+```
+
+#### What each line does
+
+In `blocks/quote.sneferu`:
+
+1. **Lines 1-6** one quote: a bordered card with the quote and the customer's
+   name. A block reads its own settings as `block.settings.<key>`.
+2. **Lines 7-14** the two settings of one quote: the text and the name.
+
+In `sections/testimonials.sneferu`:
+
+1. **Line 4** `{% if section.blocks %}` is true when the merchant has added at
+   least one quote.
+2. **Line 6** `{% for block in section.blocks %}` goes through the quotes in the
+   merchant's order, and `<hk-block of="{{ block }}" />` draws each one with
+   `blocks/quote.sneferu`.
+3. **Lines 8-9** what shows when there are no quotes yet.
+4. **Line 19** `"blocks"` tells the builder which block types this section
+   takes (`quote`) and how many (6 at most).
+5. **Lines 20-23** `"presets"`: when the merchant adds this section, the builder
+   offers to start it with three quotes.
+
+![A heading "What our customers say" and three bordered quote cards side by side](../images/testimonials@2x.webp "With three quote blocks, 1080 px wide. Rendered by the Sneferu runtime with three blocks passed in.") ![The same heading with the sentence "No quotes yet. Add one in the editor." under it](../images/testimonials-empty@2x.webp "With no blocks: this is also what sneferu dev shows, because default sections cannot carry blocks.")
 
 How it works:
 
@@ -176,16 +231,17 @@ How it works:
   added. They are stored with the theme and used by the builder; the CLI does not
   render them.
 - Because default sections cannot carry blocks, `sneferu dev` shows a block
-  section with no blocks. Design that state: it is also what a merchant sees right
-  after adding the section.
+  section with no blocks. Design that state, as lines 8-9 do: it is also what a
+  merchant sees right after adding the section.
 
-```html
-{% if section.blocks %}
-  {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
-{% else %}
-  <hk-text text="{{ t('no_quotes_yet') }}" align="center" />
-{% endif %}
-```
+#### Try it
+
+1. Save the three files and add the key to both locale files:
+   `"no_quotes_yet": "No quotes yet. Add one in the editor."` in `en.json`, and
+   an Arabic sentence in `ar.json`.
+2. Add `{"type":"testimonials"}` to `templates/index.sneferu`.
+3. Run `npx @hekana/sneferu validate` and look at the preview: you see the
+   empty state.
 
 ## Snippets vs blocks
 

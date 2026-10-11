@@ -131,14 +131,51 @@ Hekana.
 
 ## Loops
 
-```html
-{% for p in collection('featured').products limit: 4 %}
-  <hk-card class="item" data-first="{{ forloop.first }}">
-    <hk-heading text="{{ forloop.index }}. {{ p.title }}" level="h3" size="18" />
-    <hk-price amount="{{ p.price }}" compare-at="{{ p.compare_at }}" />
-  </hk-card>
-{% endfor %}
+A short list of the first three products of a collection, numbered, with a
+"Sale" label on any product that has a lower price than before.
+
+```html title="sections/on-sale.sneferu"
+<hk-section padding-y="64" mobile-padding-y="40">
+  <hk-stack gap="16">
+    <hk-heading text="{{ section.settings.heading }}" level="h2" size="32" mobile-size="24" />
+    {% for p in collection('featured').products limit: 3 %}
+      <hk-card border="true" padding="16" radius="12">
+        <hk-stack direction="row" justify="between" align="center" gap="12">
+          <hk-text text="{{ forloop.index }}. {{ p.title }}" size="17" />
+          <hk-stack direction="row" gap="8" align="center">
+            {% if p.compare_at > p.price %}<hk-badge text="{{ t('sale') }}" tone="accent" />{% endif %}
+            <hk-price amount="{{ p.price }}" compare-at="{{ p.compare_at }}" />
+          </hk-stack>
+        </hk-stack>
+      </hk-card>
+    {% endfor %}
+  </hk-stack>
+</hk-section>
+<hk-schema>{
+  "name": { "ar": "قائمة منتجات", "en": "Product list" },
+  "version": 1,
+  "settings": {
+    "heading": { "type": "text", "label": { "ar": "العنوان", "en": "Heading" }, "default": "Today's picks" }
+  }
+}</hk-schema>
 ```
+
+#### What each line does
+
+1. **Line 4** `{% for p in collection('featured').products limit: 3 %}` repeats
+   lines 5-13 once for each of the first three products. Inside, `p` is the
+   current product.
+2. **Line 7** `{{ forloop.index }}` is 1, 2, 3 and `{{ p.title }}` is the
+   product's name.
+3. **Line 9** `p.compare_at > p.price` is true when the product had a higher
+   price before; only then the "Sale" badge shows. Its words come from the
+   `sale` key in your locale files, and its look from the badge rules in the
+   starter's `assets/theme.css`.
+4. **Line 10** `<hk-price>` prints the price, and the old price crossed out when
+   there is one.
+5. **Line 14** `{% endfor %}` ends the repeated part.
+
+![A "Today's picks" heading and three numbered product rows; the first has a Sale badge, EGP 520.00 and EGP 600.00 crossed out](../images/on-sale@2x.webp "1080 px wide, English. The product names are the dev preview's sample data.")
 
 | Rule | Value |
 |---|---|
@@ -165,8 +202,9 @@ locale for any missing key.
 ## Snippet arguments
 
 ```html
-{% render 'tier-card', name: section.settings.tier1_name, price: section.settings.tier1_price, best: section.settings.best == '1' %}
+{% render 'plan-card', name: section.settings.plan1_name, price: section.settings.plan1_price, best: section.settings.best == '1' %}
 ```
 
+The [subscription plans](08-cookbook.md#subscription-plans) in the cookbook use this.
 Arguments are `key: expression`, separated by commas (commas inside quotes are
 fine: `label: 'a, b'`). The snippet sees them plus the caller's scope.

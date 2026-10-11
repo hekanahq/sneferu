@@ -1,0 +1,27 @@
+<hk-section padding-y="64" mobile-padding-y="40">
+  <hk-stack gap="32">
+    <hk-heading text="{{ section.settings.heading }}" level="h2" size="32" mobile-size="24" align="center" />
+    <hk-grid columns="3" tablet-columns="1" gap="24">
+      {% render 'plan-card', name: section.settings.plan1_name, price: section.settings.plan1_price, details: section.settings.plan1_details, best: section.settings.best == '1', variant: 'outline' %}
+      {% render 'plan-card', name: section.settings.plan2_name, price: section.settings.plan2_price, details: section.settings.plan2_details, best: section.settings.best == '2', variant: 'solid' %}
+      {% render 'plan-card', name: section.settings.plan3_name, price: section.settings.plan3_price, details: section.settings.plan3_details, best: section.settings.best == '3', variant: 'outline' %}
+    </hk-grid>
+  </hk-stack>
+</hk-section>
+<hk-schema>{
+  "name": { "ar": "باقات الاشتراك", "en": "Subscription plans" },
+  "version": 1,
+  "settings": {
+    "heading":       { "type": "text",     "label": { "ar": "العنوان", "en": "Heading" }, "default": "Pick your monthly coffee box" },
+    "plan1_name":    { "type": "text",     "label": { "ar": "اسم الباقة ١", "en": "Plan 1 name" }, "default": "Small" },
+    "plan1_price":   { "type": "number",   "label": { "ar": "سعر الباقة ١ (قرش)", "en": "Plan 1 price (piastres)" }, "default": 29900, "min": 0 },
+    "plan1_details": { "type": "textarea", "label": { "ar": "تفاصيل الباقة ١", "en": "Plan 1 details" }, "default": "250 g of coffee, one roast" },
+    "plan2_name":    { "type": "text",     "label": { "ar": "اسم الباقة ٢", "en": "Plan 2 name" }, "default": "Regular" },
+    "plan2_price":   { "type": "number",   "label": { "ar": "سعر الباقة ٢ (قرش)", "en": "Plan 2 price (piastres)" }, "default": 49900, "min": 0 },
+    "plan2_details": { "type": "textarea", "label": { "ar": "تفاصيل الباقة ٢", "en": "Plan 2 details" }, "default": "500 g of coffee, two roasts" },
+    "plan3_name":    { "type": "text",     "label": { "ar": "اسم الباقة ٣", "en": "Plan 3 name" }, "default": "Family" },
+    "plan3_price":   { "type": "number",   "label": { "ar": "سعر الباقة ٣ (قرش)", "en": "Plan 3 price (piastres)" }, "default": 79900, "min": 0 },
+    "plan3_details": { "type": "textarea", "label": { "ar": "تفاصيل الباقة ٣", "en": "Plan 3 details" }, "default": "1 kg of coffee, any roasts" },
+    "best":          { "type": "select",   "label": { "ar": "الباقة الأفضل قيمة", "en": "Best value plan" }, "options": ["1", "2", "3"], "default": "2" }
+  }
+}</hk-schema>

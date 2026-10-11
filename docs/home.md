@@ -1,0 +1,80 @@
+# Overview
+
+<!-- The examples on the hekana.dev landing page, under the hero. Rendered by
+     apps/platform/app/hekana-dev/page.tsx in the Hekana repo. -->
+
+## What a section looks like
+
+This is the hero section every new theme starts with: a dark band with a large
+heading, a sentence and a button. A section is one file: the markup first, then
+an `<hk-schema>` that lists what the merchant can edit.
+
+```html title="sections/hero.sneferu"
+<hk-section background="theme:secondary" padding-y="96" mobile-padding-y="48">
+  <hk-stack gap="16" align="start">
+    <hk-heading text="{{ section.settings.title }}" level="h1" size="56" mobile-size="32" color="#FFFFFF" />
+    <hk-text text="{{ section.settings.subtitle }}" size="20" color="#E5E7EB" />
+    {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+    <hk-button label="{{ t('shop_now') }}" href="/products" />
+  </hk-stack>
+</hk-section>
+<hk-schema>{"name":{"ar":"واجهة","en":"Hero"},"version":1,"blocks":{"allowed":["chip"],"max":4},"settings":{
+  "title":{"type":"text","label":{"ar":"العنوان","en":"Title"},"default":"Hello","maxLength":80},
+  "subtitle":{"type":"textarea","label":{"ar":"الوصف","en":"Subtitle"},"default":"","maxLength":200}}}</hk-schema>
+```
+
+#### What each line does
+
+1. **Line 1** `<hk-section>` is the band. `background="theme:secondary"` paints
+   it with a colour from the theme's `theme.json`. `padding-y="96"` is the space
+   above and below the content; on phones it is 48.
+2. **Line 2** `<hk-stack>` puts everything inside it in a column, 16 px apart.
+3. **Line 3** `<hk-heading>` is the big title. `{{ section.settings.title }}`
+   prints the `title` setting: what the merchant typed, or the default.
+4. **Line 4** `<hk-text>` prints the `subtitle` setting.
+5. **Line 5** draws any small labels the merchant added inside the hero (blocks).
+   A new hero has none.
+6. **Line 6** `<hk-button>` is a link drawn as a button. `t('shop_now')` takes
+   its words from the theme's Arabic or English locale file.
+7. **Lines 9-11** `<hk-schema>` names the section and declares its settings:
+   `title` and `subtitle`, each with an Arabic and English label and a default.
+
+![A dark band with a large white Arabic heading, a line of text and an orange button](images/starter-hero@2x.webp "The starter hero in the dev preview, 1080 px wide. Arabic is the default store language, so it reads right to left.")
+
+More complete sections, each with a picture: the [Cookbook](guide/08-cookbook.md).
+
+## Quick start
+
+Three commands take you from an empty folder to a theme on a store. Until the
+npm package is published, run them from a clone of the SDK, as
+[Build your first theme](guide/01-getting-started.md#create-a-theme) describes.
+
+### 1. Create a theme
+
+```bash
+npx @hekana/sneferu init my-theme
+```
+
+Copies the starter theme into a new folder, `my-theme`, and names the theme
+after the folder.
+
+### 2. Preview it
+
+```bash
+npx @hekana/sneferu dev ./my-theme
+```
+
+Open `http://127.0.0.1:4100`. The preview fills the theme with sample products
+and reloads every time you save a file. Add `?locale=en` for English.
+
+![The starter theme in the dev preview: the hero, then the first sample product cards](images/starter-dev@2x.webp "The top of the page straight after init, 1080 px wide.")
+
+### 3. Push a version
+
+```bash
+npx @hekana/sneferu push ./my-theme --package my-theme
+```
+
+Checks the theme, compiles it and uploads it to Hekana as a new version. For
+now, pushing is limited to Hekana platform admins; see
+[Push and publish](guide/07-publishing.md).

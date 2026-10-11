@@ -1,56 +1,129 @@
 # 8. Cookbook
 
-Four complete sections. Each one was dropped into a fresh copy of the starter
-theme and checked with `validate` (zero errors, zero warnings); the output is in
-[_verified.txt](_verified.txt). Copy the files, add the section type to
-`templates/index.sneferu`, and run `dev`.
+Five store sections you can copy into a theme as they are: an announcement bar,
+a hero, a feature row, a product grid and subscription plans. Each one shows the
+file, explains it line by line, and shows a picture of what it renders. Every
+picture on this page is a screenshot of the section rendered by the Sneferu
+runtime with the `sneferu dev` sample data, not a drawing.
 
-```html
+The complete theme, with all five sections, is in the SDK repository under
+`docs/examples/example-store/`. It passes `validate` with no errors and no
+warnings. The [last section](#all-five-on-one-page) shows the five together.
+
+
+## Before you start
+
+Create a theme and keep the preview open while you work:
+
+```bash
+npx @hekana/sneferu init my-store
+npx @hekana/sneferu dev ./my-store
+```
+
+Open `http://127.0.0.1:4100/?locale=en`. It reloads every time you save a file.
+
+The starter's `assets/theme.css` already styles buttons, badges and product
+cards. Add one more file next to it:
+
+```css title="assets/base.css"
+h1, h2, h3, h4, p { margin: 0; }
+```
+
+1. **Line 1** removes the browser's default space above and below headings and
+   paragraphs, so the spacing you set with `gap` on `hk-stack` is the only
+   spacing between them.
+
+Then list the sections on the home page, in the order you want them. Replace
+the content of `templates/index.sneferu` with:
+
+```html title="templates/index.sneferu"
 <hk-sections />
 <hk-schema>{"sections":[
+  {"type":"announcement-bar"},
   {"type":"promo-hero"},
+  {"type":"feature-row"},
   {"type":"product-grid"},
-  {"type":"pricing"},
-  {"type":"bento"}
+  {"type":"pricing"}
 ]}</hk-schema>
 ```
 
-All four use the base component styles from
-[chapter 5](05-styling-and-responsive.md#your-css-assetscss). Save them as
-`assets/base.css`:
+1. **Line 1** `<hk-sections />` is where the page's sections go.
+2. **Lines 2-8** list the sections a new home page starts with. Each `type` is a
+   file name in `sections/` without `.sneferu`. Add them one by one as you
+   build each section below; a type with no file yet is an error (SN3020).
 
-```css
-.sn-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px;
-  padding-inline: 20px; border-radius: 10px; font-weight: 600; text-decoration: none;
-  border: 2px solid var(--hk-color-accent); }
-.sn-btn-solid { background: var(--hk-color-accent); color: var(--hk-color-background); }
-.sn-btn-outline { background: transparent; color: var(--hk-color-accent); }
-.sn-btn-ghost { background: transparent; border-color: transparent; color: inherit; }
-.sn-badge { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 13px; font-weight: 600; }
-.sn-badge-accent { background: var(--hk-color-accent); color: var(--hk-color-background); }
-.sn-badge-neutral { background: color-mix(in srgb, var(--hk-color-text) 10%, transparent); }
-.sn-product-card { display: flex; flex-direction: column; gap: 8px; color: inherit; text-decoration: none; }
-.sn-product-card img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 12px; }
-.sn-was { opacity: .6; margin-inline-start: 6px; }
+## Announcement bar
+
+A thin coloured strip at the top of the page with one message and a link, for
+news such as free delivery or a sale.
+
+```html title="sections/announcement-bar.sneferu"
+<hk-section background="{{ section.settings.background }}" padding-y="12" class="announcement">
+  <hk-stack direction="row" mobile-direction="column" gap="12" mobile-gap="4" align="center" justify="center">
+    <hk-text text="{{ section.settings.message }}" size="15" align="center" color="#FFFFFF" />
+    {% if section.settings.link_label %}<a class="announcement-link" href="{{ section.settings.link }}">{{ section.settings.link_label }}</a>{% endif %}
+  </hk-stack>
+</hk-section>
+<hk-schema>{
+  "name": { "ar": "شريط إعلان", "en": "Announcement bar" },
+  "version": 1,
+  "settings": {
+    "message":    { "type": "text",  "label": { "ar": "الرسالة", "en": "Message" }, "default": "Free delivery on orders over EGP 500", "maxLength": 90 },
+    "link_label": { "type": "text",  "label": { "ar": "نص الرابط", "en": "Link text" }, "default": "See details", "maxLength": 30 },
+    "link":       { "type": "link",  "label": { "ar": "الرابط", "en": "Link" }, "default": "/pages/delivery" },
+    "background": { "type": "color", "label": { "ar": "الخلفية", "en": "Background" }, "default": "theme:accent" }
+  }
+}</hk-schema>
 ```
 
-## (a) Hero with a token background and a call to action
+```css title="assets/announcement.css"
+.announcement-link { color: #FFFFFF; font-weight: 600; text-decoration: underline; text-underline-offset: 3px;
+  display: inline-flex; align-items: center; min-height: 44px; }
+```
 
-A full-width hero whose background is a colour setting defaulting to the
-`primary` token, an optional eyebrow badge, a title that scales down on tablet
-and mobile, and two buttons that stack on mobile.
+#### What each line does
 
-`sections/promo-hero.sneferu`:
+1. **Line 1** `<hk-section>` is the strip. Its `background` comes from the
+   `background` setting (line 14), which starts as the theme's accent colour.
+   `padding-y="12"` keeps it thin. `class="announcement"` is a name you can use
+   in your CSS.
+2. **Line 2** `<hk-stack>` lays out the message and the link in one row,
+   centred, 12 px apart. On phones (`mobile-direction="column"`) they stack.
+3. **Line 3** `<hk-text>` prints the message the merchant typed, in white.
+4. **Line 4** `{% if section.settings.link_label %}` shows the link only when
+   the merchant filled in the link text. The link is a plain HTML `<a>`; you can
+   mix plain HTML with `hk-*` tags.
+5. **Lines 7-16** `<hk-schema>` declares what the merchant can edit in the store
+   builder: the message, the link text, the link and the colour. Each setting
+   has a type, an Arabic and English label, and a default.
+6. In the CSS file, `.announcement-link` makes the link white, bold and
+   underlined, and at least 44 px tall so it is easy to tap.
 
-```html
-<hk-section background="{{ section.settings.background }}" padding-y="120" tablet-padding-y="88" mobile-padding-y="56" class="promo-hero">
-  <hk-stack gap="20" mobile-gap="12" align="start">
-    {% if section.settings.eyebrow %}<hk-badge text="{{ section.settings.eyebrow }}" tone="neutral" />{% endif %}
-    <hk-heading text="{{ section.settings.title }}" level="h1" size="60" tablet-size="44" mobile-size="32" color="theme:background" />
-    <hk-text text="{{ section.settings.subtitle }}" size="20" mobile-size="16" color="theme:background" />
+![An orange strip with the text "Free delivery on orders over EGP 500" and an underlined "See details" link](../images/announcement-bar@2x.webp "Desktop: message and link on one row.") ![The same strip on a phone, with the link under the message](../images/announcement-bar-phone@2x.webp "Phone: the link moves under the message.")
+
+#### Try it
+
+1. Save both files.
+2. Add `{"type":"announcement-bar"}` to `templates/index.sneferu`.
+3. Run `npx @hekana/sneferu validate ./my-store`. It should print
+   `✔ theme my-store@0.1.0 is valid`.
+4. Look at the preview. To try another colour, change `"default": "theme:accent"`
+   on line 14 to a colour such as `"#3B2A1A"` and save.
+
+## Hero
+
+The big band at the top of the home page: a small label, a large heading, a
+sentence and two buttons.
+
+```html title="sections/promo-hero.sneferu"
+<hk-section background="{{ section.settings.background }}" padding-y="112" tablet-padding-y="80" mobile-padding-y="56">
+  <hk-stack gap="20" mobile-gap="14" align="start">
+    {% if section.settings.eyebrow %}<hk-badge text="{{ section.settings.eyebrow }}" tone="accent" />{% endif %}
+    <hk-heading text="{{ section.settings.title }}" level="h1" size="56" tablet-size="44" mobile-size="32" color="#FFFFFF" />
+    <hk-text text="{{ section.settings.subtitle }}" size="20" mobile-size="16" color="#E5E7EB" />
     <hk-stack direction="row" mobile-direction="column" gap="12">
-      <hk-button label="{{ section.settings.cta_label }}" href="{{ section.settings.cta_link }}" size="lg" />
-      <hk-button label="{{ t('browse_all') }}" href="/collections/all" variant="outline" size="lg" />
+      <hk-button label="{{ section.settings.cta_label }}" href="{{ section.settings.cta_link }}" />
+      <hk-button label="{{ t('browse_all') }}" href="/collections/all" variant="outline" class="hero-outline" />
     </hk-stack>
   </hk-stack>
 </hk-section>
@@ -58,144 +131,150 @@ and mobile, and two buttons that stack on mobile.
   "name": { "ar": "واجهة ترويجية", "en": "Promo hero" },
   "version": 1,
   "settings": {
-    "eyebrow":    { "type": "text",     "label": { "ar": "سطر صغير فوق العنوان", "en": "Eyebrow" }, "default": "عرض الأسبوع", "maxLength": 40 },
-    "title":      { "type": "text",     "label": { "ar": "العنوان", "en": "Title" }, "default": "كل اللي محتاجه في مكان واحد", "maxLength": 80 },
-    "subtitle":   { "type": "textarea", "label": { "ar": "الوصف", "en": "Subtitle" }, "default": "توصيل لكل مصر والدفع عند الاستلام", "maxLength": 200 },
-    "cta_label":  { "type": "text",     "label": { "ar": "نص الزر", "en": "Button label" }, "default": "اطلب دلوقتي", "maxLength": 30 },
-    "cta_link":   { "type": "link",     "label": { "ar": "رابط الزر", "en": "Button link" }, "default": "/products" },
+    "eyebrow":    { "type": "text",     "label": { "ar": "سطر صغير فوق العنوان", "en": "Eyebrow" }, "default": "New this week", "maxLength": 40 },
+    "title":      { "type": "text",     "label": { "ar": "العنوان", "en": "Title" }, "default": "Everything for your home, in one place", "maxLength": 80 },
+    "subtitle":   { "type": "textarea", "label": { "ar": "الوصف", "en": "Subtitle" }, "default": "Delivery across Egypt. Pay cash when your order arrives.", "maxLength": 200 },
+    "cta_label":  { "type": "text",     "label": { "ar": "نص الزر", "en": "Button label" }, "default": "Shop new arrivals", "maxLength": 30 },
+    "cta_link":   { "type": "link",     "label": { "ar": "رابط الزر", "en": "Button link" }, "default": "/collections/featured" },
     "background": { "type": "color",    "label": { "ar": "الخلفية", "en": "Background" }, "default": "theme:primary" }
   }
 }</hk-schema>
 ```
 
-Add to `locales/ar.json` and `locales/en.json`:
-
-```json
-{
-  "browse_all": "تصفح كل المنتجات"
-}
+```css title="assets/hero.css"
+.sn-btn.hero-outline { color: #FFFFFF; border-color: #FFFFFF; }
 ```
 
-```json
+Add one line to both locale files:
+
+```json title="locales/en.json"
 {
   "browse_all": "Browse all products"
 }
 ```
 
-Things to notice:
+```json title="locales/ar.json"
+{
+  "browse_all": "تصفح كل المنتجات"
+}
+```
 
-- `"default": "theme:primary"` on a `color` setting: the merchant can keep the
-  token or pick any hex colour; `background="{{ section.settings.background }}"`
-  takes both.
-- `color="theme:background"` keeps the text readable whatever the token values are.
-- `{% if section.settings.eyebrow %}`: an empty eyebrow is falsy, so the badge
-  disappears instead of rendering empty.
-- `cta_link` is a `link` setting; an unsafe value (`javascript:…`) renders as `#`.
+#### What each line does
 
-## (b) Pricing tiers: three cards, a "best value" badge, 3 → 1 columns
+1. **Line 1** `<hk-section>` is the band. The colour comes from the
+   `background` setting (line 21), which starts as the theme's `primary`
+   colour. There are 112 px of space above and below the content: 80 px on
+   tablets, 56 px on phones.
+2. **Line 2** `<hk-stack>` puts everything in a column, 20 px apart, lined up
+   at the start of the line (the left in English, the right in Arabic).
+3. **Line 3** shows the small label only if the merchant wrote one. An empty
+   setting counts as "no", so the badge disappears instead of showing empty.
+4. **Line 4** `<hk-heading>` is the page's main title (`level="h1"`), 56 px on
+   desktop, 44 px on tablets, 32 px on phones, in white.
+5. **Line 5** `<hk-text>` is the sentence under the title, in light grey.
+6. **Lines 6-9** a row of two buttons that stack on phones. The first button's
+   text and link come from settings. The second button's text comes from the
+   locale files through `t('browse_all')`, so it changes with the store's
+   language.
+7. **Line 8** `variant="outline"` draws a button with a border and no fill.
+   `class="hero-outline"` lets the CSS file make it white, so it shows on the
+   dark band.
+8. **Lines 12-23** the settings: label, title, sentence, button text, button
+   link and background colour. `"type": "link"` means an unsafe link (such as
+   `javascript:…`) is replaced with `#` before it reaches the page.
 
-Three cards side by side on desktop, one per row on tablet and mobile. The
-merchant picks which tier is the best value; that card gets a badge and an
-accent outline. Prices are numbers in piastres and printed with `money`, so
-`29900` shows as `299.00 ج.م` / `EGP 299.00`.
+![A dark band with an orange "New this week" label, the heading "Everything for your home, in one place", a sentence and two buttons](../images/promo-hero@2x.webp "Desktop: heading at 56 px, buttons side by side.") ![The same hero on a phone](../images/promo-hero-phone@2x.webp "Phone: heading at 32 px, buttons stacked.")
 
-`sections/pricing.sneferu`:
+#### Try it
 
-```html
-<hk-section>
-  <hk-stack gap="32">
-    <hk-heading text="{{ section.settings.heading }}" level="h2" size="36" mobile-size="28" align="center" />
-    <hk-grid columns="3" tablet-columns="1" gap="24" class="tiers">
-      {% render 'tier-card', name: section.settings.tier1_name, price: section.settings.tier1_price, features: section.settings.tier1_features, link: '/pages/plans', best: section.settings.best == '1', variant: 'outline' %}
-      {% render 'tier-card', name: section.settings.tier2_name, price: section.settings.tier2_price, features: section.settings.tier2_features, link: '/pages/plans', best: section.settings.best == '2', variant: 'solid' %}
-      {% render 'tier-card', name: section.settings.tier3_name, price: section.settings.tier3_price, features: section.settings.tier3_features, link: '/pages/plans', best: section.settings.best == '3', variant: 'outline' %}
+1. Save the three files and add `{"type":"promo-hero"}` to the template.
+2. Run `validate`, then look at the preview.
+3. Change the window width: under 1024 px the heading is 44 px, under 640 px it
+   is 32 px and the buttons stack.
+
+## Feature row
+
+Three short cards side by side that tell shoppers why to buy here: delivery,
+payment and returns.
+
+```html title="sections/feature-row.sneferu"
+<hk-section padding-y="64" mobile-padding-y="40">
+  <hk-stack gap="24">
+    <hk-heading text="{{ section.settings.heading }}" level="h2" size="32" mobile-size="24" align="center" />
+    <hk-grid columns="3" tablet-columns="1" gap="16">
+      <hk-card border="true" padding="24" radius="16">
+        <hk-stack gap="8">
+          <hk-heading text="{{ section.settings.one_title }}" level="h3" size="20" />
+          <hk-text text="{{ section.settings.one_text }}" size="15" color="#4B5563" />
+        </hk-stack>
+      </hk-card>
+      <hk-card border="true" padding="24" radius="16">
+        <hk-stack gap="8">
+          <hk-heading text="{{ section.settings.two_title }}" level="h3" size="20" />
+          <hk-text text="{{ section.settings.two_text }}" size="15" color="#4B5563" />
+        </hk-stack>
+      </hk-card>
+      <hk-card border="true" padding="24" radius="16">
+        <hk-stack gap="8">
+          <hk-heading text="{{ section.settings.three_title }}" level="h3" size="20" />
+          <hk-text text="{{ section.settings.three_text }}" size="15" color="#4B5563" />
+        </hk-stack>
+      </hk-card>
     </hk-grid>
   </hk-stack>
 </hk-section>
 <hk-schema>{
-  "name": { "ar": "باقات الأسعار", "en": "Pricing tiers" },
+  "name": { "ar": "مميزات المتجر", "en": "Feature row" },
   "version": 1,
   "settings": {
-    "heading":        { "type": "text",     "label": { "ar": "العنوان", "en": "Heading" }, "default": "اختار الباقة المناسبة" },
-    "tier1_name":     { "type": "text",     "label": { "ar": "اسم الباقة ١", "en": "Tier 1 name" }, "default": "أساسي" },
-    "tier1_price":    { "type": "number",   "label": { "ar": "سعر الباقة ١ (قرش)", "en": "Tier 1 price (piastres)" }, "default": 9900, "min": 0 },
-    "tier1_features": { "type": "textarea", "label": { "ar": "مميزات الباقة ١", "en": "Tier 1 features" }, "default": "متجر واحد · ١٠٠ منتج" },
-    "tier2_name":     { "type": "text",     "label": { "ar": "اسم الباقة ٢", "en": "Tier 2 name" }, "default": "بيزنس" },
-    "tier2_price":    { "type": "number",   "label": { "ar": "سعر الباقة ٢ (قرش)", "en": "Tier 2 price (piastres)" }, "default": 29900, "min": 0 },
-    "tier2_features": { "type": "textarea", "label": { "ar": "مميزات الباقة ٢", "en": "Tier 2 features" }, "default": "منتجات بلا حدود · دومين خاص" },
-    "tier3_name":     { "type": "text",     "label": { "ar": "اسم الباقة ٣", "en": "Tier 3 name" }, "default": "متقدم" },
-    "tier3_price":    { "type": "number",   "label": { "ar": "سعر الباقة ٣ (قرش)", "en": "Tier 3 price (piastres)" }, "default": 59900, "min": 0 },
-    "tier3_features": { "type": "textarea", "label": { "ar": "مميزات الباقة ٣", "en": "Tier 3 features" }, "default": "كل حاجة في بيزنس · دعم أولوية" },
-    "best":           { "type": "select",   "label": { "ar": "الباقة الأفضل قيمة", "en": "Best value tier" }, "options": ["1", "2", "3"], "default": "2" }
+    "heading":     { "type": "text",     "label": { "ar": "العنوان", "en": "Heading" }, "default": "Why people shop with us" },
+    "one_title":   { "type": "text",     "label": { "ar": "الميزة ١", "en": "Feature 1" }, "default": "Delivery to every governorate" },
+    "one_text":    { "type": "textarea", "label": { "ar": "وصف الميزة ١", "en": "Feature 1 text" }, "default": "Cairo and Giza in 2 days, the rest of Egypt in 3 to 5." },
+    "two_title":   { "type": "text",     "label": { "ar": "الميزة ٢", "en": "Feature 2" }, "default": "Cash on delivery" },
+    "two_text":    { "type": "textarea", "label": { "ar": "وصف الميزة ٢", "en": "Feature 2 text" }, "default": "Pay when the order reaches your door." },
+    "three_title": { "type": "text",     "label": { "ar": "الميزة ٣", "en": "Feature 3" }, "default": "14-day returns" },
+    "three_text":  { "type": "textarea", "label": { "ar": "وصف الميزة ٣", "en": "Feature 3 text" }, "default": "Not the right fit? Send it back within 14 days." }
   }
 }</hk-schema>
 ```
 
-`snippets/tier-card.sneferu`:
+#### What each line does
 
-```html
-<hk-card class="tier" data-best="{{ best }}" padding="28" mobile-padding="20" radius="16" border="true" shadow="sm">
-  <hk-stack gap="12">
-    {% if best %}<hk-badge text="{{ t('best_value') }}" tone="accent" />{% endif %}
-    <hk-heading text="{{ name }}" level="h3" size="24" />
-    <p class="tier-price"><strong>{{ price | money }}</strong> <small>{{ t('per_month') }}</small></p>
-    <hk-text text="{{ features }}" size="15" />
-    <hk-button label="{{ t('choose_plan') }}" href="{{ link }}" variant="{{ variant }}" />
-  </hk-stack>
-</hk-card>
-```
+1. **Line 1** the section, with 64 px of space above and below (40 px on phones).
+2. **Line 3** the heading, centred.
+3. **Line 4** `<hk-grid columns="3">` makes three equal columns. On tablets and
+   phones (`tablet-columns="1"`) the cards stack in one column.
+4. **Lines 5-10** one card. `border="true"` draws a thin border, `padding="24"`
+   is the space inside it and `radius="16"` rounds the corners. Inside, a title
+   and a sentence, both from settings.
+5. **Lines 11-22** the second and third cards, the same shape with their own
+   settings.
+6. **Lines 26-38** seven settings: the heading, then a title and a sentence for
+   each card.
 
-`assets/pricing.css`:
+![Three bordered cards under the heading "Why people shop with us": delivery, cash on delivery, 14-day returns](../images/feature-row@2x.webp "Desktop: three columns.") ![The same cards on a phone, one per row](../images/feature-row-phone@2x.webp "Phone: one column.")
 
-```css
-.tier[data-best="true"] { outline: 2px solid var(--hk-color-accent); outline-offset: -2px; }
-.tier-price { margin: 0; font-size: 28px; }
-.tier-price small { font-size: 14px; opacity: .7; }
-```
+> **When the merchant should choose how many cards.** Three fixed cards keep
+> this example short. To let the merchant add and remove cards, make each card a
+> block: see [Sections and blocks](03-sections-and-blocks.md#blocks).
 
-Add to `locales/ar.json` and `locales/en.json`:
+#### Try it
 
-```json
-{
-  "best_value": "أفضل قيمة",
-  "per_month": "/ شهريًا",
-  "choose_plan": "اختار الباقة"
-}
-```
+Save the file, add `{"type":"feature-row"}` to the template, run `validate` and
+look at the preview.
 
-```json
-{
-  "best_value": "Best value",
-  "per_month": "/ month",
-  "choose_plan": "Choose plan"
-}
-```
+## Product grid
 
-Things to notice:
+A heading with a "View all" link, then the first products of the store's
+`featured` collection in a grid. If the collection is empty, a short message
+shows instead.
 
-- The card markup lives once in a snippet; the section renders it three times
-  with different arguments.
-- `best: section.settings.best == '1'` passes a boolean. The snippet uses it in
-  `{% if best %}` and as `data-best="{{ best }}"` (`"true"` / `"false"`), and the
-  CSS styles `[data-best="true"]`. A dynamic `style` attribute is not allowed, so
-  `data-*` + CSS is the way to style by state.
-- `columns="3" tablet-columns="1"` on `hk-grid` is the whole responsive layout.
-- A version where the merchant adds and removes tiers would make each tier a
-  block (see [chapter 3](03-sections-and-blocks.md#blocks)).
-
-## (c) Product grid from `collection('featured')` with a heading
-
-A heading with a "view all" link on the same row, then up to N products from the
-`featured` collection, with an empty state.
-
-`sections/product-grid.sneferu`:
-
-```html
-<hk-section padding-y="72" mobile-padding-y="40">
+```html title="sections/product-grid.sneferu"
+<hk-section padding-y="64" mobile-padding-y="40">
   <hk-stack gap="24">
     <hk-stack direction="row" justify="between" align="center">
       <hk-heading text="{{ section.settings.heading }}" level="h2" size="32" mobile-size="24" />
-      {% if section.settings.show_link %}<hk-button label="{{ t('view_all') }}" href="/collections/featured" variant="ghost" size="sm" />{% endif %}
+      {% if section.settings.show_link %}<hk-button label="{{ t('view_all') }}" href="/collections/featured" variant="ghost" />{% endif %}
     </hk-stack>
     {% if collection('featured').products %}
       <hk-product-grid products="{{ collection('featured').products }}" limit="{{ section.settings.count }}" columns="4" tablet-columns="3" mobile-columns="2" />
@@ -208,125 +287,171 @@ A heading with a "view all" link on the same row, then up to N products from the
   "name": { "ar": "شبكة منتجات", "en": "Product grid" },
   "version": 1,
   "settings": {
-    "heading":   { "type": "text",    "label": { "ar": "العنوان", "en": "Heading" }, "default": "الأكثر مبيعًا" },
-    "count":     { "type": "range",   "label": { "ar": "عدد المنتجات", "en": "Products to show" }, "default": 8, "min": 2, "max": 24, "step": 1 },
+    "heading":   { "type": "text",    "label": { "ar": "العنوان", "en": "Heading" }, "default": "Best sellers" },
+    "count":     { "type": "range",   "label": { "ar": "عدد المنتجات", "en": "Products to show" }, "default": 4, "min": 2, "max": 24, "step": 1 },
     "show_link": { "type": "boolean", "label": { "ar": "إظهار «عرض الكل»", "en": "Show “View all”" }, "default": true }
   }
 }</hk-schema>
 ```
 
-Add to `locales/ar.json` and `locales/en.json`:
+Add to both locale files:
 
-```json
-{
-  "view_all": "عرض الكل",
-  "collection_empty": "مفيش منتجات هنا لسه"
-}
-```
-
-```json
+```json title="locales/en.json"
 {
   "view_all": "View all",
   "collection_empty": "No products here yet"
 }
 ```
 
-Things to notice:
+```json title="locales/ar.json"
+{
+  "view_all": "عرض الكل",
+  "collection_empty": "مفيش منتجات هنا لسه"
+}
+```
 
-- `products="{{ collection('featured').products }}"` passes the product array
-  itself, not text: an attribute that is exactly one `{{ }}` keeps the value's type.
-- `limit="{{ section.settings.count }}"` comes from a `range` setting clamped to
-  2-24; `hk-product-grid` itself caps `limit` at 48.
-- `{% if collection('featured').products %}` is false for an empty or missing
-  collection (empty arrays are falsy), so the empty state shows.
-- The handle `featured` is written in the template: lookups take literal
-  arguments only. Use one section per collection, or ask the store to fill the
-  `featured` collection.
+#### What each line does
 
-## (d) Bento grid with mixed spans
+1. **Lines 3-6** a row with the heading at one end and the "View all" button at
+   the other (`justify="between"`). The button shows only when the `show_link`
+   setting is on. `variant="ghost"` is a button with no border and no fill.
+2. **Line 7** `collection('featured').products` is the list of products in the
+   collection whose handle is `featured`. `{% if … %}` is true when that list
+   has at least one product.
+3. **Line 8** `<hk-product-grid>` draws a card for each product: picture, name
+   and price. `limit` is how many to show, from the `count` setting. Four
+   columns on desktop, three on tablets, two on phones.
+4. **Lines 9-11** what shows when the collection is empty.
+5. **Line 19** `count` is a slider (`"type": "range"`) from 2 to 24, starting
+   at 4.
 
-A four-column bento: one large tile spanning 2 × 2, a wide tile, two small
-tiles, then four product tiles where the first is wide. Two columns on tablet,
-one on mobile.
+![A "Best sellers" heading with a "View all" link and four product cards with prices](../images/product-grid@2x.webp "Desktop: four columns. The products are the sneferu dev sample data.") ![The same grid on a phone, two columns](../images/product-grid-phone@2x.webp "Phone: two columns.")
 
-`sections/bento.sneferu`:
+> **Note.** The collection handle (`featured`) is written in the template. A
+> lookup only takes fixed text, so `collection(section.settings.handle)` is an
+> error (SN1105). Use one section per collection.
 
-```html
-<hk-section>
-  <hk-grid columns="4" tablet-columns="2" mobile-columns="1" gap="16" class="bento">
-    <hk-card class="bento-wide bento-tall" background="theme:primary" padding="32" mobile-padding="20" radius="20">
-      <hk-stack gap="12">
-        <hk-heading text="{{ section.settings.lead_title }}" level="h2" size="40" mobile-size="28" color="theme:background" />
-        <hk-text text="{{ section.settings.lead_text }}" color="theme:background" />
-        <hk-button label="{{ t('shop_now') }}" href="/products" />
-      </hk-stack>
-    </hk-card>
-    <hk-card class="bento-wide" background="theme:accent" radius="20">
-      <hk-heading text="{{ t('bento_delivery') }}" level="h3" size="22" color="theme:background" />
-    </hk-card>
-    <hk-card border="true" radius="20">
-      <hk-heading text="{{ t('bento_cod') }}" level="h3" size="20" />
-    </hk-card>
-    <hk-card border="true" radius="20">
-      <hk-heading text="{{ t('bento_returns') }}" level="h3" size="20" />
-    </hk-card>
-    {% for p in collection('featured').products limit: 4 %}
-      <hk-card class="bento-product" data-first="{{ forloop.first }}" border="true" radius="20" padding="12">
-        <hk-product-card product="{{ p }}" />
-      </hk-card>
-    {% endfor %}
-  </hk-grid>
+#### Try it
+
+1. Save the file, add the locale lines and `{"type":"product-grid"}`.
+2. The preview shows the six sample products; the grid shows four.
+3. To see the empty message, change `featured` to `sale` on lines 7 and 8 and
+   save: the preview has no `sale` collection.
+
+## Subscription plans
+
+Three plans side by side with their monthly price. The merchant picks which one
+is the best value; that card gets a badge, a coloured outline and a filled
+button.
+
+```html title="sections/pricing.sneferu"
+<hk-section padding-y="64" mobile-padding-y="40">
+  <hk-stack gap="32">
+    <hk-heading text="{{ section.settings.heading }}" level="h2" size="32" mobile-size="24" align="center" />
+    <hk-grid columns="3" tablet-columns="1" gap="24">
+      {% render 'plan-card', name: section.settings.plan1_name, price: section.settings.plan1_price, details: section.settings.plan1_details, best: section.settings.best == '1', variant: 'outline' %}
+      {% render 'plan-card', name: section.settings.plan2_name, price: section.settings.plan2_price, details: section.settings.plan2_details, best: section.settings.best == '2', variant: 'solid' %}
+      {% render 'plan-card', name: section.settings.plan3_name, price: section.settings.plan3_price, details: section.settings.plan3_details, best: section.settings.best == '3', variant: 'outline' %}
+    </hk-grid>
+  </hk-stack>
 </hk-section>
 <hk-schema>{
-  "name": { "ar": "شبكة بينتو", "en": "Bento grid" },
+  "name": { "ar": "باقات الاشتراك", "en": "Subscription plans" },
   "version": 1,
   "settings": {
-    "lead_title": { "type": "text",     "label": { "ar": "العنوان الرئيسي", "en": "Lead title" }, "default": "جديد الموسم وصل" },
-    "lead_text":  { "type": "textarea", "label": { "ar": "النص الرئيسي", "en": "Lead text" }, "default": "تشكيلة جديدة كل أسبوع" }
+    "heading":       { "type": "text",     "label": { "ar": "العنوان", "en": "Heading" }, "default": "Pick your monthly coffee box" },
+    "plan1_name":    { "type": "text",     "label": { "ar": "اسم الباقة ١", "en": "Plan 1 name" }, "default": "Small" },
+    "plan1_price":   { "type": "number",   "label": { "ar": "سعر الباقة ١ (قرش)", "en": "Plan 1 price (piastres)" }, "default": 29900, "min": 0 },
+    "plan1_details": { "type": "textarea", "label": { "ar": "تفاصيل الباقة ١", "en": "Plan 1 details" }, "default": "250 g of coffee, one roast" },
+    "plan2_name":    { "type": "text",     "label": { "ar": "اسم الباقة ٢", "en": "Plan 2 name" }, "default": "Regular" },
+    "plan2_price":   { "type": "number",   "label": { "ar": "سعر الباقة ٢ (قرش)", "en": "Plan 2 price (piastres)" }, "default": 49900, "min": 0 },
+    "plan2_details": { "type": "textarea", "label": { "ar": "تفاصيل الباقة ٢", "en": "Plan 2 details" }, "default": "500 g of coffee, two roasts" },
+    "plan3_name":    { "type": "text",     "label": { "ar": "اسم الباقة ٣", "en": "Plan 3 name" }, "default": "Family" },
+    "plan3_price":   { "type": "number",   "label": { "ar": "سعر الباقة ٣ (قرش)", "en": "Plan 3 price (piastres)" }, "default": 79900, "min": 0 },
+    "plan3_details": { "type": "textarea", "label": { "ar": "تفاصيل الباقة ٣", "en": "Plan 3 details" }, "default": "1 kg of coffee, any roasts" },
+    "best":          { "type": "select",   "label": { "ar": "الباقة الأفضل قيمة", "en": "Best value plan" }, "options": ["1", "2", "3"], "default": "2" }
   }
 }</hk-schema>
 ```
 
-`assets/bento.css`:
+The card is a snippet, written once and used three times:
 
-```css
-.bento { grid-auto-rows: minmax(160px, auto); grid-auto-flow: dense; }
-.bento-wide { grid-column: span 2; }
-.bento-tall { grid-row: span 2; }
-@media (max-width: 639px) {
-  .bento-wide, .bento-tall { grid-column: auto; grid-row: auto; }
-}
-.bento-product[data-first="true"] { grid-column: span 2; }
-@media (max-width: 639px) { .bento-product[data-first="true"] { grid-column: auto; } }
+```html title="snippets/plan-card.sneferu"
+<hk-card class="plan" data-best="{{ best }}" padding="28" mobile-padding="20" radius="16" border="true">
+  <hk-stack gap="12" align="start">
+    {% if best %}<hk-badge text="{{ t('best_value') }}" tone="accent" />{% endif %}
+    <hk-heading text="{{ name }}" level="h3" size="22" />
+    <p class="plan-price"><strong>{{ price | money }}</strong> <small>{{ t('per_month') }}</small></p>
+    <hk-text text="{{ details }}" size="15" />
+    <hk-button label="{{ t('choose_plan') }}" href="/pages/subscribe" variant="{{ variant }}" />
+  </hk-stack>
+</hk-card>
 ```
 
-Add to `locales/ar.json` and `locales/en.json`:
+```css title="assets/pricing.css"
+.plan[data-best="true"] { outline: 2px solid var(--hk-color-accent); outline-offset: -2px; }
+.plan-price { margin: 0; font-size: 28px; }
+.plan-price small { font-size: 14px; opacity: .7; }
+```
 
-```json
+Add to both locale files:
+
+```json title="locales/en.json"
 {
-  "shop_now": "تسوق دلوقتي",
-  "bento_delivery": "توصيل لكل المحافظات",
-  "bento_cod": "الدفع عند الاستلام",
-  "bento_returns": "استرجاع خلال ١٤ يوم"
+  "best_value": "Best value",
+  "per_month": "/ month",
+  "choose_plan": "Choose this box"
 }
 ```
 
-```json
+```json title="locales/ar.json"
 {
-  "shop_now": "Shop now",
-  "bento_delivery": "Delivery to every governorate",
-  "bento_cod": "Cash on delivery",
-  "bento_returns": "14-day returns"
+  "best_value": "أفضل قيمة",
+  "per_month": "/ شهريًا",
+  "choose_plan": "اختار الباقة"
 }
 ```
 
-Things to notice:
+#### What each line does
 
-- `hk-grid` sets the columns; spans come from your CSS through the `class`
-  passthrough (`bento-wide`, `bento-tall`). `grid-auto-flow: dense` fills the
-  gaps the large tiles leave.
-- Inside the loop, `data-first="{{ forloop.first }}"` marks the first product so
-  CSS can widen it. `{% %}` directives cannot go inside an attribute value; use
-  `{{ }}` and `data-*` instead.
-- `limit: 4` keeps the loop small and predictable.
-- On mobile every span resets to one cell, so the tiles stack in source order.
+In `sections/pricing.sneferu`:
+
+1. **Line 4** a three-column grid that becomes one column on tablets and phones.
+2. **Lines 5-7** `{% render 'plan-card', … %}` draws `snippets/plan-card.sneferu`
+   three times, each time with its own values: `name`, `price`, `details`,
+   `best` and `variant`. `best: section.settings.best == '1'` is `true` only for
+   the plan the merchant chose as the best value.
+3. **Lines 17, 20, 23** prices are whole numbers in piastres: `29900` is
+   EGP 299.00. Never write `299.00` in a price setting.
+4. **Line 25** a drop-down (`"type": "select"`) with the choices 1, 2 and 3.
+
+In `snippets/plan-card.sneferu`:
+
+1. **Line 1** the card. `data-best="{{ best }}"` writes `true` or `false` into
+   the page, so the CSS file can draw an outline around the best card only.
+2. **Line 3** the "Best value" badge, only on the best card.
+3. **Line 5** `{{ price | money }}` turns `29900` into `EGP 299.00` in English
+   and `299.00 ج.م` in Arabic.
+4. **Line 7** the button: filled on the best card, outlined on the others, as
+   the section passed in `variant`.
+
+![Three plan cards: Small EGP 299.00, Regular EGP 499.00 with a "Best value" badge and an orange outline, Family EGP 799.00](../images/pricing@2x.webp "Desktop: three columns, the middle plan marked as best value.") ![The same plans on a phone, one per row](../images/pricing-phone@2x.webp "Phone: one column.")
+
+> **Note.** A `style="…"` attribute cannot contain `{{ }}`. To style a card by
+> its state, write the state into a `data-*` attribute, as line 1 of the
+> snippet does, and match it in CSS.
+
+#### Try it
+
+1. Save the four files, add `{"type":"pricing"}` to the template, and run
+   `validate`.
+2. To mark another plan as the best value, change `"default": "2"` on line 25
+   to `"3"` and save.
+
+## All five on one page
+
+With all five types listed in `templates/index.sneferu`, the preview shows a
+complete home page. Arrange them in any order; the merchant can reorder them
+later in the store builder.
+
+![The example store at 1080 px wide: announcement bar, hero, feature row, product grid and subscription plans, top to bottom](../images/full-page@2x.webp "Desktop, 1080 px wide. All five sections on one page, as sneferu dev shows them with ?locale=en.")

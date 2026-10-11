@@ -1,0 +1,38 @@
+<hk-section padding-y="64" mobile-padding-y="40">
+  <hk-stack gap="24">
+    <hk-heading text="{{ section.settings.heading }}" level="h2" size="32" mobile-size="24" align="center" />
+    <hk-grid columns="3" tablet-columns="1" gap="16">
+      <hk-card border="true" padding="24" radius="16">
+        <hk-stack gap="8">
+          <hk-heading text="{{ section.settings.one_title }}" level="h3" size="20" />
+          <hk-text text="{{ section.settings.one_text }}" size="15" color="#4B5563" />
+        </hk-stack>
+      </hk-card>
+      <hk-card border="true" padding="24" radius="16">
+        <hk-stack gap="8">
+          <hk-heading text="{{ section.settings.two_title }}" level="h3" size="20" />
+          <hk-text text="{{ section.settings.two_text }}" size="15" color="#4B5563" />
+        </hk-stack>
+      </hk-card>
+      <hk-card border="true" padding="24" radius="16">
+        <hk-stack gap="8">
+          <hk-heading text="{{ section.settings.three_title }}" level="h3" size="20" />
+          <hk-text text="{{ section.settings.three_text }}" size="15" color="#4B5563" />
+        </hk-stack>
+      </hk-card>
+    </hk-grid>
+  </hk-stack>
+</hk-section>
+<hk-schema>{
+  "name": { "ar": "مميزات المتجر", "en": "Feature row" },
+  "version": 1,
+  "settings": {
+    "heading":     { "type": "text",     "label": { "ar": "العنوان", "en": "Heading" }, "default": "Why people shop with us" },
+    "one_title":   { "type": "text",     "label": { "ar": "الميزة ١", "en": "Feature 1" }, "default": "Delivery to every governorate" },
+    "one_text":    { "type": "textarea", "label": { "ar": "وصف الميزة ١", "en": "Feature 1 text" }, "default": "Cairo and Giza in 2 days, the rest of Egypt in 3 to 5." },
+    "two_title":   { "type": "text",     "label": { "ar": "الميزة ٢", "en": "Feature 2" }, "default": "Cash on delivery" },
+    "two_text":    { "type": "textarea", "label": { "ar": "وصف الميزة ٢", "en": "Feature 2 text" }, "default": "Pay when the order reaches your door." },
+    "three_title": { "type": "text",     "label": { "ar": "الميزة ٣", "en": "Feature 3" }, "default": "14-day returns" },
+    "three_text":  { "type": "textarea", "label": { "ar": "وصف الميزة ٣", "en": "Feature 3 text" }, "default": "Not the right fit? Send it back within 14 days." }
+  }
+}</hk-schema>
