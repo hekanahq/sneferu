@@ -70,3 +70,13 @@ describe('collection settings and collections()', () => {
       expect('error' in parseFor(bad), bad).toBe(true);
   });
 });
+
+describe('url()', () => {
+  it('takes exactly one argument, a literal or any expression', () => {
+    expect(parseExpr("url('/products')").expr).toEqual({ k: 'lookup', fn: 'url', args: [{ k: 'lit', v: '/products' }] });
+    expect(parseExpr('url(product.url)').expr).toEqual({ k: 'lookup', fn: 'url', args: [{ k: 'path', p: ['product', 'url'] }] });
+    expect(parseExpr('url(section.settings.link | default: "/")').expr).toEqual({ k: 'lookup', fn: 'url', args: [{ k: 'filter', name: 'default', input: { k: 'path', p: ['section', 'settings', 'link'] }, args: [{ k: 'lit', v: '/' }] }] });
+    for (const bad of ['url()', "url('/a', '/b')", 'url(x.y())'])
+      expect(parseExpr(bad).error, bad).toBeDefined();
+  });
+});

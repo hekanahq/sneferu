@@ -298,6 +298,20 @@
      }
     }
    },
+   "money": {
+    "type": "object",
+    "description": "Default money format for the money filter, <hk-price> and product cards",
+    "properties": {
+     "format": {
+      "enum": [
+       "decimal",
+       "whole"
+      ],
+      "description": "decimal: 1,290.00 (default). whole: 1,290, two decimals kept when there are piastres"
+     }
+    },
+    "additionalProperties": false
+   },
    "previews": {
     "type": "array",
     "items": {

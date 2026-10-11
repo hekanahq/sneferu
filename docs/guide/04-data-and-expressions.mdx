@@ -20,11 +20,12 @@ run code. The full grammar is in [language.md](../language.mdx).
 
 ### Lookups
 
-Lookups take **literal** arguments (`collection('featured')`). The one
-exception is `collection()`, which also takes a `collection` setting, so the
-merchant can choose the collection (see
-[Let the merchant choose a collection](#let-the-merchant-choose-a-collection)).
-Any other argument, such as `collection(product.title)`, is SN1105.
+Lookups take **literal** arguments (`collection('featured')`). Two take more:
+`collection()` also takes a `collection` setting, so the merchant can choose the
+collection (see
+[Let the merchant choose a collection](#let-the-merchant-choose-a-collection)),
+and `url()` takes any one expression (see [Links](#links)). Any other argument,
+such as `collection(product.title)`, is SN1105.
 
 | Lookup | Returns |
 | - | - |
@@ -35,6 +36,7 @@ Any other argument, such as `collection(product.title)`, is SN1105.
 | `t('shop_now')` | the text from `locales/<locale>.json`, then the default locale, then the key itself |
 | `settings('accent')` | one theme setting (same as `settings.accent`) |
 | `asset_url('logo.svg')` | the URL of `assets/logo.svg` |
+| `url('/products')` | a link for this page: `/en/products` on an English page, `/products` on an Arabic one. Takes a literal or any expression: `url(section.settings.link)` |
 
 ### Product fields
 
@@ -132,7 +134,7 @@ blocks. Use that for empty states:
 
 | Filter | Input → output |
 | - | - |
-| `money` | price in minor units → formatted price in the store currency. `{{ 129000 \| money }}` → `EGP 1,290.00`. Other currencies use the ISO code: `USD 1,290.00`. On an Arabic page the currency comes after the number. Always two decimals, Western digits |
+| `money` | price in minor units → formatted price in the store currency. `{{ 129000 \| money }}` → `EGP 1,290.00`. Other currencies use the ISO code: `USD 1,290.00`. On an Arabic page the currency comes after the number. Western digits. Options: see [Money formats](#money-formats) |
 | `img` | image (object with `url`, or a URL) → image URL, optionally sized: `{{ p.image \| img: 400 }}` |
 | `date` | ISO date → long date: `{{ '2026-10-10' \| date }}` → `10 October 2026` |
 | `t` | key → translation: `{{ 'shop_now' \| t }}` (same as `t('shop_now')`) |
@@ -152,6 +154,64 @@ use `money` or `<hk-price amount="{{ p.price }}" compare-at="{{ p.compare_at }}"
 
 Dates and prices always use Western digits, in every locale, matching the rest
 of Hekana.
+
+### Money formats
+
+`money` takes two optional arguments: the format and the unit.
+
+| Expression | Arabic page | English page |
+| - | - | - |
+| `{{ 129000 \| money }}` | `1,290.00 ج.م` | `EGP 1,290.00` |
+| `{{ 129000 \| money: 'whole' }}` | `1,290 ج.م` | `EGP 1,290` |
+| `{{ 129050 \| money: 'whole' }}` | `1,290.50 ج.م` | `EGP 1,290.50` |
+| `{{ 120 \| money: 'whole', 'major' }}` | `120 ج.م` | `EGP 120` |
+
+- Format: `'decimal'` (the default) always prints two decimals; `'whole'` drops
+  `.00` when the amount is a whole pound and keeps two decimals otherwise.
+- Unit: `'minor'` (the default) reads the input as piastres; `'major'` reads it
+  as pounds. Product prices are always minor units, so `'major'` is for numbers
+  you wrote yourself.
+
+To make `whole` the default for the whole theme, set it in `theme.json`:
+
+```json
+"money": { "format": "whole" }
+```
+
+It applies to `money` without a format, to `<hk-price>` and to the price inside
+`<hk-product-card>` and `<hk-product-grid>`. `<hk-price format="decimal">` (or
+`"whole"`) overrides it for one tag, and `money: 'decimal'` for one expression.
+With the `whole` format `<hk-price>` wraps the number in `<bdi>`, so it reads
+correctly next to `ج.م` on Arabic pages; with the default format its markup is
+unchanged. Anything other than `decimal` or `whole` in `theme.json` is SN3033.
+
+## Links
+
+A link written in a template is used as written: `href="/products"` goes to the
+Arabic page even when the shopper is on English. Wrap store links in `url()` so
+they keep the page's language:
+
+```html
+<a href="{{ url('/products') }}">{{ t('all_products') }}</a>
+<a href="{{ url(section.settings.link) }}">{{ section.settings.label }}</a>
+```
+
+| On an English page | Result |
+| - | - |
+| `url('/products')` | `/en/products` |
+| `url('/en/products')` | `/en/products` (already prefixed) |
+| `url('https://example.com')`, `url('mailto:…')`, `url('tel:…')`, `url('#reviews')` | unchanged |
+| `url('javascript:…')`, `url('//evil.example')`, an empty value | `#` |
+
+On an Arabic page store paths are unchanged (Arabic is the default language and
+has no prefix). On the store, Hekana also adds whatever the store's address needs;
+the result is always checked with the same URL rules as `href` (see
+[Security and limits](06-security-and-limits.mdx)). `url()` takes exactly one
+argument.
+
+`<hk-button href="/products">` does this for you: its link always follows the
+page's language. Product and category URLs (`p.url`, `c.url`) already include
+the prefix, so they do not need `url()`.
 
 ## Loops
 

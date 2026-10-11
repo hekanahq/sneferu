@@ -7,5 +7,7 @@ export { pageDependencies, MAX_PAGE_COLLECTIONS, type PageDependencies, type Pag
 export { renderPage, prepareArtifact, type ArtifactLike, type PageNode, type RenderOptions, type RenderResult } from './page';
 export { checkArtifactShape } from './shape';
 export { translate } from './translate';
+export { resolveUrl } from './url';
+export { defaultUrl } from '@hekana/sneferu-core';
 export { themeTokenCss } from './tokens';
 export { themeFontCss } from './fonts';

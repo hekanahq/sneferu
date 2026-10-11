@@ -1,4 +1,4 @@
-import { escapeAttr, escapeText, safeUrl, toStr, type HkTag, type TagRenderContext } from '@hekana/sneferu-core';
+import { escapeAttr, escapeText, formatAmount, isMoneyFormat, moneyText, safeUrl, toStr, type HkTag, type MoneyFormat, type TagRenderContext } from '@hekana/sneferu-core';
 import { px, responsiveCss, safeImageSrc } from './css';
 import { passthrough } from './attrs';
 
@@ -8,25 +8,36 @@ const NONE: Extra = { cls: '', attrs: '' };
 const L = (ar: string, en: string) => ({ ar, en });
 const ed = (ar: string, en: string) => ({ label: L(ar, en), group: 'commerce', insertable: true });
 
-export function formatMoney(minor: unknown, locale: 'ar' | 'en', currency = 'EGP'): string {
+export function formatMoney(minor: unknown, locale: 'ar' | 'en', currency = 'EGP', format: MoneyFormat = 'decimal'): string {
   const n = typeof minor === 'number' ? minor : Number(minor);
   if (!Number.isFinite(n)) return '';
-  const s = (n / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-  if (currency === 'EGP') return locale === 'ar' ? `${s} ج.م` : `EGP ${s}`;
-  return locale === 'ar' ? `${s} ${currency}` : `${currency} ${s}`;
+  return moneyText(formatAmount(n, format), locale, currency);
 }
 
-const priceHtml = (id: string, amount: unknown, compareAt: unknown, c: TagRenderContext, x: Extra = NONE) => {
-  const now = formatMoney(amount, c.locale);
-  const was = typeof compareAt === 'number' && typeof amount === 'number' && compareAt > amount ? ` <s class="sn-was">${escapeText(formatMoney(compareAt, c.locale))}</s>` : '';
-  return `<span class="sn-${id} sn-price${x.cls}"${x.attrs}><span class="sn-now">${escapeText(now)}</span>${was}</span>`;
+/** Escaped price text; with 'whole' the number is isolated in <bdi> (the decimal default keeps 0.2's markup). */
+const moneyHtml = (minor: unknown, locale: 'ar' | 'en', format: MoneyFormat): string => {
+  if (format !== 'whole') return escapeText(formatMoney(minor, locale));
+  const n = typeof minor === 'number' ? minor : Number(minor);
+  if (!Number.isFinite(n)) return '';
+  return moneyText(escapeText(formatAmount(n, 'whole')), locale, 'EGP', (s) => `<bdi>${s}</bdi>`);
+};
+
+const priceHtml = (id: string, amount: unknown, compareAt: unknown, c: TagRenderContext, x: Extra = NONE, format?: unknown) => {
+  const f: MoneyFormat = isMoneyFormat(format) ? format : isMoneyFormat(c.money) ? c.money : 'decimal';
+  const now = moneyHtml(amount, c.locale, f);
+  const was = typeof compareAt === 'number' && typeof amount === 'number' && compareAt > amount ? ` <s class="sn-was">${moneyHtml(compareAt, c.locale, f)}</s>` : '';
+  return `<span class="sn-${id} sn-price${x.cls}"${x.attrs}><span class="sn-now">${now}</span>${was}</span>`;
 };
 
 export const hkPrice: HkTag = {
   name: 'hk-price', version: 1, category: 'commerce',
-  props: { amount: { type: 'number', label: L('السعر', 'Price') }, compareAt: { type: 'number', label: L('السعر قبل الخصم', 'Compare at') } },
+  props: {
+    amount: { type: 'number', label: L('السعر', 'Price') },
+    compareAt: { type: 'number', label: L('السعر قبل الخصم', 'Compare at') },
+    format: { type: 'select', label: L('شكل الرقم', 'Number format'), options: ['decimal', 'whole'] },
+  },
   allowedParents: '*', allowedChildren: [], responsive: [], bindable: '*', editor: ed('السعر', 'Price'),
-  render: (p, c) => priceHtml(c.id, p.amount, p.compareAt, c, passthrough(p)),
+  render: (p, c) => priceHtml(c.id, p.amount, p.compareAt, c, passthrough(p), p.format),
 };
 
 type ProductView = { title?: unknown; url?: unknown; price?: unknown; compare_at?: unknown; image?: { url?: unknown } | unknown };

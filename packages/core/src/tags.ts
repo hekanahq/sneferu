@@ -11,6 +11,13 @@ export interface TagRenderContext {
   dir: 'rtl' | 'ltr';
   t(key: string): string;
   /**
+   * A link for this page: store-relative paths get the locale prefix (and the
+   * host's store prefix); the result has passed safeUrl.
+   */
+  url(path: string): string;
+  /** The theme's default money format (theme.json `money.format`); absent means 'decimal'. */
+  money?: 'decimal' | 'whole';
+  /**
    * No argument: the children, except `<hk-part>` markers. With a name: the
    * content of the `<hk-part name="…">` children with that name ('' when none).
    */

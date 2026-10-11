@@ -2,6 +2,7 @@ import { err, LIMITS, escapeAttr, escapeText, safeToken, safeUrl, svgCase, toStr
 import type { RenderContext, Scope } from './context';
 import { evaluate, truthy } from './evaluate';
 import { translate } from './translate';
+import { resolveUrl } from './url';
 import { Budget } from './budget';
 export { Budget } from './budget';
 
@@ -138,6 +139,8 @@ export function renderNodes(nodes: IRNode[], scope: Scope, env: Env): string {
             css: (rule) => env.css.push(rule),
             controller: (name) => env.controllers.add(name),
             t: (key) => tr(env, key),
+            url: (path) => resolveUrl(env.ctx, path),
+            ...(env.ctx.money === 'whole' || env.ctx.money === 'decimal' ? { money: env.ctx.money } : {}),
             renderChildren: (part?: string) => {
               const kids = part === undefined ? n.children.filter((c) => !isPart(c))
                 : n.children.flatMap((c) => (isPart(c) && partName(c) === part ? c.children : []));

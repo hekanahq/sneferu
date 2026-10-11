@@ -104,6 +104,7 @@ templates (SN2011).
 | `tokens.colors` | yes | `primary`, `secondary`, `accent`, `background`, `text` as `#RRGGBB`. Extra keys (`muted`, `border`, …) are allowed | SN3019 |
 | `tokens.layout.contentWidth` | no | `"<3-4 digits>px"`, e.g. `"1200px"`; becomes `--hk-content-width` | ignored if malformed |
 | `tokens.fonts` | no | `heading`, `body`, `mono`: font families from the catalogue (see [Fonts](05-styling-and-responsive.mdx#fonts)) | SN3032 |
+| `money.format` | no | `"decimal"` (default, `1,290.00`) or `"whole"` (`1,290`, two decimals kept when there are piastres): the default for `money`, `<hk-price>` and product cards (see [Money formats](04-data-and-expressions.mdx#money-formats)) | SN3033 |
 | `tokens.radius` | no | accepted in the manifest, not turned into CSS yet | |
 | `previews` | no | array of preview image names | |
 

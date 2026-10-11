@@ -1,18 +1,19 @@
-import { toStr, type FilterName } from '@hekana/sneferu-core';
+import { formatAmount, isMoneyFormat, moneyText, toStr, type FilterName } from '@hekana/sneferu-core';
 import type { RenderContext } from './context';
 import { translate } from './translate';
 
 const num = (v: unknown) => (typeof v === 'number' ? v : typeof v === 'string' && v.trim() !== '' ? Number(v) : NaN);
-const money = (minor: unknown, ctx: RenderContext) => {
-  const n = num(minor);
+/** `money: format?, unit?`: format 'whole' | 'decimal' (default: the theme's), unit 'minor' (piastres, default) | 'major' (pounds). */
+const money = (input: unknown, args: unknown[], ctx: RenderContext) => {
+  const n = num(input);
   if (!Number.isFinite(n)) return '';
-  const s = (n / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-  if (ctx.currency === 'EGP') return ctx.locale === 'ar' ? `${s} ج.م` : `EGP ${s}`;
-  return ctx.locale === 'ar' ? `${s} ${ctx.currency}` : `${ctx.currency} ${s}`;
+  const minor = args[1] === 'major' ? Math.round(n * 100) : n;
+  const format = isMoneyFormat(args[0]) ? args[0] : isMoneyFormat(ctx.money) ? ctx.money : 'decimal';
+  return moneyText(formatAmount(minor, format), ctx.locale, ctx.currency);
 };
 
 export const FILTER_IMPLS: Record<FilterName, (input: unknown, args: unknown[], ctx: RenderContext) => unknown> = {
-  money: (i, _a, c) => money(i, c),
+  money: (i, a, c) => money(i, a, c),
   img: (i, a, c) => c.imageUrl(i, typeof a[0] === 'number' ? a[0] : undefined),
   date: (i, _a, c) => { const d = new Date(toStr(i)); return Number.isNaN(d.getTime()) ? '' : d.toLocaleDateString(c.locale === 'ar' ? 'ar-EG-u-nu-latn' : 'en-GB', { year: 'numeric', month: 'long', day: 'numeric' }); },
   t: (i, _a, c) => translate(c, toStr(i)),

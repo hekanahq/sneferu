@@ -10,3 +10,5 @@ export * from './registry';
 export * from './labels';
 export * from './svg-case';
 export * from './fonts';
+export * from './url';
+export * from './money';

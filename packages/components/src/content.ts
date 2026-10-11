@@ -1,4 +1,4 @@
-import { escapeAttr, escapeText, safeUrl, toStr, type HkTag } from '@hekana/sneferu-core';
+import { escapeAttr, escapeText, safeUrl, toStr, type HkTag, type TagRenderContext } from '@hekana/sneferu-core';
 import { colorVar, oneOf, px, responsiveCss, safeImageSrc } from './css';
 import { passthrough } from './attrs';
 import { sanitizeRichText } from './sanitize';
@@ -71,6 +71,12 @@ export const hkImage: HkTag = {
   },
 };
 
+/** A merchant link through the page's resolver (locale prefix on store paths); always safe. */
+export const link = (c: TagRenderContext, href: unknown): string => {
+  const h = toStr(href) || '#';
+  return safeUrl(typeof c.url === 'function' ? c.url(h) : h);
+};
+
 const VARIANT = oneOf(['solid', 'outline', 'ghost'] as const);
 export const hkButton: HkTag = {
   name: 'hk-button', version: 1, category: 'ui',
@@ -84,7 +90,7 @@ export const hkButton: HkTag = {
   render(p, c) {
     const v = VARIANT(p.variant) ?? 'solid';
     const x = passthrough(p);
-    return `<a class="sn-${c.id} sn-btn sn-btn-${v}${x.cls}"${x.attrs} href="${escapeAttr(safeUrl(toStr(p.href) || '#'))}">${escapeText(toStr(p.label))}</a>`;
+    return `<a class="sn-${c.id} sn-btn sn-btn-${v}${x.cls}"${x.attrs} href="${escapeAttr(link(c, p.href))}">${escapeText(toStr(p.label))}</a>`;
   },
 };
 

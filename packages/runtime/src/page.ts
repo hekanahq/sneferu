@@ -1,4 +1,4 @@
-import { coerceSetting, err, escapeAttr, safeToken, toStr, validateIR, type Diagnostic, type FieldSchema, type HkTag, type IRNode, type TagRegistry } from '@hekana/sneferu-core';
+import { coerceSetting, err, escapeAttr, isMoneyFormat, safeToken, toStr, validateIR, type Diagnostic, type FieldSchema, type HkTag, type IRNode, type TagRegistry } from '@hekana/sneferu-core';
 import type { RenderContext, Scope } from './context';
 import { Budget, own, renderNodes, type Env } from './render';
 import type { Limits } from './budget';
@@ -6,7 +6,7 @@ import { checkArtifactShape } from './shape';
 
 interface Schemaed { ir: IRNode[]; schema: { settings: FieldSchema } }
 export interface ArtifactLike {
-  manifest: { id: string; settings?: FieldSchema; defaultLocale?: string; tokens?: unknown };
+  manifest: { id: string; settings?: FieldSchema; defaultLocale?: string; tokens?: unknown; money?: unknown };
   layout: IRNode[];
   templates: Record<string, IRNode[]>;
   templateSections: Record<string, { type: string; settings: Record<string, unknown>; blocks?: { type: string; settings: Record<string, unknown> }[] }[]>;
@@ -91,7 +91,10 @@ function render(artifact: ArtifactLike, opts: RenderOptions): RenderResult {
   const dir: RenderContext['dir'] = locale === 'ar' ? 'rtl' : 'ltr';
   const themeSettings = (artifact.manifest as { settings?: unknown }).settings;
   const settings = isObj(themeSettings) ? settingsFor(themeSettings as FieldSchema, opts.ctx.settings, locale) : opts.ctx.settings;
-  const ctx: RenderContext = { ...opts.ctx, locale, dir, settings };
+  // theme.json money.format is the theme's default; a host value is used only when the theme has none
+  const mf = isObj(artifact.manifest.money) ? artifact.manifest.money.format : undefined;
+  const money = isMoneyFormat(mf) ? mf : isMoneyFormat(opts.ctx.money) ? opts.ctx.money : undefined;
+  const ctx: RenderContext = { ...opts.ctx, locale, dir, settings, money };
   const env: Env = { ctx, registry: opts.registry, snippets: artifact.snippets, slots: {}, budget: new Budget(opts.limits), css: [], controllers: new Set(), diagnostics: [], ids: { n: 0 }, depth: 0, include: 0 };
   const base: Scope = { ...(opts.scope ?? {}), store: ctx.store, locale, dir };
 

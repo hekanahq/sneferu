@@ -654,6 +654,19 @@
           "label": {
             "en": "Compare at"
           }
+        },
+        {
+          "name": "format",
+          "attr": "format",
+          "type": "select",
+          "options": [
+            "decimal",
+            "whole"
+          ],
+          "responsive": false,
+          "label": {
+            "en": "Number format"
+          }
         }
       ]
     },
