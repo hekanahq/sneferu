@@ -1,14 +1,22 @@
-import { ENGINE_VERSION, err, normalizeFieldLabels, normalizeLabel, warn, type Diagnostic, type FieldSchema } from '@hekana/sneferu-core';
+import { closest } from './validate';
+import { ENGINE_VERSION, FONTS, err, normalizeFieldLabels, normalizeLabel, warn, type Diagnostic, type FieldSchema } from '@hekana/sneferu-core';
 
 export interface Manifest {
   id: string; name: { ar: string; en: string }; version: string; author: string;
   description: { ar: string; en: string }; category: string; engine: 'hk2'; engineCompatibility: string;
   defaultLocale: 'ar' | 'en'; locales: ('ar' | 'en')[]; settings: FieldSchema;
-  tokens: { colors: Record<string, string>; fonts?: { heading?: string; body?: string }; radius?: Record<string, string>; layout?: { contentWidth?: string } };
+  tokens: { colors: Record<string, string>; fonts?: { heading?: string; body?: string; mono?: string }; radius?: Record<string, string>; layout?: { contentWidth?: string } };
   previews?: string[];
 }
 
 const SEMVER = /^(\d+)\.(\d+)\.(\d+)$/;
+const FONT_ROLES = ['heading', 'body', 'mono'];
+/** Case-insensitive "Did you mean" for a font family, answering with the canonical name. */
+function fontSuggestion(x: string, families: string[]): string {
+  const canon = new Map(families.map((f) => [f.toLowerCase(), f]));
+  const best = closest(x.toLowerCase(), canon.keys());
+  return best === undefined ? '' : ` Did you mean "${canon.get(best)}"?`;
+}
 const HEX = /^#[0-9a-fA-F]{6}$/;
 
 /** `^2.0.0` → major 2, >= 2.0.0; `2.1.0` exact. */
@@ -45,6 +53,20 @@ export function validateManifest(json: unknown): { manifest?: Manifest; diagnost
   else if (m.locales.some((l) => l !== 'ar' && l !== 'en')) out.push(err('SN3018', 'locales may only contain ar and en', at));
   const c = m.tokens?.colors ?? {};
   for (const k of ['primary', 'secondary', 'accent', 'background', 'text']) if (!HEX.test(String(c[k]))) out.push(err('SN3019', `tokens.colors.${k} must be a #RRGGBB colour`, at));
+  const fonts = (m.tokens as { fonts?: unknown } | undefined)?.fonts;
+  if (fonts !== undefined) {
+    if (typeof fonts !== 'object' || fonts === null || Array.isArray(fonts)) out.push(err('SN3032', 'tokens.fonts must be an object with optional heading, body and mono', at));
+    else {
+      const families = Object.keys(FONTS);
+      for (const [role, name] of Object.entries(fonts)) {
+        if (!FONT_ROLES.includes(role)) out.push(err('SN3032', `tokens.fonts.${role.slice(0, 40)} is not a font role; use heading, body or mono`, at));
+        else if (typeof name !== 'string' || !Object.hasOwn(FONTS, name)) {
+          const shown = typeof name === 'string' ? JSON.stringify(name.slice(0, 60)) : 'a non-string';
+          out.push(err('SN3032', `tokens.fonts.${role}: ${shown} is not in the font catalogue (${families.join(', ')}).${typeof name === 'string' ? fontSuggestion(name.slice(0, 60), families) : ''}`, at));
+        }
+      }
+    }
+  }
   if (typeof m.settings !== 'object' || m.settings === null) out.push(err('SN3021', 'settings must be an object', at));
   if (out.length) return { diagnostics: out };
   const settings = normalizeFieldLabels(m.settings);

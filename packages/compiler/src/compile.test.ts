@@ -31,6 +31,16 @@ describe('compileTheme', () => {
     expect(artifact!.locales.ar!.buy).toBe('اشتري');
     expect(artifact!.hash).toMatch(/^[0-9a-f]{16}$/);
   });
+  it('rejects an unknown font with a suggestion (SN3032)', () => {
+    const withFonts = (fonts: unknown) => base().map((x) => (x.path === 'theme.json' ? f(x.path, JSON.stringify({ ...manifest, tokens: { ...manifest.tokens, fonts } })) : x));
+    const r = compileTheme(withFonts({ body: 'Cario' }), reg).diagnostics.filter((d) => d.severity === 'error');
+    expect(r.map((d) => d.code)).toEqual(['SN3032']);
+    expect(r[0]!.message).toContain('Did you mean "Cairo"?');
+    expect(compileTheme(withFonts({ heading: 'Cairo', body: 'Inter', mono: 'Martian Mono' }), reg).diagnostics.filter((d) => d.severity === 'error')).toEqual([]);
+    for (const bad of ['Cairo', { size: 'Cairo' }, { body: 7 }, { body: '__proto__' }, { mono: 'toString' }]) {
+      expect(compileTheme(withFonts(bad), reg).diagnostics.filter((d) => d.severity === 'error').map((d) => d.code)).toEqual(['SN3032']);
+    }
+  });
   it('is deterministic: same input, same hash', () => {
     expect(compileTheme(base(), reg).artifact!.hash).toBe(compileTheme(base(), reg).artifact!.hash);
   });

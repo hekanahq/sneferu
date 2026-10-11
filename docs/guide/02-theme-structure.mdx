@@ -32,7 +32,7 @@ part of the theme and is checked.
 | `sections/<type>.sneferu` | A section type. File name = type (`sections/hero.sneferu` is type `hero`). Has a `<hk-schema>` with `name` and `settings` | Rendered inside `<div data-hk-section="<id>">` |
 | `blocks/<type>.sneferu` | An item a merchant can add inside a section (a quote, a slide, a feature) | Rendered inside `<div data-hk-block="<id>">` |
 | `snippets/<name>.sneferu` | A reusable partial, no schema | `{% render 'name', key: value %}` |
-| `assets/` | CSS, JS, images, fonts: `.css .js .png .jpg .jpeg .webp .avif .gif .svg .woff .woff2 .ttf .otf .ico` | The only folder that may have sub-folders. `assets/*.css` is the theme stylesheet |
+| `assets/` | CSS, JS, images, fonts: `.css .js .png .jpg .jpeg .webp .avif .gif .svg .woff .woff2 .ttf .otf .ico` | The only folder that may have sub-folders. `assets/*.css` is the theme stylesheet. Font files are accepted but not served on the store: use `tokens.fonts` |
 | `locales/<xx>.json` | Flat `{ "key": "text" }` maps, values strings only | Used by `t('key')` and `\| t` |
 | `migrations/*.json` | Settings migrations between theme versions | Accepted, not used yet |
 
@@ -103,7 +103,8 @@ templates (SN2011).
 | `settings` | yes | object of fields (may be `{}`), same field format as sections. Merchants edit these for the whole theme; read them as `settings.accent` or `settings('accent')` | SN3021 |
 | `tokens.colors` | yes | `primary`, `secondary`, `accent`, `background`, `text` as `#RRGGBB`. Extra keys (`muted`, `border`, …) are allowed | SN3019 |
 | `tokens.layout.contentWidth` | no | `"<3-4 digits>px"`, e.g. `"1200px"`; becomes `--hk-content-width` | ignored if malformed |
-| `tokens.fonts`, `tokens.radius` | no | accepted in the manifest, not turned into CSS yet | |
+| `tokens.fonts` | no | `heading`, `body`, `mono`: font families from the catalogue (see [Fonts](05-styling-and-responsive.mdx#fonts)) | SN3032 |
+| `tokens.radius` | no | accepted in the manifest, not turned into CSS yet | |
 | `previews` | no | array of preview image names | |
 
 Labels and names (`name`, `description`, every setting `label`, section and block

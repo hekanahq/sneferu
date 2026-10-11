@@ -2,20 +2,20 @@ import { describe, it, expect } from 'vitest';
 import { safeUrl } from '@hekana/sneferu-core';
 import { sanitizeRichText } from './sanitize';
 
-const A = (href?: string, body = 'x') => `<a${href === undefined ? '' : ` href="${href}"`} rel="nofollow noopener">${body}</a>`;
+const A = (href?: string, body = 'x') => `<a${href === undefined ? '' : ` href="${href}"`} rel="nofollow noopener ugc">${body}</a>`;
 
 const cases: [string, string][] = [
   ['<p>Hi <b>there</b></p>', '<p>Hi <b>there</b></p>'],
   ['<img src=x onerror=alert(1)>', ''],
-  ['<a href="javascript:alert(1)">x</a>', '<a rel="nofollow noopener">x</a>'],
-  ['<a href="https://x.com" onclick="y">x</a>', '<a href="https://x.com" rel="nofollow noopener">x</a>'],
+  ['<a href="javascript:alert(1)">x</a>', '<a rel="nofollow noopener ugc">x</a>'],
+  ['<a href="https://x.com" onclick="y">x</a>', '<a href="https://x.com" rel="nofollow noopener ugc">x</a>'],
   ['<p style="color:red" class="z">t</p>', '<p>t</p>'],
   ['<style>p{}</style><p>a</p>', '<p>a</p>'],
   ['<b><script>alert(1)</script>ok</b>', '<b>ok</b>'],
   ['&lt;script&gt;x', '&lt;script&gt;x'],
   ['<p>a<p>b', '<p>a</p><p>b</p>'],
   ['<svg><a href="javascript:1">x</a></svg>', ''],
-  ['<a href="//evil.com">x</a>', '<a rel="nofollow noopener">x</a>'],
+  ['<a href="//evil.com">x</a>', '<a rel="nofollow noopener ugc">x</a>'],
   ['<ul><li>1<li>2</ul>', '<ul><li>1</li><li>2</li></ul>'],
   ['<h1>T</h1>', 'T'],
   ['<!-- c --><p>x</p>', '<p>x</p>'],
@@ -197,5 +197,17 @@ describe('sanitizeRichText', () => {
     // the generator really exercises kept links and markup
     expect(withHref).toBeGreaterThan(5);
     expect(withTags).toBeGreaterThan(200);
+  });
+
+  it('input size is capped up front: 10 MB finishes fast, normal input is unchanged', () => {
+    const t0 = Date.now();
+    const out = sanitizeRichText('<p>' + '&amp;<b>x</b> '.repeat(700_000) + '</p>');
+    const out2 = sanitizeRichText('a'.repeat(10_000_000));
+    const out3 = sanitizeRichText('<script>'.repeat(1_200_000));
+    expect(Date.now() - t0).toBeLessThan(1000);
+    expect(out.length).toBeLessThanOrEqual(100_000);
+    expect(out2.length).toBeLessThanOrEqual(100_000);
+    expect(out3).toBe('');
+    expect(sanitizeRichText('<p>Hi &amp; <b>there</b></p>')).toBe('<p>Hi &amp; <b>there</b></p>');
   });
 });

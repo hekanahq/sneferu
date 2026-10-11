@@ -12,7 +12,7 @@ const { TagRegistry } = core;
 const ctx = { locale: 'ar' as const, dir: 'rtl' as const, currency: 'EGP', store: {}, settings: {}, data: {}, collections: {}, products: {},
   translations: {}, fallbackTranslations: {}, assetUrl: (p: string) => p, imageUrl: (r: unknown) => String(r) };
 const raw = () => ({
-  manifest: { id: 'x' }, layout: [{ k: 'slot', name: 'content' }], templates: { index: [{ k: 'slot', name: 'sections' }] },
+  manifest: { id: 'xyz' }, layout: [{ k: 'slot', name: 'content' }], templates: { index: [{ k: 'slot', name: 'sections' }] },
   templateSections: { index: [{ type: 's', settings: {} }] }, sections: { s: { ir: [{ k: 'html', s: '<p>hi</p>' }], schema: { settings: {} } } },
   blocks: {}, snippets: {},
 });
@@ -38,6 +38,10 @@ describe('prepareArtifact (I9d)', () => {
     expect(vi.mocked(core.validateIR)).toHaveBeenCalled();
     const bad = raw(); bad.sections.s.ir = [{ k: 'html', s: '<script>x</script>' }];
     expect(prepareArtifact(bad, new TagRegistry())).toMatchObject({ ok: false, diagnostics: [{ code: 'SN9014' }] });
+    for (const id of ['a\\', 'a\n}x{', 'ab', 'Abc', '<b>', 7]) {
+      const a = raw(); (a.manifest as Record<string, unknown>).id = id;
+      expect(prepareArtifact(a, new TagRegistry()), String(id)).toMatchObject({ ok: false, diagnostics: [{ code: 'SN9015' }] });
+    }
     expect(prepareArtifact(null, new TagRegistry())).toMatchObject({ ok: false, diagnostics: [{ code: 'SN9015' }] });
     const cyclic: Record<string, unknown> = raw(); (cyclic.manifest as Record<string, unknown>).self = cyclic;
     expect(prepareArtifact(cyclic, new TagRegistry())).toMatchObject({ ok: false, diagnostics: [{ code: 'SN9015' }] });

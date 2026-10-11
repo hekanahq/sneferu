@@ -3,6 +3,8 @@ import type { AstNode } from './ast';
 
 const ATTR_NAME = /^[a-z_:][a-z0-9_:.-]*$/;
 const PASSTHROUGH = (a: string) => a === 'class' || a === 'id' || a === 'role' || a === 'title' || a.startsWith('data-') || a.startsWith('aria-');
+/** Interactive content cannot sit inside the card's link (the badge part renders inside it). */
+const BADGE_INTERACTIVE = new Set(['a', 'button', 'details', 'label', 'hk-button', 'hk-product-card', 'hk-product-grid', 'hk-rich-text']);
 const BUILTIN_HK = new Set(['hk-slot', 'hk-sections', 'hk-block', 'hk-part']);
 
 export const camel = (s: string) => s.replace(/-([a-z])/g, (_, c: string) => c.toUpperCase());
@@ -21,10 +23,15 @@ function distance(a: string, b: string): number {
       d[i]![j] = Math.min(d[i - 1]![j]! + 1, d[i]![j - 1]! + 1, d[i - 1]![j - 1]! + (a[i - 1] === b[j - 1] ? 0 : 1));
   return d[a.length]![b.length]!;
 }
-const suggest = (x: string, options: Iterable<string>) => {
+/** The option nearest to `x` by edit distance, if it is close enough to be a likely typo. */
+export const closest = (x: string, options: Iterable<string>): string | undefined => {
   let best = ''; let score = Infinity;
   for (const o of options) { const s = distance(x, o); if (s < score) { score = s; best = o; } }
-  return score <= 3 ? ` Did you mean "${best}"?` : '';
+  return score <= 3 ? best : undefined;
+};
+const suggest = (x: string, options: Iterable<string>) => {
+  const best = closest(x, options);
+  return best === undefined ? '' : ` Did you mean "${best}"?`;
 };
 const kebab = (s: string) => s.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`);
 
@@ -68,6 +75,7 @@ export function validateTemplate(
   };
 
   /** `parent`: the registry tag whose direct children `list` are, if any (hk-part needs one that declares parts). */
+  let inBadge = 0;
   const visit = (list: AstNode[], parent?: HkTag): void => {
     for (const n of list) {
       if (n.t === 'for') {
@@ -85,6 +93,7 @@ export function validateTemplate(
         Object.values(n.args).forEach((e) => exprs(e, n));
         if (!opts.snippets.has(n.snippet)) out.push(err('SN2008', `unknown snippet '${n.snippet}'${suggest(n.snippet, opts.snippets)}`, at(n)));
       } else if (n.t === 'el') {
+        if (inBadge > 0 && BADGE_INTERACTIVE.has(n.tag)) out.push(err('SN2014', `<${n.tag}> is interactive and cannot go inside the badge part of <hk-product-card>; the badge sits inside the card's link`, at(n)));
         if (!n.tag.startsWith('hk-') && !isAllowedElement(n.tag)) {
           out.push(err('SN2001', isForbiddenElement(n.tag) ? `<${n.tag}> is not allowed in themes` : `<${n.tag}> is not on the element allow-list`, at(n)));
         }
@@ -107,7 +116,10 @@ export function validateTemplate(
             if (name === undefined || !parts.includes(name)) out.push(err('SN2013', `<hk-part> needs a fixed name="…" that <${parent.name}> has: ${parts.join(', ')}.${name ? suggest(name, parts) : ''}`, at(n)));
           }
           for (const a of n.attrs) if (a.name !== 'name') out.push(err('SN2004', `unknown property "${a.name}" on <hk-part>; it takes only name`, { file: opts.file, ...a.loc }));
+          const badge = parent?.name === 'hk-product-card' && n.attrs.some((a) => a.name === 'name' && a.parts.length === 1 && a.parts[0] === 'badge');
+          if (badge) inBadge++;
           visit(n.children);
+          if (badge) inBadge--;
           continue;
         }
         if (n.tag.startsWith('hk-') && !BUILTIN_HK.has(n.tag)) {

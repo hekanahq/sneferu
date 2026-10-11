@@ -45,6 +45,7 @@ Every problem Sneferu reports has a stable code. The format is `file:line:col se
 | SN2011 | `<hk-slot>` used outside a layout or template | Move it into the layout or a template. |
 | SN2012 | `collection(…)` or `limit:` reads a setting that does not exist in the file's `<hk-schema>` (or in theme.json for `settings.*`), or that has the wrong type | Add the setting, or fix its type: `collection` for `collection()`, `number` or `range` for `limit:`. |
 | SN2013 | `<hk-part>` is not a direct child of a tag that has parts, or its `name` is missing, contains `{{ }}`, or is not one of the tag's parts | Put it directly inside the tag (for example `<hk-product-card>`, parts `badge` and `actions`) and use one of its part names. |
+| SN2014 | An interactive tag (`a`, `button`, `details`, `label`, `hk-button`, `hk-product-card`, `hk-product-grid`, `hk-rich-text`) is inside `<hk-part name="badge">` of `<hk-product-card>`; the badge renders inside the card's link. | Use plain markup in the badge, or move the interactive element to the `actions` part. |
 
 ## SN3xxx Package, manifest and compile
 
@@ -81,6 +82,7 @@ Every problem Sneferu reports has a stable code. The format is `file:line:col se
 | SN3029 | A template's default section lists a block its section does not allow, or more than `blocks.max` | Add the type to the section's `blocks.allowed`, or list fewer blocks. |
 | SN3030 | A section or block `<hk-schema>` lacks a `name` or has bad `settings` | Add a `name` string; `settings` must be an object. |
 | SN3031 | A setting's `label` is not a string (warning) | Write the label as a string. |
+| SN3032 | `tokens.fonts` is not an object, has a key other than `heading`, `body`, `mono`, or names a font that is not in the catalogue | Use one of the catalogue families exactly as written (see [Fonts](guide/05-styling-and-responsive.mdx#fonts)). |
 
 ## SN4xxx Rendering
 

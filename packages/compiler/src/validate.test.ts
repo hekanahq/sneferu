@@ -10,12 +10,23 @@ const tag = (name: string, extra: Partial<HkTag> = {}): HkTag => ({
   editor: { label: { ar: name, en: name }, group: 'layout', insertable: true }, ...extra,
 });
 const registry = new TagRegistry().register(tag('hk-grid')).register(tag('hk-badge', { allowedChildren: [], props: { tone: { type: 'select', label: { ar: 'ن', en: 'T' }, options: ['a'], required: true } } }))
+  .register(tag('hk-product-card', { props: {}, parts: ['badge', 'actions'], allowedChildren: ['hk-part'] }))
   .register(tag('hk-card', { props: {}, parts: ['badge', 'actions'], allowedChildren: ['hk-part'] }));
 
 const run = (src: string, kind: 'layout' | 'template' | 'section' = 'section') =>
   validateTemplate(parseTemplate(src, 'f').nodes, { file: 'f', registry, snippets: new Set(['price']), kind }).map((d) => d.code);
 
 describe('validateTemplate', () => {
+  describe('interactive content in the card badge (SN2014)', () => {
+    it.each(['a', 'button', 'details', 'label', 'hk-product-card', 'hk-product-grid'])('refuses <%s>', (t) => {
+      expect(run(`<hk-product-card><hk-part name="badge"><span><${t}>x</${t}></span></hk-part></hk-product-card>`)).toContain('SN2014');
+    });
+    it('refuses it under {% if %} too, but allows plain markup and the actions part', () => {
+      expect(run('<hk-product-card><hk-part name="badge">{% if x %}<a href="/x">y</a>{% endif %}</hk-part></hk-product-card>')).toContain('SN2014');
+      expect(run('<hk-product-card><hk-part name="badge"><span class="new">New</span></hk-part><hk-part name="actions"><a href="/x">Buy</a></hk-part></hk-product-card>')).toEqual([]);
+    });
+  });
+
   describe('hk-part (SN2013)', () => {
     it('is accepted as a direct child of a tag that declares parts', () => {
       expect(run('<hk-card>\n  <hk-part name="badge"><span class="new">New</span></hk-part>\n  <hk-part name="actions"><a href="/x">Buy</a></hk-part>\n</hk-card>')).toEqual([]);

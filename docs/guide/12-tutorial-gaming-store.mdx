@@ -859,7 +859,7 @@ and cart pages use the store's regular theme.
 | - | - |
 | no icon tag | one `icon` snippet of inline SVG |
 | `asset_url()` is empty on the live storefront for now | no bundled images: icons and hero art are inline SVG, product art comes from products |
-| no font loader | `@font-face` rules pointing at `https://fonts.gstatic.com` |
+| fonts in `assets/` are not served on the store (use `tokens.fonts`) | `@font-face` rules pointing at `https://fonts.gstatic.com` |
 | one value per setting for every language | text settings default to `""`, with `default: t('…')` |
 | links do not follow the locale | link paths in the locale files (`url_products`) |
 | template default sections cannot carry blocks | repeated items are numbered settings or locale keys |
