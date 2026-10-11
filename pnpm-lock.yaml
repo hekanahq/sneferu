@@ -65,6 +65,9 @@ importers:
 
   packages/sneferu:
     dependencies:
+      '@hekana/prettier-plugin-sneferu':
+        specifier: workspace:^
+        version: link:../prettier-plugin-sneferu
       '@hekana/sneferu-compiler':
         specifier: workspace:^
         version: link:../compiler
@@ -83,6 +86,9 @@ importers:
       commander:
         specifier: ^12.1.0
         version: 12.1.0
+      prettier:
+        specifier: ^3.6.2
+        version: 3.9.10
     devDependencies:
       '@types/node':
         specifier: ^22.9.0
