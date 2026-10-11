@@ -20,7 +20,7 @@ cd my-theme
 ```
 
 `init` copies the starter theme into `my-theme/` and sets `theme.json` `id` from
-the folder name (`my-theme`). It refuses a non-empty folder unless you pass
+the folder name (`my-theme`) and `name` to its title case (`My Theme`). It refuses a non-empty folder unless you pass
 `--force`.
 
 <Callout kind="note">
@@ -62,7 +62,7 @@ The preview uses sample data, not a real store:
 | - | - |
 | `store.name` | `Sample store` |
 | Currency | EGP, so `money` prints `EGP 520.00` |
-| `collection('featured')` | 6 products with `title`, `url`, `price` (piastres), `compare_at`, `image.url` |
+| `collection('featured')`, `'new'`, `'gift-cards'`, `'subscriptions'` | 4 to 6 products each, with `title`, `url` (`/products/<handle>`, or `/en/products/<handle>` in English), `price` (piastres), `compare_at`, `image.url` |
 | `product('sample-1')` | the first of those products |
 | Theme settings | every setting at its `default` |
 | Sections | the default sections listed in the template's `<hk-schema>` (see [chapter 3](03-sections-and-blocks.mdx)) |

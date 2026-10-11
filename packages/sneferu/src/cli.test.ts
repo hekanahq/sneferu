@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { mkdtempSync, readFileSync, writeFileSync, existsSync, mkdirSync, symlinkSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
 import { runInit } from './commands/init';
 import { runValidate } from './commands/validate';
 import { runBuild } from './commands/build';
@@ -17,6 +17,15 @@ describe('cli commands', () => {
     const v = runValidate(dir);
     expect(v.ok).toBe(true);
     expect(v.output).toContain('✔ theme my-shop@0.1.0 is valid');
+  });
+  it('init names the theme after its folder', () => {
+    const d = join(dirname(dir), 'neon-arcade');
+    runInit(d, {});
+    const m = JSON.parse(readFileSync(join(d, 'theme.json'), 'utf8'));
+    expect(m.id).toBe('neon-arcade');
+    expect(m.name).toBe('Neon Arcade');
+    expect(JSON.stringify(m.description)).not.toMatch(/starter/i);
+    expect(runValidate(d).ok).toBe(true);
   });
   it('init refuses a non-empty folder without --force', () => {
     mkdirSync(dir, { recursive: true }); writeFileSync(join(dir, 'x.txt'), 'x');

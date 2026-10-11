@@ -1,4 +1,4 @@
-import { LIMITS, isUrlAttribute, escapeAttr, escapeText, type IRAttr, type IRNode, type IRValue, type TagRegistry } from '@hekana/sneferu-core';
+import { LIMITS, svgCase, isUrlAttribute, escapeAttr, escapeText, type IRAttr, type IRNode, type IRValue, type TagRegistry } from '@hekana/sneferu-core';
 import { VOID_ELEMENTS, type AstNode } from './ast';
 import { propOf } from './validate';
 
@@ -10,9 +10,10 @@ const isStatic = (n: AstNode): boolean =>
 function staticHtml(n: AstNode): string {
   if (n.t === 'text') return escapeText(n.v).replace(/&amp;(#?[a-zA-Z0-9]+;)/g, '&$1'); // keep author entities like &amp;
   if (n.t !== 'el') return '';
-  const attrs = n.attrs.map((a) => (a.parts.length === 0 ? ` ${a.name}` : ` ${a.name}="${escapeAttr((a.parts as string[]).join(''))}"`)).join('');
-  if (VOID_ELEMENTS.has(n.tag)) return `<${n.tag}${attrs}>`;
-  return `<${n.tag}${attrs}>${n.children.map(staticHtml).join('')}</${n.tag}>`;
+  const attrs = n.attrs.map((a) => (a.parts.length === 0 ? ` ${svgCase(a.name)}` : ` ${svgCase(a.name)}="${escapeAttr((a.parts as string[]).join(''))}"`)).join('');
+  const tag = svgCase(n.tag);
+  if (VOID_ELEMENTS.has(n.tag)) return `<${tag}${attrs}>`;
+  return `<${tag}${attrs}>${n.children.map(staticHtml).join('')}</${tag}>`;
 }
 
 function coerceStatic(raw: string, type: string | undefined): unknown {

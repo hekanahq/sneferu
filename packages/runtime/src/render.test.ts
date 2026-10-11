@@ -19,6 +19,10 @@ describe('renderNodes', () => {
     expect(renderNodes(nodes, { u: 'javascript:alert(1)', t: '"<x>"', cls: 'a"b' }, env()))
       .toBe('<a href="#" title="&quot;&lt;x&gt;&quot;" class="c a b">"&lt;x&gt;"</a>');
   });
+  it('emits SVG camelCase names for dynamic elements', () => {
+    const nodes: IRNode[] = [{ k: 'el', tag: 'svg', attrs: [{ name: 'viewbox', sink: 'text', parts: ['0 0 ', path('n'), ' 24'] }], children: [{ k: 'el', tag: 'lineargradient', attrs: [], children: [] }] }];
+    expect(renderNodes(nodes, { n: 24 }, env())).toBe('<svg viewBox="0 0 24 24"><linearGradient></linearGradient></svg>');
+  });
   it('renders if/loop/translations/components and collects scoped css', () => {
     const e = env();
     const html = renderNodes([

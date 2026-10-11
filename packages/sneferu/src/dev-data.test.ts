@@ -9,6 +9,13 @@ import { readSampleData, sampleDataPath, startDev } from './commands/dev';
 const book = { title: 'Notes', url: '/products/notes', price: 9900, compare_at: null, image: { url: 'https://cdn.example/n.png' } };
 
 describe('sample data', () => {
+  it('has category collections and locale-aware URLs', () => {
+    const en = sampleContext('en', {}, 'ar');
+    expect(Object.keys(en.collections)).toEqual(expect.arrayContaining(['featured', 'new', 'gift-cards', 'subscriptions']));
+    for (const h of ['featured', 'new', 'gift-cards', 'subscriptions']) expect(en.collections[h]!.products.length).toBeGreaterThanOrEqual(4);
+    expect((en.collections['new']!.products[0] as { url: string }).url).toMatch(/^\/en\/products\//);
+    expect((sampleContext('ar', {}, 'ar').collections['new']!.products[0] as { url: string }).url).toMatch(/^\/products\//);
+  });
   it('adds collections and products, and overrides the store name', () => {
     const ctx = withSampleData(sampleContext('en', {}, 'en'), pickSampleData({ store: { name: 'Pages' }, collections: { ebooks: { title: 'E-books', products: [book] } }, products: { notes: book } }, 'en'));
     expect(ctx.store.name).toBe('Pages');

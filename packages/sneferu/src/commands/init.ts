@@ -15,5 +15,11 @@ export function runInit(target: string, opts: { force?: boolean }): void {
   // swap the id in place, so the starter stays exactly as `sneferu format` writes it
   const out = text.replace(/("id"\s*:\s*)"[^"]*"/, (_m, k: string) => `${k}${next}`);
   if (JSON.parse(out).id !== JSON.parse(next)) throw new Error('could not set the theme id in theme.json');
-  writeFileSync(mpath, out);
+  const title = id.split('-').filter(Boolean).map((w) => w[0]!.toUpperCase() + w.slice(1)).join(' ');
+  const named = out
+    .replace(/("name"\s*:\s*)"[^"]*"/, (_m, k: string) => `${k}${JSON.stringify(title)}`)
+    .replace(/("description"\s*:\s*)"[^"]*"/, (_m, k: string) => `${k}"A Sneferu theme."`);
+  const parsed = JSON.parse(named) as { name?: string; description?: string };
+  if (parsed.name !== title || parsed.description !== 'A Sneferu theme.') throw new Error('could not set the theme name in theme.json');
+  writeFileSync(mpath, named);
 }

@@ -1,4 +1,4 @@
-import { err, escapeAttr, escapeText, safeToken, safeUrl, toStr, type Diagnostic, type IRNode, type IRValue, type TagRegistry } from '@hekana/sneferu-core';
+import { err, escapeAttr, escapeText, safeToken, safeUrl, svgCase, toStr, type Diagnostic, type IRNode, type IRValue, type TagRegistry } from '@hekana/sneferu-core';
 import type { RenderContext, Scope } from './context';
 import { evaluate, truthy } from './evaluate';
 import { translate } from './translate';
@@ -56,15 +56,15 @@ export function renderNodes(nodes: IRNode[], scope: Scope, env: Env): string {
       case 't': add(escapeText(tr(env, n.key))); break;
       case 'el': {
         const attrs = n.attrs.map((a) => {
-          if (a.parts.length === 0) return ` ${a.name}`;
+          if (a.parts.length === 0) return ` ${svgCase(a.name)}`;
           const raw = a.parts.map((p) => (typeof p === 'string' ? p : toStr(evaluate(p, scope, env.ctx)))).join('');
           const val = a.sink === 'url' ? safeUrl(raw) : a.sink === 'token' ? safeToken(raw) : raw;
-          return ` ${a.name}="${escapeAttr(val)}"`;
+          return ` ${svgCase(a.name)}="${escapeAttr(val)}"`;
         }).join('');
-        if (!add(`<${n.tag}${attrs}>`)) break;
+        if (!add(`<${svgCase(n.tag)}${attrs}>`)) break;
         if (n.void) break;
         raw(renderNodes(n.children, scope, { ...env, depth: env.depth + 1 }));
-        const close = `</${n.tag}>`;
+        const close = `</${svgCase(n.tag)}>`;
         env.budget.force(close.length); raw(close);
         break;
       }

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { TagRegistry, type HkTag } from '@hekana/sneferu-core';
+import { TagRegistry, validateIR, checkRawHtml, type HkTag } from '@hekana/sneferu-core';
 import { parseTemplate } from './parser';
 import { lower } from './lower';
 
@@ -41,5 +41,14 @@ describe('lower', () => {
     expect(ir('<svg><use xlink:href="{{ p.icon }}"></use></svg>')).toEqual([
       { k: 'el', tag: 'svg', attrs: [], children: [{ k: 'el', tag: 'use', attrs: [{ name: 'xlink:href', sink: 'url', parts: [{ k: 'path', p: ['p', 'icon'] }] }], children: [] }] },
     ]);
+  });
+  it('keeps SVG camelCase names in static output and still passes the lower-case checks', () => {
+    const nodes = ir('<svg viewBox="0 0 24 24"><defs><linearGradient id="g" gradientUnits="userSpaceOnUse"></linearGradient></defs></svg>');
+    const html = (nodes[0] as { s: string }).s;
+    expect(html).toContain('viewBox="0 0 24 24"');
+    expect(html).toContain('<linearGradient id="g" gradientUnits="userSpaceOnUse">');
+    expect(html).toContain('</linearGradient>');
+    expect(checkRawHtml(html)).toBeUndefined();
+    expect(validateIR(nodes, new Set())).toEqual([]);
   });
 });

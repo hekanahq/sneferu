@@ -113,6 +113,32 @@ What CSS cannot do in a theme:
   already available to the page.
 - All theme CSS together may be at most 512 KB.
 
+## Resets and specificity
+
+Scope your selectors under the theme's root attribute so they never touch the
+rest of the page. A broad reset written that way is more specific than you
+might expect:
+
+```css
+[data-hk-theme='x'] a { color: inherit; }   /* specificity (0,1,1) */
+.btn { color: white; }                      /* specificity (0,1,0) */
+```
+
+The reset wins over `.btn` on every `<a class="btn">`, because an attribute
+selector plus an element beats a single class. Wrap the whole selector in `:where()`,
+which always counts as zero specificity, and the reset drops to (0,0,0):
+
+```css
+:where([data-hk-theme='x'] a) { color: inherit; }   /* specificity (0,0,0) */
+.btn { color: white; }                              /* wins */
+```
+
+To keep the element's own weight, wrap only the scope:
+`:where([data-hk-theme='x']) a` has specificity (0,0,1), which `.btn` still beats.
+
+Use `:where()` for resets and other low-priority defaults, and plain selectors
+for the styles that are meant to win.
+
 ## Responsive props
 
 Breakpoints are desktop-first:
