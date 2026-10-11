@@ -45,6 +45,11 @@ npx @hekana/sneferu dev            # current folder
 npx @hekana/sneferu dev ./my-theme --port 4200
 ```
 
+Open `http://127.0.0.1:4100`. A new theme looks like this: the starter's hero
+section and a grid of sample products, in Arabic, right to left.
+
+![The starter theme in the dev preview: a dark hero with an Arabic heading and button, then the first sample product cards](../images/starter-dev@2x.webp "The top of the dev preview straight after init, 1080 px wide. The products and prices are the preview's sample data.")
+
 | What | Detail |
 |---|---|
 | Address | `http://127.0.0.1:4100` (local only; `--port` changes the port) |
@@ -121,5 +126,5 @@ npx @hekana/sneferu build --out out  # another output folder
 4. [Styling and responsive](05-styling-and-responsive.md): tokens, CSS, RTL.
 5. [Security and limits](06-security-and-limits.md): what a theme cannot do.
 6. [Publishing](07-publishing.md): `sneferu push`.
-7. [Cookbook](08-cookbook.md): four complete sections.
+7. [Cookbook](08-cookbook.md): five complete store sections, with pictures.
 8. [Tag reference](../reference/tags.md): every `hk-*` tag and prop.

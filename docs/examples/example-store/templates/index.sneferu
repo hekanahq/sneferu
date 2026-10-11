@@ -1,0 +1,8 @@
+<hk-sections />
+<hk-schema>{"sections":[
+  {"type":"announcement-bar"},
+  {"type":"promo-hero"},
+  {"type":"feature-row"},
+  {"type":"product-grid"},
+  {"type":"pricing"}
+]}</hk-schema>

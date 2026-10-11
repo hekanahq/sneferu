@@ -1,0 +1,43 @@
+{
+  "id": "example-store",
+  "name": {
+    "ar": "متجر تجريبي",
+    "en": "Example store"
+  },
+  "version": "0.1.0",
+  "author": "Hekana",
+  "description": {
+    "ar": "أمثلة دليل سنفرو",
+    "en": "The Sneferu cookbook examples"
+  },
+  "category": "general",
+  "engine": "hk2",
+  "engineCompatibility": "^2.0.0",
+  "defaultLocale": "ar",
+  "locales": [
+    "ar",
+    "en"
+  ],
+  "settings": {
+    "accent": {
+      "type": "color",
+      "label": {
+        "ar": "لون مميز",
+        "en": "Accent"
+      },
+      "default": "#B45309"
+    }
+  },
+  "tokens": {
+    "colors": {
+      "primary": "#111827",
+      "secondary": "#1F2937",
+      "accent": "#B45309",
+      "background": "#FFFFFF",
+      "text": "#111827"
+    },
+    "layout": {
+      "contentWidth": "1200px"
+    }
+  }
+}

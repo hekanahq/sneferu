@@ -24,7 +24,7 @@ then `node packages/sneferu/dist/cli.js <command> <theme folder>`.
 5. [Styling and responsive](docs/guide/05-styling-and-responsive.md): tokens, theme CSS, breakpoints, RTL
 6. [Security and limits](docs/guide/06-security-and-limits.md): allow-list, URLs, render budgets
 7. [Publishing](docs/guide/07-publishing.md): `sneferu push`, versions, install and publish
-8. [Cookbook](docs/guide/08-cookbook.md): hero, pricing tiers, product grid, bento grid
+8. [Cookbook](docs/guide/08-cookbook.md): announcement bar, hero, feature row, product grid, subscription plans, each with a picture of the result
 
 ## Reference
 

@@ -1,0 +1,23 @@
+<hk-section padding-y="64" mobile-padding-y="40">
+  <hk-stack gap="16">
+    <hk-heading text="{{ section.settings.heading }}" level="h2" size="32" mobile-size="24" />
+    {% for p in collection('featured').products limit: 3 %}
+      <hk-card border="true" padding="16" radius="12">
+        <hk-stack direction="row" justify="between" align="center" gap="12">
+          <hk-text text="{{ forloop.index }}. {{ p.title }}" size="17" />
+          <hk-stack direction="row" gap="8" align="center">
+            {% if p.compare_at > p.price %}<hk-badge text="{{ t('sale') }}" tone="accent" />{% endif %}
+            <hk-price amount="{{ p.price }}" compare-at="{{ p.compare_at }}" />
+          </hk-stack>
+        </hk-stack>
+      </hk-card>
+    {% endfor %}
+  </hk-stack>
+</hk-section>
+<hk-schema>{
+  "name": { "ar": "قائمة منتجات", "en": "Product list" },
+  "version": 1,
+  "settings": {
+    "heading": { "type": "text", "label": { "ar": "العنوان", "en": "Heading" }, "default": "Today's picks" }
+  }
+}</hk-schema>

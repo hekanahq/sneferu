@@ -1,0 +1,24 @@
+<hk-section padding-y="64" mobile-padding-y="40">
+  <hk-stack gap="24">
+    <hk-heading text="{{ section.settings.heading }}" level="h2" size="32" mobile-size="24" />
+    {% if section.blocks %}
+      <hk-grid columns="3" mobile-columns="1" gap="16">
+        {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+      </hk-grid>
+    {% else %}
+      <hk-text text="{{ t('no_quotes_yet') }}" color="#4B5563" />
+    {% endif %}
+  </hk-stack>
+</hk-section>
+<hk-schema>{
+  "name": { "ar": "آراء العملاء", "en": "Testimonials" },
+  "version": 1,
+  "settings": {
+    "heading": { "type": "text", "label": { "ar": "العنوان", "en": "Heading" }, "default": "What our customers say" }
+  },
+  "blocks": { "allowed": ["quote"], "max": 6 },
+  "presets": [
+    { "name": { "ar": "ثلاث آراء", "en": "Three quotes" },
+      "blocks": [ { "type": "quote" }, { "type": "quote" }, { "type": "quote" } ] }
+  ]
+}</hk-schema>

@@ -1,0 +1,3 @@
+.plan[data-best="true"] { outline: 2px solid var(--hk-color-accent); outline-offset: -2px; }
+.plan-price { margin: 0; font-size: 28px; }
+.plan-price small { font-size: 14px; opacity: .7; }

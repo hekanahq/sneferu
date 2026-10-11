@@ -1,0 +1,14 @@
+<hk-card border="true" padding="20" radius="16">
+  <hk-stack gap="10">
+    <p class="quote">{{ block.settings.text }}</p>
+    <hk-text text="{{ block.settings.author }}" size="14" color="#4B5563" />
+  </hk-stack>
+</hk-card>
+<hk-schema>{
+  "name": { "ar": "رأي", "en": "Quote" },
+  "version": 1,
+  "settings": {
+    "text":   { "type": "textarea", "label": { "ar": "الرأي", "en": "Quote" }, "default": "Delivery was fast and the packaging was perfect.", "maxLength": 280 },
+    "author": { "type": "text",     "label": { "ar": "الاسم", "en": "Name" }, "default": "Mona, Alexandria", "maxLength": 60 }
+  }
+}</hk-schema>

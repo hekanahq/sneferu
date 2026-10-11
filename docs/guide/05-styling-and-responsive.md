@@ -49,7 +49,7 @@ the whole theme:
 ```
 
 ```css
-.promo-hero .sn-btn-solid { background: var(--hk-color-accent); color: var(--hk-color-background); }
+.sn-btn-solid { background: var(--hk-color-accent); color: var(--hk-color-background); }
 ```
 
 A `color` setting (`"default": "theme:primary"`) lets the merchant pick either a
@@ -133,6 +133,12 @@ prefixes:
 <hk-stack direction="row" mobile-direction="column" gap="16">…</hk-stack>
 ```
 
+The [product grid](08-cookbook.md#product-grid) in the cookbook uses
+`columns="4" tablet-columns="3" mobile-columns="2"` and
+`size="32" mobile-size="24"` on its heading. The same file at two widths:
+
+![Four product cards in a row under a 32 px heading](../images/product-grid@2x.webp "1080 px wide: the base values, four columns.") ![Two product cards per row under a smaller heading](../images/product-grid-phone@2x.webp "390 px wide: the mobile- values, two columns.")
+
 Responsive props today: `hk-section` `padding-y`; `hk-container` `padding-x`;
 `hk-stack` `direction`, `gap`; `hk-grid` `columns`, `gap`; `hk-heading` and
 `hk-text` `size`; `hk-card` `padding`; `hk-product-grid` `columns`. A prefix on
@@ -141,7 +147,7 @@ any other prop is SN2004 (with a "did you mean" hint).
 For anything else, use a media query with the same widths in your CSS:
 
 ```css
-@media (max-width: 639px) { .bento-wide { grid-column: auto; } }
+@media (max-width: 639px) { .announcement-link { font-size: 14px; } }
 ```
 
 ## Right-to-left and Arabic first
