@@ -63,7 +63,7 @@ Notes:
 | `<hk-sections />` | shorthand for the `sections` slot, used in templates |
 | `<hk-schema>{json}</hk-schema>` | declares settings (sections, blocks) or default sections (templates) |
 
-Loops: the default limit is 50 iterations, the maximum is 250. A limit below 1 or above 250 is an error (SN2007). `limit:` may instead read a `number` or `range` setting (`limit: section.settings.count`); the value is clamped to 1..250 at render time and a value that is not a whole number uses 50. A page may run at most 2,000 loop iterations in total.
+Loops: the default limit is 50 iterations, the maximum is 250. A limit below 1 or above 250 is an error (SN2007). `limit:` may instead read a `number` or `range` setting (`limit: section.settings.count`); at render time a value above 250 uses 250, and a value below 1 or not a whole number uses the default, 50. A page may run at most 2,000 loop iterations in total.
 
 Snippets: `{% render %}` may nest up to 8 deep. Snippets may not include each other in a cycle (`a` renders `b`, `b` renders `a`, or `a` renders itself): that is a compile error (SN3027, `snippet include cycle: a → b → a`). Every node rendered (text, markup, `render`, `if`, `for`, slot, component) counts against the page's node budget, so wide fan-out (a snippet rendering another several times, several levels deep) stops at the budget instead of growing exponentially.
 

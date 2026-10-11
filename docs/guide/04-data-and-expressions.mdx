@@ -218,9 +218,9 @@ how many items show:
 
 The setting is `section.settings.<name>`, `block.settings.<name>` or
 `settings.<name>`; anything else is SN1105, and a setting that does not exist
-or is not a `number` or `range` is SN2012. At render time the value is clamped
-to 1..250; a value that is not a whole number (empty, text, `2.5`) uses the
-default limit, 50.
+or is not a `number` or `range` is SN2012. At render time a value above 250
+uses 250, and a value below 1 or not a whole number (empty, text, `2.5`, `0`,
+`-3`) uses the default limit, 50.
 
 ## Let the merchant choose a collection
 

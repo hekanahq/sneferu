@@ -92,10 +92,12 @@ function fromSettings(schema: unknown, stored: unknown, out: Acc): void {
 /**
  * Everything a page needs fetched BEFORE it renders (no fetches inside loops):
  * the collection handles it can ask for and whether it lists the store's
- * categories (`collections()`). Walks the layout, the template, every snippet
- * (a snippet can be rendered from anywhere), and the sections and blocks the
- * page uses (or the template's defaults); adds the value of every
- * `collection`-typed theme, section and block setting, defaults included.
+ * categories (`collections()`). Walks the layout, the template, the theme
+ * settings, the sections and blocks the page uses (or the template's
+ * defaults), then every snippet (a snippet can be rendered from anywhere);
+ * adds the value of every `collection`-typed theme, section and block setting,
+ * defaults included. Snippets come last so the cap never crowds out a
+ * merchant's pick.
  *
  * The artifact is untrusted: only own properties are read, the walk is
  * depth-limited, handles must match /^[a-z0-9][a-z0-9-]{0,99}$/, at most 8 are
@@ -110,7 +112,6 @@ export function pageDependencies(artifact: ArtifactLike, opts: PageDependencyOpt
     const blockDefs = rec(a.blocks);
     fromNodes(a.layout, out, 0);
     fromNodes(own(rec(a.templates), template), out, 0);
-    for (const ir of Object.values(rec(a.snippets))) fromNodes(ir, out, 0);
     fromSettings(rec(a.manifest).settings, rec(opts).settings, out);
 
     const saved = rec(opts).sections;
@@ -133,6 +134,8 @@ export function pageDependencies(artifact: ArtifactLike, opts: PageDependencyOpt
         fromSettings(rec(bdef.schema).settings, c.props, out);
       }
     }
+    // snippets last: the merchant's picks above must not be crowded out by the cap
+    for (const ir of Object.values(rec(a.snippets))) fromNodes(ir, out, 0);
     return { collections: [...out.handles], categories: out.categories };
   } catch {
     return { collections: [], categories: false };

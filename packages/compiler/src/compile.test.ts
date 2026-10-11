@@ -199,4 +199,11 @@ describe('compileTheme', () => {
     expect(codes('{{ collection(settings.home).title }}')).toEqual(['SN2012']);
     expect(codes('{{ collection(settings.home).title }}', { home: { type: 'collection', label: 'Home' } })).toEqual([]);
   });
+  it('checks collection(settings.x) when theme.json has no settings key (SN2012)', () => {
+    const { settings: _drop, ...noSettings } = manifest;
+    const files = [...base().filter((x) => x.path !== 'sections/hero.sneferu' && x.path !== 'theme.json'),
+      f('theme.json', JSON.stringify(noSettings)),
+      f('sections/hero.sneferu', '<p>{{ collection(settings.home).title }}</p><hk-schema>{"name":"Hero","settings":{}}</hk-schema>')];
+    expect(compileTheme(files, reg).diagnostics.filter((d) => d.severity === 'error').map((d) => d.code).sort()).toEqual(['SN2012', 'SN3021']);
+  });
 });
