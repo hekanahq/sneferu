@@ -9,6 +9,8 @@ import { runPush } from './push';
 import { writeCredentials } from '../credentials';
 import { startFakeApi, ok, DEV_KEY, type FakeApi } from '../test-utils/fake-api';
 
+const EVIL = '\u001b[2J\u001b]8;;https://evil.example\u0007click\u001b]8;;\u0007\u009b31m\r';
+const CONTROL = /[\u0000-\u0008\u000b-\u001f\u007f-\u009f]/;
 interface Seen { method?: string; url?: string; auth?: string; body?: { files: { path: string; contentBase64: string }[] } }
 
 let server: Server;
@@ -177,6 +179,44 @@ describe('sneferu push with a developer key', () => {
     expect(r.output).toContain('✔ pushed my-shop@0.1.0');
     expect(r.output).toContain('409 DEV_STORE_MISSING');
     expect(r.output).toContain('enable developer access first');
+  });
+
+  it('never sends the saved key to another origin (HEKANA_API_URL or --api-url)', async () => {
+    save();
+    const other = await startFakeApi();
+    try {
+      for (const r of [
+        await runPush(dir, { pkg: 'my-shop', env: { ...env, HEKANA_API_URL: other.base.replace('127.0.0.1', 'localhost') } }),
+        await runPush(dir, { pkg: 'my-shop', apiUrl: other.base.replace('127.0.0.1', 'localhost'), env }),
+      ]) {
+        expect(r.ok).toBe(false);
+        expect(r.output).toContain(`Your saved key is for ${new URL(api.base).origin}. Set HEKANA_TOKEN to use http://localhost:`);
+      }
+      expect(other.seen).toHaveLength(0);
+      expect(api.seen).toHaveLength(0);
+    } finally { await other.close(); }
+  });
+
+  it('HEKANA_TOKEN still pushes to another origin', async () => {
+    save();
+    const other = await startFakeApi();
+    try {
+      other.routes.set('POST /admin/hk2/packages/my-shop/versions', pushed);
+      const r = await runPush(dir, { pkg: 'my-shop', env: { ...env, HEKANA_API_URL: other.base, HEKANA_TOKEN: 'ci-tok' } });
+      expect(r.ok).toBe(true);
+      expect(other.seen[0]!.auth).toBe('Bearer ci-tok');
+    } finally { await other.close(); }
+  });
+
+  it('strips terminal control characters from server strings', async () => {
+    save();
+    api.routes.set('POST /developer/themes/my-shop/versions', ok({ versionId: `v-9${EVIL}`, version: '0.1.0', status: 'in_review', contentHash: 'b'.repeat(64), diagnostics: [{ code: `X${EVIL}`, severity: 'warning', message: `hi${EVIL}\nforged line` }] }, 201));
+    api.routes.set('POST /developer/dev-store/theme', ok({ storeUrl: `https://dev.hekana.com${EVIL}` }));
+    const r = await runPush(dir, { pkg: 'my-shop', devStore: true, env });
+    expect(r.ok).toBe(true);
+    expect(r.output).not.toMatch(CONTROL);
+    expect(r.output.split('\n')).toHaveLength(3);
+    expect(r.output).toContain('Published on your dev store: https://dev.hekana.com[2J');
   });
 
   it('reads error code/message nested under error', async () => {

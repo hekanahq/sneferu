@@ -1,6 +1,6 @@
 import { spawn } from 'node:child_process';
 import { hostname } from 'node:os';
-import { callApi, describeError, isBrowsableUrl, normalizeApiUrl, redact } from '../api';
+import { callApi, describeError, isBrowsableUrl, normalizeApiUrl, redact, sanitize } from '../api';
 import { readCredentials, writeCredentials } from '../credentials';
 
 export interface LoginOptions {
@@ -49,6 +49,7 @@ const wait = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
 const MIN_INTERVAL_S = 5;
 const MAX_EXPIRES_S = 900;
 const DEV_KEY = /^hk_dev_[A-Za-z0-9_-]{43}$/;
+const USER_CODE = /^[A-Z0-9]{4}-[A-Z0-9]{4}$/;
 const positive = (v: unknown, fallback: number) => (typeof v === 'number' && Number.isFinite(v) && v > 0 ? v : fallback);
 
 /**
@@ -58,7 +59,8 @@ const positive = (v: unknown, fallback: number) => (typeof v === 'number' && Num
  */
 export async function runLogin(o: LoginOptions = {}): Promise<CommandResult> {
   const env = o.env ?? process.env;
-  const log = o.log ?? ((s: string) => console.log(s));
+  const print = o.log ?? ((s: string) => console.log(s));
+  const log = (s: string) => print(redact(s));
   const sleep = o.sleep ?? wait;
   const now = o.now ?? Date.now;
   const fail = (output: string): CommandResult => ({ ok: false, output: redact(output) });
@@ -72,13 +74,14 @@ export async function runLogin(o: LoginOptions = {}): Promise<CommandResult> {
   if (!started.ok) return fail(`✖ login could not start ${describeError(started)}`);
   const { deviceCode, userCode, verificationUri, verificationUriComplete } = started.data;
   if (typeof deviceCode !== 'string' || !deviceCode || typeof userCode !== 'string') return fail('✖ login could not start: unexpected response from the server');
+  if (!USER_CODE.test(userCode)) return fail('✖ login could not start: the server sent a malformed code');
   // Clamp what the server says: never poll faster than every 5 s, never wait past 15 minutes.
   let interval = Math.max(MIN_INTERVAL_S, positive(started.data.interval, MIN_INTERVAL_S));
   const deadline = now() + Math.min(MAX_EXPIRES_S, positive(started.data.expiresIn, 600)) * 1000;
 
   // Only an http(s) URL is ever handed to the system opener.
   const link = isBrowsableUrl(verificationUriComplete) ? verificationUriComplete : null;
-  log(`Open ${link ?? (isBrowsableUrl(verificationUri) ? verificationUri : '(the server sent no usable link)')}`);
+  log(`Open ${sanitize(link ?? (isBrowsableUrl(verificationUri) ? verificationUri : '(the server sent no usable link)'))}`);
   log(`Code: ${userCode}`);
   if (link) {
     try { (o.openUrl ?? openInBrowser)(link); } catch { /* printed above; the user can open it */ }
@@ -99,8 +102,8 @@ export async function runLogin(o: LoginOptions = {}): Promise<CommandResult> {
     if (status === 'expired_token') return fail('✖ The code expired. Run sneferu login again');
     const { key, keyPrefix } = polled.data;
     if (status !== 'ok' || typeof key !== 'string' || !DEV_KEY.test(key)) return fail('✖ login failed: the server did not return a valid developer key');
-    const email = typeof polled.data.email === 'string' ? polled.data.email : '';
-    const prefix = typeof keyPrefix === 'string' && keyPrefix ? keyPrefix : key.slice(0, 15);
+    const email = typeof polled.data.email === 'string' ? sanitize(polled.data.email) : '';
+    const prefix = typeof keyPrefix === 'string' && sanitize(keyPrefix) ? sanitize(keyPrefix) : key.slice(0, 15);
 
     const previous = readCredentials(env);
     let path: string;

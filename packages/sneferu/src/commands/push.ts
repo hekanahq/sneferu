@@ -2,7 +2,7 @@ import { formatDiagnostic, type Diagnostic } from '@hekana/sneferu-core';
 import { compileTheme } from '@hekana/sneferu-compiler';
 import { createDefaultRegistry } from '@hekana/sneferu-components';
 import { loadTheme } from '../load';
-import { callApi, describeError, isDevKey, isObj, normalizeApiUrl, redact } from '../api';
+import { callApi, describeError, isDevKey, isObj, normalizeApiUrl, redact, sanitize } from '../api';
 import { resolveAuth } from '../credentials';
 
 export { DEFAULT_API_URL } from '../api';
@@ -22,7 +22,10 @@ export interface PushOptions {
 export interface PushResult { ok: boolean; output: string; versionId?: string }
 
 const asDiagnostics = (v: unknown): Diagnostic[] =>
-  Array.isArray(v) ? v.filter((d): d is Diagnostic => isObj(d) && typeof d.code === 'string' && typeof d.message === 'string') : [];
+  Array.isArray(v)
+    ? v.filter((d): d is Diagnostic => isObj(d) && typeof d.code === 'string' && typeof d.message === 'string')
+      .map((d) => ({ ...d, code: sanitize(d.code), severity: sanitize(d.severity) as Diagnostic['severity'], message: sanitize(d.message), ...(typeof d.file === 'string' ? { file: sanitize(d.file) } : {}) }))
+    : [];
 
 /**
  * Upload a theme's SOURCE files to Hekana, which compiles them itself. The
@@ -35,7 +38,8 @@ const asDiagnostics = (v: unknown): Diagnostic[] =>
  */
 export async function runPush(dir: string, o: PushOptions): Promise<PushResult> {
   if (!SLUG.test(o.pkg)) return { ok: false, output: '✖ --package must be 2-63 lowercase letters, digits or dashes' };
-  const auth = resolveAuth(o.env ?? process.env);
+  const auth = resolveAuth(o.env ?? process.env, o.apiUrl);
+  if (o.token === undefined && auth.error) return { ok: false, output: redact(auth.error) };
   const token = o.token ?? auth.token ?? '';
   if (!token) return { ok: false, output: '✖ Not logged in. Run sneferu login, or set HEKANA_TOKEN' };
   const dev = isDevKey(token);
@@ -68,8 +72,8 @@ export async function runPush(dir: string, o: PushOptions): Promise<PushResult> 
     lines.push(`✖ push rejected ${describeError(res)}`);
     return { ok: false, output: redact(lines.join('\n')) };
   }
-  const versionId = String(res.data.versionId ?? '');
-  lines.push(`✔ pushed ${o.pkg}@${String(res.data.version)} → version ${versionId} (${String(res.data.status)}, hash ${String(res.data.contentHash)})`);
+  const versionId = sanitize(res.data.versionId);
+  lines.push(`✔ pushed ${o.pkg}@${sanitize(res.data.version)} → version ${versionId} (${sanitize(res.data.status)}, hash ${sanitize(res.data.contentHash)})`);
   if (!o.devStore) return { ok: true, output: redact(lines.join('\n')), versionId };
 
   const pub = await callApi(o.fetchImpl, api, '/developer/dev-store/theme', { method: 'POST', token, body: { versionId } });
@@ -81,6 +85,6 @@ export async function runPush(dir: string, o: PushOptions): Promise<PushResult> 
     lines.push(`✖ pushed, but not published on your dev store ${describeError(pub)}`);
     return { ok: false, output: redact(lines.join('\n')), versionId };
   }
-  lines.push(`Published on your dev store: ${String(pub.data.storeUrl ?? '')}`);
+  lines.push(`Published on your dev store: ${sanitize(pub.data.storeUrl)}`);
   return { ok: true, output: redact(lines.join('\n')), versionId };
 }

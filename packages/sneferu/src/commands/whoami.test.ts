@@ -6,6 +6,8 @@ import { runWhoami } from './whoami';
 import { writeCredentials } from '../credentials';
 import { startFakeApi, ok, DEV_KEY, type FakeApi } from '../test-utils/fake-api';
 
+const EVIL = '\u001b[2J\u001b]8;;https://evil.example\u0007click\u001b]8;;\u0007\u009b31m\r';
+const CONTROL = /[\u0000-\u0008\u000b-\u001f\u007f-\u009f]/;
 let api: FakeApi;
 let env: NodeJS.ProcessEnv;
 beforeEach(async () => {
@@ -57,5 +59,40 @@ describe('sneferu whoami', () => {
     expect(r.ok).toBe(false);
     expect(r.output).toContain('401');
     expect(r.output).not.toContain(DEV_KEY);
+  });
+
+  it('never sends the saved key to another origin (HEKANA_API_URL)', async () => {
+    save();
+    const other = await startFakeApi();
+    try {
+      const r = await runWhoami({ env: { ...env, HEKANA_API_URL: other.base.replace('127.0.0.1', 'localhost') } });
+      expect(r.ok).toBe(false);
+      expect(r.output).toContain(`Your saved key is for ${new URL(api.base).origin}`);
+      expect(r.output).toContain('Set HEKANA_TOKEN to use');
+      expect(r.output).toContain('sneferu login --api-url');
+      expect(other.seen).toHaveLength(0);
+      expect(api.seen).toHaveLength(0);
+    } finally { await other.close(); }
+  });
+
+  it('uses HEKANA_TOKEN against another origin, never the saved key', async () => {
+    save();
+    const other = await startFakeApi();
+    try {
+      other.routes.set('GET /developer/whoami', ok({ email: 'ci@example.com', keyName: 'ci', keyPrefix: 'hk_dev_CiCiCiCi', devStore: null }));
+      const ciKey = `hk_dev_${'C'.repeat(43)}`;
+      const r = await runWhoami({ env: { ...env, HEKANA_API_URL: other.base, HEKANA_TOKEN: ciKey } });
+      expect(r.ok).toBe(true);
+      expect(other.seen[0]!.auth).toBe(`Bearer ${ciKey}`);
+    } finally { await other.close(); }
+  });
+
+  it('strips terminal control characters from what the server sends', async () => {
+    save();
+    api.routes.set('GET /developer/whoami', ok({ email: `dev@example.com${EVIL}`, keyName: `k${EVIL}`, keyPrefix: `hk_dev_A1b2C3d4${EVIL}`, devStore: { url: `https://dev.hekana.com${EVIL}` } }));
+    const r = await runWhoami({ env });
+    expect(r.ok).toBe(true);
+    expect(r.output).not.toMatch(CONTROL);
+    expect(r.output.split('\n')).toHaveLength(3);
   });
 });

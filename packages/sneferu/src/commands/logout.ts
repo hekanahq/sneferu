@@ -1,5 +1,5 @@
 import { callApi, describeError, normalizeApiUrl, redact } from '../api';
-import { deleteCredentials, readCredentials } from '../credentials';
+import { credentialsPath, deleteCredentials, readCredentials } from '../credentials';
 import type { CommandResult } from './login';
 
 /** Revoke the saved key on the server (best-effort), then delete it locally. */
@@ -17,7 +17,11 @@ export async function runLogout(o: { fetchImpl?: typeof fetch; env?: NodeJS.Proc
     if (!r.reached) lines.push(`Note: could not revoke the key on the server (${r.error}). Revoke it in the partner portal.`);
     else if (!r.ok) lines.push(`Note: could not revoke the key on the server ${describeError(r)}. Revoke it in the partner portal if it is still listed.`);
   }
-  deleteCredentials(env);
+  const del = deleteCredentials(env);
+  if (!del.ok) {
+    lines.push(`✖ could not delete the saved key at ${credentialsPath(env)}: ${del.error}. Delete that file yourself.`);
+    return { ok: false, output: redact(lines.join('\n')) };
+  }
   lines.push('Logged out');
   if (env.HEKANA_TOKEN) lines.push('Note: HEKANA_TOKEN is still set in this shell.');
   return { ok: true, output: redact(lines.join('\n')) };

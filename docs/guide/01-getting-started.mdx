@@ -124,10 +124,10 @@ npx @hekana/sneferu build --out out  # another output folder
 | `dev [dir]` | theme folder, default `.` | `--port <n>` default `4100` |
 | `validate [dir]` | theme folder, default `.` | |
 | `build [dir]` | theme folder, default `.` | `--out <dir>` default `dist` |
-| `login` | | `--api-url <url>` API to sign in to, default `https://api.hekana.com/api/v1`. Signs in through the browser and saves a developer key to `~/.config/sneferu/credentials.json` |
+| `login` | | `--api-url <url>` API to sign in to, default `https://api.hekana.com/api/v1`. Signs in through the browser and saves a developer key to `~/.config/sneferu/credentials.json`; revokes the previously saved key for the same API |
 | `logout` | | revokes the saved key on Hekana and deletes the file |
 | `whoami` | | prints the account, key prefix and dev store the CLI uses |
-| `push [dir]` | theme folder, default `.` | `--package <slug>` required, must equal `theme.json` `id`; `--dev-store` also installs and publishes the version on your dev store and prints its URL. Uses the key saved by `login`, or env `HEKANA_TOKEN`; env `HEKANA_API_URL` |
+| `push [dir]` | theme folder, default `.` | `--package <slug>` required, must equal `theme.json` `id`, and not a reserved slug (`starter`, `hekana`, `default`, `admin`, `official`, `theme`, `themes`, `test`, `demo`, `preview`, and anything starting with `hekana-`); `--dev-store` also installs and publishes the version on your dev store and prints its URL. Uses the key saved by `login`, or env `HEKANA_TOKEN`; env `HEKANA_API_URL` |
 
 `login`, `logout`, `whoami` and `push` are covered in
 [Get an API key](09-get-an-api-key.mdx) and [Push and publish](07-publishing.mdx).

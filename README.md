@@ -12,6 +12,13 @@ artifact and previewed locally.
 
 Commands: `init`, `dev`, `validate`, `build`, `login`, `logout`, `whoami`, `push` (with a developer key; `--dev-store` publishes on your dev store).
 
+To push you need a Hekana account (create one at https://dashboard.hekana.com/signup; the
+partner portal has no sign-up of its own), then turn on developer access at
+https://partners.hekana.com/developers. `sneferu login` saves a developer key and revokes
+the previously saved key for the same API. The server allows 30 pushes per hour per key and
+60 per developer, at most 5 versions waiting for review and at most 20 theme packages per
+developer. Reserved slugs: `starter`, `hekana`, `default`, `admin`, `official`, `theme`, `themes`, `test`, `demo`, `preview`, and anything starting with `hekana-`.
+
 The npm package is not published yet. From a clone: `pnpm install && pnpm build`,
 then `node packages/sneferu/dist/cli.js <command> <theme folder>`.
 

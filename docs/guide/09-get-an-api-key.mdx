@@ -10,9 +10,12 @@ account.
 ## Turn on developer access
 
 <Steps>
-  1. Open [partners.hekana.com/developers](https://partners.hekana.com/developers)
-     and sign in with your Hekana account. If you do not have one, create it there.
-  2. Turn on developer access. Hekana creates your **dev store** at once.
+  1. If you do not have a Hekana account, create one at
+     [dashboard.hekana.com/signup](https://dashboard.hekana.com/signup). The
+     partner portal has no sign-up of its own.
+  2. Open [partners.hekana.com/developers](https://partners.hekana.com/developers)
+     and sign in with your Hekana account.
+  3. Turn on developer access. Hekana creates your **dev store** at once.
 </Steps>
 
 Your dev store is a free store at `https://devstore-xxxxxxxx.hekana.com` (the
@@ -29,6 +32,11 @@ There are two ways. Both give you the same kind of key.
 ```bash
 npx @hekana/sneferu login
 ```
+
+The npm package `@hekana/sneferu` is not published yet. Until it is, run the CLI
+from a clone: `pnpm install && pnpm build`, then
+`node packages/sneferu/dist/cli.js <command>` (here
+`node packages/sneferu/dist/cli.js login`).
 
 ```
 Open https://partners.hekana.com/developers/device?code=BCDF-GHJK
@@ -48,7 +56,11 @@ Logged in as you@example.com. Key hk_dev_Ab12Cd34… saved to /home/you/.config/
 </Steps>
 
 The code works once and expires after 10 minutes. If it expires, run `login`
-again. Use `npx @hekana/sneferu whoami` to check which account and dev store the
+again.
+
+The CLI keeps one saved key. When `login` saves a new key, it revokes the key it
+replaces if that key was saved for the same API. A key saved for another API is
+left alone. Use `npx @hekana/sneferu whoami` to check which account and dev store the
 CLI is using.
 
 ### Create a key in the portal
@@ -75,6 +87,24 @@ HEKANA_TOKEN=$HEKANA_DEV_KEY npx @hekana/sneferu push ./my-theme --package my-th
 | - | - |
 | `HEKANA_TOKEN` | The key to use. Takes precedence over the key saved by `login`. Never commit it |
 | `HEKANA_API_URL` | The API to talk to. Default `https://api.hekana.com/api/v1`. Must be `https://`; `http://` is accepted only for `localhost` and `127.0.0.1` |
+
+The key saved by `login` is only ever sent to the API it was saved for. If
+`HEKANA_API_URL` points at another host and `HEKANA_TOKEN` is not set, `push` and
+`whoami` stop with `✖ Your saved key is for <origin>. Set HEKANA_TOKEN to use
+<other origin>, or run sneferu login --api-url <other>`.
+
+## Limits
+
+Hekana enforces these per developer:
+
+| Limit | Value | When reached |
+| - | - | - |
+| Pushes | 30 per hour per key, 60 per hour per developer | `429` |
+| Versions waiting for review | at most 5 | `409 HK2_REVIEW_QUEUE_FULL` |
+| Theme packages | at most 20 | `409 HK2_PACKAGE_LIMIT` |
+| Active keys | at most 10 | the portal refuses a new key |
+
+Reserved package slugs, which nobody outside Hekana can push: `starter`, `hekana`, `default`, `admin`, `official`, `theme`, `themes`, `test`, `demo`, `preview`, and anything starting with `hekana-`.
 
 ## Sign out
 

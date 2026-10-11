@@ -27,6 +27,8 @@ const baseOpts = () => ({
   sleep: async (ms: number) => { slept.push(ms); clock += ms; },
   now: () => clock,
 });
+const EVIL = '\u001b[2J\u001b]8;;https://evil.example\u0007click\u001b]8;;\u0007\u009b31m\r';
+const CONTROL = /[\u0000-\u0008\u000b-\u001f\u007f-\u009f]/;
 const allText = (r: { output: string }) => [r.output, ...logs].join('\n');
 
 beforeEach(async () => {
@@ -240,5 +242,31 @@ describe('sneferu login hardening', () => {
     expect(r.ok).toBe(true);
     expect(api.seen.some((s) => s.url.endsWith('/revoke'))).toBe(false);
     expect(r.output).not.toContain('previous key');
+  });
+
+  it('refuses a user code that is not XXXX-XXXX, and prints none of it', async () => {
+    api.routes.set('POST /developer/device/code', code({ userCode: `BCDF-GHJK${EVIL}` }));
+    const r = await runLogin(baseOpts());
+    expect(r.ok).toBe(false);
+    expect(r.output).toContain('malformed code');
+    expect(allText(r)).not.toMatch(CONTROL);
+    expect(opened).toEqual([]);
+    expect(api.seen.filter((s) => s.url.endsWith('/device/token'))).toHaveLength(0);
+  });
+
+  it('strips terminal control characters from the email and error messages', async () => {
+    api.routes.set('POST /developer/device/code', code());
+    api.routes.set('POST /developer/device/token', ok({ status: 'ok', key: DEV_KEY, keyPrefix: `hk_dev_A1b2C3d4${EVIL}`, email: `dev@example.com${EVIL}` }));
+    const r = await runLogin(baseOpts());
+    expect(r.ok).toBe(true);
+    expect(allText(r)).not.toMatch(CONTROL);
+    expect(r.output).toContain('Logged in as dev@example.com[2J]8;;https://evil.exampleclick]8;;31m.');
+
+    logs = [];
+    api.routes.set('POST /developer/device/code', { status: 400, body: { success: false, code: `BAD${EVIL}`, message: `nope${EVIL}\nsecond line` } });
+    const bad = await runLogin(baseOpts());
+    expect(bad.ok).toBe(false);
+    expect(bad.output).not.toMatch(CONTROL);
+    expect(bad.output).not.toContain('\n'); // a server message cannot forge extra output lines
   });
 });

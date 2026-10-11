@@ -1,4 +1,11 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+
+// Running as root, no file permission stops unlink; simulate the failure at the module edge.
+const failDelete = vi.hoisted(() => ({ on: false }));
+vi.mock('../credentials', async (importOriginal) => {
+  const real = await importOriginal<typeof import('../credentials')>();
+  return { ...real, deleteCredentials: (env?: NodeJS.ProcessEnv) => (failDelete.on ? { ok: false as const, error: 'EACCES: permission denied, unlink' } : real.deleteCredentials(env)) };
+});
 import { mkdtempSync, existsSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -9,6 +16,7 @@ import { startFakeApi, ok, DEV_KEY, type FakeApi } from '../test-utils/fake-api'
 let api: FakeApi;
 let env: NodeJS.ProcessEnv;
 beforeEach(async () => {
+  failDelete.on = false;
   api = await startFakeApi();
   env = { XDG_CONFIG_HOME: mkdtempSync(join(tmpdir(), 'snf-logout-')) };
 });
@@ -52,5 +60,18 @@ describe('sneferu logout', () => {
     expect(r.output).toContain('401');
     expect(r.output).toContain('Logged out');
     expect(existsSync(credentialsPath(env))).toBe(false);
+  });
+
+  it('fails, and does not say "Logged out", when the file cannot be deleted', async () => {
+    save();
+    api.routes.set('POST /developer/keys/current/revoke', ok({ revoked: true }));
+    failDelete.on = true;
+    const r = await runLogout({ env });
+    expect(r.ok).toBe(false);
+    expect(r.output).toContain('could not delete the saved key');
+    expect(r.output).toContain('EACCES: permission denied');
+    expect(r.output).not.toContain('Logged out');
+    expect(r.output).not.toContain(DEV_KEY);
+    expect(existsSync(credentialsPath(env))).toBe(true);
   });
 });

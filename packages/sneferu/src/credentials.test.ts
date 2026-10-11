@@ -53,18 +53,33 @@ describe('credentials', () => {
   });
 
   it('deletes the file and reports whether there was one', () => {
-    expect(deleteCredentials(env)).toBe(false);
+    expect(deleteCredentials(env)).toEqual({ ok: true });
     writeCredentials(creds, env);
-    expect(deleteCredentials(env)).toBe(true);
+    expect(deleteCredentials(env)).toEqual({ ok: true });
     expect(existsSync(credentialsPath(env))).toBe(false);
   });
 
-  it('resolveAuth: HEKANA_TOKEN beats the saved key; HEKANA_API_URL beats the saved URL', () => {
+  it('reports a delete failure other than "not there"', () => {
+    mkdirSync(credentialsPath(env), { recursive: true }); // unlink on a directory fails (EISDIR/EPERM), even as root
+    const r = deleteCredentials(env);
+    expect(r.ok).toBe(false);
+    expect(!r.ok && r.error).toMatch(/EISDIR|EPERM/);
+  });
+
+  it('resolveAuth: HEKANA_TOKEN beats the saved key; the saved key only goes to its own origin', () => {
     expect(resolveAuth(env)).toEqual({ apiUrl: DEFAULT_API_URL, token: null, source: 'none' });
     writeCredentials(creds, env);
     expect(resolveAuth(env)).toEqual({ apiUrl: creds.apiUrl, token: DEV_KEY, source: 'credentials' });
     expect(resolveAuth({ ...env, HEKANA_TOKEN: 'admin-tok' })).toEqual({ apiUrl: creds.apiUrl, token: 'admin-tok', source: 'env' });
-    expect(resolveAuth({ ...env, HEKANA_API_URL: 'http://localhost:3000/api/v1' }).apiUrl).toBe('http://localhost:3000/api/v1');
+    // the saved key never goes to another origin: no token, and an error that says what to do
+    const other = resolveAuth({ ...env, HEKANA_API_URL: 'http://localhost:3000/api/v1' });
+    expect(other).toMatchObject({ apiUrl: 'http://localhost:3000/api/v1', token: null, source: 'none' });
+    expect(other.error).toBe('✖ Your saved key is for https://api.example.com. Set HEKANA_TOKEN to use http://localhost:3000, or run sneferu login --api-url http://localhost:3000/api/v1');
+    // same origin, different spelling of the path: still the saved key
+    expect(resolveAuth({ ...env, HEKANA_API_URL: 'https://api.example.com/api/v1/' })).toMatchObject({ token: DEV_KEY, source: 'credentials' });
+    // HEKANA_TOKEN is unaffected by the origin check
+    expect(resolveAuth({ ...env, HEKANA_API_URL: 'http://localhost:3000/api/v1', HEKANA_TOKEN: 'ci-tok' })).toMatchObject({ token: 'ci-tok', source: 'env' });
+    expect(resolveAuth(env, 'https://evil.example.net/api/v1').token).toBeNull();
     // an empty HEKANA_TOKEN counts as unset
     expect(resolveAuth({ ...env, HEKANA_TOKEN: '' }).source).toBe('credentials');
   });

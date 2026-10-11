@@ -8,8 +8,19 @@ export const isObj = (v: unknown): v is Record<string, unknown> => typeof v === 
 /** A developer key (as opposed to an admin access token). */
 export const isDevKey = (token: string | null | undefined): token is string => typeof token === 'string' && token.startsWith('hk_dev_');
 
-/** Never let a developer key reach the terminal, whatever echoed it. */
-export const redact = (s: string): string => s.replace(/hk_dev_[A-Za-z0-9_-]{9,}/g, 'hk_dev_…');
+// C0 and C1 control characters except \t and \n (ESC, CSI, OSC, BEL, \r, …).
+const CONTROL = /[\u0000-\u0008\u000b-\u001f\u007f-\u009f]/g;
+const CONTROL_OR_BREAK = /[\u0000-\u001f\u007f-\u009f]/g;
+
+/**
+ * Make text safe to print: terminal control characters are removed so a server-sent string
+ * cannot move the cursor, rewrite the screen, set the title or smuggle an OSC 8 link.
+ * `multiline` keeps \n and \t (a whole message); otherwise the result is one line (a field).
+ */
+export const sanitize = (s: unknown, multiline = false): string => String(s ?? '').replace(multiline ? CONTROL : CONTROL_OR_BREAK, '');
+
+/** Never let a developer key (or a terminal control character) reach the terminal, whatever echoed it. */
+export const redact = (s: string): string => sanitize(s, true).replace(/hk_dev_[A-Za-z0-9_-]{9,}/g, 'hk_dev_…');
 
 /** https only, except plain http to the local machine. Trailing slashes are dropped. */
 export function normalizeApiUrl(raw: string | undefined): { api: string; error?: undefined } | { api?: undefined; error: string } {
@@ -63,6 +74,6 @@ export function describeError(r: { status: number; statusText: string; json: unk
   const nested = isObj(top.error) ? top.error : isObj(top.data) ? top.data : {};
   const code = typeof top.code === 'string' ? top.code : typeof nested.code === 'string' ? nested.code : '';
   const rawMsg = top.message ?? nested.message ?? (typeof top.error === 'string' ? top.error : undefined);
-  const message = Array.isArray(rawMsg) ? rawMsg.join('; ') : String(rawMsg ?? (r.statusText || 'request failed'));
-  return redact(`(${r.status}${code ? ` ${code}` : ''}): ${message}`);
+  const message = Array.isArray(rawMsg) ? rawMsg.map((m) => sanitize(m)).join('; ') : sanitize(rawMsg ?? (r.statusText || 'request failed'));
+  return redact(`(${r.status}${code ? ` ${sanitize(code)}` : ''}): ${message}`);
 }

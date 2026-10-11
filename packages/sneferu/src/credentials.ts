@@ -57,15 +57,41 @@ export function writeCredentials(c: Credentials, env: NodeJS.ProcessEnv = proces
   return path;
 }
 
-export function deleteCredentials(env: NodeJS.ProcessEnv = process.env): boolean {
-  try { unlinkSync(credentialsPath(env)); return true; } catch { return false; }
+/** Delete the saved login. Missing already counts as deleted; any other failure is returned. */
+export function deleteCredentials(env: NodeJS.ProcessEnv = process.env): { ok: true } | { ok: false; error: string } {
+  try { unlinkSync(credentialsPath(env)); return { ok: true }; } catch (e) {
+    if ((e as NodeJS.ErrnoException).code === 'ENOENT') return { ok: true };
+    return { ok: false, error: (e as Error).message };
+  }
 }
 
-/** token = HEKANA_TOKEN ?? saved key; API URL = HEKANA_API_URL ?? saved apiUrl ?? the default. */
-export function resolveAuth(env: NodeJS.ProcessEnv = process.env): { apiUrl: string; token: string | null; source: 'env' | 'credentials' | 'none' } {
+/** `scheme://host[:port]` of an API URL, or null when it is not a URL. */
+export function apiOrigin(raw: string): string | null {
+  try { return new URL(raw).origin; } catch { return null; }
+}
+
+export interface ResolvedAuth { apiUrl: string; token: string | null; source: 'env' | 'credentials' | 'none'; error?: string }
+
+/**
+ * token = HEKANA_TOKEN ?? saved key; API URL = `targetUrl` ?? HEKANA_API_URL ?? saved apiUrl ?? the default.
+ * The SAVED key is only ever sent to the origin it was saved with: when the URL resolves to
+ * another origin and HEKANA_TOKEN is not set, no token is returned and `error` says why.
+ */
+export function resolveAuth(env: NodeJS.ProcessEnv = process.env, targetUrl?: string): ResolvedAuth {
   const creds = readCredentials(env);
-  const apiUrl = env.HEKANA_API_URL || creds?.apiUrl || DEFAULT_API_URL;
+  const apiUrl = targetUrl || env.HEKANA_API_URL || creds?.apiUrl || DEFAULT_API_URL;
   if (env.HEKANA_TOKEN) return { apiUrl, token: env.HEKANA_TOKEN, source: 'env' };
-  if (creds) return { apiUrl, token: creds.key, source: 'credentials' };
+  if (creds) {
+    const saved = apiOrigin(creds.apiUrl);
+    const target = apiOrigin(apiUrl);
+    if (!saved || saved !== target) {
+      const other = target ?? apiUrl;
+      return {
+        apiUrl, token: null, source: 'none',
+        error: `✖ Your saved key is for ${saved ?? creds.apiUrl}. Set HEKANA_TOKEN to use ${other}, or run sneferu login --api-url ${apiUrl}`,
+      };
+    }
+    return { apiUrl, token: creds.key, source: 'credentials' };
+  }
   return { apiUrl, token: null, source: 'none' };
 }
