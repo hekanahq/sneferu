@@ -47,6 +47,7 @@ Notes:
 - `{{ }}` output is escaped for its position: text, attribute, or URL (URLs go through a safe-URL check, so `javascript:` becomes `#`).
 - An attribute may mix text and expressions: `class="card {{ section.settings.tone }}"`.
 - Tag and attribute names are lower-cased.
+- Whitespace follows HTML: a run of spaces and line breaks in text becomes one space, and whitespace HTML does not render (between block tags such as `<div>` or `<hk-text>`, at the start and end of a block, between the items of `<hk-stack>` and `<hk-grid>`) is dropped at compile time. Text inside `<pre>` is kept exactly. So indentation never changes a theme, and `sneferu format` ([Format your theme](guide/10-format-your-theme.mdx)) can re-indent freely.
 
 ## Directives
 

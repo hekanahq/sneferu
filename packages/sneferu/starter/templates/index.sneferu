@@ -1,2 +1,20 @@
 <hk-sections />
-<hk-schema>{"sections":[{"type":"hero","settings":{"title":"Welcome","subtitle":"A theme built with Sneferu"}},{"type":"featured","settings":{"title":"Featured products"}}]}</hk-schema>
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "hero",
+        "settings": {
+          "title": "Welcome",
+          "subtitle": "A theme built with Sneferu"
+        }
+      },
+      {
+        "type": "featured",
+        "settings": {
+          "title": "Featured products"
+        }
+      }
+    ]
+  }
+</hk-schema>

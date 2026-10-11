@@ -4,11 +4,23 @@
     <hk-text text="{{ block.settings.author }}" size="14" color="#4B5563" />
   </hk-stack>
 </hk-card>
-<hk-schema>{
-  "name": "Quote",
-  "version": 1,
-  "settings": {
-    "text":   { "type": "textarea", "label": "Quote", "default": "Delivery was fast and the packaging was perfect.", "maxLength": 280 },
-    "author": { "type": "text",     "label": "Name", "default": "Mona, Alexandria", "maxLength": 60 }
+<hk-schema>
+  {
+    "name": "Quote",
+    "version": 1,
+    "settings": {
+      "text": {
+        "type": "textarea",
+        "label": "Quote",
+        "default": "Delivery was fast and the packaging was perfect.",
+        "maxLength": 280
+      },
+      "author": {
+        "type": "text",
+        "label": "Name",
+        "default": "Mona, Alexandria",
+        "maxLength": 60
+      }
+    }
   }
-}</hk-schema>
+</hk-schema>

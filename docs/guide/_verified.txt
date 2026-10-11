@@ -1,4 +1,4 @@
-Sneferu developer guide: validation record, 2026-10-11 (sneferu b374486, CLI built from this repo)
+Sneferu developer guide: validation record, 2026-10-11 (sneferu feat/prettier-plugin, CLI built from this repo)
 
 Every example in the guide is in docs/examples/example-store (the cookbook's five sections,
 plus the testimonials and on-sale sections of chapters 3 and 4). It was validated and built:
@@ -8,8 +8,16 @@ $ node packages/sneferu/dist/cli.js validate docs/examples/example-store
 exit 0
 
 $ node packages/sneferu/dist/cli.js build docs/examples/example-store --out /tmp/example-store-dist
-✔ built example-store@0.1.0 → <out>/example-store-0.1.0.sneferu.json (hash 31d12b2ac01de0e4)
+✔ built example-store@0.1.0 → <out>/example-store-0.1.0.sneferu.json (hash beea57fb8e3a7eaa)
 exit 0
+
+$ node packages/sneferu/dist/cli.js format docs/examples/example-store --check
+✔ all 13 files are formatted
+exit 0
+
+The example store and the starter are formatted with @hekana/prettier-plugin-sneferu; the
+compiled artifact is identical before and after formatting (starter 4ee874d67a59f946,
+example store beea57fb8e3a7eaa, both compiled with the 0.2.0 compiler).
 
 The pictures in docs/images are regenerated with one command:
 

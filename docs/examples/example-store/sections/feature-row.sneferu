@@ -23,16 +23,46 @@
     </hk-grid>
   </hk-stack>
 </hk-section>
-<hk-schema>{
-  "name": "Feature row",
-  "version": 1,
-  "settings": {
-    "heading":     { "type": "text",     "label": "Heading", "default": "Why people shop with us" },
-    "one_title":   { "type": "text",     "label": "Feature 1", "default": "Delivery to every governorate" },
-    "one_text":    { "type": "textarea", "label": "Feature 1 text", "default": "Cairo and Giza in 2 days, the rest of Egypt in 3 to 5." },
-    "two_title":   { "type": "text",     "label": "Feature 2", "default": "Cash on delivery" },
-    "two_text":    { "type": "textarea", "label": "Feature 2 text", "default": "Pay when the order reaches your door." },
-    "three_title": { "type": "text",     "label": "Feature 3", "default": "14-day returns" },
-    "three_text":  { "type": "textarea", "label": "Feature 3 text", "default": "Not the right fit? Send it back within 14 days." }
+<hk-schema>
+  {
+    "name": "Feature row",
+    "version": 1,
+    "settings": {
+      "heading": {
+        "type": "text",
+        "label": "Heading",
+        "default": "Why people shop with us"
+      },
+      "one_title": {
+        "type": "text",
+        "label": "Feature 1",
+        "default": "Delivery to every governorate"
+      },
+      "one_text": {
+        "type": "textarea",
+        "label": "Feature 1 text",
+        "default": "Cairo and Giza in 2 days, the rest of Egypt in 3 to 5."
+      },
+      "two_title": {
+        "type": "text",
+        "label": "Feature 2",
+        "default": "Cash on delivery"
+      },
+      "two_text": {
+        "type": "textarea",
+        "label": "Feature 2 text",
+        "default": "Pay when the order reaches your door."
+      },
+      "three_title": {
+        "type": "text",
+        "label": "Feature 3",
+        "default": "14-day returns"
+      },
+      "three_text": {
+        "type": "textarea",
+        "label": "Feature 3 text",
+        "default": "Not the right fit? Send it back within 14 days."
+      }
+    }
   }
-}</hk-schema>
+</hk-schema>

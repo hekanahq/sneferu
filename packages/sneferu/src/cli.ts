@@ -7,14 +7,18 @@ import { runPush } from './commands/push';
 import { runLogin } from './commands/login';
 import { runLogout } from './commands/logout';
 import { runWhoami } from './commands/whoami';
+import { runFormat } from './commands/format';
 
-const program = new Command().name('sneferu').description('Build Hekana themes with Sneferu').version('0.1.0');
+const program = new Command().name('sneferu').description('Build Hekana themes with Sneferu').version('0.2.0');
 program.command('init').argument('[dir]', 'folder to create', 'my-theme').option('--force', 'write into a non-empty folder')
   .action((dir: string, o: { force?: boolean }) => { try { runInit(dir, o); console.log(`✔ created ${dir} — next: cd ${dir} && npx @hekana/sneferu dev`); } catch (e) { console.error(`✖ ${(e as Error).message}`); process.exitCode = 2; } });
 program.command('validate').argument('[dir]', 'theme folder', '.')
   .action((dir: string) => { const r = runValidate(dir); console.log(r.output); process.exitCode = r.ok ? 0 : 1; });
 program.command('build').argument('[dir]', 'theme folder', '.').option('--out <dir>', 'output folder', 'dist')
   .action((dir: string, o: { out: string }) => { const r = runBuild(dir, o.out); console.log(r.output); process.exitCode = r.ok ? 0 : 1; });
+program.command('format').argument('[dir]', 'theme folder', '.').option('--check', 'only check; exit 1 if a file is not formatted (for CI)')
+  .description('format .sneferu files, theme.json and locales with Prettier and the Sneferu plugin')
+  .action(async (dir: string, o: { check?: boolean }) => { const r = await runFormat(dir, { check: o.check === true }); (r.ok ? console.log : console.error)(r.output); process.exitCode = r.ok ? 0 : 1; });
 program.command('dev').argument('[dir]', 'theme folder', '.').option('--port <n>', 'port', '4100')
   .action(async (dir: string, o: { port: string }) => { await runDev(dir, Number(o.port)); });
 program.command('push').argument('[dir]', 'theme folder', '.')

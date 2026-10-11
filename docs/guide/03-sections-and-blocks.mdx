@@ -20,14 +20,26 @@ smallest useful section.
     <hk-button label="{{ t('shop_now') }}" href="/products" />
   </hk-stack>
 </hk-section>
-<hk-schema>{
-  "name": "Hero",
-  "version": 1,
-  "settings": {
-    "title":    { "type": "text",     "label": "Title", "default": "Hello", "maxLength": 80 },
-    "subtitle": { "type": "textarea", "label": "Subtitle", "default": "", "maxLength": 200 }
+<hk-schema>
+  {
+    "name": "Hero",
+    "version": 1,
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": "Title",
+        "default": "Hello",
+        "maxLength": 80
+      },
+      "subtitle": {
+        "type": "textarea",
+        "label": "Subtitle",
+        "default": "",
+        "maxLength": 200
+      }
+    }
   }
-}</hk-schema>
+</hk-schema>
 ```
 
 <Result>
@@ -49,7 +61,7 @@ smallest useful section.
 4. **Line 4** `<hk-text>` prints the `subtitle` setting.
 5. **Line 5** `<hk-button>` is a link drawn as a button. `t('shop_now')` takes
    its words from `locales/en.json`.
-6. **Lines 8-15** `<hk-schema>` declares the settings the merchant edits in the
+6. **Lines 8-27** `<hk-schema>` declares the settings the merchant edits in the
    store builder.
 
 Rules for the file:
@@ -158,14 +170,26 @@ six, and edits each one. Each quote is a block.
     <hk-text text="{{ block.settings.author }}" size="14" color="#4B5563" />
   </hk-stack>
 </hk-card>
-<hk-schema>{
-  "name": "Quote",
-  "version": 1,
-  "settings": {
-    "text":   { "type": "textarea", "label": "Quote", "default": "Delivery was fast and the packaging was perfect.", "maxLength": 280 },
-    "author": { "type": "text",     "label": "Name", "default": "Mona, Alexandria", "maxLength": 60 }
+<hk-schema>
+  {
+    "name": "Quote",
+    "version": 1,
+    "settings": {
+      "text": {
+        "type": "textarea",
+        "label": "Quote",
+        "default": "Delivery was fast and the packaging was perfect.",
+        "maxLength": 280
+      },
+      "author": {
+        "type": "text",
+        "label": "Name",
+        "default": "Mona, Alexandria",
+        "maxLength": 60
+      }
+    }
   }
-}</hk-schema>
+</hk-schema>
 ```
 
 ```html title="sections/testimonials.sneferu"
@@ -174,25 +198,48 @@ six, and edits each one. Each quote is a block.
     <hk-heading text="{{ section.settings.heading }}" level="h2" size="32" mobile-size="24" />
     {% if section.blocks %}
       <hk-grid columns="3" mobile-columns="1" gap="16">
-        {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+        {% for block in section.blocks %}
+          <hk-block of="{{ block }}" />
+        {% endfor %}
       </hk-grid>
     {% else %}
       <hk-text text="{{ t('no_quotes_yet') }}" color="#4B5563" />
     {% endif %}
   </hk-stack>
 </hk-section>
-<hk-schema>{
-  "name": "Testimonials",
-  "version": 1,
-  "settings": {
-    "heading": { "type": "text", "label": "Heading", "default": "What our customers say" }
-  },
-  "blocks": { "allowed": ["quote"], "max": 6 },
-  "presets": [
-    { "name": "Three quotes",
-      "blocks": [ { "type": "quote" }, { "type": "quote" }, { "type": "quote" } ] }
-  ]
-}</hk-schema>
+<hk-schema>
+  {
+    "name": "Testimonials",
+    "version": 1,
+    "settings": {
+      "heading": {
+        "type": "text",
+        "label": "Heading",
+        "default": "What our customers say"
+      }
+    },
+    "blocks": {
+      "allowed": ["quote"],
+      "max": 6
+    },
+    "presets": [
+      {
+        "name": "Three quotes",
+        "blocks": [
+          {
+            "type": "quote"
+          },
+          {
+            "type": "quote"
+          },
+          {
+            "type": "quote"
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>
 ```
 
 ```css title="assets/quote.css"
@@ -213,19 +260,19 @@ In `blocks/quote.sneferu`:
 
 1. **Lines 1-6** one quote: a bordered card with the quote and the customer's
    name. A block reads its own settings as `block.settings.<key>`.
-2. **Lines 7-14** the two settings of one quote: the text and the name.
+2. **Lines 7-26** the two settings of one quote: the text and the name.
 
 In `sections/testimonials.sneferu`:
 
 1. **Line 4** `{% if section.blocks %}` is true when the merchant has added at
    least one quote.
-2. **Line 6** `{% for block in section.blocks %}` goes through the quotes in the
+2. **Lines 6-8** `{% for block in section.blocks %}` goes through the quotes in the
    merchant's order, and `<hk-block of="{{ block }}" />` draws each one with
    `blocks/quote.sneferu`.
-3. **Lines 8-9** what shows when there are no quotes yet.
-4. **Line 19** `"blocks"` tells the builder which block types this section
+3. **Lines 10-11** what shows when there are no quotes yet.
+4. **Lines 26-29** `"blocks"` tells the builder which block types this section
    takes (`quote`) and how many (6 at most).
-5. **Lines 20-23** `"presets"`: when the merchant adds this section, the builder
+5. **Lines 30-45** `"presets"`: when the merchant adds this section, the builder
    offers to start it with three quotes.
 
 How it works:
@@ -244,7 +291,7 @@ How it works:
   added. They are stored with the theme and used by the builder; the CLI does not
   render them.
 - Because default sections cannot carry blocks, `sneferu dev` shows a block
-  section with no blocks. Design that state, as lines 8-9 do: it is also what a
+  section with no blocks. Design that state, as lines 10-11 do: it is also what a
   merchant sees right after adding the section.
 
 #### Try it

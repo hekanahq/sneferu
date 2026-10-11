@@ -8,9 +8,7 @@
   "engine": "hk2",
   "engineCompatibility": "^2.0.0",
   "defaultLocale": "en",
-  "locales": [
-    "en"
-  ],
+  "locales": ["en"],
   "settings": {
     "accent": {
       "type": "color",

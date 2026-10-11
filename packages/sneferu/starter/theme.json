@@ -1,8 +1,23 @@
 {
-  "id": "starter", "name": "Starter", "version": "0.1.0", "author": "Hekana",
+  "id": "starter",
+  "name": "Starter",
+  "version": "0.1.0",
+  "author": "Hekana",
   "description": "A starting point for a Sneferu theme",
-  "category": "general", "engine": "hk2", "engineCompatibility": "^2.0.0",
-  "defaultLocale": "en", "locales": ["en", "ar"],
+  "category": "general",
+  "engine": "hk2",
+  "engineCompatibility": "^2.0.0",
+  "defaultLocale": "en",
+  "locales": ["en", "ar"],
   "settings": { "accent": { "type": "color", "label": "Accent", "default": "#B45309" } },
-  "tokens": { "colors": { "primary": "#111827", "secondary": "#1F2937", "accent": "#B45309", "background": "#FFFFFF", "text": "#111827" }, "layout": { "contentWidth": "1200px" } }
+  "tokens": {
+    "colors": {
+      "primary": "#111827",
+      "secondary": "#1F2937",
+      "accent": "#B45309",
+      "background": "#FFFFFF",
+      "text": "#111827"
+    },
+    "layout": { "contentWidth": "1200px" }
+  }
 }

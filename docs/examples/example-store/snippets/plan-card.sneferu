@@ -1,6 +1,8 @@
 <hk-card class="plan" data-best="{{ best }}" padding="28" mobile-padding="20" radius="16" border="true">
   <hk-stack gap="12" align="start">
-    {% if best %}<hk-badge text="{{ t('best_value') }}" tone="accent" />{% endif %}
+    {% if best %}
+      <hk-badge text="{{ t('best_value') }}" tone="accent" />
+    {% endif %}
     <hk-heading text="{{ name }}" level="h3" size="22" />
     <p class="plan-price"><strong>{{ price | money }}</strong> <small>{{ t('per_month') }}</small></p>
     <hk-text text="{{ details }}" size="15" />

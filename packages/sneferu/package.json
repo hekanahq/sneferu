@@ -1,6 +1,6 @@
 {
   "name": "@hekana/sneferu",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Sneferu — build Hekana themes. npx @hekana/sneferu init",
   "type": "module",
   "bin": {
@@ -20,6 +20,8 @@
     "@hekana/sneferu-runtime": "workspace:^",
     "@hekana/sneferu-components": "workspace:^",
     "@hekana/sneferu-core": "workspace:^",
+    "@hekana/prettier-plugin-sneferu": "workspace:^",
+    "prettier": "^3.6.2",
     "commander": "^12.1.0",
     "chokidar": "^4.0.1"
   },

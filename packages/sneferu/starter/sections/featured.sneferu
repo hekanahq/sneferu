@@ -1,6 +1,23 @@
 <hk-section>
   <hk-heading text="{{ section.settings.title }}" level="h2" size="32" />
-  <hk-product-grid products="{{ collection('featured').products }}" limit="8" columns="4" tablet-columns="2" mobile-columns="2" />
+  <hk-product-grid
+    products="{{ collection('featured').products }}"
+    limit="8"
+    columns="4"
+    tablet-columns="2"
+    mobile-columns="2"
+  />
 </hk-section>
-<hk-schema>{"name":"Featured products","version":1,"settings":{
-  "title":{"type":"text","label":"Title","default":"Featured"}}}</hk-schema>
+<hk-schema>
+  {
+    "name": "Featured products",
+    "version": 1,
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": "Title",
+        "default": "Featured"
+      }
+    }
+  }
+</hk-schema>

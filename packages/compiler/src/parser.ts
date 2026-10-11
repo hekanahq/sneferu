@@ -2,6 +2,7 @@ import { err, LIMITS, type Diagnostic, type Expr } from '@hekana/sneferu-core';
 import { lex, type Loc, type RawAttr } from './lexer';
 import { parseExpr, parseFor } from './expr';
 import { VOID_ELEMENTS, type AstAttr, type AstNode } from './ast';
+import { normalizeWhitespace } from './whitespace';
 
 type Frame =
   | { kind: 'root'; body: AstNode[] }
@@ -159,5 +160,6 @@ export function parseTemplate(src: string, file: string): { nodes: AstNode[]; sc
     if (f.kind === 'if' || f.kind === 'for') diagnostics.push(err('SN1101', `{% ${f.kind} %} is never closed`, at(f.node.loc)));
     else if (f.kind === 'el') diagnostics.push(err('SN1101', `<${f.node.tag}> is never closed`, at(f.node.loc)));
   }
-  return { nodes: root.body, schema, diagnostics };
+  // indentation and line breaks HTML would not render are not part of the IR
+  return { nodes: normalizeWhitespace(root.body), schema, diagnostics };
 }

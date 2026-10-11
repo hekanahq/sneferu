@@ -10,7 +10,10 @@ export function runInit(target: string, opts: { force?: boolean }): void {
   cpSync(STARTER, dir, { recursive: true });
   const id = basename(dir).toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, '').padEnd(3, 'x').slice(0, 41);
   const mpath = join(dir, 'theme.json');
-  const m = JSON.parse(readFileSync(mpath, 'utf8'));
-  m.id = /^[a-z]/.test(id) ? id : `t-${id}`;
-  writeFileSync(mpath, `${JSON.stringify(m, null, 2)}\n`);
+  const text = readFileSync(mpath, 'utf8');
+  const next = JSON.stringify(/^[a-z]/.test(id) ? id : `t-${id}`);
+  // swap the id in place, so the starter stays exactly as `sneferu format` writes it
+  const out = text.replace(/("id"\s*:\s*)"[^"]*"/, (_m, k: string) => `${k}${next}`);
+  if (JSON.parse(out).id !== JSON.parse(next)) throw new Error('could not set the theme id in theme.json');
+  writeFileSync(mpath, out);
 }

@@ -10,7 +10,7 @@ artifact and previewed locally.
     npx @hekana/sneferu validate
     npx @hekana/sneferu build      # dist/<id>-<version>.sneferu.json
 
-Commands: `init`, `dev`, `validate`, `build`, `login`, `logout`, `whoami`, `push` (with a developer key; `--dev-store` publishes on your dev store).
+Commands: `init`, `dev`, `validate`, `build`, `format` (`--check` for CI), `login`, `logout`, `whoami`, `push` (with a developer key; `--dev-store` publishes on your dev store).
 
 To push you need a Hekana account (create one at https://dashboard.hekana.com/signup; the
 partner portal has no sign-up of its own), then turn on developer access at
@@ -32,6 +32,7 @@ Install: `npx @hekana/sneferu <command>` (Node.js 20 or newer), or `npm install 
 7. [Publishing](docs/guide/07-publishing.mdx): `sneferu push`, versions, dev store, review
 8. [Cookbook](docs/guide/08-cookbook.mdx): announcement bar, hero, feature row, product grid, subscription plans, each with a picture of the result
 9. [Get an API key](docs/guide/09-get-an-api-key.mdx): developer access, `sneferu login`, `HEKANA_TOKEN` for CI
+10. [Format your theme](docs/guide/10-format-your-theme.mdx): `sneferu format`, `@hekana/prettier-plugin-sneferu`, VS Code format on save
 
 ## Reference
 
