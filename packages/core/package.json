@@ -26,5 +26,10 @@
     "build": "tsup src/index.ts --format esm,cjs --dts --clean",
     "typecheck": "tsc --noEmit"
   },
-  "license": "SEE LICENSE IN ../../LICENSE"
+  "license": "SEE LICENSE IN LICENSE",
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://hekana.dev",
+  "author": "Hekana"
 }
