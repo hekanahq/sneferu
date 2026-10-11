@@ -1,6 +1,6 @@
 {
   "name": "@hekana/sneferu-runtime",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "description": "Sneferu runtime: render IR to HTML",
   "type": "module",
   "sideEffects": false,
@@ -20,7 +20,8 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "build": "tsup src/index.ts --format esm,cjs --dts --clean",

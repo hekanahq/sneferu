@@ -1,6 +1,6 @@
 {
   "name": "@hekana/sneferu-compiler",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Sneferu compiler: templates to IR",
   "type": "module",
   "sideEffects": false,
@@ -20,7 +20,8 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "build": "tsup src/index.ts --format esm,cjs --dts --clean",
