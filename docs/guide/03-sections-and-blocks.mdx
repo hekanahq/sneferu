@@ -152,9 +152,49 @@ A template's `<hk-schema>` lists the sections a new page starts with, in order:
 
 - `type` must be a file in `sections/` (SN3020); each entry is `{ "type", "settings"? }` (SN3026).
 - `settings` here go through the same coercion as stored values.
-- Default sections cannot list blocks. They are what `sneferu dev` shows.
+- A default section may also list `blocks` (see below). They are what `sneferu dev` shows.
 - Once a merchant edits the page, their saved list of sections replaces the
   defaults.
+
+### Default blocks
+
+A default section can start with blocks. Each entry is `{ "type", "settings"? }`:
+
+```html
+<hk-sections />
+<hk-schema>{"sections":[
+  {"type":"faq","settings":{"title":"Questions"},"blocks":[
+    {"type":"question","settings":{"text":"How long does shipping take?"}},
+    {"type":"question","settings":{"text":"Can I return an item?"}}
+  ]}
+]}</hk-schema>
+```
+
+- Each `type` must be a file in `blocks/` (SN3028).
+- The section must allow the type in `blocks.allowed`, and the list may not be
+  longer than `blocks.max` (SN3029).
+- The blocks render with the ids `default-<section index>-<block index>`, for
+  example `default-0-1`.
+
+## Text in two languages
+
+Add `"localized": true` to a `text`, `textarea` or `rich_text` setting and the
+merchant can store one value per language:
+
+```json
+"title": {
+  "type": "text",
+  "label": "Title",
+  "localized": true,
+  "default": { "ar": "أهلًا بك", "en": "Welcome" }
+}
+```
+
+Templates still read `{{ section.settings.title }}` and get a plain string: the
+value for the page's language, else the other language, else the default, else
+an empty string. A plain string saved by an older editor is used as it is in
+both languages. `maxLength` applies to the resolved string. Theme-level
+settings in `theme.json` can be localized the same way.
 
 ## Blocks
 

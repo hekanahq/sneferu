@@ -13,6 +13,8 @@ export interface Field {
   responsive?: boolean;
   visible_if?: { setting: string; equals: unknown };
   maxLength?: number;
+  /** text, textarea, rich_text: the value may be { ar?, en? } and resolves by the page locale. */
+  localized?: boolean;
 }
 export type FieldSchema = Record<string, Field>;
 /** A field as an author writes it: the label may be "Text", { en } or { ar, en }. */
@@ -43,7 +45,30 @@ function coerceScalar(f: Field, v: unknown): unknown {
   }
 }
 
-export function coerceSetting(f: Field, v: unknown): unknown {
+type Locale = 'ar' | 'en';
+const TEXTY = new Set<string>(['text', 'textarea', 'rich_text']);
+const isRec = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v);
+const cut = (f: Field, s: string) => (f.maxLength ? s.slice(0, f.maxLength) : s);
+/** A string, or the string a { ar, en } object holds for the locale (else the other locale). */
+function pick(v: unknown, locale: Locale): string | undefined {
+  if (typeof v === 'string') return v;
+  if (!isRec(v)) return undefined;
+  const other: Locale = locale === 'ar' ? 'en' : 'ar';
+  const own = (k: Locale) => (Object.hasOwn(v, k) && typeof v[k] === 'string' ? (v[k] as string) : undefined);
+  return own(locale) ?? own(other);
+}
+
+/**
+ * Coerce a stored value to what the schema allows. For a `localized` text field and a
+ * given locale, { ar, en } resolves to one string; with no locale the raw value is
+ * returned so the builder can edit both languages.
+ */
+export function coerceSetting(f: Field, v: unknown, locale?: Locale): unknown {
+  if (f.localized && TEXTY.has(f.type)) {
+    if (locale === undefined) return v === undefined ? f.default : v;
+    const s = pick(v, locale) ?? pick(f.default, locale) ?? '';
+    return cut(f, s);
+  }
   if (v === undefined) return f.default;
   if (f.responsive && isBp(v)) {
     const out: Record<string, unknown> = {};
