@@ -105,4 +105,56 @@ describe('compileTheme', () => {
       } else expect(r!.diagnostics.map((d) => d.code).some((c) => c === 'SN1108' || c === 'SN9009')).toBe(true);
     }
   });
+
+  describe('English-only themes', () => {
+    const enManifest = { ...manifest, name: 'Esports', description: { en: 'A gaming theme' }, defaultLocale: 'en', locales: ['en'],
+      settings: { accent: { type: 'color', label: 'Accent', default: '#B45309' }, tagline: { type: 'text', label: { en: 'Tagline' } } } };
+    const enFiles = (): ThemeFile[] => [
+      f('theme.json', JSON.stringify(enManifest)),
+      f('layout/theme.sneferu', '<main><hk-slot name="content" /></main>'),
+      f('templates/index.sneferu', '<hk-sections /><hk-schema>{"sections":[{"type":"hero","settings":{"title":"Hello"}}]}</hk-schema>'),
+      f('sections/hero.sneferu', '<section><h1>{{ section.settings.title }}</h1></section><hk-schema>{"name":"Hero","settings":{"title":{"type":"text","label":"Title","default":"Hi"},"size":{"type":"range","label":{"en":"Size"},"min":1,"max":4}}}</hk-schema>'),
+      f('blocks/chip.sneferu', '<span>{{ block.settings.text }}</span><hk-schema>{"name":{"en":"Chip"},"settings":{"text":{"type":"text","label":"Text"}}}</hk-schema>'),
+      f('locales/en.json', '{"buy":"Buy"}'),
+    ];
+    it('compiles string and { en } labels into { ar, en } with en standing in for ar', () => {
+      const { artifact, diagnostics } = compileTheme(enFiles(), reg);
+      expect(diagnostics).toEqual([]);
+      const a = artifact!;
+      expect(a.manifest.name).toEqual({ ar: 'Esports', en: 'Esports' });
+      expect(a.manifest.description).toEqual({ ar: 'A gaming theme', en: 'A gaming theme' });
+      expect(a.manifest.settings.accent!.label).toEqual({ ar: 'Accent', en: 'Accent' });
+      expect(a.manifest.settings.tagline!.label).toEqual({ ar: 'Tagline', en: 'Tagline' });
+      expect(a.manifest.defaultLocale).toBe('en');
+      expect(a.manifest.locales).toEqual(['en']);
+      expect(a.sections.hero!.schema.name).toEqual({ ar: 'Hero', en: 'Hero' });
+      expect(a.sections.hero!.schema.settings.title).toEqual({ type: 'text', label: { ar: 'Title', en: 'Title' }, default: 'Hi' });
+      expect(a.sections.hero!.schema.settings.size!.label).toEqual({ ar: 'Size', en: 'Size' });
+      expect(a.blocks.chip!.schema.name).toEqual({ ar: 'Chip', en: 'Chip' });
+      expect(a.blocks.chip!.schema.settings.text!.label).toEqual({ ar: 'Text', en: 'Text' });
+      expect(a.locales).toEqual({ en: { buy: 'Buy' } });
+    });
+    it('leaves bilingual labels exactly as written', () => {
+      const a = compileTheme(base(), reg).artifact!;
+      expect(a.manifest.name).toEqual({ ar: 'إي سبورتس', en: 'Esports' });
+      expect(a.sections.hero!.schema.name).toEqual({ ar: 'بطل', en: 'Hero' });
+      expect(a.sections.hero!.schema.settings.title!.label).toEqual({ ar: 'ع', en: 'T' });
+    });
+    it('still needs an English name and description', () => {
+      const codes = (m: object) => compileTheme(enFiles().map((x) => (x.path === 'theme.json' ? f('theme.json', JSON.stringify({ ...enManifest, ...m })) : x)), reg).diagnostics.filter((d) => d.severity === 'error').map((d) => d.code);
+      expect(codes({ name: { ar: 'إي سبورتس' } })).toEqual(['SN3013']);
+      expect(codes({ name: '' })).toEqual(['SN3013']);
+      expect(codes({ description: 5 })).toEqual(['SN3016']);
+      expect(codes({ locales: ['en', 'fr'] })).toEqual(['SN3018']);
+      expect(codes({ defaultLocale: 'ar' })).toEqual(['SN3018']);
+      const sec = enFiles().map((x) => (x.path === 'sections/hero.sneferu' ? f(x.path, '<section /><hk-schema>{"name":{"ar":"بطل"}}</hk-schema>') : x));
+      expect(compileTheme(sec, reg).diagnostics.map((d) => d.code)).toContain('SN3030');
+    });
+    it('warns about an unreadable setting label', () => {
+      const sec = enFiles().map((x) => (x.path === 'sections/hero.sneferu' ? f(x.path, '<section /><hk-schema>{"name":"Hero","settings":{"t":{"type":"text","label":{"ar":"ع"}}}}</hk-schema>') : x));
+      const r = compileTheme(sec, reg);
+      expect(r.artifact).toBeDefined();
+      expect(r.diagnostics.map((d) => [d.code, d.severity])).toEqual([['SN3031', 'warning']]);
+    });
+  });
 });

@@ -1,4 +1,4 @@
-import { IR_VERSION, ENGINE_VERSION, err, hasErrors, validateIR, type Diagnostic, type FieldSchema, type IRNode, type TagRegistry } from '@hekana/sneferu-core';
+import { IR_VERSION, ENGINE_VERSION, err, warn, hasErrors, normalizeFieldLabels, normalizeLabel, validateIR, type Diagnostic, type FieldSchema, type IRNode, type TagRegistry } from '@hekana/sneferu-core';
 import { checkFiles, type ThemeFile } from './files';
 import { validateManifest, type Manifest } from './manifest';
 import { parseTemplate } from './parser';
@@ -32,11 +32,15 @@ export function hash64(text: string): string {
 const isObj = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v);
 
 function asSchema(raw: unknown, file: string, out: Diagnostic[]): SectionSchema {
-  const s = (isObj(raw) ? raw : {}) as Partial<SectionSchema>;
-  const nameOk = isObj(s.name) && typeof (s.name as { ar?: unknown }).ar === 'string' && typeof (s.name as { en?: unknown }).en === 'string';
-  if (!nameOk) out.push(err('SN3030', '<hk-schema> needs name {ar,en}', { file }));
+  const s = (isObj(raw) ? raw : {}) as Partial<Record<keyof SectionSchema, unknown>>;
+  // name and setting labels may be "Text", { en } or { ar, en }; the artifact always
+  // carries { ar, en }, with en standing in for a missing ar
+  const name = normalizeLabel(s.name);
+  if (!name) out.push(err('SN3030', '<hk-schema> needs a name: a string or { en } (ar is optional)', { file }));
   if (s.settings !== undefined && !isObj(s.settings)) out.push(err('SN3030', '<hk-schema> settings must be an object', { file }));
-  return { name: nameOk ? s.name! : { ar: file, en: file }, version: typeof s.version === 'number' ? s.version : 1, settings: (isObj(s.settings) ? s.settings : {}) as FieldSchema, ...(s.blocks ? { blocks: s.blocks } : {}), ...(s.presets ? { presets: s.presets } : {}) };
+  const settings = normalizeFieldLabels(s.settings);
+  for (const k of settings.bad) out.push(warn('SN3031', `<hk-schema> settings.${k}: label must be a string or { en } (ar is optional)`, { file }));
+  return { name: name ?? { ar: file, en: file }, version: typeof s.version === 'number' ? s.version : 1, settings: settings.schema, ...(s.blocks ? { blocks: s.blocks as SectionSchema['blocks'] } : {}), ...(s.presets ? { presets: s.presets as unknown[] } : {}) };
 }
 
 /** Snippet names a tree renders, in order of first appearance. */

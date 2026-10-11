@@ -4,6 +4,7 @@ export type FieldType =
 
 export interface Field {
   type: FieldType;
+  /** Always { ar, en } once compiled; authors may write a string or { en } (see LabelInput). */
   label: { ar: string; en: string };
   default?: unknown;
   required?: boolean;
@@ -14,6 +15,9 @@ export interface Field {
   maxLength?: number;
 }
 export type FieldSchema = Record<string, Field>;
+/** A field as an author writes it: the label may be "Text", { en } or { ar, en }. */
+export type FieldInput = Omit<Field, 'label'> & { label: string | { en: string; ar?: string } };
+export type FieldSchemaInput = Record<string, FieldInput>;
 export type Breakpoint = 'base' | 'tablet' | 'mobile';
 export type Responsive<T> = T | { base?: T; tablet?: T; mobile?: T };
 
