@@ -37,7 +37,7 @@ A product (from `collection(…).products` or `product(…)`) has:
 
 | Field | Example |
 | - | - |
-| `title` | `كارت بلايستيشن` |
+| `title` | `PlayStation gift card` |
 | `url` | `/products/ps-card` |
 | `price` | `52000` (minor units: piastres; 52000 = 520.00 EGP) |
 | `compare_at` | `60000` or nil (the price before a discount) |
@@ -108,13 +108,13 @@ blocks. Use that for empty states:
 
 | Filter | Input → output |
 | - | - |
-| `money` | price in minor units → formatted price in the store currency. `{{ 129000 \| money }}` → `1,290.00 ج.م` (Arabic) / `EGP 1,290.00` (English). Other currencies use the ISO code: `1,290.00 USD` / `USD 1,290.00`. Always two decimals, Western digits |
+| `money` | price in minor units → formatted price in the store currency. `{{ 129000 \| money }}` → `EGP 1,290.00`. Other currencies use the ISO code: `USD 1,290.00`. On an Arabic page the currency comes after the number. Always two decimals, Western digits |
 | `img` | image (object with `url`, or a URL) → image URL, optionally sized: `{{ p.image \| img: 400 }}` |
-| `date` | ISO date → long date: `{{ '2026-10-10' \| date }}` → `10 أكتوبر 2026` / `10 October 2026` |
+| `date` | ISO date → long date: `{{ '2026-10-10' \| date }}` → `10 October 2026` |
 | `t` | key → translation: `{{ 'shop_now' \| t }}` (same as `t('shop_now')`) |
 | `upcase` / `downcase` | `{{ 'egp' \| upcase }}` → `EGP` |
 | `truncate` | `{{ p.title \| truncate: 20 }}` → at most 20 characters, ending in `…` (default 50) |
-| `default` | `{{ section.settings.eyebrow \| default: 'جديد' }}` → the fallback when the value is nil or `''` |
+| `default` | `{{ section.settings.eyebrow \| default: 'New' }}` → the fallback when the value is nil or `''` |
 | `size` | `{{ section.blocks \| size }}` → `3` (arrays and strings; `0` otherwise) |
 | `first` / `last` | first / last array item: `{{ tags \| first }}`. A filter result cannot be followed by `.property`; for a field of the first product write `collection('featured').products[0].title` |
 | `join` | `{{ tags \| join: ' · ' }}` → `a · b` (default separator `, `). On a missing value it prints its argument, so guard it: `{% if tags %}…{% endif %}` |
@@ -126,8 +126,8 @@ Filters chain left to right: `{{ p.title | truncate: 30 | upcase }}`.
 Prices are always integers in minor units. Never divide or format them yourself;
 use `money` or `<hk-price amount="{{ p.price }}" compare-at="{{ p.compare_at }}" />`.
 
-Dates use Western digits in Arabic (`10 أكتوبر 2026`), matching the rest of
-Hekana.
+Dates and prices always use Western digits, in every locale, matching the rest
+of Hekana.
 
 ## Loops
 
@@ -154,10 +154,10 @@ A short list of the first three products of a collection, numbered, with a
   </hk-stack>
 </hk-section>
 <hk-schema>{
-  "name": { "ar": "قائمة منتجات", "en": "Product list" },
+  "name": "Product list",
   "version": 1,
   "settings": {
-    "heading": { "type": "text", "label": { "ar": "العنوان", "en": "Heading" }, "default": "Today's picks" }
+    "heading": { "type": "text", "label": "Heading", "default": "Today's picks" }
   }
 }</hk-schema>
 ```
@@ -201,9 +201,8 @@ There is no `forloop.length`; use `{{ list | size }}` or `list.size`.
 <span>{{ 'free_delivery' | t }}</span>
 ```
 
-Use `t()` for interface words and settings for merchant content. Arabic is the
-default; the English page uses `locales/en.json` and falls back to the default
-locale for any missing key.
+Use `t()` for interface words and settings for merchant content. A page uses
+`locales/<locale>.json` and falls back to the default locale for any missing key.
 
 ## Snippet arguments
 

@@ -12,11 +12,11 @@
   </hk-stack>
 </hk-section>
 <hk-schema>{
-  "name": { "ar": "شبكة منتجات", "en": "Product grid" },
+  "name": "Product grid",
   "version": 1,
   "settings": {
-    "heading":   { "type": "text",    "label": { "ar": "العنوان", "en": "Heading" }, "default": "Best sellers" },
-    "count":     { "type": "range",   "label": { "ar": "عدد المنتجات", "en": "Products to show" }, "default": 4, "min": 2, "max": 24, "step": 1 },
-    "show_link": { "type": "boolean", "label": { "ar": "إظهار «عرض الكل»", "en": "Show “View all”" }, "default": true }
+    "heading":   { "type": "text",    "label": "Heading", "default": "Best sellers" },
+    "count":     { "type": "range",   "label": "Products to show", "default": 4, "min": 2, "max": 24, "step": 1 },
+    "show_link": { "type": "boolean", "label": "Show “View all”", "default": true }
   }
 }</hk-schema>

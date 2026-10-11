@@ -1,4 +1,4 @@
-Sneferu developer guide: validation record, 2026-10-11 (sneferu 4ba682a, CLI built from this repo)
+Sneferu developer guide: validation record, 2026-10-11 (sneferu b374486, CLI built from this repo)
 
 Every example in the guide is in docs/examples/example-store (the cookbook's five sections,
 plus the testimonials and on-sale sections of chapters 3 and 4). It was validated and built:
@@ -8,8 +8,14 @@ $ node packages/sneferu/dist/cli.js validate docs/examples/example-store
 exit 0
 
 $ node packages/sneferu/dist/cli.js build docs/examples/example-store --out /tmp/example-store-dist
-✔ built example-store@0.1.0 → <out>/example-store-0.1.0.sneferu.json (hash 6601d60575a0b90e)
+✔ built example-store@0.1.0 → <out>/example-store-0.1.0.sneferu.json (hash 31d12b2ac01de0e4)
 exit 0
 
-The pictures in docs/images were captured from that theme with the Sneferu runtime and the
-sneferu dev sample data (Playwright, Chromium, device scale 2; desktop 1080 px, phone 390 px).
+The pictures in docs/images are regenerated with one command:
+
+$ pnpm docs:shots            # all 16; or: pnpm docs:shots pricing starter-dev
+
+scripts/docs-shots.ts renders that theme and the starter with the Sneferu runtime and the
+sneferu dev sample data, in English (dir=ltr, lang=en), and captures them with Chromium at
+device scale 2: desktop 1080 px, phone 390 px. It stops if a page is not dir="ltr" lang="en"
+or if its text contains Arabic script.

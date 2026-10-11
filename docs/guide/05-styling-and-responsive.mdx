@@ -163,13 +163,13 @@ For anything else, use a media query with the same widths in your CSS:
 @media (max-width: 639px) { .announcement-link { font-size: 14px; } }
 ```
 
-## Right-to-left and Arabic first
+## Left-to-right and right-to-left
 
-Hekana stores are Arabic first. The default page is Arabic and right-to-left; the
-English page is left-to-right. The renderer sets both on the theme root:
+An English page is left-to-right; an Arabic page is right-to-left. The renderer
+sets the direction and language on the theme root:
 
 ```html
-<div data-hk-theme="my-theme" dir="rtl" lang="ar">…</div>
+<div data-hk-theme="my-theme" dir="ltr" lang="en">…</div>
 ```
 
 Rules that keep one stylesheet correct in both directions:
@@ -186,10 +186,10 @@ Rules that keep one stylesheet correct in both directions:
   `padding-inline`, `padding-block`) and `start`/`end` alignment.
 - `dir` and `locale` are available in templates (`{{ dir }}`, `{% if locale == 'en' %}`)
   for the rare case where markup must differ.
-- Arabic text needs more line height than Latin: 1.6-1.8 for body text is a good
-  default. Do not use letter-spacing on Arabic.
-- Test both: `http://127.0.0.1:4100` and `http://127.0.0.1:4100/?locale=en`.
-- Write numbers with Western digits (`1,290.00 ج.م`), as `money` and `date` do.
+- Arabic script needs more line height than Latin: 1.6-1.8 for body text is a
+  good default, with no letter-spacing.
+- Test every locale the theme lists: `http://127.0.0.1:4100/?locale=<code>`.
+- Write numbers with Western digits (`EGP 1,290.00`), as `money` and `date` do.
 
 ## Passthrough attributes on `hk-*` tags
 

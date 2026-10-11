@@ -31,7 +31,7 @@ function tagSection(t: HkTag): string {
   const lines = [
     `## \`<${t.name}>\``,
     '',
-    `${t.editor.label.en} · ${t.editor.label.ar}`,
+    t.editor.label.en,
     '',
     `| | |`,
     `|---|---|`,
@@ -42,10 +42,10 @@ function tagSection(t: HkTag): string {
   ];
   const props = Object.entries(t.props);
   if (props.length) {
-    lines.push('| Attribute | Type | Default | Responsive | Options / range | Label (en · ar) |', '|---|---|---|---|---|---|');
+    lines.push('| Attribute | Type | Default | Responsive | Options / range | Label |', '|---|---|---|---|---|---|');
     for (const [name, f] of props) {
       const responsive = t.responsive.includes(name);
-      lines.push(`| ${code(kebab(name))} | ${f.type} | ${f.default === undefined ? '—' : code(f.default)} | ${responsive ? `yes: ${code(`tablet-${kebab(name)}`)} ${code(`mobile-${kebab(name)}`)}` : 'no'} | ${constraints(f) || '—'} | ${cell(f.label.en)} · ${cell(f.label.ar)} |`);
+      lines.push(`| ${code(kebab(name))} | ${f.type} | ${f.default === undefined ? '—' : code(f.default)} | ${responsive ? `yes: ${code(`tablet-${kebab(name)}`)} ${code(`mobile-${kebab(name)}`)}` : 'no'} | ${constraints(f) || '—'} | ${cell(f.label.en)} |`);
     }
   } else lines.push('No props.');
   lines.push('');
@@ -96,12 +96,12 @@ export interface TagDocProp {
   maxLength?: number;
   options?: string[];
   responsive: boolean;
-  label: { en: string; ar: string };
+  label: { en: string };
 }
 export interface TagDoc {
   name: string;
   category: HkTag['category'];
-  label: { en: string; ar: string };
+  label: { en: string };
   allowedChildren: string[] | '*';
   responsive: string[];
   props: TagDocProp[];
@@ -118,7 +118,7 @@ export function tagRegistryData(registry: TagRegistry): string {
   const tags: TagDoc[] = orderedTags(registry).map((t) => ({
     name: t.name,
     category: t.category,
-    label: { en: t.editor.label.en, ar: t.editor.label.ar },
+    label: { en: t.editor.label.en },
     allowedChildren: t.allowedChildren,
     responsive: t.responsive.map(kebab),
     props: Object.entries(t.props).map(([name, f]) => ({
@@ -133,7 +133,7 @@ export function tagRegistryData(registry: TagRegistry): string {
       ...(f.maxLength === undefined ? {} : { maxLength: f.maxLength }),
       ...(f.options?.length ? { options: f.options } : {}),
       responsive: t.responsive.includes(name),
-      label: { en: f.label.en, ar: f.label.ar },
+      label: { en: f.label.en },
     })),
   }));
   return `${JSON.stringify({ generatedBy: 'scripts/gen-tag-docs.ts', tags }, null, 2)}\n`;

@@ -5,10 +5,10 @@
   </hk-stack>
 </hk-card>
 <hk-schema>{
-  "name": { "ar": "رأي", "en": "Quote" },
+  "name": "Quote",
   "version": 1,
   "settings": {
-    "text":   { "type": "textarea", "label": { "ar": "الرأي", "en": "Quote" }, "default": "Delivery was fast and the packaging was perfect.", "maxLength": 280 },
-    "author": { "type": "text",     "label": { "ar": "الاسم", "en": "Name" }, "default": "Mona, Alexandria", "maxLength": 60 }
+    "text":   { "type": "textarea", "label": "Quote", "default": "Delivery was fast and the packaging was perfect.", "maxLength": 280 },
+    "author": { "type": "text",     "label": "Name", "default": "Mona, Alexandria", "maxLength": 60 }
   }
 }</hk-schema>

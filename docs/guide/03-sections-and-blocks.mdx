@@ -21,17 +21,17 @@ smallest useful section.
   </hk-stack>
 </hk-section>
 <hk-schema>{
-  "name": { "ar": "واجهة", "en": "Hero" },
+  "name": "Hero",
   "version": 1,
   "settings": {
-    "title":    { "type": "text",     "label": { "ar": "العنوان", "en": "Title" }, "default": "Hello", "maxLength": 80 },
-    "subtitle": { "type": "textarea", "label": { "ar": "الوصف", "en": "Subtitle" }, "default": "", "maxLength": 200 }
+    "title":    { "type": "text",     "label": "Title", "default": "Hello", "maxLength": 80 },
+    "subtitle": { "type": "textarea", "label": "Subtitle", "default": "", "maxLength": 200 }
   }
 }</hk-schema>
 ```
 
 <Result>
-  <Shot src="../images/starter-hero@2x.webp" alt="A dark band with a large white Arabic heading, a line of text and an orange button" caption="This hero in the dev preview, Arabic (the default store language), 1080 px wide." />
+  <Shot src="../images/starter-hero@2x.webp" alt="A dark band with a large white heading, a line of text and an orange button" caption="This hero in the dev preview, 1080 px wide." />
 </Result>
 
 </Example>
@@ -48,7 +48,7 @@ smallest useful section.
    the `title` setting: what the merchant typed, or the default.
 4. **Line 4** `<hk-text>` prints the `subtitle` setting.
 5. **Line 5** `<hk-button>` is a link drawn as a button. `t('shop_now')` takes
-   its words from `locales/ar.json` or `locales/en.json`.
+   its words from `locales/en.json`.
 6. **Lines 8-15** `<hk-schema>` declares the settings the merchant edits in the
    store builder.
 
@@ -57,7 +57,7 @@ Rules for the file:
 - The file name is the section type: `hero`.
 - `<hk-schema>` is JSON (double quotes, no trailing commas; SN1107). Put it at the
   end of the file.
-- `name` needs both `ar` and `en` (SN3030). It is what merchants see in the builder.
+- `name` is required (SN3030). It is what merchants see in the builder.
 - `version` is the schema version (a number, default 1).
 - `settings` is an object of fields. Read them as `section.settings.<key>`.
 - Inside a section you also have `section.id`, `section.type` and `section.blocks`.
@@ -67,7 +67,7 @@ Rules for the file:
 Every field is:
 
 ```json
-{ "type": "…", "label": { "ar": "…", "en": "…" }, "default": …, "min": …, "max": …, "step": …,
+{ "type": "…", "label": "…", "default": …, "min": …, "max": …, "step": …,
   "options": […], "maxLength": …, "required": …, "responsive": …, "visible_if": { "setting": "…", "equals": … } }
 ```
 
@@ -75,22 +75,22 @@ Only `type` and `label` are needed. One example of each type:
 
 | Type | Value in templates | Example field |
 | - | - | - |
-| `text` | short string | `"title": { "type": "text", "label": { "ar": "العنوان", "en": "Title" }, "default": "عروض الصيف", "maxLength": 80 }` |
-| `textarea` | longer string | `"body": { "type": "textarea", "label": { "ar": "النص", "en": "Body" }, "default": "" }` |
-| `rich_text` | string | `"story": { "type": "rich_text", "label": { "ar": "قصة", "en": "Story" }, "default": "" }` |
-| `number` | number | `"padding": { "type": "number", "label": { "ar": "المسافة", "en": "Padding" }, "default": 64, "min": 0, "max": 240 }` |
-| `range` | number (slider) | `"count": { "type": "range", "label": { "ar": "العدد", "en": "Count" }, "default": 8, "min": 2, "max": 24, "step": 1 }` |
-| `boolean` | `true` / `false` | `"show_title": { "type": "boolean", "label": { "ar": "إظهار العنوان", "en": "Show title" }, "default": true }` |
-| `select` | one of `options` | `"align": { "type": "select", "label": { "ar": "المحاذاة", "en": "Align" }, "options": ["start", "center", "end"], "default": "start" }` |
-| `color` | `#hex` or `theme:<token>` | `"background": { "type": "color", "label": { "ar": "الخلفية", "en": "Background" }, "default": "theme:background" }` |
-| `image` | image reference (URL string) | `"image": { "type": "image", "label": { "ar": "صورة", "en": "Image" } }` |
-| `video` | video reference | `"video": { "type": "video", "label": { "ar": "فيديو", "en": "Video" } }` |
-| `link` | URL string | `"link": { "type": "link", "label": { "ar": "رابط", "en": "Link" }, "default": "/products" }` |
-| `icon` | icon name | `"icon": { "type": "icon", "label": { "ar": "أيقونة", "en": "Icon" }, "default": "truck" }` |
-| `product` | product handle | `"product": { "type": "product", "label": { "ar": "منتج", "en": "Product" } }` |
-| `collection` | collection handle | `"collection": { "type": "collection", "label": { "ar": "مجموعة", "en": "Collection" }, "default": "featured" }` |
-| `spacing` | string | `"gap": { "type": "spacing", "label": { "ar": "المسافات", "en": "Spacing" }, "default": "md" }` |
-| `typography` | string | `"font": { "type": "typography", "label": { "ar": "الخط", "en": "Typography" }, "default": "body" }` |
+| `text` | short string | `"title": { "type": "text", "label": "Title", "default": "Summer sale", "maxLength": 80 }` |
+| `textarea` | longer string | `"body": { "type": "textarea", "label": "Body", "default": "" }` |
+| `rich_text` | string | `"story": { "type": "rich_text", "label": "Story", "default": "" }` |
+| `number` | number | `"padding": { "type": "number", "label": "Padding", "default": 64, "min": 0, "max": 240 }` |
+| `range` | number (slider) | `"count": { "type": "range", "label": "Count", "default": 8, "min": 2, "max": 24, "step": 1 }` |
+| `boolean` | `true` / `false` | `"show_title": { "type": "boolean", "label": "Show title", "default": true }` |
+| `select` | one of `options` | `"align": { "type": "select", "label": "Align", "options": ["start", "center", "end"], "default": "start" }` |
+| `color` | `#hex` or `theme:<token>` | `"background": { "type": "color", "label": "Background", "default": "theme:background" }` |
+| `image` | image reference (URL string) | `"image": { "type": "image", "label": "Image" }` |
+| `video` | video reference | `"video": { "type": "video", "label": "Video" }` |
+| `link` | URL string | `"link": { "type": "link", "label": "Link", "default": "/products" }` |
+| `icon` | icon name | `"icon": { "type": "icon", "label": "Icon", "default": "truck" }` |
+| `product` | product handle | `"product": { "type": "product", "label": "Product" }` |
+| `collection` | collection handle | `"collection": { "type": "collection", "label": "Collection", "default": "featured" }` |
+| `spacing` | string | `"gap": { "type": "spacing", "label": "Spacing", "default": "md" }` |
+| `typography` | string | `"font": { "type": "typography", "label": "Typography", "default": "body" }` |
 
 Notes:
 
@@ -101,8 +101,7 @@ Notes:
 - `required`, `visible_if` (show this field only when another setting equals a
   value) and `responsive` are hints for the editor. Rendering does not enforce
   `required`; always set a sensible `default`.
-- Labels are shown to merchants in the dashboard: write the Arabic label first,
-  in plain Egyptian Arabic.
+- Labels are shown to merchants in the dashboard: keep them short and plain.
 
 ## How settings reach the page (coercion)
 
@@ -134,8 +133,8 @@ A template's `<hk-schema>` lists the sections a new page starts with, in order:
 ```html
 <hk-sections />
 <hk-schema>{"sections":[
-  {"type":"hero","settings":{"title":"أهلًا بيك","subtitle":"قالب مبني بسنفرو"}},
-  {"type":"featured","settings":{"title":"منتجات مختارة"}}
+  {"type":"hero","settings":{"title":"Welcome","subtitle":"A theme built with Sneferu"}},
+  {"type":"featured","settings":{"title":"Featured products"}}
 ]}</hk-schema>
 ```
 
@@ -160,11 +159,11 @@ six, and edits each one. Each quote is a block.
   </hk-stack>
 </hk-card>
 <hk-schema>{
-  "name": { "ar": "رأي", "en": "Quote" },
+  "name": "Quote",
   "version": 1,
   "settings": {
-    "text":   { "type": "textarea", "label": { "ar": "الرأي", "en": "Quote" }, "default": "Delivery was fast and the packaging was perfect.", "maxLength": 280 },
-    "author": { "type": "text",     "label": { "ar": "الاسم", "en": "Name" }, "default": "Mona, Alexandria", "maxLength": 60 }
+    "text":   { "type": "textarea", "label": "Quote", "default": "Delivery was fast and the packaging was perfect.", "maxLength": 280 },
+    "author": { "type": "text",     "label": "Name", "default": "Mona, Alexandria", "maxLength": 60 }
   }
 }</hk-schema>
 ```
@@ -183,14 +182,14 @@ six, and edits each one. Each quote is a block.
   </hk-stack>
 </hk-section>
 <hk-schema>{
-  "name": { "ar": "آراء العملاء", "en": "Testimonials" },
+  "name": "Testimonials",
   "version": 1,
   "settings": {
-    "heading": { "type": "text", "label": { "ar": "العنوان", "en": "Heading" }, "default": "What our customers say" }
+    "heading": { "type": "text", "label": "Heading", "default": "What our customers say" }
   },
   "blocks": { "allowed": ["quote"], "max": 6 },
   "presets": [
-    { "name": { "ar": "ثلاث آراء", "en": "Three quotes" },
+    { "name": "Three quotes",
       "blocks": [ { "type": "quote" }, { "type": "quote" }, { "type": "quote" } ] }
   ]
 }</hk-schema>
@@ -251,9 +250,8 @@ How it works:
 #### Try it
 
 <Steps>
-  1. Save the three files and add the key to both locale files:
-     `"no_quotes_yet": "No quotes yet. Add one in the editor."` in `en.json`, and
-     an Arabic sentence in `ar.json`.
+  1. Save the three files and add the key to `locales/en.json`:
+     `"no_quotes_yet": "No quotes yet. Add one in the editor."`.
   2. Add `{"type":"testimonials"}` to `templates/index.sneferu`.
   3. Run `npx @hekana/sneferu validate` and look at the preview: you see the
      empty state.
