@@ -55,7 +55,8 @@ The CLI skips both: they are never checked and never pushed.
 | Categories with the handles `gift-cards`, `game-currency`, `top-ups`, `subscriptions` | the category tiles and the menu links, as `/category/<handle>` |
 
 Prices are in piastres in the data and printed by `hk-product-grid`, for example
-`EGP 99.00` in English and `99.00 ج.م` in Arabic.
+`EGP 99.00` in English; on the Arabic page the currency comes after the
+number.
 
 ## 1. Start from the starter
 
@@ -288,18 +289,9 @@ by the tile icons is declared once in the layout (next step) as
 ## 6. Locale files
 
 Interface words and default copy live in `locales/ar.json` and
-`locales/en.json`, with the same keys. The first lines of each:
-
-```json title="locales/ar.json (excerpt)"
-{
-  "url_prefix": "",
-  "url_home": "/",
-  "url_products": "/products",
-  "hero_title": "كروت الألعاب والشحن",
-  "egp": "ج.م",
-  "instant_delivery": "تسليم فوري"
-}
-```
+`locales/en.json`, with the same keys; the Arabic file has the words in
+Egyptian Arabic, `url_prefix` empty and the paths without `/en`. The first
+lines of the English file:
 
 ```json title="locales/en.json (excerpt)"
 {

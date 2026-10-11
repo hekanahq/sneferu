@@ -717,16 +717,8 @@ text labels: a theme should never draw other companies' logos.
 }
 ```
 
-`locales/ar.json` has the same keys in Egyptian Arabic, for example:
-
-```json title="locales/ar.json (excerpt)"
-{
-  "slide_note": "الكود بيوصلك على الإيميل بعد الدفع الأونلاين.",
-  "platforms_heading": "تسوق حسب المنصة",
-  "trust_instant": "تسليم فوري للكود",
-  "trust_secure": "دفع أونلاين آمن"
-}
-```
+`locales/ar.json` has the same keys, with the words in Egyptian Arabic,
+`url_prefix` empty and the paths without `/en`.
 
 ## 10. The page and the phone layout
 

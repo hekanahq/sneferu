@@ -124,8 +124,8 @@ Two more gaming themes were built the same way:
   1. `npx @hekana/sneferu init arcade`, then `cd arcade`.
   2. Delete `sections/hero.sneferu`, `sections/featured.sneferu` and `blocks/`.
   3. Keep `npx @hekana/sneferu dev` running in a second terminal and open
-     `http://127.0.0.1:4100`. Once `theme.json` sets `defaultLocale` to `ar`
-     (step 2), that page is Arabic; add `?locale=en` for English.
+     `http://127.0.0.1:4100` (Arabic is the default locale once step 2 below is
+     done; add `?locale=en` for English).
 </Steps>
 
 The store needs products and four categories with these handles:
@@ -209,16 +209,8 @@ send an English shopper to the Arabic page.
 }
 ```
 
-```json title="examples/themes/arcade/locales/ar.json (excerpt)"
-{
-  "url_prefix": "",
-  "url_home": "/",
-  "url_products": "/products",
-  "url_search": "/search",
-  "hero_title": "كروت الألعاب والشحن",
-  "egp": "ج.م"
-}
-```
+`locales/ar.json` has the same keys, with `url_prefix` empty, the paths
+without `/en`, and the words in Egyptian Arabic.
 
 In a template: `href="{{ t('url_products') }}"`, and
 `{{ section.settings.title | default: t('hero_title') }}` for text a merchant

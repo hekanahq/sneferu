@@ -645,17 +645,8 @@ the hero.
 }
 ```
 
-`locales/ar.json` has the same keys in Egyptian Arabic, for example:
-
-```json title="locales/ar.json (excerpt)"
-{
-  "hero_title": "اشحن دلوقتي",
-  "hero_subtitle": "خصومات على باقات مختارة من ألعابك",
-  "offer_top": "خصم لحد",
-  "offer_bottom": "على باقات مختارة",
-  "buy": "اشتري"
-}
-```
+`locales/ar.json` has the same keys, with the words in Egyptian Arabic,
+`url_prefix` empty and the paths without `/en`.
 
 ## 9. The page and the phone layout
 
