@@ -2,11 +2,10 @@ import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { createDefaultRegistry } from '@hekana/sneferu-components';
-import { renderPage, type ArtifactLike } from './page';
-// the CLI's sample data: the same context the 0.2 fixture was rendered with
-import { sampleContext } from '../../sneferu/src/sample-data';
+import { renderPage, type ArtifactLike } from '@hekana/sneferu-runtime';
+import { sampleContext } from './sample-data';
 
-const fx = (n: string) => readFileSync(fileURLToPath(new URL(`./__fixtures__/${n}`, import.meta.url)), 'utf8');
+const fx = (n: string) => readFileSync(fileURLToPath(new URL(`../../runtime/src/__fixtures__/${n}`, import.meta.url)), 'utf8');
 
 /** The 0.2 compatibility guarantee: a 0.2 artifact renders the same HTML under every later runtime. */
 describe('0.2 golden fixture', () => {
