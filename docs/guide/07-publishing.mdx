@@ -8,7 +8,11 @@
   them.
 </Callout>
 
-## Sign in: `login`
+## Sign in
+
+Sign in once with `npx @hekana/sneferu login`, or set `HEKANA_TOKEN` to a
+developer key. Getting a key, turning on your dev store and using a key in CI are
+covered in [Get an API key](09-get-an-api-key.mdx). In short:
 
 ```bash
 npx @hekana/sneferu login
@@ -56,7 +60,7 @@ npx @hekana/sneferu push ./my-theme --package my-theme
 
 | Input | Rule |
 | - | - |
-| `--package <slug>` | required; 2-63 lower-case letters, digits, `-`; must equal `theme.json` `id`. The first push of a slug makes it yours; a slug owned by someone else, or reserved by Hekana, is refused |
+| `--package <slug>` | required; 2-63 lower-case letters, digits, `-`; must equal `theme.json` `id`. The first push of a slug makes it yours. A slug owned by someone else is refused, and so are reserved slugs such as `starter`, `default`, `theme` and anything starting `hekana-` |
 | `--dev-store` | optional; after the push, install and publish the version on your dev store (see below). Developer key only |
 | `HEKANA_TOKEN` | optional; overrides the saved key. Sent as `Authorization: Bearer …`. Never commit it |
 | `HEKANA_API_URL` | optional; overrides the URL saved by `login`, default `https://api.hekana.com/api/v1`. Must be `https://`; plain `http://` only for `localhost` / `127.0.0.1` |
@@ -81,8 +85,8 @@ What `push` does, in order:
 ## Try it on your dev store
 
 Turning on developer access in the partner portal gives you a dev store: a
-private store with sample products, used only for testing. It takes no orders and
-is not indexed by search engines.
+private store at `devstore-xxxxxxxx.hekana.com` with sample products, used only
+for testing. It takes no orders or payments and is not indexed by search engines.
 
 ```bash
 npx @hekana/sneferu push ./my-theme --package my-theme --dev-store
@@ -90,11 +94,12 @@ npx @hekana/sneferu push ./my-theme --package my-theme --dev-store
 
 ```
 ✔ pushed my-theme@1.0.1 → version 8a20…41 (in_review, hash 03be…)
-Published on your dev store: https://dev-1a2b3c4d.hekana.com
+Published on your dev store: https://devstore-1a2b3c4d.hekana.com
 ```
 
 `--dev-store` installs the version you just pushed on your dev store and
-publishes it, so you can see it with real storefront data right away. It needs a
+publishes it, so you can see it with the dev store's sample data right away. It
+works while the version is still `in_review`, and only on your own dev store. It needs a
 developer key from `login`; an admin `HEKANA_TOKEN` is refused before anything is
 uploaded. If the push succeeds but publishing fails, the CLI prints the pushed
 version and the reason, and exits with an error.
@@ -109,20 +114,24 @@ version and the reason, and exits with an error.
   the same `version` again is `409 HK2_VERSION_EXISTS`: bump `version` in
   `theme.json` and push again.
 - **Reviews outside themes.** Hekana-owned packages are approved automatically
-  (status `approved`). A version pushed with a developer key waits for review
-  (`in_review`) and becomes `approved` or `rejected` (with a note from the
-  reviewer). Only approved versions are offered to merchants.
+  (status `approved`). A version pushed with a developer key starts as
+  `in_review` and stays that way until Hekana reviews it. It then becomes
+  `approved`, which makes it installable by merchants, or `rejected`, with a note
+  from the reviewer explaining why. Only approved versions are offered to
+  merchants; `in_review` versions can only be used on your dev store.
 - Checks the theme CSS: all `assets/*.css` together at most 512 KB, valid UTF-8.
 
 | Response | Meaning |
 | - | - |
 | `201` | created; the CLI prints the version id, status and content hash |
 | `400 HK2_PUSH_INVALID` | malformed upload or bad slug |
-| `401` / `403` | missing, expired or revoked key or token, or a slug you do not own |
-| `429` | too many pushes; developer keys can push 30 times an hour |
-| `409 HK2_VERSION_EXISTS` | this version number already exists |
+| `401` | the key is invalid, expired or revoked; run `sneferu login` again |
+| `403 HK2_PACKAGE_NOT_OWNED` | the slug belongs to someone else (Hekana or another developer); pick another slug |
+| `403 HK2_PACKAGE_RESERVED` | the slug is reserved (`starter`, `hekana-*` and others); pick another slug |
+| `409 HK2_VERSION_EXISTS` | this version number already exists; bump `version` in `theme.json` |
 | `422 HK2_COMPILE_FAILED` | the theme does not compile on the server (diagnostics included) |
 | `422 HK2_PACKAGE_MISMATCH` | `theme.json` `id` differs from the package slug |
+| `429` | rate limited; a developer key can push 30 times per hour |
 
 ## Versioning
 
