@@ -44,7 +44,9 @@ smallest useful section.
 6. **Lines 8-15** `<hk-schema>` declares the settings the merchant edits in the
    store builder.
 
-![A dark band with a large white Arabic heading, a line of text and an orange button](../images/starter-hero@2x.webp "This hero in the dev preview, Arabic (the default store language), 1080 px wide.")
+<Result>
+  <Shot src="../images/starter-hero@2x.webp" alt="A dark band with a large white Arabic heading, a line of text and an orange button" caption="This hero in the dev preview, Arabic (the default store language), 1080 px wide." />
+</Result>
 
 Rules for the file:
 
@@ -68,7 +70,7 @@ Every field is:
 Only `type` and `label` are needed. One example of each type:
 
 | Type | Value in templates | Example field |
-|---|---|---|
+| - | - | - |
 | `text` | short string | `"title": { "type": "text", "label": { "ar": "العنوان", "en": "Title" }, "default": "عروض الصيف", "maxLength": 80 }` |
 | `textarea` | longer string | `"body": { "type": "textarea", "label": { "ar": "النص", "en": "Body" }, "default": "" }` |
 | `rich_text` | string | `"story": { "type": "rich_text", "label": { "ar": "قصة", "en": "Story" }, "default": "" }` |
@@ -91,7 +93,7 @@ Notes:
 - `product` and `collection` store a handle string. `product('…')` and
   `collection('…')` take **literal** arguments only, so
   `collection(section.settings.collection)` is a compile error (SN1105). Use a
-  fixed handle in the template (see the [cookbook's product grid](08-cookbook.md#product-grid)).
+  fixed handle in the template (see the [cookbook's product grid](08-cookbook.mdx#product-grid)).
 - `required`, `visible_if` (show this field only when another setting equals a
   value) and `responsive` are hints for the editor. Rendering does not enforce
   `required`; always set a sensible `default`.
@@ -104,7 +106,7 @@ The merchant's stored values are never trusted as-is. Before a section renders,
 each declared setting is filled and coerced:
 
 | Situation | Result |
-|---|---|
+| - | - |
 | No stored value | `default` (or nothing, if there is no default) |
 | `text`, `textarea`, `rich_text`, `image`, `video`, `link`, `icon`, `product`, `collection`, `spacing`, `typography` | must be a string, else `default`; cut to `maxLength` if set |
 | `number`, `range` | numbers and numeric strings are parsed and clamped to `min`/`max`; anything else gives `default` |
@@ -119,7 +121,7 @@ page.
 
 Values written directly on `hk-*` tags are not coerced by your schema; each tag
 checks its own props (a `size` outside its range is clamped, an unknown `variant`
-falls back to the tag default). See the [tag reference](../reference/tags.md).
+falls back to the tag default). See the [tag reference](../reference/tags.mdx).
 
 ## Template default sections
 
@@ -213,7 +215,11 @@ In `sections/testimonials.sneferu`:
 5. **Lines 20-23** `"presets"`: when the merchant adds this section, the builder
    offers to start it with three quotes.
 
-![A heading "What our customers say" and three bordered quote cards side by side](../images/testimonials@2x.webp "With three quote blocks, 1080 px wide. Rendered by the Sneferu runtime with three blocks passed in.") ![The same heading with the sentence "No quotes yet. Add one in the editor." under it](../images/testimonials-empty@2x.webp "With no blocks: this is also what sneferu dev shows, because default sections cannot carry blocks.")
+<Result>
+  <Shot src="../images/testimonials@2x.webp" alt='A heading "What our customers say" and three bordered quote cards side by side' caption="With three quote blocks, 1080 px wide. Rendered by the Sneferu runtime with three blocks passed in." />
+
+  <Shot src="../images/testimonials-empty@2x.webp" alt='The same heading with the sentence "No quotes yet. Add one in the editor." under it' caption="With no blocks: this is also what sneferu dev shows, because default sections cannot carry blocks." />
+</Result>
 
 How it works:
 
@@ -236,17 +242,19 @@ How it works:
 
 #### Try it
 
-1. Save the three files and add the key to both locale files:
-   `"no_quotes_yet": "No quotes yet. Add one in the editor."` in `en.json`, and
-   an Arabic sentence in `ar.json`.
-2. Add `{"type":"testimonials"}` to `templates/index.sneferu`.
-3. Run `npx @hekana/sneferu validate` and look at the preview: you see the
-   empty state.
+<Steps>
+  1. Save the three files and add the key to both locale files:
+     `"no_quotes_yet": "No quotes yet. Add one in the editor."` in `en.json`, and
+     an Arabic sentence in `ar.json`.
+  2. Add `{"type":"testimonials"}` to `templates/index.sneferu`.
+  3. Run `npx @hekana/sneferu validate` and look at the preview: you see the
+     empty state.
+</Steps>
 
 ## Snippets vs blocks
 
 | Use | When |
-|---|---|
+| - | - |
 | Block | The merchant decides how many there are and edits each one |
 | Snippet (`{% render %}`) | You repeat markup in code, with values you pass in |
 

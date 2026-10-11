@@ -1,0 +1,765 @@
+{
+  "generatedBy": "scripts/gen-tag-docs.ts",
+  "tags": [
+    {
+      "name": "hk-section",
+      "category": "layout",
+      "label": {
+        "en": "Section",
+        "ar": "قسم"
+      },
+      "allowedChildren": "*",
+      "responsive": [
+        "padding-y"
+      ],
+      "props": [
+        {
+          "name": "fullBleed",
+          "attr": "full-bleed",
+          "type": "boolean",
+          "default": false,
+          "responsive": false,
+          "label": {
+            "en": "Full bleed",
+            "ar": "بعرض الشاشة"
+          }
+        },
+        {
+          "name": "background",
+          "attr": "background",
+          "type": "color",
+          "responsive": false,
+          "label": {
+            "en": "Background",
+            "ar": "الخلفية"
+          }
+        },
+        {
+          "name": "paddingY",
+          "attr": "padding-y",
+          "type": "number",
+          "default": 64,
+          "min": 0,
+          "max": 240,
+          "responsive": true,
+          "label": {
+            "en": "Vertical padding",
+            "ar": "المسافة الرأسية"
+          }
+        }
+      ]
+    },
+    {
+      "name": "hk-container",
+      "category": "layout",
+      "label": {
+        "en": "Container",
+        "ar": "حاوية"
+      },
+      "allowedChildren": "*",
+      "responsive": [
+        "padding-x"
+      ],
+      "props": [
+        {
+          "name": "maxWidth",
+          "attr": "max-width",
+          "type": "number",
+          "min": 200,
+          "max": 1920,
+          "responsive": false,
+          "label": {
+            "en": "Max width",
+            "ar": "أقصى عرض"
+          }
+        },
+        {
+          "name": "paddingX",
+          "attr": "padding-x",
+          "type": "number",
+          "default": 16,
+          "min": 0,
+          "max": 120,
+          "responsive": true,
+          "label": {
+            "en": "Horizontal padding",
+            "ar": "المسافة الأفقية"
+          }
+        }
+      ]
+    },
+    {
+      "name": "hk-stack",
+      "category": "layout",
+      "label": {
+        "en": "Stack",
+        "ar": "صف/عمود"
+      },
+      "allowedChildren": "*",
+      "responsive": [
+        "direction",
+        "gap"
+      ],
+      "props": [
+        {
+          "name": "direction",
+          "attr": "direction",
+          "type": "select",
+          "default": "column",
+          "options": [
+            "row",
+            "column"
+          ],
+          "responsive": true,
+          "label": {
+            "en": "Direction",
+            "ar": "الاتجاه"
+          }
+        },
+        {
+          "name": "gap",
+          "attr": "gap",
+          "type": "number",
+          "default": 16,
+          "min": 0,
+          "max": 160,
+          "responsive": true,
+          "label": {
+            "en": "Gap",
+            "ar": "المسافة"
+          }
+        },
+        {
+          "name": "align",
+          "attr": "align",
+          "type": "select",
+          "options": [
+            "start",
+            "center",
+            "end",
+            "stretch"
+          ],
+          "responsive": false,
+          "label": {
+            "en": "Align",
+            "ar": "المحاذاة"
+          }
+        },
+        {
+          "name": "justify",
+          "attr": "justify",
+          "type": "select",
+          "options": [
+            "start",
+            "center",
+            "end",
+            "between"
+          ],
+          "responsive": false,
+          "label": {
+            "en": "Justify",
+            "ar": "التوزيع"
+          }
+        },
+        {
+          "name": "wrap",
+          "attr": "wrap",
+          "type": "boolean",
+          "default": false,
+          "responsive": false,
+          "label": {
+            "en": "Wrap",
+            "ar": "التفاف"
+          }
+        }
+      ]
+    },
+    {
+      "name": "hk-grid",
+      "category": "layout",
+      "label": {
+        "en": "Grid",
+        "ar": "شبكة"
+      },
+      "allowedChildren": "*",
+      "responsive": [
+        "columns",
+        "gap"
+      ],
+      "props": [
+        {
+          "name": "columns",
+          "attr": "columns",
+          "type": "range",
+          "default": 3,
+          "min": 1,
+          "max": 12,
+          "responsive": true,
+          "label": {
+            "en": "Columns",
+            "ar": "الأعمدة"
+          }
+        },
+        {
+          "name": "gap",
+          "attr": "gap",
+          "type": "number",
+          "default": 24,
+          "min": 0,
+          "max": 160,
+          "responsive": true,
+          "label": {
+            "en": "Gap",
+            "ar": "المسافة"
+          }
+        },
+        {
+          "name": "minItem",
+          "attr": "min-item",
+          "type": "number",
+          "min": 80,
+          "max": 600,
+          "responsive": false,
+          "label": {
+            "en": "Min item width",
+            "ar": "أقل عرض للعنصر"
+          }
+        }
+      ]
+    },
+    {
+      "name": "hk-heading",
+      "category": "typography",
+      "label": {
+        "en": "Heading",
+        "ar": "عنوان"
+      },
+      "allowedChildren": [],
+      "responsive": [
+        "size"
+      ],
+      "props": [
+        {
+          "name": "text",
+          "attr": "text",
+          "type": "text",
+          "default": "",
+          "responsive": false,
+          "label": {
+            "en": "Text",
+            "ar": "النص"
+          }
+        },
+        {
+          "name": "level",
+          "attr": "level",
+          "type": "select",
+          "default": "h2",
+          "options": [
+            "h1",
+            "h2",
+            "h3",
+            "h4"
+          ],
+          "responsive": false,
+          "label": {
+            "en": "Level",
+            "ar": "المستوى"
+          }
+        },
+        {
+          "name": "size",
+          "attr": "size",
+          "type": "number",
+          "min": 12,
+          "max": 160,
+          "responsive": true,
+          "label": {
+            "en": "Size",
+            "ar": "الحجم"
+          }
+        },
+        {
+          "name": "align",
+          "attr": "align",
+          "type": "select",
+          "options": [
+            "start",
+            "center",
+            "end"
+          ],
+          "responsive": false,
+          "label": {
+            "en": "Align",
+            "ar": "المحاذاة"
+          }
+        },
+        {
+          "name": "color",
+          "attr": "color",
+          "type": "color",
+          "responsive": false,
+          "label": {
+            "en": "Colour",
+            "ar": "اللون"
+          }
+        }
+      ]
+    },
+    {
+      "name": "hk-text",
+      "category": "typography",
+      "label": {
+        "en": "Text",
+        "ar": "نص"
+      },
+      "allowedChildren": [],
+      "responsive": [
+        "size"
+      ],
+      "props": [
+        {
+          "name": "text",
+          "attr": "text",
+          "type": "textarea",
+          "default": "",
+          "responsive": false,
+          "label": {
+            "en": "Text",
+            "ar": "النص"
+          }
+        },
+        {
+          "name": "size",
+          "attr": "size",
+          "type": "number",
+          "min": 10,
+          "max": 64,
+          "responsive": true,
+          "label": {
+            "en": "Size",
+            "ar": "الحجم"
+          }
+        },
+        {
+          "name": "align",
+          "attr": "align",
+          "type": "select",
+          "options": [
+            "start",
+            "center",
+            "end"
+          ],
+          "responsive": false,
+          "label": {
+            "en": "Align",
+            "ar": "المحاذاة"
+          }
+        },
+        {
+          "name": "color",
+          "attr": "color",
+          "type": "color",
+          "responsive": false,
+          "label": {
+            "en": "Colour",
+            "ar": "اللون"
+          }
+        }
+      ]
+    },
+    {
+      "name": "hk-badge",
+      "category": "typography",
+      "label": {
+        "en": "Badge",
+        "ar": "شارة"
+      },
+      "allowedChildren": [
+        "#text"
+      ],
+      "responsive": [],
+      "props": [
+        {
+          "name": "text",
+          "attr": "text",
+          "type": "text",
+          "responsive": false,
+          "label": {
+            "en": "Text",
+            "ar": "النص"
+          }
+        },
+        {
+          "name": "tone",
+          "attr": "tone",
+          "type": "select",
+          "default": "accent",
+          "options": [
+            "accent",
+            "neutral",
+            "success",
+            "warning"
+          ],
+          "responsive": false,
+          "label": {
+            "en": "Tone",
+            "ar": "اللون"
+          }
+        }
+      ]
+    },
+    {
+      "name": "hk-image",
+      "category": "media",
+      "label": {
+        "en": "Image",
+        "ar": "صورة"
+      },
+      "allowedChildren": [],
+      "responsive": [],
+      "props": [
+        {
+          "name": "src",
+          "attr": "src",
+          "type": "image",
+          "responsive": false,
+          "label": {
+            "en": "Image",
+            "ar": "الصورة"
+          }
+        },
+        {
+          "name": "alt",
+          "attr": "alt",
+          "type": "text",
+          "default": "",
+          "responsive": false,
+          "label": {
+            "en": "Alt text",
+            "ar": "وصف الصورة"
+          }
+        },
+        {
+          "name": "width",
+          "attr": "width",
+          "type": "number",
+          "min": 16,
+          "max": 2400,
+          "responsive": false,
+          "label": {
+            "en": "Width",
+            "ar": "العرض"
+          }
+        },
+        {
+          "name": "aspectRatio",
+          "attr": "aspect-ratio",
+          "type": "select",
+          "options": [
+            "1/1",
+            "4/5",
+            "3/4",
+            "16/9",
+            "21/9"
+          ],
+          "responsive": false,
+          "label": {
+            "en": "Aspect ratio",
+            "ar": "النسبة"
+          }
+        },
+        {
+          "name": "fit",
+          "attr": "fit",
+          "type": "select",
+          "default": "cover",
+          "options": [
+            "cover",
+            "contain"
+          ],
+          "responsive": false,
+          "label": {
+            "en": "Fit",
+            "ar": "الملاءمة"
+          }
+        },
+        {
+          "name": "loading",
+          "attr": "loading",
+          "type": "select",
+          "default": "lazy",
+          "options": [
+            "lazy",
+            "eager"
+          ],
+          "responsive": false,
+          "label": {
+            "en": "Loading",
+            "ar": "التحميل"
+          }
+        },
+        {
+          "name": "radius",
+          "attr": "radius",
+          "type": "number",
+          "min": 0,
+          "max": 200,
+          "responsive": false,
+          "label": {
+            "en": "Radius",
+            "ar": "استدارة"
+          }
+        }
+      ]
+    },
+    {
+      "name": "hk-button",
+      "category": "ui",
+      "label": {
+        "en": "Button",
+        "ar": "زر"
+      },
+      "allowedChildren": [],
+      "responsive": [],
+      "props": [
+        {
+          "name": "label",
+          "attr": "label",
+          "type": "text",
+          "default": "",
+          "responsive": false,
+          "label": {
+            "en": "Label",
+            "ar": "النص"
+          }
+        },
+        {
+          "name": "href",
+          "attr": "href",
+          "type": "link",
+          "default": "#",
+          "responsive": false,
+          "label": {
+            "en": "Link",
+            "ar": "الرابط"
+          }
+        },
+        {
+          "name": "variant",
+          "attr": "variant",
+          "type": "select",
+          "default": "solid",
+          "options": [
+            "solid",
+            "outline",
+            "ghost"
+          ],
+          "responsive": false,
+          "label": {
+            "en": "Style",
+            "ar": "النمط"
+          }
+        },
+        {
+          "name": "size",
+          "attr": "size",
+          "type": "select",
+          "default": "md",
+          "options": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "responsive": false,
+          "label": {
+            "en": "Size",
+            "ar": "الحجم"
+          }
+        }
+      ]
+    },
+    {
+      "name": "hk-card",
+      "category": "ui",
+      "label": {
+        "en": "Card",
+        "ar": "كارت"
+      },
+      "allowedChildren": "*",
+      "responsive": [
+        "padding"
+      ],
+      "props": [
+        {
+          "name": "background",
+          "attr": "background",
+          "type": "color",
+          "responsive": false,
+          "label": {
+            "en": "Background",
+            "ar": "الخلفية"
+          }
+        },
+        {
+          "name": "radius",
+          "attr": "radius",
+          "type": "number",
+          "default": 12,
+          "min": 0,
+          "max": 64,
+          "responsive": false,
+          "label": {
+            "en": "Radius",
+            "ar": "استدارة"
+          }
+        },
+        {
+          "name": "padding",
+          "attr": "padding",
+          "type": "number",
+          "default": 16,
+          "min": 0,
+          "max": 96,
+          "responsive": true,
+          "label": {
+            "en": "Padding",
+            "ar": "الحشو"
+          }
+        },
+        {
+          "name": "border",
+          "attr": "border",
+          "type": "boolean",
+          "default": false,
+          "responsive": false,
+          "label": {
+            "en": "Border",
+            "ar": "حد"
+          }
+        },
+        {
+          "name": "shadow",
+          "attr": "shadow",
+          "type": "select",
+          "default": "none",
+          "options": [
+            "none",
+            "sm",
+            "md",
+            "lg"
+          ],
+          "responsive": false,
+          "label": {
+            "en": "Shadow",
+            "ar": "ظل"
+          }
+        }
+      ]
+    },
+    {
+      "name": "hk-price",
+      "category": "commerce",
+      "label": {
+        "en": "Price",
+        "ar": "السعر"
+      },
+      "allowedChildren": [],
+      "responsive": [],
+      "props": [
+        {
+          "name": "amount",
+          "attr": "amount",
+          "type": "number",
+          "responsive": false,
+          "label": {
+            "en": "Price",
+            "ar": "السعر"
+          }
+        },
+        {
+          "name": "compareAt",
+          "attr": "compare-at",
+          "type": "number",
+          "responsive": false,
+          "label": {
+            "en": "Compare at",
+            "ar": "السعر قبل الخصم"
+          }
+        }
+      ]
+    },
+    {
+      "name": "hk-product-card",
+      "category": "commerce",
+      "label": {
+        "en": "Product card",
+        "ar": "كارت منتج"
+      },
+      "allowedChildren": [],
+      "responsive": [],
+      "props": [
+        {
+          "name": "product",
+          "attr": "product",
+          "type": "product",
+          "responsive": false,
+          "label": {
+            "en": "Product",
+            "ar": "المنتج"
+          }
+        }
+      ]
+    },
+    {
+      "name": "hk-product-grid",
+      "category": "commerce",
+      "label": {
+        "en": "Product grid",
+        "ar": "شبكة منتجات"
+      },
+      "allowedChildren": [],
+      "responsive": [
+        "columns"
+      ],
+      "props": [
+        {
+          "name": "products",
+          "attr": "products",
+          "type": "collection",
+          "responsive": false,
+          "label": {
+            "en": "Products",
+            "ar": "المنتجات"
+          }
+        },
+        {
+          "name": "limit",
+          "attr": "limit",
+          "type": "range",
+          "default": 8,
+          "min": 1,
+          "max": 48,
+          "responsive": false,
+          "label": {
+            "en": "Count",
+            "ar": "العدد"
+          }
+        },
+        {
+          "name": "columns",
+          "attr": "columns",
+          "type": "range",
+          "default": 4,
+          "min": 1,
+          "max": 6,
+          "responsive": true,
+          "label": {
+            "en": "Columns",
+            "ar": "الأعمدة"
+          }
+        }
+      ]
+    }
+  ]
+}

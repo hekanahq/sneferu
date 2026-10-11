@@ -3,12 +3,12 @@
 Templates read data with `{{ expression }}` and control output with
 `{% if %}`, `{% for %}` and `{% render %}`. There is no arithmetic, no
 assignment and no function calls besides the lookups below: a template cannot
-run code. The full grammar is in [language.md](../language.md).
+run code. The full grammar is in [language.md](../language.mdx).
 
 ## What a template can read
 
 | Name | Where | Contains |
-|---|---|---|
+| - | - | - |
 | `store` | everywhere | the store, e.g. `store.name` |
 | `settings` | everywhere | theme settings from `theme.json` `settings`, defaults filled in and coerced: `settings.accent` |
 | `section` | sections, their blocks and snippets | `section.id`, `section.type`, `section.settings.*`, `section.blocks` |
@@ -24,7 +24,7 @@ Lookups take **literal** arguments only (`collection('featured')`, not
 `collection(section.settings.handle)`, which is SN1105).
 
 | Lookup | Returns |
-|---|---|
+| - | - |
 | `collection('featured')` | the collection: `.title`, `.products`. A missing collection is `{ products: [] }`, never an error |
 | `product('handle')` | the product, or nothing |
 | `t('shop_now')` | the text from `locales/<locale>.json`, then the default locale, then the key itself |
@@ -36,7 +36,7 @@ Lookups take **literal** arguments only (`collection('featured')`, not
 A product (from `collection(…).products` or `product(…)`) has:
 
 | Field | Example |
-|---|---|
+| - | - |
 | `title` | `كارت بلايستيشن` |
 | `url` | `/products/ps-card` |
 | `price` | `52000` (minor units: piastres; 52000 = 520.00 EGP) |
@@ -65,7 +65,7 @@ A product (from `collection(…).products` or `product(…)`) has:
 ## Expressions
 
 | Form | Example |
-|---|---|
+| - | - |
 | Literals | `'text'`, `"text"`, `42`, `true`, `false`, `nil` |
 | Property | `section.settings.title`, `p.image.url` |
 | Index | `collection('featured').products[0].title` |
@@ -87,7 +87,7 @@ comparisons work.
 In `{% if %}`, `{% elsif %}`, `and`, `or`, `not`:
 
 | False | True |
-|---|---|
+| - | - |
 | `nil` (missing), `false`, `0`, `''` (empty string), `[]` (empty array) | everything else, including `'0'`, `' '` and `{}` |
 
 So `{% if collection('featured').products %}` is false for an empty or missing
@@ -107,7 +107,7 @@ blocks. Use that for empty states:
 ## Filters
 
 | Filter | Input → output |
-|---|---|
+| - | - |
 | `money` | price in minor units → formatted price in the store currency. `{{ 129000 \| money }}` → `1,290.00 ج.م` (Arabic) / `EGP 1,290.00` (English). Other currencies use the ISO code: `1,290.00 USD` / `USD 1,290.00`. Always two decimals, Western digits |
 | `img` | image (object with `url`, or a URL) → image URL, optionally sized: `{{ p.image \| img: 400 }}` |
 | `date` | ISO date → long date: `{{ '2026-10-10' \| date }}` → `10 أكتوبر 2026` / `10 October 2026` |
@@ -175,10 +175,12 @@ A short list of the first three products of a collection, numbered, with a
    there is one.
 5. **Line 14** `{% endfor %}` ends the repeated part.
 
-![A "Today's picks" heading and three numbered product rows; the first has a Sale badge, EGP 520.00 and EGP 600.00 crossed out](../images/on-sale@2x.webp "1080 px wide, English. The product names are the dev preview's sample data.")
+<Result>
+  <Shot src="../images/on-sale@2x.webp" alt='A "Today&#x27;s picks" heading and three numbered product rows; the first has a Sale badge, EGP 520.00 and EGP 600.00 crossed out' caption="1080 px wide, English. The product names are the dev preview's sample data." />
+</Result>
 
 | Rule | Value |
-|---|---|
+| - | - |
 | Default limit (no `limit:`) | 50 items |
 | Largest `limit:` | 250 (a limit below 1 or above 250 is SN2007) |
 | Iterations per page, all loops together | 2,000 |
@@ -205,6 +207,6 @@ locale for any missing key.
 {% render 'plan-card', name: section.settings.plan1_name, price: section.settings.plan1_price, best: section.settings.best == '1' %}
 ```
 
-The [subscription plans](08-cookbook.md#subscription-plans) in the cookbook use this.
+The [subscription plans](08-cookbook.mdx#subscription-plans) in the cookbook use this.
 Arguments are `key: expression`, separated by commas (commas inside quotes are
 fine: `label: 'a, b'`). The snippet sees them plus the caller's scope.

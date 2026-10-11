@@ -23,7 +23,7 @@ the CLI. Anything else in the folder is part of the theme and is checked.
 ## Files and what they are for
 
 | Path | Role | Notes |
-|---|---|---|
+| - | - | - |
 | `theme.json` | Identity, version, design tokens, theme-wide settings | See the field table below |
 | `layout/theme.sneferu` | Wraps every page: header, footer, and `<hk-slot name="content" />` where the page goes | Exactly this file name |
 | `templates/<name>.sneferu` | A page type. Usually `<hk-sections />` plus a `<hk-schema>` listing the default sections | `index` is required. On the platform only `index` (route `/`) is served during phase 1b |
@@ -87,7 +87,7 @@ templates (SN2011).
 ```
 
 | Field | Required | Rule | Error |
-|---|---|---|---|
+| - | - | - | - |
 | `id` | yes | 3-41 characters, lower-case letters, digits, `-`, starts with a letter. Equals the package slug you push to | SN3012 |
 | `name` | yes | `{ "ar": "…", "en": "…" }` | SN3013 |
 | `description` | yes | `{ "ar": "…", "en": "…" }` | SN3016 |
@@ -104,7 +104,7 @@ templates (SN2011).
 | `tokens.fonts`, `tokens.radius` | no | accepted in the manifest, not turned into CSS yet | |
 | `previews` | no | array of preview image names | |
 
-How tokens become CSS variables is in [chapter 5](05-styling-and-responsive.md).
+How tokens become CSS variables is in [chapter 5](05-styling-and-responsive.mdx).
 
 ## Locales
 
@@ -135,7 +135,7 @@ How tokens become CSS variables is in [chapter 5](05-styling-and-responsive.md).
 ## Size limits
 
 | Limit | Value | Error |
-|---|---|---|
+| - | - | - |
 | Files per theme | 400 | SN3005 |
 | Whole theme | 25 MB | SN3006 |
 | One asset | 2 MB | SN3007 |

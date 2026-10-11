@@ -8,7 +8,7 @@ one JSON artifact that Hekana renders.
 ## Prerequisites
 
 | Need | Version |
-|---|---|
+| - | - |
 | Node.js | 20 or newer (`node -v`) |
 | pnpm | 9 (only when running the CLI from a clone, see below) |
 | An editor | any; `.sneferu` files are HTML, so HTML highlighting works |
@@ -24,19 +24,21 @@ cd my-theme
 the folder name (`my-theme`). It refuses a non-empty folder unless you pass
 `--force`.
 
-> **The npm package is not published yet.** Until it is, run the CLI from a clone
-> of the SDK repository:
->
-> ```bash
-> git clone <sneferu repo> sneferu && cd sneferu
-> pnpm install && pnpm build
-> node packages/sneferu/dist/cli.js init ~/themes/my-theme
-> node packages/sneferu/dist/cli.js dev ~/themes/my-theme
-> ```
->
-> Every `npx @hekana/sneferu <command>` in this guide is
-> `node packages/sneferu/dist/cli.js <command> <theme folder>` from the clone.
-> The binary is also installed as `sneferu` and `snf` once the package is published.
+<Callout kind="warning">
+  **The npm package is not published yet.** Until it is, run the CLI from a clone
+  of the SDK repository:
+
+  ```bash
+  git clone <sneferu repo> sneferu && cd sneferu
+  pnpm install && pnpm build
+  node packages/sneferu/dist/cli.js init ~/themes/my-theme
+  node packages/sneferu/dist/cli.js dev ~/themes/my-theme
+  ```
+
+  Every `npx @hekana/sneferu <command>` in this guide is
+  `node packages/sneferu/dist/cli.js <command> <theme folder>` from the clone.
+  The binary is also installed as `sneferu` and `snf` once the package is published.
+</Callout>
 
 ## Preview: `dev`
 
@@ -48,10 +50,12 @@ npx @hekana/sneferu dev ./my-theme --port 4200
 Open `http://127.0.0.1:4100`. A new theme looks like this: the starter's hero
 section and a grid of sample products, in Arabic, right to left.
 
-![The starter theme in the dev preview: a dark hero with an Arabic heading and button, then the first sample product cards](../images/starter-dev@2x.webp "The top of the dev preview straight after init, 1080 px wide. The products and prices are the preview's sample data.")
+<Result>
+  <Shot src="../images/starter-dev@2x.webp" alt="The starter theme in the dev preview: a dark hero with an Arabic heading and button, then the first sample product cards" caption="The top of the dev preview straight after init, 1080 px wide. The products and prices are the preview's sample data." />
+</Result>
 
 | What | Detail |
-|---|---|
+| - | - |
 | Address | `http://127.0.0.1:4100` (local only; `--port` changes the port) |
 | Language | Arabic, right-to-left, by default. Add `?locale=en` for English, left-to-right |
 | Other templates | `http://127.0.0.1:4100/__template/<name>` renders `templates/<name>.sneferu` |
@@ -63,13 +67,13 @@ section and a grid of sample products, in Arabic, right to left.
 The preview uses sample data, not a real store:
 
 | Data | Sample value |
-|---|---|
+| - | - |
 | `store.name` | `متجر تجريبي` (Arabic) / `Sample store` (English) |
 | Currency | EGP, so `money` prints `520.00 ج.م` / `EGP 520.00` |
 | `collection('featured')` | 6 products with `title`, `url`, `price` (piastres), `compare_at`, `image.url` |
 | `product('sample-1')` | the first of those products |
 | Theme settings | every setting at its `default` |
-| Sections | the default sections listed in the template's `<hk-schema>` (see [chapter 3](03-sections-and-blocks.md)) |
+| Sections | the default sections listed in the template's `<hk-schema>` (see [chapter 3](03-sections-and-blocks.mdx)) |
 
 Any other collection is empty and any other product is nothing, which is a good
 way to check your empty states.
@@ -92,7 +96,7 @@ sections/hero.sneferu:3:5 error SN2004 unknown property "colour" on <hk-heading>
 ```
 
 Format: `file:line:col severity CODE message`. Every code is listed in
-[diagnostics.md](../diagnostics.md). `validate` exits `0` when valid and `1` when
+[diagnostics.md](../diagnostics.mdx). `validate` exits `0` when valid and `1` when
 not, so it can gate CI.
 
 ## Compile: `build`
@@ -106,12 +110,12 @@ npx @hekana/sneferu build --out out  # another output folder
 `<out>/<id>-<version>.sneferu.json` (the artifact) and copies `assets/` to
 `<out>/assets/`. It prints the artifact hash. You do not upload this file:
 `sneferu push` sends the source and Hekana compiles it itself (see
-[chapter 7](07-publishing.md)).
+[chapter 7](07-publishing.mdx)).
 
 ## Commands
 
 | Command | Arguments | Options |
-|---|---|---|
+| - | - | - |
 | `init [dir]` | folder to create, default `my-theme` | `--force` write into a non-empty folder |
 | `dev [dir]` | theme folder, default `.` | `--port <n>` default `4100` |
 | `validate [dir]` | theme folder, default `.` | |
@@ -120,11 +124,11 @@ npx @hekana/sneferu build --out out  # another output folder
 
 ## Next
 
-1. [Theme structure](02-theme-structure.md): what every file does.
-2. [Sections and blocks](03-sections-and-blocks.md): the parts merchants edit.
-3. [Data and expressions](04-data-and-expressions.md): `{{ }}`, filters, loops.
-4. [Styling and responsive](05-styling-and-responsive.md): tokens, CSS, RTL.
-5. [Security and limits](06-security-and-limits.md): what a theme cannot do.
-6. [Publishing](07-publishing.md): `sneferu push`.
-7. [Cookbook](08-cookbook.md): five complete store sections, with pictures.
-8. [Tag reference](../reference/tags.md): every `hk-*` tag and prop.
+1. [Theme structure](02-theme-structure.mdx): what every file does.
+2. [Sections and blocks](03-sections-and-blocks.mdx): the parts merchants edit.
+3. [Data and expressions](04-data-and-expressions.mdx): `{{ }}`, filters, loops.
+4. [Styling and responsive](05-styling-and-responsive.mdx): tokens, CSS, RTL.
+5. [Security and limits](06-security-and-limits.mdx): what a theme cannot do.
+6. [Publishing](07-publishing.mdx): `sneferu push`.
+7. [Cookbook](08-cookbook.mdx): five complete store sections, with pictures.
+8. [Tag reference](../reference/tags.mdx): every `hk-*` tag and prop.
