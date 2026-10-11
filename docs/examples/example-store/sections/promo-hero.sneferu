@@ -1,7 +1,16 @@
 <hk-section background="{{ section.settings.background }}" padding-y="112" tablet-padding-y="80" mobile-padding-y="56">
   <hk-stack gap="20" mobile-gap="14" align="start">
-    {% if section.settings.eyebrow %}<hk-badge text="{{ section.settings.eyebrow }}" tone="accent" />{% endif %}
-    <hk-heading text="{{ section.settings.title }}" level="h1" size="56" tablet-size="44" mobile-size="32" color="#FFFFFF" />
+    {% if section.settings.eyebrow %}
+      <hk-badge text="{{ section.settings.eyebrow }}" tone="accent" />
+    {% endif %}
+    <hk-heading
+      text="{{ section.settings.title }}"
+      level="h1"
+      size="56"
+      tablet-size="44"
+      mobile-size="32"
+      color="#FFFFFF"
+    />
     <hk-text text="{{ section.settings.subtitle }}" size="20" mobile-size="16" color="#E5E7EB" />
     <hk-stack direction="row" mobile-direction="column" gap="12">
       <hk-button label="{{ section.settings.cta_label }}" href="{{ section.settings.cta_link }}" />
@@ -9,15 +18,45 @@
     </hk-stack>
   </hk-stack>
 </hk-section>
-<hk-schema>{
-  "name": "Promo hero",
-  "version": 1,
-  "settings": {
-    "eyebrow":    { "type": "text",     "label": "Eyebrow", "default": "New this week", "maxLength": 40 },
-    "title":      { "type": "text",     "label": "Title", "default": "Everything for your home, in one place", "maxLength": 80 },
-    "subtitle":   { "type": "textarea", "label": "Subtitle", "default": "Delivery across Egypt. Pay cash when your order arrives.", "maxLength": 200 },
-    "cta_label":  { "type": "text",     "label": "Button label", "default": "Shop new arrivals", "maxLength": 30 },
-    "cta_link":   { "type": "link",     "label": "Button link", "default": "/collections/featured" },
-    "background": { "type": "color",    "label": "Background", "default": "theme:primary" }
+<hk-schema>
+  {
+    "name": "Promo hero",
+    "version": 1,
+    "settings": {
+      "eyebrow": {
+        "type": "text",
+        "label": "Eyebrow",
+        "default": "New this week",
+        "maxLength": 40
+      },
+      "title": {
+        "type": "text",
+        "label": "Title",
+        "default": "Everything for your home, in one place",
+        "maxLength": 80
+      },
+      "subtitle": {
+        "type": "textarea",
+        "label": "Subtitle",
+        "default": "Delivery across Egypt. Pay cash when your order arrives.",
+        "maxLength": 200
+      },
+      "cta_label": {
+        "type": "text",
+        "label": "Button label",
+        "default": "Shop new arrivals",
+        "maxLength": 30
+      },
+      "cta_link": {
+        "type": "link",
+        "label": "Button link",
+        "default": "/collections/featured"
+      },
+      "background": {
+        "type": "color",
+        "label": "Background",
+        "default": "theme:primary"
+      }
+    }
   }
-}</hk-schema>
+</hk-schema>

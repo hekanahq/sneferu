@@ -37,17 +37,31 @@ the content of `templates/index.sneferu` with:
 
 ```html title="templates/index.sneferu"
 <hk-sections />
-<hk-schema>{"sections":[
-  {"type":"announcement-bar"},
-  {"type":"promo-hero"},
-  {"type":"feature-row"},
-  {"type":"product-grid"},
-  {"type":"pricing"}
-]}</hk-schema>
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "announcement-bar"
+      },
+      {
+        "type": "promo-hero"
+      },
+      {
+        "type": "feature-row"
+      },
+      {
+        "type": "product-grid"
+      },
+      {
+        "type": "pricing"
+      }
+    ]
+  }
+</hk-schema>
 ```
 
 1. **Line 1** `<hk-sections />` is where the page's sections go.
-2. **Lines 2-8** list the sections a new home page starts with. Each `type` is a
+2. **Lines 2-20** list the sections a new home page starts with. Each `type` is a
    file name in `sections/` without `.sneferu`. Add them one by one as you
    build each section below; a type with no file yet is an error (SN3020).
 
@@ -62,19 +76,41 @@ news such as free delivery or a sale.
 <hk-section background="{{ section.settings.background }}" padding-y="12" class="announcement">
   <hk-stack direction="row" mobile-direction="column" gap="12" mobile-gap="4" align="center" justify="center">
     <hk-text text="{{ section.settings.message }}" size="15" align="center" color="#FFFFFF" />
-    {% if section.settings.link_label %}<a class="announcement-link" href="{{ section.settings.link }}">{{ section.settings.link_label }}</a>{% endif %}
+    {% if section.settings.link_label %}
+      <a class="announcement-link" href="{{ section.settings.link }}">{{ section.settings.link_label }}</a>
+    {% endif %}
   </hk-stack>
 </hk-section>
-<hk-schema>{
-  "name": "Announcement bar",
-  "version": 1,
-  "settings": {
-    "message":    { "type": "text",  "label": "Message", "default": "Free delivery on orders over EGP 500", "maxLength": 90 },
-    "link_label": { "type": "text",  "label": "Link text", "default": "See details", "maxLength": 30 },
-    "link":       { "type": "link",  "label": "Link", "default": "/pages/delivery" },
-    "background": { "type": "color", "label": "Background", "default": "theme:accent" }
+<hk-schema>
+  {
+    "name": "Announcement bar",
+    "version": 1,
+    "settings": {
+      "message": {
+        "type": "text",
+        "label": "Message",
+        "default": "Free delivery on orders over EGP 500",
+        "maxLength": 90
+      },
+      "link_label": {
+        "type": "text",
+        "label": "Link text",
+        "default": "See details",
+        "maxLength": 30
+      },
+      "link": {
+        "type": "link",
+        "label": "Link",
+        "default": "/pages/delivery"
+      },
+      "background": {
+        "type": "color",
+        "label": "Background",
+        "default": "theme:accent"
+      }
+    }
   }
-}</hk-schema>
+</hk-schema>
 ```
 
 ```css title="assets/announcement.css"
@@ -93,16 +129,16 @@ news such as free delivery or a sale.
 #### What each line does
 
 1. **Line 1** `<hk-section>` is the strip. Its `background` comes from the
-   `background` setting (line 14), which starts as the theme's accent colour.
+   `background` setting (lines 31-35), which starts as the theme's accent colour.
    `padding-y="12"` keeps it thin. `class="announcement"` is a name you can use
    in your CSS.
 2. **Line 2** `<hk-stack>` lays out the message and the link in one row,
    centred, 12 px apart. On phones (`mobile-direction="column"`) they stack.
 3. **Line 3** `<hk-text>` prints the message the merchant typed, in white.
-4. **Line 4** `{% if section.settings.link_label %}` shows the link only when
+4. **Lines 4-6** `{% if section.settings.link_label %}` shows the link only when
    the merchant filled in the link text. The link is a plain HTML `<a>`; you can
    mix plain HTML with `hk-*` tags.
-5. **Lines 7-16** `<hk-schema>` declares what the merchant can edit in the store
+5. **Lines 9-38** `<hk-schema>` declares what the merchant can edit in the store
    builder: the message, the link text, the link and the colour. Each setting
    has a type, a label and a default.
 6. In the CSS file, `.announcement-link` makes the link white, bold and
@@ -116,7 +152,7 @@ news such as free delivery or a sale.
   3. Run `npx @hekana/sneferu validate ./my-store`. It should print
      `✔ theme my-store@0.1.0 is valid`.
   4. Look at the preview. To try another colour, change `"default": "theme:accent"`
-     on line 14 to a colour such as `"#3B2A1A"` and save.
+     on line 34 to a colour such as `"#3B2A1A"` and save.
 </Steps>
 
 ## Hero
@@ -129,8 +165,17 @@ sentence and two buttons.
 ```html title="sections/promo-hero.sneferu"
 <hk-section background="{{ section.settings.background }}" padding-y="112" tablet-padding-y="80" mobile-padding-y="56">
   <hk-stack gap="20" mobile-gap="14" align="start">
-    {% if section.settings.eyebrow %}<hk-badge text="{{ section.settings.eyebrow }}" tone="accent" />{% endif %}
-    <hk-heading text="{{ section.settings.title }}" level="h1" size="56" tablet-size="44" mobile-size="32" color="#FFFFFF" />
+    {% if section.settings.eyebrow %}
+      <hk-badge text="{{ section.settings.eyebrow }}" tone="accent" />
+    {% endif %}
+    <hk-heading
+      text="{{ section.settings.title }}"
+      level="h1"
+      size="56"
+      tablet-size="44"
+      mobile-size="32"
+      color="#FFFFFF"
+    />
     <hk-text text="{{ section.settings.subtitle }}" size="20" mobile-size="16" color="#E5E7EB" />
     <hk-stack direction="row" mobile-direction="column" gap="12">
       <hk-button label="{{ section.settings.cta_label }}" href="{{ section.settings.cta_link }}" />
@@ -138,18 +183,48 @@ sentence and two buttons.
     </hk-stack>
   </hk-stack>
 </hk-section>
-<hk-schema>{
-  "name": "Promo hero",
-  "version": 1,
-  "settings": {
-    "eyebrow":    { "type": "text",     "label": "Eyebrow", "default": "New this week", "maxLength": 40 },
-    "title":      { "type": "text",     "label": "Title", "default": "Everything for your home, in one place", "maxLength": 80 },
-    "subtitle":   { "type": "textarea", "label": "Subtitle", "default": "Delivery across Egypt. Pay cash when your order arrives.", "maxLength": 200 },
-    "cta_label":  { "type": "text",     "label": "Button label", "default": "Shop new arrivals", "maxLength": 30 },
-    "cta_link":   { "type": "link",     "label": "Button link", "default": "/collections/featured" },
-    "background": { "type": "color",    "label": "Background", "default": "theme:primary" }
+<hk-schema>
+  {
+    "name": "Promo hero",
+    "version": 1,
+    "settings": {
+      "eyebrow": {
+        "type": "text",
+        "label": "Eyebrow",
+        "default": "New this week",
+        "maxLength": 40
+      },
+      "title": {
+        "type": "text",
+        "label": "Title",
+        "default": "Everything for your home, in one place",
+        "maxLength": 80
+      },
+      "subtitle": {
+        "type": "textarea",
+        "label": "Subtitle",
+        "default": "Delivery across Egypt. Pay cash when your order arrives.",
+        "maxLength": 200
+      },
+      "cta_label": {
+        "type": "text",
+        "label": "Button label",
+        "default": "Shop new arrivals",
+        "maxLength": 30
+      },
+      "cta_link": {
+        "type": "link",
+        "label": "Button link",
+        "default": "/collections/featured"
+      },
+      "background": {
+        "type": "color",
+        "label": "Background",
+        "default": "theme:primary"
+      }
+    }
   }
-}</hk-schema>
+</hk-schema>
 ```
 
 ```css title="assets/hero.css"
@@ -175,24 +250,24 @@ Add one line to `locales/en.json`:
 #### What each line does
 
 1. **Line 1** `<hk-section>` is the band. The colour comes from the
-   `background` setting (line 21), which starts as the theme's `primary`
+   `background` setting (lines 55-59), which starts as the theme's `primary`
    colour. There are 112 px of space above and below the content: 80 px on
    tablets, 56 px on phones.
 2. **Line 2** `<hk-stack>` puts everything in a column, 20 px apart, lined up
    at the start of the line (the left, in an English store).
-3. **Line 3** shows the small label only if the merchant wrote one. An empty
+3. **Lines 3-5** shows the small label only if the merchant wrote one. An empty
    setting counts as "no", so the badge disappears instead of showing empty.
-4. **Line 4** `<hk-heading>` is the page's main title (`level="h1"`), 56 px on
+4. **Lines 6-13** `<hk-heading>` is the page's main title (`level="h1"`), 56 px on
    desktop, 44 px on tablets, 32 px on phones, in white.
-5. **Line 5** `<hk-text>` is the sentence under the title, in light grey.
-6. **Lines 6-9** a row of two buttons that stack on phones. The first button's
+5. **Line 14** `<hk-text>` is the sentence under the title, in light grey.
+6. **Lines 15-18** a row of two buttons that stack on phones. The first button's
    text and link come from settings. The second button's text comes from the
    locale files through `t('browse_all')`, so it changes with the store's
    language.
-7. **Line 8** `variant="outline"` draws a button with a border and no fill.
+7. **Line 17** `variant="outline"` draws a button with a border and no fill.
    `class="hero-outline"` lets the CSS file make it white, so it shows on the
    dark band.
-8. **Lines 12-23** the settings: label, title, sentence, button text, button
+8. **Lines 21-62** the settings: label, title, sentence, button text, button
    link and background colour. `"type": "link"` means an unsafe link (such as
    `javascript:…`) is replaced with `#` before it reaches the page.
 
@@ -238,19 +313,49 @@ payment and returns.
     </hk-grid>
   </hk-stack>
 </hk-section>
-<hk-schema>{
-  "name": "Feature row",
-  "version": 1,
-  "settings": {
-    "heading":     { "type": "text",     "label": "Heading", "default": "Why people shop with us" },
-    "one_title":   { "type": "text",     "label": "Feature 1", "default": "Delivery to every governorate" },
-    "one_text":    { "type": "textarea", "label": "Feature 1 text", "default": "Cairo and Giza in 2 days, the rest of Egypt in 3 to 5." },
-    "two_title":   { "type": "text",     "label": "Feature 2", "default": "Cash on delivery" },
-    "two_text":    { "type": "textarea", "label": "Feature 2 text", "default": "Pay when the order reaches your door." },
-    "three_title": { "type": "text",     "label": "Feature 3", "default": "14-day returns" },
-    "three_text":  { "type": "textarea", "label": "Feature 3 text", "default": "Not the right fit? Send it back within 14 days." }
+<hk-schema>
+  {
+    "name": "Feature row",
+    "version": 1,
+    "settings": {
+      "heading": {
+        "type": "text",
+        "label": "Heading",
+        "default": "Why people shop with us"
+      },
+      "one_title": {
+        "type": "text",
+        "label": "Feature 1",
+        "default": "Delivery to every governorate"
+      },
+      "one_text": {
+        "type": "textarea",
+        "label": "Feature 1 text",
+        "default": "Cairo and Giza in 2 days, the rest of Egypt in 3 to 5."
+      },
+      "two_title": {
+        "type": "text",
+        "label": "Feature 2",
+        "default": "Cash on delivery"
+      },
+      "two_text": {
+        "type": "textarea",
+        "label": "Feature 2 text",
+        "default": "Pay when the order reaches your door."
+      },
+      "three_title": {
+        "type": "text",
+        "label": "Feature 3",
+        "default": "14-day returns"
+      },
+      "three_text": {
+        "type": "textarea",
+        "label": "Feature 3 text",
+        "default": "Not the right fit? Send it back within 14 days."
+      }
+    }
   }
-}</hk-schema>
+</hk-schema>
 ```
 
 <Result>
@@ -272,7 +377,7 @@ payment and returns.
    and a sentence, both from settings.
 5. **Lines 11-22** the second and third cards, the same shape with their own
    settings.
-6. **Lines 26-38** seven settings: the heading, then a title and a sentence for
+6. **Lines 26-68** seven settings: the heading, then a title and a sentence for
    each card.
 
 <Callout kind="note">
@@ -299,24 +404,49 @@ shows instead.
   <hk-stack gap="24">
     <hk-stack direction="row" justify="between" align="center">
       <hk-heading text="{{ section.settings.heading }}" level="h2" size="32" mobile-size="24" />
-      {% if section.settings.show_link %}<hk-button label="{{ t('view_all') }}" href="/collections/featured" variant="ghost" />{% endif %}
+      {% if section.settings.show_link %}
+        <hk-button label="{{ t('view_all') }}" href="/collections/featured" variant="ghost" />
+      {% endif %}
     </hk-stack>
     {% if collection('featured').products %}
-      <hk-product-grid products="{{ collection('featured').products }}" limit="{{ section.settings.count }}" columns="4" tablet-columns="3" mobile-columns="2" />
+      <hk-product-grid
+        products="{{ collection('featured').products }}"
+        limit="{{ section.settings.count }}"
+        columns="4"
+        tablet-columns="3"
+        mobile-columns="2"
+      />
     {% else %}
       <hk-text text="{{ t('collection_empty') }}" align="center" />
     {% endif %}
   </hk-stack>
 </hk-section>
-<hk-schema>{
-  "name": "Product grid",
-  "version": 1,
-  "settings": {
-    "heading":   { "type": "text",    "label": "Heading", "default": "Best sellers" },
-    "count":     { "type": "range",   "label": "Products to show", "default": 4, "min": 2, "max": 24, "step": 1 },
-    "show_link": { "type": "boolean", "label": "Show “View all”", "default": true }
+<hk-schema>
+  {
+    "name": "Product grid",
+    "version": 1,
+    "settings": {
+      "heading": {
+        "type": "text",
+        "label": "Heading",
+        "default": "Best sellers"
+      },
+      "count": {
+        "type": "range",
+        "label": "Products to show",
+        "default": 4,
+        "min": 2,
+        "max": 24,
+        "step": 1
+      },
+      "show_link": {
+        "type": "boolean",
+        "label": "Show “View all”",
+        "default": true
+      }
+    }
   }
-}</hk-schema>
+</hk-schema>
 ```
 
 <Result>
@@ -338,17 +468,17 @@ Add to `locales/en.json`:
 
 #### What each line does
 
-1. **Lines 3-6** a row with the heading at one end and the "View all" button at
+1. **Lines 3-8** a row with the heading at one end and the "View all" button at
    the other (`justify="between"`). The button shows only when the `show_link`
    setting is on. `variant="ghost"` is a button with no border and no fill.
-2. **Line 7** `collection('featured').products` is the list of products in the
+2. **Line 9** `collection('featured').products` is the list of products in the
    collection whose handle is `featured`. `{% if … %}` is true when that list
    has at least one product.
-3. **Line 8** `<hk-product-grid>` draws a card for each product: picture, name
+3. **Lines 10-16** `<hk-product-grid>` draws a card for each product: picture, name
    and price. `limit` is how many to show, from the `count` setting. Four
    columns on desktop, three on tablets, two on phones.
-4. **Lines 9-11** what shows when the collection is empty.
-5. **Line 19** `count` is a slider (`"type": "range"`) from 2 to 24, starting
+4. **Lines 17-19** what shows when the collection is empty.
+5. **Lines 32-39** `count` is a slider (`"type": "range"`) from 2 to 24, starting
    at 4.
 
 <Callout kind="note">
@@ -362,7 +492,7 @@ Add to `locales/en.json`:
 <Steps>
   1. Save the file, add the locale lines and `{"type":"product-grid"}`.
   2. The preview shows the six sample products; the grid shows four.
-  3. To see the empty message, change `featured` to `sale` on lines 7 and 8 and
+  3. To see the empty message, change `featured` to `sale` on lines 9 and 11 and
      save: the preview has no `sale` collection.
 </Steps>
 
@@ -386,29 +516,81 @@ three times) and the outline's CSS.
     </hk-grid>
   </hk-stack>
 </hk-section>
-<hk-schema>{
-  "name": "Subscription plans",
-  "version": 1,
-  "settings": {
-    "heading":       { "type": "text",     "label": "Heading", "default": "Pick your monthly coffee box" },
-    "plan1_name":    { "type": "text",     "label": "Plan 1 name", "default": "Small" },
-    "plan1_price":   { "type": "number",   "label": "Plan 1 price (piastres)", "default": 29900, "min": 0 },
-    "plan1_details": { "type": "textarea", "label": "Plan 1 details", "default": "250 g of coffee, one roast" },
-    "plan2_name":    { "type": "text",     "label": "Plan 2 name", "default": "Regular" },
-    "plan2_price":   { "type": "number",   "label": "Plan 2 price (piastres)", "default": 49900, "min": 0 },
-    "plan2_details": { "type": "textarea", "label": "Plan 2 details", "default": "500 g of coffee, two roasts" },
-    "plan3_name":    { "type": "text",     "label": "Plan 3 name", "default": "Family" },
-    "plan3_price":   { "type": "number",   "label": "Plan 3 price (piastres)", "default": 79900, "min": 0 },
-    "plan3_details": { "type": "textarea", "label": "Plan 3 details", "default": "1 kg of coffee, any roasts" },
-    "best":          { "type": "select",   "label": "Best value plan", "options": ["1", "2", "3"], "default": "2" }
+<hk-schema>
+  {
+    "name": "Subscription plans",
+    "version": 1,
+    "settings": {
+      "heading": {
+        "type": "text",
+        "label": "Heading",
+        "default": "Pick your monthly coffee box"
+      },
+      "plan1_name": {
+        "type": "text",
+        "label": "Plan 1 name",
+        "default": "Small"
+      },
+      "plan1_price": {
+        "type": "number",
+        "label": "Plan 1 price (piastres)",
+        "default": 29900,
+        "min": 0
+      },
+      "plan1_details": {
+        "type": "textarea",
+        "label": "Plan 1 details",
+        "default": "250 g of coffee, one roast"
+      },
+      "plan2_name": {
+        "type": "text",
+        "label": "Plan 2 name",
+        "default": "Regular"
+      },
+      "plan2_price": {
+        "type": "number",
+        "label": "Plan 2 price (piastres)",
+        "default": 49900,
+        "min": 0
+      },
+      "plan2_details": {
+        "type": "textarea",
+        "label": "Plan 2 details",
+        "default": "500 g of coffee, two roasts"
+      },
+      "plan3_name": {
+        "type": "text",
+        "label": "Plan 3 name",
+        "default": "Family"
+      },
+      "plan3_price": {
+        "type": "number",
+        "label": "Plan 3 price (piastres)",
+        "default": 79900,
+        "min": 0
+      },
+      "plan3_details": {
+        "type": "textarea",
+        "label": "Plan 3 details",
+        "default": "1 kg of coffee, any roasts"
+      },
+      "best": {
+        "type": "select",
+        "label": "Best value plan",
+        "options": ["1", "2", "3"],
+        "default": "2"
+      }
+    }
   }
-}</hk-schema>
+</hk-schema>
 ```
 
 ```html title="snippets/plan-card.sneferu"
 <hk-card class="plan" data-best="{{ best }}" padding="28" mobile-padding="20" radius="16" border="true">
   <hk-stack gap="12" align="start">
-    {% if best %}<hk-badge text="{{ t('best_value') }}" tone="accent" />{% endif %}
+    {% if best %}
+      <hk-badge text="{{ t('best_value') }}" tone="accent" />
+    {% endif %}
     <hk-heading text="{{ name }}" level="h3" size="22" />
     <p class="plan-price"><strong>{{ price | money }}</strong> <small>{{ t('per_month') }}</small></p>
     <hk-text text="{{ details }}" size="15" />
@@ -450,17 +632,17 @@ In `sections/pricing.sneferu`:
    three times, each time with its own values: `name`, `price`, `details`,
    `best` and `variant`. `best: section.settings.best == '1'` is `true` only for
    the plan the merchant chose as the best value.
-3. **Lines 17, 20, 23** prices are whole numbers in piastres: `29900` is
+3. **Lines 26-31, 42-47, 58-63** prices are whole numbers in piastres: `29900` is
    EGP 299.00. Never write `299.00` in a price setting.
-4. **Line 25** a drop-down (`"type": "select"`) with the choices 1, 2 and 3.
+4. **Lines 69-74** a drop-down (`"type": "select"`) with the choices 1, 2 and 3.
 
 In `snippets/plan-card.sneferu`:
 
 1. **Line 1** the card. `data-best="{{ best }}"` writes `true` or `false` into
    the page, so the CSS file can draw an outline around the best card only.
-2. **Line 3** the "Best value" badge, only on the best card.
-3. **Line 5** `{{ price | money }}` turns `29900` into `EGP 299.00`.
-4. **Line 7** the button: filled on the best card, outlined on the others, as
+2. **Lines 3-5** the "Best value" badge, only on the best card.
+3. **Line 7** `{{ price | money }}` turns `29900` into `EGP 299.00`.
+4. **Line 9** the button: filled on the best card, outlined on the others, as
    the section passed in `variant`.
 
 <Callout kind="note">
@@ -474,7 +656,7 @@ In `snippets/plan-card.sneferu`:
 <Steps>
   1. Save the four files, add `{"type":"pricing"}` to the template, and run
      `validate`.
-  2. To mark another plan as the best value, change `"default": "2"` on line 25
+  2. To mark another plan as the best value, change `"default": "2"` on line 73
      to `"3"` and save.
 </Steps>
 
@@ -488,13 +670,27 @@ later in the store builder.
 
 ```html title="templates/index.sneferu"
 <hk-sections />
-<hk-schema>{"sections":[
-  {"type":"announcement-bar"},
-  {"type":"promo-hero"},
-  {"type":"feature-row"},
-  {"type":"product-grid"},
-  {"type":"pricing"}
-]}</hk-schema>
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "announcement-bar"
+      },
+      {
+        "type": "promo-hero"
+      },
+      {
+        "type": "feature-row"
+      },
+      {
+        "type": "product-grid"
+      },
+      {
+        "type": "pricing"
+      }
+    ]
+  }
+</hk-schema>
 ```
 
 <Result>

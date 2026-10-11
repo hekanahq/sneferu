@@ -145,7 +145,9 @@ A short list of the first three products of a collection, numbered, with a
         <hk-stack direction="row" justify="between" align="center" gap="12">
           <hk-text text="{{ forloop.index }}. {{ p.title }}" size="17" />
           <hk-stack direction="row" gap="8" align="center">
-            {% if p.compare_at > p.price %}<hk-badge text="{{ t('sale') }}" tone="accent" />{% endif %}
+            {% if p.compare_at > p.price %}
+              <hk-badge text="{{ t('sale') }}" tone="accent" />
+            {% endif %}
             <hk-price amount="{{ p.price }}" compare-at="{{ p.compare_at }}" />
           </hk-stack>
         </hk-stack>
@@ -153,13 +155,19 @@ A short list of the first three products of a collection, numbered, with a
     {% endfor %}
   </hk-stack>
 </hk-section>
-<hk-schema>{
-  "name": "Product list",
-  "version": 1,
-  "settings": {
-    "heading": { "type": "text", "label": "Heading", "default": "Today's picks" }
+<hk-schema>
+  {
+    "name": "Product list",
+    "version": 1,
+    "settings": {
+      "heading": {
+        "type": "text",
+        "label": "Heading",
+        "default": "Today's picks"
+      }
+    }
   }
-}</hk-schema>
+</hk-schema>
 ```
 
 <Result>
@@ -171,17 +179,17 @@ A short list of the first three products of a collection, numbered, with a
 #### What each line does
 
 1. **Line 4** `{% for p in collection('featured').products limit: 3 %}` repeats
-   lines 5-13 once for each of the first three products. Inside, `p` is the
+   lines 5-15 once for each of the first three products. Inside, `p` is the
    current product.
 2. **Line 7** `{{ forloop.index }}` is 1, 2, 3 and `{{ p.title }}` is the
    product's name.
-3. **Line 9** `p.compare_at > p.price` is true when the product had a higher
+3. **Lines 9-11** `p.compare_at > p.price` is true when the product had a higher
    price before; only then the "Sale" badge shows. Its words come from the
    `sale` key in your locale files, and its look from the badge rules in the
    starter's `assets/theme.css`.
-4. **Line 10** `<hk-price>` prints the price, and the old price crossed out when
+4. **Line 12** `<hk-price>` prints the price, and the old price crossed out when
    there is one.
-5. **Line 14** `{% endfor %}` ends the repeated part.
+5. **Line 16** `{% endfor %}` ends the repeated part.
 
 | Rule | Value |
 | - | - |

@@ -1,0 +1,231 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`printer > arabic text 1`] = `
+"<p>أهلاً بك في متجرنا. {{ store.name }}</p>
+"
+`;
+
+exports[`printer > attribute quotes 1`] = `
+"<div class="a" data-x="plain" title='say "hi"' data-y="{{ t('k') }}" hidden></div>
+"
+`;
+
+exports[`printer > blank lines between blocks are kept (one) 1`] = `
+"<div>
+  <p>a</p>
+
+  <p>b</p>
+</div>
+"
+`;
+
+exports[`printer > filters with several arguments 1`] = `
+"<p>{{ a | default: 'none' }} {{ t('cart.count') | default: b, c }}</p>
+"
+`;
+
+exports[`printer > for with limit 1`] = `
+"<ul>
+  {% for p in collection('featured').products limit: 4 %}
+    <li>{{ p.title }}</li>
+  {% endfor %}
+</ul>
+"
+`;
+
+exports[`printer > hk components 1`] = `
+"<hk-section padding-y="96">
+  <hk-stack gap="16">
+    <hk-heading text="{{ section.settings.title }}" level="h1" />
+    <hk-text text="Hi" />
+  </hk-stack>
+</hk-section>
+"
+`;
+
+exports[`printer > html comment 1`] = `
+"<div>
+  <!-- the hero -->
+  <hk-text text="x" />
+</div>
+"
+`;
+
+exports[`printer > hugging inline elements stay hugged 1`] = `
+"<span><b>a</b><i>b</i></span>
+"
+`;
+
+exports[`printer > if elsif else 1`] = `
+"<div>
+  {% if a %}
+    <p>A</p>
+  {% elsif b %}
+    <p>B</p>
+  {% else %}
+    <p>C</p>
+  {% endif %}
+</div>
+"
+`;
+
+exports[`printer > inline elements keep their spacing 1`] = `
+"<p>Price:<strong>{{ p.price | money }}</strong> <small>per month</small>,<a href="/x">more</a></p>
+"
+`;
+
+exports[`printer > inline text fills to the print width 1`] = `
+"<p>
+  Delivery across Egypt, every day of the week. Pay cash when your order arrives, or pay online with a card or a wallet.
+  Returns are free for fourteen days.
+</p>
+"
+`;
+
+exports[`printer > interpolation spacing 1`] = `
+"<p>
+  {{ product.title | upcase }} {{ price | money }} {{ x | truncate: 20 }} {{ collection('featured').products | size }}
+</p>
+"
+`;
+
+exports[`printer > invalid schema json is left alone 1`] = `
+"<hk-schema>{ "name": oops }</hk-schema>
+"
+`;
+
+exports[`printer > long attribute list 1`] = `
+"<hk-heading
+  text="{{ section.settings.title }}"
+  level="h1"
+  size="56"
+  tablet-size="44"
+  mobile-size="32"
+  color="#FFFFFF"
+  align="center"
+/>
+"
+`;
+
+exports[`printer > long open tag with children 1`] = `
+"<hk-section background="{{ section.settings.background }}" padding-y="112" tablet-padding-y="80" mobile-padding-y="56">
+  <hk-text text="x" />
+</hk-section>
+"
+`;
+
+exports[`printer > nested control flow 1`] = `
+"<hk-stack>
+  {% for p in products %}{% if p.available %}
+      <hk-text text="{{ p.title }}" />
+    {% else %}
+      <hk-badge text="Sold out" />
+    {% endif %}{% endfor %}
+</hk-stack>
+"
+`;
+
+exports[`printer > nested elements 1`] = `
+"<div class="a">
+  <section>
+    <p>Hello</p>
+  </section>
+</div>
+"
+`;
+
+exports[`printer > operators and keywords 1`] = `
+"{% if a == 1 and not b or c != 'x' %}<b>yes</b>{% endif %}
+"
+`;
+
+exports[`printer > pre is left alone 1`] = `
+"<div>
+  <pre>  keep
+    this   </pre>
+</div>
+"
+`;
+
+exports[`printer > prettier-ignore 1`] = `
+"<div>
+  <!-- prettier-ignore -->
+  <p   class="keep"  >  as   written </p>
+  <p class="tidy">tidied</p>
+</div>
+"
+`;
+
+exports[`printer > render 1`] = `
+"<hk-grid>
+  {% render 'plan-card', name: p.name, best: p.best == '1' %}
+</hk-grid>
+"
+`;
+
+exports[`printer > render that does not compile is kept as written 1`] = `
+"{% render "plan-card",name:p.name %}
+"
+`;
+
+exports[`printer > schema json 1`] = `
+"<hk-section></hk-section>
+<hk-schema>
+  {
+    "name": "Hero",
+    "version": 1,
+    "blocks": {
+      "allowed": ["chip", "quote"],
+      "max": 4
+    },
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": "Title",
+        "default": "Hello"
+      },
+      "n": {
+        "type": "number",
+        "default": 1.50,
+        "min": -2e3
+      }
+    },
+    "presets": [],
+    "empty": {}
+  }
+</hk-schema>
+"
+`;
+
+exports[`printer > significant space in an empty inline element 1`] = `
+"<p>a<span> </span>b</p>
+"
+`;
+
+exports[`printer > table 1`] = `
+"<table>
+  <tr>
+    <td>1</td>
+    <td>{{ x }}</td>
+  </tr>
+</table>
+"
+`;
+
+exports[`printer > text and entities 1`] = `
+"<p>Fish &amp; chips &nbsp; a &lt; b</p>
+"
+`;
+
+exports[`printer > unknown directive is kept 1`] = `
+"{% while x %}
+"
+`;
+
+exports[`printer > void and self-closing 1`] = `
+"<div>
+  <img src="/a.png" alt="A"><br>
+  <hk-sections />
+</div>
+"
+`;

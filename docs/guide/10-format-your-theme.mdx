@@ -1,0 +1,240 @@
+# 10. Format your theme
+
+`@hekana/prettier-plugin-sneferu` teaches [Prettier](https://prettier.io) to
+format `.sneferu` files. It indents nested tags and `{% if %}` / `{% for %}`
+blocks, puts long attribute lists one per line, tidies the spacing in `{{ }}`
+and `{% %}`, and pretty-prints the JSON in `<hk-schema>`. The `sneferu format`
+command runs the same plugin over a whole theme, without any setup.
+
+Formatting never changes what your theme does: it only moves whitespace that
+HTML does not render, and the compiled artifact of a theme is identical before
+and after formatting.
+
+## Before and after
+
+A section written on as few lines as possible:
+
+```html title="sections/hero.sneferu (before)"
+<hk-section background="theme:secondary" padding-y="96"><hk-stack gap="16" align="start">
+<hk-heading text="{{section.settings.title|upcase}}" level="h1" size="56" mobile-size="32" color="#FFFFFF" />
+{% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+<hk-button label='{{ t("shop_now") }}' href="/products" /></hk-stack></hk-section>
+<hk-schema>{"name":"Hero","version":1,"settings":{"title":{"type":"text","label":"Title","default":"Hello"}}}</hk-schema>
+```
+
+The same file after `npx @hekana/sneferu format`:
+
+```html title="sections/hero.sneferu (after)"
+<hk-section background="theme:secondary" padding-y="96">
+  <hk-stack gap="16" align="start">
+    <hk-heading text="{{ section.settings.title | upcase }}" level="h1" size="56" mobile-size="32" color="#FFFFFF" />
+    {% for block in section.blocks %}
+      <hk-block of="{{ block }}" />
+    {% endfor %}
+    <hk-button label="{{ t('shop_now') }}" href="/products" />
+  </hk-stack>
+</hk-section>
+<hk-schema>
+  {
+    "name": "Hero",
+    "version": 1,
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": "Title",
+        "default": "Hello"
+      }
+    }
+  }
+</hk-schema>
+```
+
+`sneferu init` already writes its starter theme in this style.
+
+## Format with the CLI
+
+The CLI includes Prettier and the plugin, so there is nothing to install:
+
+```bash
+npx @hekana/sneferu format            # current folder
+npx @hekana/sneferu format ./my-theme
+```
+
+```
+sections/hero.sneferu formatted
+✔ formatted 1 of 8 files
+```
+
+`format` formats every `.sneferu` file, `theme.json` and the files in
+`locales/`. It reads your Prettier configuration (`.prettierrc` and the other
+files Prettier supports, and `.editorconfig`) if the theme has one. CSS files in
+`assets/` are left as they are.
+
+A file that does not parse (for example a tag that is never closed) is reported
+and left unchanged; run `validate` to see the problem. As a last safety check,
+`format` compiles every file before and after and refuses to write a change the
+compiler would see.
+
+### Check formatting in CI
+
+`--check` writes nothing. It lists the files that are not formatted and exits
+with `1`, so it can fail a pull request:
+
+```bash
+npx @hekana/sneferu format --check
+```
+
+```
+sections/hero.sneferu is not formatted
+✖ 1 of 8 files need formatting (run sneferu format)
+```
+
+For example, in a GitHub Actions workflow:
+
+```yaml title=".github/workflows/theme.yml"
+name: theme
+on: [pull_request]
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npx @hekana/sneferu format --check
+      - run: npx @hekana/sneferu validate
+```
+
+## Use Prettier directly
+
+To format from your editor, or together with the rest of a project, install
+Prettier and the plugin in the theme folder:
+
+```bash
+npm install --save-dev prettier @hekana/prettier-plugin-sneferu
+```
+
+Then add a `.prettierrc` file next to `theme.json`:
+
+```json title=".prettierrc"
+{
+  "plugins": ["@hekana/prettier-plugin-sneferu"]
+}
+```
+
+Now Prettier formats `.sneferu` files like any other:
+
+```bash
+npx prettier --write "**/*.sneferu"
+npx prettier --check "**/*.sneferu"
+```
+
+`package.json`, `node_modules/`, lock files and files whose name starts with a
+dot (such as `.prettierrc` and `.vscode/`) are not part of the theme: `validate`,
+`build` and `push` skip them.
+
+## Set up VS Code
+
+<Steps>
+  1. Install the [Prettier extension](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+     (`esbenp.prettier-vscode`).
+  2. Install Prettier and the plugin in the theme folder and add `.prettierrc`,
+     as above. The extension uses the Prettier and the plugin it finds there.
+  3. Add the settings below to `.vscode/settings.json` in the theme folder.
+</Steps>
+
+```json title=".vscode/settings.json"
+{
+  "files.associations": {
+    "*.sneferu": "html"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  }
+}
+```
+
+1. **Lines 2-4** open `.sneferu` files in HTML mode, for highlighting, tag
+   completion and Emmet. Prettier still picks the Sneferu plugin, because it
+   chooses the formatter from the `.sneferu` extension, not from the editor
+   mode.
+2. **Lines 5-8** make Prettier the formatter for these files and format on
+   save. If you use an extension that registers its own `sneferu` language,
+   put the same two lines under `"[sneferu]"` instead of `"[html]"`.
+
+Other editors work the same way: any editor with a Prettier integration formats
+`.sneferu` files once the plugin is in `.prettierrc`.
+
+## Options
+
+Set options in `.prettierrc`, for example `{ "printWidth": 100 }`. `sneferu
+format` reads the same file.
+
+| Option | Default | Does |
+| - | - | - |
+| `printWidth` | `120` | The line length the formatter aims for. A tag whose attributes do not fit goes one attribute per line; text wraps at this width |
+| `tabWidth` | `2` | Spaces per indentation level |
+| `useTabs` | `false` | Indent with tabs instead of spaces |
+| `singleQuote` | `false` | Quote attribute values with `'` instead of `"`. Strings inside `{{ }}` in an attribute then use the other quote |
+| `sneferuSingleQuote` | `true` | Use `'` for strings inside `{{ }}` and `{% %}` (`"` when `false`). A string that contains the chosen quote keeps the other one |
+| `indentSchema` | `true` | Indent the JSON inside `<hk-schema>` one level. `false` keeps it at the level of the tag |
+
+`printWidth` defaults to `120` for `.sneferu` files (Prettier's own default is
+`80`): theme tags carry many attributes, and 120 keeps most of them on one line.
+
+## What the formatter changes
+
+| Construct | Rule |
+| - | - |
+| Elements and `hk-*` tags | One child element per line, indented one level, where whitespace is free to change (see below) |
+| Attributes | All on one line when the tag fits in `printWidth`, otherwise one per line with `>` or `/>` on its own line. Values are quoted with `"` (or `'` with `singleQuote`); a value is never rewritten except for `{{ }}` inside it |
+| `{{ }}` | One space inside the braces and around `\|`, `==`, `and`, `or`; filter arguments as `filter: a, b`; no spaces around `.`, `[ ]` or `( )` |
+| `{% if %}` / `{% elsif %}` / `{% else %}` / `{% endif %}`, `{% for %}` / `{% endfor %}` | The body goes on its own lines, indented, when it contains tags; `limit: n` with one space |
+| `{% render %}` | Arguments as `'name', key: value, key: value` on one line |
+| `<hk-schema>` | The JSON is pretty-printed: two spaces per level, every object on its own lines, short arrays of plain values on one line. Keys stay in the order you wrote them and values stay exactly as written. JSON that does not parse is left as it is |
+| Text | Runs of spaces and line breaks become one space, and long text wraps at `printWidth` |
+| `<!-- comments -->` | Kept as written |
+| `<pre>` | Its content is kept exactly as written |
+| Blank lines | One blank line between two tags is kept; several become one |
+
+### Whitespace that matters
+
+HTML ignores some whitespace and not other whitespace. Between two block tags
+(`<div>`, `<p>`, `<hk-section>`, `<hk-text>` …), at the start and end of a
+block, and between the items of `<hk-stack>` and `<hk-grid>`, whitespace is not
+rendered, so the formatter adds and removes line breaks there freely. Between
+inline content, such as text and `<strong>` in a paragraph, a space shows on the
+page, so the formatter keeps it (it may turn it into a line break, which looks
+the same), and where you wrote no space it does not add one:
+
+```html
+<p><strong>{{ price | money }}</strong> <small>a month</small></p>
+```
+
+stays on one line with exactly one space between the two tags, and
+`<b>a</b><i>b</i>` stays joined.
+
+The compiler follows the same rules: it collapses whitespace runs and drops the
+whitespace HTML does not render, which is why the artifact is identical before
+and after formatting.
+
+## Skip a part
+
+Put `<!-- prettier-ignore -->` before a tag, a `{% if %}` / `{% for %}` block or
+a `{{ }}` to keep it exactly as written:
+
+```html
+<!-- prettier-ignore -->
+<hk-grid columns="3"   gap="16">
+  <hk-text text="aligned by hand" />
+</hk-grid>
+```
+
+The comment is dropped when the theme is compiled, like every HTML comment.
+
+## Next
+
+[Cookbook](08-cookbook.mdx): five complete store sections, formatted with this
+plugin.

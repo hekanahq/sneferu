@@ -5,3 +5,6 @@ export { parseExpr } from './expr';
 export { validateTemplate, propOf } from './validate';
 export { lower } from './lower';
 export { VOID_ELEMENTS } from './ast';
+export { normalizeWhitespace, innerContext, isBlockLevel, freeBeside, isWsOnly, WS_CHARS, type WsContext, type WsNeighbor } from './whitespace';
+export { parseFor } from './expr';
+export { splitArgs } from './parser';

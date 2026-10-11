@@ -6,7 +6,7 @@ const pkg = (name: string) =>
   JSON.parse(readFileSync(fileURLToPath(new URL(`../../${name}/package.json`, import.meta.url)), 'utf8'));
 
 describe('library packages ship ESM and CommonJS (the Hekana API is CommonJS)', () => {
-  it.each(['core', 'compiler', 'runtime', 'components'])('%s declares both entry points', (name) => {
+  it.each(['core', 'compiler', 'runtime', 'components', 'prettier-plugin-sneferu'])('%s declares both entry points', (name) => {
     const p = pkg(name);
     expect(p.main).toBe('./dist/index.cjs');
     expect(p.module).toBe('./dist/index.js');

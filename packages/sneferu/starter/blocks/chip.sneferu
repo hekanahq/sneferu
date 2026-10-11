@@ -1,2 +1,14 @@
 <hk-badge text="{{ block.settings.label }}" tone="accent" />
-<hk-schema>{"name":"Chip","version":1,"settings":{"label":{"type":"text","label":"Label","default":"New"}}}</hk-schema>
+<hk-schema>
+  {
+    "name": "Chip",
+    "version": 1,
+    "settings": {
+      "label": {
+        "type": "text",
+        "label": "Label",
+        "default": "New"
+      }
+    }
+  }
+</hk-schema>

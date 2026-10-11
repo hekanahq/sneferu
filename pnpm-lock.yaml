@@ -44,6 +44,19 @@ importers:
 
   packages/core: {}
 
+  packages/prettier-plugin-sneferu:
+    dependencies:
+      '@hekana/sneferu-compiler':
+        specifier: workspace:^
+        version: link:../compiler
+    devDependencies:
+      '@hekana/sneferu-components':
+        specifier: workspace:^
+        version: link:../components
+      prettier:
+        specifier: ^3.6.2
+        version: 3.9.10
+
   packages/runtime:
     dependencies:
       '@hekana/sneferu-core':
@@ -1336,6 +1349,11 @@ packages:
     engines: {node: '>=10.13.0'}
     hasBin: true
 
+  prettier@3.9.10:
+    resolution: {integrity: sha512-skGHTH1Yb9QvaTC4hWnRTzEYtCpApF0UMBPz+t/0ZPzP8ihefo/btKd+QA7pUE0fEwA1SbS/NmhyEcstdXOIdA==}
+    engines: {node: '>=14'}
+    hasBin: true
+
   quansync@0.2.11:
     resolution: {integrity: sha512-AifT7QEbW9Nri4tAwR5M/uzpBuqfZf+zwaEM/QkzEjj7NBuFD2rBuy0K3dE+8wltbezDV7JMA0WfnCPYRSYbXA==}
 
@@ -2625,6 +2643,8 @@ snapshots:
       source-map-js: 1.2.2
 
   prettier@2.8.8: {}
+
+  prettier@3.9.10: {}
 
   quansync@0.2.11: {}
 

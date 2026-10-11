@@ -16,13 +16,36 @@ an `<hk-schema>` that lists what the merchant can edit.
   <hk-stack gap="16" align="start">
     <hk-heading text="{{ section.settings.title }}" level="h1" size="56" mobile-size="32" color="#FFFFFF" />
     <hk-text text="{{ section.settings.subtitle }}" size="20" color="#E5E7EB" />
-    {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+    {% for block in section.blocks %}
+      <hk-block of="{{ block }}" />
+    {% endfor %}
     <hk-button label="{{ t('shop_now') }}" href="/products" />
   </hk-stack>
 </hk-section>
-<hk-schema>{"name":"Hero","version":1,"blocks":{"allowed":["chip"],"max":4},"settings":{
-  "title":{"type":"text","label":"Title","default":"Hello","maxLength":80},
-  "subtitle":{"type":"textarea","label":"Subtitle","default":"","maxLength":200}}}</hk-schema>
+<hk-schema>
+  {
+    "name": "Hero",
+    "version": 1,
+    "blocks": {
+      "allowed": ["chip"],
+      "max": 4
+    },
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": "Title",
+        "default": "Hello",
+        "maxLength": 80
+      },
+      "subtitle": {
+        "type": "textarea",
+        "label": "Subtitle",
+        "default": "",
+        "maxLength": 200
+      }
+    }
+  }
+</hk-schema>
 ```
 
 <Result>
@@ -40,11 +63,11 @@ an `<hk-schema>` that lists what the merchant can edit.
 3. **Line 3** `<hk-heading>` is the big title. `{{ section.settings.title }}`
    prints the `title` setting: what the merchant typed, or the default.
 4. **Line 4** `<hk-text>` prints the `subtitle` setting.
-5. **Line 5** draws any small labels the merchant added inside the hero (blocks).
+5. **Lines 5-7** draws any small labels the merchant added inside the hero (blocks).
    A new hero has none.
-6. **Line 6** `<hk-button>` is a link drawn as a button. `t('shop_now')` takes
+6. **Line 8** `<hk-button>` is a link drawn as a button. `t('shop_now')` takes
    its words from the theme's locale file.
-7. **Lines 9-11** `<hk-schema>` names the section and declares its settings:
+7. **Lines 11-34** `<hk-schema>` names the section and declares its settings:
    `title` and `subtitle`, each with a label and a default.
 
 More complete sections, each with a picture: the [Cookbook](guide/08-cookbook.mdx).
