@@ -10,7 +10,6 @@ one JSON artifact that Hekana renders.
 | Need | Version |
 | - | - |
 | Node.js | 20 or newer (`node -v`) |
-| pnpm | 9 (only when running the CLI from a clone, see below) |
 | An editor | any; `.sneferu` files are HTML, so HTML highlighting works |
 
 ## Create a theme
@@ -24,20 +23,9 @@ cd my-theme
 the folder name (`my-theme`). It refuses a non-empty folder unless you pass
 `--force`.
 
-<Callout kind="warning">
-  **The npm package is not published yet.** Until it is, run the CLI from a clone
-  of the SDK repository:
-
-  ```bash
-  git clone <sneferu repo> sneferu && cd sneferu
-  pnpm install && pnpm build
-  node packages/sneferu/dist/cli.js init ~/themes/my-theme
-  node packages/sneferu/dist/cli.js dev ~/themes/my-theme
-  ```
-
-  Every `npx @hekana/sneferu <command>` in this guide is
-  `node packages/sneferu/dist/cli.js <command> <theme folder>` from the clone.
-  The binary is also installed as `sneferu` and `snf` once the package is published.
+<Callout kind="note">
+  To skip `npx`, install the CLI once: `npm install -g @hekana/sneferu`. It is then
+  available as `sneferu` (or the short `snf`), for example `sneferu dev my-theme`.
 </Callout>
 
 ## Preview: `dev`
