@@ -84,7 +84,7 @@ export async function startDev(dir: string, port: number, opts: { data?: string 
       }
       const sample = readSampleData(dataPath);
       if (sample.error) { res.writeHead(500, { 'content-type': 'text/html; charset=utf-8' }).end(errorPage(`sample data: ${sample.error}`)); return; }
-      const ctx = withSampleData(sampleContext(locale, artifact.locales, artifact.manifest.defaultLocale), pickSampleData(sample.raw, locale));
+      const ctx = withSampleData(sampleContext(locale, artifact.locales, artifact.manifest.defaultLocale, { responsive: true }), pickSampleData(sample.raw, locale));
       const r = renderPage(artifact, { template, ctx, registry });
       const body = r.html || `<pre style="padding:24px;white-space:pre-wrap">${escapeText(r.diagnostics.map(formatDiagnostic).join('\n') || 'empty page')}</pre>`;
       res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' }).end(devPage(artifact, { body, locale, css: r.css, themeCss: themeCss(), reloadScript: true }));

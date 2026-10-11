@@ -439,6 +439,27 @@
           }
         },
         {
+          "name": "height",
+          "attr": "height",
+          "type": "number",
+          "min": 16,
+          "max": 2400,
+          "responsive": false,
+          "label": {
+            "en": "Height"
+          }
+        },
+        {
+          "name": "sizes",
+          "attr": "sizes",
+          "type": "text",
+          "default": "100vw",
+          "responsive": false,
+          "label": {
+            "en": "Image sizes"
+          }
+        },
+        {
           "name": "aspectRatio",
           "attr": "aspect-ratio",
           "type": "select",

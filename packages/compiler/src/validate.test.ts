@@ -115,4 +115,19 @@ describe('validateTemplate', () => {
       expect(v("{{ collection(section.settings.whatever).title }}", 'block')).toEqual([]);
     });
   });
+  describe('<img> without width and height (SN2015)', () => {
+    it('warns for a literal <img> missing either attribute', () => {
+      for (const src of ['<img src="/a.png" alt="">', '<img src="/a.png" alt="" width="10">', '<img src="/a.png" alt="" height="10">']) expect(run(src), src).toContain('SN2015');
+    });
+    it('is quiet when both are present, static or dynamic, and for hk-image', () => {
+      expect(run('<img src="/a.png" alt="" width="10" height="10">')).not.toContain('SN2015');
+      expect(run('<img src="{{ x }}" alt="" width="{{ w }}" height="{{ h }}">')).not.toContain('SN2015');
+      expect(run('<hk-grid><img src="/a.png" alt=""></hk-grid>')).toContain('SN2015');
+      expect(run('{% if x %}<img src="/a.png" alt="" width="1" height="1">{% endif %}')).not.toContain('SN2015');
+    });
+    it('is a warning, not an error', () => {
+      const d = validateTemplate(parseTemplate('<img src="/a.png" alt="">', 'f').nodes, { file: 'f', registry, snippets: new Set(), kind: 'section' });
+      expect(d.filter((x) => x.code === 'SN2015').map((x) => x.severity)).toEqual(['warning']);
+    });
+  });
 });

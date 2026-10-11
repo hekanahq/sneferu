@@ -67,3 +67,55 @@ SVG files are checked strictly. They cannot contain `<script>`,
 a push error (`HK2_ASSET_INVALID`), never silently dropped. SVG is served with a
 locked-down content security policy, so it works in `<img>` and CSS but cannot
 run anything.
+
+## Responsive images
+
+A phone should not download a 1600 px photo for a 200 px card. Product images
+from Hekana carry the variants the upload pipeline made, as a `srcset`:
+
+```
+{ "url": "https://…/p.png",
+  "srcset": "https://…/p.w400.webp 400w, https://…/p.w800.webp 800w, https://…/p.w1600.webp 1600w" }
+```
+
+The `srcset` is only there when those variants exist. Sneferu never builds a
+variant URL itself, so it never points at a file that is not there.
+
+### `hk-image`
+
+When the image has a `srcset`, `<hk-image>` prints `srcset` and `sizes` with it:
+
+```
+<hk-image src="{{ product.image }}" alt="{{ product.title }}"
+          sizes="(max-width:639px) 100vw, 50vw" width="800" height="800" />
+```
+
+| Prop | What it does |
+| - | - |
+| `sizes` | how wide the image is at each breakpoint; default `100vw`. Ignored when the image has no `srcset` |
+| `width`, `height` | become `width` and `height` attributes, so the browser reserves the space. `width` also caps the image's width in CSS. Without them, the image object's own `width` and `height` are used, when it has them |
+
+### Product cards
+
+`<hk-product-card>` prints `srcset` with `sizes="(max-width:639px) 50vw, 25vw"` when the
+product image has one: half the screen on a phone, a quarter on a wider one
+(a four-column grid). A product with no `srcset` renders exactly as it did in 0.2.
+
+### The `img` filter
+
+`{{ product.image | img: 400 }}` asks the host for the image at 400 px. The host
+picks the smallest listed variant at least that wide, or the widest when none is,
+or the image's own URL when there is no `srcset`:
+
+```
+<img src="{{ product.image | img: 400 }}" alt="{{ product.title }}" width="400" height="400">
+```
+
+### Plain `<img>` tags
+
+A literal `<img>` should have both `width` and `height`; without them the
+compiler warns with SN2015. This is a warning only: the theme still compiles
+and publishes.
+
+`sneferu dev` gives the sample products a `srcset` too, so you can see the
+`srcset` and `sizes` attributes while you work.

@@ -13,6 +13,11 @@ export interface RenderContext {
   translations: Record<string, string>;
   fallbackTranslations: Record<string, string>;
   assetUrl(path: string): string;
+  /**
+   * The URL for an image at `width` pixels (`{{ image | img: 400 }}`; the filter passes the width through
+   * unchanged). Hosts pick from the variants the image object lists (`pickVariant` in
+   * @hekana/sneferu-components) and never build a URL that is not listed there.
+   */
   imageUrl(ref: unknown, width?: number): string;
   /**
    * The host's link resolver (store path prefix, locale prefix). Optional: without it
