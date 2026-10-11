@@ -19,7 +19,7 @@ npx @hekana/sneferu init my-store
 npx @hekana/sneferu dev ./my-store
 ```
 
-Open `http://127.0.0.1:4100/?locale=en`. It reloads every time you save a file.
+Open `http://127.0.0.1:4100`. It reloads every time you save a file.
 
 The starter's `assets/theme.css` already styles buttons, badges and product
 cards. Add one more file next to it:
@@ -66,13 +66,13 @@ news such as free delivery or a sale.
   </hk-stack>
 </hk-section>
 <hk-schema>{
-  "name": { "ar": "شريط إعلان", "en": "Announcement bar" },
+  "name": "Announcement bar",
   "version": 1,
   "settings": {
-    "message":    { "type": "text",  "label": { "ar": "الرسالة", "en": "Message" }, "default": "Free delivery on orders over EGP 500", "maxLength": 90 },
-    "link_label": { "type": "text",  "label": { "ar": "نص الرابط", "en": "Link text" }, "default": "See details", "maxLength": 30 },
-    "link":       { "type": "link",  "label": { "ar": "الرابط", "en": "Link" }, "default": "/pages/delivery" },
-    "background": { "type": "color", "label": { "ar": "الخلفية", "en": "Background" }, "default": "theme:accent" }
+    "message":    { "type": "text",  "label": "Message", "default": "Free delivery on orders over EGP 500", "maxLength": 90 },
+    "link_label": { "type": "text",  "label": "Link text", "default": "See details", "maxLength": 30 },
+    "link":       { "type": "link",  "label": "Link", "default": "/pages/delivery" },
+    "background": { "type": "color", "label": "Background", "default": "theme:accent" }
   }
 }</hk-schema>
 ```
@@ -104,7 +104,7 @@ news such as free delivery or a sale.
    mix plain HTML with `hk-*` tags.
 5. **Lines 7-16** `<hk-schema>` declares what the merchant can edit in the store
    builder: the message, the link text, the link and the colour. Each setting
-   has a type, an Arabic and English label, and a default.
+   has a type, a label and a default.
 6. In the CSS file, `.announcement-link` makes the link white, bold and
    underlined, and at least 44 px tall so it is easy to tap.
 
@@ -139,15 +139,15 @@ sentence and two buttons.
   </hk-stack>
 </hk-section>
 <hk-schema>{
-  "name": { "ar": "واجهة ترويجية", "en": "Promo hero" },
+  "name": "Promo hero",
   "version": 1,
   "settings": {
-    "eyebrow":    { "type": "text",     "label": { "ar": "سطر صغير فوق العنوان", "en": "Eyebrow" }, "default": "New this week", "maxLength": 40 },
-    "title":      { "type": "text",     "label": { "ar": "العنوان", "en": "Title" }, "default": "Everything for your home, in one place", "maxLength": 80 },
-    "subtitle":   { "type": "textarea", "label": { "ar": "الوصف", "en": "Subtitle" }, "default": "Delivery across Egypt. Pay cash when your order arrives.", "maxLength": 200 },
-    "cta_label":  { "type": "text",     "label": { "ar": "نص الزر", "en": "Button label" }, "default": "Shop new arrivals", "maxLength": 30 },
-    "cta_link":   { "type": "link",     "label": { "ar": "رابط الزر", "en": "Button link" }, "default": "/collections/featured" },
-    "background": { "type": "color",    "label": { "ar": "الخلفية", "en": "Background" }, "default": "theme:primary" }
+    "eyebrow":    { "type": "text",     "label": "Eyebrow", "default": "New this week", "maxLength": 40 },
+    "title":      { "type": "text",     "label": "Title", "default": "Everything for your home, in one place", "maxLength": 80 },
+    "subtitle":   { "type": "textarea", "label": "Subtitle", "default": "Delivery across Egypt. Pay cash when your order arrives.", "maxLength": 200 },
+    "cta_label":  { "type": "text",     "label": "Button label", "default": "Shop new arrivals", "maxLength": 30 },
+    "cta_link":   { "type": "link",     "label": "Button link", "default": "/collections/featured" },
+    "background": { "type": "color",    "label": "Background", "default": "theme:primary" }
   }
 }</hk-schema>
 ```
@@ -164,17 +164,11 @@ sentence and two buttons.
 
 </Example>
 
-Add one line to both locale files:
+Add one line to `locales/en.json`:
 
 ```json title="locales/en.json"
 {
   "browse_all": "Browse all products"
-}
-```
-
-```json title="locales/ar.json"
-{
-  "browse_all": "تصفح كل المنتجات"
 }
 ```
 
@@ -185,7 +179,7 @@ Add one line to both locale files:
    colour. There are 112 px of space above and below the content: 80 px on
    tablets, 56 px on phones.
 2. **Line 2** `<hk-stack>` puts everything in a column, 20 px apart, lined up
-   at the start of the line (the left in English, the right in Arabic).
+   at the start of the line (the left, in an English store).
 3. **Line 3** shows the small label only if the merchant wrote one. An empty
    setting counts as "no", so the badge disappears instead of showing empty.
 4. **Line 4** `<hk-heading>` is the page's main title (`level="h1"`), 56 px on
@@ -245,16 +239,16 @@ payment and returns.
   </hk-stack>
 </hk-section>
 <hk-schema>{
-  "name": { "ar": "مميزات المتجر", "en": "Feature row" },
+  "name": "Feature row",
   "version": 1,
   "settings": {
-    "heading":     { "type": "text",     "label": { "ar": "العنوان", "en": "Heading" }, "default": "Why people shop with us" },
-    "one_title":   { "type": "text",     "label": { "ar": "الميزة ١", "en": "Feature 1" }, "default": "Delivery to every governorate" },
-    "one_text":    { "type": "textarea", "label": { "ar": "وصف الميزة ١", "en": "Feature 1 text" }, "default": "Cairo and Giza in 2 days, the rest of Egypt in 3 to 5." },
-    "two_title":   { "type": "text",     "label": { "ar": "الميزة ٢", "en": "Feature 2" }, "default": "Cash on delivery" },
-    "two_text":    { "type": "textarea", "label": { "ar": "وصف الميزة ٢", "en": "Feature 2 text" }, "default": "Pay when the order reaches your door." },
-    "three_title": { "type": "text",     "label": { "ar": "الميزة ٣", "en": "Feature 3" }, "default": "14-day returns" },
-    "three_text":  { "type": "textarea", "label": { "ar": "وصف الميزة ٣", "en": "Feature 3 text" }, "default": "Not the right fit? Send it back within 14 days." }
+    "heading":     { "type": "text",     "label": "Heading", "default": "Why people shop with us" },
+    "one_title":   { "type": "text",     "label": "Feature 1", "default": "Delivery to every governorate" },
+    "one_text":    { "type": "textarea", "label": "Feature 1 text", "default": "Cairo and Giza in 2 days, the rest of Egypt in 3 to 5." },
+    "two_title":   { "type": "text",     "label": "Feature 2", "default": "Cash on delivery" },
+    "two_text":    { "type": "textarea", "label": "Feature 2 text", "default": "Pay when the order reaches your door." },
+    "three_title": { "type": "text",     "label": "Feature 3", "default": "14-day returns" },
+    "three_text":  { "type": "textarea", "label": "Feature 3 text", "default": "Not the right fit? Send it back within 14 days." }
   }
 }</hk-schema>
 ```
@@ -315,12 +309,12 @@ shows instead.
   </hk-stack>
 </hk-section>
 <hk-schema>{
-  "name": { "ar": "شبكة منتجات", "en": "Product grid" },
+  "name": "Product grid",
   "version": 1,
   "settings": {
-    "heading":   { "type": "text",    "label": { "ar": "العنوان", "en": "Heading" }, "default": "Best sellers" },
-    "count":     { "type": "range",   "label": { "ar": "عدد المنتجات", "en": "Products to show" }, "default": 4, "min": 2, "max": 24, "step": 1 },
-    "show_link": { "type": "boolean", "label": { "ar": "إظهار «عرض الكل»", "en": "Show “View all”" }, "default": true }
+    "heading":   { "type": "text",    "label": "Heading", "default": "Best sellers" },
+    "count":     { "type": "range",   "label": "Products to show", "default": 4, "min": 2, "max": 24, "step": 1 },
+    "show_link": { "type": "boolean", "label": "Show “View all”", "default": true }
   }
 }</hk-schema>
 ```
@@ -333,19 +327,12 @@ shows instead.
 
 </Example>
 
-Add to both locale files:
+Add to `locales/en.json`:
 
 ```json title="locales/en.json"
 {
   "view_all": "View all",
   "collection_empty": "No products here yet"
-}
-```
-
-```json title="locales/ar.json"
-{
-  "view_all": "عرض الكل",
-  "collection_empty": "مفيش منتجات هنا لسه"
 }
 ```
 
@@ -400,20 +387,20 @@ three times) and the outline's CSS.
   </hk-stack>
 </hk-section>
 <hk-schema>{
-  "name": { "ar": "باقات الاشتراك", "en": "Subscription plans" },
+  "name": "Subscription plans",
   "version": 1,
   "settings": {
-    "heading":       { "type": "text",     "label": { "ar": "العنوان", "en": "Heading" }, "default": "Pick your monthly coffee box" },
-    "plan1_name":    { "type": "text",     "label": { "ar": "اسم الباقة ١", "en": "Plan 1 name" }, "default": "Small" },
-    "plan1_price":   { "type": "number",   "label": { "ar": "سعر الباقة ١ (قرش)", "en": "Plan 1 price (piastres)" }, "default": 29900, "min": 0 },
-    "plan1_details": { "type": "textarea", "label": { "ar": "تفاصيل الباقة ١", "en": "Plan 1 details" }, "default": "250 g of coffee, one roast" },
-    "plan2_name":    { "type": "text",     "label": { "ar": "اسم الباقة ٢", "en": "Plan 2 name" }, "default": "Regular" },
-    "plan2_price":   { "type": "number",   "label": { "ar": "سعر الباقة ٢ (قرش)", "en": "Plan 2 price (piastres)" }, "default": 49900, "min": 0 },
-    "plan2_details": { "type": "textarea", "label": { "ar": "تفاصيل الباقة ٢", "en": "Plan 2 details" }, "default": "500 g of coffee, two roasts" },
-    "plan3_name":    { "type": "text",     "label": { "ar": "اسم الباقة ٣", "en": "Plan 3 name" }, "default": "Family" },
-    "plan3_price":   { "type": "number",   "label": { "ar": "سعر الباقة ٣ (قرش)", "en": "Plan 3 price (piastres)" }, "default": 79900, "min": 0 },
-    "plan3_details": { "type": "textarea", "label": { "ar": "تفاصيل الباقة ٣", "en": "Plan 3 details" }, "default": "1 kg of coffee, any roasts" },
-    "best":          { "type": "select",   "label": { "ar": "الباقة الأفضل قيمة", "en": "Best value plan" }, "options": ["1", "2", "3"], "default": "2" }
+    "heading":       { "type": "text",     "label": "Heading", "default": "Pick your monthly coffee box" },
+    "plan1_name":    { "type": "text",     "label": "Plan 1 name", "default": "Small" },
+    "plan1_price":   { "type": "number",   "label": "Plan 1 price (piastres)", "default": 29900, "min": 0 },
+    "plan1_details": { "type": "textarea", "label": "Plan 1 details", "default": "250 g of coffee, one roast" },
+    "plan2_name":    { "type": "text",     "label": "Plan 2 name", "default": "Regular" },
+    "plan2_price":   { "type": "number",   "label": "Plan 2 price (piastres)", "default": 49900, "min": 0 },
+    "plan2_details": { "type": "textarea", "label": "Plan 2 details", "default": "500 g of coffee, two roasts" },
+    "plan3_name":    { "type": "text",     "label": "Plan 3 name", "default": "Family" },
+    "plan3_price":   { "type": "number",   "label": "Plan 3 price (piastres)", "default": 79900, "min": 0 },
+    "plan3_details": { "type": "textarea", "label": "Plan 3 details", "default": "1 kg of coffee, any roasts" },
+    "best":          { "type": "select",   "label": "Best value plan", "options": ["1", "2", "3"], "default": "2" }
   }
 }</hk-schema>
 ```
@@ -444,21 +431,13 @@ three times) and the outline's CSS.
 
 </Example>
 
-Add to both locale files:
+Add to `locales/en.json`:
 
 ```json title="locales/en.json"
 {
   "best_value": "Best value",
   "per_month": "/ month",
   "choose_plan": "Choose this box"
-}
-```
-
-```json title="locales/ar.json"
-{
-  "best_value": "أفضل قيمة",
-  "per_month": "/ شهريًا",
-  "choose_plan": "اختار الباقة"
 }
 ```
 
@@ -480,8 +459,7 @@ In `snippets/plan-card.sneferu`:
 1. **Line 1** the card. `data-best="{{ best }}"` writes `true` or `false` into
    the page, so the CSS file can draw an outline around the best card only.
 2. **Line 3** the "Best value" badge, only on the best card.
-3. **Line 5** `{{ price | money }}` turns `29900` into `EGP 299.00` in English
-   and `299.00 ج.م` in Arabic.
+3. **Line 5** `{{ price | money }}` turns `29900` into `EGP 299.00`.
 4. **Line 7** the button: filled on the best card, outlined on the others, as
    the section passed in `variant`.
 
@@ -520,7 +498,7 @@ later in the store builder.
 ```
 
 <Result>
-  <Shot src="../images/full-page@2x.webp" alt="The example store at 1080 px wide: announcement bar, hero, feature row, product grid and subscription plans, top to bottom" caption="Desktop, 1080 px wide. All five sections on one page, as sneferu dev shows them with ?locale=en." />
+  <Shot src="../images/full-page@2x.webp" alt="The example store at 1080 px wide: announcement bar, hero, feature row, product grid and subscription plans, top to bottom" caption="Desktop, 1080 px wide. All five sections on one page, as sneferu dev shows them." />
 </Result>
 
 </Example>

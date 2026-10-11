@@ -20,13 +20,13 @@ an `<hk-schema>` that lists what the merchant can edit.
     <hk-button label="{{ t('shop_now') }}" href="/products" />
   </hk-stack>
 </hk-section>
-<hk-schema>{"name":{"ar":"واجهة","en":"Hero"},"version":1,"blocks":{"allowed":["chip"],"max":4},"settings":{
-  "title":{"type":"text","label":{"ar":"العنوان","en":"Title"},"default":"Hello","maxLength":80},
-  "subtitle":{"type":"textarea","label":{"ar":"الوصف","en":"Subtitle"},"default":"","maxLength":200}}}</hk-schema>
+<hk-schema>{"name":"Hero","version":1,"blocks":{"allowed":["chip"],"max":4},"settings":{
+  "title":{"type":"text","label":"Title","default":"Hello","maxLength":80},
+  "subtitle":{"type":"textarea","label":"Subtitle","default":"","maxLength":200}}}</hk-schema>
 ```
 
 <Result>
-  <Shot src="images/starter-hero@2x.webp" alt="A dark band with a large white Arabic heading, a line of text and an orange button" caption="The starter hero in the dev preview, 1080 px wide. Arabic is the default store language, so it reads right to left." />
+  <Shot src="images/starter-hero@2x.webp" alt="A dark band with a large white heading, a line of text and an orange button" caption="The starter hero in the dev preview, 1080 px wide." />
 </Result>
 
 </Example>
@@ -43,9 +43,9 @@ an `<hk-schema>` that lists what the merchant can edit.
 5. **Line 5** draws any small labels the merchant added inside the hero (blocks).
    A new hero has none.
 6. **Line 6** `<hk-button>` is a link drawn as a button. `t('shop_now')` takes
-   its words from the theme's Arabic or English locale file.
+   its words from the theme's locale file.
 7. **Lines 9-11** `<hk-schema>` names the section and declares its settings:
-   `title` and `subtitle`, each with an Arabic and English label and a default.
+   `title` and `subtitle`, each with a label and a default.
 
 More complete sections, each with a picture: the [Cookbook](guide/08-cookbook.mdx).
 
@@ -79,7 +79,7 @@ npx @hekana/sneferu dev ./my-theme
 </Example>
 
 Open `http://127.0.0.1:4100`. The preview fills the theme with sample products
-and reloads every time you save a file. Add `?locale=en` for English.
+and reloads every time you save a file.
 
 ### 3. Push a version
 

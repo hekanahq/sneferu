@@ -50,18 +50,18 @@ npx @hekana/sneferu dev ./my-theme --port 4200
 ```
 
 <Result url="127.0.0.1:4100">
-  <Shot src="../images/starter-dev@2x.webp" alt="The starter theme in the dev preview: a dark hero with an Arabic heading and button, then the first sample product cards" caption="The top of the dev preview straight after init, 1080 px wide. The products and prices are the preview's sample data." />
+  <Shot src="../images/starter-dev@2x.webp" alt="The starter theme in the dev preview: a dark hero with a heading and button, then the first sample product cards" caption="The top of the dev preview straight after init, 1080 px wide. The products and prices are the preview's sample data." />
 </Result>
 
 </Example>
 
 Open `http://127.0.0.1:4100`. A new theme looks like the picture: the starter's
-hero section and a grid of sample products, in Arabic, right to left.
+hero section and a grid of sample products, in English, left to right.
 
 | What | Detail |
 | - | - |
 | Address | `http://127.0.0.1:4100` (local only; `--port` changes the port) |
-| Language | Arabic, right-to-left, by default. Add `?locale=en` for English, left-to-right |
+| Language | The theme's `defaultLocale`. `?locale=<code>` shows another locale the theme lists in `locales` |
 | Other templates | `http://127.0.0.1:4100/__template/<name>` renders `templates/<name>.sneferu` |
 | Live reload | Saving any file recompiles and reloads the open page |
 | Errors | A theme that does not compile shows the diagnostics list instead of the page |
@@ -72,8 +72,8 @@ The preview uses sample data, not a real store:
 
 | Data | Sample value |
 | - | - |
-| `store.name` | `متجر تجريبي` (Arabic) / `Sample store` (English) |
-| Currency | EGP, so `money` prints `520.00 ج.م` / `EGP 520.00` |
+| `store.name` | `Sample store` |
+| Currency | EGP, so `money` prints `EGP 520.00` |
 | `collection('featured')` | 6 products with `title`, `url`, `price` (piastres), `compare_at`, `image.url` |
 | `product('sample-1')` | the first of those products |
 | Theme settings | every setting at its `default` |

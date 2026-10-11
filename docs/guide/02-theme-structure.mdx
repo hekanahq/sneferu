@@ -12,8 +12,7 @@ my-theme/
 ├── snippets/*.sneferu      partials for {% render %}
 ├── assets/                 css, js, images, fonts
 ├── locales/
-│   ├── ar.json             UI strings, Arabic
-│   └── en.json             UI strings, English
+│   └── en.json             UI strings, one file per locale
 └── migrations/*.json       settings migrations (reserved)
 ```
 
@@ -51,7 +50,7 @@ A template:
 ```html
 <hk-sections />
 <hk-schema>{"sections":[
-  {"type":"hero","settings":{"title":"أهلًا بيك"}},
+  {"type":"hero","settings":{"title":"Welcome"}},
   {"type":"featured"}
 ]}</hk-schema>
 ```
@@ -64,17 +63,17 @@ templates (SN2011).
 ```json
 {
   "id": "nile-fashion",
-  "name": { "ar": "نيل فاشون", "en": "Nile Fashion" },
-  "description": { "ar": "قالب لمتاجر الملابس", "en": "A theme for clothing stores" },
+  "name": "Nile Fashion",
+  "description": "A theme for clothing stores",
   "version": "1.0.0",
   "author": "Hekana",
   "category": "fashion",
   "engine": "hk2",
   "engineCompatibility": "^2.0.0",
-  "defaultLocale": "ar",
-  "locales": ["ar", "en"],
+  "defaultLocale": "en",
+  "locales": ["en"],
   "settings": {
-    "accent": { "type": "color", "label": { "ar": "لون مميز", "en": "Accent" }, "default": "#B45309" }
+    "accent": { "type": "color", "label": "Accent", "default": "#B45309" }
   },
   "tokens": {
     "colors": {
@@ -89,29 +88,28 @@ templates (SN2011).
 | Field | Required | Rule | Error |
 | - | - | - | - |
 | `id` | yes | 3-41 characters, lower-case letters, digits, `-`, starts with a letter. Equals the package slug you push to | SN3012 |
-| `name` | yes | `{ "ar": "…", "en": "…" }` | SN3013 |
-| `description` | yes | `{ "ar": "…", "en": "…" }` | SN3016 |
+| `name` | yes | a string, e.g. `"Nile Fashion"` | SN3013 |
+| `description` | yes | a string | SN3016 |
 | `version` | yes | `x.y.z`. Bump it for every push; a pushed version cannot be replaced | SN3014 |
 | `author` | yes | non-empty string | SN3015 |
 | `category` | yes | non-empty string (`general`, `fashion`, `electronics`, …) | SN3017 |
 | `engine` | yes | exactly `"hk2"` | SN3010 |
 | `engineCompatibility` | yes | `^2.0.0` or an exact version; must include the current engine 2.0.0 | SN3011 |
-| `defaultLocale` | yes | `"ar"` or `"en"`. Use `"ar"`: Hekana stores are Arabic-first | SN3018 |
-| `locales` | yes | array that includes `defaultLocale`, e.g. `["ar", "en"]` | SN3018 |
+| `defaultLocale` | yes | `"en"` or `"ar"` | SN3018 |
+| `locales` | yes | array that includes `defaultLocale`, e.g. `["en"]` | SN3018 |
 | `settings` | yes | object of fields (may be `{}`), same field format as sections. Merchants edit these for the whole theme; read them as `settings.accent` or `settings('accent')` | SN3021 |
 | `tokens.colors` | yes | `primary`, `secondary`, `accent`, `background`, `text` as `#RRGGBB`. Extra keys (`muted`, `border`, …) are allowed | SN3019 |
 | `tokens.layout.contentWidth` | no | `"<3-4 digits>px"`, e.g. `"1200px"`; becomes `--hk-content-width` | ignored if malformed |
 | `tokens.fonts`, `tokens.radius` | no | accepted in the manifest, not turned into CSS yet | |
 | `previews` | no | array of preview image names | |
 
+Labels and names (`name`, `description`, every setting `label`, section and block
+names) are plain strings. Arabic labels are optional: you may write
+`{ "en": "Accent", "ar": "…" }`, and when `ar` is missing merchants see the `en` label.
+
 How tokens become CSS variables is in [chapter 5](05-styling-and-responsive.mdx).
 
 ## Locales
-
-```json
-// locales/ar.json
-{ "shop_now": "تسوق دلوقتي", "view_all": "عرض الكل" }
-```
 
 ```json
 // locales/en.json

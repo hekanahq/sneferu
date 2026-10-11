@@ -15,9 +15,9 @@
   </hk-stack>
 </hk-section>
 <hk-schema>{
-  "name": { "ar": "قائمة منتجات", "en": "Product list" },
+  "name": "Product list",
   "version": 1,
   "settings": {
-    "heading": { "type": "text", "label": { "ar": "العنوان", "en": "Heading" }, "default": "Today's picks" }
+    "heading": { "type": "text", "label": "Heading", "default": "Today's picks" }
   }
 }</hk-schema>

@@ -60,12 +60,12 @@ Every problem Sneferu reports has a stable code. The format is `file:line:col se
 | SN3010 | `engine` is not `"hk2"` | Set `"engine": "hk2"`. |
 | SN3011 | `engineCompatibility` does not include the current engine | Use a range that includes 2.0.0, such as `^2.0.0`. |
 | SN3012 | Invalid `id` | 3-41 characters: lower-case letters, digits, dashes, starting with a letter. |
-| SN3013 | `name` lacks `ar` or `en` | Provide both. |
+| SN3013 | `name` is missing or not a string | Write the theme name as a string. |
 | SN3014 | `version` is not `x.y.z` | Use semantic versioning. |
 | SN3015 | `author` is missing | Add it. |
-| SN3016 | `description` lacks `ar` or `en` | Provide both. |
+| SN3016 | `description` is missing or not a string | Write a one-line description as a string. |
 | SN3017 | `category` is missing | Add it. |
-| SN3018 | `defaultLocale` is not `ar`/`en`, or `locales` omits it | Fix `defaultLocale` and `locales`. |
+| SN3018 | `defaultLocale` is not `en`/`ar`, `locales` omits it, or lists another code | Fix `defaultLocale` and `locales`. |
 | SN3019 | A required colour token is missing or not `#RRGGBB` | Set `primary`, `secondary`, `accent`, `background`, `text`. |
 | SN3020 | A template references a section that does not exist | Create the section or fix the type. |
 | SN3021 | `settings` in `theme.json` is not an object | Use an object of fields. |
@@ -75,7 +75,8 @@ Every problem Sneferu reports has a stable code. The format is `file:line:col se
 | SN3025 | A locale file is not valid JSON, or is not a flat object whose values are all strings | Use `{ "key": "text", ... }` with string values only. |
 | SN3027 | Snippet include cycle, e.g. `snippet include cycle: a → b → a` | Break the cycle; a snippet may not (indirectly) render itself. |
 | SN3026 | A template's schema `sections` is malformed | Use an array of `{ "type": "...", "settings": {...} }`. |
-| SN3030 | A section or block `<hk-schema>` lacks `name` `{ar,en}` or has bad `settings` | Add both names; `settings` must be an object. |
+| SN3030 | A section or block `<hk-schema>` lacks a `name` or has bad `settings` | Add a `name` string; `settings` must be an object. |
+| SN3031 | A setting's `label` is not a string (warning) | Write the label as a string. |
 
 ## SN4xxx Rendering
 

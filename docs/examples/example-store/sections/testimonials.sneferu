@@ -11,14 +11,14 @@
   </hk-stack>
 </hk-section>
 <hk-schema>{
-  "name": { "ar": "آراء العملاء", "en": "Testimonials" },
+  "name": "Testimonials",
   "version": 1,
   "settings": {
-    "heading": { "type": "text", "label": { "ar": "العنوان", "en": "Heading" }, "default": "What our customers say" }
+    "heading": { "type": "text", "label": "Heading", "default": "What our customers say" }
   },
   "blocks": { "allowed": ["quote"], "max": 6 },
   "presets": [
-    { "name": { "ar": "ثلاث آراء", "en": "Three quotes" },
+    { "name": "Three quotes",
       "blocks": [ { "type": "quote" }, { "type": "quote" }, { "type": "quote" } ] }
   ]
 }</hk-schema>

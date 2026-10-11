@@ -5,8 +5,7 @@
       "name": "hk-section",
       "category": "layout",
       "label": {
-        "en": "Section",
-        "ar": "قسم"
+        "en": "Section"
       },
       "allowedChildren": "*",
       "responsive": [
@@ -20,8 +19,7 @@
           "default": false,
           "responsive": false,
           "label": {
-            "en": "Full bleed",
-            "ar": "بعرض الشاشة"
+            "en": "Full bleed"
           }
         },
         {
@@ -30,8 +28,7 @@
           "type": "color",
           "responsive": false,
           "label": {
-            "en": "Background",
-            "ar": "الخلفية"
+            "en": "Background"
           }
         },
         {
@@ -43,8 +40,7 @@
           "max": 240,
           "responsive": true,
           "label": {
-            "en": "Vertical padding",
-            "ar": "المسافة الرأسية"
+            "en": "Vertical padding"
           }
         }
       ]
@@ -53,8 +49,7 @@
       "name": "hk-container",
       "category": "layout",
       "label": {
-        "en": "Container",
-        "ar": "حاوية"
+        "en": "Container"
       },
       "allowedChildren": "*",
       "responsive": [
@@ -69,8 +64,7 @@
           "max": 1920,
           "responsive": false,
           "label": {
-            "en": "Max width",
-            "ar": "أقصى عرض"
+            "en": "Max width"
           }
         },
         {
@@ -82,8 +76,7 @@
           "max": 120,
           "responsive": true,
           "label": {
-            "en": "Horizontal padding",
-            "ar": "المسافة الأفقية"
+            "en": "Horizontal padding"
           }
         }
       ]
@@ -92,8 +85,7 @@
       "name": "hk-stack",
       "category": "layout",
       "label": {
-        "en": "Stack",
-        "ar": "صف/عمود"
+        "en": "Stack"
       },
       "allowedChildren": "*",
       "responsive": [
@@ -112,8 +104,7 @@
           ],
           "responsive": true,
           "label": {
-            "en": "Direction",
-            "ar": "الاتجاه"
+            "en": "Direction"
           }
         },
         {
@@ -125,8 +116,7 @@
           "max": 160,
           "responsive": true,
           "label": {
-            "en": "Gap",
-            "ar": "المسافة"
+            "en": "Gap"
           }
         },
         {
@@ -141,8 +131,7 @@
           ],
           "responsive": false,
           "label": {
-            "en": "Align",
-            "ar": "المحاذاة"
+            "en": "Align"
           }
         },
         {
@@ -157,8 +146,7 @@
           ],
           "responsive": false,
           "label": {
-            "en": "Justify",
-            "ar": "التوزيع"
+            "en": "Justify"
           }
         },
         {
@@ -168,8 +156,7 @@
           "default": false,
           "responsive": false,
           "label": {
-            "en": "Wrap",
-            "ar": "التفاف"
+            "en": "Wrap"
           }
         }
       ]
@@ -178,8 +165,7 @@
       "name": "hk-grid",
       "category": "layout",
       "label": {
-        "en": "Grid",
-        "ar": "شبكة"
+        "en": "Grid"
       },
       "allowedChildren": "*",
       "responsive": [
@@ -196,8 +182,7 @@
           "max": 12,
           "responsive": true,
           "label": {
-            "en": "Columns",
-            "ar": "الأعمدة"
+            "en": "Columns"
           }
         },
         {
@@ -209,8 +194,7 @@
           "max": 160,
           "responsive": true,
           "label": {
-            "en": "Gap",
-            "ar": "المسافة"
+            "en": "Gap"
           }
         },
         {
@@ -221,8 +205,7 @@
           "max": 600,
           "responsive": false,
           "label": {
-            "en": "Min item width",
-            "ar": "أقل عرض للعنصر"
+            "en": "Min item width"
           }
         }
       ]
@@ -231,8 +214,7 @@
       "name": "hk-heading",
       "category": "typography",
       "label": {
-        "en": "Heading",
-        "ar": "عنوان"
+        "en": "Heading"
       },
       "allowedChildren": [],
       "responsive": [
@@ -246,8 +228,7 @@
           "default": "",
           "responsive": false,
           "label": {
-            "en": "Text",
-            "ar": "النص"
+            "en": "Text"
           }
         },
         {
@@ -263,8 +244,7 @@
           ],
           "responsive": false,
           "label": {
-            "en": "Level",
-            "ar": "المستوى"
+            "en": "Level"
           }
         },
         {
@@ -275,8 +255,7 @@
           "max": 160,
           "responsive": true,
           "label": {
-            "en": "Size",
-            "ar": "الحجم"
+            "en": "Size"
           }
         },
         {
@@ -290,8 +269,7 @@
           ],
           "responsive": false,
           "label": {
-            "en": "Align",
-            "ar": "المحاذاة"
+            "en": "Align"
           }
         },
         {
@@ -300,8 +278,7 @@
           "type": "color",
           "responsive": false,
           "label": {
-            "en": "Colour",
-            "ar": "اللون"
+            "en": "Colour"
           }
         }
       ]
@@ -310,8 +287,7 @@
       "name": "hk-text",
       "category": "typography",
       "label": {
-        "en": "Text",
-        "ar": "نص"
+        "en": "Text"
       },
       "allowedChildren": [],
       "responsive": [
@@ -325,8 +301,7 @@
           "default": "",
           "responsive": false,
           "label": {
-            "en": "Text",
-            "ar": "النص"
+            "en": "Text"
           }
         },
         {
@@ -337,8 +312,7 @@
           "max": 64,
           "responsive": true,
           "label": {
-            "en": "Size",
-            "ar": "الحجم"
+            "en": "Size"
           }
         },
         {
@@ -352,8 +326,7 @@
           ],
           "responsive": false,
           "label": {
-            "en": "Align",
-            "ar": "المحاذاة"
+            "en": "Align"
           }
         },
         {
@@ -362,8 +335,7 @@
           "type": "color",
           "responsive": false,
           "label": {
-            "en": "Colour",
-            "ar": "اللون"
+            "en": "Colour"
           }
         }
       ]
@@ -372,8 +344,7 @@
       "name": "hk-badge",
       "category": "typography",
       "label": {
-        "en": "Badge",
-        "ar": "شارة"
+        "en": "Badge"
       },
       "allowedChildren": [
         "#text"
@@ -386,8 +357,7 @@
           "type": "text",
           "responsive": false,
           "label": {
-            "en": "Text",
-            "ar": "النص"
+            "en": "Text"
           }
         },
         {
@@ -403,8 +373,7 @@
           ],
           "responsive": false,
           "label": {
-            "en": "Tone",
-            "ar": "اللون"
+            "en": "Tone"
           }
         }
       ]
@@ -413,8 +382,7 @@
       "name": "hk-image",
       "category": "media",
       "label": {
-        "en": "Image",
-        "ar": "صورة"
+        "en": "Image"
       },
       "allowedChildren": [],
       "responsive": [],
@@ -425,8 +393,7 @@
           "type": "image",
           "responsive": false,
           "label": {
-            "en": "Image",
-            "ar": "الصورة"
+            "en": "Image"
           }
         },
         {
@@ -436,8 +403,7 @@
           "default": "",
           "responsive": false,
           "label": {
-            "en": "Alt text",
-            "ar": "وصف الصورة"
+            "en": "Alt text"
           }
         },
         {
@@ -448,8 +414,7 @@
           "max": 2400,
           "responsive": false,
           "label": {
-            "en": "Width",
-            "ar": "العرض"
+            "en": "Width"
           }
         },
         {
@@ -465,8 +430,7 @@
           ],
           "responsive": false,
           "label": {
-            "en": "Aspect ratio",
-            "ar": "النسبة"
+            "en": "Aspect ratio"
           }
         },
         {
@@ -480,8 +444,7 @@
           ],
           "responsive": false,
           "label": {
-            "en": "Fit",
-            "ar": "الملاءمة"
+            "en": "Fit"
           }
         },
         {
@@ -495,8 +458,7 @@
           ],
           "responsive": false,
           "label": {
-            "en": "Loading",
-            "ar": "التحميل"
+            "en": "Loading"
           }
         },
         {
@@ -507,8 +469,7 @@
           "max": 200,
           "responsive": false,
           "label": {
-            "en": "Radius",
-            "ar": "استدارة"
+            "en": "Radius"
           }
         }
       ]
@@ -517,8 +478,7 @@
       "name": "hk-button",
       "category": "ui",
       "label": {
-        "en": "Button",
-        "ar": "زر"
+        "en": "Button"
       },
       "allowedChildren": [],
       "responsive": [],
@@ -530,8 +490,7 @@
           "default": "",
           "responsive": false,
           "label": {
-            "en": "Label",
-            "ar": "النص"
+            "en": "Label"
           }
         },
         {
@@ -541,8 +500,7 @@
           "default": "#",
           "responsive": false,
           "label": {
-            "en": "Link",
-            "ar": "الرابط"
+            "en": "Link"
           }
         },
         {
@@ -557,8 +515,7 @@
           ],
           "responsive": false,
           "label": {
-            "en": "Style",
-            "ar": "النمط"
+            "en": "Style"
           }
         },
         {
@@ -573,8 +530,7 @@
           ],
           "responsive": false,
           "label": {
-            "en": "Size",
-            "ar": "الحجم"
+            "en": "Size"
           }
         }
       ]
@@ -583,8 +539,7 @@
       "name": "hk-card",
       "category": "ui",
       "label": {
-        "en": "Card",
-        "ar": "كارت"
+        "en": "Card"
       },
       "allowedChildren": "*",
       "responsive": [
@@ -597,8 +552,7 @@
           "type": "color",
           "responsive": false,
           "label": {
-            "en": "Background",
-            "ar": "الخلفية"
+            "en": "Background"
           }
         },
         {
@@ -610,8 +564,7 @@
           "max": 64,
           "responsive": false,
           "label": {
-            "en": "Radius",
-            "ar": "استدارة"
+            "en": "Radius"
           }
         },
         {
@@ -623,8 +576,7 @@
           "max": 96,
           "responsive": true,
           "label": {
-            "en": "Padding",
-            "ar": "الحشو"
+            "en": "Padding"
           }
         },
         {
@@ -634,8 +586,7 @@
           "default": false,
           "responsive": false,
           "label": {
-            "en": "Border",
-            "ar": "حد"
+            "en": "Border"
           }
         },
         {
@@ -651,8 +602,7 @@
           ],
           "responsive": false,
           "label": {
-            "en": "Shadow",
-            "ar": "ظل"
+            "en": "Shadow"
           }
         }
       ]
@@ -661,8 +611,7 @@
       "name": "hk-price",
       "category": "commerce",
       "label": {
-        "en": "Price",
-        "ar": "السعر"
+        "en": "Price"
       },
       "allowedChildren": [],
       "responsive": [],
@@ -673,8 +622,7 @@
           "type": "number",
           "responsive": false,
           "label": {
-            "en": "Price",
-            "ar": "السعر"
+            "en": "Price"
           }
         },
         {
@@ -683,8 +631,7 @@
           "type": "number",
           "responsive": false,
           "label": {
-            "en": "Compare at",
-            "ar": "السعر قبل الخصم"
+            "en": "Compare at"
           }
         }
       ]
@@ -693,8 +640,7 @@
       "name": "hk-product-card",
       "category": "commerce",
       "label": {
-        "en": "Product card",
-        "ar": "كارت منتج"
+        "en": "Product card"
       },
       "allowedChildren": [],
       "responsive": [],
@@ -705,8 +651,7 @@
           "type": "product",
           "responsive": false,
           "label": {
-            "en": "Product",
-            "ar": "المنتج"
+            "en": "Product"
           }
         }
       ]
@@ -715,8 +660,7 @@
       "name": "hk-product-grid",
       "category": "commerce",
       "label": {
-        "en": "Product grid",
-        "ar": "شبكة منتجات"
+        "en": "Product grid"
       },
       "allowedChildren": [],
       "responsive": [
@@ -729,8 +673,7 @@
           "type": "collection",
           "responsive": false,
           "label": {
-            "en": "Products",
-            "ar": "المنتجات"
+            "en": "Products"
           }
         },
         {
@@ -742,8 +685,7 @@
           "max": 48,
           "responsive": false,
           "label": {
-            "en": "Count",
-            "ar": "العدد"
+            "en": "Count"
           }
         },
         {
@@ -755,8 +697,7 @@
           "max": 6,
           "responsive": true,
           "label": {
-            "en": "Columns",
-            "ar": "الأعمدة"
+            "en": "Columns"
           }
         }
       ]

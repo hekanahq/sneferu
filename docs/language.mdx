@@ -93,7 +93,7 @@ Apply with `|`, arguments after `:` (`{{ title | truncate: 40 }}`).
 
 | Filter | Input | Args | Example |
 | - | - | - | - |
-| `money` | price in minor units (piastres, cents) | none | EGP: `129000` gives `1,290.00 ج.م` (Arabic) or `EGP 1,290.00` (English). Other store currencies use the ISO code: `1,290.00 USD` (Arabic, code after) or `USD 1,290.00` (English, code before). Always two decimals, Western digits, `,` grouping. |
+| `money` | price in minor units (piastres, cents) | none | EGP: `129000` gives `EGP 1,290.00`. Other store currencies use the ISO code: `USD 1,290.00`. On an Arabic page the currency comes after the number. Always two decimals, Western digits, `,` grouping. |
 | `img` | image reference | optional width | `{{ p.image \| img: 400 }}` gives a sized image URL |
 | `date` | ISO date string | none | `2026-10-10` gives `10 October 2026` (English) or the Arabic date with Western numerals |
 | `t` | translation key | none | `{{ 'shop_now' \| t }}` gives the text from `locales/<locale>.json`, falling back to the default locale, then the key |
@@ -170,7 +170,7 @@ sections/*.sneferu   reusable page parts with settings and blocks
 blocks/*.sneferu     items inside a section, rendered with hk-block
 snippets/*.sneferu   partials used with {% render %}
 assets/              css, js, images, fonts (png jpg webp avif gif svg woff woff2 ttf otf ico)
-locales/<xx>.json    flat key to text maps (ar.json, en.json); every value must be a string (SN3025)
+locales/<xx>.json    flat key to text maps (en.json, …); every value must be a string (SN3025)
 migrations/*.json    settings migrations
 ```
 
@@ -188,7 +188,7 @@ Template example (default sections for the page):
 
 ```html
 <hk-sections />
-<hk-schema>{"sections":[{"type":"hero","settings":{"title":"أهلًا بيك"}},{"type":"featured"}]}</hk-schema>
+<hk-schema>{"sections":[{"type":"hero","settings":{"title":"Welcome"}},{"type":"featured"}]}</hk-schema>
 ```
 
 Section example:
@@ -198,19 +198,19 @@ Section example:
   <hk-heading text="{{ section.settings.title }}" level="h1" size="56" mobile-size="32" />
   <hk-button label="{{ t('shop_now') }}" href="/products" />
 </hk-section>
-<hk-schema>{"name":{"ar":"واجهة","en":"Hero"},"version":1,"settings":{
-  "title":{"type":"text","label":{"ar":"العنوان","en":"Title"},"default":"Hello","maxLength":80}}}</hk-schema>
+<hk-schema>{"name":"Hero","version":1,"settings":{
+  "title":{"type":"text","label":"Title","default":"Hello","maxLength":80}}}</hk-schema>
 ```
 
-A section or block schema needs `name` with both `ar` and `en` (SN3030). A section schema may also carry `blocks` (`{ "allowed": [...], "max": n }`) and `presets`. A rendered page wraps the whole output in `<div data-hk-theme="<id>" dir="rtl|ltr" lang="ar|en">`. `lang` is the render locale when it is two lower-case letters (otherwise the theme's default locale, otherwise `ar`), and `dir` is derived from it: `rtl` for `ar`, `ltr` for everything else. Components inside a section get ids `s-<sectionId>-c<n>` (CSS class `sn-s-<sectionId>-c<n>`), so re-rendering one section produces the same ids it had on the full page; components in the layout use `c<n>`.
+A section or block schema needs a `name` string (SN3030). A section schema may also carry `blocks` (`{ "allowed": [...], "max": n }`) and `presets`. A rendered page wraps the whole output in `<div data-hk-theme="<id>" dir="rtl|ltr" lang="ar|en">`. `lang` is the render locale when it is two lower-case letters (otherwise the theme's default locale, otherwise `ar`), and `dir` is derived from it: `rtl` for `ar`, `ltr` for everything else. Components inside a section get ids `s-<sectionId>-c<n>` (CSS class `sn-s-<sectionId>-c<n>`), so re-rendering one section produces the same ids it had on the full page; components in the layout use `c<n>`.
 
 ## theme.json
 
-Required: `id` (3-41 chars: lowercase letters, digits, dashes, starting with a letter), `name` and `description` (`{ar,en}`), `version` (x.y.z), `author`, `category`, `engine: "hk2"`, `engineCompatibility` (`^2.0.0` or exact; the current engine is 2.0.0), `defaultLocale`, `locales` (must include the default), `settings` (a field schema), and `tokens.colors` with `primary`, `secondary`, `accent`, `background`, `text` as `#RRGGBB`.
+Required: `id` (3-41 chars: lowercase letters, digits, dashes, starting with a letter), `name` and `description` (strings), `version` (x.y.z), `author`, `category`, `engine: "hk2"`, `engineCompatibility` (`^2.0.0` or exact; the current engine is 2.0.0), `defaultLocale`, `locales` (must include the default), `settings` (a field schema), and `tokens.colors` with `primary`, `secondary`, `accent`, `background`, `text` as `#RRGGBB`.
 
 ## Field types (`<hk-schema>` settings)
 
-Each field is `{ "type", "label": {"ar","en"}, "default"?, "required"?, "min"?, "max"?, "step"?, "options"?, "responsive"?, "visible_if"?, "maxLength"? }`.
+Each field is `{ "type", "label", "default"?, "required"?, "min"?, "max"?, "step"?, "options"?, "responsive"?, "visible_if"?, "maxLength"? }`.
 
 | Type | Value | Coercion of stored setting values |
 | - | - | - |

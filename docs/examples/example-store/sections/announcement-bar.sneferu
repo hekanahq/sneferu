@@ -5,12 +5,12 @@
   </hk-stack>
 </hk-section>
 <hk-schema>{
-  "name": { "ar": "شريط إعلان", "en": "Announcement bar" },
+  "name": "Announcement bar",
   "version": 1,
   "settings": {
-    "message":    { "type": "text",  "label": { "ar": "الرسالة", "en": "Message" }, "default": "Free delivery on orders over EGP 500", "maxLength": 90 },
-    "link_label": { "type": "text",  "label": { "ar": "نص الرابط", "en": "Link text" }, "default": "See details", "maxLength": 30 },
-    "link":       { "type": "link",  "label": { "ar": "الرابط", "en": "Link" }, "default": "/pages/delivery" },
-    "background": { "type": "color", "label": { "ar": "الخلفية", "en": "Background" }, "default": "theme:accent" }
+    "message":    { "type": "text",  "label": "Message", "default": "Free delivery on orders over EGP 500", "maxLength": 90 },
+    "link_label": { "type": "text",  "label": "Link text", "default": "See details", "maxLength": 30 },
+    "link":       { "type": "link",  "label": "Link", "default": "/pages/delivery" },
+    "background": { "type": "color", "label": "Background", "default": "theme:accent" }
   }
 }</hk-schema>
