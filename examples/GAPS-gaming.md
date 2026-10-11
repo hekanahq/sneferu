@@ -24,6 +24,7 @@ missing, how the themes work around it, and whether it blocked the design.
 | 16 | A broad reset such as `[data-hk-theme='x'] a { color: inherit }` (0,1,1) silently beats single-class rules like `.es-buy` (0,1,0) | Resets wrapped in `:where(…)`; worth a line in the styling guide | No (docs) |
 | 17 | SVG attribute and tag names are written lower-case (`viewbox`, `lineargradient`, `gradientunits`). Browsers fix the case when parsing HTML, so it renders, but the output is not valid XML/XHTML | None needed | No |
 | 18 | The published CLI (0.2.0) rejects `README.md` and `docs/` inside a theme folder (SN3002). Fixed on `main` by #17, not yet on npm | The example folders validate with the CLI built from `main`; the pushed copies have no README | No |
+| 19 | Platform, not SDK: right after a publish, the first storefront render can fail (cold artifact fetch inside the 3 s budget is the likely cause) and the page silently serves the **legacy** theme, with no log line. Seen twice (console ar, esports en). Later requests render HK2 | Every live screenshot is checked for `data-hk-theme` before it is used | No, but a shopper can briefly see the old theme, and nothing records it |
 
 ## Status
 
