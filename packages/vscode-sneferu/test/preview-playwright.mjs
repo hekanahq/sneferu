@@ -38,9 +38,13 @@ try {
   for (let i = 0; i < 50 && !frame(); i++) await panel.waitForTimeout(100);
   await frame().waitForSelector('[data-hk-section="default-0"]');
 
+  // the width animates (.12s): wait for it to settle, then measure
+  const widthIs = (w) => panel.waitForFunction((x) => Math.round(document.getElementById('frame').getBoundingClientRect().width) === x, w, { timeout: 3000 });
   await panel.click('[data-width="phone"]');
+  await widthIs(390);
   assert.equal(Math.round((await frameEl.boundingBox()).width), 390);
   await panel.click('[data-width="tablet"]');
+  await widthIs(820);
   assert.equal(Math.round((await frameEl.boundingBox()).width), 820);
   await panel.click('[data-locale="en"]');
   await panel.waitForFunction(() => document.getElementById('frame').src.includes('locale=en'));

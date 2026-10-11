@@ -68,6 +68,21 @@ async function run() {
   assert.ok(attrNames.includes('mobile-columns') && !attrNames.includes('products'), `prop completion: ${attrNames.slice(0, 12)}`);
   log(`completion ok (${names.length} items)`);
 
+  // 2b. the starter theme, in the same workspace: its own schema drives section.settings
+  {
+    const hero = (await open('starter/sections/hero.sneferu')).doc;
+    const sp = posOf(hero, 'section.settings.title', 'section.settings.'.length);
+    const l = await vscode.commands.executeCommand('vscode.executeCompletionItemProvider', hero.uri, sp);
+    const got = l.items.map((i) => (typeof i.label === 'string' ? i.label : i.label.label)).sort();
+    assert.deepEqual(got, ['subtitle', 'title'], `starter settings: ${got}`);
+    const hh = hoverText(await vscode.commands.executeCommand('vscode.executeHoverProvider', hero.uri, posOf(hero, "t('shop_now')", 4)));
+    assert.ok(hh.includes('Shop now'), `starter translation hover: ${hh}`);
+    const fmt = await vscode.commands.executeCommand('vscode.executeFormatDocumentProvider', hero.uri, { tabSize: 2, insertSpaces: true });
+    assert.equal((fmt ?? []).length, 0, 'the starter is already formatted');
+    await open('arcade/sections/arcade-products.sneferu');
+    log('starter ok');
+  }
+
   // 3. hover
   const hovers = await vscode.commands.executeCommand('vscode.executeHoverProvider', doc.uri, posOf(doc, 'hk-product-grid', 4));
   const ht = hoverText(hovers);
