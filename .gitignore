@@ -3,3 +3,5 @@ dist
 .turbo
 *.tsbuildinfo
 .sneferu-dev
+# example themes ship their dev sample data
+!examples/themes/*/.sneferu-dev

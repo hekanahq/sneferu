@@ -6,7 +6,8 @@ import { compile, fmt, formatTheme, meaning, readTheme } from './test-utils';
 const repo = (p: string) => fileURLToPath(new URL(`../../../${p}`, import.meta.url));
 
 describe('formatting never changes what a theme compiles to', () => {
-  for (const dir of ['packages/sneferu/starter', 'docs/examples/example-store']) {
+  const examples = readdirSync(repo('examples/themes')).map((d) => `examples/themes/${d}`);
+  for (const dir of ['packages/sneferu/starter', 'docs/examples/example-store', ...examples]) {
     it(`${dir}: identical artifact, idempotent`, async () => {
       const files = readTheme(repo(dir));
       const before = compile(files);
@@ -39,20 +40,21 @@ describe('formatting never changes what a theme compiles to', () => {
 });
 
 describe('the shipped themes and the guide are formatted', () => {
-  for (const dir of ['packages/sneferu/starter', 'docs/examples/example-store']) {
+  const examples = readdirSync(repo('examples/themes')).map((d) => `examples/themes/${d}`);
+  for (const dir of ['packages/sneferu/starter', 'docs/examples/example-store', ...examples]) {
     it(dir, async () => {
       const files = readTheme(repo(dir));
       const formatted = await formatTheme(files);
       formatted.forEach((f, i) => expect(Buffer.from(f.bytes).toString(), f.path).toBe(Buffer.from(files[i]!.bytes).toString()));
     });
   }
-  it('every .sneferu example in the guide is formatted, and matches its file in the example store when it has one', async () => {
+  it('every .sneferu example in the guide is formatted, and matches its file in the example store or examples/ when it has one', async () => {
     for (const dir of ['docs/guide', 'docs']) {
       for (const f of readdirSync(repo(dir)).filter((x) => x.endsWith('.mdx'))) {
         const text = readFileSync(repo(`${dir}/${f}`), 'utf8');
         for (const m of text.matchAll(/```html title="([^"]+\.sneferu)"\n([\s\S]*?)```/g)) {
           expect(await fmt(m[2]!), `${f} ${m[1]}`).toBe(m[2]);
-          const file = repo(`docs/examples/example-store/${m[1]}`);
+          const file = m[1]!.startsWith('examples/') ? repo(m[1]!) : repo(`docs/examples/example-store/${m[1]}`);
           if (existsSync(file)) expect(m[2], `${f} ${m[1]}`).toBe(readFileSync(file, 'utf8'));
         }
       }

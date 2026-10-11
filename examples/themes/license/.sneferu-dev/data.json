@@ -1,0 +1,298 @@
+{
+ "ar": {
+  "store": {
+   "name": "متجر مفتاح"
+  },
+  "collections": {
+   "apps": {
+    "title": "برامج",
+    "products": [
+     {
+      "title": "منظّم المهام، ترخيص سنة",
+      "url": "/products/task-planner-1y",
+      "price": 45000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/icon-tasks.webp"
+      }
+     },
+     {
+      "title": "أدوات PDF، ترخيص سنة",
+      "url": "/products/pdf-toolkit-1y",
+      "price": 39900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/icon-pdf.webp"
+      }
+     },
+     {
+      "title": "محرّر الصور، ترخيص دائم",
+      "url": "/products/photo-editor-lifetime",
+      "price": 120000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/icon-photo.webp"
+      }
+     },
+     {
+      "title": "خزنة كلمات السر، ترخيص سنة",
+      "url": "/products/password-vault-1y",
+      "price": 29900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/icon-vault.webp"
+      }
+     }
+    ]
+   },
+   "bundles": {
+    "title": "باقات",
+    "products": [
+     {
+      "title": "كل البرامج: شهر",
+      "url": "/products/all-apps-1m",
+      "price": 12000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/bundle.webp"
+      }
+     },
+     {
+      "title": "كل البرامج: 3 شهور",
+      "url": "/products/all-apps-3m",
+      "price": 33000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/bundle.webp"
+      }
+     },
+     {
+      "title": "كل البرامج: سنة",
+      "url": "/products/all-apps-12m",
+      "price": 84000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/bundle.webp"
+      }
+     }
+    ]
+   },
+   "featured": {
+    "title": "مختارات",
+    "products": [
+     {
+      "title": "منظّم المهام، ترخيص سنة",
+      "url": "/products/task-planner-1y",
+      "price": 45000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/icon-tasks.webp"
+      }
+     },
+     {
+      "title": "أدوات PDF، ترخيص سنة",
+      "url": "/products/pdf-toolkit-1y",
+      "price": 39900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/icon-pdf.webp"
+      }
+     },
+     {
+      "title": "محرّر الصور، ترخيص دائم",
+      "url": "/products/photo-editor-lifetime",
+      "price": 120000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/icon-photo.webp"
+      }
+     },
+     {
+      "title": "خزنة كلمات السر، ترخيص سنة",
+      "url": "/products/password-vault-1y",
+      "price": 29900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/icon-vault.webp"
+      }
+     },
+     {
+      "title": "كل البرامج: شهر",
+      "url": "/products/all-apps-1m",
+      "price": 12000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/bundle.webp"
+      }
+     },
+     {
+      "title": "كل البرامج: 3 شهور",
+      "url": "/products/all-apps-3m",
+      "price": 33000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/bundle.webp"
+      }
+     },
+     {
+      "title": "كل البرامج: سنة",
+      "url": "/products/all-apps-12m",
+      "price": 84000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/bundle.webp"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "en": {
+  "store": {
+   "name": "Miftah"
+  },
+  "collections": {
+   "apps": {
+    "title": "Apps",
+    "products": [
+     {
+      "title": "Task planner, 1-year licence",
+      "url": "/en/products/task-planner-1y",
+      "price": 45000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/icon-tasks.webp"
+      }
+     },
+     {
+      "title": "PDF toolkit, 1-year licence",
+      "url": "/en/products/pdf-toolkit-1y",
+      "price": 39900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/icon-pdf.webp"
+      }
+     },
+     {
+      "title": "Photo editor, lifetime licence",
+      "url": "/en/products/photo-editor-lifetime",
+      "price": 120000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/icon-photo.webp"
+      }
+     },
+     {
+      "title": "Password vault, 1-year licence",
+      "url": "/en/products/password-vault-1y",
+      "price": 29900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/icon-vault.webp"
+      }
+     }
+    ]
+   },
+   "bundles": {
+    "title": "Bundles",
+    "products": [
+     {
+      "title": "All apps: 1 month",
+      "url": "/en/products/all-apps-1m",
+      "price": 12000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/bundle.webp"
+      }
+     },
+     {
+      "title": "All apps: 3 months",
+      "url": "/en/products/all-apps-3m",
+      "price": 33000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/bundle.webp"
+      }
+     },
+     {
+      "title": "All apps: 12 months",
+      "url": "/en/products/all-apps-12m",
+      "price": 84000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/bundle.webp"
+      }
+     }
+    ]
+   },
+   "featured": {
+    "title": "Featured",
+    "products": [
+     {
+      "title": "Task planner, 1-year licence",
+      "url": "/en/products/task-planner-1y",
+      "price": 45000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/icon-tasks.webp"
+      }
+     },
+     {
+      "title": "PDF toolkit, 1-year licence",
+      "url": "/en/products/pdf-toolkit-1y",
+      "price": 39900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/icon-pdf.webp"
+      }
+     },
+     {
+      "title": "Photo editor, lifetime licence",
+      "url": "/en/products/photo-editor-lifetime",
+      "price": 120000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/icon-photo.webp"
+      }
+     },
+     {
+      "title": "Password vault, 1-year licence",
+      "url": "/en/products/password-vault-1y",
+      "price": 29900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/icon-vault.webp"
+      }
+     },
+     {
+      "title": "All apps: 1 month",
+      "url": "/en/products/all-apps-1m",
+      "price": 12000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/bundle.webp"
+      }
+     },
+     {
+      "title": "All apps: 3 months",
+      "url": "/en/products/all-apps-3m",
+      "price": 33000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/bundle.webp"
+      }
+     },
+     {
+      "title": "All apps: 12 months",
+      "url": "/en/products/all-apps-12m",
+      "price": 84000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/bundle.webp"
+      }
+     }
+    ]
+   }
+  }
+ }
+}
