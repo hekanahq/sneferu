@@ -7,7 +7,7 @@ import { compileTheme, type Artifact } from '@hekana/sneferu-compiler';
 import { renderPage } from '@hekana/sneferu-runtime';
 import { createDefaultRegistry } from '@hekana/sneferu-components';
 import { loadTheme } from '../load';
-import { sampleContext } from '../sample-data';
+import { pickSampleData, sampleContext, withSampleData } from '../sample-data';
 import { devPage } from '../dev-page';
 
 const TYPES: Record<string, string> = { '.css': 'text/css', '.js': 'text/javascript', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.woff': 'font/woff' };
@@ -31,8 +31,22 @@ export function pickLocale(requested: string | null, manifest: { defaultLocale: 
   return (requested === 'ar' || requested === 'en') && manifest.locales.includes(requested) ? requested : manifest.defaultLocale;
 }
 
-export async function startDev(dir: string, port: number): Promise<{ server: Server; close: () => void }> {
+/** The sample data file for this run: `--data` when given, else `.sneferu-dev/data.json` when it exists. */
+export function sampleDataPath(root: string, data?: string): string | undefined {
+  if (data) return resolve(data);
+  const p = join(root, '.sneferu-dev', 'data.json');
+  return existsSync(p) ? p : undefined;
+}
+
+/** Read on every request, so editing the file and reloading the page shows it. A bad file is reported, not fatal. */
+export function readSampleData(path: string | undefined): { raw: unknown; error?: string } {
+  if (!path) return { raw: undefined };
+  try { return { raw: JSON.parse(readFileSync(path, 'utf8')) }; } catch (e) { return { raw: undefined, error: `${path}: ${(e as Error).message}` }; }
+}
+
+export async function startDev(dir: string, port: number, opts: { data?: string } = {}): Promise<{ server: Server; close: () => void }> {
   const root = resolve(dir);
+  const dataPath = sampleDataPath(root, opts.data);
   const registry = createDefaultRegistry();
   let artifact: Artifact | undefined;
   let problems = '';
@@ -68,7 +82,10 @@ export async function startDev(dir: string, port: number): Promise<{ server: Ser
       if (url.pathname.startsWith('/__template/')) {
         try { template = decodeURIComponent(url.pathname.slice('/__template/'.length)); } catch { template = ''; }
       }
-      const r = renderPage(artifact, { template, ctx: sampleContext(locale, artifact.locales, artifact.manifest.defaultLocale), registry });
+      const sample = readSampleData(dataPath);
+      if (sample.error) { res.writeHead(500, { 'content-type': 'text/html; charset=utf-8' }).end(errorPage(`sample data: ${sample.error}`)); return; }
+      const ctx = withSampleData(sampleContext(locale, artifact.locales, artifact.manifest.defaultLocale), pickSampleData(sample.raw, locale));
+      const r = renderPage(artifact, { template, ctx, registry });
       const body = r.html || `<pre style="padding:24px;white-space:pre-wrap">${escapeText(r.diagnostics.map(formatDiagnostic).join('\n') || 'empty page')}</pre>`;
       res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' }).end(devPage(artifact, { body, locale, css: r.css, themeCss: themeCss(), reloadScript: true }));
     } catch (e) {
@@ -86,10 +103,10 @@ export async function startDev(dir: string, port: number): Promise<{ server: Ser
   const actual = typeof addr === 'object' && addr ? addr.port : port;
   const other = artifact?.manifest.locales.filter((l) => l !== artifact?.manifest.defaultLocale) ?? [];
   const hint = artifact ? `  (${[artifact.manifest.defaultLocale, ...other.map((l) => `/?locale=${l}`)].join(' · ')})` : '';
-  console.log(`Sneferu dev → http://127.0.0.1:${actual}${hint}${artifact ? '' : '\n' + problems}`);
+  console.log(`Sneferu dev → http://127.0.0.1:${actual}${hint}${dataPath ? `\nSample data: ${dataPath}` : ''}${artifact ? '' : '\n' + problems}`);
   return { server, close: () => { clearTimeout(timer); void watcher.close(); for (const c of clients) c.end(); server.close(); } };
 }
 
-export async function runDev(dir: string, port: number): Promise<void> {
-  await startDev(dir, port);
+export async function runDev(dir: string, port: number, opts: { data?: string } = {}): Promise<void> {
+  await startDev(dir, port, opts);
 }
