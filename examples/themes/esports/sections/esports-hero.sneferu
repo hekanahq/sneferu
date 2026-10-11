@@ -1,0 +1,73 @@
+<hk-section padding-y="24" mobile-padding-y="12" class="es-hero-wrap">
+  <div class="es-hero">
+    <div class="es-hero-copy">
+      <hk-heading
+        text="{{ section.settings.title | default: t('hero_title') }}"
+        level="h1"
+        size="56"
+        tablet-size="44"
+        mobile-size="28"
+        class="es-hero-title"
+      />
+      <hk-text
+        text="{{ section.settings.subtitle | default: t('hero_subtitle') }}"
+        size="20"
+        mobile-size="14"
+        class="es-hero-sub"
+      />
+      <hk-button
+        label="{{ section.settings.button | default: t('hero_button') }}"
+        href="{{ t('url_products') }}"
+        class="es-cta"
+      />
+    </div>
+    <div class="es-hero-art">
+      {% render 'hero-art' %}
+    </div>
+    {% if section.settings.show_offer %}
+      <div class="es-offer">
+        <span class="es-offer-top">{{ t('offer_top') }}</span>
+        <strong class="es-offer-num">{{ section.settings.offer_percent }}%</strong>
+        <span class="es-offer-bottom">{{ t('offer_bottom') }}</span>
+      </div>
+    {% endif %}
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": "Esports hero",
+    "version": 1,
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": "Title (empty = theme text)",
+        "default": "",
+        "maxLength": 40
+      },
+      "subtitle": {
+        "type": "text",
+        "label": "Subtitle (empty = theme text)",
+        "default": "",
+        "maxLength": 80
+      },
+      "button": {
+        "type": "text",
+        "label": "Button (empty = theme text)",
+        "default": "",
+        "maxLength": 24
+      },
+      "show_offer": {
+        "type": "boolean",
+        "label": "Show the offer box",
+        "default": true
+      },
+      "offer_percent": {
+        "type": "number",
+        "label": "Offer percent",
+        "default": 20,
+        "min": 1,
+        "max": 90
+      }
+    }
+  }
+</hk-schema>

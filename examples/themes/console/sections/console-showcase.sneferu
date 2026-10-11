@@ -1,0 +1,57 @@
+<hk-section padding-y="32" mobile-padding-y="16" class="cc-showcase">
+  {% if collection('featured').products %}
+    <div class="cc-carousel">
+      <a
+        class="cc-arrow cc-arrow-prev"
+        href="#cc-start"
+        aria-label="{{ t('carousel_start') }}"
+      >{% render 'icon', name: 'arrow' %}</a>
+      <div class="cc-track">
+        <span id="cc-start" class="cc-anchor"></span>
+        {% for p in collection('featured').products limit: 6 %}
+          <a class="cc-slide" href="{{ p.url }}">
+            <span class="cc-slide-art">
+              {% if p.image %}
+                <hk-image
+                  src="{{ p.image.url }}"
+                  alt="{{ p.title }}"
+                  aspect-ratio="1/1"
+                  fit="cover"
+                  radius="14"
+                  loading="eager"
+                />
+              {% else %}
+                <span class="cc-slide-fallback">{% render 'icon', name: 'gift' %}</span>
+              {% endif %}
+              <span class="cc-platforms" aria-hidden="true">
+                <span>{% render 'icon', name: 'gamepad' %}</span>
+                <span>{% render 'icon', name: 'monitor' %}</span>
+                <span>{% render 'icon', name: 'phone' %}</span>
+              </span>
+            </span>
+            <span class="cc-slide-body">
+              <strong class="cc-slide-title">{{ p.title }}</strong>
+              <span class="cc-slide-note">{{ t('slide_note') }}</span>
+              <hk-price amount="{{ p.price }}" compare-at="{{ p.compare_at }}" class="cc-slide-price" />
+            </span>
+          </a>
+        {% endfor %}
+        <span id="cc-end" class="cc-anchor"></span>
+      </div>
+      <a
+        class="cc-arrow cc-arrow-next"
+        href="#cc-end"
+        aria-label="{{ t('carousel_end') }}"
+      >{% render 'icon', name: 'arrow' %}</a>
+    </div>
+  {% else %}
+    <p class="cc-empty">{{ t('empty_products') }}</p>
+  {% endif %}
+</hk-section>
+<hk-schema>
+  {
+    "name": "Product showcase",
+    "version": 1,
+    "settings": {}
+  }
+</hk-schema>

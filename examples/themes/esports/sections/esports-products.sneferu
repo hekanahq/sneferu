@@ -1,0 +1,23 @@
+<hk-section padding-y="24" mobile-padding-y="16" class="es-products">
+  <nav class="es-tabs" aria-label="{{ t('platforms') }}">
+    <a class="es-tab is-active" href="{{ t('url_products') }}">{{ t('tab_1') }}</a>
+    <a class="es-tab" href="{{ t('url_prefix') }}/category/gift-cards">{{ t('tab_2') }}</a>
+    <a class="es-tab" href="{{ t('url_prefix') }}/category/top-ups">{{ t('tab_3') }}</a>
+  </nav>
+  {% if collection('featured').products %}
+    <div class="es-grid">
+      {% for p in collection('featured').products limit: 10 %}
+        {% render 'tc', p: p %}
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="es-empty">{{ t('empty_products') }}</p>
+  {% endif %}
+</hk-section>
+<hk-schema>
+  {
+    "name": "Top-up cards",
+    "version": 1,
+    "settings": {}
+  }
+</hk-schema>

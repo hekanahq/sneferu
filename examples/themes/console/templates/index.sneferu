@@ -1,0 +1,25 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "console-showcase"
+      },
+      {
+        "type": "console-amounts"
+      },
+      {
+        "type": "console-platforms"
+      },
+      {
+        "type": "console-trust"
+      },
+      {
+        "type": "console-products"
+      },
+      {
+        "type": "console-faq"
+      }
+    ]
+  }
+</hk-schema>

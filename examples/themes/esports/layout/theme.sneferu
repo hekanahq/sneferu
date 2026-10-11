@@ -1,0 +1,57 @@
+<header class="es-header">
+  <hk-container>
+    <div class="es-bar">
+      <details class="es-menu">
+        <summary aria-label="{{ t('menu') }}">
+          {% render 'icon', name: 'menu' %}
+        </summary>
+        <nav class="es-menu-panel">
+          <a href="{{ t('url_products') }}">{{ t('nav_all') }}</a>
+          <a href="{{ t('url_prefix') }}/category/game-currency">{{ t('cat_currency') }}</a>
+          <a href="{{ t('url_prefix') }}/category/gift-cards">{{ t('cat_gift_cards') }}</a>
+          <a href="{{ t('url_prefix') }}/category/top-ups">{{ t('cat_topups') }}</a>
+          <a href="#faq">{{ t('nav_faq') }}</a>
+        </nav>
+      </details>
+      <a class="es-logo" href="{{ t('url_home') }}" aria-label="{{ store.name }}">
+        {% render 'mark' %}
+        <span>{{ store.name }}</span>
+      </a>
+      <a class="es-search" href="{{ t('url_search') }}">
+        {% render 'icon', name: 'search' %}
+        <span>{{ t('search_placeholder') }}</span>
+      </a>
+      <nav class="es-nav" aria-label="{{ t('nav_label') }}">
+        <a href="{{ t('url_products') }}">{{ t('nav_all') }}</a>
+        <a class="is-hot" href="{{ t('url_prefix') }}/category/game-currency">{{ t('cat_currency') }}</a>
+        <a href="{{ t('url_prefix') }}/category/gift-cards">{{ t('cat_gift_cards') }}</a>
+        <a href="{{ t('url_prefix') }}/category/top-ups">{{ t('cat_topups') }}</a>
+        <a href="#faq">{{ t('nav_faq') }}</a>
+      </nav>
+      <a
+        class="es-icon"
+        href="{{ t('url_account') }}"
+        aria-label="{{ t('account') }}"
+      >{% render 'icon', name: 'user' %}</a>
+      <a class="es-icon" href="{{ t('url_cart') }}" aria-label="{{ t('cart') }}">{% render 'icon', name: 'cart' %}</a>
+    </div>
+  </hk-container>
+</header>
+<main><hk-slot name="content" /></main>
+<footer class="es-footer">
+  <hk-container>
+    <div class="es-footer-row">
+      <div class="es-footer-brand">
+        <span class="es-logo">{% render 'mark' %}<span>{{ store.name }}</span></span>
+        <p>{{ t('footer_about') }}</p>
+      </div>
+      <nav class="es-footer-links" aria-label="{{ t('footer_links') }}">
+        <a href="{{ t('url_products') }}">{{ t('nav_all') }}</a>
+        <a href="{{ t('url_prefix') }}/category/game-currency">{{ t('cat_currency') }}</a>
+        <a href="{{ t('url_prefix') }}/category/gift-cards">{{ t('cat_gift_cards') }}</a>
+        <a href="#faq">{{ t('nav_faq') }}</a>
+      </nav>
+    </div>
+    <p class="es-copy">© {{ store.name }}</p>
+  </hk-container>
+</footer>

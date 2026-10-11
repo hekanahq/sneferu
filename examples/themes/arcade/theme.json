@@ -1,0 +1,26 @@
+{
+  "id": "arcade",
+  "name": "Arcade",
+  "version": "1.0.1",
+  "author": "Hekana",
+  "description": "A dark gaming store for gift cards and top-ups: neon cyan and lime, amount chips, category tiles, redeem steps.",
+  "category": "gaming",
+  "engine": "hk2",
+  "engineCompatibility": "^2.0.0",
+  "defaultLocale": "ar",
+  "locales": ["ar", "en"],
+  "settings": {},
+  "tokens": {
+    "colors": {
+      "primary": "#22D3EE",
+      "secondary": "#0D141C",
+      "accent": "#A3E635",
+      "background": "#070A0F",
+      "text": "#E6EDF3",
+      "muted": "#8B98A9",
+      "surface": "#0C1219",
+      "line": "#1C2A36"
+    },
+    "layout": { "contentWidth": "1200px" }
+  }
+}

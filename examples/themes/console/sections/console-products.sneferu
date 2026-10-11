@@ -1,0 +1,48 @@
+<hk-section padding-y="40" mobile-padding-y="28" class="cc-products">
+  <hk-stack gap="20">
+    <div class="cc-row-head">
+      <hk-heading
+        text="{{ section.settings.heading | default: t('products_heading') }}"
+        level="h2"
+        size="24"
+        mobile-size="20"
+        class="cc-h2"
+      />
+      <a class="cc-more" href="{{ t('url_products') }}">{{ t('view_all') }}</a>
+    </div>
+    {% if collection('featured').products %}
+      <hk-product-grid
+        products="{{ collection('featured').products }}"
+        limit="{{ section.settings.count }}"
+        columns="4"
+        tablet-columns="3"
+        mobile-columns="2"
+        class="cc-grid"
+      />
+    {% else %}
+      <p class="cc-empty">{{ t('empty_products') }}</p>
+    {% endif %}
+  </hk-stack>
+</hk-section>
+<hk-schema>
+  {
+    "name": "Product grid",
+    "version": 1,
+    "settings": {
+      "heading": {
+        "type": "text",
+        "label": "Heading (empty = theme text)",
+        "default": "",
+        "maxLength": 60
+      },
+      "count": {
+        "type": "range",
+        "label": "Products",
+        "default": 8,
+        "min": 2,
+        "max": 24,
+        "step": 1
+      }
+    }
+  }
+</hk-schema>
