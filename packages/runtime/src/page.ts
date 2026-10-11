@@ -36,7 +36,7 @@ const deepFreeze = <T>(v: T): T => {
   return v;
 };
 const validateTrees = (artifact: ArtifactLike, registry: TagRegistry): Diagnostic[] => {
-  const known = new Set([...registry.names(), 'hk-block']);
+  const known = new Set([...registry.names(), 'hk-block', 'hk-part']);
   const trees: IRNode[][] = [artifact.layout, ...Object.values(artifact.templates), ...Object.values(artifact.snippets),
     ...Object.values(artifact.sections).map((s) => s.ir), ...Object.values(artifact.blocks).map((b) => b.ir)];
   return trees.flatMap((t) => validateIR(t, known));

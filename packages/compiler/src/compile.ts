@@ -93,18 +93,18 @@ export function compileTheme(files: ThemeFile[], registry: TagRegistry): { artif
   const mv = validateManifest(manifestJson);
   diagnostics.push(...mv.diagnostics);
 
-  const themeSettings: unknown = isObj(manifestJson) ? manifestJson.settings : undefined;
+  const themeSettings: Record<string, unknown> = isObj(manifestJson) && isObj(manifestJson.settings) ? manifestJson.settings : {};
   const byDir = (dir: string) => [...text.keys()].filter((p) => p.startsWith(`${dir}/`) && p.endsWith('.sneferu')).sort();
   const nameOf = (p: string) => p.split('/').pop()!.replace(/\.sneferu$/, '');
   const snippetNames = new Set(byDir('snippets').map(nameOf));
-  const knownTags = new Set([...registry.names(), 'hk-block']);
+  const knownTags = new Set([...registry.names(), 'hk-block', 'hk-part']);
 
   const compileOne = (path: string, kind: 'layout' | 'template' | 'section' | 'block' | 'snippet') => {
     const parsed = parseTemplate(text.get(path)!, path);
     diagnostics.push(...parsed.diagnostics);
     const own = isObj(parsed.schema) && isObj(parsed.schema.settings) ? parsed.schema.settings : {};
     const checked = hasErrors(parsed.diagnostics) ? [] : validateTemplate(parsed.nodes, { file: path, registry, snippets: snippetNames, kind,
-      ...(kind === 'section' || kind === 'block' ? { settingsSchema: own } : {}), ...(isObj(themeSettings) ? { themeSettings } : {}) });
+      ...(kind === 'section' || kind === 'block' ? { settingsSchema: own } : {}), themeSettings });
     diagnostics.push(...checked);
     const ir = lower(parsed.nodes, registry);
     // the runtime re-checks every artifact; refuse here anything it would refuse there

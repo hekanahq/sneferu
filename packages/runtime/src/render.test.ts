@@ -8,10 +8,30 @@ const ctx: RenderContext = { locale: 'ar', dir: 'rtl', currency: 'EGP', store: {
 const box: HkTag = { name: 'hk-box', version: 1, category: 'layout', props: { pad: { type: 'number', label: { ar: 'ح', en: 'P' }, default: 8 } },
   allowedParents: '*', allowedChildren: '*', responsive: [], bindable: '*', editor: { label: { ar: 'ص', en: 'B' }, group: 'layout', insertable: true },
   render: (props, c) => { c.css(`.sn-${c.id}{padding:${Number(props.pad)}px}`); return `<div class="sn-${c.id}">${c.renderChildren()}</div>`; } };
-const env = (over: Partial<Env> = {}): Env => ({ ctx, registry: new TagRegistry().register(box), snippets: {}, slots: {}, budget: new Budget(), css: [], controllers: new Set(), diagnostics: [], ids: { n: 0 }, depth: 0, include: 0, ...over });
+const carded: HkTag = { ...box, name: 'hk-carded', parts: ['badge', 'actions'], allowedChildren: ['hk-part'],
+  render: (_p, c) => `<a>${c.renderChildren('badge')}|${c.renderChildren()}</a>${c.renderChildren('actions')}` };
+const env = (over: Partial<Env> = {}): Env => ({ ctx, registry: new TagRegistry().register(box).register(carded), snippets: {}, slots: {}, budget: new Budget(), css: [], controllers: new Set(), diagnostics: [], ids: { n: 0 }, depth: 0, include: 0, ...over });
 const path = (...p: string[]) => ({ k: 'path' as const, p });
 
 describe('renderNodes', () => {
+  it('renders named parts where the tag asks for them; renderChildren() skips parts', () => {
+    const part = (name: unknown, children: IRNode[]): IRNode => ({ k: 'comp', tag: 'hk-part', props: { name: { k: 'static', v: name } }, children });
+    const nodes: IRNode[] = [{ k: 'comp', tag: 'hk-carded', props: {}, children: [
+      part('badge', [{ k: 'text', e: path('b') }]), { k: 'html', s: ' ' }, part('actions', [{ k: 'html', s: '<i>1</i>' }]),
+      part('actions', [{ k: 'html', s: '<i>2</i>' }]), part('other', [{ k: 'html', s: 'no' }]),
+      { k: 'comp', tag: 'hk-part', props: { name: { k: 'expr', e: path('dyn') } }, children: [{ k: 'html', s: 'no' }] },
+    ] }];
+    const e = env();
+    expect(renderNodes(nodes, { b: '<New>', dyn: 'badge' }, e)).toBe('<a>&lt;New&gt;| </a><i>1</i><i>2</i>');
+    expect(e.diagnostics).toEqual([]);
+  });
+  it('an hk-part outside a parts tag renders nothing', () => {
+    const e = env();
+    expect(renderNodes([{ k: 'comp', tag: 'hk-box', props: {}, children: [{ k: 'comp', tag: 'hk-part', props: { name: { k: 'static', v: 'badge' } }, children: [{ k: 'html', s: 'x' }] }] }], {}, e))
+      .toBe('<div class="sn-c1"></div>');
+    expect(renderNodes([{ k: 'comp', tag: 'hk-part', props: {}, children: [{ k: 'html', s: 'x' }] }], {}, e)).toBe('');
+    expect(e.diagnostics).toEqual([]);
+  });
   it('escapes text, attributes and URLs by sink', () => {
     const nodes: IRNode[] = [{ k: 'el', tag: 'a', attrs: [
       { name: 'href', sink: 'url', parts: [path('u')] }, { name: 'title', sink: 'text', parts: [path('t')] }, { name: 'class', sink: 'token', parts: ['c ', path('cls')] },

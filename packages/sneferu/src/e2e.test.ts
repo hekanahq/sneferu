@@ -88,3 +88,33 @@ describe('merchant-chosen collections end to end', () => {
     expect(page({}).html).toContain('<a href="/en/collections/gift-cards">Gift cards (6)</a>');
   });
 });
+
+describe('product data end to end', () => {
+  const registry = createDefaultRegistry();
+  const section = `{% for p in collection('featured').products limit: 2 %}`
+    + `<hk-product-card product="{{ p }}">\n  <hk-part name="badge">{% if p.compare_at %}<span class="sale">Sale</span>{% endif %}</hk-part>\n  <hk-part name="actions"><a class="buy" href="{{ p.url }}">{{ p.title }}</a></hk-part>\n</hk-product-card>{% endfor %}`
+    + `<hk-product-card product="{{ product('sample-1') }}" class="plain" />`
+    + `<hk-rich-text html="{{ product('sample-1').description }}" class="desc" />`
+    + `<p class="raw">{{ product('sample-1').description }}</p>`
+    + `<hk-schema>{"name":"Details","settings":{}}</hk-schema>`;
+  const themed = [...files.filter((f) => f.path !== 'sections/hero.sneferu'), { path: 'sections/hero.sneferu', bytes: new TextEncoder().encode(section) }];
+  const { artifact, diagnostics } = compileTheme(themed, registry);
+
+  it('compiles card parts and rich text, and renders them with the sample products', () => {
+    expect(diagnostics.filter((d) => d.severity === 'error')).toEqual([]);
+    const r = renderPage(artifact!, { template: 'index', ctx: sampleContext('en', artifact!.locales, 'en'), registry, sections: [{ id: 's', type: 'hero' }] });
+    expect(r.diagnostics).toEqual([]);
+    expect(r.html.match(/<div class="sn-product-card-wrap">/g)).toHaveLength(2);
+    expect(r.html).toContain('<div class="sn-product-card-wrap"><a class="sn-product-card" href="/en/products/sample-1"><span class="sale">Sale</span><img');
+    expect(r.html).toContain('</a><a class="buy" href="/en/products/sample-1">PlayStation gift card</a></div>');
+    expect(r.html).toContain('<a class="sn-product-card plain" href="/en/products/sample-1"><img');
+    expect(r.html).toMatch(/<div class="sn-[^"]* sn-rich-text desc"><p><strong>PlayStation gift card<\/strong> — The code arrives by email right after you pay\.<\/p><\/div>/);
+    // printed with {{ }} the same HTML stays escaped
+    expect(r.html).toContain('<p class="raw">&lt;p&gt;&lt;strong&gt;PlayStation gift card');
+  });
+
+  it('rejects an hk-part outside a card (SN2013)', () => {
+    const bad = [...files.filter((f) => f.path !== 'sections/hero.sneferu'), { path: 'sections/hero.sneferu', bytes: new TextEncoder().encode('<div><hk-part name="badge">x</hk-part></div><hk-schema>{"name":"X","settings":{}}</hk-schema>') }];
+    expect(compileTheme(bad, registry).diagnostics.map((d) => d.code)).toContain('SN2013');
+  });
+});

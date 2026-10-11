@@ -30,18 +30,32 @@ export const hkPrice: HkTag = {
 };
 
 type ProductView = { title?: unknown; url?: unknown; price?: unknown; compare_at?: unknown; image?: { url?: unknown } | unknown };
-const card = (prod: ProductView, id: string, c: TagRenderContext, x: Extra = NONE) => {
+/** Template-rendered part content; whitespace-only counts as empty. */
+type Parts = { badge: string; actions: string };
+const NO_PARTS: Parts = { badge: '', actions: '' };
+const filled = (s: string) => (s.trim() === '' ? '' : s);
+
+/**
+ * One product card. Without parts the markup is exactly 0.2's. `badge` goes inside
+ * the link, before the image; `actions` after the link, and the card is then
+ * wrapped in <div class="sn-product-card-wrap"> (which takes the pass-through attributes).
+ */
+const card = (prod: ProductView, id: string, c: TagRenderContext, x: Extra = NONE, parts: Parts = NO_PARTS) => {
   const url = safeUrl(toStr(prod.url) || '#');
   const img = typeof prod.image === 'object' && prod.image !== null ? toStr((prod.image as { url?: unknown }).url) : toStr(prod.image);
   const imgHtml = safeImageSrc(img) ? `<img src="${escapeAttr(img)}" alt="${escapeAttr(toStr(prod.title))}" loading="lazy" decoding="async">` : '';
-  return `<a class="sn-product-card${x.cls}"${x.attrs} href="${escapeAttr(url)}">${imgHtml}<span class="sn-title">${escapeText(toStr(prod.title))}</span>${priceHtml(`${id}-p`, prod.price, prod.compare_at, c)}</a>`;
+  const inner = `${parts.badge}${imgHtml}<span class="sn-title">${escapeText(toStr(prod.title))}</span>${priceHtml(`${id}-p`, prod.price, prod.compare_at, c)}</a>`;
+  if (parts.actions === '') return `<a class="sn-product-card${x.cls}"${x.attrs} href="${escapeAttr(url)}">${inner}`;
+  return `<div class="sn-product-card-wrap${x.cls}"${x.attrs}><a class="sn-product-card" href="${escapeAttr(url)}">${inner}${parts.actions}</div>`;
 };
 
 export const hkProductCard: HkTag = {
   name: 'hk-product-card', version: 1, category: 'commerce',
   props: { product: { type: 'product', label: L('المنتج', 'Product') } },
-  allowedParents: '*', allowedChildren: [], responsive: [], bindable: '*', editor: ed('كارت منتج', 'Product card'),
-  render: (p, c) => (typeof p.product === 'object' && p.product !== null ? card(p.product as ProductView, c.id, c, passthrough(p)) : ''),
+  allowedParents: '*', allowedChildren: ['hk-part'], parts: ['badge', 'actions'], responsive: [], bindable: '*', editor: ed('كارت منتج', 'Product card'),
+  render: (p, c) => (typeof p.product === 'object' && p.product !== null
+    ? card(p.product as ProductView, c.id, c, passthrough(p), { badge: filled(c.renderChildren('badge')), actions: filled(c.renderChildren('actions')) })
+    : ''),
 };
 
 export const hkProductGrid: HkTag = {

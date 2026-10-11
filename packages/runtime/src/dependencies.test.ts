@@ -61,6 +61,15 @@ describe('pageDependencies', () => {
     expect(many.collections).toHaveLength(8);
     expect(many.collections[0]).toBe('featured');
   });
+  it('walks the merchant\'s sections and blocks before snippets, so the cap keeps their picks', () => {
+    const snippets = Object.fromEntries(Array.from({ length: 10 }, (_, i) => [`s${i}`, [loopOver(lit(`snip-${i}`))] as IRNode[]]));
+    const r = pageDependencies({ ...artifact(), snippets }, { template: 'index', settings: { home: 'theme-pick' }, sections: [
+      { id: 'g', type: 'grid', props: { list: 'merchant-pick' } },
+      { id: 'f', type: 'faq', children: [{ id: 'b', type: 'shelf', props: { list: 'block-pick' } }] },
+    ] });
+    expect(r.collections).toHaveLength(8);
+    expect(r.collections).toEqual(expect.arrayContaining(['featured', 'theme-pick', 'merchant-pick', 'block-pick']));
+  });
   it('reports categories when collections() is used', () => {
     const a = { ...artifact(), snippets: { nav: [{ k: 'loop', as: 'c', src: { k: 'lookup', fn: 'collections', args: [] }, limit: 50, body: [] }] as IRNode[] } };
     expect(pageDependencies(a, { template: 'index' })).toMatchObject({ categories: true });

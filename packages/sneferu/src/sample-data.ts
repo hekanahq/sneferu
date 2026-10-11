@@ -23,14 +23,40 @@ const MEMBERS: Record<keyof typeof COLLECTION, number[]> = {
   subscriptions: [4, 7, 9, 11],
 };
 
-/** One sample product. Every field a collection or product page reads lives here. */
-export const sampleProduct = (locale: 'ar' | 'en', i: number) => ({
-  title: TITLES[locale][i],
-  url: `${locale === 'en' ? '/en' : ''}/products/sample-${i + 1}`,
-  price: PRICES[i],
-  compare_at: i === 0 ? 60000 : null,
-  image: { url: `https://placehold.co/600x600/png?text=${i + 1}` },
-});
+/** How each sample product is delivered: subscriptions are activated by hand, the rest are codes. */
+const DIGITAL_KIND = (i: number): 'code' | 'manual' => (MEMBERS.subscriptions.includes(i) ? 'manual' : 'code');
+const DELIVERY = {
+  ar: { code: 'الكود بيوصلك على الإيميل بعد الدفع على طول.', manual: 'بيتفعل على حسابك خلال يوم من الدفع.' },
+  en: { code: 'The code arrives by email right after you pay.', manual: 'Activated on your account within a day of payment.' },
+} as const;
+/** The store category a sample product belongs to; products 2 and 3 have none. */
+const categoryOf = (i: number): 'gift-cards' | 'subscriptions' | null =>
+  MEMBERS['gift-cards'].includes(i) ? 'gift-cards' : MEMBERS.subscriptions.includes(i) ? 'subscriptions' : null;
+
+/** One sample product, in the theme product shape. Every field a collection or product page reads lives here. */
+export const sampleProduct = (locale: 'ar' | 'en', i: number) => {
+  const prefix = locale === 'en' ? '/en' : '';
+  const title = TITLES[locale][i]!;
+  const kind = DIGITAL_KIND(i);
+  const cat = categoryOf(i);
+  return {
+    id: `sample-${i + 1}`,
+    handle: `sample-${i + 1}`,
+    title,
+    url: `${prefix}/products/sample-${i + 1}`,
+    price: PRICES[i],
+    compare_at: i === 0 ? 60000 : null,
+    image: { url: `https://placehold.co/600x600/png?text=${i + 1}` },
+    available: true,
+    /** Sanitised HTML: print it with <hk-rich-text html="{{ product.description }}" />. */
+    description: `<p><strong>${title}</strong> — ${DELIVERY[locale][kind]}</p>`,
+    excerpt: `${title} — ${DELIVERY[locale][kind]}`,
+    kind: 'digital' as const,
+    digital_kind: kind,
+    tags: [kind === 'manual' ? 'subscription' : 'gift-card', ...(i < 3 ? ['gaming'] : [])],
+    category: cat ? { handle: cat, title: COLLECTION[cat][locale], url: `${prefix}/collections/${cat}` } : null,
+  };
+};
 
 /** The collections `collections()` lists as the store's categories (featured is not one). */
 const CATEGORIES = ['new', 'gift-cards', 'subscriptions'] as const;

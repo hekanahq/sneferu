@@ -3,12 +3,31 @@ import { mkdtempSync, writeFileSync, mkdirSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { request, type Server } from 'node:http';
-import { pickSampleData, sampleContext, withSampleData } from './sample-data';
+import { sanitizeRichText } from '@hekana/sneferu-components';
+import { pickSampleData, sampleContext, sampleProduct, sampleProducts, withSampleData } from './sample-data';
 import { readSampleData, sampleDataPath, startDev } from './commands/dev';
 
 const book = { title: 'Notes', url: '/products/notes', price: 9900, compare_at: null, image: { url: 'https://cdn.example/n.png' } };
 
 describe('sample data', () => {
+  it('products have the theme product shape (spec A3)', () => {
+    for (const locale of ['ar', 'en'] as const) {
+      for (const p of sampleProducts(locale)) {
+        expect(Object.keys(p).sort()).toEqual(['available', 'category', 'compare_at', 'description', 'digital_kind', 'excerpt', 'handle', 'id', 'image', 'kind', 'price', 'tags', 'title', 'url']);
+        expect(sanitizeRichText(p.description)).toBe(p.description);
+        expect(p.description).toContain('<strong>');
+        expect(p.excerpt.length).toBeLessThanOrEqual(200);
+        expect(p.excerpt).not.toMatch(/[<>]/);
+        expect(p.kind).toBe('digital');
+        expect(['code', 'file', 'manual']).toContain(p.digital_kind);
+        expect(p.tags.length).toBeLessThanOrEqual(20);
+        for (const t of p.tags) expect(t.length).toBeLessThanOrEqual(40);
+      }
+    }
+    expect(sampleProduct('en', 0).category).toEqual({ handle: 'gift-cards', title: 'Gift cards', url: '/en/collections/gift-cards' });
+    expect(sampleProduct('ar', 4)).toMatchObject({ digital_kind: 'manual', category: { handle: 'subscriptions', url: '/collections/subscriptions' } });
+    expect(sampleProduct('en', 1).category).toBeNull();
+  });
   it('has category collections and locale-aware URLs', () => {
     const en = sampleContext('en', {}, 'ar');
     expect(Object.keys(en.collections)).toEqual(expect.arrayContaining(['featured', 'new', 'gift-cards', 'subscriptions']));

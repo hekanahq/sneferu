@@ -38,6 +38,7 @@ function tagSection(t: HkTag): string {
     `| Category | ${t.category} |`,
     `| Children | ${children(t)} |`,
     `| Responsive props | ${t.responsive.length ? t.responsive.map((p) => code(kebab(p))).join(' ') : 'none'} |`,
+    ...(t.parts?.length ? [`| Parts | ${t.parts.map((p) => code(p)).join(' ')} (\`<hk-part name="…">\`) |`] : []),
     '',
   ];
   const props = Object.entries(t.props);
@@ -76,7 +77,7 @@ export function renderTagDocs(registry: TagRegistry): string {
     ...byCat.map(([c, ts]) => `| ${c} | ${ts.map((t) => `[\`${t.name}\`](#${t.name})`).join(' ')} |`),
     '',
     'Built into the language (not in the registry): `<hk-schema>` (settings JSON), `<hk-slot name="content" />` and `<hk-sections />` (layout and templates only),',
-    '`<hk-block of="{{ block }}" />` (renders a block inside a section). See [language.md](../language.md).',
+    '`<hk-block of="{{ block }}" />` (renders a block inside a section), `<hk-part name="…">` (fills a named part of a tag that has parts, such as `hk-product-card`). See [language.md](../language.md).',
     '',
   ];
   for (const [, ts] of byCat) for (const t of ts) out.push(tagSection(t));
@@ -103,6 +104,7 @@ export interface TagDoc {
   category: HkTag['category'];
   label: { en: string };
   allowedChildren: string[] | '*';
+  parts?: string[];
   responsive: string[];
   props: TagDocProp[];
 }
@@ -120,6 +122,7 @@ export function tagRegistryData(registry: TagRegistry): string {
     category: t.category,
     label: { en: t.editor.label.en },
     allowedChildren: t.allowedChildren,
+    ...(t.parts?.length ? { parts: t.parts } : {}),
     responsive: t.responsive.map(kebab),
     props: Object.entries(t.props).map(([name, f]) => ({
       name,
@@ -163,9 +166,12 @@ export function renderTagDocsMdx(registry: TagRegistry): string {
     ...byCat.map(([c, ts]) => `| ${c} | ${ts.map((t) => `[\`${t.name}\`](#${t.name})`).join(' ')} |`),
     '',
     'Built into the language (not in the registry): `<hk-schema>` (settings JSON), `<hk-slot name="content" />` and `<hk-sections />` (layout and templates only),',
-    '`<hk-block of="{{ block }}" />` (renders a block inside a section). See [language.mdx](../language.mdx).',
+    '`<hk-block of="{{ block }}" />` (renders a block inside a section), `<hk-part name="…">` (fills a named part of a tag that has parts, such as `hk-product-card`). See [language.mdx](../language.mdx).',
     '',
   ];
-  for (const t of tags) out.push(`## \`<${t.name}>\``, '', `<TagProps tag="${t.name}" />`, '');
+  for (const t of tags) {
+    out.push(`## \`<${t.name}>\``, '', `<TagProps tag="${t.name}" />`, '');
+    if (t.parts?.length) out.push(`Parts, each filled with \`<hk-part name="…">\` directly inside the tag: ${t.parts.map((p) => `\`${p}\``).join(', ')}.`, '');
+  }
   return `${out.join('\n').trimEnd()}\n`;
 }

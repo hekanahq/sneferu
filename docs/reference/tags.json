@@ -341,6 +341,27 @@
       ]
     },
     {
+      "name": "hk-rich-text",
+      "category": "typography",
+      "label": {
+        "en": "Rich text"
+      },
+      "allowedChildren": [],
+      "responsive": [],
+      "props": [
+        {
+          "name": "html",
+          "attr": "html",
+          "type": "rich_text",
+          "default": "",
+          "responsive": false,
+          "label": {
+            "en": "Rich text"
+          }
+        }
+      ]
+    },
+    {
       "name": "hk-badge",
       "category": "typography",
       "label": {
@@ -642,7 +663,13 @@
       "label": {
         "en": "Product card"
       },
-      "allowedChildren": [],
+      "allowedChildren": [
+        "hk-part"
+      ],
+      "parts": [
+        "badge",
+        "actions"
+      ],
       "responsive": [],
       "props": [
         {
