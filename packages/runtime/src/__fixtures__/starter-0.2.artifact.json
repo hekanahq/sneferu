@@ -1,0 +1,551 @@
+{
+ "schema": "sneferu/artifact@1",
+ "irVersion": "sneferu/ir@1",
+ "engineVersion": "2.0.0",
+ "manifest": {
+  "id": "starter",
+  "name": {
+   "ar": "Starter",
+   "en": "Starter"
+  },
+  "version": "0.1.0",
+  "author": "Hekana",
+  "description": {
+   "ar": "A starting point for a Sneferu theme",
+   "en": "A starting point for a Sneferu theme"
+  },
+  "category": "general",
+  "engine": "hk2",
+  "engineCompatibility": "^2.0.0",
+  "defaultLocale": "en",
+  "locales": [
+   "en",
+   "ar"
+  ],
+  "settings": {
+   "accent": {
+    "type": "color",
+    "label": {
+     "ar": "Accent",
+     "en": "Accent"
+    },
+    "default": "#B45309"
+   }
+  },
+  "tokens": {
+   "colors": {
+    "primary": "#111827",
+    "secondary": "#1F2937",
+    "accent": "#B45309",
+    "background": "#FFFFFF",
+    "text": "#111827"
+   },
+   "layout": {
+    "contentWidth": "1200px"
+   }
+  }
+ },
+ "layout": [
+  {
+   "k": "el",
+   "tag": "header",
+   "attrs": [
+    {
+     "name": "class",
+     "sink": "token",
+     "parts": [
+      "site-header"
+     ]
+    }
+   ],
+   "children": [
+    {
+     "k": "comp",
+     "tag": "hk-container",
+     "props": {},
+     "children": [
+      {
+       "k": "el",
+       "tag": "a",
+       "attrs": [
+        {
+         "name": "href",
+         "sink": "url",
+         "parts": [
+          "/"
+         ]
+        },
+        {
+         "name": "class",
+         "sink": "token",
+         "parts": [
+          "logo"
+         ]
+        }
+       ],
+       "children": [
+        {
+         "k": "text",
+         "e": {
+          "k": "path",
+          "p": [
+           "store",
+           "name"
+          ]
+         }
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "k": "el",
+   "tag": "main",
+   "attrs": [],
+   "children": [
+    {
+     "k": "slot",
+     "name": "content"
+    }
+   ]
+  },
+  {
+   "k": "el",
+   "tag": "footer",
+   "attrs": [
+    {
+     "name": "class",
+     "sink": "token",
+     "parts": [
+      "site-footer"
+     ]
+    }
+   ],
+   "children": [
+    {
+     "k": "comp",
+     "tag": "hk-container",
+     "props": {},
+     "children": [
+      {
+       "k": "comp",
+       "tag": "hk-text",
+       "props": {
+        "text": {
+         "k": "expr",
+         "e": {
+          "k": "path",
+          "p": [
+           "store",
+           "name"
+          ]
+         }
+        },
+        "size": {
+         "k": "responsive",
+         "base": {
+          "k": "static",
+          "v": 14
+         }
+        }
+       },
+       "children": []
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "templates": {
+  "index": [
+   {
+    "k": "slot",
+    "name": "sections"
+   }
+  ]
+ },
+ "sections": {
+  "featured": {
+   "ir": [
+    {
+     "k": "comp",
+     "tag": "hk-section",
+     "props": {},
+     "children": [
+      {
+       "k": "comp",
+       "tag": "hk-heading",
+       "props": {
+        "text": {
+         "k": "expr",
+         "e": {
+          "k": "path",
+          "p": [
+           "section",
+           "settings",
+           "title"
+          ]
+         }
+        },
+        "level": {
+         "k": "static",
+         "v": "h2"
+        },
+        "size": {
+         "k": "responsive",
+         "base": {
+          "k": "static",
+          "v": 32
+         }
+        }
+       },
+       "children": []
+      },
+      {
+       "k": "comp",
+       "tag": "hk-product-grid",
+       "props": {
+        "products": {
+         "k": "expr",
+         "e": {
+          "k": "path",
+          "p": [
+           "products"
+          ],
+          "from": {
+           "k": "lookup",
+           "fn": "collection",
+           "args": [
+            {
+             "k": "lit",
+             "v": "featured"
+            }
+           ]
+          }
+         }
+        },
+        "limit": {
+         "k": "static",
+         "v": 8
+        },
+        "columns": {
+         "k": "responsive",
+         "base": {
+          "k": "static",
+          "v": 4
+         },
+         "tablet": {
+          "k": "static",
+          "v": 2
+         },
+         "mobile": {
+          "k": "static",
+          "v": 2
+         }
+        }
+       },
+       "children": []
+      }
+     ]
+    }
+   ],
+   "schema": {
+    "name": {
+     "ar": "Featured products",
+     "en": "Featured products"
+    },
+    "version": 1,
+    "settings": {
+     "title": {
+      "type": "text",
+      "label": {
+       "ar": "Title",
+       "en": "Title"
+      },
+      "default": "Featured"
+     }
+    }
+   }
+  },
+  "hero": {
+   "ir": [
+    {
+     "k": "comp",
+     "tag": "hk-section",
+     "props": {
+      "background": {
+       "k": "static",
+       "v": "theme:secondary"
+      },
+      "paddingY": {
+       "k": "responsive",
+       "base": {
+        "k": "static",
+        "v": 96
+       },
+       "mobile": {
+        "k": "static",
+        "v": 48
+       }
+      }
+     },
+     "children": [
+      {
+       "k": "comp",
+       "tag": "hk-stack",
+       "props": {
+        "gap": {
+         "k": "responsive",
+         "base": {
+          "k": "static",
+          "v": 16
+         }
+        },
+        "align": {
+         "k": "static",
+         "v": "start"
+        }
+       },
+       "children": [
+        {
+         "k": "comp",
+         "tag": "hk-heading",
+         "props": {
+          "text": {
+           "k": "expr",
+           "e": {
+            "k": "path",
+            "p": [
+             "section",
+             "settings",
+             "title"
+            ]
+           }
+          },
+          "level": {
+           "k": "static",
+           "v": "h1"
+          },
+          "size": {
+           "k": "responsive",
+           "base": {
+            "k": "static",
+            "v": 56
+           },
+           "mobile": {
+            "k": "static",
+            "v": 32
+           }
+          },
+          "color": {
+           "k": "static",
+           "v": "#FFFFFF"
+          }
+         },
+         "children": []
+        },
+        {
+         "k": "comp",
+         "tag": "hk-text",
+         "props": {
+          "text": {
+           "k": "expr",
+           "e": {
+            "k": "path",
+            "p": [
+             "section",
+             "settings",
+             "subtitle"
+            ]
+           }
+          },
+          "size": {
+           "k": "responsive",
+           "base": {
+            "k": "static",
+            "v": 20
+           }
+          },
+          "color": {
+           "k": "static",
+           "v": "#E5E7EB"
+          }
+         },
+         "children": []
+        },
+        {
+         "k": "loop",
+         "as": "block",
+         "src": {
+          "k": "path",
+          "p": [
+           "section",
+           "blocks"
+          ]
+         },
+         "limit": 50,
+         "body": [
+          {
+           "k": "comp",
+           "tag": "hk-block",
+           "props": {
+            "of": {
+             "k": "expr",
+             "e": {
+              "k": "path",
+              "p": [
+               "block"
+              ]
+             }
+            }
+           },
+           "children": []
+          }
+         ]
+        },
+        {
+         "k": "comp",
+         "tag": "hk-button",
+         "props": {
+          "label": {
+           "k": "expr",
+           "e": {
+            "k": "lookup",
+            "fn": "t",
+            "args": [
+             {
+              "k": "lit",
+              "v": "shop_now"
+             }
+            ]
+           }
+          },
+          "href": {
+           "k": "static",
+           "v": "/products"
+          }
+         },
+         "children": []
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "schema": {
+    "name": {
+     "ar": "Hero",
+     "en": "Hero"
+    },
+    "version": 1,
+    "settings": {
+     "title": {
+      "type": "text",
+      "label": {
+       "ar": "Title",
+       "en": "Title"
+      },
+      "default": "Hello",
+      "maxLength": 80
+     },
+     "subtitle": {
+      "type": "textarea",
+      "label": {
+       "ar": "Subtitle",
+       "en": "Subtitle"
+      },
+      "default": "",
+      "maxLength": 200
+     }
+    },
+    "blocks": {
+     "allowed": [
+      "chip"
+     ],
+     "max": 4
+    }
+   }
+  }
+ },
+ "blocks": {
+  "chip": {
+   "ir": [
+    {
+     "k": "comp",
+     "tag": "hk-badge",
+     "props": {
+      "text": {
+       "k": "expr",
+       "e": {
+        "k": "path",
+        "p": [
+         "block",
+         "settings",
+         "label"
+        ]
+       }
+      },
+      "tone": {
+       "k": "static",
+       "v": "accent"
+      }
+     },
+     "children": []
+    }
+   ],
+   "schema": {
+    "name": {
+     "ar": "Chip",
+     "en": "Chip"
+    },
+    "version": 1,
+    "settings": {
+     "label": {
+      "type": "text",
+      "label": {
+       "ar": "Label",
+       "en": "Label"
+      },
+      "default": "New"
+     }
+    }
+   }
+  }
+ },
+ "snippets": {},
+ "templateSections": {
+  "index": [
+   {
+    "type": "hero",
+    "settings": {
+     "title": "Welcome",
+     "subtitle": "A theme built with Sneferu"
+    }
+   },
+   {
+    "type": "featured",
+    "settings": {
+     "title": "Featured products"
+    }
+   }
+  ]
+ },
+ "locales": {
+  "ar": {
+   "shop_now": "تسوق دلوقتي"
+  },
+  "en": {
+   "shop_now": "Shop now"
+  }
+ },
+ "assets": [
+  {
+   "path": "assets/theme.css",
+   "size": 1251,
+   "hash": "e2377b8eb43ce023"
+  }
+ ],
+ "hash": "4ee874d67a59f946"
+}
