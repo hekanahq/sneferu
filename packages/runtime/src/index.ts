@@ -8,3 +8,4 @@ export { renderPage, prepareArtifact, type ArtifactLike, type PageNode, type Ren
 export { checkArtifactShape } from './shape';
 export { translate } from './translate';
 export { themeTokenCss } from './tokens';
+export { themeFontCss } from './fonts';

@@ -103,7 +103,8 @@ templates (SN2011).
 | `settings` | yes | object of fields (may be `{}`), same field format as sections. Merchants edit these for the whole theme; read them as `settings.accent` or `settings('accent')` | SN3021 |
 | `tokens.colors` | yes | `primary`, `secondary`, `accent`, `background`, `text` as `#RRGGBB`. Extra keys (`muted`, `border`, …) are allowed | SN3019 |
 | `tokens.layout.contentWidth` | no | `"<3-4 digits>px"`, e.g. `"1200px"`; becomes `--hk-content-width` | ignored if malformed |
-| `tokens.fonts`, `tokens.radius` | no | accepted in the manifest, not turned into CSS yet | |
+| `tokens.fonts` | no | `heading`, `body`, `mono`: font families from the catalogue (see [Fonts](05-styling-and-responsive.mdx#fonts)) | SN3032 |
+| `tokens.radius` | no | accepted in the manifest, not turned into CSS yet | |
 | `previews` | no | array of preview image names | |
 
 Labels and names (`name`, `description`, every setting `label`, section and block

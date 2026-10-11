@@ -56,6 +56,53 @@ A `color` setting (`"default": "theme:primary"`) lets the merchant pick either a
 token or a hex colour, and passes straight into a colour prop:
 `background="{{ section.settings.background }}"`.
 
+## Fonts
+
+Name fonts in `theme.json`. All three keys are optional:
+
+```json
+"tokens": {
+  "colors": { "primary": "#111827", "secondary": "#1F2937", "accent": "#B45309",
+              "background": "#FFFFFF", "text": "#111827" },
+  "fonts": { "heading": "Cairo", "body": "Inter", "mono": "Martian Mono" }
+}
+```
+
+Only families from the catalogue below are accepted, written exactly as shown.
+Anything else is compile error SN3032 (with a "did you mean" when the name is
+close). Fonts are served by Hekana: bundled font files are not supported, and
+`assets/` fonts are not used for `tokens.fonts`.
+
+| Family | Arabic | Weights |
+| - | - | - |
+| Cairo | yes | 200-1000 (variable) |
+| IBM Plex Sans Arabic | yes | 300, 400, 500, 600, 700 |
+| Tajawal | yes | 400, 500, 700, 800 |
+| Almarai | yes | 400, 700, 800 |
+| Readex Pro | yes | 160-700 (variable) |
+| Noto Kufi Arabic | yes | 100-900 (variable) |
+| Rubik | yes | 300-900 (variable) |
+| Baloo Bhaijaan 2 | yes | 400-800 (variable) |
+| Inter | no | 100-900 (variable) |
+| Martian Mono | no | 100-800 (variable) |
+| Space Grotesk | no | 300-700 (variable) |
+| JetBrains Mono | no | 100-800 (variable) |
+
+On the page this becomes `--hk-font-heading`, `--hk-font-body` and `--hk-font-mono`
+on the theme root, `font-family: var(--hk-font-body)` on the root, and
+`font-family: var(--hk-font-heading)` on `h1` to `h6`. Only the font files the
+page needs are loaded (`font-display: swap`).
+
+**Arabic pages.** When a chosen font has no Arabic glyphs (Inter, Martian Mono,
+Space Grotesk, JetBrains Mono), its stack on an Arabic page is
+`"Inter", "Cairo", sans-serif`, so Arabic text uses Cairo instead of the browser
+default. A theme that declares no fonts gets Cairo on Arabic pages and the
+system fonts on English pages. On an Arabic page without a `heading` font,
+headings use the body font. `mono` defaults to the system monospace stack.
+
+In `sneferu dev` the same families are loaded from Google Fonts, so the preview
+needs a network connection; published themes never load anything from Google.
+
 ## Your CSS: `assets/*.css`
 
 Every `.css` file at the top level of `assets/` is the theme stylesheet. It is

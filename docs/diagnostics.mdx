@@ -82,6 +82,7 @@ Every problem Sneferu reports has a stable code. The format is `file:line:col se
 | SN3029 | A template's default section lists a block its section does not allow, or more than `blocks.max` | Add the type to the section's `blocks.allowed`, or list fewer blocks. |
 | SN3030 | A section or block `<hk-schema>` lacks a `name` or has bad `settings` | Add a `name` string; `settings` must be an object. |
 | SN3031 | A setting's `label` is not a string (warning) | Write the label as a string. |
+| SN3032 | `tokens.fonts` is not an object, has a key other than `heading`, `body`, `mono`, or names a font that is not in the catalogue | Use one of the catalogue families exactly as written (see [Fonts](guide/05-styling-and-responsive.mdx#fonts)). |
 
 ## SN4xxx Rendering
 

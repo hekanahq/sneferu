@@ -5,7 +5,7 @@ import { join, resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { Server } from 'node:http';
 import { request } from 'node:http';
-import { devPage, tokenCss } from './dev-page';
+import { devPage, googleFontsHref, tokenCss } from './dev-page';
 import { pickLocale, resolveAsset, startDev } from './commands/dev';
 import { readFileSync } from 'node:fs';
 
@@ -26,6 +26,22 @@ describe('dev page', () => {
     expect(html).toContain('<style>.a{}</style>');
     expect(html).toContain("new EventSource('/__events')");
     expect(devPage(artifact as never, { body: '', locale: 'en', css: '', themeCss: '', reloadScript: false })).not.toContain('EventSource');
+  });
+});
+
+describe('dev fonts', () => {
+  const m = { id: 'x', tokens: { fonts: { heading: 'Cairo', body: 'Inter', mono: 'evil&family=x' } } };
+  it('links Google Fonts for the declared catalogue families only, Cairo added on ar', () => {
+    expect(googleFontsHref(m, 'en')).toBe('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Inter:wght@100..900&display=swap');
+    expect(googleFontsHref({ id: 'x', tokens: { fonts: { body: 'Inter' } } }, 'ar')).toBe('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Cairo:wght@200..1000&display=swap');
+    expect(googleFontsHref({ id: 'x' }, 'en')).toBe('');
+  });
+  it('the page carries the link, the variables and no @font-face', () => {
+    const html = devPage({ manifest: m } as never, { body: '', locale: 'ar', css: '', themeCss: '', reloadScript: false });
+    expect(html).toContain('<link rel="stylesheet" href="https://fonts.googleapis.com/css2?');
+    expect(html).toContain('--hk-font-body:"Inter","Cairo",sans-serif');
+    expect(html).not.toContain('@font-face');
+    expect(html).not.toContain('evil');
   });
 });
 
