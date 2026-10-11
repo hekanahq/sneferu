@@ -170,7 +170,8 @@ of Hekana.
   `.00` when the amount is a whole pound and keeps two decimals otherwise.
 - Unit: `'minor'` (the default) reads the input as piastres; `'major'` reads it
   as pounds. Product prices are always minor units, so `'major'` is for numbers
-  you wrote yourself.
+  you wrote yourself. The unit is the second argument, so `'major'` always needs
+  a format before it: `money: 'decimal', 'major'` or `money: 'whole', 'major'`.
 
 To make `whole` the default for the whole theme, set it in `theme.json`:
 

@@ -115,12 +115,12 @@ describe('renderNodes', () => {
     expect(run(undefined)).toBe('');
     expect(run('featured')).toBe('iii');
   });
-  it('a CSS rule written twice on a page is kept once (shared rules such as the icon flip)', () => {
-    const shared: HkTag = { ...box, name: 'hk-shared', render: (_p, c) => { c.css('[dir=rtl] .sn-flip{transform:scaleX(-1)}'); c.css(`.sn-${c.id}{x:1}`); return '<i></i>'; } };
-    const e = env({ registry: new TagRegistry().register(shared), cssSeen: new Set() });
+  it('cssOnce writes a shared rule once per page; css() output is never deduplicated', () => {
+    const shared: HkTag = { ...box, name: 'hk-shared', render: (_p, c) => { c.cssOnce!('[dir=rtl] .sn-flip{transform:scaleX(-1)}'); c.css('.dup{x:1}'); c.css(`.sn-${c.id}{x:1}`); return '<i></i>'; } };
+    const e = env({ registry: new TagRegistry().register(shared), cssOnce: new Set() });
     const one: IRNode = { k: 'comp', tag: 'hk-shared', props: {}, children: [] };
     renderNodes([one, one, one], {}, e);
-    expect(e.css).toEqual(['[dir=rtl] .sn-flip{transform:scaleX(-1)}', '.sn-c1{x:1}', '.sn-c2{x:1}', '.sn-c3{x:1}']);
+    expect(e.css).toEqual(['[dir=rtl] .sn-flip{transform:scaleX(-1)}', '.dup{x:1}', '.sn-c1{x:1}', '.dup{x:1}', '.sn-c2{x:1}', '.dup{x:1}', '.sn-c3{x:1}']);
   });
   it('tags get ctx.url and the money default', () => {
     let seen: unknown[] = [];
@@ -128,6 +128,6 @@ describe('renderNodes', () => {
     renderNodes([{ k: 'comp', tag: 'hk-probe', props: {}, children: [] }], {}, env({ registry: new TagRegistry().register(probe), ctx: { ...ctx, locale: 'en', dir: 'ltr', money: 'whole' } }));
     expect(seen).toEqual(['/en/products', '#', 'whole']);
     renderNodes([{ k: 'comp', tag: 'hk-probe', props: {}, children: [] }], {}, env({ registry: new TagRegistry().register(probe), ctx: { ...ctx, url: (p) => `/s${p}` } }));
-    expect(seen).toEqual(['/s/products', '/sjavascript:x', undefined]); // the host's result, checked by safeUrl
+    expect(seen).toEqual(['/s/products', '#', undefined]); // unsafe input never reaches the host
   });
 });

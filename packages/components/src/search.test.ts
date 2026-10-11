@@ -37,10 +37,12 @@ describe('hk-search-form', () => {
   it('button: icon by default, button-label as text, never empty', () => {
     expect(render('hk-search-form', {}).html).toMatch(ICON);
     const both = render('hk-search-form', { buttonLabel: '<b>Go</b>' }, { locale: 'en' }).html;
-    expect(both).toMatch(/<button type="submit" class="sn-search-button" aria-label="Search"><svg [^]*<\/svg>&lt;b&gt;Go&lt;\/b&gt;<\/button>/);
-    expect(render('hk-search-form', { icon: false, buttonLabel: 'Go' }, { locale: 'en' }).html).toContain('aria-label="Search">Go</button>');
+    // visible text is the accessible name: no aria-label that differs from it
+    expect(both).toMatch(/<button type="submit" class="sn-search-button"><svg [^]*<\/svg>&lt;b&gt;Go&lt;\/b&gt;<\/button>/);
+    expect(render('hk-search-form', { icon: false, buttonLabel: 'Go' }, { locale: 'en' }).html).toContain('<button type="submit" class="sn-search-button">Go</button>');
     // no icon and no button text: the label is the button text, so the button is never blank
-    expect(render('hk-search-form', { icon: false }, { locale: 'en' }).html).toContain('aria-label="Search">Search</button>');
+    expect(render('hk-search-form', { icon: false }, { locale: 'en' }).html).toContain('<button type="submit" class="sn-search-button">Search</button>');
+    expect(render('hk-search-form', {}, { locale: 'en' }).html).toContain('<button type="submit" class="sn-search-button" aria-label="Search"><svg');
   });
   it('the host resolver is used for action and its result is checked', () => {
     expect(render('hk-search-form', {}, { url: (p) => `/store-x${p}` }).html).toContain('action="/store-x/search"');
@@ -55,6 +57,16 @@ describe('hk-search-form', () => {
     expect(html).not.toContain('onsubmit');
     expect(html).not.toContain('formaction');
     expect(html.match(/role=/g)).toHaveLength(1);
+  });
+  it('text props are trimmed and cut to 200 characters', () => {
+    const { html } = render('hk-search-form', { placeholder: 'p'.repeat(500), label: `  ${'l'.repeat(500)}  `, buttonLabel: 'b'.repeat(500) });
+    expect(html).toContain(`placeholder="${'p'.repeat(200)}"`);
+    expect(html).toContain(`>${'l'.repeat(200)}</label>`);
+    expect(html).toContain(`>${'b'.repeat(200)}</button>`);
+    expect(html).not.toContain('p'.repeat(201));
+  });
+  it('the host resolver gets /search and a normalising resolver is fine', () => {
+    expect(render('hk-search-form', {}, { url: (p) => new URL(p, 'https://shop.example').href }).html).toContain('action="https://shop.example/search"');
   });
   it('ids come from the instance id and stay attribute-safe', () => {
     const { html } = render('hk-search-form', {}, { id: 's-hero-c3' });

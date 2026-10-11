@@ -73,10 +73,19 @@ export const hkImage: HkTag = {
   },
 };
 
-/** A merchant link through the page's resolver (locale prefix on store paths); always safe. */
+/**
+ * A merchant link through the page's resolver (locale prefix on store paths); always safe.
+ * The input is checked first and only store-relative paths reach ctx.url; its result is checked again.
+ */
 export const link = (c: TagRenderContext, href: unknown): string => {
-  const h = toStr(href) || '#';
-  return safeUrl(typeof c.url === 'function' ? c.url(h) : h);
+  const s = safeUrl(toStr(href));
+  if (s === '#' || !s.startsWith('/') || typeof c.url !== 'function') return s;
+  try {
+    const out = c.url(s);
+    return typeof out === 'string' ? safeUrl(out) : '#';
+  } catch {
+    return '#';
+  }
 };
 
 const VARIANT = oneOf(['solid', 'outline', 'ghost'] as const);

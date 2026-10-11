@@ -103,7 +103,8 @@ renders, on an English page:
 | `icon` | boolean | `true` | The `search` icon in the button |
 
 The button is never empty: with `icon="false"` and no `button-label` it shows
-the label.
+the label. Its accessible name is its visible text; only an icon-only button
+gets `aria-label` (the label). Text props are trimmed and cut to 200 characters.
 
 ### What is fixed
 
@@ -113,6 +114,11 @@ There is no `action`, `method` or field prop, no hidden fields, and `role` and
 `aria-*` on the tag are ignored (the form is `role="search"`). Writing any other
 attribute that is not a prop is SN2004. This keeps a theme from sending
 shoppers' input anywhere but the store.
+
+A `GET` form replaces any query string in its `action` with the form's own
+fields, so in a dev setup that picks the store with a query string (`?store=…`)
+that parameter is dropped on submit. Stores addressed by their own host, as on
+Hekana, are not affected.
 
 ### Styling
 

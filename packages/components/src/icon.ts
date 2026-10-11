@@ -21,7 +21,8 @@ export function iconSvg(name: string, size: number, stroke: number, label?: stri
   if (!isIconName(name)) return '';
   const s = iconSize(size);
   const w = iconStroke(stroke);
-  const a11y = label ? `role="img" aria-label="${escapeAttr(label)}"` : 'aria-hidden="true"';
+  const text = typeof label === 'string' ? label.trim() : '';
+  const a11y = text ? `role="img" aria-label="${escapeAttr(text)}"` : 'aria-hidden="true"';
   return `<svg class="sn-icon${opts.flip ? ' sn-flip' : ''}${opts.cls ?? ''}"${opts.attrs ?? ''} xmlns="http://www.w3.org/2000/svg" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" ${a11y}>${ICONS[name]}</svg>`;
 }
 
@@ -29,7 +30,7 @@ export function iconSvg(name: string, size: number, stroke: number, label?: stri
 export function tagIcon(c: TagRenderContext, name: unknown, size: unknown, stroke: unknown, label?: string, extra: { cls?: string; attrs?: string } = {}): string {
   if (!isIconName(name)) return '';
   const flip = c.dir === 'rtl' && FLIP_ICONS.has(name);
-  if (flip) c.css(FLIP_CSS);
+  if (flip) (c.cssOnce ?? c.css)(FLIP_CSS);
   return iconSvg(name, iconSize(size), iconStroke(stroke), label, { flip, ...extra });
 }
 

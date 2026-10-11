@@ -86,6 +86,14 @@ describe('url() and money options', () => {
     expect(url('/products', { url: () => { throw new Error('x'); } })).toBe('#');
     expect(url('/products', { url: () => 5 as never })).toBe('#');
   });
+  it('only safe store-relative input reaches the host resolver (a normalising resolver cannot turn //evil into a link)', () => {
+    const calls: string[] = [];
+    const host = (p: string) => { calls.push(p); return new URL(p, 'https://shop.example').href; };
+    expect(url('/products', { url: host })).toBe('https://shop.example/products');
+    for (const bad of ['//evil.com', '/\\evil.com', 'javascript:x', ' //evil.com']) expect(url(bad, { url: host }), bad).toBe('#');
+    for (const keep of ['https://x.com/a', 'mailto:a@b.co', 'tel:+201000000000', '#top', '?q=1']) expect(url(keep, { url: host }), keep).toBe(keep);
+    expect(calls).toEqual(['/products']);
+  });
   it('money takes whole/decimal and minor/major', () => {
     const m = (input: unknown, args: unknown[], over: Partial<RenderContext> = {}) =>
       evaluate({ k: 'filter', name: 'money', input: lit(input as never), args: args.map((a) => lit(a as never)) }, {}, ctx(over));
@@ -99,5 +107,6 @@ describe('url() and money options', () => {
     expect(m(129000, [], { money: 'whole' })).toBe('1,290 ج.م');
     expect(m(129000, ['decimal'], { money: 'whole' })).toBe('1,290.00 ج.م');
     expect(m('x', ['whole'])).toBe('');
+    expect(m(1e308, ['decimal', 'major'])).toBe('');
   });
 });

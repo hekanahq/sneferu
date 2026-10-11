@@ -5,6 +5,11 @@ export interface TagRenderContext {
   /** Stable, unique per rendered instance; used to scope CSS: `.sn-${id}`. */
   id: string;
   css(rule: string): void;
+  /**
+   * A page-wide constant rule shared by every instance (the icon flip, the visually-hidden
+   * helper): written once per page however many tags ask. Optional; fall back to css().
+   */
+  cssOnce?(rule: string): void;
   controller(name: string): void;
   data: Record<string, unknown>;
   locale: 'ar' | 'en';

@@ -95,7 +95,7 @@ function render(artifact: ArtifactLike, opts: RenderOptions): RenderResult {
   const mf = isObj(artifact.manifest.money) ? artifact.manifest.money.format : undefined;
   const money = isMoneyFormat(mf) ? mf : isMoneyFormat(opts.ctx.money) ? opts.ctx.money : undefined;
   const ctx: RenderContext = { ...opts.ctx, locale, dir, settings, money };
-  const env: Env = { ctx, registry: opts.registry, snippets: artifact.snippets, slots: {}, budget: new Budget(opts.limits), css: [], cssSeen: new Set(), controllers: new Set(), diagnostics: [], ids: { n: 0 }, depth: 0, include: 0 };
+  const env: Env = { ctx, registry: opts.registry, snippets: artifact.snippets, slots: {}, budget: new Budget(opts.limits), css: [], cssOnce: new Set(), controllers: new Set(), diagnostics: [], ids: { n: 0 }, depth: 0, include: 0 };
   const base: Scope = { ...(opts.scope ?? {}), store: ctx.store, locale, dir };
 
   const sections: PageNode[] = Array.isArray(opts.sections) ? opts.sections : (own(artifact.templateSections, opts.template) ?? []).map((s, i) => ({ id: `default-${i}`, type: s.type, props: s.settings, ...(Array.isArray(s.blocks) ? { children: s.blocks.map((b, j) => ({ id: `default-${i}-${j}`, type: b.type, props: b.settings })) } : {}) }));

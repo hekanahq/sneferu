@@ -116,6 +116,13 @@ describe('content and commerce tags', () => {
     expect(render('hk-button', { label: 'Shop', href: 'https://x.com/a' }, '', { locale: 'en' }).html).toContain('href="https://x.com/a"');
     expect(render('hk-button', { label: 'Shop', href: '/products' }, '', { url: () => 'javascript:alert(1)' }).html).toContain('href="#"');
     expect(render('hk-button', { label: 'Shop' }, '', { locale: 'en' }).html).toContain('href="#"');
+    // input checked before the host resolver: a normalising resolver never sees //evil or /\evil
+    const calls: string[] = [];
+    const host = (p: string) => { calls.push(p); return new URL(p, 'https://shop.example').href; };
+    for (const href of ['//evil.com', '/\\evil.com']) expect(render('hk-button', { label: 'x', href }, '', { url: host }).html, href).toContain('href="#"');
+    expect(render('hk-button', { label: 'x', href: 'mailto:a@b.co' }, '', { url: host }).html).toContain('href="mailto:a@b.co"');
+    expect(render('hk-button', { label: 'x', href: '/p' }, '', { url: host }).html).toContain('href="https://shop.example/p"');
+    expect(calls).toEqual(['/p']);
   });
   it('price: format whole drops .00 and wraps the number in <bdi>; the default is 0.2 markup', () => {
     expect(render('hk-price', { amount: 129000, format: 'whole' }).html).toBe('<span class="sn-c1 sn-price"><span class="sn-now"><bdi>1,290</bdi> ج.م</span></span>');

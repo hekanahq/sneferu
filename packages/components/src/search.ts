@@ -1,20 +1,21 @@
-import { escapeAttr, escapeText, safeToken, safeUrl, toStr, type HkTag, type TagRenderContext } from '@hekana/sneferu-core';
+import { escapeAttr, escapeText, safeToken, toStr, type HkTag, type TagRenderContext } from '@hekana/sneferu-core';
 import { passthrough } from './attrs';
 import { iconSvg } from './icon';
+import { link } from './content';
 
 const L = (ar: string, en: string) => ({ ar, en });
 /** Used when neither the `label` prop nor a `search` translation exists. */
 const BUILTIN = L('بحث', 'Search');
 export const VISUALLY_HIDDEN_CSS = '.sn-visually-hidden{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}';
 
-const text = (v: unknown): string => toStr(v).trim();
+/** Merchant/template text: trimmed, at most 200 characters. */
+const text = (v: unknown): string => toStr(v).trim().slice(0, 200);
 const searchLabel = (p: Record<string, unknown>, c: TagRenderContext): string => {
   const own = text(p.label);
   if (own) return own;
   const t = text(c.t('search'));
   return t && t !== 'search' ? t : BUILTIN[c.locale];
 };
-const searchAction = (c: TagRenderContext): string => safeUrl(typeof c.url === 'function' ? c.url('/search') : '/search');
 
 /**
  * The only form a theme can render: GET to the store's /search with one `q` field.
@@ -41,16 +42,17 @@ export const hkSearchForm: HkTag = {
     c.css(`${s} input{flex:1 1 12em;min-width:0;min-height:44px;font:inherit}`);
     c.css(`${s} .sn-search-button{display:inline-flex;align-items:center;justify-content:center;gap:.5em;min-width:44px;min-height:44px;font:inherit;cursor:pointer}`);
     const show = p.showLabel === true;
-    if (!show) c.css(VISUALLY_HIDDEN_CSS);
+    if (!show) (c.cssOnce ?? c.css)(VISUALLY_HIDDEN_CSS);
     const label = searchLabel(p, c);
     const qid = `${safeToken(c.id).replace(/ /g, '-')}-q`;
     const placeholder = text(p.placeholder);
     const icon = p.icon === false ? '' : iconSvg('search', 20, 2);
     const btnText = text(p.buttonLabel) || (icon === '' ? label : '');
     const x = passthrough(p, true);
-    return `<form class="sn-${c.id} sn-search${x.cls}"${x.attrs} role="search" method="get" action="${escapeAttr(searchAction(c))}">`
+    return `<form class="sn-${c.id} sn-search${x.cls}"${x.attrs} role="search" method="get" action="${escapeAttr(link(c, '/search'))}">`
       + `<label class="sn-search-label${show ? '' : ' sn-visually-hidden'}" for="${escapeAttr(qid)}">${escapeText(label)}</label>`
       + `<input id="${escapeAttr(qid)}" type="search" name="q" maxlength="100" autocomplete="off" enterkeyhint="search"${placeholder ? ` placeholder="${escapeAttr(placeholder)}"` : ''}>`
-      + `<button type="submit" class="sn-search-button" aria-label="${escapeAttr(label)}">${icon}${escapeText(btnText)}</button></form>`;
+      // visible button text is the accessible name; aria-label only for an icon-only button
+      + `<button type="submit" class="sn-search-button"${btnText ? '' : ` aria-label="${escapeAttr(label)}"`}>${icon}${escapeText(btnText)}</button></form>`;
   },
 };

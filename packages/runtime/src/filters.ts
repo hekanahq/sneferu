@@ -8,6 +8,7 @@ const money = (input: unknown, args: unknown[], ctx: RenderContext) => {
   const n = num(input);
   if (!Number.isFinite(n)) return '';
   const minor = args[1] === 'major' ? Math.round(n * 100) : n;
+  if (!Number.isFinite(minor)) return ''; // 1e308 pounds overflows to Infinity piastres
   const format = isMoneyFormat(args[0]) ? args[0] : isMoneyFormat(ctx.money) ? ctx.money : 'decimal';
   return moneyText(formatAmount(minor, format), ctx.locale, ctx.currency);
 };

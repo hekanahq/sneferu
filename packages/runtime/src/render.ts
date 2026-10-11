@@ -24,8 +24,8 @@ export interface Env {
   ctx: RenderContext; registry: TagRegistry; snippets: Record<string, IRNode[]>;
   slots: Record<string, () => string>; budget: Budget; css: string[]; controllers: Set<string>;
   diagnostics: Diagnostic[]; ids: { n: number; prefix?: string }; depth: number; include: number;
-  /** CSS rules already written on this page: a rule written twice is kept once (shared rules such as the icon flip). */
-  cssSeen?: Set<string>;
+  /** Rules written through cssOnce on this page (shared constant rules such as the icon flip). Other css() output is never deduplicated. */
+  cssOnce?: Set<string>;
   /** Block definitions; when present, <hk-block of="…"/> renders them with the caller's env. */
   blocks?: Record<string, { ir: IRNode[] }>;
 }
@@ -138,8 +138,10 @@ export function renderNodes(nodes: IRNode[], scope: Scope, env: Env): string {
         try {
           const out = tag.render(props, {
             id, locale: env.ctx.locale, dir: env.ctx.dir, data: scope,
-            css: (rule) => {
-              if (env.cssSeen) { if (env.cssSeen.has(rule)) return; env.cssSeen.add(rule); }
+            css: (rule) => env.css.push(rule),
+            cssOnce: (rule) => {
+              const seen = env.cssOnce;
+              if (seen) { if (seen.has(rule)) return; seen.add(rule); }
               env.css.push(rule);
             },
             controller: (name) => env.controllers.add(name),

@@ -50,6 +50,8 @@ describe('iconSvg', () => {
     expect(iconSvg('search', 20, 2)).toBe(`<svg class="sn-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS.search}</svg>`);
     expect(iconSvg('search', 24, 1.5, 'Search "all"')).toContain('stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Search &quot;all&quot;">');
     expect(iconSvg('search', 24, 2, '')).toContain('aria-hidden="true"');
+    expect(iconSvg('search', 24, 2, '   ')).toContain('aria-hidden="true"');
+    expect(iconSvg('search', 24, 2, '  Go  ')).toContain('aria-label="Go"');
     expect(iconSvg('nope', 20, 2)).toBe('');
     expect(iconSvg('__proto__', 20, 2)).toBe('');
     expect(iconSvg('toString', 20, 2)).toBe('');
