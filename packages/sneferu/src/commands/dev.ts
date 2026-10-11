@@ -26,6 +26,11 @@ export function resolveAsset(assets: string, raw: string): string | undefined {
   return file.startsWith(base + sep) ? file : undefined;
 }
 
+/** ?locale= when the theme ships it, otherwise the theme's default locale. */
+export function pickLocale(requested: string | null, manifest: { defaultLocale: 'ar' | 'en'; locales: readonly string[] }): 'ar' | 'en' {
+  return (requested === 'ar' || requested === 'en') && manifest.locales.includes(requested) ? requested : manifest.defaultLocale;
+}
+
 export async function startDev(dir: string, port: number): Promise<{ server: Server; close: () => void }> {
   const root = resolve(dir);
   const registry = createDefaultRegistry();
@@ -58,7 +63,7 @@ export async function startDev(dir: string, port: number): Promise<{ server: Ser
         res.writeHead(200, { 'content-type': TYPES[extname(file).toLowerCase()] ?? 'application/octet-stream' }).end(readFileSync(file)); return;
       }
       if (!artifact) { res.writeHead(500, { 'content-type': 'text/html; charset=utf-8' }).end(errorPage(problems)); return; }
-      const locale = url.searchParams.get('locale') === 'en' ? 'en' : 'ar';
+      const locale = pickLocale(url.searchParams.get('locale'), artifact.manifest);
       let template = 'index';
       if (url.pathname.startsWith('/__template/')) {
         try { template = decodeURIComponent(url.pathname.slice('/__template/'.length)); } catch { template = ''; }
@@ -79,7 +84,9 @@ export async function startDev(dir: string, port: number): Promise<{ server: Ser
   await new Promise<void>((ok) => server.listen(port, '127.0.0.1', ok));
   const addr = server.address();
   const actual = typeof addr === 'object' && addr ? addr.port : port;
-  console.log(`Sneferu dev → http://127.0.0.1:${actual}  (ar · /?locale=en)${artifact ? '' : '\n' + problems}`);
+  const other = artifact?.manifest.locales.filter((l) => l !== artifact?.manifest.defaultLocale) ?? [];
+  const hint = artifact ? `  (${[artifact.manifest.defaultLocale, ...other.map((l) => `/?locale=${l}`)].join(' · ')})` : '';
+  console.log(`Sneferu dev → http://127.0.0.1:${actual}${hint}${artifact ? '' : '\n' + problems}`);
   return { server, close: () => { clearTimeout(timer); void watcher.close(); for (const c of clients) c.end(); server.close(); } };
 }
 

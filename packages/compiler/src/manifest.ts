@@ -1,4 +1,4 @@
-import { ENGINE_VERSION, err, type Diagnostic, type FieldSchema } from '@hekana/sneferu-core';
+import { ENGINE_VERSION, err, normalizeFieldLabels, normalizeLabel, warn, type Diagnostic, type FieldSchema } from '@hekana/sneferu-core';
 
 export interface Manifest {
   id: string; name: { ar: string; en: string }; version: string; author: string;
@@ -10,7 +10,6 @@ export interface Manifest {
 
 const SEMVER = /^(\d+)\.(\d+)\.(\d+)$/;
 const HEX = /^#[0-9a-fA-F]{6}$/;
-const bi = (v: unknown) => typeof v === 'object' && v !== null && typeof (v as { ar?: unknown }).ar === 'string' && typeof (v as { en?: unknown }).en === 'string';
 
 /** `^2.0.0` → major 2, >= 2.0.0; `2.1.0` exact. */
 export function satisfies(range: string, version: string): boolean {
@@ -30,17 +29,25 @@ export function validateManifest(json: unknown): { manifest?: Manifest; diagnost
   const m = json as Partial<Manifest>;
   if (typeof m !== 'object' || m === null) return { diagnostics: [err('SN3009', 'theme.json must be an object', at)] };
   if (!/^[a-z][a-z0-9-]{2,40}$/.test(String(m.id))) out.push(err('SN3012', 'id must be 3–41 lowercase letters, digits or dashes', at));
-  if (!bi(m.name)) out.push(err('SN3013', 'name needs ar and en', at));
+  // name, description and setting labels may be "Text", { en } or { ar, en };
+  // the manifest always carries { ar, en }, with en standing in for a missing ar
+  const name = normalizeLabel(m.name);
+  if (!name) out.push(err('SN3013', 'name must be a string or { en } (ar is optional)', at));
   if (!SEMVER.test(String(m.version))) out.push(err('SN3014', 'version must be semver x.y.z', at));
   if (typeof m.author !== 'string' || !m.author) out.push(err('SN3015', 'author is required', at));
-  if (!bi(m.description)) out.push(err('SN3016', 'description needs ar and en', at));
+  const description = normalizeLabel(m.description);
+  if (!description) out.push(err('SN3016', 'description must be a string or { en } (ar is optional)', at));
   if (typeof m.category !== 'string' || !m.category) out.push(err('SN3017', 'category is required', at));
   if (m.engine !== 'hk2') out.push(err('SN3010', `engine must be "hk2" (got ${JSON.stringify(m.engine)})`, at));
   else if (typeof m.engineCompatibility !== 'string' || !satisfies(m.engineCompatibility, ENGINE_VERSION)) out.push(err('SN3011', `engineCompatibility ${JSON.stringify(m.engineCompatibility)} does not include engine ${ENGINE_VERSION}`, at));
   if (m.defaultLocale !== 'ar' && m.defaultLocale !== 'en') out.push(err('SN3018', 'defaultLocale must be ar or en', at));
   if (!Array.isArray(m.locales) || !m.locales.includes(m.defaultLocale as 'ar')) out.push(err('SN3018', 'locales must include defaultLocale', at));
+  else if (m.locales.some((l) => l !== 'ar' && l !== 'en')) out.push(err('SN3018', 'locales may only contain ar and en', at));
   const c = m.tokens?.colors ?? {};
   for (const k of ['primary', 'secondary', 'accent', 'background', 'text']) if (!HEX.test(String(c[k]))) out.push(err('SN3019', `tokens.colors.${k} must be a #RRGGBB colour`, at));
   if (typeof m.settings !== 'object' || m.settings === null) out.push(err('SN3021', 'settings must be an object', at));
-  return out.length ? { diagnostics: out } : { manifest: m as Manifest, diagnostics: out };
+  if (out.length) return { diagnostics: out };
+  const settings = normalizeFieldLabels(m.settings);
+  for (const k of settings.bad) out.push(warn('SN3031', `settings.${k}: label must be a string or { en } (ar is optional)`, at));
+  return { manifest: { ...(m as Manifest), name: name!, description: description!, settings: settings.schema }, diagnostics: out };
 }

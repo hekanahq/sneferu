@@ -7,3 +7,4 @@ export * from './escape';
 export * from './fields';
 export * from './tags';
 export * from './registry';
+export * from './labels';

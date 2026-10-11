@@ -1,4 +1,5 @@
-import type { FieldSchema } from './fields';
+import type { FieldSchema, FieldSchemaInput } from './fields';
+import type { LabelInput } from './labels';
 
 export interface TagRenderContext {
   /** Stable, unique per rendered instance; used to scope CSS: `.sn-${id}`. */
@@ -26,3 +27,9 @@ export interface HkTag {
   a11y?: { role?: string; keyboard?: string; labelProp?: string };
   editor: { label: { ar: string; en: string }; group: string; insertable: boolean; privileged?: boolean };
 }
+
+/** A tag as written: labels may be "Text", { en } or { ar, en }; register() normalizes them. */
+export type HkTagInput = Omit<HkTag, 'props' | 'editor'> & {
+  props: FieldSchemaInput | FieldSchema;
+  editor: Omit<HkTag['editor'], 'label'> & { label: LabelInput };
+};
