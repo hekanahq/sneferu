@@ -8,7 +8,7 @@ const manifest = {
   id: 'esports', name: { ar: 'إي سبورتس', en: 'Esports' }, version: '1.0.0', author: 'Hekana',
   description: { ar: 'قالب', en: 'Theme' }, category: 'gaming', engine: 'hk2', engineCompatibility: '^2.0.0',
   defaultLocale: 'ar', locales: ['ar', 'en'], settings: {},
-  tokens: { colors: { primary: '#A3E635', secondary: '#2E1065', accent: '#7C3AED', background: '#120A1F', text: '#F5F3FF' } },
+  tokens: { colors: { primary: '#A3E635', secondary: '#2E1065', accent: '#B45309', background: '#120A1F', text: '#F5F3FF' } },
 };
 const base = (): ThemeFile[] => [
   f('theme.json', JSON.stringify(manifest)),

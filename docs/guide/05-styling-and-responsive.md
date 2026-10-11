@@ -11,7 +11,7 @@ A theme is styled in three layers:
 
 ```json
 "tokens": {
-  "colors": { "primary": "#111827", "secondary": "#1F2937", "accent": "#7C3AED",
+  "colors": { "primary": "#111827", "secondary": "#1F2937", "accent": "#B45309",
               "background": "#FFFFFF", "text": "#111827", "muted": "#6B7280" },
   "layout": { "contentWidth": "1200px" }
 }
@@ -23,7 +23,7 @@ becomes one rule on the theme's root element:
 [data-hk-theme="my-theme"] {
   --hk-color-primary: #111827;
   --hk-color-secondary: #1F2937;
-  --hk-color-accent: #7C3AED;
+  --hk-color-accent: #B45309;
   --hk-color-background: #FFFFFF;
   --hk-color-text: #111827;
   --hk-color-muted: #6B7280;

@@ -8,7 +8,7 @@ import { request } from 'node:http';
 import { devPage, tokenCss } from './dev-page';
 import { resolveAsset, startDev } from './commands/dev';
 
-const artifact = { manifest: { id: 'esports', defaultLocale: 'ar', tokens: { colors: { primary: '#A3E635', secondary: '#2E1065', accent: '#7C3AED', background: '#120A1F', text: '#F5F3FF' }, layout: { contentWidth: '1200px' } } } };
+const artifact = { manifest: { id: 'esports', defaultLocale: 'ar', tokens: { colors: { primary: '#A3E635', secondary: '#2E1065', accent: '#B45309', background: '#120A1F', text: '#F5F3FF' }, layout: { contentWidth: '1200px' } } } };
 
 describe('dev page', () => {
   it('emits token variables mapped onto the platform names', () => {
