@@ -33,6 +33,7 @@ Install: `npx @hekana/sneferu <command>` (Node.js 20 or newer), or `npm install 
 8. [Cookbook](docs/guide/08-cookbook.mdx): announcement bar, hero, feature row, product grid, subscription plans, each with a picture of the result
 9. [Get an API key](docs/guide/09-get-an-api-key.mdx): developer access, `sneferu login`, `HEKANA_TOKEN` for CI
 10. [Format your theme](docs/guide/10-format-your-theme.mdx): `sneferu format`, `@hekana/prettier-plugin-sneferu`, VS Code format on save
+11. [Tutorial: build a digital products store theme](docs/guide/11-tutorial-digital-store.mdx): the Bento example theme from mockup to live store; Creator and License in [examples/themes](examples/themes)
 
 ## Reference
 

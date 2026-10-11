@@ -1,0 +1,262 @@
+{
+ "ar": {
+  "store": {
+   "name": "دفتر"
+  },
+  "collections": {
+   "printables": {
+    "title": "مطبوعات",
+    "products": [
+     {
+      "title": "كراسة تلوين الشمس للأطفال",
+      "url": "/products/sunny-colouring-book",
+      "price": 6900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/bento-sun.webp"
+      }
+     },
+     {
+      "title": "مخطط أسبوعي للطباعة",
+      "url": "/products/weekly-planner",
+      "price": 4900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/bento-smiley.webp"
+      }
+     },
+     {
+      "title": "بطاقات حروف للأطفال",
+      "url": "/products/kids-alphabet-cards",
+      "price": 5900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/bento-ghost.webp"
+      }
+     }
+    ]
+   },
+   "templates": {
+    "title": "قوالب وكتب",
+    "products": [
+     {
+      "title": "قوالب بوستات سوشيال",
+      "url": "/products/social-post-templates",
+      "price": 14900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/bento-waves.webp"
+      }
+     },
+     {
+      "title": "قوالب ستوري",
+      "url": "/products/story-templates",
+      "price": 9900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/bento-stars.webp"
+      }
+     },
+     {
+      "title": "كتاب: ابدأ مشروعك من البيت",
+      "url": "/products/start-from-home-ebook",
+      "price": 12900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/bento-plant.webp"
+      }
+     }
+    ]
+   },
+   "featured": {
+    "title": "مختارات",
+    "products": [
+     {
+      "title": "كراسة تلوين الشمس للأطفال",
+      "url": "/products/sunny-colouring-book",
+      "price": 6900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/bento-sun.webp"
+      }
+     },
+     {
+      "title": "مخطط أسبوعي للطباعة",
+      "url": "/products/weekly-planner",
+      "price": 4900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/bento-smiley.webp"
+      }
+     },
+     {
+      "title": "بطاقات حروف للأطفال",
+      "url": "/products/kids-alphabet-cards",
+      "price": 5900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/bento-ghost.webp"
+      }
+     },
+     {
+      "title": "قوالب بوستات سوشيال",
+      "url": "/products/social-post-templates",
+      "price": 14900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/bento-waves.webp"
+      }
+     },
+     {
+      "title": "قوالب ستوري",
+      "url": "/products/story-templates",
+      "price": 9900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/bento-stars.webp"
+      }
+     },
+     {
+      "title": "كتاب: ابدأ مشروعك من البيت",
+      "url": "/products/start-from-home-ebook",
+      "price": 12900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/bento-plant.webp"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "en": {
+  "store": {
+   "name": "Daftar"
+  },
+  "collections": {
+   "printables": {
+    "title": "Printables",
+    "products": [
+     {
+      "title": "Sunny colouring book",
+      "url": "/en/products/sunny-colouring-book",
+      "price": 6900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/bento-sun.webp"
+      }
+     },
+     {
+      "title": "Printable weekly planner",
+      "url": "/en/products/weekly-planner",
+      "price": 4900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/bento-smiley.webp"
+      }
+     },
+     {
+      "title": "Kids alphabet cards",
+      "url": "/en/products/kids-alphabet-cards",
+      "price": 5900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/bento-ghost.webp"
+      }
+     }
+    ]
+   },
+   "templates": {
+    "title": "Templates and e-books",
+    "products": [
+     {
+      "title": "Social post templates",
+      "url": "/en/products/social-post-templates",
+      "price": 14900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/bento-waves.webp"
+      }
+     },
+     {
+      "title": "Story templates",
+      "url": "/en/products/story-templates",
+      "price": 9900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/bento-stars.webp"
+      }
+     },
+     {
+      "title": "E-book: Start a business from home",
+      "url": "/en/products/start-from-home-ebook",
+      "price": 12900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/bento-plant.webp"
+      }
+     }
+    ]
+   },
+   "featured": {
+    "title": "Featured",
+    "products": [
+     {
+      "title": "Sunny colouring book",
+      "url": "/en/products/sunny-colouring-book",
+      "price": 6900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/bento-sun.webp"
+      }
+     },
+     {
+      "title": "Printable weekly planner",
+      "url": "/en/products/weekly-planner",
+      "price": 4900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/bento-smiley.webp"
+      }
+     },
+     {
+      "title": "Kids alphabet cards",
+      "url": "/en/products/kids-alphabet-cards",
+      "price": 5900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/bento-ghost.webp"
+      }
+     },
+     {
+      "title": "Social post templates",
+      "url": "/en/products/social-post-templates",
+      "price": 14900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/bento-waves.webp"
+      }
+     },
+     {
+      "title": "Story templates",
+      "url": "/en/products/story-templates",
+      "price": 9900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/bento-stars.webp"
+      }
+     },
+     {
+      "title": "E-book: Start a business from home",
+      "url": "/en/products/start-from-home-ebook",
+      "price": 12900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/bento-plant.webp"
+      }
+     }
+    ]
+   }
+  }
+ }
+}

@@ -20,6 +20,8 @@ export function readTheme(dir: string): ThemeFile[] {
   const out: ThemeFile[] = [];
   const walk = (d: string) => {
     for (const name of readdirSync(d)) {
+      // what the CLI's loadTheme skips: dot entries, and README/LICENSE/CHANGELOG/docs at the top
+      if (name.startsWith('.') || (d === dir && /^(readme|license|licence|changelog)(\.(md|txt))?$|^docs$/i.test(name))) continue;
       const p = join(d, name);
       if (statSync(p).isDirectory()) walk(p);
       else out.push({ path: relative(dir, p), bytes: readFileSync(p) });

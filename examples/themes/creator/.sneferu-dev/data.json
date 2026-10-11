@@ -1,0 +1,272 @@
+{
+ "ar": {
+  "store": {
+   "name": "استوديو منى سليم"
+  },
+  "collections": {
+   "courses": {
+    "title": "كورسات",
+    "products": [
+     {
+      "title": "كورس تصميم صفحات الويب",
+      "url": "/products/web-page-design-course",
+      "price": 79900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course.webp"
+      }
+     },
+     {
+      "title": "كورس الاسكتش للمصممين",
+      "url": "/products/sketching-for-designers",
+      "price": 59900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course-2.webp"
+      }
+     }
+    ]
+   },
+   "ebooks": {
+    "title": "كتب إلكترونية",
+    "products": [
+     {
+      "title": "كتاب: تصميم يتقري بسهولة",
+      "url": "/products/design-that-reads",
+      "price": 14900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook.webp"
+      }
+     },
+     {
+      "title": "كتاب: إزاي تسعّر شغلك كمصمم",
+      "url": "/products/pricing-design-work",
+      "price": 12900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook-2.webp"
+      }
+     }
+    ]
+   },
+   "templates": {
+    "title": "قوالب",
+    "products": [
+     {
+      "title": "قوالب تخطيط صفحات قابلة للتعديل",
+      "url": "/products/page-layout-templates",
+      "price": 19900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-templates.webp"
+      }
+     },
+     {
+      "title": "فلاتر ألوان للصور",
+      "url": "/products/photo-colour-presets",
+      "price": 9900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-presets.webp"
+      }
+     }
+    ]
+   },
+   "featured": {
+    "title": "مختارات",
+    "products": [
+     {
+      "title": "كورس تصميم صفحات الويب",
+      "url": "/products/web-page-design-course",
+      "price": 79900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course.webp"
+      }
+     },
+     {
+      "title": "كورس الاسكتش للمصممين",
+      "url": "/products/sketching-for-designers",
+      "price": 59900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course-2.webp"
+      }
+     },
+     {
+      "title": "كتاب: تصميم يتقري بسهولة",
+      "url": "/products/design-that-reads",
+      "price": 14900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook.webp"
+      }
+     },
+     {
+      "title": "كتاب: إزاي تسعّر شغلك كمصمم",
+      "url": "/products/pricing-design-work",
+      "price": 12900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook-2.webp"
+      }
+     },
+     {
+      "title": "قوالب تخطيط صفحات قابلة للتعديل",
+      "url": "/products/page-layout-templates",
+      "price": 19900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-templates.webp"
+      }
+     },
+     {
+      "title": "فلاتر ألوان للصور",
+      "url": "/products/photo-colour-presets",
+      "price": 9900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-presets.webp"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "en": {
+  "store": {
+   "name": "Mona Selim Studio"
+  },
+  "collections": {
+   "courses": {
+    "title": "Courses",
+    "products": [
+     {
+      "title": "Web page design course",
+      "url": "/en/products/web-page-design-course",
+      "price": 79900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course.webp"
+      }
+     },
+     {
+      "title": "Sketching for designers",
+      "url": "/en/products/sketching-for-designers",
+      "price": 59900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course-2.webp"
+      }
+     }
+    ]
+   },
+   "ebooks": {
+    "title": "E-books",
+    "products": [
+     {
+      "title": "E-book: Design that reads well",
+      "url": "/en/products/design-that-reads",
+      "price": 14900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook.webp"
+      }
+     },
+     {
+      "title": "E-book: Pricing your design work",
+      "url": "/en/products/pricing-design-work",
+      "price": 12900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook-2.webp"
+      }
+     }
+    ]
+   },
+   "templates": {
+    "title": "Templates",
+    "products": [
+     {
+      "title": "Editable page layout templates",
+      "url": "/en/products/page-layout-templates",
+      "price": 19900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-templates.webp"
+      }
+     },
+     {
+      "title": "Photo colour presets",
+      "url": "/en/products/photo-colour-presets",
+      "price": 9900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-presets.webp"
+      }
+     }
+    ]
+   },
+   "featured": {
+    "title": "Featured",
+    "products": [
+     {
+      "title": "Web page design course",
+      "url": "/en/products/web-page-design-course",
+      "price": 79900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course.webp"
+      }
+     },
+     {
+      "title": "Sketching for designers",
+      "url": "/en/products/sketching-for-designers",
+      "price": 59900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course-2.webp"
+      }
+     },
+     {
+      "title": "E-book: Design that reads well",
+      "url": "/en/products/design-that-reads",
+      "price": 14900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook.webp"
+      }
+     },
+     {
+      "title": "E-book: Pricing your design work",
+      "url": "/en/products/pricing-design-work",
+      "price": 12900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook-2.webp"
+      }
+     },
+     {
+      "title": "Editable page layout templates",
+      "url": "/en/products/page-layout-templates",
+      "price": 19900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-templates.webp"
+      }
+     },
+     {
+      "title": "Photo colour presets",
+      "url": "/en/products/photo-colour-presets",
+      "price": 9900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-presets.webp"
+      }
+     }
+    ]
+   }
+  }
+ }
+}
