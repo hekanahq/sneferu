@@ -1,0 +1,34 @@
+<section class="ls-apps" id="apps">
+  <div class="ls-wrap">
+    <div class="ls-head">
+      <h2 class="ls-h2">{{ section.settings.heading | default: t('apps_heading') }}</h2>
+      <p class="ls-side">{{ t('apps_side') }}</p>
+    </div>
+    <div class="ls-apps-grid">
+      <a class="ls-all" href="{{ t('href_products') }}">
+        <span>{{ t('all_apps') }}</span>
+        {% render 'icon', name: 'download' %}
+      </a>
+      {% for p in collection('apps').products limit: 3 %}
+        <div class="ls-app">
+          <hk-product-card product="{{ p }}" class="ls-app-card" />
+          <a class="ls-app-buy" href="{{ p.url }}" aria-hidden="true" tabindex="-1">{{ t('buy') }}</a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+<hk-schema>
+  {
+    "name": "Apps",
+    "version": 1,
+    "settings": {
+      "heading": {
+        "type": "text",
+        "label": "Heading (empty: the theme's own words)",
+        "default": "",
+        "maxLength": 60
+      }
+    }
+  }
+</hk-schema>

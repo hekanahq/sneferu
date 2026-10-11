@@ -1,0 +1,27 @@
+{
+  "id": "license",
+  "name": "License",
+  "version": "1.0.1",
+  "author": "Hekana",
+  "description": "A dark theme for software licences, subscriptions and digital tools",
+  "category": "digital",
+  "engine": "hk2",
+  "engineCompatibility": "^2.0.0",
+  "defaultLocale": "ar",
+  "locales": ["ar", "en"],
+  "settings": {},
+  "tokens": {
+    "colors": {
+      "primary": "#0A1122",
+      "secondary": "#121C33",
+      "accent": "#C8F04D",
+      "background": "#0A1122",
+      "text": "#EEF2F8",
+      "muted": "#97A3B9",
+      "tier": "#1D4A84",
+      "tier-deep": "#15365F",
+      "line": "#26324B"
+    },
+    "layout": { "contentWidth": "1040px" }
+  }
+}

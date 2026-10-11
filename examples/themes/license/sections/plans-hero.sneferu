@@ -1,0 +1,57 @@
+<section class="ls-hero" id="plans">
+  <div class="ls-wrap ls-hero-row">
+    <div class="ls-hero-copy">
+      <h1 class="ls-h1">
+        <span class="ls-accent">{{ section.settings.line1 | default: t('hero_line1') }}</span>
+        <span>{{ section.settings.line2 | default: t('hero_line2') }}</span>
+      </h1>
+      <p class="ls-lead">{{ section.settings.text | default: t('hero_text') }}</p>
+      <a class="ls-btn ls-btn-sm" href="#apps">
+        <span>{{ section.settings.button | default: t('hero_button') }}</span>
+        {% render 'icon', name: 'download' %}
+      </a>
+    </div>
+    <div class="ls-tiers">
+      {% for p in collection('bundles').products limit: 3 %}
+        <a class="ls-tier" href="{{ p.url }}" data-best="{{ forloop.index == 2 }}">
+          <span class="ls-tier-name">{{ p.title }}</span>
+          <hk-price amount="{{ p.price }}" compare-at="{{ p.compare_at }}" class="ls-tier-price" />
+          <span class="ls-tier-note">{{ t('tier_note') }}</span>
+          <span class="ls-tier-buy">{{ t('buy') }}</span>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+<hk-schema>
+  {
+    "name": "Plans hero",
+    "version": 1,
+    "settings": {
+      "line1": {
+        "type": "text",
+        "label": "Heading, first line (empty: the theme's own words)",
+        "default": "",
+        "maxLength": 60
+      },
+      "line2": {
+        "type": "text",
+        "label": "Heading, second line",
+        "default": "",
+        "maxLength": 60
+      },
+      "text": {
+        "type": "textarea",
+        "label": "Text",
+        "default": "",
+        "maxLength": 200
+      },
+      "button": {
+        "type": "text",
+        "label": "Button",
+        "default": "",
+        "maxLength": 30
+      }
+    }
+  }
+</hk-schema>

@@ -1,0 +1,16 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "covers"
+      },
+      {
+        "type": "what-you-get"
+      },
+      {
+        "type": "author"
+      }
+    ]
+  }
+</hk-schema>

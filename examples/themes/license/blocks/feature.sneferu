@@ -1,0 +1,15 @@
+{% render 'feature', text: block.settings.text %}
+<hk-schema>
+  {
+    "name": "Feature",
+    "version": 1,
+    "settings": {
+      "text": {
+        "type": "text",
+        "label": "Feature",
+        "default": "Instant delivery by email",
+        "maxLength": 80
+      }
+    }
+  }
+</hk-schema>

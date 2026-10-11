@@ -1,0 +1,41 @@
+<section class="bt-band-wrap">
+  <div class="bt-wrap">
+    <div class="bt-band">
+      <div>
+        <h2>{{ section.settings.heading | default: t('band_heading') }}</h2>
+        <p>{{ section.settings.text | default: t('band_text') }}</p>
+      </div>
+      <hk-button
+        label="{{ section.settings.button | default: t('band_button') }}"
+        href="{{ t('href_products') }}"
+        class="bt-band-button"
+      />
+    </div>
+  </div>
+</section>
+<hk-schema>
+  {
+    "name": "Call to action band",
+    "version": 1,
+    "settings": {
+      "heading": {
+        "type": "text",
+        "label": "Heading (empty: the theme's own words)",
+        "default": "",
+        "maxLength": 80
+      },
+      "text": {
+        "type": "textarea",
+        "label": "Text",
+        "default": "",
+        "maxLength": 200
+      },
+      "button": {
+        "type": "text",
+        "label": "Button",
+        "default": "",
+        "maxLength": 30
+      }
+    }
+  }
+</hk-schema>

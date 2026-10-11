@@ -1,0 +1,19 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "plans-hero"
+      },
+      {
+        "type": "features"
+      },
+      {
+        "type": "apps"
+      },
+      {
+        "type": "faq"
+      }
+    ]
+  }
+</hk-schema>

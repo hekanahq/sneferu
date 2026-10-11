@@ -1,0 +1,16 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "tabs"
+      },
+      {
+        "type": "bento"
+      },
+      {
+        "type": "band"
+      }
+    ]
+  }
+</hk-schema>

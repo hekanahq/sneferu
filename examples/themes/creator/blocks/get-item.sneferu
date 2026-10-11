@@ -1,0 +1,21 @@
+{% render 'get-item', term: block.settings.term, text: block.settings.text %}
+<hk-schema>
+  {
+    "name": "What you get: item",
+    "version": 1,
+    "settings": {
+      "term": {
+        "type": "text",
+        "label": "Item",
+        "default": "Lessons",
+        "maxLength": 40
+      },
+      "text": {
+        "type": "text",
+        "label": "Detail",
+        "default": "Recorded videos you keep",
+        "maxLength": 120
+      }
+    }
+  }
+</hk-schema>
