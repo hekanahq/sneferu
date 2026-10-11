@@ -17,7 +17,10 @@ my-theme/
 ```
 
 `node_modules/`, `dist/`, `.git/`, `.sneferu-dev/` and `.DS_Store` are ignored by
-the CLI. Anything else in the folder is part of the theme and is checked.
+the CLI, and so are, at the top of the folder only, `package.json` and lock files,
+`README.md`, `LICENSE`, `CHANGELOG.md` and a `docs/` folder (for notes and
+screenshots). None of these is checked or pushed. Anything else in the folder is
+part of the theme and is checked.
 
 ## Files and what they are for
 

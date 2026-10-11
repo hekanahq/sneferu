@@ -40,6 +40,18 @@ describe('cli commands', () => {
     expect(b.artifactPath!.endsWith('dist/my-shop-0.1.0.sneferu.json')).toBe(true);
     expect(existsSync(join(dir, 'dist', 'assets', 'theme.css'))).toBe(true);
   });
+  it('validate ignores README, LICENSE, CHANGELOG and a top-level docs/ folder', () => {
+    runInit(dir, {});
+    for (const f of ['README.md', 'LICENSE', 'CHANGELOG.md', 'readme.txt']) writeFileSync(join(dir, f), '# notes');
+    mkdirSync(join(dir, 'docs'), { recursive: true });
+    writeFileSync(join(dir, 'docs', 'shot.webp'), 'x');
+    expect(runValidate(dir).ok).toBe(true);
+    const paths = loadTheme(dir).map((f) => f.path);
+    expect(paths.some((p) => /readme|license|changelog|^docs\//i.test(p))).toBe(false);
+    // only at the top: a README inside sections/ is still an error
+    writeFileSync(join(dir, 'sections', 'README.md'), 'x');
+    expect(runValidate(dir).ok).toBe(false);
+  });
   it('loadTheme refuses symlinks', () => {
     runInit(dir, {});
     symlinkSync('/etc/passwd', join(dir, 'assets', 'leak.css'));
