@@ -35,7 +35,7 @@ becomes one rule on the theme's root element:
 ```
 
 | Token | Variable | Use |
-|---|---|---|
+| - | - | - |
 | `colors.<key>` (key: lower-case letters, digits, `-`) | `--hk-color-<key>` | in CSS: `var(--hk-color-accent)`; in colour props and settings: `theme:accent` |
 | `layout.contentWidth` (`"1200px"`, 3-4 digits) | `--hk-content-width` | max width of `hk-section` content and `hk-container` (fallback 1280px) |
 
@@ -69,7 +69,7 @@ Write styles for:
 - the stable hooks the tags render:
 
 | Tag | Stable classes |
-|---|---|
+| - | - |
 | `hk-button` | `sn-btn`, `sn-btn-solid` / `sn-btn-outline` / `sn-btn-ghost` |
 | `hk-card` | `sn-card` |
 | `hk-badge` | `sn-badge`, `sn-badge-accent` / `-neutral` / `-success` / `-warning` |
@@ -118,12 +118,12 @@ What CSS cannot do in a theme:
 Breakpoints are desktop-first:
 
 | Prefix | Applies at |
-|---|---|
+| - | - |
 | none | every width (the base value) |
 | `tablet-` | 1023px and below |
 | `mobile-` | 639px and below |
 
-A prop marked responsive in the [tag reference](../reference/tags.md) takes the
+A prop marked responsive in the [tag reference](../reference/tags.mdx) takes the
 prefixes:
 
 ```html
@@ -133,11 +133,15 @@ prefixes:
 <hk-stack direction="row" mobile-direction="column" gap="16">…</hk-stack>
 ```
 
-The [product grid](08-cookbook.md#product-grid) in the cookbook uses
+The [product grid](08-cookbook.mdx#product-grid) in the cookbook uses
 `columns="4" tablet-columns="3" mobile-columns="2"` and
 `size="32" mobile-size="24"` on its heading. The same file at two widths:
 
-![Four product cards in a row under a 32 px heading](../images/product-grid@2x.webp "1080 px wide: the base values, four columns.") ![Two product cards per row under a smaller heading](../images/product-grid-phone@2x.webp "390 px wide: the mobile- values, two columns.")
+<Result>
+  <Shot src="../images/product-grid@2x.webp" alt="Four product cards in a row under a 32 px heading" caption="1080 px wide: the base values, four columns." />
+
+  <Shot src="../images/product-grid-phone@2x.webp" alt="Two product cards per row under a smaller heading" caption="390 px wide: the mobile- values, two columns." />
+</Result>
 
 Responsive props today: `hk-section` `padding-y`; `hk-container` `padding-x`;
 `hk-stack` `direction`, `gap`; `hk-grid` `columns`, `gap`; `hk-heading` and
@@ -162,7 +166,7 @@ English page is left-to-right. The renderer sets both on the theme root:
 Rules that keep one stylesheet correct in both directions:
 
 | Do | Instead of |
-|---|---|
+| - | - |
 | `margin-inline-start`, `padding-inline`, `inset-inline-end` | `margin-left`, `padding-right`, `right` |
 | `text-align: start` / `end` (and `align="start"` on tags) | `text-align: left` / `right` |
 | `border-inline-start` | `border-left` |
@@ -183,7 +187,7 @@ Rules that keep one stylesheet correct in both directions:
 Every `hk-*` tag accepts these attributes and writes them on its root element:
 
 | Attribute | Behaviour |
-|---|---|
+| - | - |
 | `class` | added after the tag's own classes, reduced to letters, digits, `-`, `_` |
 | `id` | one safe token |
 | `role`, `title` | written as given (escaped) |

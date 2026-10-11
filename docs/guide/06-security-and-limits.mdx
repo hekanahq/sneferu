@@ -12,7 +12,7 @@ Plain HTML elements are checked against an **allow-list**. Anything not on it is
 SN2001, including custom elements.
 
 | Group | Allowed |
-|---|---|
+| - | - |
 | Sectioning and grouping | `address article aside blockquote dd details div dl dt figcaption figure footer h1 h2 h3 h4 h5 h6 header hgroup hr li main menu nav ol p pre search section summary ul` |
 | Text | `a abbr b bdi bdo br cite code data del dfn em i ins kbd mark meter progress q rp rt ruby s samp small span strong sub sup time u var wbr` |
 | Media | `audio img picture source track video` |
@@ -29,13 +29,13 @@ Form controls (`button`, `input`, `select`, `textarea`) are not on the list.
 ## What a theme cannot do (yet)
 
 | Not available | Instead |
-|---|---|
+| - | - |
 | JavaScript: no `<script>`, no `on*` handlers | Interactive parts come from platform tags. `.js` files are accepted in `assets/` but nothing can load them in this release |
 | Forms and inputs | `hk-button` for links that look like buttons. Cart, checkout and search tags arrive in later releases |
 | Inline `<style>` or `<link rel="stylesheet">` | `assets/*.css` |
 | Dynamic `style="…{{ }}…"` (SN2009) | classes, `data-*` + CSS, tokens, tag props |
 | Embeds (`iframe`, `object`, `embed`) | none |
-| Reading arbitrary data | only the scope in [chapter 4](04-data-and-expressions.md) |
+| Reading arbitrary data | only the scope in [chapter 4](04-data-and-expressions.mdx) |
 
 ## Attributes
 
@@ -53,7 +53,7 @@ URL attributes are `href`, every `*:href` (`xlink:href`), `src`, `action`,
 `poster`, `srcset` and `formaction`.
 
 | Allowed | Rejected |
-|---|---|
+| - | - |
 | `https://…` | `http://…` |
 | `mailto:…` | `javascript:`, `vbscript:`, `data:` and every other scheme |
 | `tel:…` | protocol-relative `//host/…` |
@@ -83,7 +83,7 @@ dropped at compile time.
 Every page render is metered. The limits are fixed by the platform:
 
 | Budget | Limit |
-|---|---|
+| - | - |
 | Rendered nodes per page (text, markup, tags, `if`, `for`, `render`, …) | 20,000 |
 | Loop iterations per page, all loops | 2,000 |
 | Output size per page | 1,500,000 characters |
@@ -121,11 +121,11 @@ snippet that does not exist is SN2008.
 Every problem has a stable code; the series tells you the stage:
 
 | Series | Stage |
-|---|---|
+| - | - |
 | SN1xxx | parsing |
 | SN2xxx | template rules (elements, attributes, tags, URLs) |
 | SN3xxx | files, manifest, compile |
 | SN4xxx | rendering (the page still renders; the bad part is dropped) |
 | SN9xxx | artifact integrity (rebuild) |
 
-The full list with fixes: [diagnostics.md](../diagnostics.md).
+The full list with fixes: [diagnostics.md](../diagnostics.mdx).

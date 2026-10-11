@@ -17,17 +17,17 @@ then `node packages/sneferu/dist/cli.js <command> <theme folder>`.
 
 ## Developer guide
 
-1. [Getting started](docs/guide/01-getting-started.md): install, `init`, `dev`, `validate`, `build`
-2. [Theme structure](docs/guide/02-theme-structure.md): every folder and file, `theme.json`, limits
-3. [Sections and blocks](docs/guide/03-sections-and-blocks.md): `<hk-schema>`, field types, settings coercion, blocks
-4. [Data and expressions](docs/guide/04-data-and-expressions.md): scope, lookups, filters, truthiness, loops
-5. [Styling and responsive](docs/guide/05-styling-and-responsive.md): tokens, theme CSS, breakpoints, RTL
-6. [Security and limits](docs/guide/06-security-and-limits.md): allow-list, URLs, render budgets
-7. [Publishing](docs/guide/07-publishing.md): `sneferu push`, versions, install and publish
-8. [Cookbook](docs/guide/08-cookbook.md): announcement bar, hero, feature row, product grid, subscription plans, each with a picture of the result
+1. [Getting started](docs/guide/01-getting-started.mdx): install, `init`, `dev`, `validate`, `build`
+2. [Theme structure](docs/guide/02-theme-structure.mdx): every folder and file, `theme.json`, limits
+3. [Sections and blocks](docs/guide/03-sections-and-blocks.mdx): `<hk-schema>`, field types, settings coercion, blocks
+4. [Data and expressions](docs/guide/04-data-and-expressions.mdx): scope, lookups, filters, truthiness, loops
+5. [Styling and responsive](docs/guide/05-styling-and-responsive.mdx): tokens, theme CSS, breakpoints, RTL
+6. [Security and limits](docs/guide/06-security-and-limits.mdx): allow-list, URLs, render budgets
+7. [Publishing](docs/guide/07-publishing.mdx): `sneferu push`, versions, install and publish
+8. [Cookbook](docs/guide/08-cookbook.mdx): announcement bar, hero, feature row, product grid, subscription plans, each with a picture of the result
 
 ## Reference
 
-- [Tag reference](docs/reference/tags.md): every `hk-*` tag and prop (generated: `pnpm docs:tags`)
-- [Language reference](docs/language.md): grammar, directives, scope, filters
-- [Diagnostics](docs/diagnostics.md): every SN code and its fix
+- [Tag reference](docs/reference/tags.mdx): every `hk-*` tag and prop (generated: `pnpm docs:tags`)
+- [Language reference](docs/language.mdx): grammar, directives, scope, filters
+- [Diagnostics](docs/diagnostics.mdx): every SN code and its fix

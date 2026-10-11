@@ -3,7 +3,7 @@
 Every problem Sneferu reports has a stable code. The format is `file:line:col severity CODE message`. Errors fail `validate` and `build`.
 
 | Series | Stage |
-|---|---|
+| - | - |
 | SN1xxx | lexing and parsing templates |
 | SN2xxx | template validation (tags, attributes, safety) |
 | SN3xxx | package, manifest and compile |
@@ -13,7 +13,7 @@ Every problem Sneferu reports has a stable code. The format is `file:line:col se
 ## SN1xxx Syntax
 
 | Code | Meaning | Fix |
-|---|---|---|
+| - | - | - |
 | SN1001 | `{{` has no closing `}}` | Close the output expression. |
 | SN1002 | `{%` has no closing `%}` | Close the directive. |
 | SN1003 | Unterminated tag or attribute value | Close the quote or the `>`. |
@@ -31,7 +31,7 @@ Every problem Sneferu reports has a stable code. The format is `file:line:col se
 ## SN2xxx Template validation
 
 | Code | Meaning | Fix |
-|---|---|---|
+| - | - | - |
 | SN2001 | Element not on the allow-list (see language.md), for example `script`, `style`, `iframe`, `form`, SVG `animate`/`set`/`foreignobject`, form controls or custom elements | Remove it; put styles in `assets/*.css`; use `hk-*` tags. |
 | SN2002 | Forbidden attribute (`on*` handlers, `srcdoc`, `formaction`, `attributename`, `xml:base`) or an invalid attribute name | Remove it. |
 | SN2003 | Unknown `hk-*` tag | Check the spelling; the message suggests the closest tag. |
@@ -47,7 +47,7 @@ Every problem Sneferu reports has a stable code. The format is `file:line:col se
 ## SN3xxx Package, manifest and compile
 
 | Code | Meaning | Fix |
-|---|---|---|
+| - | - | - |
 | SN3001 | `theme.json` is missing | Add it at the theme root. |
 | SN3002 | Invalid file path (absolute, `..`, bad characters, backslash, symlink) | Use lower-case names with letters, digits, `.`, `_`, `-`. |
 | SN3003 | File type or location not allowed | Put files in the allowed folders with the allowed extensions. |
@@ -82,7 +82,7 @@ Every problem Sneferu reports has a stable code. The format is `file:line:col se
 These are reported by the runtime while rendering a page. The page still renders; the affected part is dropped.
 
 | Code | Meaning | Fix |
-|---|---|---|
+| - | - | - |
 | SN4001 | Render budget exceeded (nodes, loop iterations or output size); the section degrades | Lower loop limits or simplify the section. |
 | SN4002 | Snippet or block include depth exceeded (8); reported once per page | Remove recursive or deeply nested includes. |
 | SN4003 | Maximum nesting depth (64) reached; reported once per page | Flatten the markup. |
@@ -98,7 +98,7 @@ These are reported by the runtime while rendering a page. The page still renders
 The runtime re-checks a compiled artifact before rendering. These indicate a corrupt or tampered artifact; rebuild it with `sneferu build`.
 
 | Code | Meaning | Fix |
-|---|---|---|
+| - | - | - |
 | SN9001 | Unknown IR node kind | Rebuild with the current SDK. |
 | SN9002 | Unknown component in the IR | Rebuild; check the tag exists. |
 | SN9003 | Unknown filter in the IR | Rebuild. |

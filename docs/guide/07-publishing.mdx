@@ -1,11 +1,13 @@
 # 7. Publishing
 
-> **Status (phase 1b): internal, admin only.** Pushing, installing and publishing
-> Sneferu themes is limited to Hekana platform admins while theme engine 2 is
-> dogfooded on dev and preview stores. A store only uses a Sneferu theme when the
-> platform switch (`HK2_ENABLED`) and the store's own `hk2Themes` feature flag are
-> both on. Merchants will install and publish themes from the builder later; third-
-> party developer accounts come after that.
+<Callout kind="warning">
+  **Status (phase 1b): internal, admin only.** Pushing, installing and publishing
+  Sneferu themes is limited to Hekana platform admins while theme engine 2 is
+  dogfooded on dev and preview stores. A store only uses a Sneferu theme when the
+  platform switch (`HK2_ENABLED`) and the store's own `hk2Themes` feature flag are
+  both on. Merchants will install and publish themes from the builder later; third-
+  party developer accounts come after that.
+</Callout>
 
 ## Push a version
 
@@ -20,7 +22,7 @@ npx @hekana/sneferu push ./my-theme --package my-theme
 ```
 
 | Input | Rule |
-|---|---|
+| - | - |
 | `--package <slug>` | required; 2-63 lower-case letters, digits, `-`; must equal `theme.json` `id` |
 | `HEKANA_TOKEN` | required; sent as `Authorization: Bearer …`. Never commit it |
 | `HEKANA_API_URL` | optional, default `https://api.hekana.com/api/v1`. Must be `https://`; plain `http://` only for `localhost` / `127.0.0.1` |
@@ -51,7 +53,7 @@ What `push` does, in order:
 - Checks the theme CSS: all `assets/*.css` together at most 512 KB, valid UTF-8.
 
 | Response | Meaning |
-|---|---|
+| - | - |
 | `201` | created; the CLI prints the version id, status and content hash |
 | `400 HK2_PUSH_INVALID` | malformed upload or bad slug |
 | `401` / `403` | missing, expired or non-admin token |
@@ -75,7 +77,7 @@ What `push` does, in order:
 All under `{HEKANA_API_URL}`, with a platform admin bearer token:
 
 | Step | Endpoint | Effect |
-|---|---|---|
+| - | - | - |
 | List packages | `GET /admin/hk2/packages` | every theme package |
 | List versions | `GET /admin/hk2/packages/<slug>/versions` | versions with status and hash |
 | Install | `POST /admin/hk2/merchants/<merchantId>/install/<versionId>` | pins the version on the store as a **draft**; shoppers see no change |

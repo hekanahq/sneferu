@@ -51,7 +51,7 @@ Notes:
 ## Directives
 
 | Directive | Example |
-|---|---|
+| - | - |
 | `{% if expr %}` / `{% elsif expr %}` / `{% else %}` / `{% endif %}` | `{% if product.compare_at > product.price %}<hk-badge text="{{ 'sale' \| t }}" />{% endif %}` |
 | `{% for x in expr [limit:n] %}` / `{% endfor %}` | `{% for p in collection('featured').products limit: 8 %}{{ p.title }}{% endfor %}` |
 | `{% render 'snippet', key: expr %}` | `{% render 'price-tag', amount: p.price %}` renders `snippets/price-tag.sneferu` with `amount` in scope |
@@ -76,7 +76,7 @@ Each block is rendered from `blocks/<type>.sneferu` with `block` in scope (`bloc
 ## Scope
 
 | Name | Contains |
-|---|---|
+| - | - |
 | `store` | the store (e.g. `store.name`) |
 | `settings` | the theme-level settings declared in `theme.json` `settings`: defaults filled in and stored values coerced like section settings |
 | `section` | in sections: `section.id`, `section.type`, `section.settings.*`, `section.blocks` |
@@ -92,7 +92,7 @@ Each block is rendered from `blocks/<type>.sneferu` with `block` in scope (`bloc
 Apply with `|`, arguments after `:` (`{{ title | truncate: 40 }}`).
 
 | Filter | Input | Args | Example |
-|---|---|---|---|
+| - | - | - | - |
 | `money` | price in minor units (piastres, cents) | none | EGP: `129000` gives `1,290.00 ج.م` (Arabic) or `EGP 1,290.00` (English). Other store currencies use the ISO code: `1,290.00 USD` (Arabic, code after) or `USD 1,290.00` (English, code before). Always two decimals, Western digits, `,` grouping. |
 | `img` | image reference | optional width | `{{ p.image \| img: 400 }}` gives a sized image URL |
 | `date` | ISO date string | none | `2026-10-10` gives `10 October 2026` (English) or the Arabic date with Western numerals |
@@ -111,7 +111,7 @@ Apply with `|`, arguments after `:` (`{{ title | truncate: 40 }}`).
 Called like functions with literal arguments only.
 
 | Lookup | Returns |
-|---|---|
+| - | - |
 | `collection('handle')` | the collection (use `.products`); an empty collection if missing |
 | `product('handle')` | the product, or nothing |
 | `t('key')` | the translation (same fallback as the `t` filter); the key if missing |
@@ -146,7 +146,7 @@ Because a theme is untrusted input, the runtime re-validates the compiled artifa
 ## Limits
 
 | Limit | Value |
-|---|---|
+| - | - |
 | Loop default / maximum limit | 50 / 250 |
 | Loop iterations per page | 2,000 |
 | Snippet and block include depth | 8 |
@@ -177,7 +177,7 @@ migrations/*.json    settings migrations
 File and folder names are lower-case letters, digits, `.`, `_`, `-`. Symlinks, `..` and absolute paths are rejected (SN3002).
 
 | Role | What it does | Starter example |
-|---|---|---|
+| - | - | - |
 | Layout | wraps every page; the content slot receives the template | `layout/theme.sneferu` |
 | Template | page type; usually just `<hk-sections />` plus a `<hk-schema>` listing default sections | `templates/index.sneferu` |
 | Section | rendered inside `<div data-hk-section="<id>">`; has a `<hk-schema>` | `sections/hero.sneferu` |
@@ -213,7 +213,7 @@ Required: `id` (3-41 chars: lowercase letters, digits, dashes, starting with a l
 Each field is `{ "type", "label": {"ar","en"}, "default"?, "required"?, "min"?, "max"?, "step"?, "options"?, "responsive"?, "visible_if"?, "maxLength"? }`.
 
 | Type | Value | Coercion of stored setting values |
-|---|---|---|
+| - | - | - |
 | `text` | short string | string, cut to `maxLength` |
 | `textarea` | long string | as `text` |
 | `rich_text` | string | as `text` |
