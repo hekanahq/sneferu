@@ -1,0 +1,294 @@
+{
+ "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+ "name": "Sneferu",
+ "scopeName": "text.html.sneferu",
+ "fileTypes": [
+  "sneferu"
+ ],
+ "patterns": [
+  {
+   "include": "#comment"
+  },
+  {
+   "include": "#schema"
+  },
+  {
+   "include": "#interp"
+  },
+  {
+   "include": "#directive"
+  },
+  {
+   "include": "#tag"
+  },
+  {
+   "include": "text.html.basic#entities"
+  }
+ ],
+ "injections": {
+  "L:text.html.sneferu string.quoted - meta.embedded.expression.sneferu": {
+   "patterns": [
+    {
+     "include": "#interp"
+    }
+   ]
+  }
+ },
+ "repository": {
+  "comment": {
+   "name": "comment.block.html",
+   "begin": "<!--",
+   "end": "-->",
+   "captures": {
+    "0": {
+     "name": "punctuation.definition.comment.html"
+    }
+   }
+  },
+  "schema": {
+   "begin": "(<)(hk-schema)\\s*(>)",
+   "beginCaptures": {
+    "1": {
+     "name": "punctuation.definition.tag.begin.html"
+    },
+    "2": {
+     "name": "entity.name.tag.sneferu support.class.component.sneferu"
+    },
+    "3": {
+     "name": "punctuation.definition.tag.end.html"
+    }
+   },
+   "end": "(</)(hk-schema)\\s*(>)",
+   "endCaptures": {
+    "1": {
+     "name": "punctuation.definition.tag.begin.html"
+    },
+    "2": {
+     "name": "entity.name.tag.sneferu support.class.component.sneferu"
+    },
+    "3": {
+     "name": "punctuation.definition.tag.end.html"
+    }
+   },
+   "contentName": "meta.embedded.block.json source.json",
+   "patterns": [
+    {
+     "include": "source.json"
+    }
+   ]
+  },
+  "interp": {
+   "name": "meta.embedded.expression.sneferu",
+   "begin": "\\{\\{-?",
+   "beginCaptures": {
+    "0": {
+     "name": "punctuation.section.embedded.begin.sneferu"
+    }
+   },
+   "end": "-?\\}\\}",
+   "endCaptures": {
+    "0": {
+     "name": "punctuation.section.embedded.end.sneferu"
+    }
+   },
+   "patterns": [
+    {
+     "include": "#expression"
+    }
+   ]
+  },
+  "directive": {
+   "name": "meta.embedded.expression.sneferu meta.directive.sneferu",
+   "begin": "(\\{%-?)\\s*(if|elsif|else|endif|for|endfor|render|[a-z_]+)?",
+   "beginCaptures": {
+    "1": {
+     "name": "punctuation.section.embedded.begin.sneferu"
+    },
+    "2": {
+     "name": "keyword.other.directive.sneferu"
+    }
+   },
+   "end": "-?%\\}",
+   "endCaptures": {
+    "0": {
+     "name": "punctuation.section.embedded.end.sneferu"
+    }
+   },
+   "patterns": [
+    {
+     "include": "#expression"
+    }
+   ]
+  },
+  "expression": {
+   "patterns": [
+    {
+     "include": "#string"
+    },
+    {
+     "name": "constant.numeric.sneferu",
+     "match": "\\b\\d+(?:\\.\\d+)?\\b"
+    },
+    {
+     "name": "constant.language.sneferu",
+     "match": "\\b(true|false|nil)\\b"
+    },
+    {
+     "name": "keyword.operator.logical.sneferu",
+     "match": "\\b(and|or|not|in)\\b"
+    },
+    {
+     "name": "keyword.other.directive.sneferu",
+     "match": "\\blimit(?=\\s*:)"
+    },
+    {
+     "match": "(\\|)\\s*([a-zA-Z_]\\w*)",
+     "captures": {
+      "1": {
+       "name": "keyword.operator.filter.sneferu"
+      },
+      "2": {
+       "name": "support.function.filter.sneferu"
+      }
+     }
+    },
+    {
+     "name": "support.function.lookup.sneferu",
+     "match": "\\b[a-z_]\\w*(?=\\s*\\()"
+    },
+    {
+     "name": "keyword.operator.comparison.sneferu",
+     "match": "==|!=|>=|<=|>|<"
+    },
+    {
+     "name": "punctuation.separator.sneferu",
+     "match": "[:,]"
+    },
+    {
+     "name": "variable.language.sneferu",
+     "match": "\\b(store|settings|section|block|forloop|locale|dir)\\b"
+    },
+    {
+     "match": "(\\.)([a-zA-Z_]\\w*)",
+     "captures": {
+      "1": {
+       "name": "punctuation.accessor.sneferu"
+      },
+      "2": {
+       "name": "variable.other.property.sneferu"
+      }
+     }
+    },
+    {
+     "name": "variable.other.sneferu",
+     "match": "\\b[a-zA-Z_]\\w*\\b"
+    }
+   ]
+  },
+  "string": {
+   "patterns": [
+    {
+     "name": "string.quoted.single.sneferu",
+     "begin": "'",
+     "end": "'"
+    },
+    {
+     "name": "string.quoted.double.sneferu",
+     "begin": "\"",
+     "end": "\""
+    }
+   ]
+  },
+  "tag": {
+   "patterns": [
+    {
+     "name": "meta.tag.component.sneferu",
+     "begin": "(</?)(hk-[a-zA-Z0-9-]+)",
+     "beginCaptures": {
+      "1": {
+       "name": "punctuation.definition.tag.begin.html"
+      },
+      "2": {
+       "name": "entity.name.tag.sneferu support.class.component.sneferu"
+      }
+     },
+     "end": "(/?>)",
+     "endCaptures": {
+      "1": {
+       "name": "punctuation.definition.tag.end.html"
+      }
+     },
+     "patterns": [
+      {
+       "include": "#attributes"
+      }
+     ]
+    },
+    {
+     "name": "meta.tag.html",
+     "begin": "(</?)([a-zA-Z][a-zA-Z0-9:-]*)",
+     "beginCaptures": {
+      "1": {
+       "name": "punctuation.definition.tag.begin.html"
+      },
+      "2": {
+       "name": "entity.name.tag.html"
+      }
+     },
+     "end": "(/?>)",
+     "endCaptures": {
+      "1": {
+       "name": "punctuation.definition.tag.end.html"
+      }
+     },
+     "patterns": [
+      {
+       "include": "#attributes"
+      }
+     ]
+    }
+   ]
+  },
+  "attributes": {
+   "patterns": [
+    {
+     "include": "#interp"
+    },
+    {
+     "name": "entity.other.attribute-name.html",
+     "match": "[^\\s\"'>/=]+"
+    },
+    {
+     "name": "punctuation.separator.key-value.html",
+     "match": "="
+    },
+    {
+     "name": "string.quoted.double.html",
+     "begin": "\"",
+     "end": "\"",
+     "patterns": [
+      {
+       "include": "#interp"
+      },
+      {
+       "include": "text.html.basic#entities"
+      }
+     ]
+    },
+    {
+     "name": "string.quoted.single.html",
+     "begin": "'",
+     "end": "'",
+     "patterns": [
+      {
+       "include": "#interp"
+      },
+      {
+       "include": "text.html.basic#entities"
+      }
+     ]
+    }
+   ]
+  }
+ }
+}

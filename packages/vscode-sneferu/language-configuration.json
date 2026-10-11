@@ -1,0 +1,156 @@
+{
+ "comments": {
+  "blockComment": [
+   "<!--",
+   "-->"
+  ]
+ },
+ "brackets": [
+  [
+   "<!--",
+   "-->"
+  ],
+  [
+   "{{",
+   "}}"
+  ],
+  [
+   "{%",
+   "%}"
+  ],
+  [
+   "<",
+   ">"
+  ],
+  [
+   "{",
+   "}"
+  ],
+  [
+   "[",
+   "]"
+  ],
+  [
+   "(",
+   ")"
+  ]
+ ],
+ "autoClosingPairs": [
+  {
+   "open": "{{",
+   "close": " }}",
+   "notIn": [
+    "string",
+    "comment"
+   ]
+  },
+  {
+   "open": "{%",
+   "close": " %}",
+   "notIn": [
+    "comment"
+   ]
+  },
+  {
+   "open": "{",
+   "close": "}"
+  },
+  {
+   "open": "[",
+   "close": "]"
+  },
+  {
+   "open": "(",
+   "close": ")"
+  },
+  {
+   "open": "'",
+   "close": "'",
+   "notIn": [
+    "comment"
+   ]
+  },
+  {
+   "open": "\"",
+   "close": "\"",
+   "notIn": [
+    "comment"
+   ]
+  },
+  {
+   "open": "<!--",
+   "close": " -->",
+   "notIn": [
+    "comment",
+    "string"
+   ]
+  }
+ ],
+ "surroundingPairs": [
+  [
+   "'",
+   "'"
+  ],
+  [
+   "\"",
+   "\""
+  ],
+  [
+   "{",
+   "}"
+  ],
+  [
+   "[",
+   "]"
+  ],
+  [
+   "(",
+   ")"
+  ],
+  [
+   "<",
+   ">"
+  ]
+ ],
+ "colorizedBracketPairs": [
+  [
+   "{",
+   "}"
+  ],
+  [
+   "[",
+   "]"
+  ],
+  [
+   "(",
+   ")"
+  ]
+ ],
+ "wordPattern": "(-?\\d*\\.\\d\\w*)|([^\\`\\~\\!\\@\\$\\^\\&\\*\\(\\)\\=\\+\\[\\{\\]\\}\\\\\\|\\;\\:\\'\\\"\\,\\.\\<\\>\\/\\s]+)",
+ "onEnterRules": [
+  {
+   "beforeText": "<(?!(?:area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr))([_:\\w][_:\\w\\-.\\d]*)(?:(?:[^'\"/>]|\"[^\"]*\"|'[^']*')*?(?!\\/)>)[^<]*$",
+   "afterText": "^<\\/([_:\\w][_:\\w\\-.\\d]*)\\s*>",
+   "action": {
+    "indent": "indentOutdent"
+   }
+  },
+  {
+   "beforeText": "\\{%-?\\s*(if|elsif|else|for)\\b[^%]*%\\}\\s*$",
+   "afterText": "^\\s*\\{%-?\\s*(endif|endfor|elsif|else)\\b",
+   "action": {
+    "indent": "indentOutdent"
+   }
+  },
+  {
+   "beforeText": "\\{%-?\\s*(if|elsif|else|for)\\b[^%]*%\\}\\s*$",
+   "action": {
+    "indent": "indent"
+   }
+  }
+ ],
+ "indentationRules": {
+  "increaseIndentPattern": "<(?!\\?|(?:area|base|br|col|frame|hr|html|img|input|link|meta|param|source|track|wbr)\\b|[^>]*\\/>)([-_\\.A-Za-z0-9]+)(?=\\s|>)\\b[^>]*>(?!.*<\\/\\1>)|<!--(?!.*-->)|\\{%-?\\s*(if|elsif|else|for)\\b[^%]*%\\}(?!.*\\{%-?\\s*end)",
+  "decreaseIndentPattern": "^\\s*(<\\/(?!html)[-_\\.A-Za-z0-9]+\\b[^>]*>|-->|\\{%-?\\s*(endif|endfor|elsif|else)\\b)"
+ }
+}

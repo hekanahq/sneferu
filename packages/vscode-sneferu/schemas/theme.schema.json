@@ -1,0 +1,309 @@
+{
+ "$schema": "http://json-schema.org/draft-07/schema#",
+ "$id": "https://hekana.dev/schemas/sneferu-theme.json",
+ "title": "Sneferu theme manifest (theme.json)",
+ "description": "Applies to a theme.json whose engine is \"hk2\". https://hekana.dev/guide/theme-structure",
+ "type": "object",
+ "if": {
+  "required": [
+   "engine"
+  ],
+  "properties": {
+   "engine": {
+    "const": "hk2"
+   }
+  }
+ },
+ "then": {
+  "type": "object",
+  "required": [
+   "id",
+   "name",
+   "version",
+   "author",
+   "description",
+   "category",
+   "engine",
+   "engineCompatibility",
+   "defaultLocale",
+   "locales",
+   "settings",
+   "tokens"
+  ],
+  "properties": {
+   "id": {
+    "type": "string",
+    "pattern": "^[a-z][a-z0-9-]{2,40}$",
+    "description": "3-41 characters: lower-case letters, digits, dashes, starting with a letter (SN3012). Must equal the package slug you push to."
+   },
+   "name": {
+    "oneOf": [
+     {
+      "type": "string",
+      "minLength": 1
+     },
+     {
+      "type": "object",
+      "required": [
+       "en"
+      ],
+      "properties": {
+       "en": {
+        "type": "string",
+        "minLength": 1
+       },
+       "ar": {
+        "type": "string"
+       }
+      },
+      "additionalProperties": false
+     }
+    ],
+    "description": "Text, { \"en\": \u2026 } or { \"en\": \u2026, \"ar\": \u2026 }"
+   },
+   "description": {
+    "oneOf": [
+     {
+      "type": "string",
+      "minLength": 1
+     },
+     {
+      "type": "object",
+      "required": [
+       "en"
+      ],
+      "properties": {
+       "en": {
+        "type": "string",
+        "minLength": 1
+       },
+       "ar": {
+        "type": "string"
+       }
+      },
+      "additionalProperties": false
+     }
+    ],
+    "description": "Text, { \"en\": \u2026 } or { \"en\": \u2026, \"ar\": \u2026 }"
+   },
+   "version": {
+    "type": "string",
+    "pattern": "^\\d+\\.\\d+\\.\\d+$",
+    "description": "Semantic version x.y.z (SN3014)"
+   },
+   "author": {
+    "type": "string",
+    "minLength": 1
+   },
+   "category": {
+    "type": "string",
+    "minLength": 1
+   },
+   "engine": {
+    "const": "hk2"
+   },
+   "engineCompatibility": {
+    "type": "string",
+    "examples": [
+     "^2.0.0"
+    ],
+    "description": "A range including the current engine 2.0.0 (SN3011)"
+   },
+   "defaultLocale": {
+    "enum": [
+     "ar",
+     "en"
+    ]
+   },
+   "locales": {
+    "type": "array",
+    "items": {
+     "enum": [
+      "ar",
+      "en"
+     ]
+    },
+    "uniqueItems": true,
+    "minItems": 1
+   },
+   "settings": {
+    "type": "object",
+    "additionalProperties": {
+     "type": "object",
+     "required": [
+      "type",
+      "label"
+     ],
+     "properties": {
+      "type": {
+       "enum": [
+        "text",
+        "textarea",
+        "rich_text",
+        "number",
+        "range",
+        "boolean",
+        "select",
+        "color",
+        "image",
+        "video",
+        "link",
+        "product",
+        "collection",
+        "spacing",
+        "typography",
+        "icon"
+       ],
+       "description": "Field type"
+      },
+      "label": {
+       "oneOf": [
+        {
+         "type": "string",
+         "minLength": 1
+        },
+        {
+         "type": "object",
+         "required": [
+          "en"
+         ],
+         "properties": {
+          "en": {
+           "type": "string",
+           "minLength": 1
+          },
+          "ar": {
+           "type": "string"
+          }
+         },
+         "additionalProperties": false
+        }
+       ],
+       "description": "Text, { \"en\": \u2026 } or { \"en\": \u2026, \"ar\": \u2026 }"
+      },
+      "default": {},
+      "required": {
+       "type": "boolean"
+      },
+      "min": {
+       "type": "number"
+      },
+      "max": {
+       "type": "number"
+      },
+      "step": {
+       "type": "number"
+      },
+      "options": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "responsive": {
+       "type": "boolean"
+      },
+      "visible_if": {
+       "type": "object",
+       "properties": {
+        "setting": {
+         "type": "string"
+        },
+        "equals": {}
+       },
+       "required": [
+        "setting",
+        "equals"
+       ]
+      },
+      "maxLength": {
+       "type": "integer",
+       "minimum": 1
+      }
+     }
+    },
+    "description": "Theme settings, read in templates as settings.<key>"
+   },
+   "tokens": {
+    "type": "object",
+    "required": [
+     "colors"
+    ],
+    "properties": {
+     "colors": {
+      "type": "object",
+      "required": [
+       "primary",
+       "secondary",
+       "accent",
+       "background",
+       "text"
+      ],
+      "properties": {
+       "primary": {
+        "type": "string",
+        "pattern": "^#[0-9a-fA-F]{6}$",
+        "description": "#RRGGBB"
+       },
+       "secondary": {
+        "type": "string",
+        "pattern": "^#[0-9a-fA-F]{6}$",
+        "description": "#RRGGBB"
+       },
+       "accent": {
+        "type": "string",
+        "pattern": "^#[0-9a-fA-F]{6}$",
+        "description": "#RRGGBB"
+       },
+       "background": {
+        "type": "string",
+        "pattern": "^#[0-9a-fA-F]{6}$",
+        "description": "#RRGGBB"
+       },
+       "text": {
+        "type": "string",
+        "pattern": "^#[0-9a-fA-F]{6}$",
+        "description": "#RRGGBB"
+       }
+      },
+      "additionalProperties": {
+       "type": "string"
+      }
+     },
+     "fonts": {
+      "type": "object",
+      "properties": {
+       "heading": {
+        "type": "string"
+       },
+       "body": {
+        "type": "string"
+       }
+      }
+     },
+     "radius": {
+      "type": "object",
+      "additionalProperties": {
+       "type": "string"
+      }
+     },
+     "layout": {
+      "type": "object",
+      "properties": {
+       "contentWidth": {
+        "type": "string",
+        "pattern": "^\\d{3,4}px$"
+       }
+      }
+     }
+    }
+   },
+   "previews": {
+    "type": "array",
+    "items": {
+     "type": "string"
+    }
+   }
+  }
+ }
+}
