@@ -7,7 +7,7 @@ export const LIMITS = {
   files: 400, totalBytes: 25 * 1024 * 1024, assetBytes: 2 * 1024 * 1024, templateBytes: 300 * 1024,
 } as const;
 export const FILTERS = ['money', 'img', 'date', 't', 'escape', 'upcase', 'downcase', 'truncate', 'default', 'size', 'first', 'last', 'join', 'json_attr'] as const;
-export const LOOKUPS = ['collection', 'product', 't', 'settings', 'asset_url'] as const;
+export const LOOKUPS = ['collection', 'product', 't', 'settings', 'asset_url', 'collections'] as const;
 export type FilterName = (typeof FILTERS)[number];
 export type LookupName = (typeof LOOKUPS)[number];
 /** Elements a theme may use. Anything not listed here is rejected (allow-list, not deny-list). */

@@ -187,4 +187,16 @@ describe('compileTheme', () => {
       expect(codes('{"type":"faq","blocks":[{"settings":{}}]}')).toContain('SN3026');
     });
   });
+  it('compiles collection settings and setting loop limits, checking them against the schemas (SN2012)', () => {
+    const files = (sec: string, theme: Record<string, unknown> = {}) => [...base().filter((x) => x.path !== 'sections/hero.sneferu' && x.path !== 'theme.json'),
+      f('theme.json', JSON.stringify({ ...manifest, settings: theme })),
+      f('sections/hero.sneferu', `${sec}<hk-schema>{"name":"Hero","settings":{"title":{"type":"text","label":"T"},"list":{"type":"collection","label":"Collection","default":"featured"},"count":{"type":"range","label":"N","min":1,"max":24,"default":4}}}</hk-schema>`)];
+    const ok = compileTheme(files("<ul>{% for p in collection(section.settings.list).products limit: section.settings.count %}<li>{{ p.title }}</li>{% endfor %}</ul>"), reg);
+    expect(ok.diagnostics.filter((d) => d.severity === 'error')).toEqual([]);
+    expect((ok.artifact!.sections.hero!.ir[0] as { children: unknown[] }).children).toContainEqual(expect.objectContaining({ k: 'loop', limit: { k: 'path', p: ['section', 'settings', 'count'] } }));
+    const codes = (sec: string, theme?: Record<string, unknown>) => compileTheme(files(sec, theme), reg).diagnostics.filter((d) => d.severity === 'error').map((d) => d.code);
+    expect(codes('{{ collection(section.settings.title).title }}')).toEqual(['SN2012']);
+    expect(codes('{{ collection(settings.home).title }}')).toEqual(['SN2012']);
+    expect(codes('{{ collection(settings.home).title }}', { home: { type: 'collection', label: 'Home' } })).toEqual([]);
+  });
 });

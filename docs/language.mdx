@@ -14,7 +14,8 @@ if          = "if" expr ;
 elsif       = "elsif" expr ;
 else        = "else" ;
 endif       = "endif" ;
-for         = "for" ident "in" expr [ "limit:" integer ] ;
+for         = "for" ident "in" expr [ "limit:" ( integer | setting ) ] ;
+setting     = ( "section" | "block" ) ".settings." ident | "settings." ident ;
 endfor      = "endfor" ;
 render      = "render" string [ "," ident ":" expr { "," ident ":" expr } ] ;
 element     = "<" name { attr } ( "/>" | ">" { node } "</" name ">" ) ;
@@ -31,7 +32,9 @@ primary     = string | number | "true" | "false" | "nil"
             | "(" expr ")"
             | lookup { tail }
             | ident { tail } ;
-lookup      = lookupname "(" [ literal { "," literal } ] ")" ;   (* literal arguments only *)
+lookup      = "collection(" ( string | setting ) ")"         (* setting: of type collection *)
+            | "collections()"
+            | lookupname "(" [ literal { "," literal } ] ")" ;   (* literal arguments only *)
 tail        = "." ident | "[" integer "]" ;
 ```
 
@@ -54,13 +57,13 @@ Notes:
 | Directive | Example |
 | - | - |
 | `{% if expr %}` / `{% elsif expr %}` / `{% else %}` / `{% endif %}` | `{% if product.compare_at > product.price %}<hk-badge text="{{ 'sale' \| t }}" />{% endif %}` |
-| `{% for x in expr [limit:n] %}` / `{% endfor %}` | `{% for p in collection('featured').products limit: 8 %}{{ p.title }}{% endfor %}` |
+| `{% for x in expr [limit:n \| limit:setting] %}` / `{% endfor %}` | `{% for p in collection('featured').products limit: 8 %}{{ p.title }}{% endfor %}` |
 | `{% render 'snippet', key: expr %}` | `{% render 'price-tag', amount: p.price %}` renders `snippets/price-tag.sneferu` with `amount` in scope |
 | `<hk-slot name="content" />` | layout and templates only: where the template (in a layout) or the sections (in a template) go |
 | `<hk-sections />` | shorthand for the `sections` slot, used in templates |
 | `<hk-schema>{json}</hk-schema>` | declares settings (sections, blocks) or default sections (templates) |
 
-Loops: the default limit is 50 iterations, the maximum is 250. A limit below 1 or above 250 is an error (SN2007). A page may run at most 2,000 loop iterations in total.
+Loops: the default limit is 50 iterations, the maximum is 250. A limit below 1 or above 250 is an error (SN2007). `limit:` may instead read a `number` or `range` setting (`limit: section.settings.count`); the value is clamped to 1..250 at render time and a value that is not a whole number uses 50. A page may run at most 2,000 loop iterations in total.
 
 Snippets: `{% render %}` may nest up to 8 deep. Snippets may not include each other in a cycle (`a` renders `b`, `b` renders `a`, or `a` renders itself): that is a compile error (SN3027, `snippet include cycle: a → b → a`). Every node rendered (text, markup, `render`, `if`, `for`, slot, component) counts against the page's node budget, so wide fan-out (a snippet rendering another several times, several levels deep) stops at the budget instead of growing exponentially.
 
@@ -109,11 +112,13 @@ Apply with `|`, arguments after `:` (`{{ title | truncate: 40 }}`).
 
 ## Lookups
 
-Called like functions with literal arguments only.
+Called like functions with literal arguments only, except `collection()`, which also takes a `collection` setting.
 
 | Lookup | Returns |
 | - | - |
 | `collection('handle')` | the collection (use `.products`); an empty collection if missing |
+| `collection(section.settings.list)` | the collection picked in a `collection` setting (`section.settings.*`, `block.settings.*` or `settings.*`); an empty collection when nothing is picked. A missing or wrongly typed setting is SN2012 |
+| `collections()` | the store's categories, at most 50: `[{ handle, title, url, image, count }]` |
 | `product('handle')` | the product, or nothing |
 | `t('key')` | the translation (same fallback as the `t` filter); the key if missing |
 | `settings('key')` | one theme setting |

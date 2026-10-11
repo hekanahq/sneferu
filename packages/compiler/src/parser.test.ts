@@ -66,4 +66,8 @@ describe('parseTemplate', () => {
     expect(codes('{% if a %}1{% elsif b %}2{% else %}3{% endif %}')).toEqual([]);
     expect(codes('{% if a %}{% if b %}{% else %}{% endif %}{% else %}{% endif %}')).toEqual([]);
   });
+  it('for limit from a setting', () => {
+    expect(parseTemplate("{% for p in xs limit: section.settings.count %}{% endfor %}", 'f').nodes[0]).toMatchObject({ t: 'for', limitExpr: { k: 'path', p: ['section', 'settings', 'count'] } });
+    expect(parseTemplate("{% for p in xs limit: product.x %}{% endfor %}", 'f').diagnostics[0]!.code).toBe('SN1105');
+  });
 });

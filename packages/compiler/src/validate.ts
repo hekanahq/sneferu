@@ -1,4 +1,4 @@
-import { err, isAllowedElement, isForbiddenAttribute, isForbiddenElement, isUrlAttribute, LIMITS, safeUrl, type Diagnostic, type TagRegistry } from '@hekana/sneferu-core';
+import { err, type Expr, isAllowedElement, isForbiddenAttribute, isForbiddenElement, isUrlAttribute, LIMITS, safeUrl, type Diagnostic, type TagRegistry } from '@hekana/sneferu-core';
 import type { AstNode } from './ast';
 
 const ATTR_NAME = /^[a-z_:][a-z0-9_:.-]*$/;
@@ -30,27 +30,65 @@ const kebab = (s: string) => s.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`);
 
 export function validateTemplate(
   nodes: AstNode[],
-  opts: { file: string; registry: TagRegistry; snippets: ReadonlySet<string>; kind: 'layout' | 'template' | 'section' | 'block' | 'snippet' },
+  opts: {
+    file: string; registry: TagRegistry; snippets: ReadonlySet<string>; kind: 'layout' | 'template' | 'section' | 'block' | 'snippet';
+    /** The file's own `<hk-schema>` settings (section and block files). */
+    settingsSchema?: Record<string, unknown>;
+    /** theme.json `settings`. */
+    themeSettings?: Record<string, unknown>;
+  },
 ): Diagnostic[] {
   const out: Diagnostic[] = [];
   const at = (n: { loc: { line: number; col: number } }) => ({ file: opts.file, line: n.loc.line, col: n.loc.col });
 
+  /** SN2012: a setting a template reads as a collection or a loop limit exists and has the right type. */
+  const checkSetting = (p: (string | number)[], types: readonly string[], what: string, n: { loc: { line: number; col: number } }) => {
+    const schema = p[0] === 'settings' ? opts.themeSettings
+      : p[0] === opts.kind ? opts.settingsSchema // section.* in a section file, block.* in a block file
+        : undefined; // block.settings.* in a section: the block type is only known at render time
+    if (!schema) return;
+    const name = String(p[p.length - 1]);
+    const field = Object.hasOwn(schema, name) ? schema[name] : undefined;
+    if (!field || typeof field !== 'object') { out.push(err('SN2012', `${what}: unknown setting '${name}'${suggest(name, Object.keys(schema))}`, at(n))); return; }
+    const type = (field as { type?: unknown }).type;
+    if (!types.includes(String(type))) out.push(err('SN2012', `${what}: setting '${name}' must be of type ${types.join(' or ')}`, at(n)));
+  };
+  const exprs = (e: Expr | undefined, n: { loc: { line: number; col: number } }, d = 0): void => {
+    if (!e || d > LIMITS.renderDepth) return;
+    switch (e.k) {
+      case 'lookup':
+        if (e.fn === 'collection' && e.args[0]?.k === 'path') checkSetting(e.args[0].p, ['collection'], `collection(${e.args[0].p.join('.')})`, n);
+        e.args.forEach((a) => exprs(a, n, d + 1)); break;
+      case 'path': exprs(e.from, n, d + 1); break;
+      case 'cmp': case 'and': case 'or': exprs(e.a, n, d + 1); exprs(e.b, n, d + 1); break;
+      case 'not': exprs(e.a, n, d + 1); break;
+      case 'filter': exprs(e.input, n, d + 1); e.args.forEach((a) => exprs(a, n, d + 1)); break;
+      default: break;
+    }
+  };
+
   const visit = (list: AstNode[]): void => {
     for (const n of list) {
       if (n.t === 'for') {
+        exprs(n.src, n);
+        if (n.limitExpr?.k === 'path') checkSetting(n.limitExpr.p, ['number', 'range'], `limit: ${n.limitExpr.p.join('.')}`, n);
         const lim = n.limit ?? LIMITS.loopDefault;
         if (lim > LIMITS.loopMax || lim < 1) out.push(err('SN2007', `loop limit ${lim} is invalid: loop limit must be between 1 and ${LIMITS.loopMax}`, at(n)));
         visit(n.body);
+      } else if (n.t === 'interp') {
+        exprs(n.expr, n);
       } else if (n.t === 'if') {
-        n.branches.forEach((b) => visit(b.body));
+        n.branches.forEach((b) => { exprs(b.test, n); visit(b.body); });
         if (n.else) visit(n.else);
       } else if (n.t === 'render') {
+        Object.values(n.args).forEach((e) => exprs(e, n));
         if (!opts.snippets.has(n.snippet)) out.push(err('SN2008', `unknown snippet '${n.snippet}'${suggest(n.snippet, opts.snippets)}`, at(n)));
       } else if (n.t === 'el') {
         if (!n.tag.startsWith('hk-') && !isAllowedElement(n.tag)) {
           out.push(err('SN2001', isForbiddenElement(n.tag) ? `<${n.tag}> is not allowed in themes` : `<${n.tag}> is not on the element allow-list`, at(n)));
         }
         for (const a of n.attrs) {
+          a.parts.forEach((x) => typeof x !== 'string' && exprs(x, a));
           if (isForbiddenAttribute(a.name) || !ATTR_NAME.test(a.name)) out.push(err('SN2002', `attribute '${a.name}' is not allowed`, { file: opts.file, ...a.loc }));
           if (a.name === 'style' && a.parts.some((p) => typeof p !== 'string')) out.push(err('SN2009', 'style attributes cannot contain {{ }}; use classes, tokens or component props', { file: opts.file, ...a.loc }));
           if (isUrlAttribute(a.name) && a.parts.length > 0 && a.parts.every((p) => typeof p === 'string')) {

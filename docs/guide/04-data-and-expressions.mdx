@@ -20,12 +20,17 @@ run code. The full grammar is in [language.md](../language.mdx).
 
 ### Lookups
 
-Lookups take **literal** arguments only (`collection('featured')`, not
-`collection(section.settings.handle)`, which is SN1105).
+Lookups take **literal** arguments (`collection('featured')`). The one
+exception is `collection()`, which also takes a `collection` setting, so the
+merchant can choose the collection (see
+[Let the merchant choose a collection](#let-the-merchant-choose-a-collection)).
+Any other argument, such as `collection(product.title)`, is SN1105.
 
 | Lookup | Returns |
 | - | - |
 | `collection('featured')` | the collection: `.title`, `.products`. A missing collection is `{ products: [] }`, never an error |
+| `collection(section.settings.list)` | the collection the merchant picked in a `collection` setting; an empty collection when none is picked |
+| `collections()` | the store's categories (at most 50), see [List the store's categories](#list-the-stores-categories) |
 | `product('handle')` | the product, or nothing |
 | `t('shop_now')` | the text from `locales/<locale>.json`, then the default locale, then the key itself |
 | `settings('accent')` | one theme setting (same as `settings.accent`) |
@@ -201,6 +206,88 @@ A short list of the first three products of a collection, numbered, with a
 | `forloop.first` / `forloop.last` | `true` on the first / last item |
 
 There is no `forloop.length`; use `{{ list | size }}` or `list.size`.
+
+### Loop limits from settings
+
+`limit:` may also read a `number` or `range` setting, so the merchant chooses
+how many items show:
+
+```html
+{% for p in collection('featured').products limit: section.settings.count %}
+```
+
+The setting is `section.settings.<name>`, `block.settings.<name>` or
+`settings.<name>`; anything else is SN1105, and a setting that does not exist
+or is not a `number` or `range` is SN2012. At render time the value is clamped
+to 1..250; a value that is not a whole number (empty, text, `2.5`) uses the
+default limit, 50.
+
+## Let the merchant choose a collection
+
+A `collection` setting gives the merchant a collection picker in the builder.
+Pass the setting to `collection()` and the section shows whatever they pick:
+
+```html title="sections/collection-shelf.sneferu"
+<hk-section padding-y="48">
+  <hk-stack gap="16">
+    <hk-heading text="{{ collection(section.settings.list).title }}" level="h2" />
+    {% for p in collection(section.settings.list).products limit: section.settings.count %}
+      <hk-product-card product="{{ p }}" />
+    {% endfor %}
+  </hk-stack>
+</hk-section>
+<hk-schema>
+  {
+    "name": "Collection shelf",
+    "version": 1,
+    "settings": {
+      "list": {
+        "type": "collection",
+        "label": "Collection",
+        "default": "featured"
+      },
+      "count": {
+        "type": "range",
+        "label": "Products",
+        "min": 1,
+        "max": 12,
+        "default": 4
+      }
+    }
+  }
+</hk-schema>
+```
+
+| Rule | Value |
+| - | - |
+| Argument | a handle in quotes, or `section.settings.<name>`, `block.settings.<name>`, `settings.<name>` |
+| The setting | must exist and be of type `collection` (SN2012). In a section file `block.settings.*` is not checked, because the block type is only known on the page |
+| Nothing picked (empty value) | an empty collection: the loop renders nothing, nothing is fetched |
+| Before rendering | the store fetches every collection the page can show, the picked ones and their defaults included, up to 8 per page |
+
+## List the store's categories
+
+`collections()` takes no arguments and returns the store's categories, at most
+50, for a category menu or a grid of category tiles:
+
+```html
+<nav>
+  {% for c in collections() %}
+    <a href="{{ c.url }}">{{ c.title }} ({{ c.count }})</a>
+  {% endfor %}
+</nav>
+```
+
+| Field | Example |
+| - | - |
+| `handle` | `gift-cards` |
+| `title` | `Gift cards` (in the page's language) |
+| `url` | `/en/collections/gift-cards` (with the language prefix of the page) |
+| `image` | `{ url: "https://…" }`, or nil when the category has no image |
+| `count` | `6` (the number of products) |
+
+A store with no categories returns an empty list. In `sneferu dev` the sample
+store has three categories: `new`, `gift-cards` and `subscriptions`.
 
 ## Translations
 

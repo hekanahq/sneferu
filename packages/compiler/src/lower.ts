@@ -40,7 +40,7 @@ export function lower(nodes: AstNode[], registry: TagRegistry): IRNode[] {
         emit({ k: 'if', branches: n.branches.map((b) => ({ test: b.test, body: lower(b.body, registry) })), ...(n.else ? { else: lower(n.else, registry) } : {}) });
         break;
       case 'for':
-        emit({ k: 'loop', as: n.as, src: n.src, limit: Math.min(n.limit ?? LIMITS.loopDefault, LIMITS.loopMax), body: lower(n.body, registry) });
+        emit({ k: 'loop', as: n.as, src: n.src, limit: n.limitExpr && n.limitExpr.k === 'path' ? { k: 'path', p: n.limitExpr.p } : Math.min(n.limit ?? LIMITS.loopDefault, LIMITS.loopMax), body: lower(n.body, registry) });
         break;
       case 'render':
         emit({ k: 'render', snippet: n.snippet, args: n.args });

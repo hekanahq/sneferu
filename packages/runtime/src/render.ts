@@ -1,9 +1,16 @@
-import { err, escapeAttr, escapeText, safeToken, safeUrl, svgCase, toStr, type Diagnostic, type IRNode, type IRValue, type TagRegistry } from '@hekana/sneferu-core';
+import { err, LIMITS, escapeAttr, escapeText, safeToken, safeUrl, svgCase, toStr, type Diagnostic, type IRNode, type IRValue, type TagRegistry } from '@hekana/sneferu-core';
 import type { RenderContext, Scope } from './context';
 import { evaluate, truthy } from './evaluate';
 import { translate } from './translate';
 import { Budget } from './budget';
 export { Budget } from './budget';
+
+/** A loop limit read from a setting: a whole number clamped to 1..loopMax, anything else the default. */
+export function clampLimit(v: unknown): number {
+  if (typeof v !== 'number' && (typeof v !== 'string' || v.trim() === '')) return LIMITS.loopDefault;
+  const n = Number(v);
+  return Number.isInteger(n) && n >= 1 ? Math.min(n, LIMITS.loopMax) : LIMITS.loopDefault;
+}
 
 export interface Env {
   ctx: RenderContext; registry: TagRegistry; snippets: Record<string, IRNode[]>;
@@ -76,7 +83,8 @@ export function renderNodes(nodes: IRNode[], scope: Scope, env: Env): string {
       }
       case 'loop': {
         const src = evaluate(n.src, scope, env.ctx);
-        const list = Array.isArray(src) ? src.slice(0, n.limit) : [];
+        const limit = typeof n.limit === 'number' ? n.limit : clampLimit(evaluate(n.limit, scope, env.ctx));
+        const list = Array.isArray(src) ? src.slice(0, limit) : [];
         list.forEach((item, index) => {
           if (env.budget.exceeded || !env.budget.iter()) return;
           raw(renderNodes(n.body, { ...scope, [n.as]: item, forloop: { index: index + 1, first: index === 0, last: index === list.length - 1 } }, env));

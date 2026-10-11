@@ -53,4 +53,16 @@ describe('evaluate', () => {
     expect(evaluate({ k: 'filter', name: 'img', input: lit('u'), args: [] }, {}, bad)).toBeUndefined();
     expect(evaluate({ k: 'bogus' } as never, {}, ctx())).toBeUndefined();
   });
+  it('collections() lists the store categories, capped at 50; collection() needs a non-empty string handle', () => {
+    const cats = Array.from({ length: 60 }, (_, i) => ({ handle: `c${i}`, title: `C${i}`, url: `/collections/c${i}`, image: null, count: i }));
+    expect(evaluate({ k: 'lookup', fn: 'collections', args: [] }, {}, ctx())).toEqual([]);
+    const listed = evaluate({ k: 'lookup', fn: 'collections', args: [] }, {}, ctx({ categories: cats })) as unknown[];
+    expect(listed).toHaveLength(50);
+    expect(listed[0]).toEqual(cats[0]);
+    expect(evaluate({ k: 'lookup', fn: 'collections', args: [] }, {}, ctx({ categories: 'x' as never }))).toEqual([]);
+    const col = (arg: unknown) => evaluate({ k: 'lookup', fn: 'collection', args: [{ k: 'path', p: ['section', 'settings', 'list'] }] }, { section: { settings: { list: arg } } },
+      ctx({ collections: { 'top-ups': { title: 'شحن', products: [{ title: 'A' }] }, '': { products: [{ title: 'ALL' }] }, '5': { products: [{ title: 'five' }] } } }));
+    expect(col('top-ups')).toEqual({ title: 'شحن', products: [{ title: 'A' }] });
+    for (const empty of ['', undefined, null, 5, ['top-ups'], { handle: 'top-ups' }]) expect(col(empty), String(empty)).toEqual({ products: [] });
+  });
 });

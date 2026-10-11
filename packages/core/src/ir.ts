@@ -24,7 +24,7 @@ export type IRNode =
   | { k: 'text'; e: Expr }
   | { k: 'el'; tag: string; attrs: IRAttr[]; children: IRNode[]; void?: boolean }
   | { k: 'if'; branches: { test: Expr; body: IRNode[] }[]; else?: IRNode[] }
-  | { k: 'loop'; as: string; src: Expr; limit: number; body: IRNode[] }
+  | { k: 'loop'; as: string; src: Expr; limit: number | { k: 'path'; p: (string | number)[] }; body: IRNode[] }
   | { k: 'comp'; tag: string; props: Record<string, IRValue>; children: IRNode[] }
   | { k: 'slot'; name: string }
   | { k: 'render'; snippet: string; args: Record<string, Expr> }

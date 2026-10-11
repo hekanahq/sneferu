@@ -32,6 +32,9 @@ export const sampleProduct = (locale: 'ar' | 'en', i: number) => ({
   image: { url: `https://placehold.co/600x600/png?text=${i + 1}` },
 });
 
+/** The collections `collections()` lists as the store's categories (featured is not one). */
+const CATEGORIES = ['new', 'gift-cards', 'subscriptions'] as const;
+
 export const sampleProducts = (locale: 'ar' | 'en') => Array.from({ length: 12 }, (_, i) => sampleProduct(locale, i));
 
 export function sampleContext(locale: 'ar' | 'en', translations: Record<string, Record<string, string>>, defaultLocale: 'ar' | 'en'): RenderContext {
@@ -41,6 +44,10 @@ export function sampleContext(locale: 'ar' | 'en', translations: Record<string, 
     store: { name: STORE[locale] },
     settings: {}, data: {},
     collections: Object.fromEntries((Object.keys(COLLECTION) as (keyof typeof COLLECTION)[]).map((h) => [h, { title: COLLECTION[h][locale], products: MEMBERS[h].map((i) => products[i]!) }])),
+    categories: CATEGORIES.map((h) => ({
+      handle: h, title: COLLECTION[h][locale], url: `${locale === 'en' ? '/en' : ''}/collections/${h}`,
+      image: products[MEMBERS[h][0]!]!.image, count: MEMBERS[h].length,
+    })),
     products: { 'sample-1': products[0]! },
     translations: translations[locale] ?? {}, fallbackTranslations: translations[defaultLocale] ?? {},
     assetUrl: (p) => `/__assets/${p}`,

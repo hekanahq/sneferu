@@ -50,4 +50,32 @@ describe('validateTemplate', () => {
     expect(run('<div a<b="1"></div>')).toEqual(['SN2002']);
     expect(run('<svg viewBox="0 0 8 8"><use xlink:href="#i"></use><path d="M0 0"></path></svg>')).toEqual([]);
   });
+  describe('collection settings (SN2012)', () => {
+    const schema = { list: { type: 'text' }, pick: { type: 'collection' }, count: { type: 'range' }, title: { type: 'text' } };
+    const theme = { home: { type: 'collection' }, n: { type: 'number' }, tagline: { type: 'text' } };
+    const v = (src: string, kind: 'section' | 'block' | 'template' = 'section') =>
+      validateTemplate(parseTemplate(src, 'f').nodes, { file: 'f', registry, snippets: new Set(), kind, settingsSchema: schema, themeSettings: theme });
+    it('accepts collection settings and number limits', () => {
+      expect(v("{% for p in collection(section.settings.pick).products limit: section.settings.count %}{{ p.title }}{% endfor %}")).toEqual([]);
+      expect(v("<p title=\"{{ collection(settings.home).title }}\">{% for p in collection(settings.home).products limit: settings.n %}x{% endfor %}</p>")).toEqual([]);
+      expect(v("{% if collection(block.settings.anything).products %}x{% endif %}")).toEqual([]);
+      expect(v("{% for p in collection(block.settings.pick).products limit: block.settings.count %}x{% endfor %}", 'block')).toEqual([]);
+    });
+    it('reports wrong types and unknown settings', () => {
+      const a = v("{% for p in collection(section.settings.list).products %}{% endfor %}");
+      expect(a.map((d) => d.code)).toEqual(['SN2012']);
+      expect(a[0]!.message).toMatch(/setting 'list' must be of type collection/);
+      const b = v("{{ collection(section.settings.missing).title }}");
+      expect(b.map((d) => d.code)).toEqual(['SN2012']);
+      expect(b[0]!.message).toMatch(/unknown setting 'missing'/);
+      expect(v("{% render 'x', l: collection(settings.tagline) %}").map((d) => d.code)).toContain('SN2012');
+      expect(v("{% for p in xs limit: section.settings.title %}{% endfor %}").map((d) => d.code)).toEqual(['SN2012']);
+      expect(v("{% for p in xs limit: settings.nope %}{% endfor %}").map((d) => d.code)).toEqual(['SN2012']);
+      expect(v("{% for p in xs limit: section.settings.constructor %}{% endfor %}").map((d) => d.code)).toEqual(['SN2012']);
+    });
+    it('checks block files against their own schema and leaves section.* unchecked there', () => {
+      expect(v("{{ collection(block.settings.list).title }}", 'block').map((d) => d.code)).toEqual(['SN2012']);
+      expect(v("{{ collection(section.settings.whatever).title }}", 'block')).toEqual([]);
+    });
+  });
 });

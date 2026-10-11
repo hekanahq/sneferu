@@ -1,8 +1,9 @@
-export type { RenderContext, Scope } from './context';
+export type { Category, RenderContext, Scope } from './context';
 export { evaluate, truthy } from './evaluate';
 export { FILTER_IMPLS } from './filters';
 export { Budget } from './budget';
-export { renderNodes, type Env } from './render';
+export { renderNodes, clampLimit, type Env } from './render';
+export { pageDependencies, MAX_PAGE_COLLECTIONS, type PageDependencies, type PageDependencyOptions } from './dependencies';
 export { renderPage, prepareArtifact, type ArtifactLike, type PageNode, type RenderOptions, type RenderResult } from './page';
 export { checkArtifactShape } from './shape';
 export { translate } from './translate';
