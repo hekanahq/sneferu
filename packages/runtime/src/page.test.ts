@@ -230,4 +230,25 @@ describe('renderPage', () => {
     expect(r.diagnostics).toEqual([]);
     expect(r.html).toMatch(/data-hk-block="default-0-0">A<.*data-hk-block="default-0-1">B</);
   });
+  it('gives a localized text setting with no default and no stored value an empty string', () => {
+    const art: ArtifactLike = { ...artifact, sections: { hero: { ir: [{ k: 'if', branches: [{ test: { k: 'cmp', op: '==', a: { k: 'path', p: ['section', 'settings', 'sub'] }, b: { k: 'lit', v: '' } }, body: [{ k: 'html', s: 'empty' }] }], else: [{ k: 'html', s: 'missing' }] }],
+      schema: { name: { ar: 'ب', en: 'H' }, version: 1, settings: { sub: { type: 'text', label: { ar: 'ع', en: 'S' }, localized: true } } } } },
+      manifest: { ...artifact.manifest, settings: { tag: { type: 'textarea', label: { ar: 'ع', en: 'T' }, localized: true } } },
+      layout: [{ k: 'if', branches: [{ test: { k: 'cmp', op: '==', a: { k: 'path', p: ['settings', 'tag'] }, b: { k: 'lit', v: '' } }, body: [{ k: 'html', s: 'tag-empty' }] }] }, { k: 'slot', name: 'content' }] };
+    const r = renderPage(art, { template: 'index', ctx, registry: new TagRegistry(), sections: [{ id: 's1', type: 'hero' }] });
+    expect(r.diagnostics).toEqual([]);
+    expect(r.html).toContain('tag-empty');
+    expect(r.html).toContain('>empty<');
+  });
+  it('reports malformed default blocks in templateSections without throwing', () => {
+    for (const blocks of ['x', [null], [{}]]) {
+      const bad = { ...artifact, templateSections: { index: [{ type: 'hero', settings: {}, blocks }] } } as unknown as ArtifactLike;
+      let r: ReturnType<typeof renderPage> | undefined;
+      expect(() => { r = renderPage(bad, { template: 'index', ctx, registry: new TagRegistry() }); }).not.toThrow();
+      expect(r!.html).toBe('');
+      expect(r!.diagnostics.length).toBeGreaterThan(0);
+      expect(r!.diagnostics.every((d) => /^SN\d{4}$/.test(d.code))).toBe(true);
+      expect(r!.diagnostics.map((d) => d.code)).toContain('SN9015');
+    }
+  });
 });

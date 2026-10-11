@@ -1,4 +1,4 @@
-import { coerceSetting, defaultsOf, err, escapeAttr, safeToken, toStr, validateIR, type Diagnostic, type FieldSchema, type HkTag, type IRNode, type TagRegistry } from '@hekana/sneferu-core';
+import { coerceSetting, err, escapeAttr, safeToken, toStr, validateIR, type Diagnostic, type FieldSchema, type HkTag, type IRNode, type TagRegistry } from '@hekana/sneferu-core';
 import type { RenderContext, Scope } from './context';
 import { Budget, own, renderNodes, type Env } from './render';
 import type { Limits } from './budget';
@@ -19,10 +19,12 @@ export interface RenderResult { html: string; css: string; controllers: string[]
 export interface RenderOptions { template: string; sections?: PageNode[]; ctx: RenderContext; registry: TagRegistry; scope?: Scope; limits?: Limits }
 
 const isObj = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v);
+const TEXTY = new Set<string>(['text', 'textarea', 'rich_text']);
 const settingsFor = (schema: FieldSchema, props: unknown, locale: 'ar' | 'en') => {
   // defaults go through coerceSetting too, so a localized { ar, en } default resolves
+  // a localized text field always resolves to a string, '' when it has neither value nor default
   const out: Record<string, unknown> = {};
-  for (const k of Object.keys(defaultsOf(schema))) out[k] = coerceSetting(schema[k]!, undefined, locale);
+  for (const [k, f] of Object.entries(schema)) if (f.default !== undefined || (f.localized && TEXTY.has(f.type))) out[k] = coerceSetting(f, undefined, locale);
   if (!isObj(props)) return out;
   for (const [k, f] of Object.entries(schema)) if (Object.hasOwn(props, k) && props[k] !== undefined) out[k] = coerceSetting(f, props[k], locale);
   return out;
