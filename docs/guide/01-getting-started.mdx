@@ -124,7 +124,10 @@ npx @hekana/sneferu build --out out  # another output folder
 | `dev [dir]` | theme folder, default `.` | `--port <n>` default `4100` |
 | `validate [dir]` | theme folder, default `.` | |
 | `build [dir]` | theme folder, default `.` | `--out <dir>` default `dist` |
-| `push [dir]` | theme folder, default `.` | `--package <slug>` required; env `HEKANA_API_URL`, `HEKANA_TOKEN` |
+| `login` | | `--api-url <url>`; signs in through the browser and saves a developer key |
+| `whoami` | | prints the account, key prefix and dev store the CLI uses |
+| `logout` | | revokes the saved key and deletes it |
+| `push [dir]` | theme folder, default `.` | `--package <slug>` required; `--dev-store` publish on your dev store; uses the key saved by `login`, or env `HEKANA_TOKEN`; env `HEKANA_API_URL` |
 
 ## Next
 
@@ -133,6 +136,6 @@ npx @hekana/sneferu build --out out  # another output folder
 3. [Data and expressions](04-data-and-expressions.mdx): `{{ }}`, filters, loops.
 4. [Styling and responsive](05-styling-and-responsive.mdx): tokens, CSS, RTL.
 5. [Security and limits](06-security-and-limits.mdx): what a theme cannot do.
-6. [Publishing](07-publishing.mdx): `sneferu push`.
+6. [Publishing](07-publishing.mdx): `sneferu login`, `sneferu push`, your dev store.
 7. [Cookbook](08-cookbook.mdx): five complete store sections, with pictures.
 8. [Tag reference](../reference/tags.mdx): every `hk-*` tag and prop.
