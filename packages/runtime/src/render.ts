@@ -12,6 +12,13 @@ export function clampLimit(v: unknown): number {
   return Number.isInteger(n) && n >= 1 ? Math.min(n, LIMITS.loopMax) : LIMITS.loopDefault;
 }
 
+const isPart = (c: IRNode): c is Extract<IRNode, { k: 'comp' }> => c.k === 'comp' && c.tag === 'hk-part';
+/** A part's name is static only; an expression never matches. */
+const partName = (c: Extract<IRNode, { k: 'comp' }>): string | undefined => {
+  const v = Object.hasOwn(c.props, 'name') ? c.props.name : undefined;
+  return v && v.k === 'static' && typeof v.v === 'string' ? v.v : undefined;
+};
+
 export interface Env {
   ctx: RenderContext; registry: TagRegistry; snippets: Record<string, IRNode[]>;
   slots: Record<string, () => string>; budget: Budget; css: string[]; controllers: Set<string>;
@@ -117,6 +124,7 @@ export function renderNodes(nodes: IRNode[], scope: Scope, env: Env): string {
           env.budget.force(close.length); raw(close);
           break;
         }
+        if (n.tag === 'hk-part') break; // rendered only by its parent, through renderChildren(name)
         const tag = env.registry.get(n.tag);
         if (!tag) { env.diagnostics.push(err('SN4005', `component ${n.tag} not available`)); break; }
         const props: Record<string, unknown> = {};
@@ -130,7 +138,13 @@ export function renderNodes(nodes: IRNode[], scope: Scope, env: Env): string {
             css: (rule) => env.css.push(rule),
             controller: (name) => env.controllers.add(name),
             t: (key) => tr(env, key),
-            renderChildren: () => { const r = renderNodes(n.children, scope, { ...env, depth: env.depth + 1 }); childLen += r.length; return r; },
+            renderChildren: (part?: string) => {
+              const kids = part === undefined ? n.children.filter((c) => !isPart(c))
+                : n.children.flatMap((c) => (isPart(c) && partName(c) === part ? c.children : []));
+              const r = renderNodes(kids, scope, { ...env, depth: env.depth + 1 });
+              childLen += r.length;
+              return r;
+            },
           });
           // children were counted by their own render; count only the component's own markup
           if (env.budget.out(Math.max(0, out.length - childLen))) raw(out); else noteExceeded(env);

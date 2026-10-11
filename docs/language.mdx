@@ -77,6 +77,29 @@ A section lists its blocks with a loop over `section.blocks` and renders each wi
 
 Each block is rendered from `blocks/<type>.sneferu` with `block` in scope (`block.id`, `block.type`, `block.settings.*`) and wrapped in `<div data-hk-block="<id>">`. A block whose type is not in the theme is skipped with SN4012.
 
+### Parts
+
+Some tags have named **parts**: places inside the tag's own markup that your template fills. Write each part as an `<hk-part name="…">` directly inside the tag:
+
+```
+<hk-product-card product="{{ p }}">
+  <hk-part name="badge">{% if p.compare_at %}<span class="sale">{{ 'sale' | t }}</span>{% endif %}</hk-part>
+  <hk-part name="actions"><a class="buy" href="{{ p.url }}">{{ 'buy' | t }}</a></hk-part>
+</hk-product-card>
+```
+
+The tag decides where each part goes. `hk-product-card` has `badge` (inside the card link, before the image) and `actions` (after the link; the card is then wrapped in `<div class="sn-product-card-wrap">`). A card with no parts renders exactly as before. `<hk-part>` anywhere else, a name the tag does not have, or a name with `{{ }}` is SN2013; it takes no other attribute (SN2004). A part that renders only whitespace counts as empty.
+
+### Rich text
+
+`{{ }}` always escapes, so HTML stored in data (a product description, a `rich_text` setting) prints as text. To output it as HTML use `hk-rich-text`, which passes it through the rich text sanitiser:
+
+```
+<hk-rich-text html="{{ product.description }}" />
+```
+
+This is the only way to output HTML from data. See [Security and limits](guide/06-security-and-limits.mdx#rich-text) for what is kept.
+
 ## Scope
 
 | Name | Contains |

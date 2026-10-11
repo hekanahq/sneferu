@@ -1,6 +1,7 @@
 import { escapeAttr, escapeText, safeUrl, toStr, type HkTag } from '@hekana/sneferu-core';
 import { colorVar, oneOf, px, responsiveCss, safeImageSrc } from './css';
 import { passthrough } from './attrs';
+import { sanitizeRichText } from './sanitize';
 
 const L = (ar: string, en: string) => ({ ar, en });
 const ed = (ar: string, en: string, group = 'content') => ({ label: L(ar, en), group, insertable: true });
@@ -119,5 +120,18 @@ export const hkBadge: HkTag = {
     const body = p.text !== undefined ? escapeText(toStr(p.text)) : c.renderChildren();
     const x = passthrough(p);
     return `<span class="sn-${c.id} sn-badge sn-badge-${TONE(p.tone) ?? 'accent'}${x.cls}"${x.attrs}>${body}</span>`;
+  },
+};
+
+/** HTML from data (a product description, a rich_text setting), through the rich text sanitiser. */
+export const hkRichText: HkTag = {
+  name: 'hk-rich-text', version: 1, category: 'typography',
+  props: { html: { type: 'rich_text', label: L('النص المنسق', 'Rich text'), default: '' } },
+  allowedParents: '*', allowedChildren: [], responsive: [], bindable: '*', editor: ed('نص منسق', 'Rich text'),
+  render(p, c) {
+    const body = typeof p.html === 'string' ? sanitizeRichText(p.html) : '';
+    if (body.trim() === '') return '';
+    const x = passthrough(p);
+    return `<div class="sn-${c.id} sn-rich-text${x.cls}"${x.attrs}>${body}</div>`;
   },
 };

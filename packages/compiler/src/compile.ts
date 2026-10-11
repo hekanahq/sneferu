@@ -97,7 +97,7 @@ export function compileTheme(files: ThemeFile[], registry: TagRegistry): { artif
   const byDir = (dir: string) => [...text.keys()].filter((p) => p.startsWith(`${dir}/`) && p.endsWith('.sneferu')).sort();
   const nameOf = (p: string) => p.split('/').pop()!.replace(/\.sneferu$/, '');
   const snippetNames = new Set(byDir('snippets').map(nameOf));
-  const knownTags = new Set([...registry.names(), 'hk-block']);
+  const knownTags = new Set([...registry.names(), 'hk-block', 'hk-part']);
 
   const compileOne = (path: string, kind: 'layout' | 'template' | 'section' | 'block' | 'snippet') => {
     const parsed = parseTemplate(text.get(path)!, path);

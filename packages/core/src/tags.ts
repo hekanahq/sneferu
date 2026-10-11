@@ -10,7 +10,11 @@ export interface TagRenderContext {
   locale: 'ar' | 'en';
   dir: 'rtl' | 'ltr';
   t(key: string): string;
-  renderChildren(): string;
+  /**
+   * No argument: the children, except `<hk-part>` markers. With a name: the
+   * content of the `<hk-part name="…">` children with that name ('' when none).
+   */
+  renderChildren(part?: string): string;
 }
 
 export interface HkTag {
@@ -20,6 +24,11 @@ export interface HkTag {
   props: FieldSchema;
   allowedParents: string[] | '*';
   allowedChildren: string[] | '*';
+  /**
+   * Named parts the tag places itself (`ctx.renderChildren(name)`). A template
+   * fills them with `<hk-part name="…">` as direct children of the tag.
+   */
+  parts?: string[];
   responsive: string[];
   bindable: string[] | '*';
   render(props: Record<string, unknown>, ctx: TagRenderContext): string;

@@ -9,12 +9,34 @@ const tag = (name: string, extra: Partial<HkTag> = {}): HkTag => ({
   allowedParents: '*', allowedChildren: '*', responsive: ['columns'], bindable: '*', render: () => '',
   editor: { label: { ar: name, en: name }, group: 'layout', insertable: true }, ...extra,
 });
-const registry = new TagRegistry().register(tag('hk-grid')).register(tag('hk-badge', { allowedChildren: [], props: { tone: { type: 'select', label: { ar: 'ن', en: 'T' }, options: ['a'], required: true } } }));
+const registry = new TagRegistry().register(tag('hk-grid')).register(tag('hk-badge', { allowedChildren: [], props: { tone: { type: 'select', label: { ar: 'ن', en: 'T' }, options: ['a'], required: true } } }))
+  .register(tag('hk-card', { props: {}, parts: ['badge', 'actions'], allowedChildren: ['hk-part'] }));
 
 const run = (src: string, kind: 'layout' | 'template' | 'section' = 'section') =>
   validateTemplate(parseTemplate(src, 'f').nodes, { file: 'f', registry, snippets: new Set(['price']), kind }).map((d) => d.code);
 
 describe('validateTemplate', () => {
+  describe('hk-part (SN2013)', () => {
+    it('is accepted as a direct child of a tag that declares parts', () => {
+      expect(run('<hk-card>\n  <hk-part name="badge"><span class="new">New</span></hk-part>\n  <hk-part name="actions"><a href="/x">Buy</a></hk-part>\n</hk-card>')).toEqual([]);
+    });
+    it('is SN2013 anywhere else', () => {
+      expect(run('<hk-part name="badge">x</hk-part>')).toEqual(['SN2013']);
+      expect(run('<hk-grid><hk-part name="badge">x</hk-part></hk-grid>')).toEqual(['SN2013']);
+      expect(run('<hk-card><hk-part name="badge"><hk-part name="badge">x</hk-part></hk-part></hk-card>')).toEqual(['SN2013']);
+      expect(run('<div><hk-card></hk-card><hk-part name="badge">x</hk-part></div>')).toEqual(['SN2013']);
+    });
+    it('needs a static name the parent declares (SN2013), and takes no other attribute (SN2004)', () => {
+      expect(run('<hk-card><hk-part name="footer">x</hk-part></hk-card>')).toEqual(['SN2013']);
+      expect(run('<hk-card><hk-part>x</hk-part></hk-card>')).toEqual(['SN2013']);
+      expect(run('<hk-card><hk-part name="{{ p }}">x</hk-part></hk-card>')).toEqual(['SN2013']);
+      expect(run('<hk-card><hk-part name="badge" class="x">x</hk-part></hk-card>')).toEqual(['SN2004']);
+    });
+    it('a parts tag takes only hk-part children (SN2006)', () => {
+      expect(run('<hk-card><p>x</p></hk-card>')).toEqual(['SN2006']);
+      expect(run('<hk-card>{% if x %}<hk-part name="badge">x</hk-part>{% endif %}</hk-card>')).toEqual(['SN2006', 'SN2013']);
+    });
+  });
   it('accepts valid markup with responsive props', () => {
     expect(run('<hk-grid columns="4" tablet-columns="2" mobile-columns="1" gap="24" class="x" data-a="1"><p>x</p></hk-grid>')).toEqual([]);
   });

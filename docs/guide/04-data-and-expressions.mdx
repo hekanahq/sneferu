@@ -42,11 +42,30 @@ A product (from `collection(…).products` or `product(…)`) has:
 
 | Field | Example |
 | - | - |
+| `id` | `"8f1c…"` (stable; do not show it) |
+| `handle` | `ps-card` |
 | `title` | `PlayStation gift card` |
 | `url` | `/products/ps-card` |
 | `price` | `52000` (minor units: piastres; 52000 = 520.00 EGP) |
 | `compare_at` | `60000` or nil (the price before a discount) |
 | `image` | `{ url: "https://…" }` |
+| `available` | `true` when it can be bought |
+| `description` | `<p>The code arrives <strong>by email</strong>.</p>`: sanitised HTML in the page's language. `{{ product.description }}` prints it escaped, as text; output it as HTML with `<hk-rich-text html="{{ product.description }}" />` |
+| `excerpt` | `The code arrives by email.` (plain text, at most 200 characters) |
+| `kind` | `physical` or `digital` |
+| `digital_kind` | `code`, `file` or `manual` for a digital product; nil for a physical one |
+| `tags` | `["gift-card", "gaming"]` (at most 20, each at most 40 characters) |
+| `category` | `{ handle: "gift-cards", title: "Gift cards", url: "/collections/gift-cards" }`, or nil |
+
+```html
+<hk-product-card product="{{ p }}">
+  <hk-part name="badge">{% if p.kind == 'digital' %}<span class="tag">{{ 'instant' | t }}</span>{% endif %}</hk-part>
+</hk-product-card>
+<hk-rich-text html="{{ product.description }}" />
+<p>{{ product.excerpt }}</p>
+```
+
+In `sneferu dev` every sample product has all of these fields.
 
 ## Output
 

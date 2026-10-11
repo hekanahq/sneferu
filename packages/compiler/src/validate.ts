@@ -1,9 +1,9 @@
-import { err, type Expr, isAllowedElement, isForbiddenAttribute, isForbiddenElement, isUrlAttribute, LIMITS, safeUrl, type Diagnostic, type TagRegistry } from '@hekana/sneferu-core';
+import { err, type Expr, isAllowedElement, isForbiddenAttribute, isForbiddenElement, isUrlAttribute, LIMITS, safeUrl, type Diagnostic, type HkTag, type TagRegistry } from '@hekana/sneferu-core';
 import type { AstNode } from './ast';
 
 const ATTR_NAME = /^[a-z_:][a-z0-9_:.-]*$/;
 const PASSTHROUGH = (a: string) => a === 'class' || a === 'id' || a === 'role' || a === 'title' || a.startsWith('data-') || a.startsWith('aria-');
-const BUILTIN_HK = new Set(['hk-slot', 'hk-sections', 'hk-block']);
+const BUILTIN_HK = new Set(['hk-slot', 'hk-sections', 'hk-block', 'hk-part']);
 
 export const camel = (s: string) => s.replace(/-([a-z])/g, (_, c: string) => c.toUpperCase());
 
@@ -67,7 +67,8 @@ export function validateTemplate(
     }
   };
 
-  const visit = (list: AstNode[]): void => {
+  /** `parent`: the registry tag whose direct children `list` are, if any (hk-part needs one that declares parts). */
+  const visit = (list: AstNode[], parent?: HkTag): void => {
     for (const n of list) {
       if (n.t === 'for') {
         exprs(n.src, n);
@@ -97,6 +98,18 @@ export function validateTemplate(
           }
         }
         if (n.tag === 'hk-slot' && opts.kind !== 'layout' && opts.kind !== 'template') out.push(err('SN2011', '<hk-slot> is only allowed in layout and templates', at(n)));
+        if (n.tag === 'hk-part') {
+          const parts = parent?.parts ?? [];
+          if (!parent || parts.length === 0) out.push(err('SN2013', '<hk-part> is only allowed directly inside a tag that has parts (for example <hk-product-card>)', at(n)));
+          else {
+            const nameAttr = n.attrs.find((a) => a.name === 'name');
+            const name = nameAttr && nameAttr.parts.every((p) => typeof p === 'string') ? (nameAttr.parts as string[]).join('') : undefined;
+            if (name === undefined || !parts.includes(name)) out.push(err('SN2013', `<hk-part> needs a fixed name="…" that <${parent.name}> has: ${parts.join(', ')}.${name ? suggest(name, parts) : ''}`, at(n)));
+          }
+          for (const a of n.attrs) if (a.name !== 'name') out.push(err('SN2004', `unknown property "${a.name}" on <hk-part>; it takes only name`, { file: opts.file, ...a.loc }));
+          visit(n.children);
+          continue;
+        }
         if (n.tag.startsWith('hk-') && !BUILTIN_HK.has(n.tag)) {
           const tag = opts.registry.get(n.tag);
           if (!tag) { out.push(err('SN2003', `unknown tag <${n.tag}>.${suggest(n.tag, opts.registry.names())}`, at(n))); visit(n.children); continue; }
@@ -120,6 +133,8 @@ export function validateTemplate(
               if (!ok) out.push(err('SN2006', `<${n.tag}> does not accept ${c.t === 'el' ? `<${c.tag}>` : 'this content'} as a child`, at(c)));
             }
           }
+          visit(n.children, tag);
+          continue;
         }
         visit(n.children);
       }

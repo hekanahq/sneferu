@@ -75,8 +75,35 @@ URL attributes are `href`, every `*:href` (`xlink:href`), `src`, `action`,
 
 All `{{ }}` output is escaped for its position (text, attribute, URL), and
 dynamic `class`/`id` values are reduced to safe tokens. Merchant settings and
-product data can never inject markup. Comments `<!-- -->` in templates are
+product data can never inject markup; HTML from data is output only through
+`hk-rich-text` (see [Rich text](#rich-text)). Comments `<!-- -->` in templates are
 dropped at compile time.
+
+## Rich text
+
+`<hk-rich-text html="{{ … }}" />` is the only way HTML from data (a product
+description, a `rich_text` setting) reaches the page. It goes through the rich
+text sanitiser, which treats the HTML as hostile and **rebuilds** it rather than
+filtering it: nothing from the input is copied to the page except text, which is
+decoded once and escaped again.
+
+| Kept | Everything else |
+| - | - |
+| `p br strong b em i u s ul ol li h2 h3 h4 blockquote a span` | other tags are dropped and their text kept (`<h1>Title</h1>` becomes `Title`) |
+| `href` on `a`, when it is a safe URL (the same rule as above); the link gets `rel="nofollow noopener"` | every other attribute: `on*`, `style`, `class`, `id`, `src`, `target`, … |
+| | an unsafe `href` (`javascript:`, `//host`, also when written with entities like `java&#115;cript:`) is removed; the link text stays |
+
+- The content of `script`, `style`, `template`, `iframe`, `object`, `svg`,
+  `math`, `noscript`, `textarea`, `title` (and `xmp`, `noembed`, `noframes`,
+  `plaintext`) is dropped entirely, text included.
+- Comments, `<!DOCTYPE>` and `<![CDATA[…]]>` are dropped.
+- Entities are decoded once and the text escaped again, so `&lt;script&gt;`
+  shows as the text `<script>` and never becomes a tag.
+- Unclosed tags are closed, stray closing tags ignored, nesting is capped at
+  64, and the output is at most 100,000 characters.
+- An empty result renders nothing.
+
+The output is stable: sanitising it again gives the same HTML.
 
 ## Render budgets
 
