@@ -74,8 +74,8 @@ Notes:
 - `required`, `visible_if` (show this field only when another setting equals a
   value) and `responsive` are hints for the editor. Rendering does not enforce
   `required`; always set a sensible `default`.
-- Labels are shown to Egyptian merchants: write the Arabic one first and in plain
-  Egyptian Arabic.
+- Labels are shown to merchants in the dashboard: write the Arabic label first,
+  in plain Egyptian Arabic.
 
 ## How settings reach the page (coercion)
 
