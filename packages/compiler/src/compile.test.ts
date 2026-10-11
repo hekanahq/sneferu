@@ -115,6 +115,7 @@ describe('compileTheme', () => {
       f('templates/index.sneferu', '<hk-sections /><hk-schema>{"sections":[{"type":"hero","settings":{"title":"Hello"}}]}</hk-schema>'),
       f('sections/hero.sneferu', '<section><h1>{{ section.settings.title }}</h1></section><hk-schema>{"name":"Hero","settings":{"title":{"type":"text","label":"Title","default":"Hi"},"size":{"type":"range","label":{"en":"Size"},"min":1,"max":4}}}</hk-schema>'),
       f('blocks/chip.sneferu', '<span>{{ block.settings.text }}</span><hk-schema>{"name":{"en":"Chip"},"settings":{"text":{"type":"text","label":"Text"}}}</hk-schema>'),
+      f('sections/quotes.sneferu', '<section /><hk-schema>{"name":"Quotes","blocks":{"allowed":["chip"],"max":3},"presets":[{"name":"Two chips","blocks":[{"type":"chip"},{"type":"chip"}]},{"name":{"ar":"لا شيء","en":"None"}}]}</hk-schema>'),
       f('locales/en.json', '{"buy":"Buy"}'),
     ];
     it('compiles string and { en } labels into { ar, en } with en standing in for ar', () => {
@@ -133,6 +134,10 @@ describe('compileTheme', () => {
       expect(a.blocks.chip!.schema.name).toEqual({ ar: 'Chip', en: 'Chip' });
       expect(a.blocks.chip!.schema.settings.text!.label).toEqual({ ar: 'Text', en: 'Text' });
       expect(a.locales).toEqual({ en: { buy: 'Buy' } });
+      expect(a.sections.quotes!.schema.presets).toEqual([
+        { name: { ar: 'Two chips', en: 'Two chips' }, blocks: [{ type: 'chip' }, { type: 'chip' }] },
+        { name: { ar: 'لا شيء', en: 'None' } },
+      ]);
     });
     it('leaves bilingual labels exactly as written', () => {
       const a = compileTheme(base(), reg).artifact!;

@@ -6,6 +6,6 @@
     <hk-button label="{{ t('shop_now') }}" href="/products" />
   </hk-stack>
 </hk-section>
-<hk-schema>{"name":{"ar":"واجهة","en":"Hero"},"version":1,"blocks":{"allowed":["chip"],"max":4},"settings":{
-  "title":{"type":"text","label":{"ar":"العنوان","en":"Title"},"default":"Hello","maxLength":80},
-  "subtitle":{"type":"textarea","label":{"ar":"الوصف","en":"Subtitle"},"default":"","maxLength":200}}}</hk-schema>
+<hk-schema>{"name":"Hero","version":1,"blocks":{"allowed":["chip"],"max":4},"settings":{
+  "title":{"type":"text","label":"Title","default":"Hello","maxLength":80},
+  "subtitle":{"type":"textarea","label":"Subtitle","default":"","maxLength":200}}}</hk-schema>

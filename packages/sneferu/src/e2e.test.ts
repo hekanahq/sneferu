@@ -28,11 +28,22 @@ describe('starter theme end to end', () => {
     expect(trees.flatMap((t) => validateIR(t, known))).toEqual([]);
   });
 
-  it('renders the home page in Arabic with real sample products', () => {
-    const r = renderPage(artifact!, { template: 'index', ctx: sampleContext('ar', artifact!.locales, 'ar'), registry });
+  it('renders the home page in English by default with real sample products', () => {
+    expect(artifact!.manifest.defaultLocale).toBe('en');
+    const r = renderPage(artifact!, { template: 'index', ctx: sampleContext('en', artifact!.locales, 'en'), registry });
+    expect(r.diagnostics).toEqual([]);
+    expect(r.html).toContain('dir="ltr" lang="en"');
+    expect(r.html).toContain('Welcome');
+    expect(r.html).toContain('Shop now');
+    expect(r.html).toContain('PlayStation gift card');
+    expect(r.html.match(/sn-product-card/g)).toHaveLength(6);
+    expect(r.html).toContain('EGP 520.00');
+  });
+
+  it('renders Arabic, right to left, when asked', () => {
+    const r = renderPage(artifact!, { template: 'index', ctx: sampleContext('ar', artifact!.locales, 'en'), registry });
     expect(r.diagnostics).toEqual([]);
     expect(r.html).toContain('dir="rtl"');
-    expect(r.html).toContain('أهلًا بيك');
     expect(r.html).toContain('تسوق دلوقتي');
     expect(r.html.match(/sn-product-card/g)).toHaveLength(6);
     expect(r.html).toContain('520.00 ج.م');
@@ -40,7 +51,7 @@ describe('starter theme end to end', () => {
   });
 
   it('renders English with fallback and merchant overrides', () => {
-    const r = renderPage(artifact!, { template: 'index', ctx: sampleContext('en', artifact!.locales, 'ar'), registry, sections: [{ id: 'h', type: 'hero', props: { title: 'Top up now' } }] });
+    const r = renderPage(artifact!, { template: 'index', ctx: sampleContext('en', artifact!.locales, 'en'), registry, sections: [{ id: 'h', type: 'hero', props: { title: 'Top up now' } }] });
     expect(r.html).toContain('dir="ltr"');
     expect(r.html).toContain('Top up now');
     expect(r.html).toContain('Shop now');

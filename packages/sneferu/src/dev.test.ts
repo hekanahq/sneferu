@@ -60,8 +60,8 @@ describe('dev server', () => {
   it('serves pages, locale, assets, and rejects traversal', async () => {
     const s = await startDev(dir, 0);
     server = s.server; port = (server.address() as { port: number }).port;
-    expect((await get(port, '/')).body).toContain('dir="rtl"');
-    expect((await get(port, '/?locale=en')).body).toContain('dir="ltr"');
+    expect((await get(port, '/')).body).toContain('dir="ltr"');
+    expect((await get(port, '/?locale=ar')).body).toContain('dir="rtl"');
     expect((await get(port, '/__assets/a.css')).body).toBe('.z{}');
     expect((await get(port, '/__assets/%2e%2e/%2e%2e/snf-secret.txt')).status).toBe(404);
     expect((await get(port, '/__assets/..%5c..%5csnf-secret.txt')).status).toBe(404);
@@ -113,15 +113,16 @@ describe('dev server, English-only theme', () => {
     }
     s.close();
   });
-  it('gives the bilingual starter English sample data for ?locale=en', async () => {
+  it('gives the bilingual starter English sample data by default and Arabic for ?locale=ar', async () => {
     const d2 = mkdtempSync(join(tmpdir(), 'snf-dev-both-'));
     cpSync(resolve(here, '../starter'), d2, { recursive: true });
     const s = await startDev(d2, 0);
     const port = (s.server.address() as { port: number }).port;
-    const en = (await get(port, '/?locale=en')).body;
+    const en = (await get(port, '/')).body;
     expect(en).toContain('PlayStation gift card');
-    expect(en).not.toContain('كارت بلايستيشن');
-    expect((await get(port, '/')).body).toContain('كارت بلايستيشن');
+    expect(en).not.toMatch(/[\u0600-\u06FF]/);
+    expect((await get(port, '/?locale=en')).body).toBe(en);
+    expect((await get(port, '/?locale=ar')).body).toContain('كارت بلايستيشن');
     s.close(); s.server.close();
   });
 });

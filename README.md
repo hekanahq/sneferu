@@ -6,7 +6,7 @@ artifact and previewed locally.
 
     npx @hekana/sneferu init my-theme
     cd my-theme
-    npx @hekana/sneferu dev        # http://127.0.0.1:4100 (Arabic, ?locale=en)
+    npx @hekana/sneferu dev        # http://127.0.0.1:4100 (English; ?locale=ar for Arabic)
     npx @hekana/sneferu validate
     npx @hekana/sneferu build      # dist/<id>-<version>.sneferu.json
 
