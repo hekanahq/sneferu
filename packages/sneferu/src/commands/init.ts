@@ -19,5 +19,7 @@ export function runInit(target: string, opts: { force?: boolean }): void {
   const named = out
     .replace(/("name"\s*:\s*)"[^"]*"/, (_m, k: string) => `${k}${JSON.stringify(title)}`)
     .replace(/("description"\s*:\s*)"[^"]*"/, (_m, k: string) => `${k}"A Sneferu theme."`);
+  const parsed = JSON.parse(named) as { name?: string; description?: string };
+  if (parsed.name !== title || parsed.description !== 'A Sneferu theme.') throw new Error('could not set the theme name in theme.json');
   writeFileSync(mpath, named);
 }

@@ -1,7 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { TagRegistry, type HkTag } from '@hekana/sneferu-core';
+import { TagRegistry, validateIR, checkRawHtml, type HkTag } from '@hekana/sneferu-core';
 import { parseTemplate } from './parser';
-import { validateIR, checkRawHtml } from '@hekana/sneferu-core';
 import { lower } from './lower';
 
 const grid: HkTag = { name: 'hk-grid', version: 1, category: 'layout',
