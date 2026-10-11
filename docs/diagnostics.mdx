@@ -84,6 +84,7 @@ Every problem Sneferu reports has a stable code. The format is `file:line:col se
 | SN3031 | A setting's `label` is not a string (warning) | Write the label as a string. |
 | SN3032 | `tokens.fonts` is not an object, has a key other than `heading`, `body`, `mono`, or names a font that is not in the catalogue | Use one of the catalogue families exactly as written (see [Fonts](guide/05-styling-and-responsive.mdx#fonts)). |
 | SN3033 | `money` in `theme.json` is not `{ "format": "decimal" }` or `{ "format": "whole" }` | Use one of the two formats, or remove `money` for the default. |
+| SN3034 | Warning: an asset in `assets/` is not served on the store (only images are): a `.js`, a font or an `.ico` | Remove it, or use `tokens.fonts`, `hk-icon` or inline SVG instead (see [Images and assets](guide/15-images-and-assets.mdx)). |
 
 ## SN4xxx Rendering
 

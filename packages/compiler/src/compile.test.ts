@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { TagRegistry, validateIR } from '@hekana/sneferu-core';
 import { compileTheme, type ThemeFile } from './compile';
+import { IMAGE_ASSET } from './files';
 
 const enc = new TextEncoder();
 const f = (path: string, text: string): ThemeFile => ({ path, bytes: enc.encode(text) });
@@ -225,5 +226,19 @@ describe('compileTheme', () => {
       f('theme.json', JSON.stringify(noSettings)),
       f('sections/hero.sneferu', '<p>{{ collection(settings.home).title }}</p><hk-schema>{"name":"Hero","settings":{}}</hk-schema>')];
     expect(compileTheme(files, reg).diagnostics.filter((d) => d.severity === 'error').map((d) => d.code).sort()).toEqual(['SN2012', 'SN3021']);
+  });
+  it('warns (SN3034) for assets the store does not serve, never for images', () => {
+    const bin = (path: string): ThemeFile => ({ path, bytes: new Uint8Array([1, 2, 3]) });
+    const files = [...base(), bin('assets/app.js'), bin('assets/f.woff2'), bin('assets/f.ttf'), bin('assets/favicon.ico'), bin('assets/a.png'), bin('assets/b.svg'), f('assets/a.css', 'a{}')];
+    const { artifact, diagnostics } = compileTheme(files, reg);
+    expect(artifact).toBeDefined();
+    const w = diagnostics.filter((d) => d.code === 'SN3034');
+    expect(w.map((d) => d.file)).toEqual(['assets/app.js', 'assets/f.ttf', 'assets/f.woff2', 'assets/favicon.ico']);
+    expect(w.every((d) => d.severity === 'warning')).toBe(true);
+    expect(w[0]!.message).toBe("asset 'assets/app.js' is not served on the store (only images are)");
+  });
+  it('exports IMAGE_ASSET for the image types the store serves', () => {
+    for (const ok of ['a.png', 'a.jpeg', 'a.webp', 'a.avif', 'a.gif', 'a.svg']) expect(IMAGE_ASSET.test(ok), ok).toBe(true);
+    for (const no of ['a.js', 'a.css', 'a.woff2', 'a.ico', 'a.png.js']) expect(IMAGE_ASSET.test(no), no).toBe(false);
   });
 });

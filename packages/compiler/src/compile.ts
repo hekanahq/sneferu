@@ -1,5 +1,5 @@
 import { IR_VERSION, ENGINE_VERSION, err, warn, hasErrors, normalizeFieldLabels, normalizeLabel, validateIR, type Diagnostic, type FieldSchema, type IRNode, type TagRegistry } from '@hekana/sneferu-core';
-import { checkFiles, type ThemeFile } from './files';
+import { checkFiles, IMAGE_ASSET, type ThemeFile } from './files';
 import { validateManifest, type Manifest } from './manifest';
 import { parseTemplate } from './parser';
 import { validateTemplate } from './validate';
@@ -164,6 +164,8 @@ export function compileTheme(files: ThemeFile[], registry: TagRegistry): { artif
     locales[nameOf(p.replace(/\.json$/, '.sneferu'))] = json as Record<string, string>;
   }
   const assets = files.filter((f) => f.path.startsWith('assets/')).sort((a, b) => (a.path < b.path ? -1 : a.path > b.path ? 1 : 0)).map((f) => ({ path: f.path, size: f.bytes.byteLength, hash: hash64(Array.from(f.bytes, (b) => String.fromCharCode(b)).join('')) }));
+
+  for (const a of assets) if (!/\.css$/.test(a.path) && !IMAGE_ASSET.test(a.path)) diagnostics.push(warn('SN3034', `asset '${a.path}' is not served on the store (only images are)`, { file: a.path }));
 
   if (hasErrors(diagnostics) || !mv.manifest) return { diagnostics };
   const body = { schema: 'sneferu/artifact@1' as const, irVersion: IR_VERSION, engineVersion: ENGINE_VERSION, manifest: mv.manifest, layout, templates, sections, blocks, snippets, templateSections, locales, assets };

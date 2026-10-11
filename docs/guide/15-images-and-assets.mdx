@@ -1,0 +1,69 @@
+# 15. Images and assets
+
+Files in `assets/` ship with your theme. This page covers which of them the
+store serves, how to point at them, and how images in a theme stay light on a
+phone.
+
+## What the store serves
+
+Only **images** in `assets/` are served on a live store:
+
+| Served | Not served |
+| - | - |
+| `.png`, `.jpg`/`.jpeg`, `.webp`, `.avif`, `.gif`, `.svg` | `.js`, `.woff`/`.woff2`/`.ttf`/`.otf`, `.ico` |
+
+Theme CSS (`assets/*.css`) is compiled into the page, so it is not served as a
+file either. Fonts, scripts and icons in `assets/` still pass `sneferu
+validate` so existing themes keep compiling, but each one produces the warning
+[SN3034](../diagnostics.mdx): `asset 'assets/app.js' is not served on the
+store (only images are)`. When you push, the server repeats the warning as
+`HK2_ASSET_NOT_SERVED`. Use `tokens.fonts` for fonts and `hk-icon` or inline
+SVG for icons.
+
+Limits: each image is at most 2 MB (SN3007), the whole package at most 25 MB
+(SN3006), and the first bytes of a file must match its extension (a `.png`
+that is not a PNG is rejected). The compiler exports the rule as
+`IMAGE_ASSET` from `@hekana/sneferu-compiler`, so the CLI and the server agree
+on what counts as an image.
+
+## `asset_url()`
+
+`asset_url('hero.webp')` gives the URL of `assets/hero.webp`. The `assets/`
+prefix is optional, and a leading `./` is ignored, so these are the same file:
+
+```
+{{ asset_url('hero.webp') }}
+{{ asset_url('assets/hero.webp') }}
+{{ asset_url('./hero.webp') }}
+```
+
+A path that is empty or unsafe (`..`, a leading `/`, a backslash, a URL)
+gives an empty string, and so does a file that was not stored. Check before
+you render a tag:
+
+```
+{% if asset_url('hero.webp') %}
+  <img src="{{ asset_url('hero.webp') }}" alt="" width="1200" height="600">
+{% endif %}
+```
+
+On the live store the URL is on the store's own address, under `/hk2/a/`, and
+carries the file's content hash. It is cached for a year; a changed image has
+a new URL. In `sneferu dev` it is `/__assets/<path>`.
+
+## Images in CSS
+
+In theme CSS, a `url(...)` that names a file in `assets/` is rewritten when you
+push, so `url(hero.webp)`, `url("./hero.webp")` and `url(../assets/hero.webp)`
+all work. Any other relative URL becomes `url()` with a warning; absolute
+`https://` URLs are left alone.
+
+## SVG
+
+SVG files are checked strictly. They cannot contain `<script>`,
+`<foreignObject>`, `<iframe>`, `<embed>`, `<object>`, animation elements,
+`on*` attributes, `javascript:` or `data:` URLs, external `href` or
+`xlink:href` (only `#fragment`), `<!DOCTYPE` or `<!ENTITY`. A failing image is
+a push error (`HK2_ASSET_INVALID`), never silently dropped. SVG is served with a
+locked-down content security policy, so it works in `<img>` and CSS but cannot
+run anything.

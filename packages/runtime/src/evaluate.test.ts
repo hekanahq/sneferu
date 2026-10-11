@@ -109,4 +109,17 @@ describe('url() and money options', () => {
     expect(m('x', ['whole'])).toBe('');
     expect(m(1e308, ['decimal', 'major'])).toBe('');
   });
+  it('asset_url drops a leading assets/ and ./, and returns empty for unsafe paths', () => {
+    const calls: string[] = [];
+    const c = ctx({ assetUrl: (x) => { calls.push(x); return `/a/${x}`; } });
+    const au = (v: unknown) => evaluate({ k: 'lookup', fn: 'asset_url', args: [{ k: 'lit', v: v as string }] }, {}, c);
+    expect(au('assets/x.png')).toBe('/a/x.png');
+    expect(au('x.png')).toBe('/a/x.png');
+    expect(au('./x.png')).toBe('/a/x.png');
+    expect(au('./assets/img/x.png')).toBe('/a/img/x.png');
+    expect(calls).toEqual(['x.png', 'x.png', 'x.png', 'img/x.png']);
+    calls.length = 0;
+    for (const bad of ['', 'assets/', '../x.png', 'a/../x.png', '/x.png', 'a\\b.png', 'https://evil/x.png', undefined, null]) expect(au(bad), String(bad)).toBe('');
+    expect(calls).toEqual([]);
+  });
 });

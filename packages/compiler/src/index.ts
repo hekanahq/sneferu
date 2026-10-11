@@ -8,3 +8,4 @@ export { VOID_ELEMENTS } from './ast';
 export { normalizeWhitespace, innerContext, isBlockLevel, freeBeside, isWsOnly, WS_CHARS, type WsContext, type WsNeighbor } from './whitespace';
 export { parseFor } from './expr';
 export { splitArgs } from './parser';
+export { IMAGE_ASSET } from './files';
