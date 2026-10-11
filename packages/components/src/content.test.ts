@@ -73,7 +73,7 @@ describe('content and commerce tags', () => {
   });
   it('hk-rich-text renders sanitized html and nothing when empty', () => {
     expect(render('hk-rich-text', { html: '<p>Hi <img src=x onerror=alert(1)><a href="javascript:1">x</a></p><script>alert(1)</script>' }).html)
-      .toBe('<div class="sn-c1 sn-rich-text"><p>Hi <a rel="nofollow noopener">x</a></p></div>');
+      .toBe('<div class="sn-c1 sn-rich-text"><p>Hi <a rel="nofollow noopener ugc">x</a></p></div>');
     expect(render('hk-rich-text', { html: '<p>x</p>', class: 'lead', id: 'd' }).html).toBe('<div class="sn-c1 sn-rich-text lead" id="d"><p>x</p></div>');
     for (const html of ['', '   ', '<img src=x>', '<script>x</script>', null, undefined, 3, { ar: '<p>x</p>' }]) expect(render('hk-rich-text', { html }).html).toBe('');
     expect(r.get('hk-rich-text')!.props.html!.type).toBe('rich_text');

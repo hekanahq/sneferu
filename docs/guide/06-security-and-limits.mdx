@@ -90,8 +90,8 @@ decoded once and escaped again.
 | Kept | Everything else |
 | - | - |
 | `p br strong b em i u s ul ol li h2 h3 h4 blockquote a span` | other tags are dropped and their text kept (`<h1>Title</h1>` becomes `Title`) |
-| `href` on `a`, when it is a safe URL (the same rule as above); the link gets `rel="nofollow noopener"` | every other attribute: `on*`, `style`, `class`, `id`, `src`, `target`, … |
-| | an unsafe `href` (`javascript:`, `//host`, also when written with entities like `java&#115;cript:`) is removed; the link text stays |
+| `href` on `a`, when it is a safe URL: only `https:`, `mailto:`, `tel:` and site-relative links are kept; the link gets `rel="nofollow noopener ugc"` | every other attribute: `on*`, `style`, `class`, `id`, `src`, `target`, … |
+| | `http:` links lose their `href` (the link text stays); so does any unsafe `href` (`javascript:`, `//host`, also when written with entities like `java&#115;cript:`) |
 
 - The content of `script`, `style`, `template`, `iframe`, `object`, `svg`,
   `math`, `noscript`, `textarea`, `title` (and `xmp`, `noembed`, `noframes`,

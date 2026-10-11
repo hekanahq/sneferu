@@ -27,7 +27,7 @@ const HEADINGS = new Set(['h2', 'h3', 'h4']);
 const LI_BARRIER = new Set(['ul', 'ol', 'blockquote', 'h2', 'h3', 'h4']);
 const MAX_DEPTH = 64;
 const DEFAULT_MAX = 100_000;
-const REL = ' rel="nofollow noopener"';
+const REL = ' rel="nofollow noopener ugc"';
 
 const NAMED: Record<string, string> = {
   amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: '\u00A0', shy: '\u00AD', copy: '\u00A9', reg: '\u00AE', trade: '\u2122',
@@ -111,7 +111,9 @@ class Writer {
 
   text(raw: string) {
     if (this.done) return;
-    const t = decode(raw);
+    // never decode more than can fit: an entity expands to at most ~12 characters when escaped
+    const budget = Math.max(0, this.max - this.out.length - this.closeLen);
+    const t = decode(raw.length > budget * 12 ? raw.slice(0, budget * 12) : raw);
     if (t === '') return;
     const esc = escapeText(t);
     if (this.fits(esc.length)) { this.out += esc; return; }
@@ -175,8 +177,9 @@ const hrefAttr = (attrs: [string, string][]): string => {
 export function sanitizeRichText(html: string, opts: { maxChars?: number } = {}): string {
   if (typeof html !== 'string' || html === '') return '';
   const m = opts?.maxChars;
-  const w = new Writer(typeof m === 'number' && Number.isFinite(m) && m >= 0 ? Math.floor(m) : DEFAULT_MAX);
-  const s = html;
+  const cap = typeof m === 'number' && Number.isFinite(m) && m >= 0 ? Math.floor(m) : DEFAULT_MAX;
+  const w = new Writer(cap);
+  const s = html.length > cap * 16 ? html.slice(0, cap * 16) : html;
   const n = s.length;
   let drop: { tag: string; depth: number } | null = null;
   let i = 0;
