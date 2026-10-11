@@ -56,6 +56,8 @@ the content of `templates/index.sneferu` with:
 A thin coloured strip at the top of the page with one message and a link, for
 news such as free delivery or a sale.
 
+<Example>
+
 ```html title="sections/announcement-bar.sneferu"
 <hk-section background="{{ section.settings.background }}" padding-y="12" class="announcement">
   <hk-stack direction="row" mobile-direction="column" gap="12" mobile-gap="4" align="center" justify="center">
@@ -80,6 +82,14 @@ news such as free delivery or a sale.
   display: inline-flex; align-items: center; min-height: 44px; }
 ```
 
+<Result>
+  <Shot src="../images/announcement-bar@2x.webp" alt='An orange strip with the text "Free delivery on orders over EGP 500" and an underlined "See details" link' caption="Desktop: message and link on one row." />
+
+  <Shot src="../images/announcement-bar-phone@2x.webp" alt="The same strip on a phone, with the link under the message" caption="Phone: the link moves under the message." />
+</Result>
+
+</Example>
+
 #### What each line does
 
 1. **Line 1** `<hk-section>` is the strip. Its `background` comes from the
@@ -98,12 +108,6 @@ news such as free delivery or a sale.
 6. In the CSS file, `.announcement-link` makes the link white, bold and
    underlined, and at least 44 px tall so it is easy to tap.
 
-<Result>
-  <Shot src="../images/announcement-bar@2x.webp" alt='An orange strip with the text "Free delivery on orders over EGP 500" and an underlined "See details" link' caption="Desktop: message and link on one row." />
-
-  <Shot src="../images/announcement-bar-phone@2x.webp" alt="The same strip on a phone, with the link under the message" caption="Phone: the link moves under the message." />
-</Result>
-
 #### Try it
 
 <Steps>
@@ -119,6 +123,8 @@ news such as free delivery or a sale.
 
 The big band at the top of the home page: a small label, a large heading, a
 sentence and two buttons.
+
+<Example>
 
 ```html title="sections/promo-hero.sneferu"
 <hk-section background="{{ section.settings.background }}" padding-y="112" tablet-padding-y="80" mobile-padding-y="56">
@@ -149,6 +155,14 @@ sentence and two buttons.
 ```css title="assets/hero.css"
 .sn-btn.hero-outline { color: #FFFFFF; border-color: #FFFFFF; }
 ```
+
+<Result>
+  <Shot src="../images/promo-hero@2x.webp" alt='A dark band with an orange "New this week" label, the heading "Everything for your home, in one place", a sentence and two buttons' caption="Desktop: heading at 56 px, buttons side by side." />
+
+  <Shot src="../images/promo-hero-phone@2x.webp" alt="The same hero on a phone" caption="Phone: heading at 32 px, buttons stacked." />
+</Result>
+
+</Example>
 
 Add one line to both locale files:
 
@@ -188,12 +202,6 @@ Add one line to both locale files:
    link and background colour. `"type": "link"` means an unsafe link (such as
    `javascript:…`) is replaced with `#` before it reaches the page.
 
-<Result>
-  <Shot src="../images/promo-hero@2x.webp" alt='A dark band with an orange "New this week" label, the heading "Everything for your home, in one place", a sentence and two buttons' caption="Desktop: heading at 56 px, buttons side by side." />
-
-  <Shot src="../images/promo-hero-phone@2x.webp" alt="The same hero on a phone" caption="Phone: heading at 32 px, buttons stacked." />
-</Result>
-
 #### Try it
 
 <Steps>
@@ -207,6 +215,8 @@ Add one line to both locale files:
 
 Three short cards side by side that tell shoppers why to buy here: delivery,
 payment and returns.
+
+<Example>
 
 ```html title="sections/feature-row.sneferu"
 <hk-section padding-y="64" mobile-padding-y="40">
@@ -249,6 +259,14 @@ payment and returns.
 }</hk-schema>
 ```
 
+<Result>
+  <Shot src="../images/feature-row@2x.webp" alt='Three bordered cards under the heading "Why people shop with us": delivery, cash on delivery, 14-day returns' caption="Desktop: three columns." />
+
+  <Shot src="../images/feature-row-phone@2x.webp" alt="The same cards on a phone, one per row" caption="Phone: one column." />
+</Result>
+
+</Example>
+
 #### What each line does
 
 1. **Line 1** the section, with 64 px of space above and below (40 px on phones).
@@ -262,12 +280,6 @@ payment and returns.
    settings.
 6. **Lines 26-38** seven settings: the heading, then a title and a sentence for
    each card.
-
-<Result>
-  <Shot src="../images/feature-row@2x.webp" alt='Three bordered cards under the heading "Why people shop with us": delivery, cash on delivery, 14-day returns' caption="Desktop: three columns." />
-
-  <Shot src="../images/feature-row-phone@2x.webp" alt="The same cards on a phone, one per row" caption="Phone: one column." />
-</Result>
 
 <Callout kind="note">
   **When the merchant should choose how many cards.** Three fixed cards keep
@@ -285,6 +297,8 @@ look at the preview.
 A heading with a "View all" link, then the first products of the store's
 `featured` collection in a grid. If the collection is empty, a short message
 shows instead.
+
+<Example>
 
 ```html title="sections/product-grid.sneferu"
 <hk-section padding-y="64" mobile-padding-y="40">
@@ -310,6 +324,14 @@ shows instead.
   }
 }</hk-schema>
 ```
+
+<Result>
+  <Shot src="../images/product-grid@2x.webp" alt='A "Best sellers" heading with a "View all" link and four product cards with prices' caption="Desktop: four columns. The products are the sneferu dev sample data." />
+
+  <Shot src="../images/product-grid-phone@2x.webp" alt="The same grid on a phone, two columns" caption="Phone: two columns." />
+</Result>
+
+</Example>
 
 Add to both locale files:
 
@@ -342,12 +364,6 @@ Add to both locale files:
 5. **Line 19** `count` is a slider (`"type": "range"`) from 2 to 24, starting
    at 4.
 
-<Result>
-  <Shot src="../images/product-grid@2x.webp" alt='A "Best sellers" heading with a "View all" link and four product cards with prices' caption="Desktop: four columns. The products are the sneferu dev sample data." />
-
-  <Shot src="../images/product-grid-phone@2x.webp" alt="The same grid on a phone, two columns" caption="Phone: two columns." />
-</Result>
-
 <Callout kind="note">
   **Note.** The collection handle (`featured`) is written in the template. A
   lookup only takes fixed text, so `collection(section.settings.handle)` is an
@@ -367,7 +383,10 @@ Add to both locale files:
 
 Three plans side by side with their monthly price. The merchant picks which one
 is the best value; that card gets a badge, a coloured outline and a filled
-button.
+button. Three files: the section, the card (a snippet, written once and used
+three times) and the outline's CSS.
+
+<Example>
 
 ```html title="sections/pricing.sneferu"
 <hk-section padding-y="64" mobile-padding-y="40">
@@ -399,8 +418,6 @@ button.
 }</hk-schema>
 ```
 
-The card is a snippet, written once and used three times:
-
 ```html title="snippets/plan-card.sneferu"
 <hk-card class="plan" data-best="{{ best }}" padding="28" mobile-padding="20" radius="16" border="true">
   <hk-stack gap="12" align="start">
@@ -418,6 +435,14 @@ The card is a snippet, written once and used three times:
 .plan-price { margin: 0; font-size: 28px; }
 .plan-price small { font-size: 14px; opacity: .7; }
 ```
+
+<Result>
+  <Shot src="../images/pricing@2x.webp" alt='Three plan cards: Small EGP 299.00, Regular EGP 499.00 with a "Best value" badge and an orange outline, Family EGP 799.00' caption="Desktop: three columns, the middle plan marked as best value." />
+
+  <Shot src="../images/pricing-phone@2x.webp" alt="The same plans on a phone, one per row" caption="Phone: one column." />
+</Result>
+
+</Example>
 
 Add to both locale files:
 
@@ -460,12 +485,6 @@ In `snippets/plan-card.sneferu`:
 4. **Line 7** the button: filled on the best card, outlined on the others, as
    the section passed in `variant`.
 
-<Result>
-  <Shot src="../images/pricing@2x.webp" alt='Three plan cards: Small EGP 299.00, Regular EGP 499.00 with a "Best value" badge and an orange outline, Family EGP 799.00' caption="Desktop: three columns, the middle plan marked as best value." />
-
-  <Shot src="../images/pricing-phone@2x.webp" alt="The same plans on a phone, one per row" caption="Phone: one column." />
-</Result>
-
 <Callout kind="note">
   **Note.** A `style="…"` attribute cannot contain `{{ }}`. To style a card by
   its state, write the state into a `data-*` attribute, as line 1 of the
@@ -487,6 +506,21 @@ With all five types listed in `templates/index.sneferu`, the preview shows a
 complete home page. Arrange them in any order; the merchant can reorder them
 later in the store builder.
 
+<Example>
+
+```html title="templates/index.sneferu"
+<hk-sections />
+<hk-schema>{"sections":[
+  {"type":"announcement-bar"},
+  {"type":"promo-hero"},
+  {"type":"feature-row"},
+  {"type":"product-grid"},
+  {"type":"pricing"}
+]}</hk-schema>
+```
+
 <Result>
   <Shot src="../images/full-page@2x.webp" alt="The example store at 1080 px wide: announcement bar, hero, feature row, product grid and subscription plans, top to bottom" caption="Desktop, 1080 px wide. All five sections on one page, as sneferu dev shows them with ?locale=en." />
 </Result>
+
+</Example>

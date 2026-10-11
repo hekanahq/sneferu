@@ -9,6 +9,8 @@ This is the hero section every new theme starts with: a dark band with a large
 heading, a sentence and a button. A section is one file: the markup first, then
 an `<hk-schema>` that lists what the merchant can edit.
 
+<Example>
+
 ```html title="sections/hero.sneferu"
 <hk-section background="theme:secondary" padding-y="96" mobile-padding-y="48">
   <hk-stack gap="16" align="start">
@@ -22,6 +24,12 @@ an `<hk-schema>` that lists what the merchant can edit.
   "title":{"type":"text","label":{"ar":"العنوان","en":"Title"},"default":"Hello","maxLength":80},
   "subtitle":{"type":"textarea","label":{"ar":"الوصف","en":"Subtitle"},"default":"","maxLength":200}}}</hk-schema>
 ```
+
+<Result>
+  <Shot src="images/starter-hero@2x.webp" alt="A dark band with a large white Arabic heading, a line of text and an orange button" caption="The starter hero in the dev preview, 1080 px wide. Arabic is the default store language, so it reads right to left." />
+</Result>
+
+</Example>
 
 #### What each line does
 
@@ -38,10 +46,6 @@ an `<hk-schema>` that lists what the merchant can edit.
    its words from the theme's Arabic or English locale file.
 7. **Lines 9-11** `<hk-schema>` names the section and declares its settings:
    `title` and `subtitle`, each with an Arabic and English label and a default.
-
-<Result>
-  <Shot src="images/starter-hero@2x.webp" alt="A dark band with a large white Arabic heading, a line of text and an orange button" caption="The starter hero in the dev preview, 1080 px wide. Arabic is the default store language, so it reads right to left." />
-</Result>
 
 More complete sections, each with a picture: the [Cookbook](guide/08-cookbook.mdx).
 
@@ -62,16 +66,20 @@ after the folder.
 
 ### 2. Preview it
 
+<Example>
+
 ```bash
 npx @hekana/sneferu dev ./my-theme
 ```
 
-Open `http://127.0.0.1:4100`. The preview fills the theme with sample products
-and reloads every time you save a file. Add `?locale=en` for English.
-
-<Result>
+<Result url="127.0.0.1:4100">
   <Shot src="images/starter-dev@2x.webp" alt="The starter theme in the dev preview: the hero, then the first sample product cards" caption="The top of the page straight after init, 1080 px wide." />
 </Result>
+
+</Example>
+
+Open `http://127.0.0.1:4100`. The preview fills the theme with sample products
+and reloads every time you save a file. Add `?locale=en` for English.
 
 ### 3. Push a version
 

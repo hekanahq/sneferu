@@ -134,6 +134,8 @@ Hekana.
 A short list of the first three products of a collection, numbered, with a
 "Sale" label on any product that has a lower price than before.
 
+<Example>
+
 ```html title="sections/on-sale.sneferu"
 <hk-section padding-y="64" mobile-padding-y="40">
   <hk-stack gap="16">
@@ -160,6 +162,12 @@ A short list of the first three products of a collection, numbered, with a
 }</hk-schema>
 ```
 
+<Result>
+  <Shot src="../images/on-sale@2x.webp" alt='A "Today&#x27;s picks" heading and three numbered product rows; the first has a Sale badge, EGP 520.00 and EGP 600.00 crossed out' caption="1080 px wide, English. The product names are the dev preview's sample data." />
+</Result>
+
+</Example>
+
 #### What each line does
 
 1. **Line 4** `{% for p in collection('featured').products limit: 3 %}` repeats
@@ -174,10 +182,6 @@ A short list of the first three products of a collection, numbered, with a
 4. **Line 10** `<hk-price>` prints the price, and the old price crossed out when
    there is one.
 5. **Line 14** `{% endfor %}` ends the repeated part.
-
-<Result>
-  <Shot src="../images/on-sale@2x.webp" alt='A "Today&#x27;s picks" heading and three numbered product rows; the first has a Sale badge, EGP 520.00 and EGP 600.00 crossed out' caption="1080 px wide, English. The product names are the dev preview's sample data." />
-</Result>
 
 | Rule | Value |
 | - | - |
