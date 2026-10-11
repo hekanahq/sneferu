@@ -1,42 +1,115 @@
 # 7. Publishing
 
 <Callout kind="warning">
-  **Status (phase 1b): internal, admin only.** Pushing, installing and publishing
-  Sneferu themes is limited to Hekana platform admins while theme engine 2 is
-  dogfooded on dev and preview stores. A store only uses a Sneferu theme when the
-  platform switch (`HK2_ENABLED`) and the store's own `hk2Themes` feature flag are
-  both on. Merchants will install and publish themes from the builder later; third-
-  party developer accounts come after that.
+  **Status: early access.** A store only uses a Sneferu theme when the platform
+  switch (`HK2_ENABLED`) and the store's own `hk2Themes` feature flag are both on.
+  Developers push with their own developer key and test on their own dev store;
+  themes from outside developers are reviewed by Hekana before merchants can use
+  them.
 </Callout>
+
+## Sign in
+
+Sign in once with `npx @hekana/sneferu login`, or set `HEKANA_TOKEN` to a
+developer key. Getting a key, turning on your dev store and using a key in CI are
+covered in [Get an API key](09-get-an-api-key.mdx). You need a Hekana account:
+if you do not have one, create it at
+[dashboard.hekana.com/signup](https://dashboard.hekana.com/signup) (the partner
+portal has no sign-up of its own), then sign in at
+[partners.hekana.com/developers](https://partners.hekana.com/developers) and turn
+on developer access. In short:
+
+```bash
+npx @hekana/sneferu login
+```
+
+```
+Open https://partners.hekana.com/developers/device?code=BCDF-GHJK
+Code: BCDF-GHJK
+Waiting for approval in the browser…
+Logged in as you@example.com. Key hk_dev_Ab12Cd34… saved to /home/you/.config/sneferu/credentials.json
+```
+
+1. The CLI asks Hekana for a one-time code, prints it with a link, and tries to
+   open the link in your browser (if it cannot, open it yourself).
+2. Sign in to Hekana in the browser, check that the code matches the one in your
+   terminal, and press Approve. Deny if you did not start this login.
+3. The CLI receives a new developer key and saves it. The key is shown only to
+   the CLI, never printed; the terminal shows its prefix (`hk_dev_Ab12Cd34…`).
+
+The code is valid for 10 minutes and works once. If it expires, run `login`
+again.
+
+The key is saved to `~/.config/sneferu/credentials.json` (or
+`$XDG_CONFIG_HOME/sneferu/credentials.json`), readable only by you (file mode
+`0600`, folder `0700`), together with the API URL you logged in to. Each login
+creates a new key, named `CLI login (sneferu-cli on <host>) <date>`; you can see
+and revoke your keys in the partner portal under Developers. The CLI keeps one
+saved key: when `login` saves a new one, it revokes the key it replaces if that
+key was saved for the same API. A key can only push
+themes and publish them on your dev store.
+
+| Command | Does |
+| - | - |
+| `login [--api-url <url>]` | device login as above; revokes the previously saved key for the same API. `--api-url` (or `HEKANA_API_URL`) for staging or local; default `https://api.hekana.com/api/v1` |
+| `whoami` | prints your email, the key prefix and your dev store URL |
+| `logout` | revokes the saved key on Hekana, then deletes the file. If Hekana cannot be reached the file is still deleted and the CLI says so: revoke the key in the partner portal |
 
 ## Push a version
 
 ```bash
-export HEKANA_API_URL=https://api.hekana.com/api/v1   # the default; set it for staging or local
-export HEKANA_TOKEN=<platform admin access token>
 npx @hekana/sneferu push ./my-theme --package my-theme
 ```
 
 ```
-✔ pushed my-theme@1.0.0 → version 6f1c…e2 (approved, hash 9a41…)
+✔ pushed my-theme@1.0.0 → version 6f1c…e2 (in_review, hash 9a41…)
 ```
 
 | Input | Rule |
 | - | - |
-| `--package <slug>` | required; 2-63 lower-case letters, digits, `-`; must equal `theme.json` `id` |
-| `HEKANA_TOKEN` | required; sent as `Authorization: Bearer …`. Never commit it |
-| `HEKANA_API_URL` | optional, default `https://api.hekana.com/api/v1`. Must be `https://`; plain `http://` only for `localhost` / `127.0.0.1` |
+| `--package <slug>` | required; 2-63 lower-case letters, digits, `-`; must equal `theme.json` `id`. The first push of a slug makes it yours. A slug owned by someone else is refused, and so are the reserved slugs: `starter`, `hekana`, `default`, `admin`, `official`, `theme`, `themes`, `test`, `demo`, `preview`, and anything starting with `hekana-` |
+| `--dev-store` | optional; after the push, install and publish the version on your dev store (see below). Developer key only |
+| `HEKANA_TOKEN` | optional; overrides the saved key. Sent as `Authorization: Bearer …`. Never commit it |
+| `HEKANA_API_URL` | optional; overrides the URL saved by `login`, default `https://api.hekana.com/api/v1`. Must be `https://`; plain `http://` only for `localhost` / `127.0.0.1`. The saved key is never sent to another host: with a different host and no `HEKANA_TOKEN`, `push` stops and says so |
+
+Which credentials `push` uses: `HEKANA_TOKEN` if it is set, otherwise the key
+saved by `login`. With neither, it stops with
+`✖ Not logged in. Run sneferu login, or set HEKANA_TOKEN`.
 
 What `push` does, in order:
 
 1. Checks the slug, the token and the URL. Nothing is sent if any is wrong.
 2. Compiles the theme locally as a pre-flight. A theme with errors is **not
    pushed**: you get the same diagnostics as `validate` and `✖ not pushed`.
-3. Uploads the **source files** (`theme.json`, templates, locales, assets) as
-   `POST {HEKANA_API_URL}/admin/hk2/packages/<slug>/versions`. `dist/`,
-   `node_modules/`, `.git/` and any `*.sneferu.json` artifact are never uploaded.
-   Keep build output in `dist/`; another `--out` folder inside the theme would be
-   uploaded and rejected as an unknown file location.
+3. Uploads the **source files** (`theme.json`, templates, locales, assets). A
+   developer key (`hk_dev_…`) uploads to
+   `POST {HEKANA_API_URL}/developer/themes/<slug>/versions`; a Hekana platform
+   admin token to `POST {HEKANA_API_URL}/admin/hk2/packages/<slug>/versions`.
+   `dist/`, `node_modules/`, `.git/` and any `*.sneferu.json` artifact are never
+   uploaded. Keep build output in `dist/`; another `--out` folder inside the theme
+   would be uploaded and rejected as an unknown file location.
+
+## Try it on your dev store
+
+Turning on developer access in the partner portal gives you a dev store: a
+private store at `devstore-xxxxxxxx.hekana.com` with sample products, used only
+for testing. It takes no orders or payments and is not indexed by search engines.
+
+```bash
+npx @hekana/sneferu push ./my-theme --package my-theme --dev-store
+```
+
+```
+✔ pushed my-theme@1.0.1 → version 8a20…41 (in_review, hash 03be…)
+Published on your dev store: https://devstore-1a2b3c4d.hekana.com
+```
+
+`--dev-store` installs the version you just pushed on your dev store and
+publishes it, so you can see it with the dev store's sample data right away. It
+works while the version is still `in_review`, and only on your own dev store. It needs a
+developer key from `login`; an admin `HEKANA_TOKEN` is refused before anything is
+uploaded. If the push succeeds but publishing fails, the CLI prints the pushed
+version and the reason, and exits with an error.
 
 ## What the server does
 
@@ -47,19 +120,30 @@ What `push` does, in order:
 - **Stores an immutable version.** `<slug>@<version>` can be pushed once. Pushing
   the same `version` again is `409 HK2_VERSION_EXISTS`: bump `version` in
   `theme.json` and push again.
-- **Approves Hekana-owned packages automatically** (status `approved`). Packages
-  owned by outside developers will wait for review (`in_review`) once developer
-  accounts exist.
+- **Reviews outside themes.** Hekana-owned packages are approved automatically
+  (status `approved`). A version pushed with a developer key starts as
+  `in_review` and stays that way until Hekana reviews it. It then becomes
+  `approved`, which makes it installable by merchants, or `rejected`, with a note
+  from the reviewer explaining why. Only approved versions are offered to
+  merchants; `in_review` versions can only be used on your dev store.
 - Checks the theme CSS: all `assets/*.css` together at most 512 KB, valid UTF-8.
+- **Limits each developer.** 30 pushes per hour per key and 60 per hour per
+  developer (`429`); at most 5 versions waiting for review (`409
+  HK2_REVIEW_QUEUE_FULL`); at most 20 theme packages (`409 HK2_PACKAGE_LIMIT`).
 
 | Response | Meaning |
 | - | - |
 | `201` | created; the CLI prints the version id, status and content hash |
 | `400 HK2_PUSH_INVALID` | malformed upload or bad slug |
-| `401` / `403` | missing, expired or non-admin token |
-| `409 HK2_VERSION_EXISTS` | this version number already exists |
+| `401` | the key is invalid, expired or revoked; run `sneferu login` again |
+| `403 HK2_PACKAGE_NOT_OWNED` | the slug belongs to someone else (Hekana or another developer); pick another slug |
+| `403 HK2_PACKAGE_RESERVED` | the slug is reserved (see the list above); pick another slug |
+| `409 HK2_VERSION_EXISTS` | this version number already exists; bump `version` in `theme.json` |
+| `409 HK2_REVIEW_QUEUE_FULL` | too many versions waiting for review (at most 5); wait for a review before pushing another |
+| `409 HK2_PACKAGE_LIMIT` | package limit reached (at most 20 theme packages per developer) |
 | `422 HK2_COMPILE_FAILED` | the theme does not compile on the server (diagnostics included) |
 | `422 HK2_PACKAGE_MISMATCH` | `theme.json` `id` differs from the package slug |
+| `429` | rate limited: 30 pushes per hour per key, 60 per hour per developer; wait and push again |
 
 ## Versioning
 
@@ -72,9 +156,10 @@ What `push` does, in order:
 - Keep setting keys stable across versions. Merchants' saved values are keyed by
   setting name; a renamed key starts again from its default.
 
-## Install and publish on a store (admin endpoints for now)
+## Install and publish on a merchant store (admin endpoints for now)
 
-All under `{HEKANA_API_URL}`, with a platform admin bearer token:
+All under `{HEKANA_API_URL}`, with a platform admin bearer token (developers use
+`--dev-store` instead):
 
 | Step | Endpoint | Effect |
 | - | - | - |
@@ -95,7 +180,8 @@ flow with settings editing, preview and rollback.
 
 ## Checklist before a push
 
-1. `npx @hekana/sneferu validate` is clean.
+1. `npx @hekana/sneferu validate` is clean, and `npx @hekana/sneferu whoami`
+   shows the account you expect.
 2. Checked in `dev` in every locale the theme lists (`?locale=<code>`), on a narrow window.
 3. Empty states checked (empty collection, a block section with no blocks).
 4. `version` bumped in `theme.json`.

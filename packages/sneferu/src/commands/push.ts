@@ -2,34 +2,51 @@ import { formatDiagnostic, type Diagnostic } from '@hekana/sneferu-core';
 import { compileTheme } from '@hekana/sneferu-compiler';
 import { createDefaultRegistry } from '@hekana/sneferu-components';
 import { loadTheme } from '../load';
+import { callApi, describeError, isDevKey, isObj, normalizeApiUrl, redact, sanitize } from '../api';
+import { resolveAuth } from '../credentials';
 
-export const DEFAULT_API_URL = 'https://api.hekana.com/api/v1';
+export { DEFAULT_API_URL } from '../api';
 const SLUG = /^[a-z0-9][a-z0-9-]{1,62}$/;
-const LOOPBACK = new Set(['localhost', '127.0.0.1', '[::1]']);
 
-export interface PushOptions { pkg: string; apiUrl?: string; token?: string; fetchImpl?: typeof fetch }
+export interface PushOptions {
+  pkg: string;
+  /** Explicit API URL; otherwise HEKANA_API_URL, the saved login's URL, or the default. */
+  apiUrl?: string;
+  /** Explicit token; otherwise HEKANA_TOKEN or the saved developer key. */
+  token?: string;
+  /** After a successful push, install and publish the version on the caller's dev store. */
+  devStore?: boolean;
+  fetchImpl?: typeof fetch;
+  env?: NodeJS.ProcessEnv;
+}
 export interface PushResult { ok: boolean; output: string; versionId?: string }
 
-const isObj = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v);
 const asDiagnostics = (v: unknown): Diagnostic[] =>
-  Array.isArray(v) ? v.filter((d): d is Diagnostic => isObj(d) && typeof d.code === 'string' && typeof d.message === 'string') : [];
+  Array.isArray(v)
+    ? v.filter((d): d is Diagnostic => isObj(d) && typeof d.code === 'string' && typeof d.message === 'string')
+      .map((d) => ({ ...d, code: sanitize(d.code), severity: sanitize(d.severity) as Diagnostic['severity'], message: sanitize(d.message), ...(typeof d.file === 'string' ? { file: sanitize(d.file) } : {}) }))
+    : [];
 
 /**
  * Upload a theme's SOURCE files to Hekana, which compiles them itself. The
  * local compile is a pre-flight only: a theme that fails here is never sent,
  * and nothing this CLI compiled is ever uploaded (the server trusts its own
  * compiler, not ours).
+ *
+ * A developer key (`hk_dev_…`) pushes to the developer route; any other token
+ * (a platform admin access token) to the admin route.
  */
 export async function runPush(dir: string, o: PushOptions): Promise<PushResult> {
   if (!SLUG.test(o.pkg)) return { ok: false, output: '✖ --package must be 2-63 lowercase letters, digits or dashes' };
-  const token = o.token ?? '';
-  if (!token) return { ok: false, output: '✖ HEKANA_TOKEN is not set' };
-  const api = (o.apiUrl || DEFAULT_API_URL).replace(/\/+$/, '');
-  let url: URL;
-  try { url = new URL(api); } catch { return { ok: false, output: `✖ HEKANA_API_URL is not a URL: ${api}` }; }
-  if (url.protocol !== 'https:' && !(url.protocol === 'http:' && LOOPBACK.has(url.hostname))) {
-    return { ok: false, output: '✖ HEKANA_API_URL must be https (plain http only for localhost)' };
-  }
+  const auth = resolveAuth(o.env ?? process.env, o.apiUrl);
+  if (o.token === undefined && auth.error) return { ok: false, output: redact(auth.error) };
+  const token = o.token ?? auth.token ?? '';
+  if (!token) return { ok: false, output: '✖ Not logged in. Run sneferu login, or set HEKANA_TOKEN' };
+  const dev = isDevKey(token);
+  if (o.devStore && !dev) return { ok: false, output: '✖ --dev-store needs a developer key: run sneferu login (an admin HEKANA_TOKEN cannot publish to a dev store)' };
+  const norm = normalizeApiUrl(o.apiUrl || auth.apiUrl);
+  if (norm.error !== undefined) return { ok: false, output: norm.error };
+  const api = norm.api;
 
   let files;
   try {
@@ -45,29 +62,29 @@ export async function runPush(dir: string, o: PushOptions): Promise<PushResult> 
     return { ok: false, output: `✖ theme.json id "${local.artifact.manifest.id}" does not match --package "${o.pkg}"` };
   }
 
-  const body = JSON.stringify({ files: files.map((f) => ({ path: f.path, contentBase64: Buffer.from(f.bytes).toString('base64') })) });
-  let res: Response;
-  try {
-    res = await (o.fetchImpl ?? fetch)(`${api}/admin/hk2/packages/${o.pkg}/versions`, {
-      method: 'POST',
-      headers: { 'content-type': 'application/json', authorization: `Bearer ${token}` },
-      body,
-    });
-  } catch (e) {
-    return { ok: false, output: `✖ could not reach ${api}: ${(e as Error).message}` };
-  }
-  let json: unknown = null;
-  try { json = await res.json(); } catch { json = null; }
-  const payload = isObj(json) && isObj(json.data) ? json.data : isObj(json) ? json : {};
-  const lines = asDiagnostics(payload.diagnostics).map(formatDiagnostic);
+  const files64 = files.map((f) => ({ path: f.path, contentBase64: Buffer.from(f.bytes).toString('base64') }));
+  const route = dev ? `/developer/themes/${o.pkg}/versions` : `/admin/hk2/packages/${o.pkg}/versions`;
+  const res = await callApi(o.fetchImpl, api, route, { method: 'POST', token, body: { files: files64 } });
+  if (!res.reached) return { ok: false, output: redact(`✖ ${res.error}`) };
+  const lines = asDiagnostics(res.data.diagnostics).map(formatDiagnostic);
 
   if (!res.ok) {
-    const code = typeof payload.code === 'string' ? ` ${payload.code}` : '';
-    const message = Array.isArray(payload.message) ? payload.message.join('; ') : String(payload.message ?? res.statusText);
-    lines.push(`✖ push rejected (${res.status}${code}): ${message}`);
-    return { ok: false, output: lines.join('\n') };
+    lines.push(`✖ push rejected ${describeError(res)}`);
+    return { ok: false, output: redact(lines.join('\n')) };
   }
-  const versionId = String(payload.versionId ?? '');
-  lines.push(`✔ pushed ${o.pkg}@${String(payload.version)} → version ${versionId} (${String(payload.status)}, hash ${String(payload.contentHash)})`);
-  return { ok: true, output: lines.join('\n'), versionId };
+  const versionId = sanitize(res.data.versionId);
+  lines.push(`✔ pushed ${o.pkg}@${sanitize(res.data.version)} → version ${versionId} (${sanitize(res.data.status)}, hash ${sanitize(res.data.contentHash)})`);
+  if (!o.devStore) return { ok: true, output: redact(lines.join('\n')), versionId };
+
+  const pub = await callApi(o.fetchImpl, api, '/developer/dev-store/theme', { method: 'POST', token, body: { versionId } });
+  if (!pub.reached) {
+    lines.push(`✖ pushed, but not published on your dev store: ${pub.error}`);
+    return { ok: false, output: redact(lines.join('\n')), versionId };
+  }
+  if (!pub.ok) {
+    lines.push(`✖ pushed, but not published on your dev store ${describeError(pub)}`);
+    return { ok: false, output: redact(lines.join('\n')), versionId };
+  }
+  lines.push(`Published on your dev store: ${sanitize(pub.data.storeUrl)}`);
+  return { ok: true, output: redact(lines.join('\n')), versionId };
 }

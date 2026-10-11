@@ -10,7 +10,14 @@ artifact and previewed locally.
     npx @hekana/sneferu validate
     npx @hekana/sneferu build      # dist/<id>-<version>.sneferu.json
 
-Commands: `init`, `dev`, `validate`, `build`, `push` (admin only during phase 1b).
+Commands: `init`, `dev`, `validate`, `build`, `login`, `logout`, `whoami`, `push` (with a developer key; `--dev-store` publishes on your dev store).
+
+To push you need a Hekana account (create one at https://dashboard.hekana.com/signup; the
+partner portal has no sign-up of its own), then turn on developer access at
+https://partners.hekana.com/developers. `sneferu login` saves a developer key and revokes
+the previously saved key for the same API. The server allows 30 pushes per hour per key and
+60 per developer, at most 5 versions waiting for review and at most 20 theme packages per
+developer. Reserved slugs: `starter`, `hekana`, `default`, `admin`, `official`, `theme`, `themes`, `test`, `demo`, `preview`, and anything starting with `hekana-`.
 
 The npm package is not published yet. From a clone: `pnpm install && pnpm build`,
 then `node packages/sneferu/dist/cli.js <command> <theme folder>`.
@@ -23,8 +30,9 @@ then `node packages/sneferu/dist/cli.js <command> <theme folder>`.
 4. [Data and expressions](docs/guide/04-data-and-expressions.mdx): scope, lookups, filters, truthiness, loops
 5. [Styling and responsive](docs/guide/05-styling-and-responsive.mdx): tokens, theme CSS, breakpoints, RTL
 6. [Security and limits](docs/guide/06-security-and-limits.mdx): allow-list, URLs, render budgets
-7. [Publishing](docs/guide/07-publishing.mdx): `sneferu push`, versions, install and publish
+7. [Publishing](docs/guide/07-publishing.mdx): `sneferu push`, versions, dev store, review
 8. [Cookbook](docs/guide/08-cookbook.mdx): announcement bar, hero, feature row, product grid, subscription plans, each with a picture of the result
+9. [Get an API key](docs/guide/09-get-an-api-key.mdx): developer access, `sneferu login`, `HEKANA_TOKEN` for CI
 
 ## Reference
 

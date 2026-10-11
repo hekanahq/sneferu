@@ -1,0 +1,122 @@
+# 9. Get an API key
+
+To push a theme you need a developer key. Any Hekana account can get one. You do
+not need to be a partner, and you do not need a store.
+
+A developer key looks like `hk_dev_` followed by 43 characters. It can push theme
+versions and publish them on your dev store. It cannot do anything else on your
+account.
+
+## Turn on developer access
+
+<Steps>
+  1. If you do not have a Hekana account, create one at
+     [dashboard.hekana.com/signup](https://dashboard.hekana.com/signup). The
+     partner portal has no sign-up of its own.
+  2. Open [partners.hekana.com/developers](https://partners.hekana.com/developers)
+     and sign in with your Hekana account.
+  3. Turn on developer access. Hekana creates your **dev store** at once.
+</Steps>
+
+Your dev store is a free store at `https://devstore-xxxxxxxx.hekana.com` (the
+`xxxxxxxx` is specific to you), with sample products, used only for testing your
+theme. It takes no orders, accepts no payments, and search engines are told not to
+index it. The page shows its address.
+
+## Get a key
+
+There are two ways. Both give you the same kind of key.
+
+### Sign in from the terminal
+
+```bash
+npx @hekana/sneferu login
+```
+
+The npm package `@hekana/sneferu` is not published yet. Until it is, run the CLI
+from a clone: `pnpm install && pnpm build`, then
+`node packages/sneferu/dist/cli.js <command>` (here
+`node packages/sneferu/dist/cli.js login`).
+
+```
+Open https://partners.hekana.com/developers/device?code=BCDF-GHJK
+Code: BCDF-GHJK
+Waiting for approval in the browser…
+Logged in as you@example.com. Key hk_dev_Ab12Cd34… saved to /home/you/.config/sneferu/credentials.json
+```
+
+<Steps>
+  1. The CLI prints a code in the form `XXXX-XXXX` and opens the link in your
+     browser. If it cannot, open the link yourself.
+  2. In the browser, check that the code is the one in your terminal, then press
+     Approve. Press Deny if you did not start this login.
+  3. The CLI saves the new key to `~/.config/sneferu/credentials.json` (or
+     `$XDG_CONFIG_HOME/sneferu/credentials.json`). The file is readable only by
+     you (mode `600`). The terminal shows only the first characters of the key.
+</Steps>
+
+The code works once and expires after 10 minutes. If it expires, run `login`
+again.
+
+The CLI keeps one saved key. When `login` saves a new key, it revokes the key it
+replaces if that key was saved for the same API. A key saved for another API is
+left alone. Use `npx @hekana/sneferu whoami` to check which account and dev store the
+CLI is using.
+
+### Create a key in the portal
+
+On [partners.hekana.com/developers](https://partners.hekana.com/developers),
+create a key and give it a name. The full key is **shown once**. Copy it then:
+Hekana keeps only a hash and cannot show it again.
+
+- You can have up to 10 active keys.
+- Revoke a key at any time on the same page. A revoked key stops working
+  immediately.
+- A key's scope is fixed: it can push themes and publish on your dev store.
+
+## Use a key in CI
+
+Set `HEKANA_TOKEN` in your CI provider's secret store. When it is set, the CLI uses
+it instead of the saved login.
+
+```bash
+HEKANA_TOKEN=$HEKANA_DEV_KEY npx @hekana/sneferu push ./my-theme --package my-theme
+```
+
+| Variable | Does |
+| - | - |
+| `HEKANA_TOKEN` | The key to use. Takes precedence over the key saved by `login`. Never commit it |
+| `HEKANA_API_URL` | The API to talk to. Default `https://api.hekana.com/api/v1`. Must be `https://`; `http://` is accepted only for `localhost` and `127.0.0.1` |
+
+The key saved by `login` is only ever sent to the API it was saved for. If
+`HEKANA_API_URL` points at another host and `HEKANA_TOKEN` is not set, `push` and
+`whoami` stop with `✖ Your saved key is for <origin>. Set HEKANA_TOKEN to use
+<other origin>, or run sneferu login --api-url <other>`.
+
+## Limits
+
+Hekana enforces these per developer:
+
+| Limit | Value | When reached |
+| - | - | - |
+| Pushes | 30 per hour per key, 60 per hour per developer | `429` |
+| Versions waiting for review | at most 5 | `409 HK2_REVIEW_QUEUE_FULL` |
+| Theme packages | at most 20 | `409 HK2_PACKAGE_LIMIT` |
+| Active keys | at most 10 | the portal refuses a new key |
+
+Reserved package slugs, which nobody outside Hekana can push: `starter`, `hekana`, `default`, `admin`, `official`, `theme`, `themes`, `test`, `demo`, `preview`, and anything starting with `hekana-`.
+
+## Sign out
+
+```bash
+npx @hekana/sneferu logout
+```
+
+`logout` revokes the saved key on Hekana and deletes the file. If Hekana cannot be
+reached, the file is still deleted and the CLI tells you to revoke the key on the
+portal. A key that leaked is revoked from the portal; you do not need the CLI.
+
+## Next
+
+[Push and publish](07-publishing.mdx): send your first version and see it on the
+dev store.

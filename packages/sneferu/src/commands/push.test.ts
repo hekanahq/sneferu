@@ -6,7 +6,11 @@ import { join } from 'node:path';
 import { runInit } from './init';
 import { runBuild } from './build';
 import { runPush } from './push';
+import { writeCredentials } from '../credentials';
+import { startFakeApi, ok, DEV_KEY, type FakeApi } from '../test-utils/fake-api';
 
+const EVIL = '\u001b[2J\u001b]8;;https://evil.example\u0007click\u001b]8;;\u0007\u009b31m\r';
+const CONTROL = /[\u0000-\u0008\u000b-\u001f\u007f-\u009f]/;
 interface Seen { method?: string; url?: string; auth?: string; body?: { files: { path: string; contentBase64: string }[] } }
 
 let server: Server;
@@ -56,9 +60,16 @@ describe('sneferu push', () => {
   });
 
   it('refuses to run without a token and sends nothing', async () => {
-    const r = await runPush(dir, { pkg: 'my-shop', apiUrl: base, token: '' });
+    const r = await runPush(dir, { pkg: 'my-shop', apiUrl: base, token: '', env: { XDG_CONFIG_HOME: mkdtempSync(join(tmpdir(), 'snf-cfg-')) } });
     expect(r.ok).toBe(false);
-    expect(r.output).toContain('HEKANA_TOKEN is not set');
+    expect(r.output).toContain('Not logged in. Run sneferu login, or set HEKANA_TOKEN');
+    expect(seen).toHaveLength(0);
+  });
+
+  it('refuses to run with no token and no saved login', async () => {
+    const r = await runPush(dir, { pkg: 'my-shop', apiUrl: base, env: { XDG_CONFIG_HOME: mkdtempSync(join(tmpdir(), 'snf-cfg-')) } });
+    expect(r.ok).toBe(false);
+    expect(r.output).toContain('Not logged in. Run sneferu login, or set HEKANA_TOKEN');
     expect(seen).toHaveLength(0);
   });
 
@@ -99,5 +110,120 @@ describe('sneferu push', () => {
     const r = await runPush(dir, { pkg: 'My Shop', apiUrl: base, token: 'tok' });
     expect(r.ok).toBe(false);
     expect(r.output).toContain('--package');
+  });
+});
+
+describe('sneferu push with a developer key', () => {
+  let api: FakeApi;
+  let env: NodeJS.ProcessEnv;
+  const pushed = ok({ versionId: 'v-9', version: '0.1.0', status: 'in_review', contentHash: 'b'.repeat(64), diagnostics: [] }, 201);
+  beforeEach(async () => {
+    api = await startFakeApi();
+    env = { XDG_CONFIG_HOME: mkdtempSync(join(tmpdir(), 'snf-cfg-')) };
+  });
+  afterEach(async () => { await api.close(); });
+  const save = () => writeCredentials({ apiUrl: api.base, key: DEV_KEY, email: 'dev@example.com', createdAt: new Date().toISOString() }, env);
+
+  it('uses the saved key and URL and pushes to the developer route', async () => {
+    save();
+    api.routes.set('POST /developer/themes/my-shop/versions', pushed);
+    const r = await runPush(dir, { pkg: 'my-shop', env });
+    expect(r.ok).toBe(true);
+    expect(r.versionId).toBe('v-9');
+    expect(r.output).toContain('✔ pushed my-shop@0.1.0 → version v-9 (in_review');
+    expect(r.output).not.toContain(DEV_KEY);
+    expect(api.seen).toHaveLength(1);
+    expect(api.seen[0]).toMatchObject({ method: 'POST', url: '/api/v1/developer/themes/my-shop/versions', auth: `Bearer ${DEV_KEY}` });
+  });
+
+  it('HEKANA_TOKEN beats the saved key and keeps the admin route', async () => {
+    save();
+    api.routes.set('POST /admin/hk2/packages/my-shop/versions', pushed);
+    const r = await runPush(dir, { pkg: 'my-shop', env: { ...env, HEKANA_TOKEN: 'admin-tok' } });
+    expect(r.ok).toBe(true);
+    expect(api.seen[0]).toMatchObject({ url: '/api/v1/admin/hk2/packages/my-shop/versions', auth: 'Bearer admin-tok' });
+  });
+
+  it('an explicit hk_dev_ token also goes to the developer route', async () => {
+    api.routes.set('POST /developer/themes/my-shop/versions', pushed);
+    const r = await runPush(dir, { pkg: 'my-shop', apiUrl: api.base, token: DEV_KEY, env });
+    expect(r.ok).toBe(true);
+    expect(api.seen[0]!.url).toBe('/api/v1/developer/themes/my-shop/versions');
+  });
+
+  it('--dev-store publishes the pushed version on the dev store', async () => {
+    save();
+    api.routes.set('POST /developer/themes/my-shop/versions', pushed);
+    api.routes.set('POST /developer/dev-store/theme', ok({ publicationId: 'p1', revision: 3, storeUrl: 'https://dev-0a1b2c3d.hekana.com' }));
+    const r = await runPush(dir, { pkg: 'my-shop', devStore: true, env });
+    expect(r.ok).toBe(true);
+    expect(r.output).toContain('Published on your dev store: https://dev-0a1b2c3d.hekana.com');
+    expect(api.seen).toHaveLength(2);
+    expect(api.seen[1]).toMatchObject({ method: 'POST', url: '/api/v1/developer/dev-store/theme', auth: `Bearer ${DEV_KEY}`, body: { versionId: 'v-9' } });
+  });
+
+  it('--dev-store refuses an admin token before uploading anything', async () => {
+    const r = await runPush(dir, { pkg: 'my-shop', apiUrl: api.base, token: 'admin-tok', devStore: true, env });
+    expect(r.ok).toBe(false);
+    expect(r.output).toContain('--dev-store needs a developer key');
+    expect(api.seen).toHaveLength(0);
+  });
+
+  it('--dev-store reports a failed publish after a good push', async () => {
+    save();
+    api.routes.set('POST /developer/themes/my-shop/versions', pushed);
+    api.routes.set('POST /developer/dev-store/theme', { status: 409, body: { success: false, code: 'DEV_STORE_MISSING', message: 'enable developer access first' } });
+    const r = await runPush(dir, { pkg: 'my-shop', devStore: true, env });
+    expect(r.ok).toBe(false);
+    expect(r.versionId).toBe('v-9');
+    expect(r.output).toContain('✔ pushed my-shop@0.1.0');
+    expect(r.output).toContain('409 DEV_STORE_MISSING');
+    expect(r.output).toContain('enable developer access first');
+  });
+
+  it('never sends the saved key to another origin (HEKANA_API_URL or --api-url)', async () => {
+    save();
+    const other = await startFakeApi();
+    try {
+      for (const r of [
+        await runPush(dir, { pkg: 'my-shop', env: { ...env, HEKANA_API_URL: other.base.replace('127.0.0.1', 'localhost') } }),
+        await runPush(dir, { pkg: 'my-shop', apiUrl: other.base.replace('127.0.0.1', 'localhost'), env }),
+      ]) {
+        expect(r.ok).toBe(false);
+        expect(r.output).toContain(`Your saved key is for ${new URL(api.base).origin}. Set HEKANA_TOKEN to use http://localhost:`);
+      }
+      expect(other.seen).toHaveLength(0);
+      expect(api.seen).toHaveLength(0);
+    } finally { await other.close(); }
+  });
+
+  it('HEKANA_TOKEN still pushes to another origin', async () => {
+    save();
+    const other = await startFakeApi();
+    try {
+      other.routes.set('POST /admin/hk2/packages/my-shop/versions', pushed);
+      const r = await runPush(dir, { pkg: 'my-shop', env: { ...env, HEKANA_API_URL: other.base, HEKANA_TOKEN: 'ci-tok' } });
+      expect(r.ok).toBe(true);
+      expect(other.seen[0]!.auth).toBe('Bearer ci-tok');
+    } finally { await other.close(); }
+  });
+
+  it('strips terminal control characters from server strings', async () => {
+    save();
+    api.routes.set('POST /developer/themes/my-shop/versions', ok({ versionId: `v-9${EVIL}`, version: '0.1.0', status: 'in_review', contentHash: 'b'.repeat(64), diagnostics: [{ code: `X${EVIL}`, severity: 'warning', message: `hi${EVIL}\nforged line` }] }, 201));
+    api.routes.set('POST /developer/dev-store/theme', ok({ storeUrl: `https://dev.hekana.com${EVIL}` }));
+    const r = await runPush(dir, { pkg: 'my-shop', devStore: true, env });
+    expect(r.ok).toBe(true);
+    expect(r.output).not.toMatch(CONTROL);
+    expect(r.output.split('\n')).toHaveLength(3);
+    expect(r.output).toContain('Published on your dev store: https://dev.hekana.com[2J');
+  });
+
+  it('reads error code/message nested under error', async () => {
+    save();
+    api.routes.set('POST /developer/themes/my-shop/versions', { status: 403, body: { success: false, error: { code: 'HK2_SLUG_TAKEN', message: 'slug belongs to someone else' } } });
+    const r = await runPush(dir, { pkg: 'my-shop', env });
+    expect(r.ok).toBe(false);
+    expect(r.output).toContain('✖ push rejected (403 HK2_SLUG_TAKEN): slug belongs to someone else');
   });
 });
