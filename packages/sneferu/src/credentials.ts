@@ -1,4 +1,5 @@
-import { chmodSync, closeSync, existsSync, mkdirSync, openSync, readFileSync, unlinkSync, writeSync } from 'node:fs';
+import { chmodSync, closeSync, constants, fsyncSync, lstatSync, mkdirSync, openSync, readFileSync, renameSync, unlinkSync, writeSync } from 'node:fs';
+import { randomBytes } from 'node:crypto';
 import { homedir } from 'node:os';
 import { dirname, isAbsolute, join } from 'node:path';
 import { DEFAULT_API_URL, isObj } from './api';
@@ -22,20 +23,37 @@ export function readCredentials(env: NodeJS.ProcessEnv = process.env): Credentia
   return { apiUrl, key, email, createdAt: typeof createdAt === 'string' ? createdAt : '' };
 }
 
-/** Save the login: the file is 0600 inside a 0700 directory, also when either already existed. */
+/**
+ * Save the login: a 0600 file inside a 0700 directory. The directory must be a real
+ * directory (not a symlink) owned by this user. The file is written to a fresh temp file
+ * (O_EXCL, O_NOFOLLOW where available), fsynced, then renamed over credentials.json, so a
+ * symlink at that path is replaced, never written through, and a crash never leaves half a file.
+ */
 export function writeCredentials(c: Credentials, env: NodeJS.ProcessEnv = process.env): string {
   const path = credentialsPath(env);
   const dir = dirname(path);
   mkdirSync(dir, { recursive: true, mode: 0o700 });
+  const st = lstatSync(dir);
+  if (!st.isDirectory()) throw new Error(`${dir} is not a real directory (symlink?); refusing to save the key there`);
+  if (typeof process.getuid === 'function' && st.uid !== process.getuid()) throw new Error(`${dir} is not owned by you; refusing to save the key there`);
   chmodSync(dir, 0o700);
-  if (existsSync(path)) chmodSync(path, 0o600); // tighten before the key is written into it
-  const fd = openSync(path, 'w', 0o600);
+
+  const tmp = join(dir, `.credentials.${process.pid}.${randomBytes(6).toString('hex')}.tmp`);
+  const flags = constants.O_WRONLY | constants.O_CREAT | constants.O_EXCL | (constants.O_NOFOLLOW ?? 0);
+  const fd = openSync(tmp, flags, 0o600);
   try {
-    writeSync(fd, `${JSON.stringify({ apiUrl: c.apiUrl, key: c.key, email: c.email, createdAt: c.createdAt }, null, 2)}\n`);
-  } finally {
-    closeSync(fd);
+    try {
+      writeSync(fd, `${JSON.stringify({ apiUrl: c.apiUrl, key: c.key, email: c.email, createdAt: c.createdAt }, null, 2)}\n`);
+      fsyncSync(fd);
+    } finally {
+      closeSync(fd);
+    }
+    chmodSync(tmp, 0o600);
+    renameSync(tmp, path);
+  } catch (e) {
+    try { unlinkSync(tmp); } catch { /* already gone */ }
+    throw e;
   }
-  chmodSync(path, 0o600);
   return path;
 }
 

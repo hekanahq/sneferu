@@ -2,8 +2,8 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { mkdtempSync, statSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { runLogin } from './login';
-import { credentialsPath, readCredentials } from '../credentials';
+import { runLogin, browserCommand } from './login';
+import { credentialsPath, readCredentials, writeCredentials } from '../credentials';
 import { startFakeApi, ok, DEV_KEY, type FakeApi } from '../test-utils/fake-api';
 
 let api: FakeApi;
@@ -138,5 +138,107 @@ describe('sneferu login', () => {
     api.routes.set('POST /developer/device/token', ok({ status: 'ok', key: DEV_KEY, keyPrefix: 'hk_dev_A1b2C3d4', email: 'a@b.c' }));
     const r = await runLogin({ ...baseOpts(), openUrl: () => { throw new Error('no browser'); } });
     expect(r.ok).toBe(true);
+  });
+});
+
+describe('browserCommand (no shell, https only)', () => {
+  it('builds the exact argv per platform', () => {
+    const u = 'https://partners.hekana.com/developers/device?code=BCDF-GHJK';
+    expect(browserCommand(u, 'linux')).toEqual({ cmd: 'xdg-open', args: [u] });
+    expect(browserCommand(u, 'darwin')).toEqual({ cmd: 'open', args: [u] });
+    expect(browserCommand(u, 'win32')).toEqual({ cmd: 'rundll32', args: ['url.dll,FileProtocolHandler', u] });
+  });
+  it('never routes a URL through cmd on Windows, shell metacharacters stay inside one argument', () => {
+    const c = browserCommand('https://x/?a|calc&b', 'win32')!;
+    expect(c.cmd).toBe('rundll32');
+    expect(c.args).toHaveLength(2);
+    expect(c.args[1]).toBe(new URL('https://x/?a|calc&b').href);
+  });
+  it('refuses anything but https (http only for localhost)', () => {
+    expect(browserCommand('http://evil.example.com/x', 'linux')).toBeNull();
+    expect(browserCommand('file:///etc/passwd', 'linux')).toBeNull();
+    expect(browserCommand('javascript:alert(1)', 'win32')).toBeNull();
+    expect(browserCommand('not a url', 'darwin')).toBeNull();
+    expect(browserCommand('http://localhost:3001/x', 'linux')).toEqual({ cmd: 'xdg-open', args: ['http://localhost:3001/x'] });
+  });
+});
+
+describe('sneferu login hardening', () => {
+  const good = (key = DEV_KEY) => ok({ status: 'ok', key, keyPrefix: 'hk_dev_A1b2C3d4', email: 'dev@example.com' });
+
+  it('waits at least 5 s between polls whatever the server says', async () => {
+    api.routes.set('POST /developer/device/code', code({ interval: 1 }));
+    api.routes.set('POST /developer/device/token', (_r, n) => (n < 2 ? ok({ status: 'authorization_pending' }) : good()));
+    const r = await runLogin(baseOpts());
+    expect(r.ok).toBe(true);
+    expect(slept).toEqual([5000, 5000]);
+  });
+
+  it('never polls past 900 s even if the server says the code lives longer', async () => {
+    api.routes.set('POST /developer/device/code', code({ expiresIn: 100_000 }));
+    api.routes.set('POST /developer/device/token', ok({ status: 'authorization_pending' }));
+    const r = await runLogin(baseOpts());
+    expect(r.ok).toBe(false);
+    expect(r.output).toContain('The code expired');
+    expect(slept.reduce((a, b) => a + b, 0)).toBeLessThanOrEqual(900_000);
+  });
+
+  it('refuses a malformed key without saving or printing it', async () => {
+    const bad = 'hk_dev_tooShort-SECRETVALUE';
+    api.routes.set('POST /developer/device/code', code());
+    api.routes.set('POST /developer/device/token', good(bad));
+    const r = await runLogin(baseOpts());
+    expect(r.ok).toBe(false);
+    expect(allText(r)).not.toContain('SECRETVALUE');
+    expect(readCredentials(env)).toBeNull();
+  });
+
+  it('does not print "undefined" when the server sends no email', async () => {
+    api.routes.set('POST /developer/device/code', code());
+    api.routes.set('POST /developer/device/token', ok({ status: 'ok', key: DEV_KEY, keyPrefix: 'hk_dev_A1b2C3d4' }));
+    const r = await runLogin(baseOpts());
+    expect(r.ok).toBe(true);
+    expect(r.output).not.toContain('undefined');
+    expect(readCredentials(env)!.email).toBe('');
+  });
+
+  it('revokes the previous key for the same API with the old key, never printing it', async () => {
+    const OLD = `hk_dev_OLDOLDOL${'y'.repeat(35)}`;
+    writeCredentials({ apiUrl: api.base, key: OLD, email: 'dev@example.com', createdAt: '2026-10-01T00:00:00.000Z' }, env);
+    api.routes.set('POST /developer/device/code', code());
+    api.routes.set('POST /developer/device/token', good());
+    api.routes.set('POST /developer/keys/current/revoke', ok({ revoked: true }));
+    const r = await runLogin(baseOpts());
+    expect(r.ok).toBe(true);
+    expect(r.output).toContain('previous key revoked');
+    expect(allText(r)).not.toContain(OLD);
+    const revokes = api.seen.filter((s) => s.url.endsWith('/developer/keys/current/revoke'));
+    expect(revokes).toHaveLength(1);
+    expect(revokes[0]!.auth).toBe(`Bearer ${OLD}`);
+    expect(readCredentials(env)!.key).toBe(DEV_KEY);
+  });
+
+  it('says so when the previous key could not be revoked, and still logs in', async () => {
+    const OLD = `hk_dev_OLDOLDOL${'y'.repeat(35)}`;
+    writeCredentials({ apiUrl: api.base, key: OLD, email: 'dev@example.com', createdAt: '' }, env);
+    api.routes.set('POST /developer/device/code', code());
+    api.routes.set('POST /developer/device/token', good());
+    api.routes.set('POST /developer/keys/current/revoke', { status: 500, body: { success: false, message: 'boom' } });
+    const r = await runLogin(baseOpts());
+    expect(r.ok).toBe(true);
+    expect(r.output).toContain('could not revoke previous key');
+    expect(allText(r)).not.toContain(OLD);
+    expect(readCredentials(env)!.key).toBe(DEV_KEY);
+  });
+
+  it('leaves a previous key for a different API alone', async () => {
+    const OLD = `hk_dev_OLDOLDOL${'y'.repeat(35)}`;
+    writeCredentials({ apiUrl: 'https://api.other.example/api/v1', key: OLD, email: 'x', createdAt: '' }, env);
+    api.routes.set('POST /developer/device/code', code());
+    api.routes.set('POST /developer/device/token', good());
+    const r = await runLogin(baseOpts());
+    expect(r.ok).toBe(true);
+    expect(api.seen.some((s) => s.url.endsWith('/revoke'))).toBe(false);
+    expect(r.output).not.toContain('previous key');
   });
 });

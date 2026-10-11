@@ -1,7 +1,7 @@
 import { spawn } from 'node:child_process';
 import { hostname } from 'node:os';
 import { callApi, describeError, isBrowsableUrl, normalizeApiUrl, redact } from '../api';
-import { writeCredentials } from '../credentials';
+import { readCredentials, writeCredentials } from '../credentials';
 
 export interface LoginOptions {
   apiUrl?: string;
@@ -20,19 +20,35 @@ export function clientName(host = hostname()): string {
   return `sneferu-cli on ${clean || 'unknown'}`;
 }
 
+/**
+ * The exact command that opens `raw` in the system browser, or null when it must not be
+ * opened. Only https (http only for localhost) is accepted, and no shell is ever involved:
+ * on Windows `rundll32 url.dll,FileProtocolHandler` receives the URL as one argument, so
+ * shell metacharacters in a server-sent URL (`|`, `&`, …) cannot run anything.
+ */
+export function browserCommand(raw: string, platform: NodeJS.Platform = process.platform): { cmd: string; args: string[] } | null {
+  if (!isBrowsableUrl(raw)) return null;
+  const href = new URL(raw).href;
+  if (platform === 'win32') return { cmd: 'rundll32', args: ['url.dll,FileProtocolHandler', href] };
+  if (platform === 'darwin') return { cmd: 'open', args: [href] };
+  return { cmd: 'xdg-open', args: [href] };
+}
+
 /** Best-effort: open the system browser. Every failure is swallowed; the URL is printed anyway. */
 export function openInBrowser(url: string): void {
+  const c = browserCommand(url);
+  if (!c) return;
   try {
-    const [cmd, args] = process.platform === 'darwin' ? ['open', [url]]
-      : process.platform === 'win32' ? ['cmd', ['/c', 'start', '""', url.replace(/&/g, '^&')]]
-      : ['xdg-open', [url]];
-    const child = spawn(cmd as string, args as string[], { detached: true, stdio: 'ignore' });
+    const child = spawn(c.cmd, c.args, { detached: true, stdio: 'ignore', shell: false });
     child.on('error', () => {});
     child.unref();
   } catch { /* no browser: the user opens the printed URL */ }
 }
 
 const wait = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
+const MIN_INTERVAL_S = 5;
+const MAX_EXPIRES_S = 900;
+const DEV_KEY = /^hk_dev_[A-Za-z0-9_-]{43}$/;
 const positive = (v: unknown, fallback: number) => (typeof v === 'number' && Number.isFinite(v) && v > 0 ? v : fallback);
 
 /**
@@ -56,8 +72,9 @@ export async function runLogin(o: LoginOptions = {}): Promise<CommandResult> {
   if (!started.ok) return fail(`✖ login could not start ${describeError(started)}`);
   const { deviceCode, userCode, verificationUri, verificationUriComplete } = started.data;
   if (typeof deviceCode !== 'string' || !deviceCode || typeof userCode !== 'string') return fail('✖ login could not start: unexpected response from the server');
-  let interval = positive(started.data.interval, 5);
-  const deadline = now() + positive(started.data.expiresIn, 600) * 1000;
+  // Clamp what the server says: never poll faster than every 5 s, never wait past 15 minutes.
+  let interval = Math.max(MIN_INTERVAL_S, positive(started.data.interval, MIN_INTERVAL_S));
+  const deadline = now() + Math.min(MAX_EXPIRES_S, positive(started.data.expiresIn, 600)) * 1000;
 
   // Only an http(s) URL is ever handed to the system opener.
   const link = isBrowsableUrl(verificationUriComplete) ? verificationUriComplete : null;
@@ -80,16 +97,24 @@ export async function runLogin(o: LoginOptions = {}): Promise<CommandResult> {
     if (status === 'slow_down') { interval += 5; continue; }
     if (status === 'access_denied') return fail('✖ Login was denied');
     if (status === 'expired_token') return fail('✖ The code expired. Run sneferu login again');
-    const { key, keyPrefix, email } = polled.data;
-    if (status !== 'ok' || typeof key !== 'string' || !key.startsWith('hk_dev_')) return fail('✖ login failed: unexpected response from the server');
+    const { key, keyPrefix } = polled.data;
+    if (status !== 'ok' || typeof key !== 'string' || !DEV_KEY.test(key)) return fail('✖ login failed: the server did not return a valid developer key');
+    const email = typeof polled.data.email === 'string' ? polled.data.email : '';
+    const prefix = typeof keyPrefix === 'string' && keyPrefix ? keyPrefix : key.slice(0, 15);
 
+    const previous = readCredentials(env);
     let path: string;
     try {
-      path = writeCredentials({ apiUrl: api, key, email: typeof email === 'string' ? email : '', createdAt: new Date().toISOString() }, env);
+      path = writeCredentials({ apiUrl: api, key, email, createdAt: new Date().toISOString() }, env);
     } catch (e) {
       return fail(`✖ could not save the key: ${(e as Error).message}`);
     }
-    const lines = [`Logged in as ${String(email)}. Key ${String(keyPrefix)}… saved to ${path}`];
+    const lines = [`Logged in${email ? ` as ${email}` : ''}. Key ${prefix}… saved to ${path}`];
+    // One saved key per API: the key this login replaced is revoked (best-effort).
+    if (previous && previous.key !== key && previous.apiUrl.replace(/\/+$/, '') === api) {
+      const r = await callApi(o.fetchImpl, api, '/developer/keys/current/revoke', { method: 'POST', token: previous.key, body: {} });
+      lines.push(r.reached && r.ok ? 'Note: previous key revoked.' : 'Note: could not revoke previous key. Revoke it in the partner portal if it is still listed.');
+    }
     if (env.HEKANA_TOKEN) lines.push('Note: HEKANA_TOKEN is set in this shell and takes precedence over the saved key. Unset it to use the key.');
     return { ok: true, output: redact(lines.join('\n')) };
   }

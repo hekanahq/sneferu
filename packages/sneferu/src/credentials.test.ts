@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { mkdtempSync, statSync, writeFileSync, mkdirSync, chmodSync, existsSync } from 'node:fs';
+import { mkdtempSync, statSync, lstatSync, writeFileSync, mkdirSync, chmodSync, existsSync, symlinkSync, readFileSync, readdirSync } from 'node:fs';
 import { tmpdir, homedir } from 'node:os';
 import { join } from 'node:path';
 import { credentialsPath, readCredentials, writeCredentials, deleteCredentials, resolveAuth } from './credentials';
@@ -67,5 +67,28 @@ describe('credentials', () => {
     expect(resolveAuth({ ...env, HEKANA_API_URL: 'http://localhost:3000/api/v1' }).apiUrl).toBe('http://localhost:3000/api/v1');
     // an empty HEKANA_TOKEN counts as unset
     expect(resolveAuth({ ...env, HEKANA_TOKEN: '' }).source).toBe('credentials');
+  });
+
+  it('does not write through a symlinked credentials.json: the link is replaced by a regular 0600 file', () => {
+    const target = join(mkdtempSync(join(tmpdir(), 'snf-target-')), 'victim.txt');
+    writeFileSync(target, 'original');
+    mkdirSync(join(cfg, 'sneferu'), { recursive: true, mode: 0o700 });
+    symlinkSync(target, credentialsPath(env));
+    writeCredentials(creds, env);
+    expect(readFileSync(target, 'utf8')).toBe('original');
+    const st = lstatSync(credentialsPath(env));
+    expect(st.isSymbolicLink()).toBe(false);
+    expect(st.isFile()).toBe(true);
+    expect(st.mode & 0o777).toBe(0o600);
+    expect(readCredentials(env)).toEqual(creds);
+    // no temp files left behind
+    expect(readdirSync(join(cfg, 'sneferu'))).toEqual(['credentials.json']);
+  });
+
+  it('refuses a config directory that is a symlink', () => {
+    const elsewhere = mkdtempSync(join(tmpdir(), 'snf-elsewhere-'));
+    symlinkSync(elsewhere, join(cfg, 'sneferu'));
+    expect(() => writeCredentials(creds, env)).toThrow(/not a real directory/);
+    expect(readdirSync(elsewhere)).toEqual([]);
   });
 });
