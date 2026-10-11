@@ -1,0 +1,230 @@
+{
+  "name": "sneferu",
+  "displayName": "Sneferu",
+  "description": "Official Sneferu support for Hekana themes: syntax highlighting, completion, hover docs, live diagnostics, theme checks, formatting and a live preview.",
+  "version": "0.1.0",
+  "publisher": "hekana",
+  "private": true,
+  "license": "SEE LICENSE IN LICENSE",
+  "homepage": "https://hekana.dev/guide/vscode",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Mostafa-M-Hussein/sneferu.git",
+    "directory": "packages/vscode-sneferu"
+  },
+  "bugs": {
+    "url": "https://github.com/Mostafa-M-Hussein/sneferu/issues"
+  },
+  "icon": "media/icon.png",
+  "galleryBanner": {
+    "color": "#F5F1EA",
+    "theme": "light"
+  },
+  "categories": [
+    "Programming Languages",
+    "Linters",
+    "Formatters",
+    "Snippets"
+  ],
+  "keywords": [
+    "sneferu",
+    "hekana",
+    "theme",
+    "ecommerce",
+    "template",
+    "liquid"
+  ],
+  "engines": {
+    "vscode": "^1.91.0"
+  },
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "workspaceContains:**/theme.json",
+    "onLanguage:sneferu"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "sneferu",
+        "aliases": [
+          "Sneferu",
+          "sneferu"
+        ],
+        "extensions": [
+          ".sneferu"
+        ],
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "light": "./media/file-icon.svg",
+          "dark": "./media/file-icon.svg"
+        }
+      }
+    ],
+    "grammars": [
+      {
+        "language": "sneferu",
+        "scopeName": "text.html.sneferu",
+        "path": "./syntaxes/sneferu.tmLanguage.json",
+        "embeddedLanguages": {
+          "source.json": "json",
+          "meta.embedded.expression.sneferu": "sneferu",
+          "source.css": "css"
+        }
+      }
+    ],
+    "snippets": [
+      {
+        "language": "sneferu",
+        "path": "./snippets/sneferu.code-snippets"
+      }
+    ],
+    "jsonValidation": [
+      {
+        "fileMatch": "theme.json",
+        "url": "./schemas/theme.schema.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "sneferu.openPreview",
+        "title": "Open Preview",
+        "category": "Sneferu",
+        "icon": "$(open-preview)"
+      },
+      {
+        "command": "sneferu.stopPreview",
+        "title": "Stop Dev Server",
+        "category": "Sneferu"
+      },
+      {
+        "command": "sneferu.validateTheme",
+        "title": "Validate Theme",
+        "category": "Sneferu"
+      },
+      {
+        "command": "sneferu.formatTheme",
+        "title": "Format Theme",
+        "category": "Sneferu"
+      },
+      {
+        "command": "sneferu.build",
+        "title": "Build Theme",
+        "category": "Sneferu"
+      },
+      {
+        "command": "sneferu.push",
+        "title": "Push to Dev Store",
+        "category": "Sneferu"
+      },
+      {
+        "command": "sneferu.login",
+        "title": "Log In",
+        "category": "Sneferu"
+      },
+      {
+        "command": "sneferu.whoami",
+        "title": "Who Am I",
+        "category": "Sneferu"
+      },
+      {
+        "command": "sneferu.restartServer",
+        "title": "Restart Language Server",
+        "category": "Sneferu"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "sneferu.openPreview",
+          "when": "resourceLangId == sneferu",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Sneferu",
+      "properties": {
+        "sneferu.cliPath": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "Path to the Sneferu CLI (`cli.js`) to run. Empty: the theme's own `node_modules/@hekana/sneferu`, else the CLI bundled with this extension."
+        },
+        "sneferu.preview.port": {
+          "type": "number",
+          "default": 4100,
+          "description": "First port tried for the dev server. The next free port is used when it is taken."
+        },
+        "sneferu.preview.dataFile": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "Sample data JSON passed to `sneferu dev --data`. Empty: `.sneferu-dev/data.json` when it exists."
+        },
+        "sneferu.preview.reloadOnSave": {
+          "type": "boolean",
+          "default": true,
+          "description": "Reload the preview when a theme file is saved."
+        },
+        "sneferu.diagnostics.delay": {
+          "type": "number",
+          "default": 250,
+          "description": "Milliseconds to wait after typing before the theme is checked again."
+        },
+        "sneferu.checks.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "Run the theme checks (unused settings, translations, alt text, labels, asset sizes) in addition to the compiler."
+        },
+        "sneferu.checks.disabled": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "markdownDescription": "Theme checks to turn off, by name, e.g. `[\"OrphanedSnippet\"]`."
+        },
+        "sneferu.checks.assetSizeWarnKb": {
+          "type": "number",
+          "default": 500,
+          "description": "Warn when an asset is larger than this many kilobytes (the compiler rejects assets over 2048 KB)."
+        }
+      }
+    },
+    "configurationDefaults": {
+      "[sneferu]": {
+        "editor.defaultFormatter": "hekana.sneferu",
+        "editor.quickSuggestions": {
+          "other": true,
+          "comments": false,
+          "strings": true
+        },
+        "editor.linkedEditing": true
+      }
+    }
+  },
+  "scripts": {
+    "gen": "tsx scripts/gen-data.ts",
+    "build": "tsx scripts/gen-data.ts && node scripts/build.mjs",
+    "watch": "node scripts/build.mjs --watch",
+    "typecheck": "tsc --noEmit",
+    "test:unit": "cd ../.. && vitest run packages/vscode-sneferu",
+    "test:e2e": "node test/run-e2e.mjs",
+    "package": "pnpm build && vsce package --no-dependencies"
+  },
+  "devDependencies": {
+    "@hekana/prettier-plugin-sneferu": "workspace:^",
+    "@hekana/sneferu": "workspace:^",
+    "@hekana/sneferu-compiler": "workspace:^",
+    "@hekana/sneferu-components": "workspace:^",
+    "@hekana/sneferu-core": "workspace:^",
+    "@types/node": "^22.9.0",
+    "@types/vscode": "1.91.0",
+    "@vscode/test-electron": "^3.1.0",
+    "@vscode/vsce": "^4.0.0",
+    "esbuild": "^0.28.2",
+    "jsonc-parser": "^3.3.1",
+    "prettier": "^3.6.2",
+    "vscode-languageclient": "^10.1.2",
+    "vscode-languageserver": "^10.1.2",
+    "vscode-languageserver-textdocument": "^1.0.15"
+  }
+}

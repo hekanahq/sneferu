@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true, "resolveJsonModule": true, "types": ["node", "vscode"], "lib": ["ES2022", "DOM"],
+    "paths": {
+      "@hekana/sneferu-core": ["../core/src/index.ts"], "@hekana/sneferu-compiler": ["../compiler/src/index.ts"],
+      "@hekana/sneferu-runtime": ["../runtime/src/index.ts"], "@hekana/sneferu-components": ["../components/src/index.ts"],
+      "@hekana/prettier-plugin-sneferu": ["../prettier-plugin-sneferu/src/index.ts"]
+    }
+  },
+  "include": ["src", "scripts/*.ts"]
+}

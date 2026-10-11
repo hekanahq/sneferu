@@ -1,0 +1,12 @@
+**
+!package.json
+!README.md
+!CHANGELOG.md
+!LICENSE
+!language-configuration.json
+!dist/**
+!syntaxes/**
+!snippets/**
+!schemas/**
+!media/icon.png
+!media/file-icon.svg

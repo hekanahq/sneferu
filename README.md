@@ -35,6 +35,7 @@ Install: `npx @hekana/sneferu <command>` (Node.js 20 or newer), or `npm install 
 10. [Format your theme](docs/guide/10-format-your-theme.mdx): `sneferu format`, `@hekana/prettier-plugin-sneferu`, VS Code format on save
 11. [Tutorial: build a digital products store theme](docs/guide/11-tutorial-digital-store.mdx): the Bento example theme from mockup to live store; Creator and License in [examples/themes](examples/themes)
 12. [Tutorial: build a gaming store theme](docs/guide/12-tutorial-gaming-store.mdx): the Arcade example theme from mockup to live store; Console and Esports in [examples/themes](examples/themes)
+13. [Editor setup: VS Code](docs/guide/13-editor-setup-vscode.mdx): the Sneferu extension: completion, hover, live diagnostics, theme checks, formatting and a live preview ([packages/vscode-sneferu](packages/vscode-sneferu))
 
 ## Reference
 
