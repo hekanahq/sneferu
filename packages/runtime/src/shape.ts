@@ -17,7 +17,7 @@ export function checkArtifactShape(a: unknown): Diagnostic[] {
     for (const [k, f] of Object.entries(v)) if (!isObj(f) || typeof f.type !== 'string') bad(`${where}.${k}`, 'must be a field with a string type');
   };
   const m = a.manifest;
-  if (!isObj(m) || typeof m.id !== 'string') bad('manifest', 'needs a string id');
+  if (!isObj(m) || typeof m.id !== 'string' || !/^[a-z][a-z0-9-]{2,40}$/.test(m.id)) bad('manifest', 'needs an id of 3-41 lowercase letters, digits or dashes');
   else {
     if (m.settings !== undefined) fields('manifest.settings', m.settings);
     if (m.tokens !== undefined && !isObj(m.tokens)) bad('manifest.tokens', 'must be an object');

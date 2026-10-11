@@ -32,7 +32,7 @@ part of the theme and is checked.
 | `sections/<type>.sneferu` | A section type. File name = type (`sections/hero.sneferu` is type `hero`). Has a `<hk-schema>` with `name` and `settings` | Rendered inside `<div data-hk-section="<id>">` |
 | `blocks/<type>.sneferu` | An item a merchant can add inside a section (a quote, a slide, a feature) | Rendered inside `<div data-hk-block="<id>">` |
 | `snippets/<name>.sneferu` | A reusable partial, no schema | `{% render 'name', key: value %}` |
-| `assets/` | CSS, JS, images, fonts: `.css .js .png .jpg .jpeg .webp .avif .gif .svg .woff .woff2 .ttf .otf .ico` | The only folder that may have sub-folders. `assets/*.css` is the theme stylesheet |
+| `assets/` | CSS, JS, images, fonts: `.css .js .png .jpg .jpeg .webp .avif .gif .svg .woff .woff2 .ttf .otf .ico` | The only folder that may have sub-folders. `assets/*.css` is the theme stylesheet. Font files are accepted but not served on the store: use `tokens.fonts` |
 | `locales/<xx>.json` | Flat `{ "key": "text" }` maps, values strings only | Used by `t('key')` and `\| t` |
 | `migrations/*.json` | Settings migrations between theme versions | Accepted, not used yet |
 

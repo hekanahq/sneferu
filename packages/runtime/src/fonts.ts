@@ -48,7 +48,7 @@ export function themeFontCss(manifest: { id: string; tokens?: unknown }, locale:
   };
   for (const e of [heading, body, mono]) {
     if (!e) continue;
-    want(e, ar ? ['arabic', 'latin'] : ['latin']);
+    want(e, ['arabic', 'latin']); // unicode-range: an unused subset costs nothing until its glyphs appear
     if (ar && !e.scripts.includes('arabic')) want(FONTS[DEFAULT_ARABIC_FONT]!, ['arabic']);
   }
 

@@ -23,10 +23,15 @@ function distance(a: string, b: string): number {
       d[i]![j] = Math.min(d[i - 1]![j]! + 1, d[i]![j - 1]! + 1, d[i - 1]![j - 1]! + (a[i - 1] === b[j - 1] ? 0 : 1));
   return d[a.length]![b.length]!;
 }
-const suggest = (x: string, options: Iterable<string>) => {
+/** The option nearest to `x` by edit distance, if it is close enough to be a likely typo. */
+export const closest = (x: string, options: Iterable<string>): string | undefined => {
   let best = ''; let score = Infinity;
   for (const o of options) { const s = distance(x, o); if (s < score) { score = s; best = o; } }
-  return score <= 3 ? ` Did you mean "${best}"?` : '';
+  return score <= 3 ? best : undefined;
+};
+const suggest = (x: string, options: Iterable<string>) => {
+  const best = closest(x, options);
+  return best === undefined ? '' : ` Did you mean "${best}"?`;
 };
 const kebab = (s: string) => s.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`);
 

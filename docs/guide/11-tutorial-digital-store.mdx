@@ -195,7 +195,7 @@ has the details; it needs the CLI from Sneferu main after #16.)
 - No purple, lavender or pink anywhere: the mockup's lavender panel is `sky`
   and its pink tile is `peach`.
 
-There is no font loader yet, so `assets/fonts.css` holds `@font-face` rules
+This example predates `tokens.fonts` (Baloo Bhaijaan 2 is in the catalogue now), so `assets/fonts.css` holds `@font-face` rules
 that point at `https://fonts.gstatic.com` (Arabic and Latin subsets of Baloo
 Bhaijaan 2), and the stylesheet sets the family on the theme's own root:
 
@@ -501,7 +501,7 @@ and cart pages use the store's regular theme.
 | Limit | What the three themes do |
 | - | - |
 | `asset_url()` is empty on the live storefront for now | no bundled images: art comes from products, inline SVG, or an `image` setting with an `https://` default |
-| no font loader | `@font-face` rules pointing at `https://fonts.gstatic.com` |
+| fonts in `assets/` are not served on the store (use `tokens.fonts`) | `@font-face` rules pointing at `https://fonts.gstatic.com` |
 | a lookup takes fixed text | category handles are written in the templates |
 | one value per setting for every language | settings default to `""`, with `default: t('…')` |
 | template default sections cannot carry blocks | list sections render items from the locale files until the merchant adds blocks |

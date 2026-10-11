@@ -27,9 +27,9 @@ describe('themeFontCss', () => {
     expect(faces(css).sort()).toEqual(['cairo-arabic-200_1000.woff2', 'cairo-latin-200_1000.woff2']);
     expect(css).toContain('[data-hk-theme="t"] :is(h1,h2,h3,h4,h5,h6){font-family:var(--hk-font-heading)}');
   });
-  it('English page uses only the latin subset and no Cairo fallback', () => {
+  it('English page loads both subsets of declared families but adds no Cairo fallback', () => {
     const css = themeFontCss(m({ heading: 'Cairo', body: 'Inter', mono: 'Martian Mono' }), 'en', B);
-    expect(faces(css).sort()).toEqual(['cairo-latin-200_1000.woff2', 'inter-latin-100_900.woff2', 'martian-mono-latin-100_800.woff2']);
+    expect(faces(css).sort()).toEqual(['cairo-arabic-200_1000.woff2', 'cairo-latin-200_1000.woff2', 'inter-latin-100_900.woff2', 'martian-mono-latin-100_800.woff2']);
     expect(css).toContain('--hk-font-mono:"Martian Mono",monospace');
     expect(css).toContain('font-display:swap');
     expect(css).toContain('unicode-range:U+0000-00FF');
