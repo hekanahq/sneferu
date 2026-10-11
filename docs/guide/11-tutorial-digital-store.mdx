@@ -11,6 +11,27 @@ files are in the SDK repository under `examples/themes/bento/`.
 The mockup was generated as a design brief. Its Arabic is placeholder text, and
 its lavender and pink tiles become sky blue and peach.
 
+<Example>
+
+```html title="examples/themes/bento/templates/index.sneferu"
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "tabs"
+      },
+      {
+        "type": "bento"
+      },
+      {
+        "type": "band"
+      }
+    ]
+  }
+</hk-schema>
+```
+
 <Result url="demo-bento.hekana.com">
   <Shot tab="Mockup" src="../images/tutorial-bento-mockup.webp" alt="A pastel mockup: category tabs, two coloured header tiles, two panels with three illustrated covers each, and a teal band" caption="The mockup the theme reproduces." />
 
@@ -19,18 +40,66 @@ its lavender and pink tiles become sky blue and peach.
   <Shot tab="Live, phone" src="../images/tutorial-bento-phone.webp" alt="The same page on a phone: the shelves stacked, three small covers per panel" caption="The same page at 390 px." />
 </Result>
 
-Two more themes were built the same way and follow the same steps:
+</Example>
+
+Two more themes were built the same way and follow the same steps. Each home
+page is a template listing its sections, like Bento's above:
 
 | Theme | What it shows | Live |
 | - | - | - |
 | Creator | editorial covers in a scroll-snap row, a checklist, an author strip | [demo-creator.hekana.com](https://demo-creator.hekana.com) |
 | License | dark, plan cards built from products, app cards, a FAQ accordion | [demo-license.hekana.com](https://demo-license.hekana.com) |
 
+<Example>
+
+```html title="examples/themes/creator/templates/index.sneferu"
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "covers"
+      },
+      {
+        "type": "what-you-get"
+      },
+      {
+        "type": "author"
+      }
+    ]
+  }
+</hk-schema>
+```
+
+```html title="examples/themes/license/templates/index.sneferu"
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "plans-hero"
+      },
+      {
+        "type": "features"
+      },
+      {
+        "type": "apps"
+      },
+      {
+        "type": "faq"
+      }
+    ]
+  }
+</hk-schema>
+```
+
 <Result url="demo-creator / demo-license.hekana.com">
   <Shot tab="Creator" src="../images/tutorial-creator-ar.webp" alt="Creator: two large dark covers with orange badges, a checklist and an author strip on warm paper" caption="Creator, examples/themes/creator/." />
 
   <Shot tab="License" src="../images/tutorial-license-ar.webp" alt="License: a dark navy page with three blue plan cards, a feature checklist and app cards with lime buttons" caption="License, examples/themes/license/." />
 </Result>
+
+</Example>
 
 Each example folder has a `README.md` that walks through its own files the
 same way this page walks through Bento.
@@ -62,28 +131,26 @@ Delete the starter's `sections/hero.sneferu`, `sections/featured.sneferu` and
 
 The dev preview's built-in sample products are game cards, and its only
 collection is `featured`. To preview with this store's own products, write
-`.sneferu-dev/data.json`. It can be split by locale, so the preview shows
-Arabic titles on the Arabic page:
+`.sneferu-dev/data.json`. It can be split by locale, one block per language:
 
 ```json title="examples/themes/bento/.sneferu-dev/data.json (excerpt)"
-{
- "ar": {
+ "en": {
   "store": {
-   "name": "دفتر"
+   "name": "Daftar"
   },
   "collections": {
    "printables": {
-    "title": "مطبوعات",
+    "title": "Printables",
     "products": [
      {
-      "title": "كراسة تلوين الشمس للأطفال",
-      "url": "/products/sunny-colouring-book",
+      "title": "Sunny colouring book",
+      "url": "/en/products/sunny-colouring-book",
       "price": 6900,
       "compare_at": null,
 ```
 
-The file continues with every product of both collections, then an `"en"`
-block with the English titles. The folder starts with a dot, so it is never
+That is the start of the `"en"` block; an `"ar"` block before it has the same
+products with Arabic titles, so `?locale=ar` previews in Arabic. The folder starts with a dot, so it is never
 part of the theme and never pushed. ([Getting started](01-getting-started.mdx)
 has the details; it needs the CLI from Sneferu main after #16.)
 
@@ -213,24 +280,8 @@ Bhaijaan 2), and the stylesheet sets the family on the theme's own root:
 
 ## 5. The template
 
-```html title="examples/themes/bento/templates/index.sneferu"
-<hk-sections />
-<hk-schema>
-  {
-    "sections": [
-      {
-        "type": "tabs"
-      },
-      {
-        "type": "bento"
-      },
-      {
-        "type": "band"
-      }
-    ]
-  }
-</hk-schema>
-```
+The template is the one shown at the top of this page: three sections, in
+order. A merchant can reorder them or add more in the builder.
 
 ## 6. The shelves
 
