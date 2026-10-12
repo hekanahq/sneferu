@@ -1,13 +1,18 @@
 <section class="bt-bento" id="shop">
   <div class="bt-wrap bt-bento-grid">
-    {% render 'shelf', c: collection('printables'), key: 'printables', title: t('printables_title'), note: t('printables_note'), href: t('href_printables'), head: 'peach', panel: 'sky' %}
-    {% render 'shelf', c: collection('templates'), key: 'templates', title: t('templates_title'), note: t('templates_note'), href: t('href_templates'), head: 'sage', panel: 'warm' %}
+    {% for block in section.blocks %}
+      <hk-block of="{{ block }}" />
+    {% endfor %}
   </div>
 </section>
 <hk-schema>
   {
     "name": "Bento shelves",
     "version": 1,
-    "settings": {}
+    "settings": {},
+    "blocks": {
+      "allowed": ["shelf"],
+      "max": 4
+    }
   }
 </hk-schema>

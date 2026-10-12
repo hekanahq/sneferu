@@ -1,0 +1,93 @@
+<div class="bt-shelf" id="{{ block.settings.list }}">
+  <a class="bt-head" data-tone="{{ block.settings.head }}" href="{{ url(block.settings.link) }}">
+    <h2>{{ block.settings.title }}</h2>
+    <span class="bt-thumbs" aria-hidden="true">
+      {% for p in collection(block.settings.list).products limit: 5 %}
+        {% if p.image %}<img src="{{ p.image.url }}" alt="" width="28" height="28" loading="lazy" />{% endif %}
+      {% endfor %}
+    </span>
+  </a>
+  <div class="bt-panel" data-tone="{{ block.settings.panel }}">
+    <div class="bt-chips">
+      <span class="bt-chip bt-chip-on">{{ t('chip_instant') }}</span>
+      <span class="bt-chip">{{ t('chip_pdf') }}</span>
+      <span class="bt-chip">{{ block.settings.note }}</span>
+    </div>
+    {% if collection(block.settings.list).products %}
+      <div class="bt-covers">
+        {% for p in collection(block.settings.list).products limit: block.settings.count %}
+          <div class="bt-cover">
+            <hk-product-card product="{{ p }}" class="bt-card">
+              <hk-part name="badge">{% if forloop.first %}<span class="bt-new">{{ t('badge_new') }}</span>{% endif %}</hk-part>
+            </hk-product-card>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="bt-empty">{{ t('empty') }}</p>
+    {% endif %}
+    <a
+      class="bt-more"
+      href="{{ url(block.settings.link) }}"
+      aria-label="{{ t('see_all') }}: {{ block.settings.title }}"
+    ><hk-icon name="plus" size="18" stroke="2.5" /></a>
+  </div>
+</div>
+<hk-schema>
+  {
+    "name": "Shelf",
+    "version": 1,
+    "settings": {
+      "list": {
+        "type": "collection",
+        "label": "Collection",
+        "default": "printables"
+      },
+      "title": {
+        "type": "text",
+        "label": "Title",
+        "localized": true,
+        "default": {
+          "ar": "مطبوعات للبيت والمدرسة",
+          "en": "Printables for home and school"
+        },
+        "maxLength": 60
+      },
+      "note": {
+        "type": "text",
+        "label": "Third chip",
+        "localized": true,
+        "default": {
+          "ar": "للأطفال",
+          "en": "For kids"
+        },
+        "maxLength": 30
+      },
+      "link": {
+        "type": "link",
+        "label": "Link of the title and the + button",
+        "default": "/category/printables"
+      },
+      "count": {
+        "type": "range",
+        "label": "Covers",
+        "default": 3,
+        "min": 1,
+        "max": 6,
+        "step": 1
+      },
+      "head": {
+        "type": "select",
+        "label": "Title colour",
+        "options": ["peach", "sage", "sky", "warm"],
+        "default": "peach"
+      },
+      "panel": {
+        "type": "select",
+        "label": "Panel colour",
+        "options": ["peach", "sage", "sky", "warm"],
+        "default": "sky"
+      }
+    }
+  }
+</hk-schema>

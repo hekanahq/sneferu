@@ -3,10 +3,94 @@
   {
     "sections": [
       {
-        "type": "tabs"
+        "type": "tabs",
+        "blocks": [
+          {
+            "type": "tab",
+            "settings": {
+              "label": {
+                "ar": "الكل",
+                "en": "All"
+              },
+              "link": "#shop",
+              "current": true
+            }
+          },
+          {
+            "type": "tab",
+            "settings": {
+              "label": {
+                "ar": "مطبوعات",
+                "en": "Printables"
+              },
+              "link": "#printables",
+              "current": false
+            }
+          },
+          {
+            "type": "tab",
+            "settings": {
+              "label": {
+                "ar": "قوالب وكتب",
+                "en": "Templates and e-books"
+              },
+              "link": "#templates",
+              "current": false
+            }
+          },
+          {
+            "type": "tab",
+            "settings": {
+              "label": {
+                "ar": "كل المنتجات",
+                "en": "All products"
+              },
+              "link": "/products",
+              "current": false
+            }
+          }
+        ]
       },
       {
-        "type": "bento"
+        "type": "bento",
+        "blocks": [
+          {
+            "type": "shelf",
+            "settings": {
+              "list": "printables",
+              "title": {
+                "ar": "مطبوعات للبيت والمدرسة",
+                "en": "Printables for home and school"
+              },
+              "note": {
+                "ar": "للأطفال",
+                "en": "For kids"
+              },
+              "link": "/category/printables",
+              "count": 3,
+              "head": "peach",
+              "panel": "sky"
+            }
+          },
+          {
+            "type": "shelf",
+            "settings": {
+              "list": "templates",
+              "title": {
+                "ar": "قوالب وكتب لشغلك",
+                "en": "Templates and e-books for work"
+              },
+              "note": {
+                "ar": "للمشاريع",
+                "en": "For projects"
+              },
+              "link": "/category/templates",
+              "count": 3,
+              "head": "sage",
+              "panel": "warm"
+            }
+          }
+        ]
       },
       {
         "type": "band"
