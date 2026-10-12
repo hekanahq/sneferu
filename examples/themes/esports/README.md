@@ -95,7 +95,7 @@ Next to the theme: `README.md` and `docs/`, which the CLI skips.
 ## 1. Start from the starter
 
 ```bash
-npx @hekana/sneferu init esports
+npx sneferu init esports
 cd esports
 ```
 
@@ -863,8 +863,8 @@ settings and blocks, not here.
 
 ## 10. Check, preview and push
 
-1. `npx @hekana/sneferu format`
-2. `npx @hekana/sneferu validate` prints `✔ theme esports@1.1.0 is valid`.
-3. `npx @hekana/sneferu dev`, then `?locale=en`, then a window under 640 px.
+1. `npx sneferu format`
+2. `npx sneferu validate` prints `✔ theme esports@1.1.0 is valid`.
+3. `npx sneferu dev`, then `?locale=en`, then a window under 640 px.
 4. Change `id` in `theme.json` to a slug of your own, then
-   `npx @hekana/sneferu push . --package <your-slug> --dev-store`.
+   `npx sneferu push . --package <your-slug> --dev-store`.

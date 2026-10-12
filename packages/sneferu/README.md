@@ -9,13 +9,15 @@ run safely.
 ## Quick start
 
 ```bash
-npx @hekana/sneferu init my-theme     # copy the starter theme
-npx @hekana/sneferu dev ./my-theme    # preview on http://127.0.0.1:4100
-npx @hekana/sneferu validate ./my-theme
-npx @hekana/sneferu build ./my-theme
+npx sneferu init my-theme     # copy the starter theme
+npx sneferu dev ./my-theme    # preview on http://127.0.0.1:4100
+npx sneferu validate ./my-theme
+npx sneferu build ./my-theme
 ```
 
-Requires Node.js 20 or newer.
+Requires Node.js 20 or newer. Install it globally with `npm i -g sneferu` for the
+`sneferu` and `snf` commands. `sneferu` is a short name for this package
+(`@hekana/sneferu`); both install the same tool.
 
 ## Commands
 

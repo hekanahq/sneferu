@@ -137,7 +137,7 @@ locale files.
 ## 2. Create the theme and the sample data
 
 ```bash
-npx @hekana/sneferu init bento
+npx sneferu init bento
 cd bento
 ```
 
@@ -600,12 +600,12 @@ shelves and rearranges the header:
 ## 9. Check, preview and push
 
 <Steps>
-  1. `npx @hekana/sneferu format` indents every file.
-  2. `npx @hekana/sneferu validate` prints `✔ theme bento@1.1.0 is valid`.
-  3. `npx @hekana/sneferu dev` and open `http://127.0.0.1:4100`, then
+  1. `npx sneferu format` indents every file.
+  2. `npx sneferu validate` prints `✔ theme bento@1.1.0 is valid`.
+  3. `npx sneferu dev` and open `http://127.0.0.1:4100`, then
      `?locale=en`. Narrow the window below 640 px.
   4. Change `id` in `theme.json` to a slug of your own, then
-     `npx @hekana/sneferu push . --package <your-slug> --dev-store`.
+     `npx sneferu push . --package <your-slug> --dev-store`.
   5. On a real store, create the two categories with the handles from step 1,
      or pick other categories for the shelves in the editor.
 </Steps>

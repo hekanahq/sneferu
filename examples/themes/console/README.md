@@ -97,7 +97,7 @@ The CLI skips both.
 ## 1. Start from the starter
 
 ```bash
-npx @hekana/sneferu init console
+npx sneferu init console
 cd console
 ```
 
@@ -935,8 +935,8 @@ side with the picture on top, and the five platforms share one row.
 
 ## 11. Check, preview and push
 
-1. `npx @hekana/sneferu format`
-2. `npx @hekana/sneferu validate` prints `✔ theme console@1.1.0 is valid`.
-3. `npx @hekana/sneferu dev`, then `?locale=en`, then a window under 640 px.
+1. `npx sneferu format`
+2. `npx sneferu validate` prints `✔ theme console@1.1.0 is valid`.
+3. `npx sneferu dev`, then `?locale=en`, then a window under 640 px.
 4. Change `id` in `theme.json` to a slug of your own, then
-   `npx @hekana/sneferu push . --package <your-slug> --dev-store`.
+   `npx sneferu push . --package <your-slug> --dev-store`.
