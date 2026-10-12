@@ -50,9 +50,21 @@ async function run() {
   log('activated');
 
   // 1. language + grammar
-  const { doc } = await open('arcade/sections/arcade-products.sneferu');
+  const { doc } = await open('arcade/sections/arcade-products.snf');
   assert.equal(doc.languageId, 'sneferu');
   const original = doc.getText();
+
+  // 1b. the old extension: .sneferu is the same language, and a section type opens it
+  const legacy = (await open('legacy/sections/hero.sneferu')).doc;
+  assert.equal(legacy.languageId, 'sneferu');
+  const idx = (await open('legacy/templates/index.snf')).doc;
+  const toHero = await until('definition → hero.sneferu', async () => {
+    const d = await vscode.commands.executeCommand('vscode.executeDefinitionProvider', idx.uri, posOf(idx, '"hero"', 2));
+    return d && d.length ? d : undefined;
+  });
+  assert.ok(toHero.some((d) => (d.uri ?? d.targetUri).fsPath.endsWith(join('sections', 'hero.sneferu'))), 'section type → .sneferu file');
+  log('.sneferu: language and definition');
+  await open('arcade/sections/arcade-products.snf');
 
   // 2. completion
   const at = posOf(doc, '<hk-product-grid', 1);
@@ -70,7 +82,7 @@ async function run() {
 
   // 2b. the starter theme, in the same workspace: its own schema drives section.settings
   {
-    const hero = (await open('starter/sections/hero.sneferu')).doc;
+    const hero = (await open('starter/sections/hero.snf')).doc;
     const sp = posOf(hero, 'section.settings.title', 'section.settings.'.length);
     const l = await vscode.commands.executeCommand('vscode.executeCompletionItemProvider', hero.uri, sp);
     const got = l.items.map((i) => (typeof i.label === 'string' ? i.label : i.label.label)).sort();
@@ -79,7 +91,7 @@ async function run() {
     assert.ok(hh.includes('Shop now'), `starter translation hover: ${hh}`);
     const fmt = await vscode.commands.executeCommand('vscode.executeFormatDocumentProvider', hero.uri, { tabSize: 2, insertSpaces: true });
     assert.equal((fmt ?? []).length, 0, 'the starter is already formatted');
-    await open('arcade/sections/arcade-products.sneferu');
+    await open('arcade/sections/arcade-products.snf');
     log('starter ok');
   }
 
@@ -95,13 +107,13 @@ async function run() {
   const defs = await vscode.commands.executeCommand('vscode.executeDefinitionProvider', doc.uri, tAt);
   const defFiles = defs.map((d) => (d.uri ?? d.targetUri).fsPath.replace(/\\/g, '/')).sort();
   assert.deepEqual(defFiles, [join(work, 'arcade/locales/ar.json'), join(work, 'arcade/locales/en.json')].map((p) => p.replace(/\\/g, '/')).sort());
-  const cat = (await open('arcade/sections/arcade-categories.sneferu')).doc;
-  const snip = await vscode.commands.executeCommand('vscode.executeDefinitionProvider', cat.uri, posOf(cat, "'tile'", 2));
-  assert.ok(snip.some((d) => (d.uri ?? d.targetUri).fsPath.endsWith(join('snippets', 'tile.sneferu'))), 'render → snippet');
+  const chip = (await open('arcade/blocks/chip.snf')).doc;
+  const snip = await vscode.commands.executeCommand('vscode.executeDefinitionProvider', chip.uri, posOf(chip, "'glyph'", 2));
+  assert.ok(snip.some((d) => (d.uri ?? d.targetUri).fsPath.endsWith(join('snippets', 'glyph.snf'))), 'render → snippet');
   log('definition ok');
 
   // 5. live diagnostics from the compiler, on unsaved text
-  const ed = (await open('arcade/sections/arcade-products.sneferu')).editor;
+  const ed = (await open('arcade/sections/arcade-products.snf')).editor;
   await ed.edit((e) => e.insert(new vscode.Position(1, 0), '  <hk-imagez src="x" />\n'));
   const diag = await until('SN2003', () => vscode.languages.getDiagnostics(doc.uri).find((d) => (typeof d.code === 'object' ? d.code.value : d.code) === 'SN2003'));
   assert.equal(String(diag.code.target), 'https://hekana.dev/reference/diagnostics#SN2003');
@@ -151,7 +163,7 @@ async function run() {
   // 7. theme checks + quick fix: a key only in en.json
   const en = (await open('arcade/locales/en.json')).doc;
   const enEditor = vscode.window.activeTextEditor;
-  await enEditor.edit((e) => e.insert(posOf(en, '"url_prefix"'), '"only_in_en": "Only English",\n  '));
+  await enEditor.edit((e) => e.insert(posOf(en, '"menu"'), '"only_in_en": "Only English",\n  '));
   const mt = await until('MatchingTranslations', () => vscode.languages.getDiagnostics(en.uri).find((d) => (typeof d.code === 'object' ? d.code.value : d.code) === 'MatchingTranslations'));
   const actions = await vscode.commands.executeCommand('vscode.executeCodeActionProvider', en.uri, mt.range);
   const fix = actions.find((a) => a.title.includes('only_in_en'));
@@ -164,7 +176,7 @@ async function run() {
   await vscode.commands.executeCommand('workbench.action.files.saveAll');
 
   // 8. live preview
-  await open('arcade/sections/arcade-products.sneferu');
+  await open('arcade/sections/arcade-products.snf');
   await vscode.commands.executeCommand('sneferu.openPreview');
   const st = api.dev.state;
   assert.equal(st.s, 'running', `dev server: ${JSON.stringify(st)}`);
@@ -200,7 +212,7 @@ async function run() {
   if (shots) {
     // completion and hover, as a user sees them
     await vscode.commands.executeCommand('workbench.action.closeEditorsInOtherGroups');
-    const { doc: d2, editor: e2 } = await open('arcade/sections/arcade-products.sneferu');
+    const { doc: d2, editor: e2 } = await open('arcade/sections/arcade-products.snf');
     const line = d2.lineAt(posOf(d2, '<hk-stack gap="20">').line);
     await e2.edit((e) => e.insert(line.range.end, '\n    <hk-'));
     const p = d2.lineAt(line.lineNumber + 1).range.end;

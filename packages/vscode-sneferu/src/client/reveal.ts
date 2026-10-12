@@ -1,5 +1,12 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
+
+/** `dir/name.snf`, else `dir/name.sneferu` when only that exists (both work). */
+export const templatePath = (dir: string, name: string): string => {
+  const snf = join(dir, `${name}.snf`);
+  const old = join(dir, `${name}.sneferu`);
+  return !existsSync(snf) && existsSync(old) ? old : snf;
+};
 import { parseTree, findNodeAtLocation } from 'jsonc-parser';
 
 /** The template a preview path shows: `/` is index, `/__template/<name>` is <name>. */
@@ -13,14 +20,14 @@ export function templateOfPath(path: string): string {
  * The source file for a clicked element. The runtime wraps each section in
  * `data-hk-section="<id>"`; on the dev server the ids are `default-<n>`, the
  * n-th entry of the template's default sections, so the file is
- * sections/<type>.sneferu. Anything outside a section is the layout.
+ * sections/<type>.snf (or .sneferu). Anything outside a section is the layout.
  */
 export function sourceFor(root: string, click: { section?: string | null; block?: string | null; path: string }): { file: string; reason: string } {
   const template = templateOfPath(click.path);
-  const layout = { file: join(root, 'layout', 'theme.sneferu'), reason: 'layout' };
+  const layout = { file: templatePath(join(root, 'layout'), 'theme'), reason: 'layout' };
   if (!click.section) return layout;
   const m = /^default-(\d+)$/.exec(click.section);
-  const tplFile = join(root, 'templates', `${template}.sneferu`);
+  const tplFile = templatePath(join(root, 'templates'), template);
   if (!m || !existsSync(tplFile)) return existsSync(tplFile) ? { file: tplFile, reason: `section ${click.section}` } : layout;
   const text = readFileSync(tplFile, 'utf8');
   const open = /<hk-schema\s*>/i.exec(text);
@@ -29,7 +36,7 @@ export function sourceFor(root: string, click: { section?: string | null; block?
   const tree = parseTree(text.slice(open.index + open[0].length, close));
   const type = tree && findNodeAtLocation(tree, ['sections', Number(m[1]), 'type'])?.value;
   if (typeof type !== 'string') return { file: tplFile, reason: 'template' };
-  const sec = join(root, 'sections', `${type}.sneferu`);
+  const sec = templatePath(join(root, 'sections'), type);
   return existsSync(sec) ? { file: sec, reason: `section ${type}` } : { file: tplFile, reason: `section ${type} (missing)` };
 }
 

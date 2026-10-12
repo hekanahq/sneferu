@@ -1,7 +1,7 @@
 # 1. Getting started
 
 Sneferu is the language and SDK for Hekana store themes. A theme is a folder of
-HTML-like `.sneferu` templates with `hk-*` tags, a `theme.json` manifest, locale
+HTML-like `.snf` templates with `hk-*` tags, a `theme.json` manifest, locale
 files and CSS. The CLI checks it, previews it with sample data and compiles it to
 one JSON artifact that Hekana renders.
 
@@ -10,7 +10,7 @@ one JSON artifact that Hekana renders.
 | Need | Version |
 | - | - |
 | Node.js | 20 or newer (`node -v`) |
-| An editor | any; `.sneferu` files are HTML, so HTML highlighting works. [Format your theme](10-format-your-theme.mdx) sets up Prettier and format on save |
+| An editor | any; `.snf` files are HTML, so HTML highlighting works. [Format your theme](10-format-your-theme.mdx) sets up Prettier and format on save |
 
 ## Create a theme
 
@@ -52,7 +52,7 @@ hero section and a grid of sample products, in English, left to right.
 | - | - |
 | Address | `http://127.0.0.1:4100` (local only; `--port` changes the port) |
 | Language | The theme's `defaultLocale`. `?locale=<code>` shows another locale the theme lists in `locales` |
-| Other templates | `http://127.0.0.1:4100/__template/<name>` renders `templates/<name>.sneferu` |
+| Other templates | `http://127.0.0.1:4100/__template/<name>` renders `templates/<name>.snf` |
 | Live reload | Saving any file recompiles and reloads the open page |
 | Errors | A theme that does not compile shows the diagnostics list instead of the page |
 | CSS | Every `assets/*.css` file (top level of `assets/`) is inlined after the token variables |
@@ -124,7 +124,7 @@ npx sneferu validate
 or, with problems, one line per diagnostic and a non-zero exit code:
 
 ```
-sections/hero.sneferu:3:5 error SN2004 unknown property "colour" on <hk-heading>. Did you mean "color"?
+sections/hero.snf:3:5 error SN2004 unknown property "colour" on <hk-heading>. Did you mean "color"?
 ✖ 1 error, 0 warnings
 ```
 
@@ -153,7 +153,7 @@ npx sneferu build --out out  # another output folder
 | `dev [dir]` | theme folder, default `.` | `--port <n>` default `4100`; `--data <file>` sample data JSON, default `.sneferu-dev/data.json` when it exists |
 | `validate [dir]` | theme folder, default `.` | |
 | `build [dir]` | theme folder, default `.` | `--out <dir>` default `dist` |
-| `format [dir]` | theme folder, default `.` | `--check` only report files that are not formatted and exit `1` (for CI). Formats `.sneferu` files, `theme.json` and `locales/` with Prettier and the Sneferu plugin; see [Format your theme](10-format-your-theme.mdx) |
+| `format [dir]` | theme folder, default `.` | `--check` only report files that are not formatted and exit `1` (for CI). Formats `.snf` files, `theme.json` and `locales/` with Prettier and the Sneferu plugin; see [Format your theme](10-format-your-theme.mdx) |
 | `login` | | `--api-url <url>` API to sign in to, default `https://api.hekana.com/api/v1`. Signs in through the browser and saves a developer key to `~/.config/sneferu/credentials.json`; revokes the previously saved key for the same API |
 | `logout` | | revokes the saved key on Hekana and deletes the file |
 | `whoami` | | prints the account, key prefix and dev store the CLI uses |

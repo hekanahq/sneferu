@@ -30,7 +30,7 @@ start from the new defaults.
 
 ## Pages
 
-Bento writes only the home page (`templates/index.sneferu`). The product,
+Bento writes only the home page (`templates/index.snf`). The product,
 collection, search, cart, content page and 404 templates come from the SDK's
 default store ([page types](../../../docs/guide/16-page-types.mdx)), drawn with
 Bento's tokens, fonts and layout. `assets/theme.css` restyles what the default
@@ -62,20 +62,20 @@ setting of the header section) and from the cart icon.
 
 ```
 assets/theme.css
-blocks/shelf.sneferu
-blocks/tab.sneferu
+blocks/shelf.snf
+blocks/tab.snf
 groups/footer.json
 groups/header.json
-layout/theme.sneferu
+layout/theme.snf
 locales/ar.json
 locales/en.json
-sections/band.sneferu
-sections/bento-footer.sneferu
-sections/bento-header.sneferu
-sections/bento.sneferu
-sections/tabs.sneferu
-snippets/glyph.sneferu
-templates/index.sneferu
+sections/band.snf
+sections/bento-footer.snf
+sections/bento-header.snf
+sections/bento.snf
+sections/tabs.snf
+snippets/glyph.snf
+templates/index.snf
 theme.json
 ```
 
@@ -146,7 +146,7 @@ Prices are in piastres in the data and printed by `hk-price`, for example
 
 ## 2. Layout: header and footer
 
-```html title="layout/theme.sneferu"
+```html title="layout/theme.snf"
 <div class="bt">
   <hk-section-group name="header" />
   <main><hk-slot name="content" /></main>
@@ -160,7 +160,7 @@ The header and the footer are [section groups](../../../docs/guide/18-section-gr
 whole store. The header also holds the cart: the cart link carries `data-hk-open="cart-drawer"` and
 `<hk-cart-count />`, and `<hk-cart-drawer>` lists the lines (a plain link to the cart page without JavaScript).
 
-```html title="sections/bento-header.sneferu"
+```html title="sections/bento-header.snf"
 <header class="bt-header">
   <div class="bt-wrap bt-header-row">
     <div class="bt-start">
@@ -230,7 +230,7 @@ whole store. The header also holds the cart: the cart link carries `data-hk-open
   `shopping-bag`, `search`, `menu`, `plus`). The filled avatar has no match in
   the set, so it stays inline SVG in one snippet:
 
-```html title="snippets/glyph.sneferu"
+```html title="snippets/glyph.snf"
 {% if name == 'user' %}
   <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><circle
       cx="13"
@@ -246,7 +246,7 @@ whole store. The header also holds the cart: the cart link carries `data-hk-open
 
 ## 3. The template
 
-```html title="templates/index.sneferu (excerpt)"
+```html title="templates/index.snf (excerpt)"
 <hk-sections />
 <hk-schema>
   {
@@ -278,7 +278,7 @@ more in the builder.
 
 ## 4. Category tabs
 
-```html title="sections/tabs.sneferu"
+```html title="sections/tabs.snf"
 <nav class="bt-tabs" aria-label="{{ t('tabs_label') }}">
   <div class="bt-wrap bt-tabs-row">
     {% for block in section.blocks %}
@@ -299,7 +299,7 @@ more in the builder.
 </hk-schema>
 ```
 
-```html title="blocks/tab.sneferu"
+```html title="blocks/tab.snf"
 <a href="{{ url(block.settings.link) }}" aria-current="{{ block.settings.current }}">{{ block.settings.label }}</a>
 <hk-schema>
   {
@@ -342,7 +342,7 @@ product list.
 The section renders its `shelf` blocks; the template seeds two, each with its
 own collection and pair of colours:
 
-```html title="sections/bento.sneferu"
+```html title="sections/bento.snf"
 <section class="bt-bento" id="shop">
   <div class="bt-wrap bt-bento-grid">
     {% for block in section.blocks %}
@@ -367,7 +367,7 @@ own collection and pair of colours:
 that shelf (`printables` and `templates` by default), or an empty list when none
 is picked.
 
-```html title="blocks/shelf.sneferu"
+```html title="blocks/shelf.snf"
 <div class="bt-shelf" id="{{ block.settings.list }}">
   <a class="bt-head" data-tone="{{ block.settings.head }}" href="{{ url(block.settings.link) }}">
     <h2>{{ block.settings.title }}</h2>
@@ -521,7 +521,7 @@ The CSS for the grid, the tiles and the covers:
 
 ## 6. The teal band
 
-```html title="sections/band.sneferu"
+```html title="sections/band.snf"
 <section class="bt-band-wrap">
   <div class="bt-wrap">
     <div class="bt-band">
@@ -655,7 +655,7 @@ uses for this theme (split by locale).
 npx sneferu init bento          # start from the starter theme
 cd bento
 # replace the starter files with the ones above, then:
-npx sneferu format              # indent .sneferu, theme.json and locales
+npx sneferu format              # indent .snf, theme.json and locales
 npx sneferu validate            # must print: theme bento@1.1.0 is valid
 npx sneferu dev                 # http://127.0.0.1:4100, add ?locale=en for English
 ```

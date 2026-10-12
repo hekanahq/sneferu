@@ -34,7 +34,7 @@ start from the new defaults.
 
 ## Pages
 
-Console writes only the home page (`templates/index.sneferu`). The product,
+Console writes only the home page (`templates/index.snf`). The product,
 collection, search, cart, content page and 404 templates come from the SDK's
 default store ([page types](../../../docs/guide/16-page-types.mdx)), drawn with
 Console's tokens, fonts and layout. `assets/theme.css` restyles what the default
@@ -62,25 +62,25 @@ setting of the header section) and from the cart icon.
 
 ```
 assets/theme.css
-blocks/amount.sneferu
-blocks/faq-item.sneferu
-blocks/platform.sneferu
-blocks/trust.sneferu
+blocks/amount.snf
+blocks/faq-item.snf
+blocks/platform.snf
+blocks/trust.snf
 groups/footer.json
 groups/header.json
-layout/theme.sneferu
+layout/theme.snf
 locales/ar.json
 locales/en.json
-sections/console-amounts.sneferu
-sections/console-faq.sneferu
-sections/console-footer.sneferu
-sections/console-header.sneferu
-sections/console-platforms.sneferu
-sections/console-products.sneferu
-sections/console-showcase.sneferu
-sections/console-trust.sneferu
-snippets/glyph.sneferu
-templates/index.sneferu
+sections/console-amounts.snf
+sections/console-faq.snf
+sections/console-footer.snf
+sections/console-header.snf
+sections/console-platforms.snf
+sections/console-products.snf
+sections/console-showcase.snf
+sections/console-trust.snf
+snippets/glyph.snf
+templates/index.snf
 theme.json
 ```
 
@@ -154,7 +154,7 @@ Icons are `<hk-icon>` from the bundled Lucide set (`user`, `shopping-cart`,
 `banknote`, `chevron-left`, `chevron-right`, `chevron-down`). The set has no
 gem, so the game-currency platform keeps one inline SVG:
 
-```html title="snippets/glyph.sneferu"
+```html title="snippets/glyph.snf"
 <svg
   class="ic ic-{{ name }}"
   viewBox="0 0 24 24"
@@ -174,7 +174,7 @@ gem, so the game-currency platform keeps one inline SVG:
 
 ## 4. Layout: header and footer
 
-```html title="layout/theme.sneferu"
+```html title="layout/theme.snf"
 <hk-section-group name="header" />
 <main><hk-slot name="content" /></main>
 <hk-section-group name="footer" />
@@ -186,7 +186,7 @@ The header and the footer are [section groups](../../../docs/guide/18-section-gr
 whole store. The header also holds the cart: the cart link carries `data-hk-open="cart-drawer"` and
 `<hk-cart-count />`, and `<hk-cart-drawer>` lists the lines (a plain link to the cart page without JavaScript).
 
-```html title="sections/console-header.sneferu"
+```html title="sections/console-header.snf"
 <header class="cc-header">
   <hk-container>
     <div class="cc-bar">
@@ -274,7 +274,7 @@ whole store. The header also holds the cart: the cart link carries `data-hk-open
 
 ## 5. Product carousel
 
-```html title="sections/console-showcase.sneferu"
+```html title="sections/console-showcase.snf"
 <hk-section padding-y="32" mobile-padding-y="16" class="cc-showcase">
   {% if collection(section.settings.list).products %}
     <div class="cc-carousel">
@@ -405,7 +405,7 @@ whole store. The header also holds the cart: the cart link carries `data-hk-open
 
 ## 6. Amount selector
 
-```html title="sections/console-amounts.sneferu"
+```html title="sections/console-amounts.snf"
 <hk-section padding-y="24" mobile-padding-y="16" class="cc-amounts">
   <nav class="cc-seg" aria-label="{{ t('amounts_label') }}">
     {% for block in section.blocks %}
@@ -426,7 +426,7 @@ whole store. The header also holds the cart: the cart link carries `data-hk-open
 </hk-schema>
 ```
 
-```html title="blocks/amount.sneferu"
+```html title="blocks/amount.snf"
 <a
   class="cc-seg-item"
   data-active="{{ block.settings.highlight }}"
@@ -469,7 +469,7 @@ amounts are whole pounds, so `money: 'whole', 'major'` prints them: `EGP 500`,
 
 ## 7. Platforms and trust strip
 
-```html title="sections/console-platforms.sneferu"
+```html title="sections/console-platforms.snf"
 <hk-section padding-y="32" mobile-padding-y="24" class="cc-platforms-row">
   <hk-stack gap="24" align="center">
     <hk-heading
@@ -511,7 +511,7 @@ amounts are whole pounds, so `money: 'whole', 'major'` prints them: `EGP 500`,
 </hk-schema>
 ```
 
-```html title="blocks/platform.sneferu"
+```html title="blocks/platform.snf"
 <a class="cc-plat" href="{{ url(block.settings.link) }}">
   <span class="cc-plat-icon">
     {% if block.settings.icon == 'gem' %}
@@ -564,7 +564,7 @@ amounts are whole pounds, so `money: 'whole', 'major'` prints them: `EGP 500`,
 </hk-schema>
 ```
 
-```html title="sections/console-trust.sneferu"
+```html title="sections/console-trust.snf"
 <hk-section padding-y="20" class="cc-trust">
   <ul class="cc-trust-list">
     {% for block in section.blocks %}
@@ -585,7 +585,7 @@ amounts are whole pounds, so `money: 'whole', 'major'` prints them: `EGP 500`,
 </hk-schema>
 ```
 
-```html title="blocks/trust.sneferu"
+```html title="blocks/trust.snf"
 <li class="cc-trust-item">
   <span class="cc-trust-icon"><hk-icon name="{{ block.settings.icon }}" class="ic" /></span>
   <span>{{ block.settings.label }}</span>
@@ -641,7 +641,7 @@ wrappers out of the flex rows.
 
 ## 8. Product grid and FAQ
 
-```html title="sections/console-products.sneferu"
+```html title="sections/console-products.snf"
 <hk-section padding-y="40" mobile-padding-y="28" class="cc-products">
   <hk-stack gap="20">
     <div class="cc-row-head">
@@ -695,7 +695,7 @@ wrappers out of the flex rows.
 </hk-schema>
 ```
 
-```html title="sections/console-faq.sneferu"
+```html title="sections/console-faq.snf"
 <hk-section padding-y="48" mobile-padding-y="32" class="cc-faq">
   <div id="faq" class="cc-faq-wrap">
     <hk-heading text="{{ section.settings.heading }}" level="h2" size="24" mobile-size="20" class="cc-h2" />
@@ -728,7 +728,7 @@ wrappers out of the flex rows.
 </hk-schema>
 ```
 
-```html title="blocks/faq-item.sneferu"
+```html title="blocks/faq-item.snf"
 {% if block.settings.question %}
   <details class="cc-faq-item">
     <summary>{{ block.settings.question }}<hk-icon name="chevron-down" class="ic" /></summary>
@@ -859,7 +859,7 @@ and blocks with `{ "ar": …, "en": … }` defaults.
 
 ## 10. The page and the phone layout
 
-```html title="templates/index.sneferu (excerpt)"
+```html title="templates/index.snf (excerpt)"
 <hk-sections />
 <hk-schema>
   {

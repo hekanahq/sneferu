@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { existsSync, mkdtempSync, writeFileSync, mkdirSync } from 'node:fs';
+import { cpSync, existsSync, mkdtempSync, renameSync, rmSync, writeFileSync, mkdirSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -19,13 +19,24 @@ const get = (port: number, path: string) => fetch(`http://127.0.0.1:${port}${pat
 
 describe('click to source', () => {
   it('maps the dev server section ids to section files', () => {
-    expect(sourceFor(STARTER, { section: 'default-0', path: '/' }).file).toBe(join(STARTER, 'sections/hero.sneferu'));
-    expect(sourceFor(STARTER, { section: 'default-1', block: null, path: '/' }).file).toBe(join(STARTER, 'sections/featured.sneferu'));
-    expect(sourceFor(ARCADE, { section: 'default-4', path: '/' }).file).toBe(join(ARCADE, 'sections/arcade-faq.sneferu'));
-    expect(sourceFor(STARTER, { section: null, path: '/' }).file).toBe(join(STARTER, 'layout/theme.sneferu'));
-    expect(sourceFor(STARTER, { section: 'default-9', path: '/' }).file).toBe(join(STARTER, 'templates/index.sneferu'));
+    expect(sourceFor(STARTER, { section: 'default-0', path: '/' }).file).toBe(join(STARTER, 'sections/hero.snf'));
+    expect(sourceFor(STARTER, { section: 'default-1', block: null, path: '/' }).file).toBe(join(STARTER, 'sections/featured.snf'));
+    expect(sourceFor(ARCADE, { section: 'default-4', path: '/' }).file).toBe(join(ARCADE, 'sections/arcade-faq.snf'));
+    expect(sourceFor(STARTER, { section: null, path: '/' }).file).toBe(join(STARTER, 'layout/theme.snf'));
+    expect(sourceFor(STARTER, { section: 'default-9', path: '/' }).file).toBe(join(STARTER, 'templates/index.snf'));
     expect(templateOfPath('/__template/product')).toBe('product');
     expect(templateOfPath('/')).toBe('index');
+  });
+  it('opens a .sneferu file when the theme still uses the old extension', () => {
+    const d = mkdtempSync(join(tmpdir(), 'snf-reveal-'));
+    try {
+      cpSync(STARTER, d, { recursive: true });
+      renameSync(join(d, 'sections/hero.snf'), join(d, 'sections/hero.sneferu'));
+      renameSync(join(d, 'layout/theme.snf'), join(d, 'layout/theme.sneferu'));
+      expect(sourceFor(d, { section: 'default-0', path: '/' }).file).toBe(join(d, 'sections/hero.sneferu'));
+      expect(sourceFor(d, { section: 'default-1', path: '/' }).file).toBe(join(d, 'sections/featured.snf'));
+      expect(sourceFor(d, { section: null, path: '/' }).file).toBe(join(d, 'layout/theme.sneferu'));
+    } finally { rmSync(d, { recursive: true, force: true }); }
   });
   it('reads the port the CLI prints, and the manifest', () => {
     expect(portFromOutput('Sneferu dev → http://127.0.0.1:4101  (en · /?locale=ar)')).toBe(4101);

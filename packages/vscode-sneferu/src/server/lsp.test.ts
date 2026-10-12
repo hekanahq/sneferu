@@ -1,5 +1,5 @@
 import { describe, expect, it, beforeAll, afterAll } from 'vitest';
-import { cpSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -48,18 +48,18 @@ describe('language data (generated from the SDK docs)', () => {
 
 describe('completion', () => {
   it('hk tags after <', () => {
-    const items = complete(envAt(STARTER, 'sections/hero.sneferu', '<hk-§'));
+    const items = complete(envAt(STARTER, 'sections/hero.snf', '<hk-§'));
     expect(items.map((i) => i.label)).toEqual(expect.arrayContaining(['hk-image', 'hk-product-grid', 'hk-stack']));
     const img = items.find((i) => i.label === 'hk-image')!;
     expect(img.insertText).toMatch(/ \/>$/); // no children: self-closing
     expect(items.find((i) => i.label === 'hk-stack')!.insertText).toContain('</hk-stack>');
   });
   it('hk-slot only where it is allowed', () => {
-    expect(labels(envAt(STARTER, 'sections/hero.sneferu', '<§'))).not.toContain('hk-slot');
-    expect(labels(envAt(STARTER, 'layout/theme.sneferu', '<§'))).toContain('hk-slot');
+    expect(labels(envAt(STARTER, 'sections/hero.snf', '<§'))).not.toContain('hk-slot');
+    expect(labels(envAt(STARTER, 'layout/theme.snf', '<§'))).toContain('hk-slot');
   });
   it('props with enum values and responsive variants', () => {
-    const env = envAt(STARTER, 'sections/hero.sneferu', '<hk-stack direction="row" §');
+    const env = envAt(STARTER, 'sections/hero.snf', '<hk-stack direction="row" §');
     const l = labels(env);
     expect(l).toEqual(expect.arrayContaining(['gap', 'tablet-gap', 'mobile-direction', 'align', 'class']));
     expect(l).not.toContain('direction'); // already written
@@ -68,41 +68,41 @@ describe('completion', () => {
     expect(align.insertText).toBe('align="${1|start,center,end,stretch|}"');
   });
   it('enum values inside an attribute', () => {
-    expect(labels(envAt(STARTER, 'sections/hero.sneferu', '<hk-image aspect-ratio="§'))).toEqual(['1/1', '4/5', '3/4', '16/9', '21/9']);
-    expect(labels(envAt(STARTER, 'sections/hero.sneferu', '<hk-section background="§'))).toContain('theme:accent');
+    expect(labels(envAt(STARTER, 'sections/hero.snf', '<hk-image aspect-ratio="§'))).toEqual(['1/1', '4/5', '3/4', '16/9', '21/9']);
+    expect(labels(envAt(STARTER, 'sections/hero.snf', '<hk-section background="§'))).toContain('theme:accent');
   });
   it('filters after |', () => {
-    expect(labels(envAt(STARTER, 'sections/hero.sneferu', '{{ p.price | mo§ }}'))).toEqual(expect.arrayContaining(['money', 'truncate', 'json_attr']));
+    expect(labels(envAt(STARTER, 'sections/hero.snf', '{{ p.price | mo§ }}'))).toEqual(expect.arrayContaining(['money', 'truncate', 'json_attr']));
   });
   it("section.settings from the file's own schema", () => {
-    const src = readFileSync(join(STARTER, 'sections/hero.sneferu'), 'utf8');
-    const l = labels(envAt(STARTER, 'sections/hero.sneferu', `{{ section.settings.§ }}\n${src}`));
+    const src = readFileSync(join(STARTER, 'sections/hero.snf'), 'utf8');
+    const l = labels(envAt(STARTER, 'sections/hero.snf', `{{ section.settings.§ }}\n${src}`));
     expect(l).toEqual(['title', 'subtitle']);
   });
   it('section, product, collection and loop variables', () => {
-    expect(labels(envAt(STARTER, 'sections/hero.sneferu', '{{ section.§ }}'))).toEqual(['id', 'type', 'settings', 'blocks']);
-    expect(labels(envAt(STARTER, 'sections/hero.sneferu', "{% for p in collection('featured').products %}{{ p.§ }}{% endfor %}"))).toEqual(expect.arrayContaining(['title', 'url', 'price', 'compare_at', 'image']));
-    expect(labels(envAt(STARTER, 'sections/hero.sneferu', "{{ collection('x').§ }}"))).toEqual(['title', 'products']);
-    expect(labels(envAt(STARTER, 'sections/hero.sneferu', '{% for b in section.blocks %}{{ b.settings.§ }}{% endfor %}'))).toEqual(['label']); // blocks/chip.sneferu
-    const top = labels(envAt(STARTER, 'sections/hero.sneferu', '{% for p in x %}{{ § }}{% endfor %}'));
+    expect(labels(envAt(STARTER, 'sections/hero.snf', '{{ section.§ }}'))).toEqual(['id', 'type', 'settings', 'blocks']);
+    expect(labels(envAt(STARTER, 'sections/hero.snf', "{% for p in collection('featured').products %}{{ p.§ }}{% endfor %}"))).toEqual(expect.arrayContaining(['title', 'url', 'price', 'compare_at', 'image']));
+    expect(labels(envAt(STARTER, 'sections/hero.snf', "{{ collection('x').§ }}"))).toEqual(['title', 'products']);
+    expect(labels(envAt(STARTER, 'sections/hero.snf', '{% for b in section.blocks %}{{ b.settings.§ }}{% endfor %}'))).toEqual(['label']); // blocks/chip.snf
+    const top = labels(envAt(STARTER, 'sections/hero.snf', '{% for p in x %}{{ § }}{% endfor %}'));
     expect(top).toEqual(expect.arrayContaining(['store', 'section', 'forloop', 'p', 'collection', 't']));
-    expect(labels(envAt(STARTER, 'layout/theme.sneferu', '{{ § }}'))).not.toContain('section');
+    expect(labels(envAt(STARTER, 'layout/theme.snf', '{{ § }}'))).not.toContain('section');
   });
   it("t('…') keys from the locales, snippet names for render", () => {
-    expect(labels(envAt(STARTER, 'sections/hero.sneferu', "{{ t('§') }}"))).toEqual(['shop_now']);
-    expect(labels(envAt(STARTER, 'sections/hero.sneferu', "{{ '§' | t }}"))).toEqual(['shop_now']);
-    expect(labels(envAt(ARCADE, 'blocks/chip.sneferu', "{% render '§' %}"))).toEqual(['glyph']);
+    expect(labels(envAt(STARTER, 'sections/hero.snf', "{{ t('§') }}"))).toEqual(['shop_now']);
+    expect(labels(envAt(STARTER, 'sections/hero.snf', "{{ '§' | t }}"))).toEqual(['shop_now']);
+    expect(labels(envAt(ARCADE, 'blocks/chip.snf', "{% render '§' %}"))).toEqual(['glyph']);
   });
   it('directives after {%', () => {
-    expect(labels(envAt(STARTER, 'sections/hero.sneferu', '{% §'))).toEqual(['if', 'elsif', 'else', 'endif', 'for', 'endfor', 'render']);
+    expect(labels(envAt(STARTER, 'sections/hero.snf', '{% §'))).toEqual(['if', 'elsif', 'else', 'endif', 'for', 'endfor', 'render']);
   });
   it('field types inside <hk-schema>', () => {
-    expect(labels(envAt(STARTER, 'sections/hero.sneferu', '<hk-schema>{ "settings": { "a": { "type": "§" } } }</hk-schema>'))).toEqual(expect.arrayContaining(['text', 'range', 'select', 'color', 'product']));
+    expect(labels(envAt(STARTER, 'sections/hero.snf', '<hk-schema>{ "settings": { "a": { "type": "§" } } }</hk-schema>'))).toEqual(expect.arrayContaining(['text', 'range', 'select', 'color', 'product']));
   });
 });
 
 describe('hover', () => {
-  const h = (src: string, root = STARTER, rel = 'sections/hero.sneferu') => hover(envAt(root, rel, src))?.markdown ?? '';
+  const h = (src: string, root = STARTER, rel = 'sections/hero.snf') => hover(envAt(root, rel, src))?.markdown ?? '';
   it('tags and props from tags.json', () => {
     expect(h('<hk-im§age src="x" />')).toContain('`<hk-image>` · Image');
     expect(h('<hk-image aspect-r§atio="1/1" />')).toMatch(/aspect-ratio.*Aspect ratio/s);
@@ -114,32 +114,32 @@ describe('hover', () => {
     expect(h('{{ sto§re.name }}')).toContain('the store');
   });
   it('settings and translations', () => {
-    const src = readFileSync(join(STARTER, 'sections/hero.sneferu'), 'utf8').replace('section.settings.title', 'section.settings.ti§tle');
+    const src = readFileSync(join(STARTER, 'sections/hero.snf'), 'utf8').replace('section.settings.title', 'section.settings.ti§tle');
     expect(h(src)).toMatch(/\*\*title\*\* · setting \(`text`\)[\s\S]*Default: `"Hello"`/);
     expect(h("{{ t('shop_n§ow') }}")).toContain('**en**: Shop now');
   });
 });
 
 describe('definition and links', () => {
-  it("render 'glyph' → snippets/glyph.sneferu, t('key') → every locale", () => {
-    expect(definition(envAt(ARCADE, 'blocks/chip.sneferu', "{% render 'gly§ph', name: 'coin' %}"))).toEqual([{ rel: 'snippets/glyph.sneferu', offset: 0, length: 0 }]);
-    const t = definition(envAt(ARCADE, 'sections/arcade-products.sneferu', "{{ t('view_a§ll') }}"));
+  it("render 'glyph' → snippets/glyph.snf, t('key') → every locale", () => {
+    expect(definition(envAt(ARCADE, 'blocks/chip.snf', "{% render 'gly§ph', name: 'coin' %}"))).toEqual([{ rel: 'snippets/glyph.snf', offset: 0, length: 0 }]);
+    const t = definition(envAt(ARCADE, 'sections/arcade-products.snf', "{{ t('view_a§ll') }}"));
     expect(t.map((x) => x.rel).sort()).toEqual(['locales/ar.json', 'locales/en.json']);
     const en = readFileSync(join(ARCADE, 'locales/en.json'), 'utf8');
     const loc = t.find((x) => x.rel === 'locales/en.json')!;
     expect(en.slice(loc.offset, loc.offset + loc.length)).toBe('"view_all"');
   });
   it('a setting → its schema entry', () => {
-    const src = readFileSync(join(STARTER, 'sections/hero.sneferu'), 'utf8');
-    const env = envAt(STARTER, 'sections/hero.sneferu', src.replace('section.settings.subtitle', 'section.settings.sub§title'));
+    const src = readFileSync(join(STARTER, 'sections/hero.snf'), 'utf8');
+    const env = envAt(STARTER, 'sections/hero.snf', src.replace('section.settings.subtitle', 'section.settings.sub§title'));
     const [d] = definition(env);
     expect(env.text.slice(d!.offset, d!.offset + d!.length)).toBe('"subtitle"');
   });
   it("a template's section type → the section file; document links", () => {
-    const src = readFileSync(join(STARTER, 'templates/index.sneferu'), 'utf8');
-    expect(definition(envAt(STARTER, 'templates/index.sneferu', src.replace('"hero"', '"he§ro"')))).toEqual([{ rel: 'sections/hero.sneferu', offset: 0, length: 0 }]);
-    const l = links(src, 'templates/index.sneferu', indexTheme(STARTER));
-    expect(l.map((x) => x.rel)).toEqual(['sections/hero.sneferu', 'sections/featured.sneferu']);
+    const src = readFileSync(join(STARTER, 'templates/index.snf'), 'utf8');
+    expect(definition(envAt(STARTER, 'templates/index.snf', src.replace('"hero"', '"he§ro"')))).toEqual([{ rel: 'sections/hero.snf', offset: 0, length: 0 }]);
+    const l = links(src, 'templates/index.snf', indexTheme(STARTER));
+    expect(l.map((x) => x.rel)).toEqual(['sections/hero.snf', 'sections/featured.snf']);
     expect(src.slice(l[0]!.offset, l[0]!.offset + l[0]!.length)).toBe('hero');
   });
 });
@@ -151,16 +151,16 @@ describe('diagnostics: the compiler, live', () => {
     }
   });
   it('unsaved text is checked, with the SN code and the exact range', () => {
-    const file = join(STARTER, 'sections/hero.sneferu');
+    const file = join(STARTER, 'sections/hero.snf');
     const text = readFileSync(file, 'utf8').replace('<hk-heading', '<hk-headin');
     const { problems } = checkTheme(STARTER, new Map([[file, text]]));
     const p = problems.find((x) => x.code === 'SN2003')!;
-    expect(p.rel).toBe('sections/hero.sneferu');
+    expect(p.rel).toBe('sections/hero.snf');
     expect(text.slice(p.start, p.end)).toBe('<hk-headin');
     expect(p.message).toContain('Did you mean "hk-heading"');
   });
   it('syntax errors and bad attributes', () => {
-    const file = join(STARTER, 'sections/featured.sneferu');
+    const file = join(STARTER, 'sections/featured.snf');
     const text = readFileSync(file, 'utf8') + '\n<hk-text text="{{ x }}" colour="red" />\n{{ broken';
     const { problems } = checkTheme(STARTER, new Map([[file, text]]));
     expect(problems.map((p) => p.code)).toContain('SN1001');
@@ -183,7 +183,7 @@ describe('theme checks', () => {
     writeFileSync(join(dir, 'locales/ar.json'), '{ "shop_now": "x" }');
     writeFileSync(join(dir, 'snippets.txt'), '');
     rmSync(join(dir, 'snippets.txt'));
-    cpSync(join(ARCADE, 'snippets/glyph.sneferu'), join(dir, 'snippets/unused.sneferu'));
+    cpSync(join(ARCADE, 'snippets/glyph.snf'), join(dir, 'snippets/unused.sneferu'));
     writeFileSync(join(dir, 'assets/big.css'), 'a{}'.repeat(200_000));
     writeFileSync(join(dir, 'sections/extra.sneferu'), [
       '<hk-section>',
@@ -224,9 +224,43 @@ describe('theme checks', () => {
   });
 });
 
+describe('.snf and .sneferu in one theme', () => {
+  let dir: string;
+  beforeAll(() => {
+    dir = mkdtempSync(join(tmpdir(), 'snf-mixed-'));
+    cpSync(STARTER, dir, { recursive: true });
+    // the old extension still works: a snippet and a section in .sneferu, the rest in .snf
+    mkdirSync(join(dir, 'snippets'), { recursive: true });
+    writeFileSync(join(dir, 'snippets/old.sneferu'), '<span>old</span>');
+    cpSync(join(STARTER, 'sections/featured.snf'), join(dir, 'sections/featured.sneferu'));
+    rmSync(join(dir, 'sections/featured.snf'));
+  });
+  afterAll(() => rmSync(dir, { recursive: true, force: true }));
+
+  it('indexes both extensions under one name', () => {
+    const t = indexTheme(dir);
+    expect(t.snippets).toContain('old');
+    expect(t.sections).toEqual(expect.arrayContaining(['hero', 'featured']));
+    expect(t.fileOf('sections', 'hero')).toBe('sections/hero.snf');
+    expect(t.fileOf('sections', 'featured')).toBe('sections/featured.sneferu');
+    expect(t.fileOf('snippets', 'missing')).toBe('snippets/missing.snf');
+  });
+  it("render 'name' and a section type go to whichever file exists", () => {
+    expect(labels(envAt(dir, 'sections/hero.snf', "{% render '§' %}"))).toContain('old');
+    expect(definition(envAt(dir, 'sections/hero.snf', "{% render 'ol§d' %}"))).toEqual([{ rel: 'snippets/old.sneferu', offset: 0, length: 0 }]);
+    const src = readFileSync(join(dir, 'templates/index.snf'), 'utf8');
+    expect(definition(envAt(dir, 'templates/index.snf', src.replace('"featured"', '"feat§ured"')))).toEqual([{ rel: 'sections/featured.sneferu', offset: 0, length: 0 }]);
+    expect(links(src, 'templates/index.snf', indexTheme(dir)).map((x) => x.rel)).toEqual(['sections/hero.snf', 'sections/featured.sneferu']);
+  });
+  it('completion and hover work in a .sneferu file', () => {
+    expect(labels(envAt(dir, 'sections/featured.sneferu', '<hk-§'))).toContain('hk-stack');
+    expect(hover(envAt(dir, 'sections/featured.sneferu', "{% render 'ol§d' %}"))?.markdown).toBe('snippets/old.sneferu');
+  });
+});
+
 describe('formatting', () => {
   it('formats like `sneferu format` and refuses to change meaning', async () => {
-    const file = join(ARCADE, 'sections/arcade-products.sneferu');
+    const file = join(ARCADE, 'sections/arcade-products.snf');
     const messy = readFileSync(file, 'utf8').replace(/\n {2,}/g, '\n').replace('<hk-stack gap="20">', '<hk-stack    gap="20"   >');
     const ours = await formatDocument(file, messy, { root: ARCADE });
     expect(ours).toBe(await formatText(file, messy));

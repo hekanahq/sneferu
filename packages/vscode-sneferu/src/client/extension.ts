@@ -93,7 +93,7 @@ function setStatus(s: DevState) {
 }
 
 const templatesOf = (root: string) => {
-  try { return readdirSync(join(root, 'templates')).filter((f) => f.endsWith('.sneferu')).map((f) => f.slice(0, -8)).sort((a, b) => (a === 'index' ? -1 : b === 'index' ? 1 : a.localeCompare(b))); } catch { return ['index']; }
+  try { return [...new Set(readdirSync(join(root, 'templates')).filter((f) => /\.(snf|sneferu)$/.test(f)).map((f) => f.replace(/\.(snf|sneferu)$/, '')))].sort((a, b) => (a === 'index' ? -1 : b === 'index' ? 1 : a.localeCompare(b))); } catch { return ['index']; }
 };
 
 async function openPreview() {
@@ -155,7 +155,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<typeof
     ],
     synchronize: {
       configurationSection: 'sneferu',
-      fileEvents: vscode.workspace.createFileSystemWatcher('**/{*.sneferu,theme.json,locales/*.json,assets/**}'),
+      fileEvents: vscode.workspace.createFileSystemWatcher('**/{*.snf,*.sneferu,theme.json,locales/*.json,assets/**}'),
     },
     initializationOptions: { settings: serverSettings() },
   };

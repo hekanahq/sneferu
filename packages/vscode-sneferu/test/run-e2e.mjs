@@ -2,7 +2,7 @@
 // On Linux without a display, run under xvfb-run:  xvfb-run -a node test/run-e2e.mjs
 // SNEFERU_SHOTS=<dir> also saves screenshots of completion, hover, diagnostics and the preview.
 import { runTests } from '@vscode/test-electron';
-import { cpSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { cpSync, mkdirSync, mkdtempSync, renameSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -14,6 +14,9 @@ const work = mkdtempSync(join(tmpdir(), 'sneferu-e2e-'));
 // a copy, so the tests can edit files freely: the arcade example and the starter side by side
 cpSync(join(repo, 'examples/themes/arcade'), join(work, 'arcade'), { recursive: true });
 cpSync(join(repo, 'packages/vscode-sneferu/test/fixtures/starter'), join(work, 'starter'), { recursive: true });
+// the same starter with one section still in the old .sneferu extension
+cpSync(join(repo, 'packages/vscode-sneferu/test/fixtures/starter'), join(work, 'legacy'), { recursive: true });
+renameSync(join(work, 'legacy/sections/hero.snf'), join(work, 'legacy/sections/hero.sneferu'));
 // a clean editor for the screenshots
 mkdirSync(join(work, '.user', 'User'), { recursive: true });
 writeFileSync(join(work, '.user', 'User', 'settings.json'), JSON.stringify({

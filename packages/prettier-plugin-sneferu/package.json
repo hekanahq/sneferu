@@ -1,7 +1,7 @@
 {
   "name": "@hekana/prettier-plugin-sneferu",
-  "version": "0.4.1",
-  "description": "Prettier plugin for Sneferu theme files (.sneferu)",
+  "version": "0.4.2",
+  "description": "Prettier plugin for Sneferu theme files (.snf, .sneferu)",
   "type": "module",
   "sideEffects": false,
   "main": "./dist/index.cjs",

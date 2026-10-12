@@ -21,12 +21,12 @@ describe('formatting never changes what a theme compiles to', () => {
     });
   }
 
-  // every .sneferu example in the guide (the cookbook sections and the chapter examples)
+  // every .snf example in the guide (the cookbook sections and the chapter examples)
   const blocks: [string, string][] = [];
   for (const dir of ['docs/guide', 'docs']) {
     for (const f of readdirSync(repo(dir)).filter((x) => x.endsWith('.mdx'))) {
       const text = readFileSync(repo(`${dir}/${f}`), 'utf8');
-      for (const m of text.matchAll(/```html title="([^"]+\.sneferu)"\n([\s\S]*?)```/g)) blocks.push([`${f} ${m[1]}`, m[2]!]);
+      for (const m of text.matchAll(/```html title="([^"]+\.(?:snf|sneferu))"\n([\s\S]*?)```/g)) blocks.push([`${f} ${m[1]}`, m[2]!]);
     }
   }
   it('finds the guide examples', () => { expect(blocks.length).toBeGreaterThan(10); });
@@ -48,11 +48,11 @@ describe('the shipped themes and the guide are formatted', () => {
       formatted.forEach((f, i) => expect(Buffer.from(f.bytes).toString(), f.path).toBe(Buffer.from(files[i]!.bytes).toString()));
     });
   }
-  it('every .sneferu example in the guide is formatted, and matches its file in the example store or examples/ when it has one', async () => {
+  it('every .snf example in the guide is formatted, and matches its file in the example store or examples/ when it has one', async () => {
     for (const dir of ['docs/guide', 'docs']) {
       for (const f of readdirSync(repo(dir)).filter((x) => x.endsWith('.mdx'))) {
         const text = readFileSync(repo(`${dir}/${f}`), 'utf8');
-        for (const m of text.matchAll(/```html title="([^"]+\.sneferu)"\n([\s\S]*?)```/g)) {
+        for (const m of text.matchAll(/```html title="([^"]+\.(?:snf|sneferu))"\n([\s\S]*?)```/g)) {
           expect(await fmt(m[2]!), `${f} ${m[1]}`).toBe(m[2]);
           const file = m[1]!.startsWith('examples/') ? repo(m[1]!) : repo(`docs/examples/example-store/${m[1]}`);
           if (existsSync(file)) expect(m[2], `${f} ${m[1]}`).toBe(readFileSync(file, 'utf8'));

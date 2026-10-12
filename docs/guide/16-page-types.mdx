@@ -7,15 +7,15 @@ tokens and CSS) from the first day.
 
 | Template file | Page | Data in scope |
 | - | - | - |
-| `templates/index.sneferu` | Home (required) | none |
-| `templates/product.sneferu` | One product | `product` |
-| `templates/collection.sneferu` | A category, or all products | `collection`, `paginate` |
-| `templates/search.sneferu` | Search results | `search`, `paginate` |
-| `templates/cart.sneferu` | The cart | none (the cart is drawn in the browser, see [Cart and controllers](17-cart-and-controllers.mdx)) |
-| `templates/page.sneferu` | A merchant's content page | `page` |
-| `templates/404.sneferu` | Page not found | none |
+| `templates/index.snf` | Home (required) | none |
+| `templates/product.snf` | One product | `product` |
+| `templates/collection.snf` | A category, or all products | `collection`, `paginate` |
+| `templates/search.snf` | Search results | `search`, `paginate` |
+| `templates/cart.snf` | The cart | none (the cart is drawn in the browser, see [Cart and controllers](17-cart-and-controllers.mdx)) |
+| `templates/page.snf` | A merchant's content page | `page` |
+| `templates/404.snf` | Page not found | none |
 
-`product`, `collection` and `page` also take **alternates**: `product.codes.sneferu`
+`product`, `collection` and `page` also take **alternates**: `product.codes.snf`
 is a second product template a merchant can assign to some products. Any other
 template name is SN3035.
 
@@ -23,7 +23,7 @@ Every template can also read `request`, `localization`, `store`, `locale` and `d
 
 <Example>
 
-```html title="templates/product.sneferu"
+```html title="templates/product.snf"
 <hk-sections />
 <hk-schema>
   {
@@ -152,5 +152,5 @@ that uses it has its products preloaded (`pageDependencies(...).products`).
 `/category/<handle>?page=2`, `/search?q=card`, `/cart`, `/pages/about`, and a
 404 for anything else. Add `/en` or `/ar` to switch language, or
 `?template=product.codes` to preview an alternate.
-The 404 page uses your `templates/404.sneferu`, or the default store's when you
+The 404 page uses your `templates/404.snf`, or the default store's when you
 have none; `/__template/<name>` still renders any template directly.

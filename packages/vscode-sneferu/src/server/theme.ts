@@ -1,6 +1,7 @@
 import { existsSync, lstatSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { dirname, join, relative, sep } from 'node:path';
 import { parseTree, findNodeAtLocation, type Node as JsonNode } from 'jsonc-parser';
+import { isTemplateFile, stripTemplateExtension, TEMPLATE_EXTENSIONS } from '@hekana/sneferu-core';
 
 /** Text of open editors, by absolute path; wins over the file on disk. */
 export type Overlay = ReadonlyMap<string, string>;
@@ -48,7 +49,7 @@ export function listThemeFiles(root: string): string[] {
   return out.sort();
 }
 
-/** The schema JSON of a .sneferu file: its text, and where it starts in the file. */
+/** The schema JSON of a .snf (or .sneferu) file: its text, and where it starts in the file. */
 export function schemaOf(text: string): { json: string; offset: number } | undefined {
   const open = /<hk-schema\s*>/i.exec(text);
   if (!open) return undefined;
@@ -101,9 +102,11 @@ export interface ThemeIndex {
   blocks: string[];
   assets: { path: string; size: number }[];
   text: (rel: string) => string | undefined;
+  /** The real file of a template, section, block or snippet: `sections/hero.snf` or `sections/hero.sneferu`. */
+  fileOf: (dir: string, name: string) => string;
 }
 
-const nameOf = (p: string) => p.split('/').pop()!.replace(/\.sneferu$/, '');
+const nameOf = (p: string) => stripTemplateExtension(p.split('/').pop()!);
 
 export function indexTheme(root: string, overlay: Overlay = new Map()): ThemeIndex {
   const files = listThemeFiles(root);
@@ -127,7 +130,7 @@ export function indexTheme(root: string, overlay: Overlay = new Map()): ThemeInd
   try { manifest = JSON.parse(mt); } catch { /* reported by the compiler */ }
   const locales = new Map<string, Map<string, Translation>>();
   for (const f of files.filter((p) => /^locales\/[^/]+\.json$/.test(p))) locales.set(f.slice(8, -5), translationsOf(text(f) ?? ''));
-  const inDir = (d: string) => files.filter((p) => p.startsWith(`${d}/`) && p.endsWith('.sneferu')).map(nameOf).sort();
+  const inDir = (d: string) => files.filter((p) => p.startsWith(`${d}/`) && isTemplateFile(p)).map(nameOf).sort();
   const assets = files.filter((p) => p.startsWith('assets/')).map((path) => {
     let size = 0;
     try { size = statSync(join(root, ...path.split('/'))).size; } catch { /* only in an editor */ }
@@ -144,6 +147,7 @@ export function indexTheme(root: string, overlay: Overlay = new Map()): ThemeInd
     locales,
     snippets: inDir('snippets'), sections: inDir('sections'), blocks: inDir('blocks'),
     assets, text,
+    fileOf: (dir, name) => TEMPLATE_EXTENSIONS.map((e) => `${dir}/${name}${e}`).find((p) => files.includes(p)) ?? `${dir}/${name}${TEMPLATE_EXTENSIONS[0]}`,
   };
 }
 

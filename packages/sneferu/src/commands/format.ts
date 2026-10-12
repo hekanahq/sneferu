@@ -4,10 +4,11 @@ import * as prettier from 'prettier';
 import sneferuPlugin from '@hekana/prettier-plugin-sneferu';
 import { lower, parseTemplate } from '@hekana/sneferu-compiler';
 import { createDefaultRegistry } from '@hekana/sneferu-components';
+import { isTemplateFile } from '@hekana/sneferu-core';
 import { loadTheme } from '../load';
 
 /** The files `sneferu format` owns: templates, the manifest and the locales. */
-export const isFormattable = (p: string): boolean => p.endsWith('.sneferu') || p === 'theme.json' || /^(locales|groups)\/[^/]+\.json$/.test(p);
+export const isFormattable = (p: string): boolean => isTemplateFile(p) || p === 'theme.json' || /^(locales|groups)\/[^/]+\.json$/.test(p);
 
 const registry = createDefaultRegistry();
 /** What the compiler makes of a file; formatting must leave it unchanged. */
@@ -25,7 +26,7 @@ export async function formatText(absPath: string, text: string): Promise<string>
     printWidth: 120,
     ...rest,
     filepath: absPath,
-    parser: absPath.endsWith('.sneferu') ? 'sneferu' : 'json',
+    parser: isTemplateFile(absPath) ? 'sneferu' : 'json',
     plugins: [sneferuPlugin],
   });
 }

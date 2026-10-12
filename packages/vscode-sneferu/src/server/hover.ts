@@ -39,7 +39,7 @@ export function hover(env: Env): HoverResult | undefined {
     if ((e.fn === 't' || (e.fn === 'other' && /^['"]\s*\|\s*t\b/.test(text.slice(str.end - 1, str.end + 20)))) && theme) {
       return { markdown: `**${str.value}** · translation\n\n${translationDoc(theme, str.value)}`, start: str.start, end: str.end };
     }
-    if (e.fn === 'render') return { markdown: `snippets/${str.value}.sneferu${theme?.snippets.includes(str.value) ? '' : ' _(missing)_'}`, start: str.start, end: str.end };
+    if (e.fn === 'render') return { markdown: `${theme ? theme.fileOf('snippets', str.value) : `snippets/${str.value}.snf`}${theme?.snippets.includes(str.value) ? '' : ' _(missing)_'}`, start: str.start, end: str.end };
     if (e.fn === 'settings' && theme) {
       const f = theme.manifest.settings.find((x) => x.key === str.value);
       return f ? { markdown: fieldDoc(f), start: str.start, end: str.end } : undefined;

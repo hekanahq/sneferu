@@ -1,7 +1,7 @@
 # 10. Format your theme
 
 `@hekana/prettier-plugin-sneferu` teaches [Prettier](https://prettier.io) to
-format `.sneferu` files. It indents nested tags and `{% if %}` / `{% for %}`
+format `.snf` files. It indents nested tags and `{% if %}` / `{% for %}`
 blocks, puts long attribute lists one per line, tidies the spacing in `{{ }}`
 and `{% %}`, and pretty-prints the JSON in `<hk-schema>`. The `sneferu format`
 command runs the same plugin over a whole theme, without any setup.
@@ -14,7 +14,7 @@ and after formatting.
 
 A section written on as few lines as possible:
 
-```html title="sections/hero.sneferu (before)"
+```html title="sections/hero.snf (before)"
 <hk-section background="theme:secondary" padding-y="96"><hk-stack gap="16" align="start">
 <hk-heading text="{{section.settings.title|upcase}}" level="h1" size="56" mobile-size="32" color="#FFFFFF" />
 {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
@@ -24,7 +24,7 @@ A section written on as few lines as possible:
 
 The same file after `npx sneferu format`:
 
-```html title="sections/hero.sneferu (after)"
+```html title="sections/hero.snf (after)"
 <hk-section background="theme:secondary" padding-y="96">
   <hk-stack gap="16" align="start">
     <hk-heading text="{{ section.settings.title | upcase }}" level="h1" size="56" mobile-size="32" color="#FFFFFF" />
@@ -61,11 +61,11 @@ npx sneferu format ./my-theme
 ```
 
 ```
-sections/hero.sneferu formatted
+sections/hero.snf formatted
 ✔ formatted 1 of 8 files
 ```
 
-`format` formats every `.sneferu` file, `theme.json` and the files in
+`format` formats every `.snf` file, `theme.json` and the files in
 `locales/`. It reads your Prettier configuration (`.prettierrc` and the other
 files Prettier supports, and `.editorconfig`) if the theme has one. CSS files in
 `assets/` are left as they are.
@@ -85,7 +85,7 @@ npx sneferu format --check
 ```
 
 ```
-sections/hero.sneferu is not formatted
+sections/hero.snf is not formatted
 ✖ 1 of 8 files need formatting (run sneferu format)
 ```
 
@@ -123,11 +123,11 @@ Then add a `.prettierrc` file next to `theme.json`:
 }
 ```
 
-Now Prettier formats `.sneferu` files like any other:
+Now Prettier formats `.snf` files like any other:
 
 ```bash
-npx prettier --write "**/*.sneferu"
-npx prettier --check "**/*.sneferu"
+npx prettier --write "**/*.{snf,sneferu}"
+npx prettier --check "**/*.{snf,sneferu}"
 ```
 
 `package.json`, `node_modules/`, lock files and files whose name starts with a
@@ -136,7 +136,7 @@ dot (such as `.prettierrc` and `.vscode/`) are not part of the theme: `validate`
 
 ## Set up VS Code
 
-The [Sneferu extension](13-editor-setup-vscode.mdx) formats `.sneferu` files with
+The [Sneferu extension](13-editor-setup-vscode.mdx) formats `.snf` files with
 this plugin on its own, with no other setup. Without it, use the Prettier
 extension:
 
@@ -151,6 +151,7 @@ extension:
 ```json title=".vscode/settings.json"
 {
   "files.associations": {
+    "*.snf": "html",
     "*.sneferu": "html"
   },
   "[html]": {
@@ -160,16 +161,16 @@ extension:
 }
 ```
 
-1. **Lines 2-4** open `.sneferu` files in HTML mode, for highlighting, tag
+1. **Lines 2-5** open `.snf` (and older `.sneferu`) files in HTML mode, for highlighting, tag
    completion and Emmet. Prettier still picks the Sneferu plugin, because it
-   chooses the formatter from the `.sneferu` extension, not from the editor
+   chooses the formatter from the `.snf` extension, not from the editor
    mode.
-2. **Lines 5-8** make Prettier the formatter for these files and format on
+2. **Lines 6-9** make Prettier the formatter for these files and format on
    save. If you use an extension that registers its own `sneferu` language,
    put the same two lines under `"[sneferu]"` instead of `"[html]"`.
 
 Other editors work the same way: any editor with a Prettier integration formats
-`.sneferu` files once the plugin is in `.prettierrc`.
+`.snf` files once the plugin is in `.prettierrc`.
 
 ## Options
 
@@ -185,7 +186,7 @@ format` reads the same file.
 | `sneferuSingleQuote` | `true` | Use `'` for strings inside `{{ }}` and `{% %}` (`"` when `false`). A string that contains the chosen quote keeps the other one |
 | `indentSchema` | `true` | Indent the JSON inside `<hk-schema>` one level. `false` keeps it at the level of the tag |
 
-`printWidth` defaults to `120` for `.sneferu` files (Prettier's own default is
+`printWidth` defaults to `120` for `.snf` files (Prettier's own default is
 `80`): theme tags carry many attributes, and 120 keeps most of them on one line.
 
 ## What the formatter changes

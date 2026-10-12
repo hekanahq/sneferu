@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { mkdtempSync, readFileSync, writeFileSync, existsSync, mkdirSync, symlinkSync } from 'node:fs';
+import { mkdtempSync, readFileSync, readdirSync, renameSync, writeFileSync, existsSync, mkdirSync, symlinkSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { runInit } from './commands/init';
@@ -17,6 +17,30 @@ describe('cli commands', () => {
     const v = runValidate(dir);
     expect(v.ok).toBe(true);
     expect(v.output).toContain('✔ theme my-shop@0.1.0 is valid');
+  });
+  it('init writes .snf files; validate and build take .snf, .sneferu and a mix', () => {
+    runInit(dir, {});
+    const templates = loadTheme(dir).filter((f) => /^(layout|templates|sections|blocks|snippets)\//.test(f.path)).map((f) => f.path);
+    expect(templates.length).toBeGreaterThan(10);
+    expect(templates.every((p) => p.endsWith('.snf'))).toBe(true);
+    const before = runBuild(dir, join(dirname(dir), 'out-a'));
+    expect(before.ok).toBe(true);
+    // turn half of the files into the old extension: same artifact
+    for (const [i, p] of templates.entries()) if (i % 2 === 0) renameSync(join(dir, p), join(dir, p.replace(/\.snf$/, '.sneferu')));
+    expect(runValidate(dir).ok).toBe(true);
+    const after = runBuild(dir, join(dirname(dir), 'out-b'));
+    expect(after.ok).toBe(true);
+    const art = (o: string) => readdirSync(join(dirname(dir), o)).filter((f) => f.endsWith('.json')).map((f) => readFileSync(join(dirname(dir), o, f), 'utf8'));
+    expect(art('out-a')).toHaveLength(1);
+    expect(art('out-b')).toEqual(art('out-a'));
+  });
+  it('validate reports one name in both forms (SN3044) with the real file names', () => {
+    runInit(dir, {});
+    writeFileSync(join(dir, 'sections', 'hero.sneferu'), readFileSync(join(dir, 'sections', 'hero.snf'), 'utf8'));
+    const v = runValidate(dir);
+    expect(v.ok).toBe(false);
+    expect(v.output).toContain('SN3044');
+    expect(v.output).toContain("'sections/hero.snf' and 'sections/hero.sneferu'");
   });
   it('init names the theme after its folder', () => {
     const d = join(dirname(dir), 'neon-arcade');

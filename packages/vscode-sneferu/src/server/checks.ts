@@ -1,4 +1,5 @@
 import { parseTemplate } from '@hekana/sneferu-compiler';
+import { isTemplateFile } from '@hekana/sneferu-core';
 import { parseTree, findNodeAtLocation, type Node as JsonNode } from 'jsonc-parser';
 import { kindOf, schemaOf, settingsOf, type ThemeIndex } from './theme';
 
@@ -64,7 +65,7 @@ function labelProblem(label: unknown): string | undefined {
   return undefined;
 }
 
-/** name/label problems in one schema JSON (a .sneferu <hk-schema> or theme.json). */
+/** name/label problems in one schema JSON (a .snf <hk-schema> or theme.json). */
 function schemaLabels(json: string, base: number, rel: string, out: Finding[], withName: boolean) {
   const tree = parseTree(json);
   if (!tree) return;
@@ -84,7 +85,7 @@ export interface CheckOptions { disabled?: string[]; assetSizeWarnKb?: number }
 
 export function runChecks(theme: ThemeIndex, opts: CheckOptions = {}): Finding[] {
   const out: Finding[] = [];
-  const templates = theme.files.filter((p) => p.endsWith('.sneferu'));
+  const templates = theme.files.filter((p) => isTemplateFile(p));
   const texts = new Map(templates.map((p) => [p, theme.text(p) ?? '']));
   const all = [...texts.values()].join('\n');
   const snippetsAndBlocks = [...texts.entries()].filter(([p]) => p.startsWith('snippets/') || p.startsWith('blocks/')).map(([, t]) => t).join('\n');
@@ -177,7 +178,7 @@ export function runChecks(theme: ThemeIndex, opts: CheckOptions = {}): Finding[]
 
   // snippets
   const rendered = new Set([...all.matchAll(/\{%-?\s*render\s+['"]([\w./-]+)['"]/g)].map((m) => m[1]!));
-  for (const s of theme.snippets) if (!rendered.has(s)) out.push({ check: 'OrphanedSnippet', severity: 'hint', message: `snippet "${s}" is never rendered`, rel: `snippets/${s}.sneferu`, line: 1, col: 1 });
+  for (const s of theme.snippets) if (!rendered.has(s)) out.push({ check: 'OrphanedSnippet', severity: 'hint', message: `snippet "${s}" is never rendered`, rel: theme.fileOf('snippets', s), line: 1, col: 1 });
 
   const off = new Set(opts.disabled ?? []);
   return out.filter((f) => !off.has(f.check));

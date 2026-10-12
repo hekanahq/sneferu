@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { createServer, type IncomingMessage, type Server } from 'node:http';
-import { mkdtempSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, writeFileSync, renameSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { runInit } from './init';
@@ -53,10 +53,19 @@ describe('sneferu push', () => {
     expect(seen[0]).toMatchObject({ method: 'POST', url: '/api/v1/admin/hk2/packages/my-shop/versions', auth: 'Bearer tok' });
     const paths = seen[0]!.body!.files.map((f) => f.path);
     expect(paths).toContain('theme.json');
-    expect(paths).toContain('sections/hero.sneferu');
+    expect(paths).toContain('sections/hero.snf');
     expect(paths.some((p) => p.startsWith('dist/') || p.endsWith('.sneferu.json'))).toBe(false);
     const manifest = seen[0]!.body!.files.find((f) => f.path === 'theme.json')!;
     expect(JSON.parse(Buffer.from(manifest.contentBase64, 'base64').toString('utf8')).id).toBe('my-shop');
+  });
+  it('uploads .snf and .sneferu files as they are named', async () => {
+    renameSync(join(dir, 'sections', 'header.snf'), join(dir, 'sections', 'header.sneferu'));
+    const r = await runPush(dir, { pkg: 'my-shop', apiUrl: base, token: 'tok' });
+    expect(r.ok).toBe(true);
+    const paths = seen[0]!.body!.files.map((f) => f.path);
+    expect(paths).toContain('sections/header.sneferu');
+    expect(paths).toContain('sections/hero.snf');
+    expect(paths).not.toContain('sections/header.snf');
   });
 
   it('refuses to run without a token and sends nothing', async () => {
@@ -74,7 +83,7 @@ describe('sneferu push', () => {
   });
 
   it('does not upload a theme that fails to compile locally', async () => {
-    writeFileSync(join(dir, 'sections', 'hero.sneferu'), '<hk-grid mobile-colums="1"></hk-grid><hk-schema>{"name":{"ar":"ب","en":"H"},"version":1,"settings":{}}</hk-schema>');
+    writeFileSync(join(dir, 'sections', 'hero.snf'), '<hk-grid mobile-colums="1"></hk-grid><hk-schema>{"name":{"ar":"ب","en":"H"},"version":1,"settings":{}}</hk-schema>');
     const r = await runPush(dir, { pkg: 'my-shop', apiUrl: base, token: 'tok' });
     expect(r.ok).toBe(false);
     expect(r.output).toContain('SN2004');

@@ -34,7 +34,7 @@ start from the new defaults.
 
 ## Pages
 
-Esports writes only the home page (`templates/index.sneferu`). The product,
+Esports writes only the home page (`templates/index.snf`). The product,
 collection, search, cart, content page and 404 templates come from the SDK's
 default store ([page types](../../../docs/guide/16-page-types.mdx)), drawn with
 Esports's tokens, fonts and layout. `assets/theme.css` restyles what the default
@@ -63,23 +63,23 @@ setting of the header section) and from the cart icon.
 
 ```
 assets/theme.css
-blocks/faq-item.sneferu
-blocks/step.sneferu
-blocks/tab.sneferu
+blocks/faq-item.snf
+blocks/step.snf
+blocks/tab.snf
 groups/footer.json
 groups/header.json
-layout/theme.sneferu
+layout/theme.snf
 locales/ar.json
 locales/en.json
-sections/esports-faq.sneferu
-sections/esports-footer.sneferu
-sections/esports-header.sneferu
-sections/esports-hero.sneferu
-sections/esports-products.sneferu
-sections/esports-steps.sneferu
-snippets/hero-art.sneferu
-snippets/mark.sneferu
-templates/index.sneferu
+sections/esports-faq.snf
+sections/esports-footer.snf
+sections/esports-header.snf
+sections/esports-hero.snf
+sections/esports-products.snf
+sections/esports-steps.snf
+snippets/hero-art.snf
+snippets/mark.snf
+templates/index.snf
 theme.json
 ```
 
@@ -147,7 +147,7 @@ Delete the starter's sections and `blocks/`.
 from 200 to 1000; Hekana serves it and sets the family, so the theme has no
 font files and no `font-family` rule. The mark is the theme's own glyph:
 
-```html title="snippets/mark.sneferu"
+```html title="snippets/mark.snf"
 <svg class="es-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
   <path d="M3 5h7l6 8 6-8h7l-9.5 11L29 27h-7l-6-8-6 8H3l9.5-11z" fill="currentColor" />
   <path d="M10 5l6 8 6-8" fill="none" stroke="#070A09" stroke-width="1.4" />
@@ -160,7 +160,7 @@ The mark is a plain SVG `X` drawn in `currentColor`. Every other icon is
 
 ## 4. Layout: header and footer
 
-```html title="layout/theme.sneferu"
+```html title="layout/theme.snf"
 <hk-section-group name="header" />
 <main><hk-slot name="content" /></main>
 <hk-section-group name="footer" />
@@ -172,7 +172,7 @@ The header and the footer are [section groups](../../../docs/guide/18-section-gr
 whole store. The header also holds the cart: the cart link carries `data-hk-open="cart-drawer"` and
 `<hk-cart-count />`, and `<hk-cart-drawer>` lists the lines (a plain link to the cart page without JavaScript).
 
-```html title="sections/esports-header.sneferu"
+```html title="sections/esports-header.snf"
 <header class="es-header">
   <hk-container>
     <div class="es-bar">
@@ -285,7 +285,7 @@ form.es-search .sn-search-button:hover { color: var(--es-lime); }
 
 ## 5. Hero: a slanted band and SVG art
 
-```html title="sections/esports-hero.sneferu"
+```html title="sections/esports-hero.snf"
 <hk-section padding-y="24" mobile-padding-y="12" class="es-hero-wrap">
   <div class="es-hero">
     <div class="es-hero-copy">
@@ -369,7 +369,7 @@ form.es-search .sn-search-button:hover { color: var(--es-lime); }
 </hk-schema>
 ```
 
-```html title="snippets/hero-art.sneferu"
+```html title="snippets/hero-art.snf"
 <svg class="es-art" viewBox="0 0 520 340" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
   <defs>
     <linearGradient id="es-rim" x1="0" y1="0" x2="1" y2="1">
@@ -444,7 +444,7 @@ form.es-search .sn-search-button:hover { color: var(--es-lime); }
 
 ## 6. Tabs and top-up cards
 
-```html title="sections/esports-products.sneferu"
+```html title="sections/esports-products.snf"
 <hk-section padding-y="24" mobile-padding-y="16" class="es-products">
   <nav class="es-tabs" aria-label="{{ t('platforms') }}">
     {% for block in section.blocks %}
@@ -497,7 +497,7 @@ form.es-search .sn-search-button:hover { color: var(--es-lime); }
 </hk-schema>
 ```
 
-```html title="blocks/tab.sneferu"
+```html title="blocks/tab.snf"
 <a class="es-tab" href="{{ url(block.settings.link) }}">{{ block.settings.label }}</a>
 <hk-schema>
   {
@@ -560,7 +560,7 @@ form.es-search .sn-search-button:hover { color: var(--es-lime); }
 
 ## 7. Steps and FAQ
 
-```html title="sections/esports-steps.sneferu"
+```html title="sections/esports-steps.snf"
 <hk-section padding-y="48" mobile-padding-y="32" class="es-steps">
   <hk-stack gap="24">
     <hk-heading text="{{ section.settings.heading }}" level="h2" size="32" mobile-size="22" class="es-h2" />
@@ -595,7 +595,7 @@ form.es-search .sn-search-button:hover { color: var(--es-lime); }
 </hk-schema>
 ```
 
-```html title="blocks/step.sneferu"
+```html title="blocks/step.snf"
 <div class="es-step">
   <span class="es-step-icon"><hk-icon name="{{ block.settings.icon }}" size="22" class="ic" /></span>
   <span class="es-step-n"></span>
@@ -638,7 +638,7 @@ form.es-search .sn-search-button:hover { color: var(--es-lime); }
 </hk-schema>
 ```
 
-```html title="sections/esports-faq.sneferu"
+```html title="sections/esports-faq.snf"
 <hk-section padding-y="48" mobile-padding-y="32" class="es-faq">
   <div id="faq" class="es-faq-wrap">
     <hk-heading text="{{ section.settings.heading }}" level="h2" size="28" mobile-size="20" class="es-h2" />
@@ -671,7 +671,7 @@ form.es-search .sn-search-button:hover { color: var(--es-lime); }
 </hk-schema>
 ```
 
-```html title="blocks/faq-item.sneferu"
+```html title="blocks/faq-item.snf"
 {% if block.settings.question %}
   <details class="es-faq-item">
     <summary>{{ block.settings.question }}<hk-icon name="chevron-down" class="ic" /></summary>
@@ -802,7 +802,7 @@ settings and blocks, not here.
 
 ## 9. The page and the phone layout
 
-```html title="templates/index.sneferu (excerpt)"
+```html title="templates/index.snf (excerpt)"
 <hk-sections />
 <hk-schema>
   {

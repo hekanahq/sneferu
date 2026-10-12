@@ -1,6 +1,6 @@
 /**
  * The page types a Sneferu theme can render, the shared section groups, and the keys a host
- * stores their trees under. Templates are `templates/<type>.sneferu`; `product`, `collection`
+ * stores their trees under. Templates are `templates/<type>.snf` (or `.sneferu`); `product`, `collection`
  * and `page` also take alternates (`product.codes`).
  */
 export const PAGE_TYPES = ['index', 'product', 'collection', 'search', 'cart', 'page', '404'] as const;

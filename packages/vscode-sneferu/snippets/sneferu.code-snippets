@@ -195,7 +195,7 @@
   "prefix": [
    "layout"
   ],
-  "description": "layout/theme.sneferu skeleton.",
+  "description": "layout/theme.snf skeleton.",
   "body": [
    "<header class=\"site-header\">",
    "\t<hk-container><a href=\"/\">{{ store.name }}</a></hk-container>",

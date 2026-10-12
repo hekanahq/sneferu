@@ -139,8 +139,8 @@ rebuilding a grid from many small tags.
 A snippet may not render itself, directly or through others:
 
 ```
-snippets/a.sneferu:  {% render 'b' %}
-snippets/b.sneferu:  {% render 'a' %}
+snippets/a.snf:  {% render 'b' %}
+snippets/b.snf:  {% render 'a' %}
 ```
 
 is a compile error: `SN3027 snippet include cycle: a → b → a`. Rendering a

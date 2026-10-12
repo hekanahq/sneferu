@@ -28,7 +28,7 @@ function allSettings(theme: ThemeIndex | undefined, dir: 'sections' | 'blocks'):
   if (!theme) return [];
   const seen = new Map<string, SchemaField>();
   for (const n of dir === 'sections' ? theme.sections : theme.blocks) {
-    const t = theme.text(`${dir}/${n}.sneferu`);
+    const t = theme.text(theme.fileOf(dir, n));
     const s = t ? schemaOf(t) : undefined;
     if (s) for (const f of settingsOf(s.json, s.offset)) if (!seen.has(f.key)) seen.set(f.key, f);
   }

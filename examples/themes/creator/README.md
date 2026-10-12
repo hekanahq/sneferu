@@ -30,7 +30,7 @@ start from the new defaults.
 
 ## Pages
 
-Creator writes only the home page (`templates/index.sneferu`). The product,
+Creator writes only the home page (`templates/index.snf`). The product,
 collection, search, cart, content page and 404 templates come from the SDK's
 default store ([page types](../../../docs/guide/16-page-types.mdx)), drawn with
 Creator's tokens, fonts and layout. `assets/theme.css` restyles what the default
@@ -61,19 +61,19 @@ setting of the header section) and from the cart icon.
 
 ```
 assets/theme.css
-blocks/get-item.sneferu
+blocks/get-item.snf
 groups/footer.json
 groups/header.json
-layout/theme.sneferu
+layout/theme.snf
 locales/ar.json
 locales/en.json
-sections/author.sneferu
-sections/covers.sneferu
-sections/creator-footer.sneferu
-sections/creator-header.sneferu
-sections/what-you-get.sneferu
-snippets/cover.sneferu
-templates/index.sneferu
+sections/author.snf
+sections/covers.snf
+sections/creator-footer.snf
+sections/creator-header.snf
+sections/what-you-get.snf
+snippets/cover.snf
+templates/index.snf
 theme.json
 ```
 
@@ -134,7 +134,7 @@ the product is listed under.
 
 ## 2. Layout
 
-```html title="layout/theme.sneferu"
+```html title="layout/theme.snf"
 <div class="cr">
   <hk-section-group name="header" />
   <main><hk-slot name="content" /></main>
@@ -148,7 +148,7 @@ The header and the footer are [section groups](../../../docs/guide/18-section-gr
 whole store. The header also holds the cart: the cart link carries `data-hk-open="cart-drawer"` and
 `<hk-cart-count />`, and `<hk-cart-drawer>` lists the lines (a plain link to the cart page without JavaScript).
 
-```html title="sections/creator-header.sneferu"
+```html title="sections/creator-header.snf"
 <header class="cr-header">
   <div class="cr-wrap cr-header-row">
     <nav class="cr-nav" aria-label="{{ t('nav_label') }}">
@@ -201,7 +201,7 @@ On phones the stylesheet hides all but the store name and the first link.
 
 ## 3. The covers row
 
-```html title="sections/covers.sneferu"
+```html title="sections/covers.snf"
 <section class="cr-covers" id="shop">
   <div class="cr-wrap">
     <h2 class="cr-hidden">{{ t('shop_heading') }}</h2>
@@ -306,7 +306,7 @@ Three loops, one per `collection` setting, feed one row; each takes
 `limit: section.settings.count` products. Each passes the product, the label
 for its kind and a short `slot` name to the `cover` snippet:
 
-```html title="snippets/cover.sneferu"
+```html title="snippets/cover.snf"
 <article class="cr-cover" id="{{ slot }}-{{ forloop.index }}">
   <hk-product-card product="{{ p }}" class="cr-card">
     <hk-part name="badge">
@@ -368,7 +368,7 @@ rendered and every second one is hidden, which leaves one dot per pair:
 
 ## 4. What you get
 
-```html title="sections/what-you-get.sneferu"
+```html title="sections/what-you-get.snf"
 <section class="cr-what" id="what">
   <div class="cr-wrap">
     <h2 class="cr-h2">{{ section.settings.heading }}</h2>
@@ -403,7 +403,7 @@ rendered and every second one is hidden, which leaves one dot per pair:
 </hk-schema>
 ```
 
-```html title="blocks/get-item.sneferu"
+```html title="blocks/get-item.snf"
 <p class="cr-item">
   <span class="cr-tick" aria-hidden="true"></span>
   <strong>{{ block.settings.term }}</strong>
@@ -446,7 +446,7 @@ edit them or add up to eight.
 
 ## 5. The author strip
 
-```html title="sections/author.sneferu"
+```html title="sections/author.snf"
 <section class="cr-author" id="about">
   <div class="cr-wrap">
     <div class="cr-author-row">
@@ -546,7 +546,7 @@ left in the locale files; the copy is in settings and blocks.
 npx sneferu init creator          # start from the starter theme
 cd creator
 # replace the starter files with the ones above, then:
-npx sneferu format              # indent .sneferu, theme.json and locales
+npx sneferu format              # indent .snf, theme.json and locales
 npx sneferu validate            # must print: theme creator@1.1.0 is valid
 npx sneferu dev                 # http://127.0.0.1:4100, add ?locale=en for English
 ```

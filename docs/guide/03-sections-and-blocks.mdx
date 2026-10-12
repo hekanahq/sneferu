@@ -12,7 +12,7 @@ smallest useful section.
 
 <Example>
 
-```html title="sections/hero.sneferu"
+```html title="sections/hero.snf"
 <hk-section background="theme:secondary" padding-y="96" mobile-padding-y="48">
   <hk-stack gap="16" align="start">
     <hk-heading text="{{ section.settings.title }}" level="h1" size="56" mobile-size="32" color="#FFFFFF" />
@@ -203,7 +203,7 @@ six, and edits each one. Each quote is a block.
 
 <Example>
 
-```html title="blocks/quote.sneferu"
+```html title="blocks/quote.snf"
 <hk-card border="true" padding="20" radius="16">
   <hk-stack gap="10">
     <p class="quote">{{ block.settings.text }}</p>
@@ -232,7 +232,7 @@ six, and edits each one. Each quote is a block.
 </hk-schema>
 ```
 
-```html title="sections/testimonials.sneferu"
+```html title="sections/testimonials.snf"
 <hk-section padding-y="64" mobile-padding-y="40">
   <hk-stack gap="24">
     <hk-heading text="{{ section.settings.heading }}" level="h2" size="32" mobile-size="24" />
@@ -296,19 +296,19 @@ six, and edits each one. Each quote is a block.
 
 #### What each line does
 
-In `blocks/quote.sneferu`:
+In `blocks/quote.snf`:
 
 1. **Lines 1-6** one quote: a bordered card with the quote and the customer's
    name. A block reads its own settings as `block.settings.<key>`.
 2. **Lines 7-26** the two settings of one quote: the text and the name.
 
-In `sections/testimonials.sneferu`:
+In `sections/testimonials.snf`:
 
 1. **Line 4** `{% if section.blocks %}` is true when the merchant has added at
    least one quote.
 2. **Lines 6-8** `{% for block in section.blocks %}` goes through the quotes in the
    merchant's order, and `<hk-block of="{{ block }}" />` draws each one with
-   `blocks/quote.sneferu`.
+   `blocks/quote.snf`.
 3. **Lines 10-11** what shows when there are no quotes yet.
 4. **Lines 26-29** `"blocks"` tells the builder which block types this section
    takes (`quote`) and how many (6 at most).
@@ -319,7 +319,7 @@ How it works:
 
 - `section.blocks` is the list of the merchant's blocks in order, hidden ones
   removed. Each has `id`, `type` and coerced `settings`.
-- `<hk-block of="{{ block }}" />` renders `blocks/<type>.sneferu` with `block` in
+- `<hk-block of="{{ block }}" />` renders `blocks/<type>.snf` with `block` in
   scope, wrapped in `<div data-hk-block="<id>">`. The section's scope (`section`,
   `store`, …) stays visible.
 - A block whose type is not in the theme is skipped with SN4012; the rest of the
@@ -339,7 +339,7 @@ How it works:
 <Steps>
   1. Save the three files and add the key to `locales/en.json`:
      `"no_quotes_yet": "No quotes yet. Add one in the editor."`.
-  2. Add `{"type":"testimonials"}` to `templates/index.sneferu`.
+  2. Add `{"type":"testimonials"}` to `templates/index.snf`.
   3. Run `npx sneferu validate` and look at the preview: you see the
      empty state.
 </Steps>
@@ -351,6 +351,6 @@ How it works:
 | Block | The merchant decides how many there are and edits each one |
 | Snippet (`{% render %}`) | You repeat markup in code, with values you pass in |
 
-`{% render 'price-tag', amount: p.price %}` renders `snippets/price-tag.sneferu`
+`{% render 'price-tag', amount: p.price %}` renders `snippets/price-tag.snf`
 with `amount` in scope, on top of the caller's scope. Snippets nest up to 8 deep
 and may not render each other in a cycle (SN3027).

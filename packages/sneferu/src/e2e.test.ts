@@ -14,9 +14,9 @@ const files: ThemeFile[] = walk(STARTER).map((p) => ({ path: relative(STARTER, p
 
 /** The starter with its hero section replaced, and a home page that is just that section. */
 const onlyHero = (hero: string): ThemeFile[] => [
-  ...files.filter((f) => f.path !== 'sections/hero.sneferu' && f.path !== 'templates/index.sneferu'),
-  { path: 'sections/hero.sneferu', bytes: new TextEncoder().encode(hero) },
-  { path: 'templates/index.sneferu', bytes: new TextEncoder().encode('<hk-sections /><hk-schema>{"sections":[{"type":"hero"}]}</hk-schema>') },
+  ...files.filter((f) => f.path !== 'sections/hero.snf' && f.path !== 'templates/index.snf'),
+  { path: 'sections/hero.snf', bytes: new TextEncoder().encode(hero) },
+  { path: 'templates/index.snf', bytes: new TextEncoder().encode('<hk-sections /><hk-schema>{"sections":[{"type":"hero"}]}</hk-schema>') },
 ];
 
 describe('starter theme end to end', () => {

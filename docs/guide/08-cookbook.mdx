@@ -33,9 +33,9 @@ h1, h2, h3, h4, p { margin: 0; }
    spacing between them.
 
 Then list the sections on the home page, in the order you want them. Replace
-the content of `templates/index.sneferu` with:
+the content of `templates/index.snf` with:
 
-```html title="templates/index.sneferu"
+```html title="templates/index.snf"
 <hk-sections />
 <hk-schema>
   {
@@ -62,7 +62,7 @@ the content of `templates/index.sneferu` with:
 
 1. **Line 1** `<hk-sections />` is where the page's sections go.
 2. **Lines 2-20** list the sections a new home page starts with. Each `type` is a
-   file name in `sections/` without `.sneferu`. Add them one by one as you
+   file name in `sections/` without `.snf`. Add them one by one as you
    build each section below; a type with no file yet is an error (SN3020).
 
 ## Announcement bar
@@ -72,7 +72,7 @@ news such as free delivery or a sale.
 
 <Example>
 
-```html title="sections/announcement-bar.sneferu"
+```html title="sections/announcement-bar.snf"
 <hk-section background="{{ section.settings.background }}" padding-y="12" class="announcement">
   <hk-stack direction="row" mobile-direction="column" gap="12" mobile-gap="4" align="center" justify="center">
     <hk-text text="{{ section.settings.message }}" size="15" align="center" color="#FFFFFF" />
@@ -148,7 +148,7 @@ news such as free delivery or a sale.
 
 <Steps>
   1. Save both files.
-  2. Add `{"type":"announcement-bar"}` to `templates/index.sneferu`.
+  2. Add `{"type":"announcement-bar"}` to `templates/index.snf`.
   3. Run `npx sneferu validate ./my-store`. It should print
      `✔ theme my-store@0.1.0 is valid`.
   4. Look at the preview. To try another colour, change `"default": "theme:accent"`
@@ -162,7 +162,7 @@ sentence and two buttons.
 
 <Example>
 
-```html title="sections/promo-hero.sneferu"
+```html title="sections/promo-hero.snf"
 <hk-section background="{{ section.settings.background }}" padding-y="112" tablet-padding-y="80" mobile-padding-y="56">
   <hk-stack gap="20" mobile-gap="14" align="start">
     {% if section.settings.eyebrow %}
@@ -287,7 +287,7 @@ payment and returns.
 
 <Example>
 
-```html title="sections/feature-row.sneferu"
+```html title="sections/feature-row.snf"
 <hk-section padding-y="64" mobile-padding-y="40">
   <hk-stack gap="24">
     <hk-heading text="{{ section.settings.heading }}" level="h2" size="32" mobile-size="24" align="center" />
@@ -399,7 +399,7 @@ shows instead.
 
 <Example>
 
-```html title="sections/product-grid.sneferu"
+```html title="sections/product-grid.snf"
 <hk-section padding-y="64" mobile-padding-y="40">
   <hk-stack gap="24">
     <hk-stack direction="row" justify="between" align="center">
@@ -505,7 +505,7 @@ three times) and the outline's CSS.
 
 <Example>
 
-```html title="sections/pricing.sneferu"
+```html title="sections/pricing.snf"
 <hk-section padding-y="64" mobile-padding-y="40">
   <hk-stack gap="32">
     <hk-heading text="{{ section.settings.heading }}" level="h2" size="32" mobile-size="24" align="center" />
@@ -585,7 +585,7 @@ three times) and the outline's CSS.
 </hk-schema>
 ```
 
-```html title="snippets/plan-card.sneferu"
+```html title="snippets/plan-card.snf"
 <hk-card class="plan" data-best="{{ best }}" padding="28" mobile-padding="20" radius="16" border="true">
   <hk-stack gap="12" align="start">
     {% if best %}
@@ -625,10 +625,10 @@ Add to `locales/en.json`:
 
 #### What each line does
 
-In `sections/pricing.sneferu`:
+In `sections/pricing.snf`:
 
 1. **Line 4** a three-column grid that becomes one column on tablets and phones.
-2. **Lines 5-7** `{% render 'plan-card', … %}` draws `snippets/plan-card.sneferu`
+2. **Lines 5-7** `{% render 'plan-card', … %}` draws `snippets/plan-card.snf`
    three times, each time with its own values: `name`, `price`, `details`,
    `best` and `variant`. `best: section.settings.best == '1'` is `true` only for
    the plan the merchant chose as the best value.
@@ -636,7 +636,7 @@ In `sections/pricing.sneferu`:
    EGP 299.00. Never write `299.00` in a price setting.
 4. **Lines 69-74** a drop-down (`"type": "select"`) with the choices 1, 2 and 3.
 
-In `snippets/plan-card.sneferu`:
+In `snippets/plan-card.snf`:
 
 1. **Line 1** the card. `data-best="{{ best }}"` writes `true` or `false` into
    the page, so the CSS file can draw an outline around the best card only.
@@ -662,13 +662,13 @@ In `snippets/plan-card.sneferu`:
 
 ## All five on one page
 
-With all five types listed in `templates/index.sneferu`, the preview shows a
+With all five types listed in `templates/index.snf`, the preview shows a
 complete home page. Arrange them in any order; the merchant can reorder them
 later in the store builder.
 
 <Example>
 
-```html title="templates/index.sneferu"
+```html title="templates/index.snf"
 <hk-sections />
 <hk-schema>
   {

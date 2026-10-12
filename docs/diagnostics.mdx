@@ -39,7 +39,7 @@ Every problem Sneferu reports has a stable code. The format is `file:line:col se
 | SN2005 | A required property is missing | Add the property. |
 | SN2006 | The tag does not accept this child | Use an allowed child element. |
 | SN2007 | Loop limit outside 1..250 | Use a limit between 1 and 250. |
-| SN2008 | `{% render %}` names a snippet that does not exist | Create `snippets/<name>.sneferu` or fix the name. |
+| SN2008 | `{% render %}` names a snippet that does not exist | Create `snippets/<name>.snf` or fix the name. |
 | SN2009 | `style` attribute contains `{{ }}` | Use a class, a token or a component prop. |
 | SN2010 | Unsafe static URL in a URL attribute (`href`, any `*:href` such as `xlink:href`, `src`, `poster`, `action`, `formaction`) | Only `https:`, `mailto:`, `tel:` or relative URLs are allowed; plain `http:`, protocol-relative `//…` and anything containing `\` are rejected. |
 | SN2011 | `<hk-slot>` used outside a layout or template | Move it into the layout or a template. |
@@ -49,7 +49,7 @@ Every problem Sneferu reports has a stable code. The format is `file:line:col se
 | SN2015 | Warning: a literal `<img>` has no `width` and `height` attribute | Set both, so the page does not jump while the image loads (see [Images and assets](guide/15-images-and-assets.mdx#responsive-images)). `hk-image` sets them from its props. |
 | SN2016 | Warning: a template reads an object of another page type (`product` outside `product`, `collection` or `paginate` outside `collection` and `search`, ...); a loop variable of the same name is fine | Move the markup to the right template, or to a section used there. See [Page types](guide/16-page-types.mdx). |
 | SN2017 | `<hk-section-group>` has no fixed `name`, or the name is not `header`, `footer` or `announcement` | Write `name="header"` as plain text. |
-| SN2018 | `<hk-section-group>` outside `layout/theme.sneferu` | Place groups in the layout. |
+| SN2018 | `<hk-section-group>` outside `layout/theme.snf` | Place groups in the layout. |
 | SN2019 | The same group is placed twice in the layout | Place each group once. |
 
 ## SN3xxx Package, manifest and compile
@@ -78,8 +78,8 @@ Every problem Sneferu reports has a stable code. The format is `file:line:col se
 | SN3020 | A template references a section that does not exist | Create the section or fix the type. |
 | SN3021 | `settings` in `theme.json` is not an object | Use an object of fields. |
 | SN3022 | File is not valid UTF-8 | Re-save as UTF-8. |
-| SN3023 | `layout/theme.sneferu` is missing | Add the layout. |
-| SN3024 | `templates/index.sneferu` is missing | Add the index template. |
+| SN3023 | `layout/theme.snf` is missing | Add the layout. |
+| SN3024 | `templates/index.snf` is missing | Add the index template. |
 | SN3025 | A locale file is not valid JSON, or is not a flat object whose values are all strings | Use `{ "key": "text", ... }` with string values only. |
 | SN3027 | Snippet include cycle, e.g. `snippet include cycle: a → b → a` | Break the cycle; a snippet may not (indirectly) render itself. |
 | SN3026 | A template's schema `sections` (or a section's `blocks`) is malformed | Use an array of `{ "type": "...", "settings": {...}, "blocks": [...] }`. |
@@ -99,6 +99,7 @@ Every problem Sneferu reports has a stable code. The format is `file:line:col se
 | SN3041 | A default section sits where its `templates` list says it may not (in a template or a group) | Add the template or group to the list, or use another section. |
 | SN3042 | `blocks.allowed` names a block that is not in `blocks/` | Create the block or fix the name. |
 | SN3043 | A file in `sections/`, `blocks/` or `snippets/` is named `hk-…`; that prefix is reserved for the default store's own sections, blocks and snippets | Rename the file (and every reference to it) without the `hk-` prefix. |
+| SN3044 | One name in both forms in one folder, such as `sections/hero.snf` and `sections/hero.sneferu` | Keep one file; `.snf` is the current extension, `.sneferu` still works. |
 
 ## SN4xxx Rendering
 
@@ -112,10 +113,10 @@ These are reported by the runtime while rendering a page. The page still renders
 | SN4004 | Snippet not found at render time | Create the snippet. |
 | SN4005 | Component not available in the registry | Use a tag the platform provides. |
 | SN4006 | A component failed while rendering | Check the props passed to it. |
-| SN4010 | Template not found | Create `templates/<name>.sneferu`. |
+| SN4010 | Template not found | Create `templates/<name>.snf`. |
 | SN4011 | A page section's type does not exist in the theme, or the page section is malformed | Add the section or remove it from the page. |
-| SN4012 | A block's type does not exist in the theme; the block is skipped | Add `blocks/<type>.sneferu` or remove the block. |
-| SN4013 | A `<hk-section-group>` was reached outside the layout; it renders nothing (reported once per page) | Place section groups in `layout/theme.sneferu` only. |
+| SN4012 | A block's type does not exist in the theme; the block is skipped | Add `blocks/<type>.snf` or remove the block. |
+| SN4013 | A `<hk-section-group>` was reached outside the layout; it renders nothing (reported once per page) | Place section groups in `layout/theme.snf` only. |
 | SN4014 | A section in a group (header, footer, announcement) has a `templates` list that does not name that group; the section is skipped | Add the group to the section's `templates`, or remove the section from the group. |
 
 ## SN9xxx Artifact integrity

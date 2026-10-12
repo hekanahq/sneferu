@@ -1,4 +1,4 @@
-/** Where the cursor is in a .sneferu file, for completion and hover. */
+/** Where the cursor is in a .snf (or .sneferu) file, for completion and hover. */
 export type Ctx =
   | { k: 'tagName'; prefix: string; closing: boolean; start: number }
   | { k: 'attrName'; tag: string; prefix: string; present: string[]; start: number }

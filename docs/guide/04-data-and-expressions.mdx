@@ -221,7 +221,7 @@ A short list of the first three products of a collection, numbered, with a
 
 <Example>
 
-```html title="sections/on-sale.sneferu"
+```html title="sections/on-sale.snf"
 <hk-section padding-y="64" mobile-padding-y="40">
   <hk-stack gap="16">
     <hk-heading text="{{ section.settings.heading }}" level="h2" size="32" mobile-size="24" />
@@ -307,7 +307,7 @@ uses 250, and a value below 1 or not a whole number (empty, text, `2.5`, `0`,
 A `collection` setting gives the merchant a collection picker in the builder.
 Pass the setting to `collection()` and the section shows whatever they pick:
 
-```html title="sections/collection-shelf.sneferu"
+```html title="sections/collection-shelf.snf"
 <hk-section padding-y="48">
   <hk-stack gap="16">
     <hk-heading text="{{ collection(section.settings.list).title }}" level="h2" />
