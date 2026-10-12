@@ -1,7 +1,7 @@
 {
   "name": "@hekana/sneferu",
   "version": "0.3.0",
-  "description": "Sneferu — build Hekana themes. npx @hekana/sneferu init",
+  "description": "Sneferu \u2014 build Hekana themes. npx @hekana/sneferu init",
   "type": "module",
   "bin": {
     "sneferu": "./dist/cli.js",
@@ -9,8 +9,7 @@
   },
   "files": [
     "dist",
-    "CHANGELOG.md",
-    "starter"
+    "CHANGELOG.md"
   ],
   "scripts": {
     "build": "tsup",
@@ -24,7 +23,8 @@
     "@hekana/prettier-plugin-sneferu": "workspace:^",
     "prettier": "^3.6.2",
     "commander": "^12.1.0",
-    "chokidar": "^4.0.1"
+    "chokidar": "^4.0.1",
+    "@hekana/sneferu-templates-default": "workspace:^"
   },
   "devDependencies": {
     "@types/node": "^22.9.0"

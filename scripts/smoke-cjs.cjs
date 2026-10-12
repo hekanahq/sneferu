@@ -11,7 +11,7 @@ const { compileTheme } = req('@hekana/sneferu-compiler');
 const { createDefaultRegistry } = req('@hekana/sneferu-components');
 const { prepareArtifact, renderPage, themeTokenCss } = req('@hekana/sneferu-runtime');
 
-const root = join(__dirname, '..', 'packages', 'sneferu', 'starter');
+const root = join(__dirname, '..', 'packages', 'templates-default', 'theme');
 const walk = (d) => readdirSync(d).flatMap((f) => (statSync(join(d, f)).isDirectory() ? walk(join(d, f)) : [join(d, f)]));
 const files = walk(root).map((p) => ({ path: relative(root, p).split('\\').join('/'), bytes: readFileSync(p) }));
 

@@ -45,7 +45,7 @@ function themePage(dir: string) {
 }
 
 const example = themePage(root('docs/examples/example-store'));
-const starter = themePage(root('packages/sneferu/starter'));
+const starter = themePage(root('packages/templates-default/theme'));
 const one = (type: string, children?: PageNode[]): PageNode[] => [{ id: type, type, ...(children ? { children } : {}) }];
 const quote = (id: string, text: string, author: string): PageNode => ({ id, type: 'quote', props: { text, author } });
 

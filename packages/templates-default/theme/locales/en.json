@@ -1,0 +1,22 @@
+{
+  "skip_to_content": "Skip to content",
+  "menu": "Menu",
+  "search": "Search",
+  "search_placeholder": "What are you looking for?",
+  "home": "Home",
+  "breadcrumb": "Breadcrumb",
+  "sale": "Sale",
+  "sold_out_badge": "Sold out",
+  "products_label": "products",
+  "sort_by": "Sort by",
+  "filters": "Filters",
+  "results_for": "Results for",
+  "results_label": "results",
+  "view_all": "View all",
+  "newsletter_cta": "Subscribe",
+  "payment_methods": "Payment methods",
+  "follow_us": "Follow us",
+  "contact_us": "Contact us",
+  "language": "Language",
+  "product_info": "Product details"
+}

@@ -52,7 +52,7 @@ const NAMES = { ar: 'العربية', en: 'English' } as const;
 export const hkLocaleSwitch: HkTag = {
   name: 'hk-locale-switch', version: 1, category: 'ui',
   props: {
-    style: { type: 'select', label: L('الشكل', 'Style'), options: ['name', 'code'], default: 'name' },
+    display: { type: 'select', label: L('الشكل', 'Display'), options: ['name', 'code'], default: 'name' },
     localization: { type: 'data', label: L('بيانات اللغة', 'Localization data') },
   },
   allowedParents: '*', allowedChildren: [], responsive: [], bindable: '*',
@@ -63,7 +63,7 @@ export const hkLocaleSwitch: HkTag = {
     const target = loc.alternate_locale === 'ar' || loc.alternate_locale === 'en' ? loc.alternate_locale : null;
     const u = href(loc.alternate_url);
     if (!target || !u) return '';
-    const label = p.style === 'code' ? target.toUpperCase() : NAMES[target];
+    const label = p.display === 'code' ? target.toUpperCase() : NAMES[target];
     (c.cssOnce ?? c.css)('.sn-locale-switch{display:inline-flex;align-items:center;min-height:44px;padding-inline:8px;color:inherit}');
     const x = passthrough(p);
     return `<a class="sn-${c.id} sn-locale-switch${x.cls}"${x.attrs} href="${escapeAttr(u)}" hreflang="${target}" lang="${target}" rel="alternate">${escapeText(label)}</a>`;

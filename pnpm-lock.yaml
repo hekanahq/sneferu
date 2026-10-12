@@ -89,6 +89,9 @@ importers:
       '@hekana/sneferu-runtime':
         specifier: workspace:^
         version: link:../runtime
+      '@hekana/sneferu-templates-default':
+        specifier: workspace:^
+        version: link:../templates-default
       chokidar:
         specifier: ^4.0.1
         version: 4.0.3

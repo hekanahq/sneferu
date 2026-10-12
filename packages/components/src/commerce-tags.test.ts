@@ -94,7 +94,7 @@ describe('hk-locale-switch', () => {
     expect(run('hk-locale-switch', {}, { locale: 'ar', data: { localization: { alternate_locale: 'en', alternate_url: '/en/products/x' } } }).html)
       .toBe('<a class="sn-c1 sn-locale-switch" href="/en/products/x" hreflang="en" lang="en" rel="alternate">English</a>');
     expect(run('hk-locale-switch', {}, { locale: 'en', data: { localization: { alternate_locale: 'ar', alternate_url: '/products/x' } } }).html).toContain('>العربية</a>');
-    expect(run('hk-locale-switch', { style: 'code' }, { data: { localization: { alternate_locale: 'ar', alternate_url: '/x' } } }).html).toContain('>AR</a>');
+    expect(run('hk-locale-switch', { display: 'code' }, { data: { localization: { alternate_locale: 'ar', alternate_url: '/x' } } }).html).toContain('>AR</a>');
   });
   it('prints nothing without a usable alternate', () => {
     expect(run('hk-locale-switch', {}).html).toBe('');
@@ -119,7 +119,7 @@ describe('hk-variant-picker', () => {
     expect(cfg.variants[1]!.image).toBeNull();
   });
   it('renders selects when asked', () => {
-    const { html } = run('hk-variant-picker', { product: product(), style: 'select' });
+    const { html } = run('hk-variant-picker', { product: product(), display: 'select' });
     expect(html).toContain('<select name="hk-c1-0"><option value="S" selected>S</option><option value="M">M</option></select>');
     expect(html).not.toContain('type="radio"');
   });

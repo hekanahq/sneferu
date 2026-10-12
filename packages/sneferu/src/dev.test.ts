@@ -65,7 +65,7 @@ function get(port: number, path: string): Promise<{ status: number; body: string
 describe('dev server', () => {
   const dir = mkdtempSync(join(tmpdir(), 'snf-dev-'));
   const here = dirname(fileURLToPath(import.meta.url));
-  const starter = resolve(here, '../starter');
+  const starter = resolve(here, '../../templates-default/theme');
   cpSync(starter, dir, { recursive: true });
   mkdirSync(join(dir, 'assets'), { recursive: true });
   writeFileSync(join(dir, 'assets', 'a.css'), '.z{}');
@@ -105,7 +105,7 @@ describe('dev server, English-only theme', () => {
   const dir = mkdtempSync(join(tmpdir(), 'snf-dev-en-'));
   const here = dirname(fileURLToPath(import.meta.url));
   const put = (p: string, text: string) => { mkdirSync(dirname(join(dir, p)), { recursive: true }); writeFileSync(join(dir, p), text); };
-  const m = JSON.parse(readFileSync(resolve(here, '../starter/theme.json'), 'utf8'));
+  const m = JSON.parse(readFileSync(resolve(here, '../../templates-default/theme/theme.json'), 'utf8'));
   put('theme.json', JSON.stringify({ ...m, id: 'english', name: 'English', description: { en: 'An English-only theme' }, defaultLocale: 'en', locales: ['en'], settings: { accent: { type: 'color', label: 'Accent', default: '#B45309' } } }));
   put('layout/theme.sneferu', '<header>{{ store.name }}</header><main><hk-slot name="content" /></main>');
   put('templates/index.sneferu', '<hk-sections /><hk-schema>{"sections":[{"type":"featured","settings":{"title":"Featured"}}]}</hk-schema>');
@@ -131,12 +131,13 @@ describe('dev server, English-only theme', () => {
   });
   it('gives the bilingual starter English sample data by default and Arabic for ?locale=ar', async () => {
     const d2 = mkdtempSync(join(tmpdir(), 'snf-dev-both-'));
-    cpSync(resolve(here, '../starter'), d2, { recursive: true });
+    cpSync(resolve(here, '../../templates-default/theme'), d2, { recursive: true });
     const s = await startDev(d2, 0);
     const port = (s.server.address() as { port: number }).port;
     const en = (await get(port, '/')).body;
     expect(en).toContain('PlayStation gift card');
-    expect(en).not.toMatch(/[\u0600-\u06FF]/);
+    // the language switch names the other language in that language: the one Arabic word on an English page
+    expect(en.replace(/<a [^>]*hreflang="ar"[^>]*>[^<]*<\/a>/g, '')).not.toMatch(/[\u0600-\u06FF]/);
     expect((await get(port, '/?locale=en')).body).toBe(en);
     expect((await get(port, '/?locale=ar')).body).toContain('كارت بلايستيشن');
     s.close(); s.server.close();

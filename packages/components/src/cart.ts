@@ -27,7 +27,7 @@ export const hkVariantPicker: HkTag = {
   name: 'hk-variant-picker', version: 1, category: 'commerce',
   props: {
     product: { type: 'data', label: L('المنتج', 'Product') },
-    style: { type: 'select', label: L('شكل الاختيار', 'Picker style'), options: ['buttons', 'select'], default: 'buttons' },
+    display: { type: 'select', label: L('شكل الاختيار', 'Picker style'), options: ['buttons', 'select'], default: 'buttons' },
   },
   allowedParents: '*', allowedChildren: [], responsive: [], bindable: '*', controller: 'variant-picker', strings: COMMERCE_STRINGS,
   editor: ed('اختيار النوع', 'Variant picker'),
@@ -39,7 +39,7 @@ export const hkVariantPicker: HkTag = {
     // one variant and no options to choose: nothing to pick
     if (variants.length === 0 || (variants.length <= 1 && (options === null || options.every((o) => o.values.length <= 1)))) return '';
     (c.cssOnce ?? c.css)(VP_CSS);
-    const select = p.style === 'select';
+    const select = p.display === 'select';
     const sel = selectedVariant(prod, variants);
     const pid = productId(prod);
     const groups = options ?? [{ name: str(c, 'variant'), values: variants.map((v) => v.id), titles: variants.map((v) => v.title || v.id) }];

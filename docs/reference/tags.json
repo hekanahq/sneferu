@@ -988,8 +988,8 @@
       "responsive": [],
       "props": [
         {
-          "name": "style",
-          "attr": "style",
+          "name": "display",
+          "attr": "display",
           "type": "select",
           "default": "name",
           "options": [
@@ -998,7 +998,7 @@
           ],
           "responsive": false,
           "label": {
-            "en": "Style"
+            "en": "Display"
           }
         },
         {
@@ -1209,8 +1209,8 @@
           }
         },
         {
-          "name": "style",
-          "attr": "style",
+          "name": "display",
+          "attr": "display",
           "type": "select",
           "default": "buttons",
           "options": [

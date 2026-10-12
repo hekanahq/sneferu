@@ -7,7 +7,7 @@ import { createDefaultRegistry } from '@hekana/sneferu-components';
 import { loadTheme } from '../load';
 
 /** The files `sneferu format` owns: templates, the manifest and the locales. */
-export const isFormattable = (p: string): boolean => p.endsWith('.sneferu') || p === 'theme.json' || /^locales\/[^/]+\.json$/.test(p);
+export const isFormattable = (p: string): boolean => p.endsWith('.sneferu') || p === 'theme.json' || /^(locales|groups)\/[^/]+\.json$/.test(p);
 
 const registry = createDefaultRegistry();
 /** What the compiler makes of a file; formatting must leave it unchanged. */

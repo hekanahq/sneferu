@@ -11,7 +11,7 @@ import { DevServer, freePort } from './dev-server';
 import { previewHtml } from './preview-html';
 
 const repo = fileURLToPath(new URL('../../../../', import.meta.url));
-const STARTER = join(repo, 'packages/sneferu/starter');
+const STARTER = join(repo, 'packages/vscode-sneferu/test/fixtures/starter');
 const ARCADE = join(repo, 'examples/themes/arcade');
 const BUNDLED_CLI = fileURLToPath(new URL('../../dist/cli/cli.mjs', import.meta.url));
 
