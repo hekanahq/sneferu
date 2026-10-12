@@ -12,6 +12,10 @@ const ALLOWED: Record<string, RegExp> = {
   locales: /^[a-z]{2}\.json$/, migrations: /\.json$/, groups: /^(header|footer|announcement)\.json$/,
 };
 
+/** The default store's sections, blocks and snippets are called `hk-<name>` in a theme that borrows them, so a theme cannot use the prefix. */
+const RESERVED_PREFIX = 'hk-';
+const RESERVED_DIRS = new Set(['sections', 'blocks', 'snippets']);
+
 /** Group defaults are small trees; a bigger file is a mistake. */
 export const GROUP_FILE_BYTES = 64 * 1024;
 
@@ -30,6 +34,7 @@ export function checkFiles(files: ThemeFile[]): Diagnostic[] {
     const dir = parts.length === 1 ? '' : parts[0]!;
     const rule = ALLOWED[dir];
     if (!rule || !rule.test(parts[parts.length - 1]!) || (dir !== 'assets' && parts.length > 2)) { out.push(err('SN3003', `file type or location not allowed: '${p}'`, { file: p })); continue; }
+    if (RESERVED_DIRS.has(dir) && parts[1]!.startsWith(RESERVED_PREFIX)) out.push(err('SN3043', `'${p}': names starting with '${RESERVED_PREFIX}' are reserved for the default store`, { file: p }));
     if (dir === 'assets' && f.bytes.byteLength > LIMITS.assetBytes) out.push(err('SN3007', `asset over 2 MB: '${p}'`, { file: p }));
     if (dir === 'groups' && f.bytes.byteLength > GROUP_FILE_BYTES) out.push(err('SN3036', `group file over ${GROUP_FILE_BYTES / 1024} KB: '${p}'`, { file: p }));
     if (p.endsWith('.sneferu') && f.bytes.byteLength > LIMITS.templateBytes) out.push(err('SN3008', `template over 300 KB: '${p}'`, { file: p }));

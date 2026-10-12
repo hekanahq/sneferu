@@ -98,6 +98,7 @@ Every problem Sneferu reports has a stable code. The format is `file:line:col se
 | SN3040 | A section's `templates` list is empty, too long or names something that is not a page type, an alternate or a group | Use page types, `product.<alt>` or `header`, `footer`, `announcement`. |
 | SN3041 | A default section sits where its `templates` list says it may not (in a template or a group) | Add the template or group to the list, or use another section. |
 | SN3042 | `blocks.allowed` names a block that is not in `blocks/` | Create the block or fix the name. |
+| SN3043 | A file in `sections/`, `blocks/` or `snippets/` is named `hk-…`; that prefix is reserved for the default store's own sections, blocks and snippets | Rename the file (and every reference to it) without the `hk-` prefix. |
 
 ## SN4xxx Rendering
 
