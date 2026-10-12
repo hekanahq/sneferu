@@ -25,6 +25,8 @@ const save = () => { try { localStorage.setItem(KEY, JSON.stringify(lines)); } c
 const lang = document.documentElement.lang === 'ar' ? 'ar' : 'en';
 const T = __T__;
 const priceOnPage = () => { const t = document.querySelector('[data-hk-bind="price"] .sn-now, .sn-price .sn-now'); const m = t && /[\\d][\\d,]*(?:\\.\\d+)?/.exec(t.textContent || ''); return m ? Math.round(Number(m[0].replace(/,/g, '')) * 100) : 0; };
+const imageOnPage = () => { const i = document.querySelector('.sn-gallery img, main img'); return i ? i.currentSrc || i.src : undefined; };
+const variantOnPage = () => { const v = [...document.querySelectorAll('[data-hk-controller="variant-picker"] input:checked, [data-hk-controller="variant-picker"] select')].map((e) => e.tagName === 'SELECT' ? e.options[e.selectedIndex]?.text : e.value).filter(Boolean).join(' / '); return v || undefined; };
 const host = {
   locale: lang, currency: 'EGP',
   format: (m) => T.money.replace('{n}', (m / 100).toLocaleString('en-US', { minimumFractionDigits: 2 })),
@@ -33,7 +35,7 @@ const host = {
     const key = productId + ':' + (variantId || '');
     const hit = lines.find((l) => l.key === key);
     if (hit) hit.quantity += quantity;
-    else lines = [...lines, { key, productId, variantId, title: (document.querySelector('h1') || {}).textContent || 'Product', unitPrice: priceOnPage(), quantity, url: location.pathname }];
+    else lines = [...lines, { key, productId, variantId, title: (document.querySelector('h1') || {}).textContent || 'Product', variantTitle: variantOnPage(), image: imageOnPage(), unitPrice: priceOnPage(), quantity, url: location.pathname }];
     save(); return { ok: true };
   },
   update: (key, q) => { lines = lines.map((l) => (l.key === key ? { ...l, quantity: q } : l)); save(); },
