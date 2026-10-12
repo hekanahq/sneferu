@@ -39,13 +39,15 @@ markup still works as links and plain forms.
 - A product whose options are malformed or missing shows a flat list of variants; add to cart still adds the default variant.
 - A sold-out product (or variant) shows a disabled button with the sold out label.
 - `min_quantity: 500, quantity_step: 50` starts the quantity at 500 and steps by 50; the cap is dropped when it is below the minimum.
+- A product with no safe `url` gets a link to the cart page, styled as the button, instead of a form.
+- A variant with no title is listed as "Option 1", "Option 2", … (the `option` text) in the flat list, never by its id.
 - Prices on the page follow the variant picked (`<hk-price amount="{{ product.price }}" product="{{ product }}" />`).
 - Everything printed into `data-hk-config` is JSON, escaped for the attribute.
 
 ## The cart page
 
 `hk-cart-items` has an `empty` part: put the empty-state heading, image and
-button there. It also prints a link to checkout that is visible until the
+button there. It also prints a link to the cart page that is visible until the
 controllers run, so a visitor whose script failed still has a way forward.
 
 ```html
@@ -77,4 +79,19 @@ const stop = startControllers(document, host); // idempotent; call stop() to rem
 `CartHost` supplies `get()`, `add()`, `update()`, `remove()`, `subscribe()`,
 `format()`, `checkoutUrl` and `t()`. The controllers make no network calls and
 never compute authoritative totals; the host's cart store and the server do.
+
+Each `CartLine` from `get()` may carry the product's quantity rules:
+
+| Field | Meaning |
+| - | - |
+| `minQuantity` | The least quantity the line may have (whole number, default 1). The minus button removes the line when one more step would go below it. |
+| `quantityStep` | What the plus and minus buttons add or take away (whole number, default 1). |
+| `maxQuantity` | The most the line may have. The plus button is marked `aria-disabled` when one more step would pass it. |
+
+`t(key)` returns the shopper-facing text for these keys: `add_to_cart`, `added`,
+`sold_out`, `remove`, `subtotal`, `checkout`, `empty`, `quantity`, `increase`
+(label of the plus button), `decrease` (label of the minus button),
+`add_failed` and `close`. When `add()` returns `{ ok: false }` with a `message`,
+the message is shown as text; without one, or when `add()` throws, the shopper
+sees `add_failed` and the error goes to `console.warn`.
 The bundle is under 4 KB gzipped, uses no `eval` and no `innerHTML`.

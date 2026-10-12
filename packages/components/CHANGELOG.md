@@ -5,6 +5,7 @@
 ### Minor Changes
 
 - Tags: `hk-product-gallery`, `hk-pagination`, `hk-locale-switch`, `hk-variant-picker`, `hk-add-to-cart`, `hk-cart-count`, `hk-cart-items`, `hk-cart-summary`, `hk-cart-drawer`, `hk-section-group`; `hk-price` follows the picked variant.
+- `hk-add-to-cart` without a safe product url links to the cart page; untitled variants show as "Option N"; the `hk-cart-items` no-JS link goes to the cart page.
 
 ## 0.3.0
 

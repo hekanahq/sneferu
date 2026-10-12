@@ -34,6 +34,13 @@ describe('groups', () => {
     expect(errs(base([f('groups/sidebar.json', '{}')]))).toEqual(['SN3003']);
     expect(errs(base([f('groups/header.json', JSON.stringify({ sections: [], pad: 'x'.repeat(70000) }))]))).toContain('SN3036');
   });
+  it('reserves the hk- prefix for the default store (SN3043)', () => {
+    expect(errs(base([f('sections/hk-hero.sneferu', sec())]))).toEqual(['SN3043']);
+    expect(errs(base([f('blocks/hk-chip.sneferu', '<i></i><hk-schema>{"name":"C","settings":{}}</hk-schema>')]))).toEqual(['SN3043']);
+    expect(errs(base([f('snippets/hk-price.sneferu', '<b></b>')]))).toEqual(['SN3043']);
+    expect(errs(base([f('assets/hk-logo.png', '')]))).toEqual([]);
+    expect(errs(base([f('sections/my-hk-hero.sneferu', sec())]))).toEqual([]);
+  });
   it('warns about a group file the layout never places', () => {
     expect(c(base([f('groups/footer.json', '{"sections":[]}')])).diagnostics.map((d) => d.code)).toEqual(['SN3039']);
   });

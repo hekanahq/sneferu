@@ -1,5 +1,5 @@
 // @vitest-environment happy-dom
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { startControllers } from './index';
 import { makeHost } from './test-host';
 
@@ -99,13 +99,24 @@ describe('add-to-cart', () => {
     expect(fired).toBe(false);
     s.td();
   });
-  it('rejected promise is shown and re-enables', async () => {
+  it('a rejected promise shows the generic add_failed text, never the raw error, warns and re-enables', async () => {
     const s = setup({ productId: 'P1' });
-    s.m.state.addImpl = () => Promise.reject(new Error('offline'));
+    s.m.state.addImpl = () => Promise.reject(new Error('TypeError: x is undefined at cart.js:12'));
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
     submit(s.f);
     await flush();
-    expect(s.msg().textContent).toBe('offline');
+    expect(s.msg().textContent).toBe('Could not add');
+    expect(warn).toHaveBeenCalledTimes(1);
     expect(s.btn().disabled).toBe(false);
+    warn.mockRestore();
+    s.td();
+  });
+  it('a failure without a message shows add_failed, not sold out', async () => {
+    const s = setup({ productId: 'P1' });
+    s.m.state.addResult = { ok: false };
+    submit(s.f);
+    await flush();
+    expect(s.msg().textContent).toBe('Could not add');
     s.td();
   });
   it('works without quantity controls and falls back to config variant', async () => {

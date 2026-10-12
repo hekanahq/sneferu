@@ -38,6 +38,9 @@ part of the theme and is checked.
 | `locales/<xx>.json` | Flat `{ "key": "text" }` maps, values strings only | Used by `t('key')` and `\| t` |
 | `migrations/*.json` | Settings migrations between theme versions | Accepted, not used yet |
 
+Section, block and snippet file names may not start with `hk-` (SN3043): that prefix is reserved
+for the default store's own sections, blocks and snippets, which a theme borrows under `hk-<name>`.
+
 A minimal layout:
 
 ```html

@@ -7,6 +7,7 @@
 - `renderPage` options `groups`, `locale_overrides`, `fontBase`, `request`, `localization`; per-page-type scope; nested blocks (`block.blocks`).
 - `RenderResult.tokenCss` and `fontCss`; `themeTokenCss` and `themeFontCss` take the resolved theme settings; the default store's CSS is added when its sections render.
 - `pageDependencies` reports `products` and reads groups; `resolveThemeSettings` exported.
+- `<hk-section-group>` renders only from the layout (SN4013 elsewhere) and an artifact placing it anywhere else is rejected at load (SN9016); group sections honour the section's `templates` list (SN4014).
 
 ## 0.3.0
 

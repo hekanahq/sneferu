@@ -38,6 +38,10 @@ Install: `npx @hekana/sneferu <command>` (Node.js 20 or newer), or `npm install 
 13. [Editor setup: VS Code](docs/guide/13-editor-setup-vscode.mdx): the Sneferu extension: completion, hover, live diagnostics, theme checks, formatting and a live preview ([packages/vscode-sneferu](packages/vscode-sneferu))
 14. [Icons and search](docs/guide/14-icons-and-search.mdx): `hk-icon` with the bundled Lucide set, icons in buttons, right-to-left mirroring; `hk-search-form`, the only form a theme can render
 15. [Images and assets](docs/guide/15-images-and-assets.mdx): which assets the store serves, `asset_url()`, images in CSS, SVG rules, responsive images with `srcset`
+16. [Page types](docs/guide/16-page-types.mdx): `product`, `collection`, `search`, `cart`, `page` and `404` templates, alternates such as `product.codes`, and the objects each one has in scope (`product`, `collection`, `paginate`, `search`, `page`, `request`, `localization`)
+17. [Cart and controllers](docs/guide/17-cart-and-controllers.mdx): `@hekana/sneferu-controllers`, the variant picker, add to cart and the cart drawer, with no theme JavaScript
+18. [Header, footer and section groups](docs/guide/18-section-groups.mdx): shared groups placed in the layout and edited once for the whole store
+19. [Make everything editable](docs/guide/19-make-everything-editable.mdx): where every word, link, image and colour of a theme comes from
 
 ## Reference
 

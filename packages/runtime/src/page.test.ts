@@ -272,6 +272,19 @@ describe('renderPage', () => {
     const ok = renderPage(a, { template: 'index', ctx, registry: new TagRegistry(), request: { path: '/a b' } });
     expect(ok.html).toContain('/a b|');
   });
+  it('reads only own properties of the page objects: no prototype keys, no inherited host data', () => {
+    const path = (...p: string[]): IRNode[] => [{ k: 'text', e: { k: 'path', p } }, { k: 'html', s: '|' }];
+    const a: ArtifactLike = { ...artifact, templates: { index: [{ k: 'slot', name: 'sections' }], product: [
+      ...path('product', 'constructor'), ...path('product', '__proto__'), ...path('product', 'title'), ...path('request', 'constructor'),
+      ...path('localization', 'toString'), ...path('leaked'), ...path('request', 'page_type')] } };
+    const scope = Object.create({ leaked: 'inherited' }) as Record<string, unknown>;
+    scope.product = Object.create({ title: 'inherited' });
+    const r = renderPage(a, { template: 'product', ctx, registry: new TagRegistry(), scope });
+    expect(r.diagnostics).toEqual([]);
+    expect(r.html).toContain('<main>||||||product|</main>');
+    expect(r.html).not.toContain('inherited');
+    expect(r.html).not.toContain('function');
+  });
   it('has no alternate language when the theme ships only one', () => {
     const a: ArtifactLike = { ...artifact, manifest: { id: 'esports', locales: ['ar'] } as ArtifactLike['manifest'], templates: { index: [{ k: 'text', e: { k: 'path', p: ['localization', 'alternate_locale'] } }] } };
     const r = renderPage(a, { template: 'index', ctx, registry: new TagRegistry(), localization: { alternateUrl: '/en' } });

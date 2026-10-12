@@ -107,3 +107,7 @@ export function resolveDevRoute(opts: {
   }
   return missing();
 }
+
+/** A miss on a theme without a `404` template (the default store normally fills it in) gets a plain text page. */
+export const plainNotFound = (route: DevRoute, templates: object): boolean =>
+  route.status === 404 && route.template === '404' && !Object.hasOwn(templates, '404');

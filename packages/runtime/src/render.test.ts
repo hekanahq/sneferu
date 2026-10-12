@@ -25,6 +25,15 @@ describe('renderNodes', () => {
     expect(renderNodes(nodes, { b: '<New>', dyn: 'badge' }, e)).toBe('<a>&lt;New&gt;| </a><i>1</i><i>2</i>');
     expect(e.diagnostics).toEqual([]);
   });
+  it('a section group renders only where the env carries a group renderer (the layout); elsewhere nothing, SN4013 once', () => {
+    const g: IRNode = { k: 'comp', tag: 'hk-section-group', props: { name: { k: 'static', v: 'header' } }, children: [] };
+    const e = env();
+    expect(renderNodes([g, { k: 'html', s: '<p>' }, g], {}, e)).toBe('<p>');
+    expect(e.diagnostics.map((d) => d.code)).toEqual(['SN4013']);
+    const l = env({ group: (n) => `[${n}]` });
+    expect(renderNodes([g], {}, l)).toBe('[header]');
+    expect(l.diagnostics).toEqual([]);
+  });
   it('an hk-part outside a parts tag renders nothing', () => {
     const e = env();
     expect(renderNodes([{ k: 'comp', tag: 'hk-box', props: {}, children: [{ k: 'comp', tag: 'hk-part', props: { name: { k: 'static', v: 'badge' } }, children: [{ k: 'html', s: 'x' }] }] }], {}, e))

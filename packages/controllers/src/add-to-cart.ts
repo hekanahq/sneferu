@@ -69,9 +69,11 @@ export const addToCart: Ctl = (el, host) => {
       if (r && r.ok) {
         say(host.t('added'));
         el.dispatchEvent(new CustomEvent(EVENT_CART_ADDED, { bubbles: true, detail: { productId, variantId, quantity } }));
-      } else say((r && r.message) || host.t('sold_out'));
+      } else say((r && typeof r.message === 'string' && r.message) || host.t('add_failed'));
     } catch (err) {
-      say((err instanceof Error && err.message) || host.t('sold_out'));
+      // an exception is for the developer, not the shopper
+      console.warn('hk-add-to-cart: host.add failed', err);
+      say(host.t('add_failed'));
     } finally {
       pending = false;
       render();

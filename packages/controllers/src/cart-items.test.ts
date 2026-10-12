@@ -63,6 +63,28 @@ describe('cart-items', () => {
     expect(m.calls.remove).toEqual(['k1', 'k1']);
     td();
   });
+  it('steppers have distinct labels; steps by quantityStep; below minQuantity removes; inc respects maxQuantity', () => {
+    document.body.innerHTML = html;
+    const m = makeHost([line({ quantity: 6, minQuantity: 4, quantityStep: 2, maxQuantity: 7 })]);
+    const td = startControllers(document.body, m.host);
+    expect(q('[data-hk-act=inc]').getAttribute('aria-label')).toBe('Increase quantity');
+    expect(q('[data-hk-act=dec]').getAttribute('aria-label')).toBe('Decrease quantity');
+    expect(q('[data-hk-act=inc]').getAttribute('aria-disabled')).toBe('true');
+    q('[data-hk-act=inc]').click();
+    expect(m.calls.update).toEqual([]);
+    q('[data-hk-act=dec]').click();
+    expect(m.calls.update).toEqual([['k1', 4]]);
+    m.set([line({ quantity: 4, minQuantity: 4, quantityStep: 2, maxQuantity: 8 })]);
+    expect(q('[data-hk-act=inc]').hasAttribute('aria-disabled')).toBe(false);
+    q('[data-hk-act=inc]').click();
+    expect(m.calls.update[1]).toEqual(['k1', 6]);
+    q('[data-hk-act=dec]').click();
+    expect(m.calls.remove).toEqual(['k1']);
+    m.set([line({ quantity: 3, minQuantity: 0, quantityStep: -2 })]);
+    q('[data-hk-act=dec]').click();
+    expect(m.calls.update[2]).toEqual(['k1', 2]);
+    td();
+  });
   it('keeps focus on the same key and control after a rebuild', () => {
     document.body.innerHTML = html;
     const m = makeHost([line({ quantity: 2 }), line({ key: 'k2', quantity: 2 })]);

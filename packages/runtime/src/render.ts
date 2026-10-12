@@ -28,7 +28,7 @@ export interface Env {
   cssOnce?: Set<string>;
   /** Block definitions; when present, <hk-block of="…"/> renders them with the caller's env. */
   blocks?: Record<string, { ir: IRNode[] }>;
-  /** Renders a shared section group (<hk-section-group name="header" />); absent: the tag prints nothing. */
+  /** Renders a shared section group (<hk-section-group name="header" />). Set only for the layout; absent, the tag prints nothing and reports SN4013 once. */
   group?: (name: string) => string;
 }
 
@@ -131,8 +131,9 @@ export function renderNodes(nodes: IRNode[], scope: Scope, env: Env): string {
         }
         if (n.tag === 'hk-part') break; // rendered only by its parent, through renderChildren(name)
         if (n.tag === 'hk-section-group') {
+          if (!env.group) { reportOnce(env, 'SN4013', '<hk-section-group> renders only in the layout'); break; }
           const v = Object.hasOwn(n.props, 'name') ? n.props.name : undefined;
-          const g = env.group && v && v.k === 'static' && typeof v.v === 'string' ? env.group(v.v) : '';
+          const g = v && v.k === 'static' && typeof v.v === 'string' ? env.group(v.v) : '';
           if (g) raw(g);
           break;
         }
