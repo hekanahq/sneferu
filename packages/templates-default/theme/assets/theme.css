@@ -29,7 +29,7 @@
 .sf-header{border-bottom:1px solid color-mix(in srgb,var(--hk-color-text) 12%,transparent)}
 .sf-sticky-true{position:sticky;top:0;z-index:50}
 .sf-header-bar{display:flex;align-items:center;gap:var(--hk-space-3,16px);min-height:64px;flex-wrap:wrap}
-.sf-logo{display:inline-flex;align-items:center;gap:8px;color:inherit;text-decoration:none;font-weight:700;font-size:20px}
+.sf-logo{display:inline-flex;align-items:center;min-height:44px;gap:8px;color:inherit;text-decoration:none;font-weight:700;font-size:20px}
 .sf-logo-img{width:auto;height:auto;max-width:200px}
 .sf-logo-h-24{height:24px}.sf-logo-h-32{height:32px}.sf-logo-h-40{height:40px}.sf-logo-h-48{height:48px}.sf-logo-h-64{height:64px}
 .sf-nav{display:flex;align-items:center;gap:var(--hk-space-2,8px);flex:1;flex-wrap:wrap}
