@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.1
+
+### Patch Changes
+
+- Add-to-cart without a `url` links to the cart; `cart-items` links to `/cart` without JavaScript.
+- Variant labels fall back to 'Option N'.
+- `CartLine` minQuantity/quantityStep support.
+
 ## 0.4.0
 
 ### Minor Changes

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.1
+
+### Patch Changes
+
+- SN3043 reserves `hk-` names; section groups only render from the layout; SN9016 load check; SN4013 and SN4014.
+- The dev server serves a 404 page.
+- Add-to-cart without a `url` links to the cart; `cart-items` links to `/cart` without JavaScript.
+
 ## 0.4.0
 
 ### Minor Changes

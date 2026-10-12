@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.4.1
+
+### Patch Changes
+
+- Diagnostics SN3043 (names starting with `hk-` are reserved), SN9016 (load check), SN4013 and SN4014.
+- `CartLine` may carry `minQuantity` and `quantityStep`.
+- Section groups only render from the layout.
+- Host impact: `CartHost` `t()` must provide the keys `increase`, `decrease` and `add_failed`.
+
 ## 0.4.0
 
 ### Minor Changes

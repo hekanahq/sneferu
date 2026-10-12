@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.1
+
+### Patch Changes
+
+- Cart controller honours `minQuantity` and `quantityStep` and uses the `increase`, `decrease` and `add_failed` text keys; raw errors are never shown.
+- Host impact: `CartHost` `t()` must provide `increase`, `decrease` and `add_failed`.
+
 ## 0.4.0
 
 ### Minor Changes

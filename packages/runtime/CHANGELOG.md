@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.1
+
+### Patch Changes
+
+- Cart lines honour `minQuantity` and `quantityStep`; new text keys `increase`, `decrease`, `add_failed`; raw errors are never shown.
+- `onColor` chooses the higher-contrast text colour, and a theme `on-primary`/`on-accent` token wins.
+- Host impact: `CartHost` `t()` must provide `increase`, `decrease` and `add_failed`; `CartLine` may carry `minQuantity` and `quantityStep`.
+
 ## 0.4.0
 
 ### Minor Changes
