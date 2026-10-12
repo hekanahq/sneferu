@@ -12,7 +12,7 @@ import { runFormat } from './commands/format';
 const program = new Command().name('sneferu').description('Build Hekana themes with Sneferu').version('0.4.1');
 program.command('init').argument('[dir]', 'folder to create', 'my-theme').option('--force', 'write into a non-empty folder')
   .option('--template <name>', 'what to scaffold (starter: a complete store)', 'starter')
-  .action((dir: string, o: { force?: boolean; template?: string }) => { try { runInit(dir, o); console.log(`✔ created ${dir} — next: cd ${dir} && npx @hekana/sneferu dev`); } catch (e) { console.error(`✖ ${(e as Error).message}`); process.exitCode = 2; } });
+  .action((dir: string, o: { force?: boolean; template?: string }) => { try { runInit(dir, o); console.log(`✔ created ${dir} — next: cd ${dir} && npx sneferu dev`); } catch (e) { console.error(`✖ ${(e as Error).message}`); process.exitCode = 2; } });
 program.command('validate').argument('[dir]', 'theme folder', '.')
   .action((dir: string) => { const r = runValidate(dir); console.log(r.output); process.exitCode = r.ok ? 0 : 1; });
 program.command('build').argument('[dir]', 'theme folder', '.').option('--out <dir>', 'output folder', 'dist')

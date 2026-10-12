@@ -80,18 +80,18 @@ Node.js 20 or newer; `npx` downloads the CLI the first time.
 ### 1. Create a theme
 
 ```bash
-npx @hekana/sneferu init my-theme
+npx sneferu init my-theme
 ```
 
 Copies the starter theme into a new folder, `my-theme`, and names the theme
-after the folder.
+after the folder. `npm create sneferu my-theme` does the same.
 
 ### 2. Preview it
 
 <Example>
 
 ```bash
-npx @hekana/sneferu dev ./my-theme
+npx sneferu dev ./my-theme
 ```
 
 <Result url="127.0.0.1:4100">
@@ -106,10 +106,10 @@ and reloads every time you save a file.
 ### 3. Push a version
 
 ```bash
-npx @hekana/sneferu push ./my-theme --package my-theme
+npx sneferu push ./my-theme --package my-theme
 ```
 
 Checks the theme, compiles it and uploads it to Hekana as a new version. Sign in
-first with `npx @hekana/sneferu login`; any Hekana account can
+first with `npx sneferu login`; any Hekana account can
 [get an API key](guide/09-get-an-api-key.mdx). Add `--dev-store` to publish the
 version on your free dev store. See [Push and publish](guide/07-publishing.mdx).

@@ -30,7 +30,7 @@ There are two ways. Both give you the same kind of key.
 ### Sign in from the terminal
 
 ```bash
-npx @hekana/sneferu login
+npx sneferu login
 ```
 
 ```
@@ -55,7 +55,7 @@ again.
 
 The CLI keeps one saved key. When `login` saves a new key, it revokes the key it
 replaces if that key was saved for the same API. A key saved for another API is
-left alone. Use `npx @hekana/sneferu whoami` to check which account and dev store the
+left alone. Use `npx sneferu whoami` to check which account and dev store the
 CLI is using.
 
 ### Create a key in the portal
@@ -75,7 +75,7 @@ Set `HEKANA_TOKEN` in your CI provider's secret store. When it is set, the CLI u
 it instead of the saved login.
 
 ```bash
-HEKANA_TOKEN=$HEKANA_DEV_KEY npx @hekana/sneferu push ./my-theme --package my-theme
+HEKANA_TOKEN=$HEKANA_DEV_KEY npx sneferu push ./my-theme --package my-theme
 ```
 
 | Variable | Does |
@@ -104,7 +104,7 @@ Reserved package slugs, which nobody outside Hekana can push: `starter`, `hekana
 ## Sign out
 
 ```bash
-npx @hekana/sneferu logout
+npx sneferu logout
 ```
 
 `logout` revokes the saved key on Hekana and deletes the file. If Hekana cannot be

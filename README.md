@@ -4,11 +4,11 @@ Build themes for Hekana stores. Sneferu is Hekana's theme language and SDK —
 HTML with `hk-*` tags, `{{ }}` and `{% if/for/render %}`, compiled to a safe
 artifact and previewed locally.
 
-    npx @hekana/sneferu init my-theme
+    npx sneferu init my-theme
     cd my-theme
-    npx @hekana/sneferu dev        # http://127.0.0.1:4100 (English; ?locale=ar for Arabic)
-    npx @hekana/sneferu validate
-    npx @hekana/sneferu build      # dist/<id>-<version>.sneferu.json
+    npx sneferu dev        # http://127.0.0.1:4100 (English; ?locale=ar for Arabic)
+    npx sneferu validate
+    npx sneferu build      # dist/<id>-<version>.sneferu.json
 
 Commands: `init`, `dev`, `validate`, `build`, `format` (`--check` for CI), `login`, `logout`, `whoami`, `push` (with a developer key; `--dev-store` publishes on your dev store).
 
@@ -19,7 +19,7 @@ the previously saved key for the same API. The server allows 30 pushes per hour 
 60 per developer, at most 5 versions waiting for review and at most 20 theme packages per
 developer. Reserved slugs: `starter`, `hekana`, `default`, `admin`, `official`, `theme`, `themes`, `test`, `demo`, `preview`, and anything starting with `hekana-`.
 
-Install: `npx @hekana/sneferu <command>` (Node.js 20 or newer), or `npm install -g @hekana/sneferu` for the `sneferu` / `snf` commands.
+Install: `npx sneferu <command>` (Node.js 20 or newer), or `npm i -g sneferu` for the `sneferu` / `snf` commands. Start a theme with `npm create sneferu my-theme`. `sneferu` is a short name for `@hekana/sneferu`; both install the same tool.
 
 ## Developer guide
 

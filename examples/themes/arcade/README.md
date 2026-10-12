@@ -102,7 +102,7 @@ number.
 ## 1. Start from the starter
 
 ```bash
-npx @hekana/sneferu init arcade
+npx sneferu init arcade
 cd arcade
 ```
 
@@ -986,12 +986,12 @@ mockup; the tiles and the menu carry the same links.
 
 ## 12. Check, preview and push
 
-1. `npx @hekana/sneferu format` indents every file.
-2. `npx @hekana/sneferu validate` prints `✔ theme arcade@1.1.0 is valid`.
-3. `npx @hekana/sneferu dev` and open `http://127.0.0.1:4100`, then
+1. `npx sneferu format` indents every file.
+2. `npx sneferu validate` prints `✔ theme arcade@1.1.0 is valid`.
+3. `npx sneferu dev` and open `http://127.0.0.1:4100`, then
    `?locale=en`. Narrow the window below 640 px.
 4. Change `id` in `theme.json` to a slug of your own, then
-   `npx @hekana/sneferu push . --package <your-slug> --dev-store`.
+   `npx sneferu push . --package <your-slug> --dev-store`.
 5. On a real store, create the categories with the handles from "Data it needs".
 
 Only the home page is rendered by the theme in this release; product, category

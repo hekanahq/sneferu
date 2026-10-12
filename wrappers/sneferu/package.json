@@ -1,0 +1,25 @@
+{
+  "name": "sneferu",
+  "version": "0.4.1",
+  "description": "Sneferu: build Hekana themes. The short name for @hekana/sneferu. npx sneferu init",
+  "type": "module",
+  "bin": {
+    "sneferu": "bin/sneferu.js",
+    "snf": "bin/sneferu.js"
+  },
+  "files": [
+    "bin"
+  ],
+  "dependencies": {
+    "@hekana/sneferu": "0.4.1"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://hekana.dev",
+  "author": "Hekana"
+}

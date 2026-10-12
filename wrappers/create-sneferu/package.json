@@ -1,0 +1,24 @@
+{
+  "name": "create-sneferu",
+  "version": "0.4.1",
+  "description": "npm create sneferu my-theme: start a Hekana theme with Sneferu",
+  "type": "module",
+  "bin": {
+    "create-sneferu": "bin/create-sneferu.js"
+  },
+  "files": [
+    "bin"
+  ],
+  "dependencies": {
+    "@hekana/sneferu": "0.4.1"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://hekana.dev",
+  "author": "Hekana"
+}

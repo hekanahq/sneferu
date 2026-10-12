@@ -591,12 +591,12 @@ left in the locale files; the copy is in settings and blocks.
 ## Reproduce it
 
 ```bash
-npx @hekana/sneferu init license          # start from the starter theme
+npx sneferu init license          # start from the starter theme
 cd license
 # replace the starter files with the ones above, then:
-npx @hekana/sneferu format              # indent .sneferu, theme.json and locales
-npx @hekana/sneferu validate            # must print: theme license@1.1.0 is valid
-npx @hekana/sneferu dev                 # http://127.0.0.1:4100, add ?locale=en for English
+npx sneferu format              # indent .sneferu, theme.json and locales
+npx sneferu validate            # must print: theme license@1.1.0 is valid
+npx sneferu dev                 # http://127.0.0.1:4100, add ?locale=en for English
 ```
 
 `dev` reads `.sneferu-dev/data.json` (in this folder) as sample data, so the
@@ -606,8 +606,8 @@ preview shows this store's products and the collections the sections use
 To put it on a store, sign in once and push to your dev store:
 
 ```bash
-npx @hekana/sneferu login
-npx @hekana/sneferu push . --package <your-slug> --dev-store
+npx sneferu login
+npx sneferu push . --package <your-slug> --dev-store
 ```
 
 The `--package` slug must equal `id` in `theme.json`, so change both to a

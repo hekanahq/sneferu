@@ -15,7 +15,7 @@ one JSON artifact that Hekana renders.
 ## Create a theme
 
 ```bash
-npx @hekana/sneferu init my-theme
+npx sneferu init my-theme
 cd my-theme
 ```
 
@@ -24,8 +24,10 @@ the folder name (`my-theme`) and `name` to its title case (`My Theme`). It refus
 `--force`.
 
 <Callout kind="note">
-  To skip `npx`, install the CLI once: `npm install -g @hekana/sneferu`. It is then
+  To skip `npx`, install the CLI once: `npm i -g sneferu`. It is then
   available as `sneferu` (or the short `snf`), for example `sneferu dev my-theme`.
+  `npm create sneferu my-theme` does the same as `npx sneferu init my-theme`.
+  `sneferu` is a short name for the `@hekana/sneferu` package; both install the same tool.
 </Callout>
 
 ## Preview: `dev`
@@ -33,8 +35,8 @@ the folder name (`my-theme`) and `name` to its title case (`My Theme`). It refus
 <Example>
 
 ```bash
-npx @hekana/sneferu dev            # current folder
-npx @hekana/sneferu dev ./my-theme --port 4200
+npx sneferu dev            # current folder
+npx sneferu dev ./my-theme --port 4200
 ```
 
 <Result url="127.0.0.1:4100">
@@ -105,14 +107,14 @@ error page naming the file.
 `init` writes a complete store: a layout with header, footer and announcement
 groups, a template for every page type (home, product, collection, search,
 cart, page, 404), the sections, blocks and snippets they use, tokens in
-`theme.json` and `assets/theme.css`. `npx @hekana/sneferu init --template starter`
+`theme.json` and `assets/theme.css`. `npx sneferu init --template starter`
 is the same thing (`starter` is the only template for now). Everything in it
 is editable by the merchant: see [Make everything editable](19-make-everything-editable.mdx).
 
 ## Check: `validate`
 
 ```bash
-npx @hekana/sneferu validate
+npx sneferu validate
 ```
 
 ```
@@ -133,8 +135,8 @@ not, so it can gate CI.
 ## Compile: `build`
 
 ```bash
-npx @hekana/sneferu build            # → dist/my-theme-0.1.0.sneferu.json
-npx @hekana/sneferu build --out out  # another output folder
+npx sneferu build            # → dist/my-theme-0.1.0.sneferu.json
+npx sneferu build --out out  # another output folder
 ```
 
 `build` runs the same checks as `validate`, writes

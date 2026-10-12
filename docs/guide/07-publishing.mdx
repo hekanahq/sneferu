@@ -10,7 +10,7 @@
 
 ## Sign in
 
-Sign in once with `npx @hekana/sneferu login`, or set `HEKANA_TOKEN` to a
+Sign in once with `npx sneferu login`, or set `HEKANA_TOKEN` to a
 developer key. Getting a key, turning on your dev store and using a key in CI are
 covered in [Get an API key](09-get-an-api-key.mdx). You need a Hekana account:
 if you do not have one, create it at
@@ -20,7 +20,7 @@ portal has no sign-up of its own), then sign in at
 on developer access. In short:
 
 ```bash
-npx @hekana/sneferu login
+npx sneferu login
 ```
 
 ```
@@ -58,7 +58,7 @@ themes and publish them on your dev store.
 ## Push a version
 
 ```bash
-npx @hekana/sneferu push ./my-theme --package my-theme
+npx sneferu push ./my-theme --package my-theme
 ```
 
 ```
@@ -96,7 +96,7 @@ private store at `devstore-xxxxxxxx.hekana.com` with sample products, used only
 for testing. It takes no orders or payments and is not indexed by search engines.
 
 ```bash
-npx @hekana/sneferu push ./my-theme --package my-theme --dev-store
+npx sneferu push ./my-theme --package my-theme --dev-store
 ```
 
 ```
@@ -181,7 +181,7 @@ flow with settings editing, preview and rollback.
 
 ## Checklist before a push
 
-1. `npx @hekana/sneferu validate` is clean, and `npx @hekana/sneferu whoami`
+1. `npx sneferu validate` is clean, and `npx sneferu whoami`
    shows the account you expect.
 2. Checked in `dev` in every locale the theme lists (`?locale=<code>`), on a narrow window.
 3. Empty states checked (empty collection, a block section with no blocks).

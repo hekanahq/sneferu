@@ -15,8 +15,8 @@ warnings. The [last section](#all-five-on-one-page) shows the five together.
 Create a theme and keep the preview open while you work:
 
 ```bash
-npx @hekana/sneferu init my-store
-npx @hekana/sneferu dev ./my-store
+npx sneferu init my-store
+npx sneferu dev ./my-store
 ```
 
 Open `http://127.0.0.1:4100`. It reloads every time you save a file.
@@ -149,7 +149,7 @@ news such as free delivery or a sale.
 <Steps>
   1. Save both files.
   2. Add `{"type":"announcement-bar"}` to `templates/index.sneferu`.
-  3. Run `npx @hekana/sneferu validate ./my-store`. It should print
+  3. Run `npx sneferu validate ./my-store`. It should print
      `✔ theme my-store@0.1.0 is valid`.
   4. Look at the preview. To try another colour, change `"default": "theme:accent"`
      on line 34 to a colour such as `"#3B2A1A"` and save.

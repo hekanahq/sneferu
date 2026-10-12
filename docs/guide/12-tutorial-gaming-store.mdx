@@ -162,9 +162,9 @@ Two more gaming themes were built the same way:
 ## 1. Create the theme
 
 <Steps>
-  1. `npx @hekana/sneferu init arcade`, then `cd arcade`.
+  1. `npx sneferu init arcade`, then `cd arcade`.
   2. Delete `sections/hero.sneferu`, `sections/featured.sneferu` and `blocks/`.
-  3. Keep `npx @hekana/sneferu dev` running in a second terminal and open
+  3. Keep `npx sneferu dev` running in a second terminal and open
      `http://127.0.0.1:4100` (Arabic is the default locale once step 2 below is
      done; add `?locale=en` for English).
 </Steps>
@@ -934,11 +934,11 @@ JavaScript. The questions are about codes and payment, not shipping.
 ## 9. Check, preview and push
 
 <Steps>
-  1. `npx @hekana/sneferu format` indents every file.
-  2. `npx @hekana/sneferu validate` prints `✔ theme arcade@1.1.0 is valid`.
+  1. `npx sneferu format` indents every file.
+  2. `npx sneferu validate` prints `✔ theme arcade@1.1.0 is valid`.
   3. In `dev`, check `?locale=en` and a window under 640 px.
   4. Change `id` in `theme.json` to a slug of your own, then
-     `npx @hekana/sneferu push . --package <your-slug> --dev-store`.
+     `npx sneferu push . --package <your-slug> --dev-store`.
 </Steps>
 
 Only the home page is rendered by the theme in this release; product, category

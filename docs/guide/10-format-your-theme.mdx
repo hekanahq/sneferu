@@ -22,7 +22,7 @@ A section written on as few lines as possible:
 <hk-schema>{"name":"Hero","version":1,"settings":{"title":{"type":"text","label":"Title","default":"Hello"}}}</hk-schema>
 ```
 
-The same file after `npx @hekana/sneferu format`:
+The same file after `npx sneferu format`:
 
 ```html title="sections/hero.sneferu (after)"
 <hk-section background="theme:secondary" padding-y="96">
@@ -56,8 +56,8 @@ The same file after `npx @hekana/sneferu format`:
 The CLI includes Prettier and the plugin, so there is nothing to install:
 
 ```bash
-npx @hekana/sneferu format            # current folder
-npx @hekana/sneferu format ./my-theme
+npx sneferu format            # current folder
+npx sneferu format ./my-theme
 ```
 
 ```
@@ -81,7 +81,7 @@ compiler would see.
 with `1`, so it can fail a pull request:
 
 ```bash
-npx @hekana/sneferu format --check
+npx sneferu format --check
 ```
 
 ```
@@ -102,8 +102,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npx @hekana/sneferu format --check
-      - run: npx @hekana/sneferu validate
+      - run: npx sneferu format --check
+      - run: npx sneferu validate
 ```
 
 ## Use Prettier directly
