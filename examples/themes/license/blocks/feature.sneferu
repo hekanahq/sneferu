@@ -1,4 +1,6 @@
-{% render 'feature', text: block.settings.text %}
+<p class="ls-feature">
+  {% render 'glyph', name: 'check' %}<span>{{ block.settings.text }}</span>
+</p>
 <hk-schema>
   {
     "name": "Feature",
@@ -7,7 +9,11 @@
       "text": {
         "type": "text",
         "label": "Feature",
-        "default": "Instant delivery by email",
+        "localized": true,
+        "default": {
+          "ar": "مفتاح الترخيص على الإيميل بعد الدفع",
+          "en": "Licence key by email after payment"
+        },
         "maxLength": 80
       }
     }

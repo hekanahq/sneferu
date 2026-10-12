@@ -2,21 +2,21 @@
   <div class="ls-wrap ls-hero-row">
     <div class="ls-hero-copy">
       <h1 class="ls-h1">
-        <span class="ls-accent">{{ section.settings.line1 | default: t('hero_line1') }}</span>
-        <span>{{ section.settings.line2 | default: t('hero_line2') }}</span>
+        <span class="ls-accent">{{ section.settings.line1 }}</span>
+        <span>{{ section.settings.line2 }}</span>
       </h1>
-      <p class="ls-lead">{{ section.settings.text | default: t('hero_text') }}</p>
+      <p class="ls-lead">{{ section.settings.text }}</p>
       <a class="ls-btn ls-btn-sm" href="#apps">
-        <span>{{ section.settings.button | default: t('hero_button') }}</span>
-        {% render 'icon', name: 'download' %}
+        <span>{{ section.settings.button }}</span>
+        <hk-icon name="download" size="18" stroke="2.5" class="ls-icon" />
       </a>
     </div>
     <div class="ls-tiers">
-      {% for p in collection('bundles').products limit: 3 %}
+      {% for p in collection(section.settings.plans).products limit: 3 %}
         <a class="ls-tier" href="{{ p.url }}" data-best="{{ forloop.index == 2 }}">
           <span class="ls-tier-name">{{ p.title }}</span>
           <hk-price amount="{{ p.price }}" compare-at="{{ p.compare_at }}" class="ls-tier-price" />
-          <span class="ls-tier-note">{{ t('tier_note') }}</span>
+          <span class="ls-tier-note">{{ section.settings.tier_note }}</span>
           <span class="ls-tier-buy">{{ t('buy') }}</span>
         </a>
       {% endfor %}
@@ -30,27 +30,58 @@
     "settings": {
       "line1": {
         "type": "text",
-        "label": "Heading, first line (empty: the theme's own words)",
-        "default": "",
+        "label": "Heading, first line",
+        "localized": true,
+        "default": {
+          "ar": "كل البرامج اللي بتحتاجها",
+          "en": "Every app you need"
+        },
         "maxLength": 60
       },
       "line2": {
         "type": "text",
         "label": "Heading, second line",
-        "default": "",
+        "localized": true,
+        "default": {
+          "ar": "بترخيص واحد",
+          "en": "on one licence"
+        },
         "maxLength": 60
       },
       "text": {
         "type": "textarea",
         "label": "Text",
-        "default": "",
+        "localized": true,
+        "default": {
+          "ar": "اشترك في الباقة اللي تناسبك، ومفتاح الترخيص يوصلك على الإيميل بعد الدفع أونلاين.",
+          "en": "Pick the plan that suits you. Your licence key is emailed after online payment."
+        },
         "maxLength": 200
       },
       "button": {
         "type": "text",
         "label": "Button",
-        "default": "",
+        "localized": true,
+        "default": {
+          "ar": "شوف البرامج",
+          "en": "See the apps"
+        },
         "maxLength": 30
+      },
+      "plans": {
+        "type": "collection",
+        "label": "Plans (the first three; the second is highlighted)",
+        "default": "bundles"
+      },
+      "tier_note": {
+        "type": "text",
+        "label": "Line under each plan price",
+        "localized": true,
+        "default": {
+          "ar": "كل البرامج في ترخيص واحد",
+          "en": "All apps on one licence"
+        },
+        "maxLength": 60
       }
     }
   }

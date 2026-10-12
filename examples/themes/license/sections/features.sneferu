@@ -1,24 +1,13 @@
 <section class="ls-features" id="features">
   <div class="ls-wrap">
     <div class="ls-head">
-      <h2 class="ls-h2">{{ section.settings.heading | default: t('features_heading') }}</h2>
-      <p class="ls-side">{{ t('features_side') }}</p>
+      <h2 class="ls-h2">{{ section.settings.heading }}</h2>
+      <p class="ls-side">{{ section.settings.side }}</p>
     </div>
     <div class="ls-feature-grid">
-      {% if section.blocks %}
-        {% for block in section.blocks %}
-          <hk-block of="{{ block }}" />
-        {% endfor %}
-      {% else %}
-        {% render 'feature', text: t('feature_1') %}
-        {% render 'feature', text: t('feature_2') %}
-        {% render 'feature', text: t('feature_3') %}
-        {% render 'feature', text: t('feature_4') %}
-        {% render 'feature', text: t('feature_5') %}
-        {% render 'feature', text: t('feature_6') %}
-        {% render 'feature', text: t('feature_7') %}
-        {% render 'feature', text: t('feature_8') %}
-      {% endif %}
+      {% for block in section.blocks %}
+        <hk-block of="{{ block }}" />
+      {% endfor %}
     </div>
   </div>
 </section>
@@ -29,9 +18,23 @@
     "settings": {
       "heading": {
         "type": "text",
-        "label": "Heading (empty: the theme's own words)",
-        "default": "",
+        "label": "Heading",
+        "localized": true,
+        "default": {
+          "ar": "في كل ترخيص",
+          "en": "In every licence"
+        },
         "maxLength": 60
+      },
+      "side": {
+        "type": "text",
+        "label": "Side note",
+        "localized": true,
+        "default": {
+          "ar": "من غير شحن ومن غير انتظار",
+          "en": "Nothing to ship, nothing to wait for"
+        },
+        "maxLength": 80
       }
     },
     "blocks": {
