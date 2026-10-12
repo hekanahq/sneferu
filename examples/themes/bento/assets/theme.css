@@ -5,7 +5,7 @@
   line-height: 1.5;
   min-height: 100vh;
 }
-.bt a { color: inherit; text-decoration: none; }
+:where(.bt a) { color: inherit; text-decoration: none; }
 .bt-wrap { max-width: var(--hk-content-width); margin-inline: auto; padding-inline: 24px; }
 /* Block wrappers take no room: tabs and shelves lay out as before. */
 .bt [data-hk-block] { display: contents; }
@@ -18,8 +18,8 @@
 .bt-header { padding-block: 18px 6px; }
 .bt-header-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
 .bt-start, .bt-end { display: flex; align-items: center; gap: 4px; }
-.bt-logo { font-weight: 600; font-size: 17px; margin-inline-end: 6px; }
-.bt-icon { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; list-style: none; }
+.bt-logo { display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; font-size: 17px; margin-inline-end: 6px; }
+.bt-icon { position: relative; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; list-style: none; }
 .bt-icon::-webkit-details-marker { display: none; }
 .bt-icon:hover { background: var(--hk-color-line); }
 .bt-user { color: var(--hk-color-text); }
@@ -42,7 +42,7 @@
   flex: none; min-height: 44px; display: inline-flex; align-items: center; font-size: 17px; font-weight: 500;
   border-bottom: 2px solid transparent;
 }
-.bt-tabs-row a[aria-current="true"] { color: var(--hk-color-accent); border-bottom-color: var(--hk-color-accent); }
+.bt-tabs-row a[aria-current="true"] { color: var(--hk-color-text); border-bottom-color: var(--hk-color-accent); }
 .bt-tabs-row a:hover { color: var(--hk-color-accent); }
 
 /* Bento shelves: a header tile over a panel, two side by side */
@@ -73,7 +73,7 @@
   background: var(--hk-color-primary); color: #FFFFFF; font-size: 11px; font-weight: 600;
 }
 .bt-more {
-  position: absolute; bottom: 14px; inset-inline-end: 14px; width: 40px; height: 40px; border-radius: 50%;
+  position: absolute; bottom: 14px; inset-inline-end: 14px; width: 44px; height: 44px; border-radius: 50%;
   display: grid; place-items: center; background: var(--hk-color-teal); color: #FFFFFF !important;
 }
 .bt-more:hover { filter: brightness(.95); }
@@ -83,10 +83,10 @@
 .bt-band-wrap { padding-block: 0 40px; }
 .bt-band {
   display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;
-  min-height: 150px; padding: 28px 40px; border-radius: 36px; background: var(--hk-color-teal); color: #FFFFFF;
+  min-height: 150px; padding: 28px 40px; border-radius: 36px; background: var(--hk-color-teal); color: var(--hk-color-primary);
 }
 .bt-band h2 { margin: 0; font-size: 24px; font-weight: 700; }
-.bt-band p { margin: 2px 0 0; font-size: 15px; opacity: .92; }
+.bt-band p { margin: 2px 0 0; font-size: 15px; }
 .bt-band-button.sn-btn {
   display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding-inline: 34px; border-radius: 999px;
   background: var(--hk-color-primary); color: #FFFFFF; border: 0; font-size: 16px; font-weight: 600;
@@ -108,7 +108,7 @@
   .bt-start, .bt-end { display: contents; }
   .bt-menu { order: -1; }
   .bt-logo { margin: 0; }
-  .bt-pill { margin-inline: auto 0; min-height: 40px; padding-inline: 18px; font-size: 13px; }
+  .bt-pill { margin-inline: auto 0; min-height: 44px; padding-inline: 18px; font-size: 13px; }
   .bt-user { display: none; }
   .bt-tabs { padding-block: 4px 10px; }
   .bt-tabs-row { justify-content: flex-start; gap: 20px; }
@@ -122,3 +122,23 @@
   .bt-band { border-radius: 28px; padding: 22px; justify-content: center; text-align: center; }
   .bt-band-button.sn-btn { width: 100%; }
 }
+
+/* Cart, product, collection, search and 404 pages: the SDK's default store, in Bento's style */
+/* Dark text on the peach accent: white on peach is 2.3:1 (the runtime picks white for this colour). */
+.bt { --hk-color-on-accent: var(--hk-color-text); }
+.bt-icon .sn-cart-count { position: absolute; top: 0; inset-inline-end: -2px; }
+.sf-card { padding: 10px; border-radius: 18px; background: var(--hk-color-warm); }
+.sf-card:nth-child(4n + 2) { background: var(--hk-color-sky); }
+.sf-card:nth-child(4n + 3) { background: var(--hk-color-sage); }
+.sf-card:nth-child(4n + 4) { background: var(--hk-color-peach); }
+.sf-card-media { border-radius: 12px; }
+.sf-card-title { font-size: 14px; font-weight: 600; }
+.sf-card .sn-price { font-size: 13px; }
+.sn-was { opacity: 1; }
+.sf-cart-aside { border-radius: 18px; border-color: var(--hk-color-line); background: var(--hk-color-warm); }
+.sf-note-muted { background: var(--hk-color-sky); }
+.sn-btn, .sf-chip, .sf-search-page-form .sn-search { border-radius: 999px; }
+.sn-btn-ghost, .sn-btn-outline, .sf-view-all, .sn-cart-fallback { color: var(--hk-color-text); }
+.bt-tabs-row a { min-width: 44px; justify-content: center; }
+/* Phones: the cart icon stays in the header so the drawer is one tap away */
+@media (max-width: 639px) { .bt-end .bt-hide-phone[data-hk-open] { display: grid; } }
