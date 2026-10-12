@@ -1,17 +1,10 @@
 <section class="cr-what" id="what">
   <div class="cr-wrap">
-    <h2 class="cr-h2">{{ section.settings.heading | default: t('what_heading') }}</h2>
+    <h2 class="cr-h2">{{ section.settings.heading }}</h2>
     <div class="cr-list">
-      {% if section.blocks %}
-        {% for block in section.blocks %}
-          <hk-block of="{{ block }}" />
-        {% endfor %}
-      {% else %}
-        {% render 'get-item', term: t('get_1_term'), text: t('get_1_text') %}
-        {% render 'get-item', term: t('get_2_term'), text: t('get_2_text') %}
-        {% render 'get-item', term: t('get_3_term'), text: t('get_3_text') %}
-        {% render 'get-item', term: t('get_4_term'), text: t('get_4_text') %}
-      {% endif %}
+      {% for block in section.blocks %}
+        <hk-block of="{{ block }}" />
+      {% endfor %}
     </div>
   </div>
 </section>
@@ -22,8 +15,12 @@
     "settings": {
       "heading": {
         "type": "text",
-        "label": "Heading (empty: the theme's own words)",
-        "default": "",
+        "label": "Heading",
+        "localized": true,
+        "default": {
+          "ar": "هتاخد إيه مع كل منتج",
+          "en": "What you get with every product"
+        },
         "maxLength": 80
       }
     },

@@ -1,6 +1,5 @@
 /* Creator: warm paper, black type, one orange accent. Every colour is a token in theme.json. */
 .cr {
-  font-family: 'IBM Plex Sans Arabic', system-ui, sans-serif;
   background: var(--hk-color-background);
   color: var(--hk-color-text);
   line-height: 1.6;

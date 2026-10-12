@@ -1,7 +1,7 @@
 {
   "id": "creator",
   "name": "Creator",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "Hekana",
   "description": "An editorial theme for one creator selling courses, e-books and templates",
   "category": "digital",
@@ -20,6 +20,10 @@
       "muted": "#716B64",
       "line": "#CFC8BE"
     },
-    "layout": { "contentWidth": "1040px" }
+    "layout": { "contentWidth": "1040px" },
+    "fonts": {
+      "heading": "IBM Plex Sans Arabic",
+      "body": "IBM Plex Sans Arabic"
+    }
   }
 }
