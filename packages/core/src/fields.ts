@@ -4,6 +4,32 @@ export type FieldType =
   /** A value bound from the page (a product, `paginate`, `localization`), not something a merchant edits. */
   | 'data';
 
+export const FIELD_TYPES = ['text', 'textarea', 'rich_text', 'number', 'range', 'boolean', 'select', 'color', 'image', 'video', 'link', 'product', 'collection', 'spacing', 'typography', 'icon', 'data'] as const;
+
+/**
+ * What the builder's inspector needs to know per field type: the control to draw, the shape of the stored
+ * value, whether a merchant edits it at all, and whether `localized` / `responsive` apply.
+ */
+export const FIELD_INSPECTORS: Readonly<Record<FieldType, { control: string; value: 'string' | 'number' | 'boolean' | 'object'; editable: boolean; localizable: boolean; responsive: boolean }>> = Object.freeze({
+  text: { control: 'input', value: 'string', editable: true, localizable: true, responsive: false },
+  textarea: { control: 'textarea', value: 'string', editable: true, localizable: true, responsive: false },
+  rich_text: { control: 'rich-text', value: 'string', editable: true, localizable: true, responsive: false },
+  number: { control: 'number', value: 'number', editable: true, localizable: false, responsive: true },
+  range: { control: 'slider', value: 'number', editable: true, localizable: false, responsive: true },
+  boolean: { control: 'toggle', value: 'boolean', editable: true, localizable: false, responsive: false },
+  select: { control: 'select', value: 'string', editable: true, localizable: false, responsive: true },
+  color: { control: 'color', value: 'string', editable: true, localizable: false, responsive: false },
+  image: { control: 'image-picker', value: 'string', editable: true, localizable: false, responsive: false },
+  video: { control: 'video-picker', value: 'string', editable: true, localizable: false, responsive: false },
+  link: { control: 'link', value: 'string', editable: true, localizable: false, responsive: false },
+  product: { control: 'product-picker', value: 'string', editable: true, localizable: false, responsive: false },
+  collection: { control: 'collection-picker', value: 'string', editable: true, localizable: false, responsive: false },
+  spacing: { control: 'spacing', value: 'object', editable: true, localizable: false, responsive: true },
+  typography: { control: 'typography', value: 'object', editable: true, localizable: false, responsive: true },
+  icon: { control: 'icon-picker', value: 'string', editable: true, localizable: false, responsive: false },
+  data: { control: 'none', value: 'object', editable: false, localizable: false, responsive: false },
+});
+
 export interface Field {
   type: FieldType;
   /** Always { ar, en } once compiled; authors may write a string or { en } (see LabelInput). */

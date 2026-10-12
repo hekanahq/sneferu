@@ -113,3 +113,4 @@
 @media (min-width:900px){.sf-hero:has(.sf-hero-media){grid-template-columns:1fr 1fr}}
 .sf-hero-text{display:grid;gap:var(--hk-space-2,8px);justify-items:start}
 .sf-hero.sf-align-center .sf-hero-text{justify-items:center;text-align:center}
+.sn-cart-fallback{display:inline-flex;align-items:center;min-height:44px;color:var(--hk-color-accent)}
