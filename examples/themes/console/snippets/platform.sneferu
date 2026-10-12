@@ -1,4 +1,0 @@
-<a class="cc-plat" href="{{ t('url_prefix') }}/category/{{ handle }}">
-  <span class="cc-plat-icon">{% render 'icon', name: icon %}</span>
-  <span class="cc-plat-label">{{ label }}</span>
-</a>

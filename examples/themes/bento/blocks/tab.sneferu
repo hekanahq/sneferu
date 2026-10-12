@@ -1,0 +1,29 @@
+<a href="{{ url(block.settings.link) }}" aria-current="{{ block.settings.current }}">{{ block.settings.label }}</a>
+<hk-schema>
+  {
+    "name": "Tab",
+    "version": 1,
+    "settings": {
+      "label": {
+        "type": "text",
+        "label": "Label",
+        "localized": true,
+        "default": {
+          "ar": "الكل",
+          "en": "All"
+        },
+        "maxLength": 30
+      },
+      "link": {
+        "type": "link",
+        "label": "Link (a page, or #<collection handle> for a shelf on this page)",
+        "default": "#shop"
+      },
+      "current": {
+        "type": "boolean",
+        "label": "Underlined as the current tab",
+        "default": false
+      }
+    }
+  }
+</hk-schema>

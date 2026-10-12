@@ -1,27 +1,28 @@
 <header class="cc-header">
   <hk-container>
     <div class="cc-bar">
-      <a class="cc-logo" href="{{ t('url_home') }}">{{ store.name }}</a>
+      <a class="cc-logo" href="{{ url('/') }}">{{ store.name }}</a>
       <nav class="cc-nav" aria-label="{{ t('nav_label') }}">
-        <a href="{{ t('url_products') }}">{{ t('nav_all') }}</a>
-        <a href="{{ t('url_prefix') }}/category/gift-cards">{{ t('cat_gift_cards') }}</a>
-        <a href="{{ t('url_prefix') }}/category/game-currency">{{ t('cat_currency') }}</a>
-        <a href="{{ t('url_prefix') }}/category/subscriptions">{{ t('cat_subscriptions') }}</a>
+        <a href="{{ url('/products') }}">{{ t('nav_all') }}</a>
+        <a href="{{ url('/category/gift-cards') }}">{{ t('cat_gift_cards') }}</a>
+        <a href="{{ url('/category/game-currency') }}">{{ t('cat_currency') }}</a>
+        <a href="{{ url('/category/subscriptions') }}">{{ t('cat_subscriptions') }}</a>
         <a href="#faq">{{ t('nav_faq') }}</a>
       </nav>
       <div class="cc-icons">
-        <a
-          class="cc-icon"
-          href="{{ t('url_account') }}"
-          aria-label="{{ t('account') }}"
-        >{% render 'icon', name: 'user' %}</a>
-        <a class="cc-icon" href="{{ t('url_cart') }}" aria-label="{{ t('cart') }}">{% render 'icon', name: 'cart' %}</a>
+        <a class="cc-icon" href="{{ url('/account') }}" aria-label="{{ t('account') }}"><hk-icon
+            name="user"
+            size="24"
+            class="ic"
+          /></a>
+        <a class="cc-icon" href="{{ url('/cart') }}" aria-label="{{ t('cart') }}"><hk-icon
+            name="shopping-cart"
+            size="24"
+            class="ic"
+          /></a>
       </div>
     </div>
-    <a class="cc-search" href="{{ t('url_search') }}">
-      <span>{{ t('search_placeholder') }}</span>
-      {% render 'icon', name: 'search' %}
-    </a>
+    <hk-search-form placeholder="{{ t('search_placeholder') }}" class="cc-search" />
   </hk-container>
 </header>
 <main><hk-slot name="content" /></main>
@@ -33,9 +34,9 @@
         <p>{{ t('footer_about') }}</p>
       </div>
       <nav class="cc-footer-links" aria-label="{{ t('footer_links') }}">
-        <a href="{{ t('url_products') }}">{{ t('nav_all') }}</a>
-        <a href="{{ t('url_prefix') }}/category/gift-cards">{{ t('cat_gift_cards') }}</a>
-        <a href="{{ t('url_prefix') }}/category/game-currency">{{ t('cat_currency') }}</a>
+        <a href="{{ url('/products') }}">{{ t('nav_all') }}</a>
+        <a href="{{ url('/category/gift-cards') }}">{{ t('cat_gift_cards') }}</a>
+        <a href="{{ url('/category/game-currency') }}">{{ t('cat_currency') }}</a>
         <a href="#faq">{{ t('nav_faq') }}</a>
       </nav>
     </div>

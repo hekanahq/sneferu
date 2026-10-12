@@ -1,39 +1,18 @@
 <hk-section padding-y="24" mobile-padding-y="16" class="cc-amounts">
   <nav class="cc-seg" aria-label="{{ t('amounts_label') }}">
-    <a class="cc-seg-item" href="{{ t('url_search') }}"><span>{{ section.settings.amount_1 }}</span>
-      <small>{{ t('egp') }}</small></a>
-    <a class="cc-seg-item is-active" href="{{ t('url_search') }}"><span>{{ section.settings.amount_2 }}</span>
-      <small>{{ t('egp') }}</small></a>
-    <a class="cc-seg-item" href="{{ t('url_search') }}"><span>{{ section.settings.amount_3 }}</span>
-      <small>{{ t('egp') }}</small></a>
+    {% for block in section.blocks %}
+      <hk-block of="{{ block }}" />
+    {% endfor %}
   </nav>
 </hk-section>
 <hk-schema>
   {
     "name": "Amount selector",
     "version": 1,
-    "settings": {
-      "amount_1": {
-        "type": "number",
-        "label": "Amount 1 (EGP)",
-        "default": 200,
-        "min": 1,
-        "max": 100000
-      },
-      "amount_2": {
-        "type": "number",
-        "label": "Amount 2, highlighted (EGP)",
-        "default": 500,
-        "min": 1,
-        "max": 100000
-      },
-      "amount_3": {
-        "type": "number",
-        "label": "Amount 3 (EGP)",
-        "default": 1000,
-        "min": 1,
-        "max": 100000
-      }
+    "settings": {},
+    "blocks": {
+      "allowed": ["amount"],
+      "max": 3
     }
   }
 </hk-schema>

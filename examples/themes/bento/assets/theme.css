@@ -1,6 +1,5 @@
 /* Bento: white page, rounded pastel tiles (peach, sage, sand, sky), a teal band. No lavender or pink. */
 .bt {
-  font-family: 'Baloo Bhaijaan 2', system-ui, sans-serif;
   background: var(--hk-color-background);
   color: var(--hk-color-text);
   line-height: 1.5;
@@ -8,6 +7,8 @@
 }
 .bt a { color: inherit; text-decoration: none; }
 .bt-wrap { max-width: var(--hk-content-width); margin-inline: auto; padding-inline: 24px; }
+/* Block wrappers take no room: tabs and shelves lay out as before. */
+.bt [data-hk-block] { display: contents; }
 [data-tone="peach"] { background: var(--hk-color-peach); }
 [data-tone="sage"] { background: var(--hk-color-sage); }
 [data-tone="sky"] { background: var(--hk-color-sky); }
@@ -41,7 +42,7 @@
   flex: none; min-height: 44px; display: inline-flex; align-items: center; font-size: 17px; font-weight: 500;
   border-bottom: 2px solid transparent;
 }
-.bt-tabs-row a[aria-current="page"] { color: var(--hk-color-accent); border-bottom-color: var(--hk-color-accent); }
+.bt-tabs-row a[aria-current="true"] { color: var(--hk-color-accent); border-bottom-color: var(--hk-color-accent); }
 .bt-tabs-row a:hover { color: var(--hk-color-accent); }
 
 /* Bento shelves: a header tile over a panel, two side by side */

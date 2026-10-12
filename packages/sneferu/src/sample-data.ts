@@ -56,7 +56,7 @@ export const sampleProduct = (locale: 'ar' | 'en', i: number, responsive = false
     kind: 'digital' as const,
     digital_kind: kind,
     tags: [kind === 'manual' ? 'subscription' : 'gift-card', ...(i < 3 ? ['gaming'] : [])],
-    category: cat ? { handle: cat, title: COLLECTION[cat][locale], url: `${prefix}/collections/${cat}` } : null,
+    category: cat ? { handle: cat, title: COLLECTION[cat][locale], url: `${prefix}/category/${cat}` } : null,
   };
 };
 
@@ -74,7 +74,7 @@ export function sampleContext(locale: 'ar' | 'en', translations: Record<string, 
     settings: {}, data: {},
     collections: Object.fromEntries((Object.keys(COLLECTION) as (keyof typeof COLLECTION)[]).map((h) => [h, { title: COLLECTION[h][locale], products: MEMBERS[h].map((i) => products[i]!) }])),
     categories: CATEGORIES.map((h) => ({
-      handle: h, title: COLLECTION[h][locale], url: `${locale === 'en' ? '/en' : ''}/collections/${h}`,
+      handle: h, title: COLLECTION[h][locale], url: `${locale === 'en' ? '/en' : ''}/category/${h}`,
       image: products[MEMBERS[h][0]!]!.image, count: MEMBERS[h].length,
     })),
     products: { 'sample-1': products[0]! },

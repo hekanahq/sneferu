@@ -19,15 +19,26 @@ left out. Live: [demo-esports.hekana.com](https://demo-esports.hekana.com) and
 [/en](https://demo-esports.hekana.com/en).
 
 What the theme uses: plain HTML, `hk-section`, `hk-stack`, `hk-heading`,
-`hk-text`, `hk-button` and `hk-product-card` (wrapped to add a ribbon and a
-button), inline SVG for the art, CSS `clip-path` for the cuts, and one
-stylesheet. There is no JavaScript.
+`hk-text`, `hk-button`, `hk-icon`, `hk-search-form` and `hk-product-card` (with
+a ribbon in its `badge` part and a Buy link in its `actions` part), three block
+types (tab, step, question) seeded by the template, inline SVG for the mark and
+the art, CSS `clip-path` for the cuts, and one stylesheet. There is no
+JavaScript. Version 1.1.0 is built on Sneferu 0.3; the 0.2 workarounds it
+replaced are listed in `../../GAPS-gaming.md`.
+
+## Upgrading from 1.0
+
+In 1.1.0 the numbered settings and locale-text fallbacks became blocks and
+localized settings; values saved under 1.0 are not carried over, so the sections
+start from the new defaults.
 
 ## Files
 
 ```
-assets/fonts.css
 assets/theme.css
+blocks/faq-item.sneferu
+blocks/step.sneferu
+blocks/tab.sneferu
 layout/theme.sneferu
 locales/ar.json
 locales/en.json
@@ -35,12 +46,8 @@ sections/esports-faq.sneferu
 sections/esports-hero.sneferu
 sections/esports-products.sneferu
 sections/esports-steps.sneferu
-snippets/faq-item.sneferu
 snippets/hero-art.sneferu
-snippets/icon.sneferu
 snippets/mark.sneferu
-snippets/step.sneferu
-snippets/tc.sneferu
 templates/index.sneferu
 theme.json
 ```
@@ -51,8 +58,8 @@ Next to the theme: `README.md` and `docs/`, which the CLI skips.
 
 | What | Used by |
 | - | - |
-| Products marked featured (or the newest products), with an image; some with a compare-at price | the top-up cards, via `collection('featured')`; a compare-at price turns the ribbon into "Sale" |
-| Categories `gift-cards`, `game-currency`, `top-ups` | the tabs and the navigation |
+| A collection with images, some with a compare-at price: `featured` by default | the top-up cards, through the section's `collection` setting; a compare-at price turns the ribbon into "Sale" |
+| Categories `gift-cards`, `game-currency`, `top-ups` | the navigation and the default tab links (each tab link is a setting) |
 
 ## 1. Start from the starter
 
@@ -69,7 +76,7 @@ Delete the starter's sections and `blocks/`.
 {
   "id": "esports",
   "name": "Esports",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "author": "Hekana",
   "description": "A bold gaming top-up store: black and deep green, a lime accent, diagonal cuts, a wide hero and top-up cards with ribbons.",
   "category": "gaming",
@@ -90,7 +97,11 @@ Delete the starter's sections and `blocks/`.
       "line": "#1D2A23",
       "ribbon": "#F5B83D"
     },
-    "layout": { "contentWidth": "1200px" }
+    "layout": { "contentWidth": "1200px" },
+    "fonts": {
+      "heading": "Cairo",
+      "body": "Cairo"
+    }
   }
 }
 ```
@@ -101,16 +112,9 @@ Delete the starter's sections and `blocks/`.
 
 ## 3. Fonts, icons and the mark
 
-`assets/fonts.css` loads Cairo (500, 700 and 900) from Google Fonts:
-
-```css title="assets/fonts.css"
-@font-face { font-family: 'Cairo'; font-style: normal; font-weight: 500; font-display: swap; src: url(https://fonts.gstatic.com/s/cairo/v31/SLXVc1nY6HkvangtZmpQdkhzfH5lkSscQyyS4J0.woff2) format('woff2'); unicode-range: U+0600-06FF, U+0750-077F, U+0870-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC, U+102E0-102FB, U+10E60-10E7E, U+10EC2-10EC7, U+10EC9-10EEE, U+10EF0-10EFF, U+1EE00-1EE03, U+1EE05-1EE1F, U+1EE21-1EE22, U+1EE24, U+1EE27, U+1EE29-1EE32, U+1EE34-1EE37, U+1EE39, U+1EE3B, U+1EE42, U+1EE47, U+1EE49, U+1EE4B, U+1EE4D-1EE4F, U+1EE51-1EE52, U+1EE54, U+1EE57, U+1EE59, U+1EE5B, U+1EE5D, U+1EE5F, U+1EE61-1EE62, U+1EE64, U+1EE67-1EE6A, U+1EE6C-1EE72, U+1EE74-1EE77, U+1EE79-1EE7C, U+1EE7E, U+1EE80-1EE89, U+1EE8B-1EE9B, U+1EEA1-1EEA3, U+1EEA5-1EEA9, U+1EEAB-1EEBB, U+1EEF0-1EEF1; }
-@font-face { font-family: 'Cairo'; font-style: normal; font-weight: 500; font-display: swap; src: url(https://fonts.gstatic.com/s/cairo/v31/SLXVc1nY6HkvangtZmpQdkhzfH5lkSscRiyS.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
-@font-face { font-family: 'Cairo'; font-style: normal; font-weight: 700; font-display: swap; src: url(https://fonts.gstatic.com/s/cairo/v31/SLXVc1nY6HkvangtZmpQdkhzfH5lkSscQyyS4J0.woff2) format('woff2'); unicode-range: U+0600-06FF, U+0750-077F, U+0870-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC, U+102E0-102FB, U+10E60-10E7E, U+10EC2-10EC7, U+10EC9-10EEE, U+10EF0-10EFF, U+1EE00-1EE03, U+1EE05-1EE1F, U+1EE21-1EE22, U+1EE24, U+1EE27, U+1EE29-1EE32, U+1EE34-1EE37, U+1EE39, U+1EE3B, U+1EE42, U+1EE47, U+1EE49, U+1EE4B, U+1EE4D-1EE4F, U+1EE51-1EE52, U+1EE54, U+1EE57, U+1EE59, U+1EE5B, U+1EE5D, U+1EE5F, U+1EE61-1EE62, U+1EE64, U+1EE67-1EE6A, U+1EE6C-1EE72, U+1EE74-1EE77, U+1EE79-1EE7C, U+1EE7E, U+1EE80-1EE89, U+1EE8B-1EE9B, U+1EEA1-1EEA3, U+1EEA5-1EEA9, U+1EEAB-1EEBB, U+1EEF0-1EEF1; }
-@font-face { font-family: 'Cairo'; font-style: normal; font-weight: 700; font-display: swap; src: url(https://fonts.gstatic.com/s/cairo/v31/SLXVc1nY6HkvangtZmpQdkhzfH5lkSscRiyS.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
-@font-face { font-family: 'Cairo'; font-style: normal; font-weight: 900; font-display: swap; src: url(https://fonts.gstatic.com/s/cairo/v31/SLXVc1nY6HkvangtZmpQdkhzfH5lkSscQyyS4J0.woff2) format('woff2'); unicode-range: U+0600-06FF, U+0750-077F, U+0870-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC, U+102E0-102FB, U+10E60-10E7E, U+10EC2-10EC7, U+10EC9-10EEE, U+10EF0-10EFF, U+1EE00-1EE03, U+1EE05-1EE1F, U+1EE21-1EE22, U+1EE24, U+1EE27, U+1EE29-1EE32, U+1EE34-1EE37, U+1EE39, U+1EE3B, U+1EE42, U+1EE47, U+1EE49, U+1EE4B, U+1EE4D-1EE4F, U+1EE51-1EE52, U+1EE54, U+1EE57, U+1EE59, U+1EE5B, U+1EE5D, U+1EE5F, U+1EE61-1EE62, U+1EE64, U+1EE67-1EE6A, U+1EE6C-1EE72, U+1EE74-1EE77, U+1EE79-1EE7C, U+1EE7E, U+1EE80-1EE89, U+1EE8B-1EE9B, U+1EEA1-1EEA3, U+1EEA5-1EEA9, U+1EEAB-1EEBB, U+1EEF0-1EEF1; }
-@font-face { font-family: 'Cairo'; font-style: normal; font-weight: 900; font-display: swap; src: url(https://fonts.gstatic.com/s/cairo/v31/SLXVc1nY6HkvangtZmpQdkhzfH5lkSscRiyS.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
-```
+`tokens.fonts` in `theme.json` picks Cairo, a catalogue font with every weight
+from 200 to 1000; Hekana serves it and sets the family, so the theme has no
+font files and no `font-family` rule. The mark is the theme's own glyph:
 
 ```html title="snippets/mark.sneferu"
 <svg class="es-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
@@ -119,8 +123,9 @@ Delete the starter's sections and `blocks/`.
 </svg>
 ```
 
-The mark is a plain SVG `X` drawn in `currentColor`. `snippets/icon.sneferu`
-is the same icon set as the Console example.
+The mark is a plain SVG `X` drawn in `currentColor`. Every other icon is
+`<hk-icon>` from the bundled Lucide set: `menu`, `user`, `shopping-cart`,
+`credit-card`, `mail`, `gamepad-2`, `chevron-down`.
 
 ## 4. Layout: header and footer
 
@@ -129,38 +134,37 @@ is the same icon set as the Console example.
   <hk-container>
     <div class="es-bar">
       <details class="es-menu">
-        <summary aria-label="{{ t('menu') }}">
-          {% render 'icon', name: 'menu' %}
-        </summary>
+        <summary aria-label="{{ t('menu') }}"><hk-icon name="menu" size="22" class="ic" /></summary>
         <nav class="es-menu-panel">
-          <a href="{{ t('url_products') }}">{{ t('nav_all') }}</a>
-          <a href="{{ t('url_prefix') }}/category/game-currency">{{ t('cat_currency') }}</a>
-          <a href="{{ t('url_prefix') }}/category/gift-cards">{{ t('cat_gift_cards') }}</a>
-          <a href="{{ t('url_prefix') }}/category/top-ups">{{ t('cat_topups') }}</a>
+          <a href="{{ url('/products') }}">{{ t('nav_all') }}</a>
+          <a href="{{ url('/category/game-currency') }}">{{ t('cat_currency') }}</a>
+          <a href="{{ url('/category/gift-cards') }}">{{ t('cat_gift_cards') }}</a>
+          <a href="{{ url('/category/top-ups') }}">{{ t('cat_topups') }}</a>
           <a href="#faq">{{ t('nav_faq') }}</a>
         </nav>
       </details>
-      <a class="es-logo" href="{{ t('url_home') }}" aria-label="{{ store.name }}">
+      <a class="es-logo" href="{{ url('/') }}" aria-label="{{ store.name }}">
         {% render 'mark' %}
         <span>{{ store.name }}</span>
       </a>
-      <a class="es-search" href="{{ t('url_search') }}">
-        {% render 'icon', name: 'search' %}
-        <span>{{ t('search_placeholder') }}</span>
-      </a>
+      <hk-search-form placeholder="{{ t('search_placeholder') }}" class="es-search" />
       <nav class="es-nav" aria-label="{{ t('nav_label') }}">
-        <a href="{{ t('url_products') }}">{{ t('nav_all') }}</a>
-        <a class="is-hot" href="{{ t('url_prefix') }}/category/game-currency">{{ t('cat_currency') }}</a>
-        <a href="{{ t('url_prefix') }}/category/gift-cards">{{ t('cat_gift_cards') }}</a>
-        <a href="{{ t('url_prefix') }}/category/top-ups">{{ t('cat_topups') }}</a>
+        <a href="{{ url('/products') }}">{{ t('nav_all') }}</a>
+        <a class="is-hot" href="{{ url('/category/game-currency') }}">{{ t('cat_currency') }}</a>
+        <a href="{{ url('/category/gift-cards') }}">{{ t('cat_gift_cards') }}</a>
+        <a href="{{ url('/category/top-ups') }}">{{ t('cat_topups') }}</a>
         <a href="#faq">{{ t('nav_faq') }}</a>
       </nav>
-      <a
-        class="es-icon"
-        href="{{ t('url_account') }}"
-        aria-label="{{ t('account') }}"
-      >{% render 'icon', name: 'user' %}</a>
-      <a class="es-icon" href="{{ t('url_cart') }}" aria-label="{{ t('cart') }}">{% render 'icon', name: 'cart' %}</a>
+      <a class="es-icon" href="{{ url('/account') }}" aria-label="{{ t('account') }}"><hk-icon
+          name="user"
+          size="22"
+          class="ic"
+        /></a>
+      <a class="es-icon" href="{{ url('/cart') }}" aria-label="{{ t('cart') }}"><hk-icon
+          name="shopping-cart"
+          size="22"
+          class="ic"
+        /></a>
     </div>
   </hk-container>
 </header>
@@ -173,9 +177,9 @@ is the same icon set as the Console example.
         <p>{{ t('footer_about') }}</p>
       </div>
       <nav class="es-footer-links" aria-label="{{ t('footer_links') }}">
-        <a href="{{ t('url_products') }}">{{ t('nav_all') }}</a>
-        <a href="{{ t('url_prefix') }}/category/game-currency">{{ t('cat_currency') }}</a>
-        <a href="{{ t('url_prefix') }}/category/gift-cards">{{ t('cat_gift_cards') }}</a>
+        <a href="{{ url('/products') }}">{{ t('nav_all') }}</a>
+        <a href="{{ url('/category/game-currency') }}">{{ t('cat_currency') }}</a>
+        <a href="{{ url('/category/gift-cards') }}">{{ t('cat_gift_cards') }}</a>
         <a href="#faq">{{ t('nav_faq') }}</a>
       </nav>
     </div>
@@ -189,13 +193,14 @@ is the same icon set as the Console example.
 [data-hk-theme='esports'] {
   --es-lime: var(--hk-color-accent);
   --es-cut: 28px;
-  font-family: 'Cairo', system-ui, sans-serif;
   line-height: 1.6;
   background: radial-gradient(1000px 500px at 50% 0, rgba(31, 122, 85, 0.16), transparent 70%), var(--hk-color-background);
 }
 :where([data-hk-theme='esports'] a) { color: inherit; text-decoration: none; }
 :where([data-hk-theme='esports'] h1, [data-hk-theme='esports'] h2, [data-hk-theme='esports'] p) { margin: 0; }
 .ic { width: 22px; height: 22px; flex: none; }
+/* Block wrappers take no room: tabs and steps lay out as before. */
+[data-hk-theme='esports'] [data-hk-block] { display: contents; }
 .es-h2 { font-weight: 900; }
 
 /* Header */
@@ -204,9 +209,13 @@ is the same icon set as the Console example.
 .es-logo { display: inline-flex; align-items: center; gap: 10px; color: var(--es-lime); font-weight: 900; font-size: 18px; }
 .es-logo span { color: var(--hk-color-text); }
 .es-mark { width: 38px; height: 38px; }
-.es-search { display: flex; align-items: center; gap: 10px; flex: 0 1 300px; min-height: 44px; padding-inline: 14px; border-radius: 10px; border: 1px solid #2A3A31; background: #0D1411; color: var(--hk-color-muted); font-size: 14px; }
-.es-search .ic { width: 18px; height: 18px; }
-.es-search:hover { border-color: var(--es-lime); }
+.es-search { flex: 0 1 300px; flex-wrap: nowrap; align-items: center; gap: 2px; min-height: 44px; padding-inline: 2px 14px; border-radius: 10px; border: 1px solid #2A3A31; background: #0D1411; color: var(--hk-color-muted); font-size: 14px; }
+.es-search:hover, .es-search:focus-within { border-color: var(--es-lime); }
+form.es-search input { min-height: 42px; padding: 0; border: 0; outline: 0; background: transparent; color: var(--hk-color-text); font-size: 14px; }
+form.es-search input::placeholder { color: var(--hk-color-muted); }
+form.es-search .sn-search-button { order: -1; border: 0; background: transparent; color: var(--hk-color-muted); }
+form.es-search .sn-search-button .sn-icon { width: 18px; height: 18px; }
+form.es-search .sn-search-button:hover { color: var(--es-lime); }
 .es-nav { display: flex; gap: 26px; margin-inline-start: auto; font-weight: 700; font-size: 15px; }
 .es-nav a { display: inline-flex; align-items: center; min-height: 44px; }
 .es-nav a.is-hot, .es-nav a:hover { color: var(--es-lime); }
@@ -223,6 +232,11 @@ is the same icon set as the Console example.
 - The account and cart icons are both in the markup; CSS shows the cart on
   desktop and the account icon on phones, as in the two mockup frames.
 - `.es-nav a.is-hot` is the one highlighted link, in lime.
+- The search field is `<hk-search-form class="es-search">`, a form that sends
+  the shopper to the search page; CSS moves its button before the input
+  (`order: -1`) so the magnifier sits at the start, as in the mockup.
+- Every internal link goes through `url()`, so English pages link to English
+  pages.
 
 ## 5. Hero: a slanted band and SVG art
 
@@ -231,24 +245,15 @@ is the same icon set as the Console example.
   <div class="es-hero">
     <div class="es-hero-copy">
       <hk-heading
-        text="{{ section.settings.title | default: t('hero_title') }}"
+        text="{{ section.settings.title }}"
         level="h1"
         size="56"
         tablet-size="44"
         mobile-size="28"
         class="es-hero-title"
       />
-      <hk-text
-        text="{{ section.settings.subtitle | default: t('hero_subtitle') }}"
-        size="20"
-        mobile-size="14"
-        class="es-hero-sub"
-      />
-      <hk-button
-        label="{{ section.settings.button | default: t('hero_button') }}"
-        href="{{ t('url_products') }}"
-        class="es-cta"
-      />
+      <hk-text text="{{ section.settings.subtitle }}" size="20" mobile-size="14" class="es-hero-sub" />
+      <hk-button label="{{ section.settings.button }}" href="{{ section.settings.button_link }}" class="es-cta" />
     </div>
     <div class="es-hero-art">
       {% render 'hero-art' %}
@@ -269,21 +274,38 @@ is the same icon set as the Console example.
     "settings": {
       "title": {
         "type": "text",
-        "label": "Title (empty = theme text)",
-        "default": "",
+        "label": "Title",
+        "localized": true,
+        "default": {
+          "ar": "اشحن دلوقتي",
+          "en": "Top up now"
+        },
         "maxLength": 40
       },
       "subtitle": {
         "type": "text",
-        "label": "Subtitle (empty = theme text)",
-        "default": "",
+        "label": "Subtitle",
+        "localized": true,
+        "default": {
+          "ar": "خصومات على باقات مختارة من ألعابك",
+          "en": "Discounts on selected packs for your games"
+        },
         "maxLength": 80
       },
       "button": {
         "type": "text",
-        "label": "Button (empty = theme text)",
-        "default": "",
+        "label": "Button",
+        "localized": true,
+        "default": {
+          "ar": "اشحن دلوقتي",
+          "en": "Top up now"
+        },
         "maxLength": 24
+      },
+      "button_link": {
+        "type": "link",
+        "label": "Button link",
+        "default": "/products"
       },
       "show_offer": {
         "type": "boolean",
@@ -372,20 +394,31 @@ is the same icon set as the Console example.
   a lime-to-teal "rim light" stroke; the lime slashes are polygons.
 - The offer box is shown only when `show_offer` is on, and its number is the
   `offer_percent` setting. The words around it come from the locale files.
+- Title, subtitle and button text are `"localized": true` settings with an
+  Arabic and an English default; the button link is a `link` setting.
 
 ## 6. Tabs and top-up cards
 
 ```html title="sections/esports-products.sneferu"
 <hk-section padding-y="24" mobile-padding-y="16" class="es-products">
   <nav class="es-tabs" aria-label="{{ t('platforms') }}">
-    <a class="es-tab is-active" href="{{ t('url_products') }}">{{ t('tab_1') }}</a>
-    <a class="es-tab" href="{{ t('url_prefix') }}/category/gift-cards">{{ t('tab_2') }}</a>
-    <a class="es-tab" href="{{ t('url_prefix') }}/category/top-ups">{{ t('tab_3') }}</a>
+    {% for block in section.blocks %}
+      <hk-block of="{{ block }}" />
+    {% endfor %}
   </nav>
-  {% if collection('featured').products %}
+  {% if collection(section.settings.list).products %}
     <div class="es-grid">
-      {% for p in collection('featured').products limit: 10 %}
-        {% render 'tc', p: p %}
+      {% for p in collection(section.settings.list).products limit: section.settings.count %}
+        <hk-product-card product="{{ p }}" class="es-card">
+          <hk-part name="badge">
+            <span
+              class="es-ribbon"
+            >{% if p.compare_at > p.price %}{{ t('ribbon_sale') }}{% else %}{{ t('ribbon_pick') }}{% endif %}</span>
+          </hk-part>
+          <hk-part name="actions">
+            <a class="es-buy" href="{{ p.url }}" aria-hidden="true" tabindex="-1">{{ t('buy') }}</a>
+          </hk-part>
+        </hk-product-card>
       {% endfor %}
     </div>
   {% else %}
@@ -396,19 +429,54 @@ is the same icon set as the Console example.
   {
     "name": "Top-up cards",
     "version": 1,
-    "settings": {}
+    "settings": {
+      "list": {
+        "type": "collection",
+        "label": "Collection",
+        "default": "featured"
+      },
+      "count": {
+        "type": "range",
+        "label": "Products",
+        "default": 10,
+        "min": 2,
+        "max": 20,
+        "step": 1
+      }
+    },
+    "blocks": {
+      "allowed": ["tab"],
+      "max": 6
+    }
   }
 </hk-schema>
 ```
 
-```html title="snippets/tc.sneferu"
-<div class="es-card">
-  <span
-    class="es-ribbon"
-  >{% if p.compare_at > p.price %}{{ t('ribbon_sale') }}{% else %}{{ t('ribbon_pick') }}{% endif %}</span>
-  <hk-product-card product="{{ p }}" class="es-pc" />
-  <a class="es-buy" href="{{ p.url }}">{{ t('buy') }}</a>
-</div>
+```html title="blocks/tab.sneferu"
+<a class="es-tab" href="{{ url(block.settings.link) }}">{{ block.settings.label }}</a>
+<hk-schema>
+  {
+    "name": "Tab",
+    "version": 1,
+    "settings": {
+      "label": {
+        "type": "text",
+        "label": "Label",
+        "localized": true,
+        "default": {
+          "ar": "الكل",
+          "en": "All"
+        },
+        "maxLength": 20
+      },
+      "link": {
+        "type": "link",
+        "label": "Link",
+        "default": "/products"
+      }
+    }
+  }
+</hk-schema>
 ```
 
 ```css title="assets/theme.css (tabs and cards)"
@@ -416,28 +484,33 @@ is the same icon set as the Console example.
 .es-tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 28px; }
 .es-tab { display: inline-flex; align-items: center; justify-content: center; min-width: 120px; min-height: 46px; padding-inline: 24px; border-radius: 8px; background: #121A16; border: 1px solid #1F2C25; font-weight: 800; font-size: 14px; }
 .es-tab:hover { border-color: var(--es-lime); }
-.es-tab.is-active { background: var(--es-lime); border-color: var(--es-lime); color: #0A120C; }
+.es-tabs > [data-hk-block]:first-child .es-tab { background: var(--es-lime); border-color: var(--es-lime); color: #0A120C; }
 
 /* Top-up cards */
 .es-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; }
-.es-card { position: relative; display: flex; flex-direction: column; gap: 10px; padding: 26px 12px 12px; border-radius: 10px; background: linear-gradient(180deg, #121B16, #0D1310); border: 1px solid var(--hk-color-line); }
+.es-card.sn-product-card-wrap { position: relative; display: flex; flex-direction: column; gap: 10px; padding: 26px 12px 12px; border-radius: 10px; background: linear-gradient(180deg, #121B16, #0D1310); border: 1px solid var(--hk-color-line); }
 .es-card:hover { border-color: rgba(198, 242, 90, 0.5); }
 .es-ribbon { position: absolute; top: 8px; inset-inline-start: -6px; z-index: 1; padding: 2px 14px 2px 10px; font-size: 12px; font-weight: 900; color: #1A1305; background: var(--hk-color-ribbon); clip-path: polygon(0 0, 100% 0, 88% 50%, 100% 100%, 0 100%); }
 [dir='rtl'] .es-ribbon { padding: 2px 10px 2px 14px; clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 12% 50%); }
-.es-pc.sn-product-card { display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; }
-.es-pc img { width: 78%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 8px; }
-.es-pc .sn-title { font-size: 14px; font-weight: 700; line-height: 1.4; color: #DDE7E0; }
-.es-pc .sn-price { font-size: 20px; font-weight: 900; }
-.es-pc .sn-was { display: block; font-size: 12px; font-weight: 600; color: var(--hk-color-muted); }
+.es-card .sn-product-card { display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; }
+.es-card img { width: 78%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 8px; }
+.es-card .sn-title { font-size: 14px; font-weight: 700; line-height: 1.4; color: #DDE7E0; }
+.es-card .sn-price { font-size: 20px; font-weight: 900; }
+.es-card .sn-was { display: block; font-size: 12px; font-weight: 600; color: var(--hk-color-muted); }
 .es-buy { margin-top: auto; display: flex; align-items: center; justify-content: center; min-height: 44px; border-radius: 6px; background: var(--es-lime); color: #0A120C; font-weight: 900; }
 .es-buy:hover { filter: brightness(1.06); }
 .es-empty { color: var(--hk-color-muted); text-align: center; }
 ```
 
-- `hk-product-card` has no slot for a badge or a button, so the snippet wraps
-  it in a `div` with a ribbon before it and a Buy link after it.
+- The ribbon is the card's `badge` part (inside the link, before the image)
+  and the Buy link its `actions` part (after the link). With an `actions` part
+  the card renders inside `<div class="sn-product-card-wrap es-card">`, so
+  `es-card` styles the whole tile.
 - The ribbon says "Sale" when `p.compare_at > p.price`, otherwise "Pick".
-- The loop has `limit: 10`: a `for` limit is fixed text, not a setting.
+- The loop is `limit: section.settings.count`, a `range` setting (default 10),
+  over `collection(section.settings.list)`.
+- The tabs are `tab` blocks; the first is the lime one
+  (`.es-tabs > [data-hk-block]:first-child .es-tab`).
 - The ribbon notch is a `clip-path`, mirrored for right-to-left.
 
 ## 7. Steps and FAQ
@@ -445,18 +518,12 @@ is the same icon set as the Console example.
 ```html title="sections/esports-steps.sneferu"
 <hk-section padding-y="48" mobile-padding-y="32" class="es-steps">
   <hk-stack gap="24">
-    <hk-heading
-      text="{{ section.settings.heading | default: t('steps_heading') }}"
-      level="h2"
-      size="32"
-      mobile-size="22"
-      class="es-h2"
-    />
-    <ol class="es-step-list">
-      {% render 'step', n: '01', icon: 'pay', title: t('step_1_title'), text: t('step_1_text') %}
-      {% render 'step', n: '02', icon: 'mail', title: t('step_2_title'), text: t('step_2_text') %}
-      {% render 'step', n: '03', icon: 'gamepad', title: t('step_3_title'), text: t('step_3_text') %}
-    </ol>
+    <hk-heading text="{{ section.settings.heading }}" level="h2" size="32" mobile-size="22" class="es-h2" />
+    <div class="es-step-list">
+      {% for block in section.blocks %}
+        <hk-block of="{{ block }}" />
+      {% endfor %}
+    </div>
   </hk-stack>
 </hk-section>
 <hk-schema>
@@ -466,39 +533,73 @@ is the same icon set as the Console example.
     "settings": {
       "heading": {
         "type": "text",
-        "label": "Heading (empty = theme text)",
-        "default": "",
+        "label": "Heading",
+        "localized": true,
+        "default": {
+          "ar": "إزاي تستلم الكود",
+          "en": "How you get your code"
+        },
         "maxLength": 60
+      }
+    },
+    "blocks": {
+      "allowed": ["step"],
+      "max": 4
+    }
+  }
+</hk-schema>
+```
+
+```html title="blocks/step.sneferu"
+<div class="es-step">
+  <span class="es-step-icon"><hk-icon name="{{ block.settings.icon }}" size="22" class="ic" /></span>
+  <span class="es-step-n"></span>
+  <strong class="es-step-title">{{ block.settings.title }}</strong>
+  <span class="es-step-text">{{ block.settings.text }}</span>
+</div>
+<hk-schema>
+  {
+    "name": "Step",
+    "version": 1,
+    "settings": {
+      "icon": {
+        "type": "select",
+        "label": "Icon",
+        "options": ["credit-card", "wallet", "mail", "gamepad-2", "trophy", "zap", "key", "shield-check"],
+        "default": "credit-card"
+      },
+      "title": {
+        "type": "text",
+        "label": "Title",
+        "localized": true,
+        "default": {
+          "ar": "اختار وادفع أونلاين",
+          "en": "Pick and pay online"
+        },
+        "maxLength": 60
+      },
+      "text": {
+        "type": "text",
+        "label": "Text",
+        "localized": true,
+        "default": {
+          "ar": "اختار الكارت والقيمة، وادفع أونلاين.",
+          "en": "Choose the card and the amount, then pay online."
+        },
+        "maxLength": 140
       }
     }
   }
 </hk-schema>
 ```
 
-```html title="snippets/step.sneferu"
-<li class="es-step">
-  <span class="es-step-icon">{% render 'icon', name: icon %}</span>
-  <span class="es-step-n">{{ n }}</span>
-  <strong class="es-step-title">{{ title }}</strong>
-  <span class="es-step-text">{{ text }}</span>
-</li>
-```
-
 ```html title="sections/esports-faq.sneferu"
 <hk-section padding-y="48" mobile-padding-y="32" class="es-faq">
   <div id="faq" class="es-faq-wrap">
-    <hk-heading
-      text="{{ section.settings.heading | default: t('faq_heading') }}"
-      level="h2"
-      size="28"
-      mobile-size="20"
-      class="es-h2"
-    />
-    {% render 'faq-item', q: t('faq_1_q'), a: t('faq_1_a') %}
-    {% render 'faq-item', q: t('faq_2_q'), a: t('faq_2_a') %}
-    {% render 'faq-item', q: t('faq_3_q'), a: t('faq_3_a') %}
-    {% render 'faq-item', q: t('faq_4_q'), a: t('faq_4_a') %}
-    {% render 'faq-item', q: t('faq_5_q'), a: t('faq_5_a') %}
+    <hk-heading text="{{ section.settings.heading }}" level="h2" size="28" mobile-size="20" class="es-h2" />
+    {% for block in section.blocks %}
+      <hk-block of="{{ block }}" />
+    {% endfor %}
   </div>
 </hk-section>
 <hk-schema>
@@ -508,31 +609,66 @@ is the same icon set as the Console example.
     "settings": {
       "heading": {
         "type": "text",
-        "label": "Heading (empty = theme text)",
-        "default": "",
+        "label": "Heading",
+        "localized": true,
+        "default": {
+          "ar": "أسئلة شائعة",
+          "en": "Questions"
+        },
         "maxLength": 60
+      }
+    },
+    "blocks": {
+      "allowed": ["faq-item"],
+      "max": 12
+    }
+  }
+</hk-schema>
+```
+
+```html title="blocks/faq-item.sneferu"
+{% if block.settings.question %}
+  <details class="es-faq-item">
+    <summary>{{ block.settings.question }}<hk-icon name="chevron-down" class="ic" /></summary>
+    <p>{{ block.settings.answer }}</p>
+  </details>
+{% endif %}
+<hk-schema>
+  {
+    "name": "Question",
+    "version": 1,
+    "settings": {
+      "question": {
+        "type": "text",
+        "label": "Question",
+        "localized": true,
+        "default": {
+          "ar": "الكود بيوصل إمتى؟",
+          "en": "When does the code arrive?"
+        },
+        "maxLength": 120
+      },
+      "answer": {
+        "type": "textarea",
+        "label": "Answer",
+        "localized": true,
+        "default": {
+          "ar": "بعد ما الدفع الأونلاين يتأكد، الكود بيتبعت أوتوماتيك على الإيميل اللي كتبته في الطلب.",
+          "en": "Once your online payment is confirmed, the code is sent automatically to the email on your order."
+        },
+        "maxLength": 600
       }
     }
   }
 </hk-schema>
 ```
 
-```html title="snippets/faq-item.sneferu"
-{% if q %}
-  <details class="es-faq-item">
-    <summary>
-      {{ q }}{% render 'icon', name: 'chevron' %}
-    </summary>
-    <p>{{ a }}</p>
-  </details>
-{% endif %}
-```
-
 ```css title="assets/theme.css (steps, FAQ, footer)"
 /* Steps */
-.es-step-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-.es-step { position: relative; display: grid; gap: 6px; padding: 24px; background: var(--hk-color-surface); border: 1px solid var(--hk-color-line); clip-path: polygon(0 0, calc(100% - var(--es-cut)) 0, 100% var(--es-cut), 100% 100%, 0 100%); }
+.es-step-list { counter-reset: es-step; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.es-step { counter-increment: es-step; position: relative; display: grid; gap: 6px; padding: 24px; background: var(--hk-color-surface); border: 1px solid var(--hk-color-line); clip-path: polygon(0 0, calc(100% - var(--es-cut)) 0, 100% var(--es-cut), 100% 100%, 0 100%); }
 .es-step-icon { display: inline-flex; width: 44px; height: 44px; align-items: center; justify-content: center; border-radius: 8px; background: rgba(198, 242, 90, 0.1); color: var(--es-lime); }
+.es-step-n::before { content: counter(es-step, decimal-leading-zero); }
 .es-step-n { position: absolute; top: 16px; inset-inline-end: 36px; font-size: 32px; font-weight: 900; color: rgba(198, 242, 90, 0.18); }
 .es-step-title { font-size: 18px; font-weight: 900; }
 .es-step-text { color: var(--hk-color-muted); font-size: 15px; }
@@ -544,8 +680,8 @@ is the same icon set as the Console example.
 .es-faq-item[open] { border-color: rgba(198, 242, 90, 0.4); }
 .es-faq-item summary { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 52px; padding: 12px 18px; cursor: pointer; font-weight: 800; }
 .es-faq-item summary::-webkit-details-marker { display: none; }
-.es-faq-item summary .ic { width: 18px; height: 18px; color: var(--es-lime); transform: rotate(90deg); transition: transform 0.15s; }
-.es-faq-item[open] summary .ic { transform: rotate(-90deg); }
+.es-faq-item summary .ic { width: 18px; height: 18px; color: var(--es-lime); transition: transform 0.15s; }
+.es-faq-item[open] summary .ic { transform: rotate(180deg); }
 .es-faq-item p { padding: 0 18px 16px; color: var(--hk-color-muted); }
 
 /* Footer */
@@ -569,7 +705,8 @@ is the same icon set as the Console example.
   .es-menu { display: block; }
   .es-logo span { display: none; }
   .es-mark { width: 30px; height: 30px; }
-  .es-search { min-height: 40px; font-size: 13px; padding-inline: 10px; }
+  .es-search { min-height: 40px; font-size: 13px; padding-inline: 0 10px; }
+  form.es-search input { font-size: 13px; }
   .es-icon:last-child { display: none; }
   .es-icon:nth-last-child(2) { display: inline-flex; }
   .es-hero { min-height: 230px; grid-template-columns: 1.15fr 1fr; border-radius: 12px; }
@@ -582,90 +719,71 @@ is the same icon set as the Console example.
   .es-tab { flex: 1; min-width: 0; padding-inline: 8px; }
   .es-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
   .es-step-list { grid-template-columns: 1fr; }
-}
 ```
 
 The step cards have one corner cut off with `clip-path`, the same diagonal as
-the hero.
+the hero. Steps and questions are blocks; the step number is a CSS counter
+(`counter(es-step, decimal-leading-zero)` prints `01`, `02`, `03`).
 
 ## 8. Locale files
 
 ```json title="locales/en.json"
 {
-  "url_prefix": "/en",
-  "url_home": "/en",
-  "url_products": "/en/products",
-  "url_search": "/en/search",
-  "url_cart": "/en/cart",
   "menu": "Menu",
   "cart": "Cart",
   "nav_all": "All products",
   "nav_faq": "Questions",
   "platforms": "Platforms",
-  "egp": "EGP",
   "cat_gift_cards": "Gift cards",
   "cat_currency": "In-game currency",
   "cat_topups": "Top-up packs",
-  "steps_heading": "How you get your code",
-  "step_1_title": "Pick and pay online",
-  "step_1_text": "Choose the card and the amount, then pay online.",
-  "step_2_title": "The code arrives by email",
-  "step_2_text": "Once payment is confirmed, the code is sent automatically.",
-  "step_3_title": "Redeem it",
-  "step_3_text": "Enter the code on the platform or in the game.",
   "empty_products": "No products here yet.",
-  "faq_heading": "Questions",
-  "faq_1_q": "When does the code arrive?",
-  "faq_1_a": "Once your online payment is confirmed, the code is sent automatically to the email on your order.",
-  "faq_2_q": "Can I pay cash on delivery?",
-  "faq_2_a": "Instant delivery works with online payment only. If the store accepts cash on delivery, the code is not sent instantly.",
-  "faq_3_q": "Will the card work on my account?",
-  "faq_3_a": "Each card's page lists the region it works in. Check that your account uses the same region before you buy.",
-  "faq_4_q": "The code did not work. What now?",
-  "faq_4_a": "Contact us with your order number and we will check the code with you.",
-  "faq_5_q": "Which currency are prices in?",
-  "faq_5_a": "All prices are in Egyptian pounds (EGP).",
   "footer_about": "Gift cards and game top-ups in Egyptian pounds. Your code arrives by email after online payment.",
   "footer_links": "Store links",
-  "url_account": "/en/account",
   "account": "My account",
   "nav_label": "Store sections",
   "search_placeholder": "Search for a game or pack",
-  "hero_title": "Top up now",
-  "hero_subtitle": "Discounts on selected packs for your games",
-  "hero_button": "Top up now",
   "offer_top": "Up to",
   "offer_bottom": "off selected packs",
-  "tab_1": "All",
-  "tab_2": "Console",
-  "tab_3": "Mobile",
   "ribbon_sale": "Sale",
   "ribbon_pick": "Pick",
-  "buy": "Buy"
+  "buy": "Buy",
+  "search": "Search"
 }
 ```
 
-`locales/ar.json` has the same keys, with the words in Egyptian Arabic,
-`url_prefix` empty and the paths without `/en`.
+`locales/ar.json` has the same keys, with the words in Egyptian Arabic. The
+copy a merchant may change (hero text, tabs, steps, questions) is in localized
+settings and blocks, not here.
 
 ## 9. The page and the phone layout
 
-```html title="templates/index.sneferu"
+```html title="templates/index.sneferu (excerpt)"
 <hk-sections />
 <hk-schema>
   {
     "sections": [
+      { "type": "esports-hero" },
       {
-        "type": "esports-hero"
+        "type": "esports-products",
+        "blocks": [
+          {"type": "tab", "settings": {"label": {"ar": "الكل", "en": "All"}, "link": "/products"}},
+          … 2 more
+        ]
       },
       {
-        "type": "esports-products"
+        "type": "esports-steps",
+        "blocks": [
+          {"type": "step", "settings": {"icon": "credit-card", "title": {"ar": "اختار وادفع أونلاين", "en": "Pick and pay online"}, "text": {"ar": "اختار الكارت والقيمة، وادفع أونلاين.", "en": "Choose the card and the amount, then pay online."}}},
+          … 2 more
+        ]
       },
       {
-        "type": "esports-steps"
-      },
-      {
-        "type": "esports-faq"
+        "type": "esports-faq",
+        "blocks": [
+          {"type": "faq-item", "settings": {"question": {"ar": "الكود بيوصل إمتى؟", "en": "When does the code arrive?"}, "answer": {"ar": "بعد ما الدفع الأونلاين يتأكد، الكود بيتبعت أوتوماتيك على الإيميل اللي كتبته في الطلب.", "en": "Once your online payment is confirmed, the code is sent automatically to the email on your order."}}},
+          … 4 more
+        ]
       }
     ]
   }
@@ -684,7 +802,8 @@ the hero.
   .es-menu { display: block; }
   .es-logo span { display: none; }
   .es-mark { width: 30px; height: 30px; }
-  .es-search { min-height: 40px; font-size: 13px; padding-inline: 10px; }
+  .es-search { min-height: 40px; font-size: 13px; padding-inline: 0 10px; }
+  form.es-search input { font-size: 13px; }
   .es-icon:last-child { display: none; }
   .es-icon:nth-last-child(2) { display: inline-flex; }
   .es-hero { min-height: 230px; grid-template-columns: 1.15fr 1fr; border-radius: 12px; }
@@ -697,13 +816,12 @@ the hero.
   .es-tab { flex: 1; min-width: 0; padding-inline: 8px; }
   .es-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
   .es-step-list { grid-template-columns: 1fr; }
-}
 ```
 
 ## 10. Check, preview and push
 
 1. `npx @hekana/sneferu format`
-2. `npx @hekana/sneferu validate` prints `✔ theme esports@1.0.1 is valid`.
+2. `npx @hekana/sneferu validate` prints `✔ theme esports@1.1.0 is valid`.
 3. `npx @hekana/sneferu dev`, then `?locale=en`, then a window under 640 px.
 4. Change `id` in `theme.json` to a slug of your own, then
    `npx @hekana/sneferu push . --package <your-slug> --dev-store`.

@@ -1,18 +1,18 @@
 <hk-section padding-y="48" mobile-padding-y="32" class="arc-steps">
   <hk-stack gap="24" align="center">
     <hk-heading
-      text="{{ section.settings.heading | default: t('steps_heading') }}"
+      text="{{ section.settings.heading }}"
       level="h2"
       size="28"
       mobile-size="20"
       align="center"
       class="arc-h2"
     />
-    <ol class="arc-step-list">
-      {% render 'step', n: 1, icon: 'pay', title: t('step_1_title'), text: t('step_1_text') %}
-      {% render 'step', n: 2, icon: 'mail', title: t('step_2_title'), text: t('step_2_text') %}
-      {% render 'step', n: 3, icon: 'trophy', title: t('step_3_title'), text: t('step_3_text') %}
-    </ol>
+    <div class="arc-step-list">
+      {% for block in section.blocks %}
+        <hk-block of="{{ block }}" />
+      {% endfor %}
+    </div>
   </hk-stack>
 </hk-section>
 <hk-schema>
@@ -22,10 +22,18 @@
     "settings": {
       "heading": {
         "type": "text",
-        "label": "Heading (empty = theme text)",
-        "default": "",
+        "label": "Heading",
+        "localized": true,
+        "default": {
+          "ar": "إزاي تستلم الكود",
+          "en": "How you get your code"
+        },
         "maxLength": 60
       }
+    },
+    "blocks": {
+      "allowed": ["step"],
+      "max": 4
     }
   }
 </hk-schema>

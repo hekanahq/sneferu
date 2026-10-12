@@ -24,8 +24,8 @@ describe('sample data', () => {
         for (const t of p.tags) expect(t.length).toBeLessThanOrEqual(40);
       }
     }
-    expect(sampleProduct('en', 0).category).toEqual({ handle: 'gift-cards', title: 'Gift cards', url: '/en/collections/gift-cards' });
-    expect(sampleProduct('ar', 4)).toMatchObject({ digital_kind: 'manual', category: { handle: 'subscriptions', url: '/collections/subscriptions' } });
+    expect(sampleProduct('en', 0).category).toEqual({ handle: 'gift-cards', title: 'Gift cards', url: '/en/category/gift-cards' });
+    expect(sampleProduct('ar', 4)).toMatchObject({ digital_kind: 'manual', category: { handle: 'subscriptions', url: '/category/subscriptions' } });
     expect(sampleProduct('en', 1).category).toBeNull();
   });
   it('has category collections and locale-aware URLs', () => {
@@ -39,8 +39,8 @@ describe('sample data', () => {
     const en = sampleContext('en', {}, 'ar');
     const ar = sampleContext('ar', {}, 'ar');
     expect(en.categories!.map((c) => c.handle)).toEqual(['new', 'gift-cards', 'subscriptions']);
-    expect(en.categories![1]).toEqual({ handle: 'gift-cards', title: 'Gift cards', url: '/en/collections/gift-cards', image: en.collections['gift-cards']!.products[0] && (en.collections['gift-cards']!.products[0] as { image: unknown }).image, count: 6 });
-    expect(ar.categories![0]).toMatchObject({ handle: 'new', title: 'وصل حديثا', url: '/collections/new', count: 6 });
+    expect(en.categories![1]).toEqual({ handle: 'gift-cards', title: 'Gift cards', url: '/en/category/gift-cards', image: en.collections['gift-cards']!.products[0] && (en.collections['gift-cards']!.products[0] as { image: unknown }).image, count: 6 });
+    expect(ar.categories![0]).toMatchObject({ handle: 'new', title: 'وصل حديثا', url: '/category/new', count: 6 });
     expect(ar.categories![2]!.image).toEqual({ url: expect.stringContaining('placehold.co') });
   });
   it('adds collections and products, and overrides the store name', () => {

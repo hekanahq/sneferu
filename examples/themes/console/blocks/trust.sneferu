@@ -1,0 +1,28 @@
+<li class="cc-trust-item">
+  <span class="cc-trust-icon"><hk-icon name="{{ block.settings.icon }}" class="ic" /></span>
+  <span>{{ block.settings.label }}</span>
+</li>
+<hk-schema>
+  {
+    "name": "Trust point",
+    "version": 1,
+    "settings": {
+      "icon": {
+        "type": "select",
+        "label": "Icon",
+        "options": ["zap", "lock", "banknote", "shield-check", "mail", "clock", "credit-card", "help-circle"],
+        "default": "zap"
+      },
+      "label": {
+        "type": "text",
+        "label": "Text",
+        "localized": true,
+        "default": {
+          "ar": "تسليم فوري للكود",
+          "en": "Instant code delivery"
+        },
+        "maxLength": 60
+      }
+    }
+  }
+</hk-schema>

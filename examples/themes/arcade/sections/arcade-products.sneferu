@@ -1,18 +1,12 @@
 <hk-section padding-y="40" mobile-padding-y="28" class="arc-products">
   <hk-stack gap="20">
     <div class="arc-row-head">
-      <hk-heading
-        text="{{ section.settings.heading | default: t('products_heading') }}"
-        level="h2"
-        size="28"
-        mobile-size="20"
-        class="arc-h2"
-      />
-      <a class="arc-more" href="{{ t('url_products') }}">{{ t('view_all') }}</a>
+      <hk-heading text="{{ section.settings.heading }}" level="h2" size="28" mobile-size="20" class="arc-h2" />
+      <a class="arc-more" href="{{ url('/products') }}">{{ t('view_all') }}</a>
     </div>
-    {% if collection('featured').products %}
+    {% if collection(section.settings.list).products %}
       <hk-product-grid
-        products="{{ collection('featured').products }}"
+        products="{{ collection(section.settings.list).products }}"
         limit="{{ section.settings.count }}"
         columns="4"
         tablet-columns="3"
@@ -31,9 +25,18 @@
     "settings": {
       "heading": {
         "type": "text",
-        "label": "Heading (empty = theme text)",
-        "default": "",
+        "label": "Heading",
+        "localized": true,
+        "default": {
+          "ar": "كروت مختارة",
+          "en": "Featured cards"
+        },
         "maxLength": 60
+      },
+      "list": {
+        "type": "collection",
+        "label": "Collection",
+        "default": "featured"
       },
       "count": {
         "type": "range",

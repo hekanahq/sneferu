@@ -1,19 +1,20 @@
 <section class="ls-apps" id="apps">
   <div class="ls-wrap">
     <div class="ls-head">
-      <h2 class="ls-h2">{{ section.settings.heading | default: t('apps_heading') }}</h2>
-      <p class="ls-side">{{ t('apps_side') }}</p>
+      <h2 class="ls-h2">{{ section.settings.heading }}</h2>
+      <p class="ls-side">{{ section.settings.side }}</p>
     </div>
     <div class="ls-apps-grid">
-      <a class="ls-all" href="{{ t('href_products') }}">
+      <a class="ls-all" href="{{ url('/products') }}">
         <span>{{ t('all_apps') }}</span>
-        {% render 'icon', name: 'download' %}
+        <hk-icon name="download" size="18" stroke="2.5" class="ls-icon" />
       </a>
-      {% for p in collection('apps').products limit: 3 %}
-        <div class="ls-app">
-          <hk-product-card product="{{ p }}" class="ls-app-card" />
-          <a class="ls-app-buy" href="{{ p.url }}" aria-hidden="true" tabindex="-1">{{ t('buy') }}</a>
-        </div>
+      {% for p in collection(section.settings.list).products limit: section.settings.count %}
+        <hk-product-card product="{{ p }}" class="ls-app">
+          <hk-part name="actions">
+            <a class="ls-app-buy" href="{{ p.url }}" aria-hidden="true" tabindex="-1">{{ t('buy') }}</a>
+          </hk-part>
+        </hk-product-card>
       {% endfor %}
     </div>
   </div>
@@ -25,9 +26,36 @@
     "settings": {
       "heading": {
         "type": "text",
-        "label": "Heading (empty: the theme's own words)",
-        "default": "",
+        "label": "Heading",
+        "localized": true,
+        "default": {
+          "ar": "البرامج",
+          "en": "Apps"
+        },
         "maxLength": 60
+      },
+      "side": {
+        "type": "text",
+        "label": "Side note",
+        "localized": true,
+        "default": {
+          "ar": "ترخيص لكل برنامج لوحده",
+          "en": "A licence for each app on its own"
+        },
+        "maxLength": 80
+      },
+      "list": {
+        "type": "collection",
+        "label": "Collection",
+        "default": "apps"
+      },
+      "count": {
+        "type": "range",
+        "label": "Apps",
+        "default": 3,
+        "min": 1,
+        "max": 9,
+        "step": 1
       }
     }
   }

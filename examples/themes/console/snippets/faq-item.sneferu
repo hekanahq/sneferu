@@ -1,6 +1,0 @@
-<details class="cc-faq-item">
-  <summary>
-    {{ q }}{% render 'icon', name: 'chevron' %}
-  </summary>
-  <p>{{ a }}</p>
-</details>

@@ -1,0 +1,24 @@
+<a class="arc-tab" href="{{ url(block.settings.link) }}">{{ block.settings.label }}</a>
+<hk-schema>
+  {
+    "name": "Platform tab",
+    "version": 1,
+    "settings": {
+      "label": {
+        "type": "text",
+        "label": "Label",
+        "localized": true,
+        "default": {
+          "ar": "PC",
+          "en": "PC"
+        },
+        "maxLength": 24
+      },
+      "link": {
+        "type": "link",
+        "label": "Link",
+        "default": "/products"
+      }
+    }
+  }
+</hk-schema>

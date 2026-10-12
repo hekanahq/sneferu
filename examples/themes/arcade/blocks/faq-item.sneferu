@@ -1,0 +1,34 @@
+{% if block.settings.question %}
+  <details class="arc-faq-item">
+    <summary>{{ block.settings.question }}<hk-icon name="chevron-down" class="ic" /></summary>
+    <p>{{ block.settings.answer }}</p>
+  </details>
+{% endif %}
+<hk-schema>
+  {
+    "name": "Question",
+    "version": 1,
+    "settings": {
+      "question": {
+        "type": "text",
+        "label": "Question",
+        "localized": true,
+        "default": {
+          "ar": "الكود بيوصل إمتى؟",
+          "en": "When does the code arrive?"
+        },
+        "maxLength": 120
+      },
+      "answer": {
+        "type": "textarea",
+        "label": "Answer",
+        "localized": true,
+        "default": {
+          "ar": "بعد ما الدفع الأونلاين يتأكد، الكود بيتبعت أوتوماتيك على الإيميل اللي كتبته في الطلب.",
+          "en": "Once your online payment is confirmed, the code is sent automatically to the email on your order."
+        },
+        "maxLength": 600
+      }
+    }
+  }
+</hk-schema>

@@ -6,13 +6,156 @@
         "type": "esports-hero"
       },
       {
-        "type": "esports-products"
+        "type": "esports-products",
+        "blocks": [
+          {
+            "type": "tab",
+            "settings": {
+              "label": {
+                "ar": "الكل",
+                "en": "All"
+              },
+              "link": "/products"
+            }
+          },
+          {
+            "type": "tab",
+            "settings": {
+              "label": {
+                "ar": "كونسول",
+                "en": "Console"
+              },
+              "link": "/category/gift-cards"
+            }
+          },
+          {
+            "type": "tab",
+            "settings": {
+              "label": {
+                "ar": "موبايل",
+                "en": "Mobile"
+              },
+              "link": "/category/top-ups"
+            }
+          }
+        ]
       },
       {
-        "type": "esports-steps"
+        "type": "esports-steps",
+        "blocks": [
+          {
+            "type": "step",
+            "settings": {
+              "icon": "credit-card",
+              "title": {
+                "ar": "اختار وادفع أونلاين",
+                "en": "Pick and pay online"
+              },
+              "text": {
+                "ar": "اختار الكارت والقيمة، وادفع أونلاين.",
+                "en": "Choose the card and the amount, then pay online."
+              }
+            }
+          },
+          {
+            "type": "step",
+            "settings": {
+              "icon": "mail",
+              "title": {
+                "ar": "الكود يوصلك على الإيميل",
+                "en": "The code arrives by email"
+              },
+              "text": {
+                "ar": "أول ما الدفع يتأكد، الكود بيتبعتلك أوتوماتيك.",
+                "en": "Once payment is confirmed, the code is sent automatically."
+              }
+            }
+          },
+          {
+            "type": "step",
+            "settings": {
+              "icon": "gamepad-2",
+              "title": {
+                "ar": "اشحن حسابك",
+                "en": "Redeem it"
+              },
+              "text": {
+                "ar": "دخّل الكود في المنصة أو في اللعبة.",
+                "en": "Enter the code on the platform or in the game."
+              }
+            }
+          }
+        ]
       },
       {
-        "type": "esports-faq"
+        "type": "esports-faq",
+        "blocks": [
+          {
+            "type": "faq-item",
+            "settings": {
+              "question": {
+                "ar": "الكود بيوصل إمتى؟",
+                "en": "When does the code arrive?"
+              },
+              "answer": {
+                "ar": "بعد ما الدفع الأونلاين يتأكد، الكود بيتبعت أوتوماتيك على الإيميل اللي كتبته في الطلب.",
+                "en": "Once your online payment is confirmed, the code is sent automatically to the email on your order."
+              }
+            }
+          },
+          {
+            "type": "faq-item",
+            "settings": {
+              "question": {
+                "ar": "ينفع أدفع كاش عند الاستلام؟",
+                "en": "Can I pay cash on delivery?"
+              },
+              "answer": {
+                "ar": "التسليم الفوري بيكون مع الدفع الأونلاين بس. لو المتجر بيقبل الدفع عند الاستلام، الكود مش بيتبعت فورًا.",
+                "en": "Instant delivery works with online payment only. If the store accepts cash on delivery, the code is not sent instantly."
+              }
+            }
+          },
+          {
+            "type": "faq-item",
+            "settings": {
+              "question": {
+                "ar": "الكارت هيشتغل على حسابي؟",
+                "en": "Will the card work on my account?"
+              },
+              "answer": {
+                "ar": "صفحة كل كارت مكتوب فيها المنطقة اللي بيشتغل عليها. اتأكد إن منطقة حسابك هي نفسها قبل ما تشتري.",
+                "en": "Each card's page lists the region it works in. Check that your account uses the same region before you buy."
+              }
+            }
+          },
+          {
+            "type": "faq-item",
+            "settings": {
+              "question": {
+                "ar": "الكود ما اشتغلش، أعمل إيه؟",
+                "en": "The code did not work. What now?"
+              },
+              "answer": {
+                "ar": "كلمنا ومعاك رقم الطلب، وهنراجع الكود معاك.",
+                "en": "Contact us with your order number and we will check the code with you."
+              }
+            }
+          },
+          {
+            "type": "faq-item",
+            "settings": {
+              "question": {
+                "ar": "الأسعار بأي عملة؟",
+                "en": "Which currency are prices in?"
+              },
+              "answer": {
+                "ar": "كل الأسعار بالجنيه المصري.",
+                "en": "All prices are in Egyptian pounds (EGP)."
+              }
+            }
+          }
+        ]
       }
     ]
   }

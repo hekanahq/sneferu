@@ -2,14 +2,10 @@
   <div class="bt-wrap">
     <div class="bt-band">
       <div>
-        <h2>{{ section.settings.heading | default: t('band_heading') }}</h2>
-        <p>{{ section.settings.text | default: t('band_text') }}</p>
+        <h2>{{ section.settings.heading }}</h2>
+        <p>{{ section.settings.text }}</p>
       </div>
-      <hk-button
-        label="{{ section.settings.button | default: t('band_button') }}"
-        href="{{ t('href_products') }}"
-        class="bt-band-button"
-      />
+      <hk-button label="{{ section.settings.button }}" href="{{ section.settings.link }}" class="bt-band-button" />
     </div>
   </div>
 </section>
@@ -20,21 +16,38 @@
     "settings": {
       "heading": {
         "type": "text",
-        "label": "Heading (empty: the theme's own words)",
-        "default": "",
+        "label": "Heading",
+        "localized": true,
+        "default": {
+          "ar": "اطبع النهارده",
+          "en": "Print it today"
+        },
         "maxLength": 80
       },
       "text": {
         "type": "textarea",
         "label": "Text",
-        "default": "",
+        "localized": true,
+        "default": {
+          "ar": "ادفع أونلاين ورابط التحميل يوصلك على الإيميل على طول.",
+          "en": "Pay online and the download link is emailed to you right away."
+        },
         "maxLength": 200
       },
       "button": {
         "type": "text",
         "label": "Button",
-        "default": "",
+        "localized": true,
+        "default": {
+          "ar": "تصفّح كل المنتجات",
+          "en": "Browse all products"
+        },
         "maxLength": 30
+      },
+      "link": {
+        "type": "link",
+        "label": "Button link",
+        "default": "/products"
       }
     }
   }

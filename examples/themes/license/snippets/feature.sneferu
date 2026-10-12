@@ -1,3 +1,0 @@
-<p class="ls-feature">
-  {% render 'icon', name: 'check' %}<span>{{ text }}</span>
-</p>

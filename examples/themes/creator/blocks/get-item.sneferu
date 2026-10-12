@@ -1,4 +1,9 @@
-{% render 'get-item', term: block.settings.term, text: block.settings.text %}
+<p class="cr-item">
+  <span class="cr-tick" aria-hidden="true"></span>
+  <strong>{{ block.settings.term }}</strong>
+  <span class="cr-dash" aria-hidden="true">-</span>
+  <span>{{ block.settings.text }}</span>
+</p>
 <hk-schema>
   {
     "name": "What you get: item",
@@ -7,13 +12,21 @@
       "term": {
         "type": "text",
         "label": "Item",
-        "default": "Lessons",
+        "localized": true,
+        "default": {
+          "ar": "الدروس",
+          "en": "Lessons"
+        },
         "maxLength": 40
       },
       "text": {
         "type": "text",
         "label": "Detail",
-        "default": "Recorded videos you keep",
+        "localized": true,
+        "default": {
+          "ar": "فيديوهات مسجّلة تتفرج عليها في الوقت اللي يناسبك",
+          "en": "Recorded videos you watch when it suits you"
+        },
         "maxLength": 120
       }
     }
