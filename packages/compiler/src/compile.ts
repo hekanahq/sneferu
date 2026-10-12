@@ -1,4 +1,4 @@
-import { IR_VERSION, ENGINE_VERSION, err, warn, hasErrors, normalizeFieldLabels, normalizeLabel, validateIR, type Diagnostic, type FieldSchema, type IRNode, type TagRegistry } from '@hekana/sneferu-core';
+import { IR_VERSION, ENGINE_VERSION, err, parseTemplateName, warn, hasErrors, normalizeFieldLabels, normalizeLabel, validateIR, type Diagnostic, type FieldSchema, type IRNode, type TagRegistry } from '@hekana/sneferu-core';
 import { checkFiles, IMAGE_ASSET, type ThemeFile } from './files';
 import { validateManifest, type Manifest } from './manifest';
 import { parseTemplate } from './parser';
@@ -100,10 +100,12 @@ export function compileTheme(files: ThemeFile[], registry: TagRegistry): { artif
   const knownTags = new Set([...registry.names(), 'hk-block', 'hk-part']);
 
   const compileOne = (path: string, kind: 'layout' | 'template' | 'section' | 'block' | 'snippet') => {
+    const templateName = kind === 'template' ? nameOf(path) : undefined;
     const parsed = parseTemplate(text.get(path)!, path);
     diagnostics.push(...parsed.diagnostics);
     const own = isObj(parsed.schema) && isObj(parsed.schema.settings) ? parsed.schema.settings : {};
     const checked = hasErrors(parsed.diagnostics) ? [] : validateTemplate(parsed.nodes, { file: path, registry, snippets: snippetNames, kind,
+      ...(templateName !== undefined ? { templateName } : {}),
       ...(kind === 'section' || kind === 'block' ? { settingsSchema: own } : {}), themeSettings });
     diagnostics.push(...checked);
     const ir = lower(parsed.nodes, registry);
@@ -126,6 +128,7 @@ export function compileTheme(files: ThemeFile[], registry: TagRegistry): { artif
   for (const p of byDir('templates')) {
     const c = compileOne(p, 'template');
     const name = nameOf(p);
+    if (!parseTemplateName(name)) diagnostics.push(err('SN3035', `'templates/${name}.sneferu' is not a page type: use index, product, collection, search, cart, page or 404 (product, collection and page also take an alternate: product.codes)`, { file: p }));
     templates[name] = c.ir;
     const rawSections = isObj(c.schema) ? c.schema.sections : undefined;
     const declared: Artifact['templateSections'][string] = [];

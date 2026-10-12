@@ -1,4 +1,4 @@
-import { coerceSetting, err, escapeAttr, isMoneyFormat, safeToken, toStr, validateIR, type Diagnostic, type FieldSchema, type HkTag, type IRNode, type TagRegistry } from '@hekana/sneferu-core';
+import { coerceSetting, err, escapeAttr, isMoneyFormat, parseTemplateName, safeToken, safeUrl, toStr, validateIR, type Diagnostic, type FieldSchema, type HkTag, type IRNode, type PageNode, type TagRegistry, type ThemeLocalization, type ThemeRequest } from '@hekana/sneferu-core';
 import type { RenderContext, Scope } from './context';
 import { Budget, own, renderNodes, type Env } from './render';
 import type { Limits } from './budget';
@@ -14,9 +14,20 @@ export interface ArtifactLike {
   blocks: Record<string, Schemaed>;
   snippets: Record<string, IRNode[]>;
 }
-export interface PageNode { id: string; type: string; props?: Record<string, unknown>; children?: PageNode[]; hidden?: boolean }
+export type { PageNode };
 export interface RenderResult { html: string; css: string; controllers: string[]; diagnostics: Diagnostic[] }
-export interface RenderOptions { template: string; sections?: PageNode[]; ctx: RenderContext; registry: TagRegistry; scope?: Scope; limits?: Limits }
+export interface RenderOptions {
+  template: string; sections?: PageNode[]; ctx: RenderContext; registry: TagRegistry; limits?: Limits;
+  /**
+   * The page's data, by page type: `product` (product), `collection` + `paginate` (collection),
+   * `search` + `paginate` (search), `page` (page). See the context types in @hekana/sneferu-core.
+   */
+  scope?: Scope;
+  /** The request: `path` becomes `request.path` (a site-relative path, else ''). */
+  request?: { path?: string };
+  /** The same page in the other language: `alternateUrl` becomes `localization.alternate_url` (checked with safeUrl). */
+  localization?: { alternateUrl?: string };
+}
 
 const isObj = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v);
 const TEXTY = new Set<string>(['text', 'textarea', 'rich_text']);
@@ -63,6 +74,21 @@ export function prepareArtifact(artifact: unknown, registry: TagRegistry): { ok:
   }
 }
 
+/** `request` and `localization`: built here, frozen, and not overridable by the host's scope. */
+function pageObjects(opts: RenderOptions, manifest: ArtifactLike['manifest'], locale: 'ar' | 'en'): { request: ThemeRequest; localization: ThemeLocalization } {
+  const raw = opts.request?.path;
+  const path = typeof raw === 'string' && raw.startsWith('/') && !raw.startsWith('//') && raw.length <= 2000 && !/[\u0000-\u001F\u007F\\]/.test(raw) ? raw : '';
+  const other: 'ar' | 'en' = locale === 'ar' ? 'en' : 'ar';
+  const locales = (manifest as { locales?: unknown }).locales;
+  const ships = !Array.isArray(locales) || locales.includes(other);
+  const alt = opts.localization?.alternateUrl;
+  const altUrl = ships && typeof alt === 'string' && alt !== '' ? safeUrl(alt) : '';
+  return {
+    request: Object.freeze({ path, page_type: parseTemplateName(opts.template)?.type ?? opts.template, locale }),
+    localization: Object.freeze({ locale, alternate_locale: ships ? other : null, alternate_url: altUrl === '#' ? '' : altUrl }),
+  };
+}
+
 const failed = (diagnostics: Diagnostic[]): RenderResult => ({ html: '', css: '', controllers: [], diagnostics });
 
 /** Renders a page. Never throws: malformed artifacts or page data come back as diagnostics. */
@@ -96,7 +122,7 @@ function render(artifact: ArtifactLike, opts: RenderOptions): RenderResult {
   const money = isMoneyFormat(mf) ? mf : isMoneyFormat(opts.ctx.money) ? opts.ctx.money : undefined;
   const ctx: RenderContext = { ...opts.ctx, locale, dir, settings, money };
   const env: Env = { ctx, registry: opts.registry, snippets: artifact.snippets, slots: {}, budget: new Budget(opts.limits), css: [], cssOnce: new Set(), controllers: new Set(), diagnostics: [], ids: { n: 0 }, depth: 0, include: 0 };
-  const base: Scope = { ...(opts.scope ?? {}), store: ctx.store, locale, dir };
+  const base: Scope = { ...(opts.scope ?? {}), store: ctx.store, locale, dir, ...pageObjects(opts, artifact.manifest, locale) };
 
   const sections: PageNode[] = Array.isArray(opts.sections) ? opts.sections : (own(artifact.templateSections, opts.template) ?? []).map((s, i) => ({ id: `default-${i}`, type: s.type, props: s.settings, ...(Array.isArray(s.blocks) ? { children: s.blocks.map((b, j) => ({ id: `default-${i}-${j}`, type: b.type, props: b.settings })) } : {}) }));
 

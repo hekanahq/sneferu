@@ -1,4 +1,4 @@
-import { err, warn, type Expr, isAllowedElement, isForbiddenAttribute, isForbiddenElement, isUrlAttribute, LIMITS, safeUrl, type Diagnostic, type HkTag, type TagRegistry } from '@hekana/sneferu-core';
+import { err, warn, parseTemplateName, type Expr, isAllowedElement, isForbiddenAttribute, isForbiddenElement, isUrlAttribute, LIMITS, safeUrl, type Diagnostic, type HkTag, type TagRegistry } from '@hekana/sneferu-core';
 import type { AstNode } from './ast';
 
 const ATTR_NAME = /^[a-z_:][a-z0-9_:.-]*$/;
@@ -6,6 +6,11 @@ const PASSTHROUGH = (a: string) => a === 'class' || a === 'id' || a === 'role' |
 /** Interactive content cannot sit inside the card's link (the badge part renders inside it). */
 const BADGE_INTERACTIVE = new Set(['a', 'button', 'details', 'label', 'hk-button', 'hk-product-card', 'hk-product-grid', 'hk-rich-text']);
 const BUILTIN_HK = new Set(['hk-slot', 'hk-sections', 'hk-block', 'hk-part']);
+
+/** Top-level names the runtime provides only on some page types. */
+const PAGE_OBJECTS: Record<string, readonly string[]> = {
+  product: ['product'], collection: ['collection'], search: ['search'], paginate: ['collection', 'search'], page: ['page'],
+};
 
 export const camel = (s: string) => s.replace(/-([a-z])/g, (_, c: string) => c.toUpperCase());
 
@@ -43,10 +48,17 @@ export function validateTemplate(
     settingsSchema?: Record<string, unknown>;
     /** theme.json `settings`. */
     themeSettings?: Record<string, unknown>;
+    /** For `kind: 'template'`: the template's name (`product`, `collection.sale`, …). */
+    templateName?: string;
   },
 ): Diagnostic[] {
   const out: Diagnostic[] = [];
   const at = (n: { loc: { line: number; col: number } }) => ({ file: opts.file, line: n.loc.line, col: n.loc.col });
+  // SN2016: page objects exist only on the templates of their page type (templates only: a section may sit on several)
+  const pageType = opts.kind === 'template' ? parseTemplateName(opts.templateName)?.type : undefined;
+  const bound = new Map<string, number>();
+  const bind = (name: string, d: number) => bound.set(name, (bound.get(name) ?? 0) + d);
+  const warned = new Set<string>();
 
   /** SN2012: a setting a template reads as a collection or a loop limit exists and has the right type. */
   const checkSetting = (p: (string | number)[], types: readonly string[], what: string, n: { loc: { line: number; col: number } }) => {
@@ -60,13 +72,21 @@ export function validateTemplate(
     const type = (field as { type?: unknown }).type;
     if (!types.includes(String(type))) out.push(err('SN2012', `${what}: setting '${name}' must be of type ${types.join(' or ')}`, at(n)));
   };
+  const pageObject = (head: unknown, n: { loc: { line: number; col: number } }) => {
+    if (pageType === undefined || typeof head !== 'string' || !Object.hasOwn(PAGE_OBJECTS, head) || (bound.get(head) ?? 0) > 0) return;
+    if (PAGE_OBJECTS[head]!.includes(pageType) || warned.has(head)) return;
+    warned.add(head);
+    out.push(warn('SN2016', `'${head}' is only available on ${PAGE_OBJECTS[head]!.join(' and ')} pages, not on ${pageType}`, at(n)));
+  };
   const exprs = (e: Expr | undefined, n: { loc: { line: number; col: number } }, d = 0): void => {
     if (!e || d > LIMITS.renderDepth) return;
     switch (e.k) {
       case 'lookup':
         if (e.fn === 'collection' && e.args[0]?.k === 'path') checkSetting(e.args[0].p, ['collection'], `collection(${e.args[0].p.join('.')})`, n);
         e.args.forEach((a) => exprs(a, n, d + 1)); break;
-      case 'path': exprs(e.from, n, d + 1); break;
+      case 'path':
+        if (!e.from) pageObject(e.p[0], n);
+        exprs(e.from, n, d + 1); break;
       case 'cmp': case 'and': case 'or': exprs(e.a, n, d + 1); exprs(e.b, n, d + 1); break;
       case 'not': exprs(e.a, n, d + 1); break;
       case 'filter': exprs(e.input, n, d + 1); e.args.forEach((a) => exprs(a, n, d + 1)); break;
@@ -80,10 +100,12 @@ export function validateTemplate(
     for (const n of list) {
       if (n.t === 'for') {
         exprs(n.src, n);
+        bind(n.as, 1);
         if (n.limitExpr?.k === 'path') checkSetting(n.limitExpr.p, ['number', 'range'], `limit: ${n.limitExpr.p.join('.')}`, n);
         const lim = n.limit ?? LIMITS.loopDefault;
         if (lim > LIMITS.loopMax || lim < 1) out.push(err('SN2007', `loop limit ${lim} is invalid: loop limit must be between 1 and ${LIMITS.loopMax}`, at(n)));
         visit(n.body);
+        bind(n.as, -1);
       } else if (n.t === 'interp') {
         exprs(n.expr, n);
       } else if (n.t === 'if') {

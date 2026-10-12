@@ -131,3 +131,27 @@ describe('validateTemplate', () => {
     });
   });
 });
+
+describe('SN2016 page objects', () => {
+  const run = (name: string, src: string) => {
+    const reg = new TagRegistry();
+    const parsed = parseTemplate(src, `templates/${name}.sneferu`);
+    return validateTemplate(parsed.nodes, { file: `templates/${name}.sneferu`, registry: reg, snippets: new Set(), kind: 'template', templateName: name }).map((d) => d.code);
+  };
+  it('warns once when a template reads an object of another page type', () => {
+    expect(run('cart', '<p>{{ product.title }}</p><p>{{ product.price }}</p>')).toEqual(['SN2016']);
+    expect(run('index', '{% if collection.products %}x{% endif %}')).toEqual(['SN2016']);
+    expect(run('product', '<p>{{ product.title }}</p>')).toEqual([]);
+    expect(run('product.codes', '<p>{{ product.title }}</p>')).toEqual([]);
+    expect(run('collection', '{{ collection.title }}{{ paginate.page }}')).toEqual([]);
+    expect(run('search', '{{ search.terms }}{{ paginate.pages }}')).toEqual([]);
+    expect(run('page', '{{ page.title }}')).toEqual([]);
+    expect(run('404', '{{ paginate.page }}')).toEqual(['SN2016']);
+  });
+  it('does not warn for loop variables with the same name, or in sections', () => {
+    expect(run('index', '{% for product in collection(\'x\').products %}{{ product.title }}{% endfor %}')).toEqual([]);
+    const reg = new TagRegistry();
+    const parsed = parseTemplate('{{ product.title }}', 'sections/a.sneferu');
+    expect(validateTemplate(parsed.nodes, { file: 'sections/a.sneferu', registry: reg, snippets: new Set(), kind: 'section' })).toEqual([]);
+  });
+});

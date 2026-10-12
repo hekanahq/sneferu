@@ -251,4 +251,31 @@ describe('renderPage', () => {
       expect(r!.diagnostics.map((d) => d.code)).toContain('SN9015');
     }
   });
+
+  it('exposes request and localization, and the page type of an alternate template', () => {
+    const a: ArtifactLike = { ...artifact, manifest: { id: 'esports', locales: ['ar', 'en'] } as ArtifactLike['manifest'],
+      templates: { index: [{ k: 'slot', name: 'sections' }], 'product.codes': [
+        { k: 'text', e: { k: 'path', p: ['product', 'title'] } }, { k: 'html', s: '|' }, { k: 'text', e: { k: 'path', p: ['request', 'page_type'] } },
+        { k: 'html', s: '|' }, { k: 'text', e: { k: 'path', p: ['request', 'path'] } }, { k: 'html', s: '|' }, { k: 'text', e: { k: 'path', p: ['localization', 'alternate_locale'] } },
+        { k: 'html', s: '|' }, { k: 'text', e: { k: 'path', p: ['localization', 'alternate_url'] } }] } };
+    const r = renderPage(a, { template: 'product.codes', ctx, registry: new TagRegistry(), scope: { product: { title: 'Card' } },
+      request: { path: '/products/card' }, localization: { alternateUrl: '/en/products/card' } });
+    expect(r.diagnostics).toEqual([]);
+    expect(r.html).toContain('Card|product|/products/card|en|/en/products/card');
+  });
+  it('sanitises request and localization input and does not let the host scope override them', () => {
+    const a: ArtifactLike = { ...artifact, templates: { index: [{ k: 'text', e: { k: 'path', p: ['request', 'path'] } }, { k: 'html', s: '|' }, { k: 'text', e: { k: 'path', p: ['localization', 'alternate_url'] } }, { k: 'html', s: '|' }, { k: 'text', e: { k: 'path', p: ['store', 'name'] } }] } };
+    const r = renderPage(a, { template: 'index', ctx, registry: new TagRegistry(), scope: { request: { path: 'pwned' }, localization: { alternate_url: 'pwned' }, store: { name: 'pwned' } },
+      request: { path: '//evil.example/x' }, localization: { alternateUrl: 'javascript:alert(1)' } });
+    expect(r.html).toContain('||متجر');
+    expect(r.html).not.toContain('pwned');
+    const ok = renderPage(a, { template: 'index', ctx, registry: new TagRegistry(), request: { path: '/a b' } });
+    expect(ok.html).toContain('/a b|');
+  });
+  it('has no alternate language when the theme ships only one', () => {
+    const a: ArtifactLike = { ...artifact, manifest: { id: 'esports', locales: ['ar'] } as ArtifactLike['manifest'], templates: { index: [{ k: 'text', e: { k: 'path', p: ['localization', 'alternate_locale'] } }] } };
+    const r = renderPage(a, { template: 'index', ctx, registry: new TagRegistry(), localization: { alternateUrl: '/en' } });
+    expect(r.html).not.toContain('>en<');
+    expect(r.html).not.toContain('en');
+  });
 });

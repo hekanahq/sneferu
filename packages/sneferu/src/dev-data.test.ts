@@ -13,7 +13,7 @@ describe('sample data', () => {
   it('products have the theme product shape (spec A3)', () => {
     for (const locale of ['ar', 'en'] as const) {
       for (const p of sampleProducts(locale)) {
-        expect(Object.keys(p).sort()).toEqual(['available', 'category', 'compare_at', 'description', 'digital_kind', 'excerpt', 'handle', 'id', 'image', 'kind', 'price', 'tags', 'title', 'url']);
+        expect(Object.keys(p).sort()).toEqual(['available', 'category', 'compare_at', 'description', 'digital_kind', 'excerpt', 'handle', 'has_variants', 'id', 'image', 'images', 'kind', 'max_quantity', 'min_quantity', 'options', 'price', 'price_max', 'price_min', 'quantity_step', 'selected_variant', 'tags', 'title', 'url', 'variants']);
         expect(sanitizeRichText(p.description)).toBe(p.description);
         expect(p.description).toContain('<strong>');
         expect(p.excerpt.length).toBeLessThanOrEqual(200);
@@ -24,8 +24,8 @@ describe('sample data', () => {
         for (const t of p.tags) expect(t.length).toBeLessThanOrEqual(40);
       }
     }
-    expect(sampleProduct('en', 0).category).toEqual({ handle: 'gift-cards', title: 'Gift cards', url: '/en/collections/gift-cards' });
-    expect(sampleProduct('ar', 4)).toMatchObject({ digital_kind: 'manual', category: { handle: 'subscriptions', url: '/collections/subscriptions' } });
+    expect(sampleProduct('en', 0).category).toEqual({ handle: 'gift-cards', title: 'Gift cards', url: '/en/category/gift-cards' });
+    expect(sampleProduct('ar', 4)).toMatchObject({ digital_kind: 'manual', category: { handle: 'subscriptions', url: '/category/subscriptions' } });
     expect(sampleProduct('en', 1).category).toBeNull();
   });
   it('has category collections and locale-aware URLs', () => {
@@ -39,8 +39,8 @@ describe('sample data', () => {
     const en = sampleContext('en', {}, 'ar');
     const ar = sampleContext('ar', {}, 'ar');
     expect(en.categories!.map((c) => c.handle)).toEqual(['new', 'gift-cards', 'subscriptions']);
-    expect(en.categories![1]).toEqual({ handle: 'gift-cards', title: 'Gift cards', url: '/en/collections/gift-cards', image: en.collections['gift-cards']!.products[0] && (en.collections['gift-cards']!.products[0] as { image: unknown }).image, count: 6 });
-    expect(ar.categories![0]).toMatchObject({ handle: 'new', title: 'وصل حديثا', url: '/collections/new', count: 6 });
+    expect(en.categories![1]).toEqual({ handle: 'gift-cards', title: 'Gift cards', url: '/en/category/gift-cards', image: en.collections['gift-cards']!.products[0] && (en.collections['gift-cards']!.products[0] as { image: unknown }).image, count: 6 });
+    expect(ar.categories![0]).toMatchObject({ handle: 'new', title: 'وصل حديثا', url: '/category/new', count: 6 });
     expect(ar.categories![2]!.image).toEqual({ url: expect.stringContaining('placehold.co') });
   });
   it('adds collections and products, and overrides the store name', () => {
@@ -48,7 +48,8 @@ describe('sample data', () => {
     expect(ctx.store.name).toBe('Pages');
     expect(ctx.collections.ebooks).toEqual({ title: 'E-books', products: [book] });
     expect(ctx.collections.featured?.products.length).toBe(6);
-    expect(ctx.products.notes).toEqual(book);
+    expect(ctx.products.notes).toMatchObject(book);
+    expect(ctx.products.notes).toMatchObject({ handle: 'notes', images: [book.image], has_variants: false, min_quantity: 1, options: [] });
   });
   it('picks the block for the page locale when split by locale', () => {
     const raw = { ar: { store: { name: 'صفحات' } }, en: { store: { name: 'Pages' } } };

@@ -85,7 +85,7 @@ describe('merchant-chosen collections end to end', () => {
     expect(page({ list: 'subscriptions', count: 3 }).html).toContain('<li>One-month subscription</li>');
     expect(items(page({ list: 'subscriptions', count: 3 }).html)).toBe(3);
     expect(items(page({ list: '' }).html)).toBe(0);
-    expect(page({}).html).toContain('<a href="/en/collections/gift-cards">Gift cards (6)</a>');
+    expect(page({}).html).toContain('<a href="/en/category/gift-cards">Gift cards (6)</a>');
   });
 });
 
