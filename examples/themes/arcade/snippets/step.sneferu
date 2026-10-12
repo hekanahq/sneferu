@@ -1,6 +1,0 @@
-<li class="arc-step">
-  <span class="arc-step-icon">{% render 'icon', name: icon %}</span>
-  <span class="arc-step-n">{{ n }}</span>
-  <strong class="arc-step-title">{{ title }}</strong>
-  <span class="arc-step-text">{{ text }}</span>
-</li>

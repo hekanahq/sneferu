@@ -1,0 +1,40 @@
+<div class="es-step">
+  <span class="es-step-icon"><hk-icon name="{{ block.settings.icon }}" size="22" class="ic" /></span>
+  <span class="es-step-n"></span>
+  <strong class="es-step-title">{{ block.settings.title }}</strong>
+  <span class="es-step-text">{{ block.settings.text }}</span>
+</div>
+<hk-schema>
+  {
+    "name": "Step",
+    "version": 1,
+    "settings": {
+      "icon": {
+        "type": "select",
+        "label": "Icon",
+        "options": ["credit-card", "wallet", "mail", "gamepad-2", "trophy", "zap", "key", "shield-check"],
+        "default": "credit-card"
+      },
+      "title": {
+        "type": "text",
+        "label": "Title",
+        "localized": true,
+        "default": {
+          "ar": "اختار وادفع أونلاين",
+          "en": "Pick and pay online"
+        },
+        "maxLength": 60
+      },
+      "text": {
+        "type": "text",
+        "label": "Text",
+        "localized": true,
+        "default": {
+          "ar": "اختار الكارت والقيمة، وادفع أونلاين.",
+          "en": "Choose the card and the amount, then pay online."
+        },
+        "maxLength": 140
+      }
+    }
+  }
+</hk-schema>

@@ -2,9 +2,7 @@
   <header class="ls-header">
     <div class="ls-wrap ls-header-row">
       <details class="ls-menu">
-        <summary class="ls-icon-link" aria-label="{{ t('menu') }}">
-          {% render 'icon', name: 'menu' %}
-        </summary>
+        <summary class="ls-icon-link" aria-label="{{ t('menu') }}"><hk-icon name="menu" class="ls-icon" /></summary>
         <div class="ls-menu-panel">
           <a href="#plans">{{ t('nav_plans') }}</a>
           <a href="#apps">{{ t('nav_apps') }}</a>
@@ -20,20 +18,17 @@
         <a href="#faq">{{ t('nav_faq') }}</a>
       </nav>
       <div class="ls-tools">
-        <a class="ls-search" href="{{ t('href_search') }}">
-          <span>{{ t('search') }}</span>
-          {% render 'icon', name: 'search' %}
-        </a>
-        <a
-          class="ls-icon-link"
-          href="{{ t('href_account') }}"
-          aria-label="{{ t('account') }}"
-        >{% render 'icon', name: 'user' %}</a>
-        <a
-          class="ls-icon-link"
-          href="{{ t('href_cart') }}"
-          aria-label="{{ t('cart') }}"
-        >{% render 'icon', name: 'bag' %}</a>
+        <hk-search-form placeholder="{{ t('search') }}" class="ls-search" />
+        <a class="ls-icon-link" href="{{ url('/account') }}" aria-label="{{ t('account') }}"><hk-icon
+            name="user"
+            size="18"
+            class="ls-icon"
+          /></a>
+        <a class="ls-icon-link" href="{{ url('/cart') }}" aria-label="{{ t('cart') }}"><hk-icon
+            name="shopping-bag"
+            size="18"
+            class="ls-icon"
+          /></a>
       </div>
     </div>
   </header>

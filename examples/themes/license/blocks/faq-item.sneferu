@@ -1,4 +1,10 @@
-{% render 'faq-item', q: block.settings.question, a: block.settings.answer %}
+<details class="ls-faq-item">
+  <summary>
+    <span>{{ block.settings.question }}</span>
+    <hk-icon name="chevron-down" size="16" class="ls-chevron" />
+  </summary>
+  <p>{{ block.settings.answer }}</p>
+</details>
 <hk-schema>
   {
     "name": "Question",
@@ -7,13 +13,21 @@
       "question": {
         "type": "text",
         "label": "Question",
-        "default": "How do I receive my licence?",
+        "localized": true,
+        "default": {
+          "ar": "المفتاح بيوصلني إزاي؟",
+          "en": "How do I receive my key?"
+        },
         "maxLength": 120
       },
       "answer": {
         "type": "textarea",
         "label": "Answer",
-        "default": "By email, right after online payment.",
+        "localized": true,
+        "default": {
+          "ar": "بعد ما الدفع أونلاين يتم، بيوصلك إيميل فيه مفتاح الترخيص ورابط التحميل.",
+          "en": "Once your online payment goes through, you get an email with the licence key and the download link."
+        },
         "maxLength": 600
       }
     }

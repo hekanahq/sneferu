@@ -1,26 +1,12 @@
 <hk-section padding-y="32" mobile-padding-y="16" class="arc-hero">
   <nav class="arc-tabs" aria-label="{{ t('platforms') }}">
-    <a class="arc-tab is-active" href="{{ t('url_products') }}">{{ section.settings.tab_1 | default: t('tab_1') }}</a>
-    <a
-      class="arc-tab"
-      href="{{ t('url_prefix') }}/category/gift-cards"
-    >{{ section.settings.tab_2 | default: t('tab_2') }}</a>
-    <a
-      class="arc-tab"
-      href="{{ t('url_prefix') }}/category/gift-cards"
-    >{{ section.settings.tab_3 | default: t('tab_3') }}</a>
-    <a
-      class="arc-tab"
-      href="{{ t('url_prefix') }}/category/gift-cards"
-    >{{ section.settings.tab_4 | default: t('tab_4') }}</a>
-    <a
-      class="arc-tab"
-      href="{{ t('url_prefix') }}/category/top-ups"
-    >{{ section.settings.tab_5 | default: t('tab_5') }}</a>
+    {% for block in section.blocks %}
+      {% if block.type == 'tab' %}<hk-block of="{{ block }}" />{% endif %}
+    {% endfor %}
   </nav>
   <hk-stack gap="28" mobile-gap="20" align="center">
     <hk-heading
-      text="{{ section.settings.title | default: t('hero_title') }}"
+      text="{{ section.settings.title }}"
       level="h1"
       size="44"
       tablet-size="36"
@@ -29,26 +15,21 @@
       class="arc-title"
     />
     <div class="arc-chips">
-      {% render 'chip', amount: section.settings.amount_1 %}
-      {% render 'chip', amount: section.settings.amount_2 %}
-      {% render 'chip', amount: section.settings.amount_3 %}
-      {% render 'chip', amount: section.settings.amount_4 %}
-      {% render 'chip', amount: section.settings.amount_5 %}
-      {% render 'chip', amount: section.settings.amount_6 %}
-      {% render 'chip', amount: section.settings.amount_7 %}
-      {% render 'chip', amount: section.settings.amount_8 %}
+      {% for block in section.blocks %}
+        {% if block.type == 'chip' %}<hk-block of="{{ block }}" />{% endif %}
+      {% endfor %}
     </div>
     <div class="arc-actions">
       <hk-button
-        label="{{ t('browse_cards') }}"
-        href="{{ t('url_prefix') }}/category/gift-cards"
+        label="{{ section.settings.button }}"
+        href="{{ section.settings.button_link }}"
         variant="outline"
         size="sm"
         class="arc-browse"
       />
       <span class="arc-instant">
-        <span class="arc-instant-icon">{% render 'icon', name: 'bolt' %}</span>
-        {{ t('instant_delivery') }}
+        <span class="arc-instant-icon"><hk-icon name="zap" class="ic" /></span>
+        {{ section.settings.note }}
       </span>
     </div>
   </hk-stack>
@@ -60,96 +41,43 @@
     "settings": {
       "title": {
         "type": "text",
-        "label": "Title (empty = theme text)",
-        "default": "",
+        "label": "Title",
+        "localized": true,
+        "default": {
+          "ar": "كروت الألعاب والشحن",
+          "en": "Game cards and top-ups"
+        },
         "maxLength": 80
       },
-      "tab_1": {
+      "button": {
         "type": "text",
-        "label": "Tab 1",
-        "default": "",
-        "maxLength": 24
+        "label": "Button",
+        "localized": true,
+        "default": {
+          "ar": "تصفح الكروت",
+          "en": "Browse cards"
+        },
+        "maxLength": 30
       },
-      "tab_2": {
+      "button_link": {
+        "type": "link",
+        "label": "Button link",
+        "default": "/category/gift-cards"
+      },
+      "note": {
         "type": "text",
-        "label": "Tab 2",
-        "default": "",
-        "maxLength": 24
-      },
-      "tab_3": {
-        "type": "text",
-        "label": "Tab 3",
-        "default": "",
-        "maxLength": 24
-      },
-      "tab_4": {
-        "type": "text",
-        "label": "Tab 4",
-        "default": "",
-        "maxLength": 24
-      },
-      "tab_5": {
-        "type": "text",
-        "label": "Tab 5",
-        "default": "",
-        "maxLength": 24
-      },
-      "amount_1": {
-        "type": "number",
-        "label": "Amount 1 (EGP)",
-        "default": 100,
-        "min": 0,
-        "max": 100000
-      },
-      "amount_2": {
-        "type": "number",
-        "label": "Amount 2 (EGP)",
-        "default": 200,
-        "min": 0,
-        "max": 100000
-      },
-      "amount_3": {
-        "type": "number",
-        "label": "Amount 3 (EGP)",
-        "default": 300,
-        "min": 0,
-        "max": 100000
-      },
-      "amount_4": {
-        "type": "number",
-        "label": "Amount 4 (EGP)",
-        "default": 500,
-        "min": 0,
-        "max": 100000
-      },
-      "amount_5": {
-        "type": "number",
-        "label": "Amount 5 (EGP)",
-        "default": 750,
-        "min": 0,
-        "max": 100000
-      },
-      "amount_6": {
-        "type": "number",
-        "label": "Amount 6 (EGP)",
-        "default": 1000,
-        "min": 0,
-        "max": 100000
-      },
-      "amount_7": {
-        "type": "number",
-        "label": "Amount 7 (EGP)",
-        "default": 1500,
-        "min": 0,
-        "max": 100000
-      },
-      "amount_8": {
-        "type": "number",
-        "label": "Amount 8 (EGP)",
-        "default": 2000,
-        "min": 0,
-        "max": 100000
+        "label": "Note next to the button",
+        "localized": true,
+        "default": {
+          "ar": "تسليم فوري",
+          "en": "Instant delivery"
+        },
+        "maxLength": 40
       }
+    },
+    "blocks": {
+      "allowed": ["tab", "chip"],
+      "max": 16
     }
   }
 </hk-schema>

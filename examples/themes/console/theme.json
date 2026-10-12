@@ -1,7 +1,7 @@
 {
   "id": "console",
   "name": "Console",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "author": "Hekana",
   "description": "A clean white gaming store for gift cards and top-ups: one royal-blue accent, large product cards, an amount selector and a platform row.",
   "category": "gaming",
@@ -21,6 +21,10 @@
       "line": "#E5E7EB",
       "soft": "#F5F7FB"
     },
-    "layout": { "contentWidth": "1120px" }
+    "layout": { "contentWidth": "1120px" },
+    "fonts": {
+      "heading": "IBM Plex Sans Arabic",
+      "body": "IBM Plex Sans Arabic"
+    }
   }
 }

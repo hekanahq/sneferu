@@ -6,13 +6,141 @@
         "type": "plans-hero"
       },
       {
-        "type": "features"
+        "type": "features",
+        "blocks": [
+          {
+            "type": "feature",
+            "settings": {
+              "text": {
+                "ar": "مفتاح الترخيص على الإيميل بعد الدفع",
+                "en": "Licence key by email after payment"
+              }
+            }
+          },
+          {
+            "type": "feature",
+            "settings": {
+              "text": {
+                "ar": "رابط تحميل البرنامج مع المفتاح",
+                "en": "Download link sent with the key"
+              }
+            }
+          },
+          {
+            "type": "feature",
+            "settings": {
+              "text": {
+                "ar": "الدفع أونلاين بالكارت",
+                "en": "Pay online by card"
+              }
+            }
+          },
+          {
+            "type": "feature",
+            "settings": {
+              "text": {
+                "ar": "الأسعار بالجنيه المصري",
+                "en": "Prices in Egyptian pounds"
+              }
+            }
+          },
+          {
+            "type": "feature",
+            "settings": {
+              "text": {
+                "ar": "اشتري من الموبايل أو الكمبيوتر",
+                "en": "Buy from your phone or computer"
+              }
+            }
+          },
+          {
+            "type": "feature",
+            "settings": {
+              "text": {
+                "ar": "تقدر تجدد قبل ما الترخيص يخلص",
+                "en": "Renew before your licence ends"
+              }
+            }
+          },
+          {
+            "type": "feature",
+            "settings": {
+              "text": {
+                "ar": "عدد الأجهزة مكتوب في صفحة كل برنامج",
+                "en": "Device limit shown on each app's page"
+              }
+            }
+          },
+          {
+            "type": "feature",
+            "settings": {
+              "text": {
+                "ar": "مساعدة في التفعيل لو احتجت",
+                "en": "Help with activation if you need it"
+              }
+            }
+          }
+        ]
       },
       {
         "type": "apps"
       },
       {
-        "type": "faq"
+        "type": "faq",
+        "blocks": [
+          {
+            "type": "faq-item",
+            "settings": {
+              "question": {
+                "ar": "المفتاح بيوصلني إزاي؟",
+                "en": "How do I receive my key?"
+              },
+              "answer": {
+                "ar": "بعد ما الدفع أونلاين يتم، بيوصلك إيميل فيه مفتاح الترخيص ورابط التحميل.",
+                "en": "Once your online payment goes through, you get an email with the licence key and the download link."
+              }
+            }
+          },
+          {
+            "type": "faq-item",
+            "settings": {
+              "question": {
+                "ar": "ينفع أدفع عند الاستلام؟",
+                "en": "Can I pay cash on delivery?"
+              },
+              "answer": {
+                "ar": "لأ، المنتجات رقمية فالدفع أونلاين بس، وده اللي بيخلّي المفتاح يوصلك على طول.",
+                "en": "No. These are digital products, so payment is online only, which is what lets the key reach you right away."
+              }
+            }
+          },
+          {
+            "type": "faq-item",
+            "settings": {
+              "question": {
+                "ar": "أركّب البرنامج على كام جهاز؟",
+                "en": "How many devices can I install on?"
+              },
+              "answer": {
+                "ar": "عدد الأجهزة المسموح بيه مكتوب في صفحة كل برنامج قبل ما تشتري.",
+                "en": "The device limit is written on each app's page before you buy."
+              }
+            }
+          },
+          {
+            "type": "faq-item",
+            "settings": {
+              "question": {
+                "ar": "الإيميل موصلش، أعمل إيه؟",
+                "en": "The email did not arrive. What now?"
+              },
+              "answer": {
+                "ar": "بص في الرسائل غير المرغوب فيها الأول، ولو مش لاقيه كلّمنا من صفحة التواصل وابعت رقم الطلب.",
+                "en": "Check your spam folder first. If it is not there, contact us from the contact page with your order number."
+              }
+            }
+          }
+        ]
       }
     ]
   }

@@ -1,14 +1,14 @@
 <hk-section padding-y="32" mobile-padding-y="16" class="cc-showcase">
-  {% if collection('featured').products %}
+  {% if collection(section.settings.list).products %}
     <div class="cc-carousel">
-      <a
-        class="cc-arrow cc-arrow-prev"
-        href="#cc-start"
-        aria-label="{{ t('carousel_start') }}"
-      >{% render 'icon', name: 'arrow' %}</a>
+      <a class="cc-arrow cc-arrow-prev" href="#cc-start" aria-label="{{ t('carousel_start') }}"><hk-icon
+          name="chevron-left"
+          size="24"
+          class="ic"
+        /></a>
       <div class="cc-track">
         <span id="cc-start" class="cc-anchor"></span>
-        {% for p in collection('featured').products limit: 6 %}
+        {% for p in collection(section.settings.list).products limit: section.settings.count %}
           <a class="cc-slide" href="{{ p.url }}">
             <span class="cc-slide-art">
               {% if p.image %}
@@ -21,28 +21,32 @@
                   loading="eager"
                 />
               {% else %}
-                <span class="cc-slide-fallback">{% render 'icon', name: 'gift' %}</span>
+                <span class="cc-slide-fallback"><hk-icon name="gift" class="ic" /></span>
               {% endif %}
               <span class="cc-platforms" aria-hidden="true">
-                <span>{% render 'icon', name: 'gamepad' %}</span>
-                <span>{% render 'icon', name: 'monitor' %}</span>
-                <span>{% render 'icon', name: 'phone' %}</span>
+                <span><hk-icon name="gamepad-2" class="ic" /></span>
+                <span><hk-icon name="monitor" class="ic" /></span>
+                <span><hk-icon name="smartphone" class="ic" /></span>
               </span>
             </span>
             <span class="cc-slide-body">
               <strong class="cc-slide-title">{{ p.title }}</strong>
-              <span class="cc-slide-note">{{ t('slide_note') }}</span>
+              {% if p.digital_kind == 'code' %}
+                <span class="cc-slide-note">{{ section.settings.code_note }}</span>
+              {% elsif p.excerpt %}
+                <span class="cc-slide-note">{{ p.excerpt | truncate: 70 }}</span>
+              {% endif %}
               <hk-price amount="{{ p.price }}" compare-at="{{ p.compare_at }}" class="cc-slide-price" />
             </span>
           </a>
         {% endfor %}
         <span id="cc-end" class="cc-anchor"></span>
       </div>
-      <a
-        class="cc-arrow cc-arrow-next"
-        href="#cc-end"
-        aria-label="{{ t('carousel_end') }}"
-      >{% render 'icon', name: 'arrow' %}</a>
+      <a class="cc-arrow cc-arrow-next" href="#cc-end" aria-label="{{ t('carousel_end') }}"><hk-icon
+          name="chevron-right"
+          size="24"
+          class="ic"
+        /></a>
     </div>
   {% else %}
     <p class="cc-empty">{{ t('empty_products') }}</p>
@@ -52,6 +56,30 @@
   {
     "name": "Product showcase",
     "version": 1,
-    "settings": {}
+    "settings": {
+      "list": {
+        "type": "collection",
+        "label": "Collection",
+        "default": "featured"
+      },
+      "count": {
+        "type": "range",
+        "label": "Products",
+        "default": 6,
+        "min": 2,
+        "max": 12,
+        "step": 1
+      },
+      "code_note": {
+        "type": "text",
+        "label": "Note on products delivered as a code",
+        "localized": true,
+        "default": {
+          "ar": "الكود بيوصلك على الإيميل بعد الدفع الأونلاين.",
+          "en": "Your code arrives by email after online payment."
+        },
+        "maxLength": 80
+      }
+    }
   }
 </hk-schema>

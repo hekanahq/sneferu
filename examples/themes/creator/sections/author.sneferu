@@ -6,15 +6,11 @@
           <img class="cr-avatar" src="{{ section.settings.photo }}" alt="" width="56" height="56" loading="lazy" />
         {% endif %}
         <div>
-          <p class="cr-name">{{ section.settings.name | default: t('author_name') }}</p>
-          <p class="cr-role">{{ section.settings.role | default: t('author_role') }}</p>
+          <p class="cr-name">{{ section.settings.name }}</p>
+          <p class="cr-role">{{ section.settings.role }}</p>
         </div>
       </div>
-      <hk-button
-        label="{{ section.settings.button | default: t('author_cta') }}"
-        href="{{ section.settings.link | default: t('href_products') }}"
-        class="cr-cta"
-      />
+      <hk-button label="{{ section.settings.button }}" href="{{ section.settings.link }}" class="cr-cta" />
     </div>
   </div>
 </section>
@@ -30,26 +26,38 @@
       },
       "name": {
         "type": "text",
-        "label": "Name (empty: the theme's own words)",
-        "default": "",
+        "label": "Name",
+        "localized": true,
+        "default": {
+          "ar": "منى سليم",
+          "en": "Mona Selim"
+        },
         "maxLength": 60
       },
       "role": {
         "type": "text",
         "label": "One line about you",
-        "default": "",
+        "localized": true,
+        "default": {
+          "ar": "مصممة واجهات ومدرّبة تصميم",
+          "en": "Interface designer and design trainer"
+        },
         "maxLength": 100
       },
       "button": {
         "type": "text",
         "label": "Button",
-        "default": "",
+        "localized": true,
+        "default": {
+          "ar": "تصفّح كل المنتجات",
+          "en": "Browse all products"
+        },
         "maxLength": 30
       },
       "link": {
         "type": "link",
         "label": "Button link",
-        "default": ""
+        "default": "/products"
       }
     }
   }

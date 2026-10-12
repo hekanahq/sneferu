@@ -10,23 +10,22 @@
   <hk-container>
     <div class="arc-bar">
       <details class="arc-menu">
-        <summary aria-label="{{ t('menu') }}">
-          {% render 'icon', name: 'menu' %}
-        </summary>
+        <summary aria-label="{{ t('menu') }}"><hk-icon name="menu" size="24" class="ic" /></summary>
         <nav class="arc-menu-panel">
-          <a href="{{ t('url_home') }}">{{ t('nav_home') }}</a>
-          <a href="{{ t('url_products') }}">{{ t('nav_all') }}</a>
-          <a href="{{ t('url_prefix') }}/category/gift-cards">{{ t('cat_gift_cards') }}</a>
-          <a href="{{ t('url_prefix') }}/category/game-currency">{{ t('cat_currency') }}</a>
+          <a href="{{ url('/') }}">{{ t('nav_home') }}</a>
+          <a href="{{ url('/products') }}">{{ t('nav_all') }}</a>
+          <a href="{{ url('/category/gift-cards') }}">{{ t('cat_gift_cards') }}</a>
+          <a href="{{ url('/category/game-currency') }}">{{ t('cat_currency') }}</a>
           <a href="#faq">{{ t('nav_faq') }}</a>
         </nav>
       </details>
-      <a class="arc-logo" href="{{ t('url_home') }}">{{ store.name }}</a>
-      <a class="arc-search" href="{{ t('url_search') }}">
-        <span>{{ t('search_placeholder') }}</span>
-        {% render 'icon', name: 'search' %}
-      </a>
-      <a class="arc-cart" href="{{ t('url_cart') }}" aria-label="{{ t('cart') }}">{% render 'icon', name: 'cart' %}</a>
+      <a class="arc-logo" href="{{ url('/') }}">{{ store.name }}</a>
+      <hk-search-form placeholder="{{ t('search_placeholder') }}" class="arc-search" />
+      <a class="arc-cart" href="{{ url('/cart') }}" aria-label="{{ t('cart') }}"><hk-icon
+          name="shopping-cart"
+          size="24"
+          class="ic"
+        /></a>
     </div>
   </hk-container>
 </header>
@@ -39,10 +38,10 @@
         <p>{{ t('footer_about') }}</p>
       </div>
       <nav class="arc-footer-links" aria-label="{{ t('footer_links') }}">
-        <a href="{{ t('url_products') }}">{{ t('nav_all') }}</a>
-        <a href="{{ t('url_prefix') }}/category/gift-cards">{{ t('cat_gift_cards') }}</a>
-        <a href="{{ t('url_prefix') }}/category/game-currency">{{ t('cat_currency') }}</a>
-        <a href="{{ t('url_prefix') }}/category/top-ups">{{ t('cat_topups') }}</a>
+        <a href="{{ url('/products') }}">{{ t('nav_all') }}</a>
+        <a href="{{ url('/category/gift-cards') }}">{{ t('cat_gift_cards') }}</a>
+        <a href="{{ url('/category/game-currency') }}">{{ t('cat_currency') }}</a>
+        <a href="{{ url('/category/top-ups') }}">{{ t('cat_topups') }}</a>
         <a href="#faq">{{ t('nav_faq') }}</a>
       </nav>
     </div>

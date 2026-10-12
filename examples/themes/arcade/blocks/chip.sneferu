@@ -1,0 +1,22 @@
+{% if block.settings.amount %}
+  <a class="arc-chip" href="{{ url('/search') }}">
+    <span class="arc-chip-icon">{% render 'glyph', name: 'coin' %}</span>
+    <span class="arc-chip-amount">{{ block.settings.amount | money: 'whole', 'major' }}</span>
+    <span class="arc-chip-short">{{ block.settings.amount }}</span>
+  </a>
+{% endif %}
+<hk-schema>
+  {
+    "name": "Amount chip",
+    "version": 1,
+    "settings": {
+      "amount": {
+        "type": "number",
+        "label": "Amount (EGP)",
+        "default": 100,
+        "min": 0,
+        "max": 100000
+      }
+    }
+  }
+</hk-schema>

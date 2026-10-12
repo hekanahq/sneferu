@@ -6,19 +6,185 @@
         "type": "console-showcase"
       },
       {
-        "type": "console-amounts"
+        "type": "console-amounts",
+        "blocks": [
+          {
+            "type": "amount",
+            "settings": {
+              "amount": 200,
+              "highlight": false
+            }
+          },
+          {
+            "type": "amount",
+            "settings": {
+              "amount": 500,
+              "highlight": true
+            }
+          },
+          {
+            "type": "amount",
+            "settings": {
+              "amount": 1000,
+              "highlight": false
+            }
+          }
+        ]
       },
       {
-        "type": "console-platforms"
+        "type": "console-platforms",
+        "blocks": [
+          {
+            "type": "platform",
+            "settings": {
+              "icon": "monitor",
+              "label": {
+                "ar": "كمبيوتر",
+                "en": "PC"
+              },
+              "link": "/category/gift-cards"
+            }
+          },
+          {
+            "type": "platform",
+            "settings": {
+              "icon": "gamepad-2",
+              "label": {
+                "ar": "كونسول",
+                "en": "Console"
+              },
+              "link": "/category/gift-cards"
+            }
+          },
+          {
+            "type": "platform",
+            "settings": {
+              "icon": "gem",
+              "label": {
+                "ar": "عملات الألعاب",
+                "en": "Game currency"
+              },
+              "link": "/category/game-currency"
+            }
+          },
+          {
+            "type": "platform",
+            "settings": {
+              "icon": "smartphone",
+              "label": {
+                "ar": "موبايل",
+                "en": "Mobile"
+              },
+              "link": "/category/top-ups"
+            }
+          },
+          {
+            "type": "platform",
+            "settings": {
+              "icon": "calendar",
+              "label": {
+                "ar": "اشتراكات",
+                "en": "Subscriptions"
+              },
+              "link": "/category/subscriptions"
+            }
+          }
+        ]
       },
       {
-        "type": "console-trust"
+        "type": "console-trust",
+        "blocks": [
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "zap",
+              "label": {
+                "ar": "تسليم فوري للكود",
+                "en": "Instant code delivery"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "lock",
+              "label": {
+                "ar": "دفع أونلاين آمن",
+                "en": "Secure online payment"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "banknote",
+              "label": {
+                "ar": "الأسعار بالجنيه المصري",
+                "en": "Prices in Egyptian pounds"
+              }
+            }
+          }
+        ]
       },
       {
         "type": "console-products"
       },
       {
-        "type": "console-faq"
+        "type": "console-faq",
+        "blocks": [
+          {
+            "type": "faq-item",
+            "settings": {
+              "question": {
+                "ar": "الكود بيوصل إمتى؟",
+                "en": "When does the code arrive?"
+              },
+              "answer": {
+                "ar": "بعد ما الدفع الأونلاين يتأكد، الكود بيتبعت أوتوماتيك على الإيميل اللي كتبته في الطلب.",
+                "en": "Once your online payment is confirmed, the code is sent automatically to the email on your order."
+              }
+            }
+          },
+          {
+            "type": "faq-item",
+            "settings": {
+              "question": {
+                "ar": "ينفع أدفع كاش عند الاستلام؟",
+                "en": "Can I pay cash on delivery?"
+              },
+              "answer": {
+                "ar": "التسليم الفوري بيكون مع الدفع الأونلاين بس. لو المتجر بيقبل الدفع عند الاستلام، الكود مش بيتبعت فورًا.",
+                "en": "Instant delivery works with online payment only. If the store accepts cash on delivery, the code is not sent instantly."
+              }
+            }
+          },
+          {
+            "type": "faq-item",
+            "settings": {
+              "question": {
+                "ar": "الكارت هيشتغل على حسابي؟",
+                "en": "Will the card work on my account?"
+              },
+              "answer": {
+                "ar": "صفحة كل كارت مكتوب فيها المنطقة اللي بيشتغل عليها. اتأكد إن منطقة حسابك هي نفسها قبل ما تشتري.",
+                "en": "Each card's page lists the region it works in. Check that your account uses the same region before you buy."
+              }
+            }
+          },
+          {
+            "type": "faq-item",
+            "settings": {
+              "question": {
+                "ar": "الكود ما اشتغلش، أعمل إيه؟",
+                "en": "The code did not work. What now?"
+              },
+              "answer": {
+                "ar": "كلمنا ومعاك رقم الطلب، وهنراجع الكود معاك.",
+                "en": "Contact us with your order number and we will check the code with you."
+              }
+            }
+          }
+        ]
       }
     ]
   }

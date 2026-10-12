@@ -1,7 +1,7 @@
 {
   "id": "license",
   "name": "License",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "author": "Hekana",
   "description": "A dark theme for software licences, subscriptions and digital tools",
   "category": "digital",
@@ -22,6 +22,10 @@
       "tier-deep": "#15365F",
       "line": "#26324B"
     },
-    "layout": { "contentWidth": "1040px" }
+    "layout": { "contentWidth": "1040px" },
+    "fonts": {
+      "heading": "Readex Pro",
+      "body": "Readex Pro"
+    }
   }
 }

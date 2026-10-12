@@ -1,5 +1,8 @@
 <article class="cr-cover" id="{{ slot }}-{{ forloop.index }}">
-  <hk-product-card product="{{ p }}" class="cr-card" />
-  <span class="cr-flag">{{ section.settings.badge | default: t('instant_access') }}</span>
-  <span class="cr-kind">{{ kind }}</span>
+  <hk-product-card product="{{ p }}" class="cr-card">
+    <hk-part name="badge">
+      <span class="cr-flag">{{ section.settings.badge }}</span>
+      <span class="cr-kind">{{ kind }}</span>
+    </hk-part>
+  </hk-product-card>
 </article>

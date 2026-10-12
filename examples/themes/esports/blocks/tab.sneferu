@@ -1,0 +1,24 @@
+<a class="es-tab" href="{{ url(block.settings.link) }}">{{ block.settings.label }}</a>
+<hk-schema>
+  {
+    "name": "Tab",
+    "version": 1,
+    "settings": {
+      "label": {
+        "type": "text",
+        "label": "Label",
+        "localized": true,
+        "default": {
+          "ar": "الكل",
+          "en": "All"
+        },
+        "maxLength": 20
+      },
+      "link": {
+        "type": "link",
+        "label": "Link",
+        "default": "/products"
+      }
+    }
+  }
+</hk-schema>

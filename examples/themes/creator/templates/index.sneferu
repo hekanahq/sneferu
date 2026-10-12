@@ -6,7 +6,61 @@
         "type": "covers"
       },
       {
-        "type": "what-you-get"
+        "type": "what-you-get",
+        "blocks": [
+          {
+            "type": "get-item",
+            "settings": {
+              "term": {
+                "ar": "الملفات",
+                "en": "Files"
+              },
+              "text": {
+                "ar": "رابط التحميل بيوصلك على الإيميل بعد الدفع أونلاين",
+                "en": "Your download link is emailed after online payment"
+              }
+            }
+          },
+          {
+            "type": "get-item",
+            "settings": {
+              "term": {
+                "ar": "الدروس",
+                "en": "Lessons"
+              },
+              "text": {
+                "ar": "فيديوهات مسجّلة تتفرج عليها في الوقت اللي يناسبك",
+                "en": "Recorded videos you watch when it suits you"
+              }
+            }
+          },
+          {
+            "type": "get-item",
+            "settings": {
+              "term": {
+                "ar": "التمارين",
+                "en": "Exercises"
+              },
+              "text": {
+                "ar": "ملفات عملية تطبّق عليها خطوة بخطوة",
+                "en": "Practice files you work through step by step"
+              }
+            }
+          },
+          {
+            "type": "get-item",
+            "settings": {
+              "term": {
+                "ar": "اللغة",
+                "en": "Language"
+              },
+              "text": {
+                "ar": "شرح بالعربي وأمثلة من السوق المصري",
+                "en": "Explained in Arabic, with examples from the Egyptian market"
+              }
+            }
+          }
+        ]
       },
       {
         "type": "author"

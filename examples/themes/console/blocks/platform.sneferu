@@ -1,0 +1,50 @@
+<a class="cc-plat" href="{{ url(block.settings.link) }}">
+  <span class="cc-plat-icon">
+    {% if block.settings.icon == 'gem' %}
+      {% render 'glyph', name: 'gem' %}
+    {% else %}
+      <hk-icon name="{{ block.settings.icon }}" class="ic" />
+    {% endif %}
+  </span>
+  <span class="cc-plat-label">{{ block.settings.label }}</span>
+</a>
+<hk-schema>
+  {
+    "name": "Platform",
+    "version": 1,
+    "settings": {
+      "icon": {
+        "type": "select",
+        "label": "Icon",
+        "options": [
+          "monitor",
+          "gamepad-2",
+          "smartphone",
+          "calendar",
+          "headphones",
+          "gift",
+          "credit-card",
+          "key",
+          "zap",
+          "gem"
+        ],
+        "default": "monitor"
+      },
+      "label": {
+        "type": "text",
+        "label": "Label",
+        "localized": true,
+        "default": {
+          "ar": "كمبيوتر",
+          "en": "PC"
+        },
+        "maxLength": 24
+      },
+      "link": {
+        "type": "link",
+        "label": "Link",
+        "default": "/category/gift-cards"
+      }
+    }
+  }
+</hk-schema>

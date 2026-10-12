@@ -91,7 +91,7 @@ describe('completion', () => {
   it("t('…') keys from the locales, snippet names for render", () => {
     expect(labels(envAt(STARTER, 'sections/hero.sneferu', "{{ t('§') }}"))).toEqual(['shop_now']);
     expect(labels(envAt(STARTER, 'sections/hero.sneferu', "{{ '§' | t }}"))).toEqual(['shop_now']);
-    expect(labels(envAt(ARCADE, 'sections/arcade-hero.sneferu', "{% render '§' %}"))).toEqual(expect.arrayContaining(['chip', 'faq-item']));
+    expect(labels(envAt(ARCADE, 'blocks/chip.sneferu', "{% render '§' %}"))).toEqual(['glyph']);
   });
   it('directives after {%', () => {
     expect(labels(envAt(STARTER, 'sections/hero.sneferu', '{% §'))).toEqual(['if', 'elsif', 'else', 'endif', 'for', 'endfor', 'render']);
@@ -121,13 +121,13 @@ describe('hover', () => {
 });
 
 describe('definition and links', () => {
-  it("render 'chip' → snippets/chip.sneferu, t('key') → every locale", () => {
-    expect(definition(envAt(ARCADE, 'sections/arcade-hero.sneferu', "{% render 'ch§ip', amount: 1 %}"))).toEqual([{ rel: 'snippets/chip.sneferu', offset: 0, length: 0 }]);
-    const t = definition(envAt(ARCADE, 'sections/arcade-hero.sneferu', "{{ t('hero_ti§tle') }}"));
+  it("render 'glyph' → snippets/glyph.sneferu, t('key') → every locale", () => {
+    expect(definition(envAt(ARCADE, 'blocks/chip.sneferu', "{% render 'gly§ph', name: 'coin' %}"))).toEqual([{ rel: 'snippets/glyph.sneferu', offset: 0, length: 0 }]);
+    const t = definition(envAt(ARCADE, 'sections/arcade-products.sneferu', "{{ t('view_a§ll') }}"));
     expect(t.map((x) => x.rel).sort()).toEqual(['locales/ar.json', 'locales/en.json']);
     const en = readFileSync(join(ARCADE, 'locales/en.json'), 'utf8');
     const loc = t.find((x) => x.rel === 'locales/en.json')!;
-    expect(en.slice(loc.offset, loc.offset + loc.length)).toBe('"hero_title"');
+    expect(en.slice(loc.offset, loc.offset + loc.length)).toBe('"view_all"');
   });
   it('a setting → its schema entry', () => {
     const src = readFileSync(join(STARTER, 'sections/hero.sneferu'), 'utf8');
@@ -183,7 +183,7 @@ describe('theme checks', () => {
     writeFileSync(join(dir, 'locales/ar.json'), '{ "shop_now": "x" }');
     writeFileSync(join(dir, 'snippets.txt'), '');
     rmSync(join(dir, 'snippets.txt'));
-    cpSync(join(ARCADE, 'snippets/faq-item.sneferu'), join(dir, 'snippets/unused.sneferu'));
+    cpSync(join(ARCADE, 'snippets/glyph.sneferu'), join(dir, 'snippets/unused.sneferu'));
     writeFileSync(join(dir, 'assets/big.css'), 'a{}'.repeat(200_000));
     writeFileSync(join(dir, 'sections/extra.sneferu'), [
       '<hk-section>',
