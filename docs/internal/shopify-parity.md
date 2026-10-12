@@ -2,7 +2,7 @@
 
 Date: 2026-10-12. Compared: Shopify's theme platform as documented on
 shopify.dev (Online Store 2.0, theme blocks, Shopify CLI 3, Theme Check) against
-Sneferu as it is on `main` of `Mostafa-M-Hussein/sneferu` (`e45a4f9`,
+Sneferu as it is on `main` of `hekanahq/sneferu` (`e45a4f9`,
 `@hekana/sneferu` 0.2.0 on npm) and the HK2 code on Hekana `master` (API
 `apps/api/src/hk2`, storefront `apps/storefront/src/lib/hk2.ts`, builder
 `apps/dashboard/app/(dashboard)/design/hk2`).

@@ -9,11 +9,11 @@
   "homepage": "https://hekana.dev/guide/vscode",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Mostafa-M-Hussein/sneferu.git",
+    "url": "https://github.com/hekanahq/sneferu.git",
     "directory": "packages/vscode-sneferu"
   },
   "bugs": {
-    "url": "https://github.com/Mostafa-M-Hussein/sneferu/issues"
+    "url": "https://github.com/hekanahq/sneferu/issues"
   },
   "icon": "media/icon.png",
   "galleryBanner": {
