@@ -23,7 +23,7 @@ What the theme uses: plain HTML, `hk-section`, `hk-stack`, `hk-heading`,
 a ribbon in its `badge` part and a Buy link in its `actions` part), three block
 types (tab, step, question) seeded by the template, inline SVG for the mark and
 the art, CSS `clip-path` for the cuts, and one stylesheet. There is no
-JavaScript. Version 1.1.0 is built on Sneferu 0.3; the 0.2 workarounds it
+JavaScript. Version 1.2.0 is built on Sneferu 0.4; the 0.2 workarounds it
 replaced are listed in `../../GAPS-gaming.md`.
 
 ## Upgrading from 1.0
@@ -32,6 +32,33 @@ In 1.1.0 the numbered settings and locale-text fallbacks became blocks and
 localized settings; values saved under 1.0 are not carried over, so the sections
 start from the new defaults.
 
+## Pages
+
+Esports writes only the home page (`templates/index.sneferu`). The product,
+collection, search, cart, content page and 404 templates come from the SDK's
+default store ([page types](../../../docs/guide/16-page-types.mdx)), drawn with
+Esports's tokens, fonts and layout. `assets/theme.css` restyles what the default
+store would otherwise draw in its own way (the block "Cart, product, collection,
+search and 404 pages"):
+
+- product cards on collection and search pages use the top-up card: the dark green
+  gradient, a thin line that turns lime on hover, centred title and a heavy price;
+- the sale badge, the active chip and the cart count use dark text on lime;
+- the cart summary, the delivery note and the cart drawer sit on the dark green surface;
+- on phones the header shows the cart icon (it showed the account icon before).
+
+The header group holds the cart drawer: it opens when an item is added (a
+setting of the header section) and from the cart icon.
+
+| Page | URL in `sneferu dev` |
+| - | - |
+| Product | `/products/sample-2` |
+| Collection | `/category/gift-cards`, `/products` |
+| Search | `/search?q=card` |
+| Cart | `/cart` |
+| Content page | `/pages/about` |
+| 404 | any other path |
+
 ## Files
 
 ```
@@ -39,10 +66,14 @@ assets/theme.css
 blocks/faq-item.sneferu
 blocks/step.sneferu
 blocks/tab.sneferu
+groups/footer.json
+groups/header.json
 layout/theme.sneferu
 locales/ar.json
 locales/en.json
 sections/esports-faq.sneferu
+sections/esports-footer.sneferu
+sections/esports-header.sneferu
 sections/esports-hero.sneferu
 sections/esports-products.sneferu
 sections/esports-steps.sneferu
@@ -76,7 +107,7 @@ Delete the starter's sections and `blocks/`.
 {
   "id": "esports",
   "name": "Esports",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "Hekana",
   "description": "A bold gaming top-up store: black and deep green, a lime accent, diagonal cuts, a wide hero and top-up cards with ribbons.",
   "category": "gaming",
@@ -130,6 +161,18 @@ The mark is a plain SVG `X` drawn in `currentColor`. Every other icon is
 ## 4. Layout: header and footer
 
 ```html title="layout/theme.sneferu"
+<hk-section-group name="header" />
+<main><hk-slot name="content" /></main>
+<hk-section-group name="footer" />
+```
+
+The header and the footer are [section groups](../../../docs/guide/18-section-groups.mdx): the layout places
+`<hk-section-group name="header" />` and `<hk-section-group name="footer" />`, `groups/header.json` and
+`groups/footer.json` start them with `esports-header` and `esports-footer`, and the merchant edits them once for the
+whole store. The header also holds the cart: the cart link carries `data-hk-open="cart-drawer"` and
+`<hk-cart-count />`, and `<hk-cart-drawer>` lists the lines (a plain link to the cart page without JavaScript).
+
+```html title="sections/esports-header.sneferu"
 <header class="es-header">
   <hk-container>
     <div class="es-bar">
@@ -140,7 +183,7 @@ The mark is a plain SVG `X` drawn in `currentColor`. Every other icon is
           <a href="{{ url('/category/game-currency') }}">{{ t('cat_currency') }}</a>
           <a href="{{ url('/category/gift-cards') }}">{{ t('cat_gift_cards') }}</a>
           <a href="{{ url('/category/top-ups') }}">{{ t('cat_topups') }}</a>
-          <a href="#faq">{{ t('nav_faq') }}</a>
+          <a href="{{ url('/') }}#faq">{{ t('nav_faq') }}</a>
         </nav>
       </details>
       <a class="es-logo" href="{{ url('/') }}" aria-label="{{ store.name }}">
@@ -153,46 +196,48 @@ The mark is a plain SVG `X` drawn in `currentColor`. Every other icon is
         <a class="is-hot" href="{{ url('/category/game-currency') }}">{{ t('cat_currency') }}</a>
         <a href="{{ url('/category/gift-cards') }}">{{ t('cat_gift_cards') }}</a>
         <a href="{{ url('/category/top-ups') }}">{{ t('cat_topups') }}</a>
-        <a href="#faq">{{ t('nav_faq') }}</a>
+        <a href="{{ url('/') }}#faq">{{ t('nav_faq') }}</a>
       </nav>
       <a class="es-icon" href="{{ url('/account') }}" aria-label="{{ t('account') }}"><hk-icon
           name="user"
           size="22"
           class="ic"
         /></a>
-      <a class="es-icon" href="{{ url('/cart') }}" aria-label="{{ t('cart') }}"><hk-icon
+      <a class="es-icon" href="{{ url('/cart') }}" data-hk-open="cart-drawer" aria-label="{{ t('cart') }}"><hk-icon
           name="shopping-cart"
           size="22"
           class="ic"
-        /></a>
+        /><hk-cart-count /></a>
     </div>
   </hk-container>
+  <hk-cart-drawer open-on-add="{{ section.settings.drawer_on_add }}">
+    <hk-cart-items />
+    <hk-cart-summary />
+  </hk-cart-drawer>
 </header>
-<main><hk-slot name="content" /></main>
-<footer class="es-footer">
-  <hk-container>
-    <div class="es-footer-row">
-      <div class="es-footer-brand">
-        <span class="es-logo">{% render 'mark' %}<span>{{ store.name }}</span></span>
-        <p>{{ t('footer_about') }}</p>
-      </div>
-      <nav class="es-footer-links" aria-label="{{ t('footer_links') }}">
-        <a href="{{ url('/products') }}">{{ t('nav_all') }}</a>
-        <a href="{{ url('/category/game-currency') }}">{{ t('cat_currency') }}</a>
-        <a href="{{ url('/category/gift-cards') }}">{{ t('cat_gift_cards') }}</a>
-        <a href="#faq">{{ t('nav_faq') }}</a>
-      </nav>
-    </div>
-    <p class="es-copy">© {{ store.name }}</p>
-  </hk-container>
-</footer>
+<hk-schema>
+  {
+    "name": "Header",
+    "version": 1,
+    "templates": ["header"],
+    "settings": {
+      "drawer_on_add": {
+        "type": "boolean",
+        "label": "Open the cart when an item is added",
+        "default": true
+      }
+    }
+  }
+</hk-schema>
 ```
+
 
 ```css title="assets/theme.css (root and header)"
 /* Esports: black and deep green, lime accent, diagonal cuts. */
 [data-hk-theme='esports'] {
   --es-lime: var(--hk-color-accent);
   --es-cut: 28px;
+  min-height: 100vh;
   line-height: 1.6;
   background: radial-gradient(1000px 500px at 50% 0, rgba(31, 122, 85, 0.16), transparent 70%), var(--hk-color-background);
 }
@@ -206,12 +251,12 @@ The mark is a plain SVG `X` drawn in `currentColor`. Every other icon is
 /* Header */
 .es-header { border-bottom: 1px solid var(--hk-color-line); background: rgba(7, 10, 9, 0.9); }
 .es-bar { display: flex; align-items: center; gap: 20px; min-height: 76px; }
-.es-logo { display: inline-flex; align-items: center; gap: 10px; color: var(--es-lime); font-weight: 900; font-size: 18px; }
+.es-logo { display: inline-flex; align-items: center; min-height: 44px; min-width: 44px; gap: 10px; color: var(--es-lime); font-weight: 900; font-size: 18px; }
 .es-logo span { color: var(--hk-color-text); }
 .es-mark { width: 38px; height: 38px; }
 .es-search { flex: 0 1 300px; flex-wrap: nowrap; align-items: center; gap: 2px; min-height: 44px; padding-inline: 2px 14px; border-radius: 10px; border: 1px solid #2A3A31; background: #0D1411; color: var(--hk-color-muted); font-size: 14px; }
 .es-search:hover, .es-search:focus-within { border-color: var(--es-lime); }
-form.es-search input { min-height: 42px; padding: 0; border: 0; outline: 0; background: transparent; color: var(--hk-color-text); font-size: 14px; }
+form.es-search input { min-height: 44px; padding: 0; border: 0; outline: 0; background: transparent; color: var(--hk-color-text); font-size: 14px; }
 form.es-search input::placeholder { color: var(--hk-color-muted); }
 form.es-search .sn-search-button { order: -1; border: 0; background: transparent; color: var(--hk-color-muted); }
 form.es-search .sn-search-button .sn-icon { width: 18px; height: 18px; }
@@ -705,13 +750,12 @@ form.es-search .sn-search-button:hover { color: var(--es-lime); }
   .es-menu { display: block; }
   .es-logo span { display: none; }
   .es-mark { width: 30px; height: 30px; }
-  .es-search { min-height: 40px; font-size: 13px; padding-inline: 0 10px; }
+  .es-search { min-height: 44px; font-size: 13px; padding-inline: 0 10px; }
   form.es-search input { font-size: 13px; }
-  .es-icon:last-child { display: none; }
-  .es-icon:nth-last-child(2) { display: inline-flex; }
+  .es-icon:last-child { display: inline-flex; }
   .es-hero { min-height: 230px; grid-template-columns: 1.15fr 1fr; border-radius: 12px; }
   .es-hero-copy { padding: 22px 14px; gap: 8px; }
-  .sn-btn.es-cta { min-height: 40px; padding-inline: 18px; font-size: 14px; }
+  .sn-btn.es-cta { min-height: 44px; padding-inline: 18px; font-size: 14px; }
   .es-offer { top: 10px; inset-inline-end: 10px; padding: 6px 10px; }
   .es-offer-num { font-size: 20px; }
   .es-offer-top, .es-offer-bottom { font-size: 10px; }
@@ -802,13 +846,12 @@ settings and blocks, not here.
   .es-menu { display: block; }
   .es-logo span { display: none; }
   .es-mark { width: 30px; height: 30px; }
-  .es-search { min-height: 40px; font-size: 13px; padding-inline: 0 10px; }
+  .es-search { min-height: 44px; font-size: 13px; padding-inline: 0 10px; }
   form.es-search input { font-size: 13px; }
-  .es-icon:last-child { display: none; }
-  .es-icon:nth-last-child(2) { display: inline-flex; }
+  .es-icon:last-child { display: inline-flex; }
   .es-hero { min-height: 230px; grid-template-columns: 1.15fr 1fr; border-radius: 12px; }
   .es-hero-copy { padding: 22px 14px; gap: 8px; }
-  .sn-btn.es-cta { min-height: 40px; padding-inline: 18px; font-size: 14px; }
+  .sn-btn.es-cta { min-height: 44px; padding-inline: 18px; font-size: 14px; }
   .es-offer { top: 10px; inset-inline-end: 10px; padding: 6px 10px; }
   .es-offer-num { font-size: 20px; }
   .es-offer-top, .es-offer-bottom { font-size: 10px; }
