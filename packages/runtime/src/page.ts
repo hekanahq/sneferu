@@ -1,4 +1,4 @@
-import { coerceSetting, err, escapeAttr, isGroupName, isMoneyFormat, parseTemplateName, safeToken, safeUrl, toStr, validateIR, type Diagnostic, type FieldSchema, type GroupName, type IRNode, type LocaleOverrides, type PageNode, type SectionGroups, type TagRegistry, type ThemeLocalization, type ThemeRequest } from '@hekana/sneferu-core';
+import { coerceSetting, err, escapeAttr, isGroupName, isMoneyFormat, parseTemplateName, safeToken, sectionAllowedOn, safeUrl, toStr, validateIR, type Diagnostic, type FieldSchema, type GroupName, type IRNode, type LocaleOverrides, type PageNode, type SectionGroups, type TagRegistry, type ThemeLocalization, type ThemeRequest } from '@hekana/sneferu-core';
 import type { RenderContext, Scope } from './context';
 import { Budget, own, renderNodes, type Env } from './render';
 import type { Limits } from './budget';
@@ -75,11 +75,30 @@ const deepFreeze = <T>(v: T): T => {
   if (typeof v === 'object' && v !== null && !Object.isFrozen(v)) { Object.freeze(v); for (const x of Object.values(v)) deepFreeze(x); }
   return v;
 };
+/** Whether a (validated) tree places a section group anywhere in it. */
+const hasGroupTag = (nodes: IRNode[], d = 0): boolean => d <= 128 && nodes.some((n) => {
+  switch (n.k) {
+    case 'comp': return n.tag === 'hk-section-group' || hasGroupTag(n.children, d + 1);
+    case 'el': return hasGroupTag(n.children, d + 1);
+    case 'if': return n.branches.some((b) => hasGroupTag(b.body, d + 1)) || (n.else !== undefined && hasGroupTag(n.else, d + 1));
+    case 'loop': return hasGroupTag(n.body, d + 1);
+    default: return false;
+  }
+});
 const validateTrees = (artifact: ArtifactLike, registry: TagRegistry): Diagnostic[] => {
   const known = new Set([...registry.names(), 'hk-block', 'hk-part']);
-  const trees: IRNode[][] = [artifact.layout, ...Object.values(artifact.templates), ...Object.values(artifact.snippets),
-    ...Object.values(artifact.sections).map((s) => s.ir), ...Object.values(artifact.blocks).map((b) => b.ir)];
-  return trees.flatMap((t) => validateIR(t, known));
+  const out = validateIR(artifact.layout, known);
+  const named = (key: string, rec: Record<string, IRNode[]>): [string, IRNode[]][] => Object.entries(rec).map(([k, t]) => [`${key}.${k}`, t]);
+  const trees: [string, IRNode[]][] = [...named('templates', artifact.templates), ...named('snippets', artifact.snippets),
+    ...named('sections', Object.fromEntries(Object.entries(artifact.sections).map(([k, s]) => [k, s.ir]))),
+    ...named('blocks', Object.fromEntries(Object.entries(artifact.blocks).map(([k, b]) => [k, b.ir])))];
+  for (const [where, t] of trees) {
+    const bad = validateIR(t, known);
+    out.push(...bad);
+    // a section group renders sections: placed anywhere but the layout, a group's section could render its own group
+    if (!bad.length && hasGroupTag(t)) out.push(err('SN9016', `artifact ${where} places <hk-section-group>, which belongs in the layout only`));
+  }
+  return out;
 };
 /** Section ids become part of component class names: one safe token. */
 const sectionToken = (id: unknown) => safeToken(toStr(id)).replace(/ /g, '-');
@@ -175,7 +194,7 @@ function render(artifact: ArtifactLike, opts: RenderOptions): RenderResult {
   const mf = isObj(artifact.manifest.money) ? artifact.manifest.money.format : undefined;
   const money = isMoneyFormat(mf) ? mf : isMoneyFormat(opts.ctx.money) ? opts.ctx.money : undefined;
   const ctx: RenderContext = { ...opts.ctx, locale, dir, settings, money, translations: withOverrides(artifact, opts.ctx, opts.locale_overrides, locale) };
-  const env: Env = { ctx, registry: opts.registry, snippets: artifact.snippets, slots: {}, budget: new Budget(opts.limits), css: [], cssOnce: new Set(), controllers: new Set(), diagnostics: [], ids: { n: 0 }, depth: 0, include: 0, group: (name) => renderGroup(name) };
+  const env: Env = { ctx, registry: opts.registry, snippets: artifact.snippets, slots: {}, budget: new Budget(opts.limits), css: [], cssOnce: new Set(), controllers: new Set(), diagnostics: [], ids: { n: 0 }, depth: 0, include: 0 };
   const base: Scope = { ...(opts.scope ?? {}), store: ctx.store, locale, dir, ...pageObjects(opts, artifact.manifest, locale) };
 
   const sections: PageNode[] = Array.isArray(opts.sections) ? opts.sections : (own(artifact.templateSections, opts.template) ?? []).map((s, i) => ({ id: `default-${i}`, type: s.type, props: s.settings, ...(Array.isArray(s.blocks) ? { children: s.blocks.map((b, j) => ({ id: `default-${i}-${j}`, type: b.type, props: b.settings })) } : {}) }));
@@ -214,14 +233,22 @@ function render(artifact: ArtifactLike, opts: RenderOptions): RenderResult {
     const given = opts.groups && isObj(opts.groups) && Object.hasOwn(opts.groups, name) ? opts.groups[name] : undefined;
     const nodes = Array.isArray(given) ? given : given === undefined ? own(artifact.groups as Record<string, PageNode[]> | undefined, name) : undefined;
     if (!Array.isArray(nodes)) return '';
-    const inner = nodes.filter((s) => !(isObj(s) && s.hidden)).slice(0, MAX_GROUP_NODES).map((s) => renderSection(s, `g-${name}-`)).join('');
+    const inner = nodes.filter((s) => !(isObj(s) && s.hidden)).slice(0, MAX_GROUP_NODES).map((s) => {
+      const def = isObj(s) && typeof s.type === 'string' ? own(artifact.sections, s.type) : undefined;
+      if (def && !sectionAllowedOn(def.schema as { templates?: readonly string[] }, name)) {
+        env.diagnostics.push(err('SN4014', `section '${s.type}' is not allowed in the ${name} group; skipped`));
+        return '';
+      }
+      return renderSection(s, `g-${name}-`);
+    }).join('');
     return inner === '' ? '' : `<div data-hk-group="${name}">${inner}</div>`;
   };
 
   env.blocks = artifact.blocks;
 
   const content = () => renderNodes(template, base, { ...env, slots: { sections: () => sections.filter((s) => !(isObj(s) && s.hidden)).map((s) => renderSection(s)).join('') } });
-  const inner = renderNodes(artifact.layout, base, { ...env, slots: { content } });
+  // only the layout places section groups; sections, templates and snippets rendered from here get no group renderer
+  const inner = renderNodes(artifact.layout, base, { ...env, slots: { content }, group: renderGroup });
   const html = `<div data-hk-theme="${escapeAttr(artifact.manifest.id)}" dir="${escapeAttr(dir)}" lang="${escapeAttr(locale)}">${inner}</div>`;
   const css = env.css.join('\n');
   const ownsPage = Array.isArray(artifact.defaults?.templates) && artifact.defaults!.templates.includes(opts.template);

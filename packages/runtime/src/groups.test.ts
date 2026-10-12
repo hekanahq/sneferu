@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { TagRegistry, tokenSettings, type IRNode } from '@hekana/sneferu-core';
-import { renderPage, checkArtifactShape, themeTokenCss, themeFontCss, type ArtifactLike, type RenderContext } from './index';
+import { renderPage, prepareArtifact, checkArtifactShape, themeTokenCss, themeFontCss, type ArtifactLike, type RenderContext } from './index';
 
 const ctx: RenderContext = { locale: 'en', dir: 'ltr', currency: 'EGP', store: { name: 'S' }, settings: {}, data: {}, collections: {}, products: {},
   translations: { hello: 'Hello', other: 'Other' }, fallbackTranslations: { hello: 'Hello', other: 'Other' }, assetUrl: (p) => p, imageUrl: (r) => String(r) };
@@ -57,6 +57,32 @@ describe('section groups', () => {
       sections: [{ id: 'x', type: 'box' }], groups: { header: [{ id: 'x', type: 'box' }] } });
     const ids = [...r2.html.matchAll(/class="sn-([^"]+)"/g)].map((m) => m[1]);
     expect(ids).toEqual(['g-header-s-x-c1', 's-x-c1']);
+  });
+  it('rejects a section group outside the layout at load time; a crafted self-including group never recurses', () => {
+    const loopy = art({ sections: { ...art().sections, loopy: { ir: [html('<b>'), group('header'), html('</b>')], schema: { name: lbl, version: 1, settings: {} } } }, groups: { header: [{ id: 'h', type: 'loopy' }] } });
+    const p = prepareArtifact(loopy, reg);
+    expect(p.ok).toBe(false);
+    expect(p.diagnostics.map((d) => d.code)).toEqual(['SN9016']);
+    expect(p.diagnostics[0]!.message).toContain('sections.loopy');
+    let r!: ReturnType<typeof run>;
+    expect(() => { r = run(loopy); }).not.toThrow();
+    expect(r.html).toBe('');
+    expect(r.diagnostics.map((d) => d.code)).toEqual(['SN9016']);
+    for (const where of ['templates', 'snippets', 'blocks'] as const) {
+      const a = art();
+      if (where === 'blocks') a.blocks = { ...a.blocks, nest: { ir: [{ k: 'if', branches: [{ test: { k: 'lit', v: true }, body: [group('footer')] }] }], schema: { settings: {} } } };
+      else a[where] = { ...a[where], x: [html('<p>'), group('footer')] };
+      expect(prepareArtifact(a, reg).diagnostics.map((d) => d.code)).toEqual(['SN9016']);
+    }
+    expect(prepareArtifact(art(), reg).ok).toBe(true);
+  });
+  it('skips a group section whose templates list does not name the group', () => {
+    const only = (templates: string[]) => art({ sections: { ...art().sections, bar: { ...art().sections.bar!, schema: { ...art().sections.bar!.schema, templates } as never } } });
+    const r = run(only(['footer', 'index']));
+    expect(r.html).not.toContain('data-hk-group="header"');
+    expect(r.diagnostics.map((d) => d.code)).toEqual(['SN4014']);
+    expect(run(only(['footer']), { groups: { footer: [{ id: 'f', type: 'bar' }] } }).html).toContain('data-hk-group="footer"><div data-hk-section="f">');
+    expect(run(only(['header'])).html).toContain('data-hk-section="h"');
   });
   it('nests blocks one more level and hides hidden ones', () => {
     const tree = [{ id: 's', type: 'bar', children: [{ id: 'b1', type: 'link', children: [{ id: 'c1', type: 'link', props: { u: 'sub' } }, { id: 'c2', type: 'link', hidden: true }] }, { id: 'b2', type: 'link', hidden: true }] }];

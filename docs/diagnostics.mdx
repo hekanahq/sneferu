@@ -115,6 +115,8 @@ These are reported by the runtime while rendering a page. The page still renders
 | SN4010 | Template not found | Create `templates/<name>.sneferu`. |
 | SN4011 | A page section's type does not exist in the theme, or the page section is malformed | Add the section or remove it from the page. |
 | SN4012 | A block's type does not exist in the theme; the block is skipped | Add `blocks/<type>.sneferu` or remove the block. |
+| SN4013 | A `<hk-section-group>` was reached outside the layout; it renders nothing (reported once per page) | Place section groups in `layout/theme.sneferu` only. |
+| SN4014 | A section in a group (header, footer, announcement) has a `templates` list that does not name that group; the section is skipped | Add the group to the section's `templates`, or remove the section from the group. |
 
 ## SN9xxx Artifact integrity
 
@@ -137,3 +139,4 @@ The runtime re-checks a compiled artifact before rendering. These indicate a cor
 | SN9013 | Invalid attribute sink, or a URL attribute (`href`, `*:href`, `src`, …) without the url sink | Rebuild. |
 | SN9014 | A static HTML chunk does not match the compiler's output grammar (comment, `<!…>`, `<?…>`, CDATA, raw `<`/`>` in text, unquoted or single-quoted value, markup inside `<title>`, tag left open, disallowed element) or has a bad attribute (`on*`, forbidden name, `javascript:`/`vbscript:`/`data:text/html` value, unsafe URL). The compiler also reports this for its own output, e.g. `style="background:url(javascript:…)"` | Rebuild; if it comes from `sneferu build`, remove the offending attribute value. |
 | SN9015 | The artifact's structure is malformed (missing or wrong-typed manifest, sections, schemas, fields, …), or rendering failed unexpectedly; the page is not rendered | Rebuild with `sneferu build`; report the message if it persists. |
+| SN9016 | A template, section, block or snippet in the artifact places `<hk-section-group>`; only the layout may. The artifact is rejected | Rebuild with `sneferu build` (the compiler reports SN2018). |
