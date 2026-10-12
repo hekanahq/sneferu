@@ -25,6 +25,12 @@ set lacks, `<details>` for the phone menu and the FAQ, and one stylesheet.
 There is no JavaScript. Version 1.1.0 is built on Sneferu 0.3; the 0.2
 workarounds it replaced are listed in `../../GAPS-gaming.md`.
 
+## Upgrading from 1.0
+
+In 1.1.0 the numbered settings and locale-text fallbacks became blocks and
+localized settings; values saved under 1.0 are not carried over, so the sections
+start from the new defaults.
+
 ## Files
 
 ```
@@ -414,7 +420,7 @@ the English file:
   <a class="arc-chip" href="{{ url('/search') }}">
     <span class="arc-chip-icon">{% render 'glyph', name: 'coin' %}</span>
     <span class="arc-chip-amount">{{ block.settings.amount | money: 'whole', 'major' }}</span>
-    <span class="arc-chip-short" aria-hidden="true">{{ block.settings.amount }}</span>
+    <span class="arc-chip-short">{{ block.settings.amount }}</span>
   </a>
 {% endif %}
 <hk-schema>

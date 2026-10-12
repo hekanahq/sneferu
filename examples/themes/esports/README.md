@@ -26,6 +26,12 @@ the art, CSS `clip-path` for the cuts, and one stylesheet. There is no
 JavaScript. Version 1.1.0 is built on Sneferu 0.3; the 0.2 workarounds it
 replaced are listed in `../../GAPS-gaming.md`.
 
+## Upgrading from 1.0
+
+In 1.1.0 the numbered settings and locale-text fallbacks became blocks and
+localized settings; values saved under 1.0 are not carried over, so the sections
+start from the new defaults.
+
 ## Files
 
 ```

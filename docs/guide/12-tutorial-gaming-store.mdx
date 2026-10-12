@@ -473,7 +473,7 @@ Internal links go through `url()`: `href="{{ url('/products') }}"` is
   <a class="arc-chip" href="{{ url('/search') }}">
     <span class="arc-chip-icon">{% render 'glyph', name: 'coin' %}</span>
     <span class="arc-chip-amount">{{ block.settings.amount | money: 'whole', 'major' }}</span>
-    <span class="arc-chip-short" aria-hidden="true">{{ block.settings.amount }}</span>
+    <span class="arc-chip-short">{{ block.settings.amount }}</span>
   </a>
 {% endif %}
 <hk-schema>

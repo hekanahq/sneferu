@@ -22,6 +22,12 @@ its `actions` part, `collection` settings, `hk-search-form`, `hk-icon`,
 `<details>` for the FAQ, localized settings and blocks seeded by the template.
 Version 1.1.0 is built on Sneferu 0.3.
 
+## Upgrading from 1.0
+
+In 1.1.0 the numbered settings and locale-text fallbacks became blocks and
+localized settings; values saved under 1.0 are not carried over, so the sections
+start from the new defaults.
+
 ## Files
 
 ```
@@ -478,7 +484,7 @@ part the card renders inside `<div class="sn-product-card-wrap ls-app">`, so
 
 Each question is a block and a `<details>` element, so it opens and closes
 without script; the template seeds four. The rounded first and last rows are
-picked through the block wrappers: `[data-hk-block]:first-child > .ls-faq-item`.
+picked through the block wrappers: `.ls-faq [data-hk-block]:first-child > .ls-faq-item`.
 The chevron turns with `.ls-faq-item[open] .ls-chevron { transform: rotate(180deg); }`.
 The answers state only what is true for digital products on Hekana: the key
 and the download link arrive by email after online payment, and there is no

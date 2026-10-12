@@ -113,8 +113,8 @@ form.ls-search .sn-search-button:hover { color: var(--hk-color-text); }
 .ls-faq .ls-h2 { margin-bottom: 16px; font-size: 16px; }
 .ls-faq-list { display: flex; flex-direction: column; }
 .ls-faq-item { border: 1px solid var(--hk-color-line); border-bottom-width: 0; }
-[data-hk-block]:first-child > .ls-faq-item { border-start-start-radius: 8px; border-start-end-radius: 8px; }
-[data-hk-block]:last-child > .ls-faq-item { border-bottom-width: 1px; border-end-start-radius: 8px; border-end-end-radius: 8px; }
+.ls-faq [data-hk-block]:first-child > .ls-faq-item { border-start-start-radius: 8px; border-start-end-radius: 8px; }
+.ls-faq [data-hk-block]:last-child > .ls-faq-item { border-bottom-width: 1px; border-end-start-radius: 8px; border-end-end-radius: 8px; }
 .ls-faq-item summary {
   list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px;
   min-height: 44px; padding: 8px 14px; font-size: 13px;

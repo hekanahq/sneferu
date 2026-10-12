@@ -57,7 +57,7 @@ A product (from `collection(…).products` or `product(…)`) has:
 | `kind` | `physical` or `digital` |
 | `digital_kind` | `code`, `file` or `manual` for a digital product; nil for a physical one |
 | `tags` | `["gift-card", "gaming"]` (at most 20, each at most 40 characters) |
-| `category` | `{ handle: "gift-cards", title: "Gift cards", url: "/collections/gift-cards" }`, or nil |
+| `category` | `{ handle: "gift-cards", title: "Gift cards", url: "/category/gift-cards" }`, or nil |
 
 ```html
 <hk-product-card product="{{ p }}">
@@ -362,7 +362,7 @@ Pass the setting to `collection()` and the section shows whatever they pick:
 | - | - |
 | `handle` | `gift-cards` |
 | `title` | `Gift cards` (in the page's language) |
-| `url` | `/en/collections/gift-cards` (with the language prefix of the page) |
+| `url` | `/en/category/gift-cards` (with the language prefix of the page) |
 | `image` | `{ url: "https://…" }`, or nil when the category has no image |
 | `count` | `6` (the number of products) |
 
