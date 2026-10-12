@@ -55,7 +55,14 @@ describe('collection settings and collections()', () => {
   });
   it('other lookups still take literal arguments', () => {
     expect(parseExpr('t(section.settings.key)').error).toMatch(/literal arguments/);
-    expect(parseExpr('product(settings.p)').error).toMatch(/literal arguments/);
+    expect(parseExpr('asset_url(settings.p)').error).toMatch(/literal arguments/);
+  });
+  it('product() takes a handle or a product setting, like collection()', () => {
+    expect(parseExpr("product('sample-1').title").expr).toEqual({ k: 'path', p: ['title'], from: { k: 'lookup', fn: 'product', args: [{ k: 'lit', v: 'sample-1' }] } });
+    expect(parseExpr('product(section.settings.pick)').expr).toEqual({ k: 'lookup', fn: 'product', args: [{ k: 'path', p: ['section', 'settings', 'pick'] }] });
+    expect(parseExpr('product(settings.pick).title').expr).toMatchObject({ k: 'path', p: ['title'] });
+    for (const bad of ['product(a.b.c)', 'product(x)', 'product(section.settings.a.b)', 'product(1)', "product('a', 'b')", 'product()', 'product(t(\'x\'))'])
+      expect(parseExpr(bad).error, bad).toMatch(/takes a handle or a product setting/);
   });
   it('collections() takes no arguments', () => {
     expect(parseExpr("collections()").expr).toEqual({ k: 'lookup', fn: 'collections', args: [] });

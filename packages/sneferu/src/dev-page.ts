@@ -24,7 +24,7 @@ export function googleFontsHref(manifest: ManifestLike, locale: 'ar' | 'en'): st
 
 const styleSafe = (css: string): string => css.replace(/<\/style/gi, '<\\/style');
 
-export function devPage(artifact: { manifest: ManifestLike }, o: { body: string; locale: 'ar' | 'en'; css: string; themeCss: string; reloadScript: boolean }): string {
+export function devPage(artifact: { manifest: ManifestLike }, o: { body: string; locale: 'ar' | 'en'; css: string; themeCss: string; reloadScript: boolean; hostScript?: string }): string {
   const dir = o.locale === 'ar' ? 'rtl' : 'ltr';
   const href = googleFontsHref(artifact.manifest, o.locale);
   const fontLink = href ? `<link rel="stylesheet" href="${escapeAttr(href)}">` : '';
@@ -33,5 +33,5 @@ export function devPage(artifact: { manifest: ManifestLike }, o: { body: string;
     + `<title>${escapeAttr(artifact.manifest.id)} · Sneferu dev</title>`
     + fontLink
     + `<style>*{box-sizing:border-box}body{margin:0;font-family:system-ui,'Cairo',sans-serif}${themeTokenCss(artifact.manifest)}${styleSafe(themeFontCss(artifact.manifest, o.locale, ''))}</style>`
-    + `<style>${styleSafe(o.css)}</style><style>${styleSafe(o.themeCss)}</style></head><body>${o.body}${reload}</body></html>`;
+    + `<style>${styleSafe(o.css)}</style><style>${styleSafe(o.themeCss)}</style></head><body>${o.body}${o.hostScript ? `<script type="module">${o.hostScript.replace(/<\/script/gi, '<\\/script')}</script>` : ''}${reload}</body></html>`;
 }

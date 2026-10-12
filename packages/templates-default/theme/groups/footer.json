@@ -1,0 +1,65 @@
+{
+  "sections": [
+    {
+      "id": "footer",
+      "type": "footer",
+      "settings": {
+        "about_text": {
+          "ar": "متجر بيبيع منتجات رقمية وبيوصلها على طول.",
+          "en": "A store that sells digital products and delivers them right away."
+        }
+      },
+      "blocks": [
+        {
+          "id": "col-shop",
+          "type": "footer-column",
+          "settings": { "title": { "ar": "تسوق", "en": "Shop" } },
+          "blocks": [
+            {
+              "id": "col-shop-products",
+              "type": "footer-link",
+              "settings": { "label": { "ar": "كل المنتجات", "en": "All products" }, "url": "/products" }
+            },
+            {
+              "id": "col-shop-search",
+              "type": "footer-link",
+              "settings": { "label": { "ar": "بحث", "en": "Search" }, "url": "/search" }
+            },
+            {
+              "id": "col-shop-cart",
+              "type": "footer-link",
+              "settings": { "label": { "ar": "السلة", "en": "Cart" }, "url": "/cart" }
+            }
+          ]
+        },
+        {
+          "id": "col-help",
+          "type": "footer-column",
+          "settings": { "title": { "ar": "مساعدة", "en": "Help" } },
+          "blocks": [
+            {
+              "id": "col-help-about",
+              "type": "footer-link",
+              "settings": { "label": { "ar": "من نحن", "en": "About us" }, "url": "/pages/about" }
+            },
+            {
+              "id": "col-help-delivery",
+              "type": "footer-link",
+              "settings": { "label": { "ar": "التسليم", "en": "Delivery" }, "url": "/pages/shipping" }
+            }
+          ]
+        },
+        {
+          "id": "pay-cod",
+          "type": "payment-method",
+          "settings": { "label": { "ar": "الدفع عند الاستلام", "en": "Cash on delivery" }, "icon": "banknote" }
+        },
+        {
+          "id": "pay-card",
+          "type": "payment-method",
+          "settings": { "label": { "ar": "كارت بنكي", "en": "Bank card" }, "icon": "credit-card" }
+        }
+      ]
+    }
+  ]
+}

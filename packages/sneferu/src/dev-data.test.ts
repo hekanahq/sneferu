@@ -13,7 +13,7 @@ describe('sample data', () => {
   it('products have the theme product shape (spec A3)', () => {
     for (const locale of ['ar', 'en'] as const) {
       for (const p of sampleProducts(locale)) {
-        expect(Object.keys(p).sort()).toEqual(['available', 'category', 'compare_at', 'description', 'digital_kind', 'excerpt', 'handle', 'id', 'image', 'kind', 'price', 'tags', 'title', 'url']);
+        expect(Object.keys(p).sort()).toEqual(['available', 'category', 'compare_at', 'description', 'digital_kind', 'excerpt', 'handle', 'has_variants', 'id', 'image', 'images', 'kind', 'max_quantity', 'min_quantity', 'options', 'price', 'price_max', 'price_min', 'quantity_step', 'selected_variant', 'tags', 'title', 'url', 'variants']);
         expect(sanitizeRichText(p.description)).toBe(p.description);
         expect(p.description).toContain('<strong>');
         expect(p.excerpt.length).toBeLessThanOrEqual(200);
@@ -48,7 +48,8 @@ describe('sample data', () => {
     expect(ctx.store.name).toBe('Pages');
     expect(ctx.collections.ebooks).toEqual({ title: 'E-books', products: [book] });
     expect(ctx.collections.featured?.products.length).toBe(6);
-    expect(ctx.products.notes).toEqual(book);
+    expect(ctx.products.notes).toMatchObject(book);
+    expect(ctx.products.notes).toMatchObject({ handle: 'notes', images: [book.image], has_variants: false, min_quantity: 1, options: [] });
   });
   it('picks the block for the page locale when split by locale', () => {
     const raw = { ar: { store: { name: 'صفحات' } }, en: { store: { name: 'Pages' } } };

@@ -11,7 +11,7 @@ const { compileTheme } = req('@hekana/sneferu-compiler');
 const { createDefaultRegistry } = req('@hekana/sneferu-components');
 const { prepareArtifact, renderPage, themeTokenCss } = req('@hekana/sneferu-runtime');
 
-const root = join(__dirname, '..', 'packages', 'sneferu', 'starter');
+const root = join(__dirname, '..', 'packages', 'templates-default', 'theme');
 const walk = (d) => readdirSync(d).flatMap((f) => (statSync(join(d, f)).isDirectory() ? walk(join(d, f)) : [join(d, f)]));
 const files = walk(root).map((p) => ({ path: relative(root, p).split('\\').join('/'), bytes: readFileSync(p) }));
 
@@ -34,7 +34,7 @@ const ctx = {
   assetUrl: () => '', imageUrl: (ref) => String(ref),
 };
 const out = renderPage(prepared.artifact, { template: 'index', ctx, registry });
-if (!out.html.includes(`data-hk-theme="${artifact.manifest.id}"`) || !out.html.includes('sn-product-card') || !themeTokenCss(artifact.manifest)) {
+if (!out.html.includes(`data-hk-theme="${artifact.manifest.id}"`) || !out.html.includes('sf-card') || !themeTokenCss(artifact.manifest)) {
   console.error('cjs smoke: render did not produce the expected markup', out.diagnostics);
   process.exit(1);
 }

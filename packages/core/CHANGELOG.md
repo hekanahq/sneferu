@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.0
+
+### Minor Changes
+
+- Page types (`PAGE_TYPES`, `parseTemplateName`, `pageKeyOf`), the shared groups (`GROUP_NAMES`), `sectionAllowedOn`, `buildPaginate`, and the context types hosts pass or store: `ThemeProduct`, `ThemePaginate`, `ThemeCollectionPage`, `PageNode`, `SectionGroups`, `LocaleOverrides`.
+- `tokenSettings()`: the standard theme settings for colours, fonts, radius, spacing, button style and width. `FIELD_INSPECTORS` describes every field type for the builder; new field type `data`; `Field.group`.
+- `HkTag.strings`: the words a tag prints itself.
+
 ## 0.3.0
 
 ### Minor Changes

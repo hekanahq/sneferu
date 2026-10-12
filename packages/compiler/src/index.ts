@@ -1,4 +1,5 @@
-export { compileTheme, snippetCycles, hash64, type Artifact, type SectionSchema, type ThemeFile } from './compile';
+export { compileTheme, withDefaults, snippetCycles, hash64, placedGroups, type Artifact, type CompileOptions, type SectionSchema, type TemplateSectionEntry, type ThemeFile } from './compile';
+export { DEFAULT_PAGE_TYPES, collectLocaleKeys, collectTags } from './defaults';
 export { validateManifest, satisfies, type Manifest } from './manifest';
 export { parseTemplate } from './parser';
 export { parseExpr } from './expr';

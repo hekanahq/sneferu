@@ -115,6 +115,16 @@ describe('validateTemplate', () => {
       expect(v("{{ collection(section.settings.whatever).title }}", 'block')).toEqual([]);
     });
   });
+  describe('product settings (SN2012)', () => {
+    const schema = { pick: { type: 'product' }, name: { type: 'text' } };
+    const theme = { star: { type: 'product' } };
+    const v = (src: string) => validateTemplate(parseTemplate(src, 'f').nodes, { file: 'f', registry, snippets: new Set(), kind: 'section', settingsSchema: schema, themeSettings: theme });
+    it('accepts product settings and rejects other types', () => {
+      expect(v('{{ product(section.settings.pick).title }}{{ product(settings.star).title }}')).toEqual([]);
+      expect(v('{{ product(section.settings.name).title }}').map((d) => d.code)).toEqual(['SN2012']);
+      expect(v('{{ product(section.settings.nope).title }}').map((d) => d.code)).toEqual(['SN2012']);
+    });
+  });
   describe('<img> without width and height (SN2015)', () => {
     it('warns for a literal <img> missing either attribute', () => {
       for (const src of ['<img src="/a.png" alt="">', '<img src="/a.png" alt="" width="10">', '<img src="/a.png" alt="" height="10">']) expect(run(src), src).toContain('SN2015');
@@ -129,5 +139,29 @@ describe('validateTemplate', () => {
       const d = validateTemplate(parseTemplate('<img src="/a.png" alt="">', 'f').nodes, { file: 'f', registry, snippets: new Set(), kind: 'section' });
       expect(d.filter((x) => x.code === 'SN2015').map((x) => x.severity)).toEqual(['warning']);
     });
+  });
+});
+
+describe('SN2016 page objects', () => {
+  const run = (name: string, src: string) => {
+    const reg = new TagRegistry();
+    const parsed = parseTemplate(src, `templates/${name}.sneferu`);
+    return validateTemplate(parsed.nodes, { file: `templates/${name}.sneferu`, registry: reg, snippets: new Set(), kind: 'template', templateName: name }).map((d) => d.code);
+  };
+  it('warns once when a template reads an object of another page type', () => {
+    expect(run('cart', '<p>{{ product.title }}</p><p>{{ product.price }}</p>')).toEqual(['SN2016']);
+    expect(run('index', '{% if collection.products %}x{% endif %}')).toEqual(['SN2016']);
+    expect(run('product', '<p>{{ product.title }}</p>')).toEqual([]);
+    expect(run('product.codes', '<p>{{ product.title }}</p>')).toEqual([]);
+    expect(run('collection', '{{ collection.title }}{{ paginate.page }}')).toEqual([]);
+    expect(run('search', '{{ search.terms }}{{ paginate.pages }}')).toEqual([]);
+    expect(run('page', '{{ page.title }}')).toEqual([]);
+    expect(run('404', '{{ paginate.page }}')).toEqual(['SN2016']);
+  });
+  it('does not warn for loop variables with the same name, or in sections', () => {
+    expect(run('index', '{% for product in collection(\'x\').products %}{{ product.title }}{% endfor %}')).toEqual([]);
+    const reg = new TagRegistry();
+    const parsed = parseTemplate('{{ product.title }}', 'sections/a.sneferu');
+    expect(validateTemplate(parsed.nodes, { file: 'sections/a.sneferu', registry: reg, snippets: new Set(), kind: 'section' })).toEqual([]);
   });
 });

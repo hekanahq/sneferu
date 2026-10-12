@@ -7,7 +7,7 @@ const repo = (p: string) => fileURLToPath(new URL(`../../../${p}`, import.meta.u
 
 describe('formatting never changes what a theme compiles to', () => {
   const examples = readdirSync(repo('examples/themes')).map((d) => `examples/themes/${d}`);
-  for (const dir of ['packages/sneferu/starter', 'docs/examples/example-store', ...examples]) {
+  for (const dir of ['packages/templates-default/theme', 'docs/examples/example-store', ...examples]) {
     it(`${dir}: identical artifact, idempotent`, async () => {
       const files = readTheme(repo(dir));
       const before = compile(files);
@@ -41,7 +41,7 @@ describe('formatting never changes what a theme compiles to', () => {
 
 describe('the shipped themes and the guide are formatted', () => {
   const examples = readdirSync(repo('examples/themes')).map((d) => `examples/themes/${d}`);
-  for (const dir of ['packages/sneferu/starter', 'docs/examples/example-store', ...examples]) {
+  for (const dir of ['packages/templates-default/theme', 'docs/examples/example-store', ...examples]) {
     it(dir, async () => {
       const files = readTheme(repo(dir));
       const formatted = await formatTheme(files);

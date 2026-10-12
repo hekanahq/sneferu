@@ -1,26 +1,65 @@
-import { coerceSetting, err, escapeAttr, isMoneyFormat, safeToken, toStr, validateIR, type Diagnostic, type FieldSchema, type HkTag, type IRNode, type TagRegistry } from '@hekana/sneferu-core';
+import { coerceSetting, err, escapeAttr, isGroupName, isMoneyFormat, parseTemplateName, safeToken, safeUrl, toStr, validateIR, type Diagnostic, type FieldSchema, type GroupName, type IRNode, type LocaleOverrides, type PageNode, type SectionGroups, type TagRegistry, type ThemeLocalization, type ThemeRequest } from '@hekana/sneferu-core';
 import type { RenderContext, Scope } from './context';
 import { Budget, own, renderNodes, type Env } from './render';
 import type { Limits } from './budget';
 import { checkArtifactShape } from './shape';
+import { themeTokenCss } from './tokens';
+import { themeFontCss } from './fonts';
 
 interface Schemaed { ir: IRNode[]; schema: { settings: FieldSchema } }
+interface DefaultSection { type: string; settings: Record<string, unknown>; hidden?: boolean; blocks?: DefaultSection[] }
 export interface ArtifactLike {
-  manifest: { id: string; settings?: FieldSchema; defaultLocale?: string; tokens?: unknown; money?: unknown };
+  manifest: { id: string; settings?: FieldSchema; defaultLocale?: string; tokens?: unknown; money?: unknown; locales?: string[] };
   layout: IRNode[];
   templates: Record<string, IRNode[]>;
-  templateSections: Record<string, { type: string; settings: Record<string, unknown>; blocks?: { type: string; settings: Record<string, unknown> }[] }[]>;
+  templateSections: Record<string, DefaultSection[]>;
+  /** Default trees of the shared groups (artifacts built before 0.4 have none). */
+  groups?: Partial<Record<GroupName, PageNode[]>>;
+  /** The keys `locale_overrides` may set (artifacts built before 0.4 have none: the keys of the locale files apply). */
+  localeKeys?: string[];
+  /** Set when the SDK's default store filled in templates or groups: its `hk-` sections and its stylesheet. */
+  defaults?: { templates: string[]; groups: GroupName[]; sections: string[]; css: string };
   sections: Record<string, Schemaed & { schema: { name?: unknown; version?: number; settings: FieldSchema } }>;
   blocks: Record<string, Schemaed>;
   snippets: Record<string, IRNode[]>;
 }
-export interface PageNode { id: string; type: string; props?: Record<string, unknown>; children?: PageNode[]; hidden?: boolean }
-export interface RenderResult { html: string; css: string; controllers: string[]; diagnostics: Diagnostic[] }
-export interface RenderOptions { template: string; sections?: PageNode[]; ctx: RenderContext; registry: TagRegistry; scope?: Scope; limits?: Limits }
+export type { PageNode };
+export interface RenderResult {
+  html: string;
+  /** Component CSS for this page, plus the default store's stylesheet when the page uses it. */
+  css: string;
+  controllers: string[];
+  diagnostics: Diagnostic[];
+  /** The theme's tokens as CSS custom properties on `[data-hk-theme]`, from the resolved theme settings. */
+  tokenCss: string;
+  /** Font-face rules and font variables for the page's language (needs `fontBase` for the files). */
+  fontCss: string;
+}
+export interface RenderOptions {
+  template: string; sections?: PageNode[]; ctx: RenderContext; registry: TagRegistry; limits?: Limits;
+  /**
+   * The page's data, by page type: `product` (product), `collection` + `paginate` (collection),
+   * `search` + `paginate` (search), `page` (page). See the context types in @hekana/sneferu-core.
+   */
+  scope?: Scope;
+  /**
+   * The shared section groups (header, footer, announcement) the merchant edited, rendered wherever the layout
+   * places `<hk-section-group>`. A group that is absent uses the theme's defaults; `[]` renders nothing.
+   */
+  groups?: SectionGroups;
+  /** The merchant's text for locale keys, per language. Only keys in the artifact's `localeKeys` apply (at most 500, 500 characters each). */
+  locale_overrides?: LocaleOverrides;
+  /** Where font files are served (`/hk2/fonts/`); without it `fontCss` carries the variables but no @font-face. */
+  fontBase?: string;
+  /** The request: `path` becomes `request.path` (a site-relative path, else ''). */
+  request?: { path?: string };
+  /** The same page in the other language: `alternateUrl` becomes `localization.alternate_url` (checked with safeUrl). */
+  localization?: { alternateUrl?: string };
+}
 
 const isObj = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v);
 const TEXTY = new Set<string>(['text', 'textarea', 'rich_text']);
-const settingsFor = (schema: FieldSchema, props: unknown, locale: 'ar' | 'en') => {
+export const settingsFor = (schema: FieldSchema, props: unknown, locale: 'ar' | 'en') => {
   // defaults go through coerceSetting too, so a localized { ar, en } default resolves
   // a localized text field always resolves to a string, '' when it has neither value nor default
   const out: Record<string, unknown> = {};
@@ -30,6 +69,7 @@ const settingsFor = (schema: FieldSchema, props: unknown, locale: 'ar' | 'en') =
   return out;
 };
 const LOCALE = /^[a-z]{2}$/;
+const MAX_GROUP_NODES = 24;
 const PREPARED = new WeakMap<object, TagRegistry>();
 const deepFreeze = <T>(v: T): T => {
   if (typeof v === 'object' && v !== null && !Object.isFrozen(v)) { Object.freeze(v); for (const x of Object.values(v)) deepFreeze(x); }
@@ -63,7 +103,47 @@ export function prepareArtifact(artifact: unknown, registry: TagRegistry): { ok:
   }
 }
 
-const failed = (diagnostics: Diagnostic[]): RenderResult => ({ html: '', css: '', controllers: [], diagnostics });
+const OVERRIDE_KEY = /^[A-Za-z0-9_.-]{1,80}$/;
+const UNSAFE_KEYS = new Set(['__proto__', 'constructor', 'prototype']);
+const CONTROL = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g;
+export const MAX_LOCALE_OVERRIDES = 500;
+export const MAX_OVERRIDE_CHARS = 500;
+/**
+ * The page language's translations with the merchant's overrides on top. An override applies only for a key the
+ * artifact lists (localeKeys; without that list, a key one of the locale files has). The result has no prototype.
+ */
+function withOverrides(artifact: ArtifactLike, ctx: RenderContext, overrides: unknown, locale: 'ar' | 'en'): Record<string, string> {
+  const out: Record<string, string> = Object.create(null);
+  for (const [k, v] of Object.entries(ctx.translations ?? {})) if (typeof v === 'string') out[k] = v;
+  const mine = isObj(overrides) && Object.hasOwn(overrides, locale) ? (overrides as Record<string, unknown>)[locale] : undefined;
+  if (!isObj(mine)) return out;
+  const known = Array.isArray(artifact.localeKeys) ? new Set(artifact.localeKeys.filter((k): k is string => typeof k === 'string')) : undefined;
+  let n = 0;
+  for (const [k, v] of Object.entries(mine)) {
+    if (n++ >= MAX_LOCALE_OVERRIDES) break;
+    if (typeof v !== 'string' || !OVERRIDE_KEY.test(k) || UNSAFE_KEYS.has(k)) continue;
+    const listed = known ? known.has(k) : Object.hasOwn(out, k) || Object.hasOwn(ctx.fallbackTranslations ?? {}, k);
+    if (listed) out[k] = v.replace(CONTROL, '').slice(0, MAX_OVERRIDE_CHARS);
+  }
+  return out;
+}
+
+/** `request` and `localization`: built here, frozen, and not overridable by the host's scope. */
+function pageObjects(opts: RenderOptions, manifest: ArtifactLike['manifest'], locale: 'ar' | 'en'): { request: ThemeRequest; localization: ThemeLocalization } {
+  const raw = opts.request?.path;
+  const path = typeof raw === 'string' && raw.startsWith('/') && !raw.startsWith('//') && raw.length <= 2000 && !/[\u0000-\u001F\u007F\\]/.test(raw) ? raw : '';
+  const other: 'ar' | 'en' = locale === 'ar' ? 'en' : 'ar';
+  const locales = (manifest as { locales?: unknown }).locales;
+  const ships = !Array.isArray(locales) || locales.includes(other);
+  const alt = opts.localization?.alternateUrl;
+  const altUrl = ships && typeof alt === 'string' && alt !== '' ? safeUrl(alt) : '';
+  return {
+    request: Object.freeze({ path, page_type: parseTemplateName(opts.template)?.type ?? opts.template, locale }),
+    localization: Object.freeze({ locale, alternate_locale: ships ? other : null, alternate_url: altUrl === '#' ? '' : altUrl }),
+  };
+}
+
+const failed = (diagnostics: Diagnostic[]): RenderResult => ({ html: '', css: '', controllers: [], diagnostics, tokenCss: '', fontCss: '' });
 
 /** Renders a page. Never throws: malformed artifacts or page data come back as diagnostics. */
 export function renderPage(artifact: ArtifactLike, opts: RenderOptions): RenderResult {
@@ -83,7 +163,7 @@ function render(artifact: ArtifactLike, opts: RenderOptions): RenderResult {
   }
 
   const template = own(artifact.templates, opts.template);
-  if (!template) return { html: '', css: '', controllers: [], diagnostics: [err('SN4010', `template '${opts.template}' not found`)] };
+  if (!template) return failed([err('SN4010', `template '${opts.template}' not found`)]);
 
   // dir is derived from the locale, never taken from the caller, and both are validated
   const fallback = (artifact.manifest as { defaultLocale?: unknown }).defaultLocale;
@@ -94,25 +174,33 @@ function render(artifact: ArtifactLike, opts: RenderOptions): RenderResult {
   // theme.json money.format is the theme's default; a host value is used only when the theme has none
   const mf = isObj(artifact.manifest.money) ? artifact.manifest.money.format : undefined;
   const money = isMoneyFormat(mf) ? mf : isMoneyFormat(opts.ctx.money) ? opts.ctx.money : undefined;
-  const ctx: RenderContext = { ...opts.ctx, locale, dir, settings, money };
-  const env: Env = { ctx, registry: opts.registry, snippets: artifact.snippets, slots: {}, budget: new Budget(opts.limits), css: [], cssOnce: new Set(), controllers: new Set(), diagnostics: [], ids: { n: 0 }, depth: 0, include: 0 };
-  const base: Scope = { ...(opts.scope ?? {}), store: ctx.store, locale, dir };
+  const ctx: RenderContext = { ...opts.ctx, locale, dir, settings, money, translations: withOverrides(artifact, opts.ctx, opts.locale_overrides, locale) };
+  const env: Env = { ctx, registry: opts.registry, snippets: artifact.snippets, slots: {}, budget: new Budget(opts.limits), css: [], cssOnce: new Set(), controllers: new Set(), diagnostics: [], ids: { n: 0 }, depth: 0, include: 0, group: (name) => renderGroup(name) };
+  const base: Scope = { ...(opts.scope ?? {}), store: ctx.store, locale, dir, ...pageObjects(opts, artifact.manifest, locale) };
 
   const sections: PageNode[] = Array.isArray(opts.sections) ? opts.sections : (own(artifact.templateSections, opts.template) ?? []).map((s, i) => ({ id: `default-${i}`, type: s.type, props: s.settings, ...(Array.isArray(s.blocks) ? { children: s.blocks.map((b, j) => ({ id: `default-${i}-${j}`, type: b.type, props: b.settings })) } : {}) }));
 
-  const renderSection = (node: PageNode): string => {
+  const defaultSections = new Set<string>(Array.isArray(artifact.defaults?.sections) ? artifact.defaults!.sections.filter((x): x is string => typeof x === 'string') : []);
+  let usedDefaults = false;
+  const MAX_BLOCKS = 100;
+  /** Blocks of a section or block: hidden ones skipped, nested blocks (one more level) under `blocks`. */
+  const toBlocks = (list: unknown, depth: number): { id: unknown; type: string; settings: Record<string, unknown>; blocks: unknown[] }[] =>
+    (Array.isArray(list) ? list : []).filter((c): c is PageNode => isObj(c) && typeof c.type === 'string' && !c.hidden).slice(0, MAX_BLOCKS)
+      .map((c) => ({ id: c.id, type: c.type, settings: settingsFor(own(artifact.blocks, c.type)?.schema.settings ?? {}, c.props, locale), blocks: depth < 2 ? toBlocks(c.children, depth + 1) : [] }));
+
+  const renderSection = (node: PageNode, idPrefix = ''): string => {
     if (!isObj(node) || typeof node.type !== 'string') { env.diagnostics.push(err('SN4011', 'page section is malformed')); return '<!-- section unavailable -->'; }
     const def = own(artifact.sections, node.type);
     if (!def) { env.diagnostics.push(err('SN4011', `section '${node.type}' is not in this theme`)); return `<!-- section ${escapeAttr(toStr(node.id))} unavailable -->`; }
-    const children = Array.isArray(node.children) ? node.children.filter((c): c is PageNode => isObj(c) && typeof c.type === 'string') : [];
-    const blocks = children.filter((c) => !c.hidden).map((c) => ({ id: c.id, type: c.type, settings: settingsFor(own(artifact.blocks, c.type)?.schema.settings ?? {}, c.props, locale) }));
+    if (defaultSections.has(node.type)) usedDefaults = true;
+    const blocks = toBlocks(node.children, 1);
     const scope: Scope = { ...base, section: { id: node.id, type: node.type, settings: settingsFor(def.schema.settings, node.props, locale), blocks } };
     const unavailable = `<!-- section ${escapeAttr(toStr(node.id))} unavailable -->`;
     if (env.budget.exceeded) return unavailable;
     // each section renders against what is left of the page budget, so one runaway
     // section degrades alone and the surrounding layout stays balanced
     const sub = env.budget.child();
-    const html = renderNodes(def.ir, scope, { ...env, budget: sub, slots: {}, depth: 0, ids: { n: 0, prefix: `s-${sectionToken(node.id)}-` } });
+    const html = renderNodes(def.ir, scope, { ...env, budget: sub, slots: {}, depth: 0, ids: { n: 0, prefix: `${idPrefix}s-${sectionToken(node.id)}-` } });
     if (sub.exceeded) { env.budget.absorbFailed(sub); return unavailable; }
     const out = `<div data-hk-section="${escapeAttr(toStr(node.id))}">${html}</div>`;
     env.budget.absorb(sub, out.length);
@@ -120,10 +208,27 @@ function render(artifact: ArtifactLike, opts: RenderOptions): RenderResult {
     return out;
   };
 
+  /** A shared group's sections: the merchant's tree when given, else the theme's default; nothing when neither exists or it is empty. */
+  const renderGroup = (name: string): string => {
+    if (!isGroupName(name)) return '';
+    const given = opts.groups && isObj(opts.groups) && Object.hasOwn(opts.groups, name) ? opts.groups[name] : undefined;
+    const nodes = Array.isArray(given) ? given : given === undefined ? own(artifact.groups as Record<string, PageNode[]> | undefined, name) : undefined;
+    if (!Array.isArray(nodes)) return '';
+    const inner = nodes.filter((s) => !(isObj(s) && s.hidden)).slice(0, MAX_GROUP_NODES).map((s) => renderSection(s, `g-${name}-`)).join('');
+    return inner === '' ? '' : `<div data-hk-group="${name}">${inner}</div>`;
+  };
+
   env.blocks = artifact.blocks;
 
-  const content = () => renderNodes(template, base, { ...env, slots: { sections: () => sections.filter((s) => !(isObj(s) && s.hidden)).map(renderSection).join('') } });
+  const content = () => renderNodes(template, base, { ...env, slots: { sections: () => sections.filter((s) => !(isObj(s) && s.hidden)).map((s) => renderSection(s)).join('') } });
   const inner = renderNodes(artifact.layout, base, { ...env, slots: { content } });
   const html = `<div data-hk-theme="${escapeAttr(artifact.manifest.id)}" dir="${escapeAttr(dir)}" lang="${escapeAttr(locale)}">${inner}</div>`;
-  return { html, css: env.css.join('\n'), controllers: [...env.controllers], diagnostics: env.diagnostics };
+  const css = env.css.join('\n');
+  const ownsPage = Array.isArray(artifact.defaults?.templates) && artifact.defaults!.templates.includes(opts.template);
+  const manifestLike = artifact.manifest as { id: string; tokens?: unknown };
+  return {
+    html, controllers: [...env.controllers], diagnostics: env.diagnostics,
+    css: (ownsPage || usedDefaults) && typeof artifact.defaults?.css === 'string' ? `${artifact.defaults.css}\n${css}` : css,
+    tokenCss: themeTokenCss(manifestLike, settings), fontCss: themeFontCss(manifestLike, locale, opts.fontBase ?? '', settings),
+  };
 }

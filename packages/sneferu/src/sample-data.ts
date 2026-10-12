@@ -1,5 +1,6 @@
 import { defaultUrl, type RenderContext } from '@hekana/sneferu-runtime';
 import { pickVariant, srcsetOf } from '@hekana/sneferu-components';
+import { devUrl } from './dev-routes';
 
 /** Sample catalogue for `sneferu dev`, in the language the page renders in. */
 const TITLES = {
@@ -34,22 +35,52 @@ const DELIVERY = {
 const categoryOf = (i: number): 'gift-cards' | 'subscriptions' | null =>
   MEMBERS['gift-cards'].includes(i) ? 'gift-cards' : MEMBERS.subscriptions.includes(i) ? 'subscriptions' : null;
 
+const img = (i: number, k: number, responsive: boolean) => (responsive
+  ? { url: `https://placehold.co/600x600/png?text=${i + 1}${k === 1 ? "" : `.${k}`}`, srcset: [400, 800, 1600].map((w) => `https://placehold.co/${w}x${w}/png?text=${i + 1}${k === 1 ? "" : `.${k}`} ${w}w`).join(', ') }
+  : { url: `https://placehold.co/600x600/png?text=${i + 1}${k === 1 ? "" : `.${k}`}` });
+
+/** Options and variants of the sample products that have them: the gift card (amount) and the PUBG pack (pack and region). */
+const OPTION_NAMES = { ar: { amount: 'القيمة', pack: 'الباقة', region: 'المنطقة' }, en: { amount: 'Amount', pack: 'Pack', region: 'Region' } } as const;
+const VARIANTS: Record<number, { options: { key: 'amount' | 'pack' | 'region'; values: string[] }[]; price: (combo: number[]) => number; available: (combo: number[]) => boolean }> = {
+  0: { options: [{ key: 'amount', values: ['10', '25', '50'] }], price: ([a]) => [52000, 125000, 245000][a!]!, available: ([a]) => a !== 2 },
+  1: { options: [{ key: 'pack', values: ['60 UC', '325 UC', '660 UC'] }, { key: 'region', values: ['Global', 'KSA'] }],
+    price: ([p, r]) => [47500, 129000, 249000][p!]! + (r === 1 ? 1000 : 0), available: ([p, r]) => !(p === 2 && r === 1) },
+};
+/** Purchase rules of a few sample products: the diamonds are sold in multiples of 5. */
+const RULES: Record<number, { min: number; step: number; max: number | null }> = { 2: { min: 5, step: 5, max: 50 } };
+
 /** One sample product, in the theme product shape. Every field a collection or product page reads lives here. */
 export const sampleProduct = (locale: 'ar' | 'en', i: number, responsive = false) => {
   const prefix = locale === 'en' ? '/en' : '';
   const title = TITLES[locale][i]!;
   const kind = DIGITAL_KIND(i);
   const cat = categoryOf(i);
+  const images = [1, 2, 3].map((k) => img(i, k, responsive));
+  const spec = VARIANTS[i];
+  const options = spec ? spec.options.map((o) => ({ name: OPTION_NAMES[locale][o.key], values: o.values })) : [];
+  const combos: number[][] = spec ? spec.options.reduce<number[][]>((acc, o) => acc.flatMap((c) => o.values.map((_, k) => [...c, k])), [[]]) : [];
+  const variants = spec
+    ? combos.map((combo, n) => ({
+      id: `sample-${i + 1}-v${n + 1}`, title: combo.map((k, j) => spec.options[j]!.values[k]).join(' / '),
+      price: spec.price(combo), compare_at: null as number | null, available: spec.available(combo),
+      options: combo.map((k, j) => spec.options[j]!.values[k]!), image: images[n % images.length]!,
+    }))
+    : [{ id: `sample-${i + 1}-v1`, title: locale === 'ar' ? 'الافتراضي' : 'Default', price: PRICES[i]!, compare_at: i === 0 ? 60000 : null, available: true, options: [] as string[], image: images[0]! }];
+  const selected = variants.find((v) => v.available) ?? variants[0]!;
+  const prices = variants.map((v) => v.price);
+  const rule = RULES[i] ?? { min: 1, step: 1, max: 10 };
   return {
     id: `sample-${i + 1}`,
     handle: `sample-${i + 1}`,
     title,
     url: `${prefix}/products/sample-${i + 1}`,
-    price: PRICES[i],
+    price: selected.price,
     compare_at: i === 0 ? 60000 : null,
-    image: responsive ? { url: `https://placehold.co/600x600/png?text=${i + 1}`, srcset: [400, 800, 1600].map((w) => `https://placehold.co/${w}x${w}/png?text=${i + 1} ${w}w`).join(', ') }
-      : { url: `https://placehold.co/600x600/png?text=${i + 1}` },
-    available: true,
+    price_min: Math.min(...prices),
+    price_max: Math.max(...prices),
+    image: images[0]!,
+    images,
+    available: variants.some((v) => v.available),
     /** Sanitised HTML: print it with <hk-rich-text html="{{ product.description }}" />. */
     description: `<p><strong>${title}</strong> — ${DELIVERY[locale][kind]}</p>`,
     excerpt: `${title} — ${DELIVERY[locale][kind]}`,
@@ -57,6 +88,13 @@ export const sampleProduct = (locale: 'ar' | 'en', i: number, responsive = false
     digital_kind: kind,
     tags: [kind === 'manual' ? 'subscription' : 'gift-card', ...(i < 3 ? ['gaming'] : [])],
     category: cat ? { handle: cat, title: COLLECTION[cat][locale], url: `${prefix}/category/${cat}` } : null,
+    options,
+    variants,
+    selected_variant: selected,
+    has_variants: spec !== undefined,
+    min_quantity: rule.min,
+    quantity_step: rule.step,
+    max_quantity: rule.max,
   };
 };
 
@@ -66,7 +104,7 @@ const CATEGORIES = ['new', 'gift-cards', 'subscriptions'] as const;
 export const sampleProducts = (locale: 'ar' | 'en', responsive = false) => Array.from({ length: 12 }, (_, i) => sampleProduct(locale, i, responsive));
 
 /** The sample srcset defaults off so the 0.2 golden fixture stays stable; `sneferu dev` turns it on. */
-export function sampleContext(locale: 'ar' | 'en', translations: Record<string, Record<string, string>>, defaultLocale: 'ar' | 'en', opts: { responsive?: boolean } = {}): RenderContext {
+export function sampleContext(locale: 'ar' | 'en', translations: Record<string, Record<string, string>>, defaultLocale: 'ar' | 'en', opts: { responsive?: boolean; devLinks?: boolean } = {}): RenderContext {
   const products = sampleProducts(locale, opts.responsive === true);
   return {
     locale, dir: locale === 'ar' ? 'rtl' : 'ltr', currency: 'EGP',
@@ -77,11 +115,12 @@ export function sampleContext(locale: 'ar' | 'en', translations: Record<string, 
       handle: h, title: COLLECTION[h][locale], url: `${locale === 'en' ? '/en' : ''}/category/${h}`,
       image: products[MEMBERS[h][0]!]!.image, count: MEMBERS[h].length,
     })),
-    products: { 'sample-1': products[0]! },
+    products: Object.fromEntries(products.map((p) => [p.handle, p])),
     translations: translations[locale] ?? {}, fallbackTranslations: translations[defaultLocale] ?? {},
     assetUrl: (p) => `/__assets/${p}`,
     // what a host passes: the dev server has no store prefix, so the default rule (/en on English pages)
-    url: (p) => defaultUrl(p, locale),
+    // `sneferu dev` (devLinks) also prefixes /ar when the theme's default language is English, so a click stays in the language
+    url: opts.devLinks ? (p) => { const s = defaultUrl(p, 'ar'); return s.startsWith('/') && !/^\/(en|ar)([/?#]|$)/.test(s) ? devUrl(s, locale, defaultLocale) : s; } : (p) => defaultUrl(p, locale),
     imageUrl: (ref, w) => { if (srcsetOf(ref)) return pickVariant(ref, w); const u = typeof ref === 'string' ? ref : String((ref as { url?: string })?.url ?? ''); return w ? `${u}${u.includes('?') ? '&' : '?'}w=${w}` : u; },
   };
 }
@@ -124,11 +163,34 @@ export function pickSampleData(raw: unknown, locale: 'ar' | 'en'): SampleData {
   return out;
 }
 
+/**
+ * Fills the gaps in a product from your own sample data so a product page can render it:
+ * images, one default variant, no options, price range and purchase rules. Fields you wrote win.
+ */
+export function completeProduct(handle: string, raw: unknown): Record<string, unknown> {
+  const p = { ...(obj(raw) ?? {}) };
+  const image = obj(p.image) ?? null;
+  const price = typeof p.price === 'number' ? p.price : 0;
+  const variant = { id: `${handle}-v1`, title: 'Default', price, compare_at: p.compare_at ?? null, available: p.available !== false, options: [] as string[], image };
+  const variants = Array.isArray(p.variants) ? p.variants : [variant];
+  const prices = variants.map((v) => Number((v as { price?: unknown }).price)).filter(Number.isFinite);
+  const fill: Record<string, unknown> = {
+    id: handle, handle, title: '', url: devUrl(`/products/${handle}`, 'ar', 'ar'), price, compare_at: null,
+    price_min: prices.length ? Math.min(...prices) : price, price_max: prices.length ? Math.max(...prices) : price,
+    available: true, image, images: image ? [image] : [], description: '', excerpt: '', kind: 'physical', digital_kind: null,
+    tags: [], category: null, options: [], variants, selected_variant: variants[0] ?? null, has_variants: variants.length > 1,
+    min_quantity: 1, quantity_step: 1, max_quantity: 10,
+  };
+  for (const [k, v] of Object.entries(fill)) if (!Object.hasOwn(p, k) || p[k] === undefined) p[k] = v;
+  return p;
+}
+
 export function withSampleData(ctx: RenderContext, data: SampleData): RenderContext {
+  const products = Object.fromEntries(Object.entries(data.products ?? {}).map(([h, p]) => [h, completeProduct(h, p)]));
   return {
     ...ctx,
     store: { ...ctx.store, ...(data.store ?? {}) },
     collections: { ...ctx.collections, ...(data.collections ?? {}) },
-    products: { ...ctx.products, ...(data.products ?? {}) },
+    products: { ...ctx.products, ...products },
   };
 }

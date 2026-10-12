@@ -1,6 +1,6 @@
 {
   "name": "@hekana/sneferu-compiler",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Sneferu compiler: templates to IR",
   "type": "module",
   "sideEffects": false,
@@ -29,7 +29,8 @@
   },
   "license": "SEE LICENSE IN LICENSE",
   "dependencies": {
-    "@hekana/sneferu-core": "workspace:^"
+    "@hekana/sneferu-core": "workspace:^",
+    "@hekana/sneferu-templates-default": "workspace:^"
   },
   "publishConfig": {
     "access": "public"

@@ -14,7 +14,8 @@
     "smoke:cjs": "node scripts/smoke-cjs.cjs",
     "release": "pnpm build && changeset publish",
     "docs:tags": "pnpm --filter @hekana/sneferu-core build && tsx scripts/gen-tag-docs.ts",
-    "docs:shots": "pnpm build && tsx scripts/docs-shots.ts"
+    "docs:shots": "pnpm build && tsx scripts/docs-shots.ts",
+    "gen:default-theme": "tsx scripts/gen-default-theme.ts"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.9",

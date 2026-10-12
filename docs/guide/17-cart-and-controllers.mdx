@@ -1,0 +1,80 @@
+# 17. Cart and controllers
+
+Themes cannot ship JavaScript. The behaviour of a store (picking a variant,
+adding to the cart, the cart drawer) comes from a small client runtime,
+[`@hekana/sneferu-controllers`](https://www.npmjs.com/package/@hekana/sneferu-controllers),
+that the platform loads. The commerce tags print the markup and a
+`data-hk-controller` hook; the controllers upgrade it. With no JavaScript the
+markup still works as links and plain forms.
+
+| Tag | What it prints | Controller |
+| - | - | - |
+| `hk-variant-picker` | One group of radio buttons (or a select) per option | `variant-picker` |
+| `hk-add-to-cart` | A form: quantity, the chosen variant, a button, a message line | `add-to-cart` |
+| `hk-cart-count` | An empty live region the controller fills | `cart-count` |
+| `hk-cart-items` | The cart rows, with a part named `empty` | `cart-items` |
+| `hk-cart-summary` | Subtotal and checkout link | `cart-summary` |
+| `hk-cart-drawer` | A `<dialog>` holding other tags | `cart-drawer` |
+| `hk-product-gallery` | Images and thumbnails | `gallery` |
+
+<Example>
+
+```html title="blocks/product-buy.sneferu"
+<hk-variant-picker product="{{ product }}" display="buttons" />
+<hk-add-to-cart
+  product="{{ product }}"
+  label="{{ block.settings.label }}"
+  quantity="{{ block.settings.show_quantity }}"
+/>
+```
+
+<Result>
+  <Shot src="../images/page-product-phone@2x.webp" alt="A phone-sized product page with option buttons, a quantity stepper and an Add to cart button" caption="The same blocks on a 390 px screen." />
+</Result>
+
+</Example>
+
+## Rules the tags follow
+
+- A product whose options are malformed or missing shows a flat list of variants; add to cart still adds the default variant.
+- A sold-out product (or variant) shows a disabled button with the sold out label.
+- `min_quantity: 500, quantity_step: 50` starts the quantity at 500 and steps by 50; the cap is dropped when it is below the minimum.
+- Prices on the page follow the variant picked (`<hk-price amount="{{ product.price }}" product="{{ product }}" />`).
+- Everything printed into `data-hk-config` is JSON, escaped for the attribute.
+
+## The cart page
+
+`hk-cart-items` has an `empty` part: put the empty-state heading, image and
+button there. It also prints a link to checkout that is visible until the
+controllers run, so a visitor whose script failed still has a way forward.
+
+```html
+<hk-cart-items>
+  <hk-part name="empty">
+    <h2>{{ section.settings.empty_title }}</h2>
+  </hk-part>
+</hk-cart-items>
+<hk-cart-summary />
+```
+
+Any element can open the drawer: put `data-hk-open="cart-drawer"` on a link to
+the cart page. Without JavaScript it is an ordinary link.
+
+## Styling hooks
+
+`sn-cart-item`, `sn-cart-item-title`, `sn-cart-item-price`, `sn-cart-item-qty`,
+`sn-cart-item-remove`, `sn-cart-empty`, `sn-cart-subtotal`, `sn-vp-option`,
+`sn-vp-value`, `sn-qty`, `sn-atc-button`, `sn-gallery-thumbs`. The tags also
+emit the structural CSS (44 px targets, the drawer, reduced motion).
+
+## For hosts
+
+```ts
+import { startControllers, type CartHost } from '@hekana/sneferu-controllers';
+const stop = startControllers(document, host); // idempotent; call stop() to remove every listener
+```
+
+`CartHost` supplies `get()`, `add()`, `update()`, `remove()`, `subscribe()`,
+`format()`, `checkoutUrl` and `t()`. The controllers make no network calls and
+never compute authoritative totals; the host's cart store and the server do.
+The bundle is under 4 KB gzipped, uses no `eval` and no `innerHTML`.

@@ -1,0 +1,30 @@
+{
+  "sections": [
+    {
+      "id": "header",
+      "type": "header",
+      "settings": {
+        "show_search": true,
+        "show_language": true,
+        "show_cart": true
+      },
+      "blocks": [
+        {
+          "id": "nav-home",
+          "type": "menu-link",
+          "settings": { "label": { "ar": "الرئيسية", "en": "Home" }, "url": "/" }
+        },
+        {
+          "id": "nav-products",
+          "type": "menu-link",
+          "settings": { "label": { "ar": "المنتجات", "en": "Products" }, "url": "/products" }
+        },
+        {
+          "id": "nav-about",
+          "type": "menu-link",
+          "settings": { "label": { "ar": "من نحن", "en": "About" }, "url": "/pages/about" }
+        }
+      ]
+    }
+  ]
+}

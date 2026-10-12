@@ -1,6 +1,9 @@
 import { describe, it, expect } from 'vitest';
 import { TagRegistry, validateIR } from '@hekana/sneferu-core';
-import { compileTheme, type ThemeFile } from './compile';
+import { compileTheme as compileWithDefaults, type ThemeFile } from './compile';
+import type { TagRegistry as Reg } from '@hekana/sneferu-core';
+/** These tests use an empty registry, so the built-in default store (which needs the real tags) is off. */
+const compileTheme = (files: ThemeFile[], registry: Reg) => compileWithDefaults(files, registry, { defaults: false });
 import { IMAGE_ASSET } from './files';
 
 const enc = new TextEncoder();
@@ -240,5 +243,13 @@ describe('compileTheme', () => {
   it('exports IMAGE_ASSET for the image types the store serves', () => {
     for (const ok of ['a.png', 'a.jpeg', 'a.webp', 'a.avif', 'a.gif', 'a.svg']) expect(IMAGE_ASSET.test(ok), ok).toBe(true);
     for (const no of ['a.js', 'a.css', 'a.woff2', 'a.ico', 'a.png.js']) expect(IMAGE_ASSET.test(no), no).toBe(false);
+  });
+
+  it('names templates after page types (SN3035)', () => {
+    const codes = (names: string[]) => compileTheme([...base(), ...names.map((n) => f(`templates/${n}.sneferu`, '<hk-sections />'))], reg).diagnostics.filter((d) => d.severity === 'error').map((d) => d.code);
+    expect(codes(['product', 'product.codes', 'collection', 'search', 'cart', 'page', '404'])).toEqual([]);
+    expect(codes(['checkout'])).toEqual(['SN3035']);
+    expect(codes(['cart.big'])).toEqual(['SN3035']);
+    expect(codes(['Product'])).toContain('SN3002');
   });
 });

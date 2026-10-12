@@ -211,6 +211,32 @@
       ]
     },
     {
+      "name": "hk-section-group",
+      "category": "layout",
+      "label": {
+        "en": "Shared section group"
+      },
+      "allowedChildren": [],
+      "responsive": [],
+      "props": [
+        {
+          "name": "name",
+          "attr": "name",
+          "type": "select",
+          "required": true,
+          "options": [
+            "header",
+            "footer",
+            "announcement"
+          ],
+          "responsive": false,
+          "label": {
+            "en": "Group"
+          }
+        }
+      ]
+    },
+    {
       "name": "hk-heading",
       "category": "typography",
       "label": {
@@ -933,6 +959,60 @@
       ]
     },
     {
+      "name": "hk-pagination",
+      "category": "ui",
+      "label": {
+        "en": "Pagination"
+      },
+      "allowedChildren": [],
+      "responsive": [],
+      "props": [
+        {
+          "name": "paginate",
+          "attr": "paginate",
+          "type": "data",
+          "responsive": false,
+          "label": {
+            "en": "Pagination data"
+          }
+        }
+      ]
+    },
+    {
+      "name": "hk-locale-switch",
+      "category": "ui",
+      "label": {
+        "en": "Language switch"
+      },
+      "allowedChildren": [],
+      "responsive": [],
+      "props": [
+        {
+          "name": "display",
+          "attr": "display",
+          "type": "select",
+          "default": "name",
+          "options": [
+            "name",
+            "code"
+          ],
+          "responsive": false,
+          "label": {
+            "en": "Display"
+          }
+        },
+        {
+          "name": "localization",
+          "attr": "localization",
+          "type": "data",
+          "responsive": false,
+          "label": {
+            "en": "Localization data"
+          }
+        }
+      ]
+    },
+    {
       "name": "hk-price",
       "category": "commerce",
       "label": {
@@ -970,6 +1050,15 @@
           "responsive": false,
           "label": {
             "en": "Number format"
+          }
+        },
+        {
+          "name": "product",
+          "attr": "product",
+          "type": "data",
+          "responsive": false,
+          "label": {
+            "en": "Product with variants"
           }
         }
       ]
@@ -1042,6 +1131,251 @@
           "responsive": true,
           "label": {
             "en": "Columns"
+          }
+        }
+      ]
+    },
+    {
+      "name": "hk-product-gallery",
+      "category": "commerce",
+      "label": {
+        "en": "Product gallery"
+      },
+      "allowedChildren": [],
+      "responsive": [],
+      "props": [
+        {
+          "name": "product",
+          "attr": "product",
+          "type": "data",
+          "responsive": false,
+          "label": {
+            "en": "Product"
+          }
+        },
+        {
+          "name": "layout",
+          "attr": "layout",
+          "type": "select",
+          "default": "thumbs-below",
+          "options": [
+            "thumbs-below",
+            "thumbs-side",
+            "stacked"
+          ],
+          "responsive": false,
+          "label": {
+            "en": "Gallery layout"
+          }
+        },
+        {
+          "name": "thumbnails",
+          "attr": "thumbnails",
+          "type": "boolean",
+          "default": true,
+          "responsive": false,
+          "label": {
+            "en": "Thumbnails"
+          }
+        },
+        {
+          "name": "sizes",
+          "attr": "sizes",
+          "type": "text",
+          "default": "(min-width:1024px) 50vw, 100vw",
+          "responsive": false,
+          "label": {
+            "en": "Image sizes"
+          }
+        }
+      ]
+    },
+    {
+      "name": "hk-variant-picker",
+      "category": "commerce",
+      "label": {
+        "en": "Variant picker"
+      },
+      "allowedChildren": [],
+      "responsive": [],
+      "props": [
+        {
+          "name": "product",
+          "attr": "product",
+          "type": "data",
+          "responsive": false,
+          "label": {
+            "en": "Product"
+          }
+        },
+        {
+          "name": "display",
+          "attr": "display",
+          "type": "select",
+          "default": "buttons",
+          "options": [
+            "buttons",
+            "select"
+          ],
+          "responsive": false,
+          "label": {
+            "en": "Picker style"
+          }
+        }
+      ]
+    },
+    {
+      "name": "hk-add-to-cart",
+      "category": "commerce",
+      "label": {
+        "en": "Add to cart"
+      },
+      "allowedChildren": [],
+      "responsive": [],
+      "props": [
+        {
+          "name": "product",
+          "attr": "product",
+          "type": "data",
+          "responsive": false,
+          "label": {
+            "en": "Product"
+          }
+        },
+        {
+          "name": "label",
+          "attr": "label",
+          "type": "text",
+          "responsive": false,
+          "label": {
+            "en": "Button label"
+          }
+        },
+        {
+          "name": "soldOutLabel",
+          "attr": "sold-out-label",
+          "type": "text",
+          "responsive": false,
+          "label": {
+            "en": "Sold out label"
+          }
+        },
+        {
+          "name": "quantity",
+          "attr": "quantity",
+          "type": "boolean",
+          "default": true,
+          "responsive": false,
+          "label": {
+            "en": "Quantity picker"
+          }
+        },
+        {
+          "name": "variant",
+          "attr": "variant",
+          "type": "select",
+          "default": "solid",
+          "options": [
+            "solid",
+            "outline"
+          ],
+          "responsive": false,
+          "label": {
+            "en": "Button style"
+          }
+        }
+      ]
+    },
+    {
+      "name": "hk-cart-count",
+      "category": "commerce",
+      "label": {
+        "en": "Cart count"
+      },
+      "allowedChildren": [],
+      "responsive": [],
+      "props": []
+    },
+    {
+      "name": "hk-cart-items",
+      "category": "commerce",
+      "label": {
+        "en": "Cart items"
+      },
+      "allowedChildren": [
+        "hk-part"
+      ],
+      "parts": [
+        "empty"
+      ],
+      "responsive": [],
+      "props": [
+        {
+          "name": "checkoutLabel",
+          "attr": "checkout-label",
+          "type": "text",
+          "responsive": false,
+          "label": {
+            "en": "Checkout link label"
+          }
+        }
+      ]
+    },
+    {
+      "name": "hk-cart-summary",
+      "category": "commerce",
+      "label": {
+        "en": "Cart summary"
+      },
+      "allowedChildren": [],
+      "responsive": [],
+      "props": [
+        {
+          "name": "subtotalLabel",
+          "attr": "subtotal-label",
+          "type": "text",
+          "responsive": false,
+          "label": {
+            "en": "Subtotal label"
+          }
+        },
+        {
+          "name": "checkoutLabel",
+          "attr": "checkout-label",
+          "type": "text",
+          "responsive": false,
+          "label": {
+            "en": "Checkout button label"
+          }
+        }
+      ]
+    },
+    {
+      "name": "hk-cart-drawer",
+      "category": "commerce",
+      "label": {
+        "en": "Cart drawer"
+      },
+      "allowedChildren": "*",
+      "responsive": [],
+      "props": [
+        {
+          "name": "title",
+          "attr": "title",
+          "type": "text",
+          "responsive": false,
+          "label": {
+            "en": "Drawer title"
+          }
+        },
+        {
+          "name": "openOnAdd",
+          "attr": "open-on-add",
+          "type": "boolean",
+          "default": true,
+          "responsive": false,
+          "label": {
+            "en": "Open when an item is added"
           }
         }
       ]

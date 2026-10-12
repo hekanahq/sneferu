@@ -28,6 +28,8 @@ export interface Env {
   cssOnce?: Set<string>;
   /** Block definitions; when present, <hk-block of="…"/> renders them with the caller's env. */
   blocks?: Record<string, { ir: IRNode[] }>;
+  /** Renders a shared section group (<hk-section-group name="header" />); absent: the tag prints nothing. */
+  group?: (name: string) => string;
 }
 
 /** Own-property lookup: author/merchant strings must never reach Object.prototype. */
@@ -128,6 +130,12 @@ export function renderNodes(nodes: IRNode[], scope: Scope, env: Env): string {
           break;
         }
         if (n.tag === 'hk-part') break; // rendered only by its parent, through renderChildren(name)
+        if (n.tag === 'hk-section-group') {
+          const v = Object.hasOwn(n.props, 'name') ? n.props.name : undefined;
+          const g = env.group && v && v.k === 'static' && typeof v.v === 'string' ? env.group(v.v) : '';
+          if (g) raw(g);
+          break;
+        }
         const tag = env.registry.get(n.tag);
         if (!tag) { env.diagnostics.push(err('SN4005', `component ${n.tag} not available`)); break; }
         const props: Record<string, unknown> = {};

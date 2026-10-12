@@ -17,7 +17,7 @@ import type { Env } from './model';
 
 const repo = fileURLToPath(new URL('../../../../', import.meta.url));
 const data = buildData((p) => readFileSync(join(repo, p), 'utf8'));
-const STARTER = join(repo, 'packages/sneferu/starter');
+const STARTER = join(repo, 'packages/vscode-sneferu/test/fixtures/starter');
 const ARCADE = join(repo, 'examples/themes/arcade');
 
 /** `§` marks the cursor. */
@@ -146,7 +146,7 @@ describe('definition and links', () => {
 
 describe('diagnostics: the compiler, live', () => {
   it('the starter and every example theme compile without errors', () => {
-    for (const t of [STARTER, ...['arcade', 'bento', 'console', 'creator', 'esports', 'license'].map((n) => join(repo, 'examples/themes', n))]) {
+    for (const t of [STARTER, join(repo, 'packages/templates-default/theme'), ...['arcade', 'bento', 'console', 'creator', 'esports', 'license'].map((n) => join(repo, 'examples/themes', n))]) {
       expect(checkTheme(t, new Map()).problems.filter((p) => p.severity === 'error'), t).toEqual([]);
     }
   });

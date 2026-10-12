@@ -1,0 +1,25 @@
+{
+  "id": "starter",
+  "name": "Starter",
+  "version": "0.1.0",
+  "author": "Hekana",
+  "description": "A complete store to start from: header, footer, every page type, tokens you can edit",
+  "category": "general",
+  "engine": "hk2",
+  "engineCompatibility": "^2.0.0",
+  "defaultLocale": "en",
+  "locales": ["en", "ar"],
+  "settings": {},
+  "tokens": {
+    "colors": {
+      "primary": "#111827",
+      "secondary": "#1F2937",
+      "accent": "#B45309",
+      "background": "#FFFFFF",
+      "text": "#111827"
+    },
+    "fonts": { "heading": "Cairo", "body": "Cairo" },
+    "radius": { "md": "8px" },
+    "layout": { "contentWidth": "1200px" }
+  }
+}

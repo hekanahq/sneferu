@@ -13,7 +13,7 @@ beforeEach(() => { dir = join(mkdtempSync(join(tmpdir(), 'snf-fmt-')), 'my-shop'
 describe('sneferu format', () => {
   it('init writes a starter that is already formatted', async () => {
     const r = await runFormat(dir, { check: true });
-    expect(r.output).toContain('✔ all 8 files are formatted');
+    expect(r.output).toContain('✔ all 46 files are formatted');
     expect(r.ok).toBe(true);
     expect(JSON.parse(readFileSync(join(dir, 'theme.json'), 'utf8'))).toMatchObject({ id: 'my-shop', version: '0.1.0' });
   });
@@ -21,8 +21,8 @@ describe('sneferu format', () => {
   it('--check fails on an unformatted file and format fixes it without changing the build', async () => {
     const hero = join(dir, 'sections', 'hero.sneferu');
     const before = runBuild(dir, join(dir, '..', 'out1'));
-    writeFileSync(hero, readFileSync(hero, 'utf8').replace(/\n\s*/g, ''));
-    writeFileSync(join(dir, 'locales', 'en.json'), '{"shop_now":"Shop now"}');
+    writeFileSync(hero, readFileSync(hero, 'utf8').replace(/\n( +)/g, '\n$1$1'));
+    writeFileSync(join(dir, 'locales', 'en.json'), JSON.stringify(JSON.parse(readFileSync(join(dir, 'locales', 'en.json'), 'utf8'))));
     const unformatted = runBuild(dir, join(dir, '..', 'out2'));
     const check = await runFormat(dir, { check: true });
     expect(check.ok).toBe(false);
@@ -31,7 +31,7 @@ describe('sneferu format', () => {
     const r = await runFormat(dir);
     expect(r.ok).toBe(true);
     expect(r.changed.sort()).toEqual(['locales/en.json', 'sections/hero.sneferu']);
-    expect(readFileSync(hero, 'utf8')).toContain('<hk-schema>\n  {\n    "name": "Hero",');
+    expect(readFileSync(hero, 'utf8')).toContain('<hk-schema>\n  {\n    "name": {\n      "en": "Hero",');
     expect((await runFormat(dir, { check: true })).ok).toBe(true);
     const after = runBuild(dir, join(dir, '..', 'out3'));
     const art = (p: string) => JSON.parse(readFileSync(p, 'utf8'));
@@ -53,7 +53,7 @@ describe('sneferu format', () => {
     writeFileSync(join(dir, 'package.json'), '{"devDependencies":{"prettier":"^3"}}');
     const r = await runFormat(dir);
     expect(r.ok).toBe(true);
-    expect(readFileSync(join(dir, 'sections', 'hero.sneferu'), 'utf8')).toContain('<hk-heading\n      text="{{ section.settings.title }}"');
+    expect(readFileSync(join(dir, 'sections', 'hero.sneferu'), 'utf8')).toContain('<hk-heading\n          text="{{ section.settings.title }}"');
     expect(runValidate(dir).ok).toBe(true);
   });
 });

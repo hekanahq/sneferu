@@ -1,0 +1,18 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "hero",
+        "blocks": [
+          {
+            "type": "chip"
+          }
+        ]
+      },
+      {
+        "type": "featured-products"
+      }
+    ]
+  }
+</hk-schema>

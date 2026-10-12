@@ -79,10 +79,10 @@ describe('pageDependencies', () => {
     expect(pageDependencies(full, { template: 'index', sections: Array.from({ length: 20 }, (_, i) => ({ id: `s${i}`, type: 'grid', props: { list: `c-${i}` } })) }).categories).toBe(true);
   });
   it('never throws on a malformed artifact', () => {
-    expect(pageDependencies({} as never, { template: 'index' })).toEqual({ collections: [], categories: false });
-    expect(pageDependencies(null as never, { template: 'index' })).toEqual({ collections: [], categories: false });
-    expect(pageDependencies(artifact(), { template: '__proto__' })).toEqual({ collections: ['featured'], categories: false });
-    expect(pageDependencies(artifact(), { template: 'index', sections: 'x' as never })).toEqual({ collections: ['featured', 'new'], categories: false });
+    expect(pageDependencies({} as never, { template: 'index' })).toEqual({ collections: [], products: [], categories: false });
+    expect(pageDependencies(null as never, { template: 'index' })).toEqual({ collections: [], products: [], categories: false });
+    expect(pageDependencies(artifact(), { template: '__proto__' })).toEqual({ collections: ['featured'], products: [], categories: false });
+    expect(pageDependencies(artifact(), { template: 'index', sections: 'x' as never })).toEqual({ collections: ['featured', 'new'], products: [], categories: false });
     const junk = { manifest: { settings: 'x' }, layout: 'x', templates: { index: [null, 1, { k: 'loop' }, { k: 'el', attrs: 'x', children: [{ k: 'text', e: { k: 'lookup', fn: 'collection', args: 'x' } }] }] },
       templateSections: { index: [null, { type: 'hero' }, { type: 'faq', blocks: 'x' }, { type: 'faq', blocks: [null, {}] }] },
       sections: { hero: { schema: { settings: { list: null } } }, faq: null }, blocks: 'x', snippets: { a: 'x' } };
@@ -93,11 +93,24 @@ describe('pageDependencies', () => {
     expect(pageDependencies(nested, { template: 'index' }).collections).toEqual(['shallow', 'new']);
     const accessor = { ...artifact() } as Record<string, unknown>;
     Object.defineProperty(accessor, 'snippets', { get() { throw new Error('boom'); }, enumerable: true });
-    expect(pageDependencies(accessor as never, { template: 'index' })).toEqual({ collections: [], categories: false });
+    expect(pageDependencies(accessor as never, { template: 'index' })).toEqual({ collections: [], products: [], categories: false });
   });
   it('reads own properties only', () => {
     const proto = Object.create({ list: 'inherited' }) as Record<string, unknown>;
     const r = pageDependencies(artifact(), { template: 'index', sections: [{ id: 'g', type: 'grid', props: proto }, { id: 'x', type: 'toString' }] });
     expect(r.collections).toEqual(['featured']);
+  });
+
+  it('collects product handles from product() literals and product settings, defaults included', () => {
+    const prod = (arg: Expr): IRNode => ({ k: 'text', e: { k: 'path', p: ['title'], from: { k: 'lookup', fn: 'product', args: [arg] } } });
+    const a: ArtifactLike = { ...artifact(),
+      layout: [prod(lit('from-layout')), { k: 'slot', name: 'content' }],
+      sections: { pick: { ir: [prod(setting('section', 'item'))], schema: { settings: { item: { type: 'product', label: lbl, default: 'dflt' } } } } },
+      templateSections: { index: [{ type: 'pick', settings: {} }] } };
+    expect(pageDependencies(a, { template: 'index' }).products.sort()).toEqual(['dflt', 'from-layout']);
+    expect(pageDependencies(a, { template: 'index', sections: [{ id: 'x', type: 'pick', props: { item: 'chosen' } }] }).products.sort()).toEqual(['chosen', 'from-layout']);
+    expect(pageDependencies(a, { template: 'index', sections: [{ id: 'x', type: 'pick', props: { item: 'Not A Handle!' } }] }).products).toEqual(['from-layout']);
+    const many = Array.from({ length: 30 }, (_, i) => ({ id: `n${i}`, type: 'pick', props: { item: `p-${i}` } }));
+    expect(pageDependencies(a, { template: 'index', sections: many }).products).toHaveLength(12);
   });
 });

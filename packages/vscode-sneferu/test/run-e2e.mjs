@@ -13,7 +13,7 @@ const repo = join(pkg, '..', '..');
 const work = mkdtempSync(join(tmpdir(), 'sneferu-e2e-'));
 // a copy, so the tests can edit files freely: the arcade example and the starter side by side
 cpSync(join(repo, 'examples/themes/arcade'), join(work, 'arcade'), { recursive: true });
-cpSync(join(repo, 'packages/sneferu/starter'), join(work, 'starter'), { recursive: true });
+cpSync(join(repo, 'packages/vscode-sneferu/test/fixtures/starter'), join(work, 'starter'), { recursive: true });
 // a clean editor for the screenshots
 mkdirSync(join(work, '.user', 'User'), { recursive: true });
 writeFileSync(join(work, '.user', 'User', 'settings.json'), JSON.stringify({

@@ -9,6 +9,8 @@ import { createDefaultRegistry } from '@hekana/sneferu-components';
 import { loadTheme } from '../load';
 import { pickSampleData, sampleContext, withSampleData } from '../sample-data';
 import { devPage } from '../dev-page';
+import { controllersBundle, devHostScript } from '../dev-controllers';
+import { resolveDevRoute, splitLocale } from '../dev-routes';
 
 const TYPES: Record<string, string> = { '.css': 'text/css', '.js': 'text/javascript', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.woff': 'font/woff' };
 
@@ -76,18 +78,34 @@ export async function startDev(dir: string, port: number, opts: { data?: string 
         if (!file || !existsSync(file) || !statSync(file).isFile()) { res.writeHead(404).end(); return; }
         res.writeHead(200, { 'content-type': TYPES[extname(file).toLowerCase()] ?? 'application/octet-stream' }).end(readFileSync(file)); return;
       }
+      if (rawPath === '/__controllers.js') { const js = controllersBundle(); if (!js) { res.writeHead(404).end(); return; } res.writeHead(200, { 'content-type': 'text/javascript' }).end(js); return; }
       if (!artifact) { res.writeHead(500, { 'content-type': 'text/html; charset=utf-8' }).end(errorPage(problems)); return; }
-      const locale = pickLocale(url.searchParams.get('locale'), artifact.manifest);
-      let template = 'index';
-      if (url.pathname.startsWith('/__template/')) {
-        try { template = decodeURIComponent(url.pathname.slice('/__template/'.length)); } catch { template = ''; }
-      }
+      if (rawPath === '/favicon.ico') { res.writeHead(404).end(); return; }
+      const split = splitLocale(url.pathname);
+      const cookie = /(?:^|;\s*)sn_locale=(ar|en)\b/.exec(req.headers.cookie ?? '')?.[1];
+      const explicit = url.searchParams.get('locale') ?? split.locale;
+      // an unprefixed link follows the language of the page you came from (cookie), else the theme's default
+      const locale = pickLocale(explicit ?? cookie ?? null, artifact.manifest);
       const sample = readSampleData(dataPath);
       if (sample.error) { res.writeHead(500, { 'content-type': 'text/html; charset=utf-8' }).end(errorPage(`sample data: ${sample.error}`)); return; }
-      const ctx = withSampleData(sampleContext(locale, artifact.locales, artifact.manifest.defaultLocale, { responsive: true }), pickSampleData(sample.raw, locale));
-      const r = renderPage(artifact, { template, ctx, registry });
+      const ctx = withSampleData(sampleContext(locale, artifact.locales, artifact.manifest.defaultLocale, { responsive: true, devLinks: true }), pickSampleData(sample.raw, locale));
+      let template = 'index';
+      let status = 200;
+      let scope: Record<string, unknown> = {};
+      let path = split.path;
+      if (url.pathname.startsWith('/__template/')) {
+        try { template = decodeURIComponent(url.pathname.slice('/__template/'.length)); } catch { template = ''; }
+      } else {
+        const route = resolveDevRoute({ path: split.path, query: url.searchParams, locale, defaultLocale: artifact.manifest.defaultLocale, products: ctx.products, collections: ctx.collections });
+        ({ template, status, scope, path } = route);
+      }
+      const other = locale === 'ar' ? 'en' : 'ar';
+      const keep = new URLSearchParams(url.searchParams); keep.delete('locale');
+      const alternateUrl = artifact.manifest.locales.includes(other) ? `/${other}${path === '/' ? '' : path}${keep.size ? `?${keep}` : ''}` : '';
+      const r = renderPage(artifact, { template, ctx, registry, scope, request: { path }, localization: { alternateUrl } });
       const body = r.html || `<pre style="padding:24px;white-space:pre-wrap">${escapeText(r.diagnostics.map(formatDiagnostic).join('\n') || 'empty page')}</pre>`;
-      res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' }).end(devPage(artifact, { body, locale, css: r.css, themeCss: themeCss(), reloadScript: true }));
+      res.writeHead(status, { 'content-type': 'text/html; charset=utf-8', ...(explicit ? { 'set-cookie': `sn_locale=${locale}; Path=/; SameSite=Lax` } : {}) })
+        .end(devPage(artifact, { body, locale, css: r.css, themeCss: themeCss(), reloadScript: true, ...(r.controllers.length ? { hostScript: devHostScript(locale) } : {}) }));
     } catch (e) {
       if (!res.headersSent) res.writeHead(500, { 'content-type': 'text/html; charset=utf-8' });
       res.end(errorPage((e as Error).message));
