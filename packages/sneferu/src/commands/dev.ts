@@ -9,6 +9,7 @@ import { createDefaultRegistry } from '@hekana/sneferu-components';
 import { loadTheme } from '../load';
 import { pickSampleData, sampleContext, withSampleData } from '../sample-data';
 import { devPage } from '../dev-page';
+import { controllersBundle, devHostScript } from '../dev-controllers';
 import { resolveDevRoute, splitLocale } from '../dev-routes';
 
 const TYPES: Record<string, string> = { '.css': 'text/css', '.js': 'text/javascript', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.woff': 'font/woff' };
@@ -77,6 +78,7 @@ export async function startDev(dir: string, port: number, opts: { data?: string 
         if (!file || !existsSync(file) || !statSync(file).isFile()) { res.writeHead(404).end(); return; }
         res.writeHead(200, { 'content-type': TYPES[extname(file).toLowerCase()] ?? 'application/octet-stream' }).end(readFileSync(file)); return;
       }
+      if (rawPath === '/__controllers.js') { const js = controllersBundle(); if (!js) { res.writeHead(404).end(); return; } res.writeHead(200, { 'content-type': 'text/javascript' }).end(js); return; }
       if (!artifact) { res.writeHead(500, { 'content-type': 'text/html; charset=utf-8' }).end(errorPage(problems)); return; }
       if (rawPath === '/favicon.ico') { res.writeHead(404).end(); return; }
       const split = splitLocale(url.pathname);
@@ -103,7 +105,7 @@ export async function startDev(dir: string, port: number, opts: { data?: string 
       const r = renderPage(artifact, { template, ctx, registry, scope, request: { path }, localization: { alternateUrl } });
       const body = r.html || `<pre style="padding:24px;white-space:pre-wrap">${escapeText(r.diagnostics.map(formatDiagnostic).join('\n') || 'empty page')}</pre>`;
       res.writeHead(status, { 'content-type': 'text/html; charset=utf-8', ...(explicit ? { 'set-cookie': `sn_locale=${locale}; Path=/; SameSite=Lax` } : {}) })
-        .end(devPage(artifact, { body, locale, css: r.css, themeCss: themeCss(), reloadScript: true }));
+        .end(devPage(artifact, { body, locale, css: r.css, themeCss: themeCss(), reloadScript: true, ...(r.controllers.length ? { hostScript: devHostScript(locale) } : {}) }));
     } catch (e) {
       if (!res.headersSent) res.writeHead(500, { 'content-type': 'text/html; charset=utf-8' });
       res.end(errorPage((e as Error).message));

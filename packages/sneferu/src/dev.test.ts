@@ -85,6 +85,22 @@ describe('dev server', () => {
     expect(bad.status).toBe(200);
     expect(bad.body).toContain('<pre');
     expect((await get(port, '/__template/constructor')).body).toContain('<pre');
+    // every page type, a real 404 status, locale prefixes and the controllers
+    const product = await get(port, '/products/sample-2');
+    expect(product.status).toBe(200);
+    expect(product.body).toContain('data-hk-controller="add-to-cart"');
+    expect(product.body).toContain("from '/__controllers.js'");
+    const js = await get(port, '/__controllers.js');
+    expect(js.status).toBe(200);
+    expect(js.body).toContain('startControllers');
+    expect((await get(port, '/products/nope')).status).toBe(404);
+    expect((await get(port, '/nope')).body).toContain('This page does not exist');
+    expect((await get(port, '/category/gift-cards?page=999')).status).toBe(200);
+    expect((await get(port, '/search?q=card')).body).toContain('Results for');
+    expect((await get(port, '/en/cart')).body).toContain('lang="en"');
+    expect((await get(port, '/ar/cart')).body).toContain('lang="ar"');
+    expect((await get(port, '/pages/about')).body).toContain('About us');
+    expect((await get(port, '/')).body).not.toContain('__controllers.js'.concat('x'));
     s.close();
   });
 });

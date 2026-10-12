@@ -83,6 +83,9 @@ importers:
       '@hekana/sneferu-components':
         specifier: workspace:^
         version: link:../components
+      '@hekana/sneferu-controllers':
+        specifier: workspace:^
+        version: link:../controllers
       '@hekana/sneferu-core':
         specifier: workspace:^
         version: link:../core

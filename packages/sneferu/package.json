@@ -24,7 +24,8 @@
     "prettier": "^3.6.2",
     "commander": "^12.1.0",
     "chokidar": "^4.0.1",
-    "@hekana/sneferu-templates-default": "workspace:^"
+    "@hekana/sneferu-templates-default": "workspace:^",
+    "@hekana/sneferu-controllers": "workspace:^"
   },
   "devDependencies": {
     "@types/node": "^22.9.0"
