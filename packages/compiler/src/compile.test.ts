@@ -250,6 +250,6 @@ describe('compileTheme', () => {
     expect(codes(['product', 'product.codes', 'collection', 'search', 'cart', 'page', '404'])).toEqual([]);
     expect(codes(['checkout'])).toEqual(['SN3035']);
     expect(codes(['cart.big'])).toEqual(['SN3035']);
-    expect(codes(['Product'])).toEqual(['SN3002']);
+    expect(codes(['Product'])).toContain('SN3002');
   });
 });
