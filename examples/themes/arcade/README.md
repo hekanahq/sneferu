@@ -33,7 +33,7 @@ start from the new defaults.
 
 ## Pages
 
-Arcade writes only the home page (`templates/index.sneferu`). The product,
+Arcade writes only the home page (`templates/index.snf`). The product,
 collection, search, cart, content page and 404 templates come from the SDK's
 default store ([page types](../../../docs/guide/16-page-types.mdx)), drawn with
 Arcade's tokens, fonts and layout. `assets/theme.css` restyles what the default
@@ -63,25 +63,25 @@ setting of the header section) and from the cart icon.
 
 ```
 assets/theme.css
-blocks/chip.sneferu
-blocks/faq-item.sneferu
-blocks/step.sneferu
-blocks/tab.sneferu
-blocks/tile.sneferu
+blocks/chip.snf
+blocks/faq-item.snf
+blocks/step.snf
+blocks/tab.snf
+blocks/tile.snf
 groups/footer.json
 groups/header.json
-layout/theme.sneferu
+layout/theme.snf
 locales/ar.json
 locales/en.json
-sections/arcade-categories.sneferu
-sections/arcade-faq.sneferu
-sections/arcade-footer.sneferu
-sections/arcade-header.sneferu
-sections/arcade-hero.sneferu
-sections/arcade-products.sneferu
-sections/arcade-steps.sneferu
-snippets/glyph.sneferu
-templates/index.sneferu
+sections/arcade-categories.snf
+sections/arcade-faq.snf
+sections/arcade-footer.snf
+sections/arcade-header.snf
+sections/arcade-hero.snf
+sections/arcade-products.snf
+sections/arcade-steps.snf
+snippets/glyph.snf
+templates/index.snf
 theme.json
 ```
 
@@ -106,8 +106,8 @@ npx sneferu init arcade
 cd arcade
 ```
 
-Delete the starter's `sections/hero.sneferu`, `sections/featured.sneferu` and
-`blocks/chip.sneferu`; this theme writes its own.
+Delete the starter's `sections/hero.snf`, `sections/featured.snf` and
+`blocks/chip.snf`; this theme writes its own.
 
 ## 2. Manifest and tokens
 
@@ -165,9 +165,9 @@ Icons are `<hk-icon>` from the bundled Lucide set:
 `<hk-icon name="shopping-cart" size="24" class="ic" />`. They draw with
 `currentColor`, so CSS sets their colour, and `class="ic"` lets the stylesheet
 size them. Two glyphs the set lacks, the coin on the amount chips and the gem on
-the in-game currency tile, stay inline SVG in `snippets/glyph.sneferu`:
+the in-game currency tile, stay inline SVG in `snippets/glyph.snf`:
 
-```html title="snippets/glyph.sneferu"
+```html title="snippets/glyph.snf"
 <svg
   class="ic ic-{{ name }}"
   viewBox="0 0 24 24"
@@ -192,7 +192,7 @@ with `stroke: url(#arc-grad)`.
 
 ## 5. Layout: header and footer
 
-```html title="layout/theme.sneferu"
+```html title="layout/theme.snf"
 <svg class="arc-defs" width="0" height="0" aria-hidden="true">
   <defs>
     <linearGradient id="arc-grad" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
@@ -212,7 +212,7 @@ The header and the footer are [section groups](../../../docs/guide/18-section-gr
 whole store. The header also holds the cart: the cart link carries `data-hk-open="cart-drawer"` and
 `<hk-cart-count />`, and `<hk-cart-drawer>` lists the lines (a plain link to the cart page without JavaScript).
 
-```html title="sections/arcade-header.sneferu"
+```html title="sections/arcade-header.snf"
 <header class="arc-header">
   <hk-container>
     <div class="arc-bar">
@@ -319,7 +319,7 @@ Copy the merchant may change is a setting with `"localized": true` and a
 default in both languages, so the editor shows one field per language and
 `{{ section.settings.title }}` prints the one for the page:
 
-```json title="sections/arcade-hero.sneferu (schema excerpt)"
+```json title="sections/arcade-hero.snf (schema excerpt)"
 "title": {
   "type": "text",
   "label": "Title",
@@ -346,7 +346,7 @@ the English file:
 
 ## 7. Hero: tabs, title, amount chips
 
-```html title="sections/arcade-hero.sneferu"
+```html title="sections/arcade-hero.snf"
 <hk-section padding-y="32" mobile-padding-y="16" class="arc-hero">
   <nav class="arc-tabs" aria-label="{{ t('platforms') }}">
     {% for block in section.blocks %}
@@ -432,7 +432,7 @@ the English file:
 </hk-schema>
 ```
 
-```html title="blocks/tab.sneferu"
+```html title="blocks/tab.snf"
 <a class="arc-tab" href="{{ url(block.settings.link) }}">{{ block.settings.label }}</a>
 <hk-schema>
   {
@@ -459,7 +459,7 @@ the English file:
 </hk-schema>
 ```
 
-```html title="blocks/chip.sneferu"
+```html title="blocks/chip.snf"
 {% if block.settings.amount %}
   <a class="arc-chip" href="{{ url('/search') }}">
     <span class="arc-chip-icon">{% render 'glyph', name: 'coin' %}</span>
@@ -523,7 +523,7 @@ the English file:
 
 ## 8. Category tiles
 
-```html title="sections/arcade-categories.sneferu"
+```html title="sections/arcade-categories.snf"
 <hk-section padding-y="24" mobile-padding-y="16" class="arc-cats">
   {% if section.settings.heading %}
     <hk-heading text="{{ section.settings.heading }}" level="h2" size="24" mobile-size="20" class="arc-h2" />
@@ -558,7 +558,7 @@ the English file:
 </hk-schema>
 ```
 
-```html title="blocks/tile.sneferu"
+```html title="blocks/tile.snf"
 <a class="arc-tile" href="{{ url(block.settings.link) }}">
   <span class="arc-tile-icon">
     {% if block.settings.icon == 'gem' %}
@@ -617,7 +617,7 @@ the English file:
   and two on phones.
 - Each tile is a block: a localized title, a link (default
   `/category/<handle>`) and an icon picked from a list of `hk-icon` names plus
-  `gem`, which draws the glyph from `snippets/glyph.sneferu`. The template
+  `gem`, which draws the glyph from `snippets/glyph.snf`. The template
   seeds six tiles.
 
 ```css title="assets/theme.css (tiles)"
@@ -633,7 +633,7 @@ the English file:
 
 ## 9. How you get your code
 
-```html title="sections/arcade-steps.sneferu"
+```html title="sections/arcade-steps.snf"
 <hk-section padding-y="48" mobile-padding-y="32" class="arc-steps">
   <hk-stack gap="24" align="center">
     <hk-heading
@@ -675,7 +675,7 @@ the English file:
 </hk-schema>
 ```
 
-```html title="blocks/step.sneferu"
+```html title="blocks/step.snf"
 <div class="arc-step">
   <span class="arc-step-icon"><hk-icon name="{{ block.settings.icon }}" class="ic" /></span>
   <span class="arc-step-n"></span>
@@ -737,7 +737,7 @@ sent automatically by email once an online payment is confirmed.
 
 ## 10. Products and FAQ
 
-```html title="sections/arcade-products.sneferu"
+```html title="sections/arcade-products.snf"
 <hk-section padding-y="40" mobile-padding-y="28" class="arc-products">
   <hk-stack gap="20">
     <div class="arc-row-head">
@@ -798,7 +798,7 @@ The `list` setting is a `collection` picker that defaults to `featured`, and
 section shows the `empty_products` line instead. Each question is a
 `faq-item` block; the template seeds five.
 
-```html title="sections/arcade-faq.sneferu"
+```html title="sections/arcade-faq.snf"
 <hk-section padding-y="48" mobile-padding-y="32" class="arc-faq">
   <div id="faq" class="arc-faq-wrap">
     <hk-heading text="{{ section.settings.heading }}" level="h2" size="28" mobile-size="20" class="arc-h2" />
@@ -831,7 +831,7 @@ section shows the `empty_products` line instead. Each question is a
 </hk-schema>
 ```
 
-```html title="blocks/faq-item.sneferu"
+```html title="blocks/faq-item.snf"
 {% if block.settings.question %}
   <details class="arc-faq-item">
     <summary>{{ block.settings.question }}<hk-icon name="chevron-down" class="ic" /></summary>
@@ -907,7 +907,7 @@ section shows the `empty_products` line instead. Each question is a
 The template lists the five sections and seeds their blocks. The excerpt shows
 the first block of each list; the file has all of them.
 
-```html title="templates/index.sneferu (excerpt)"
+```html title="templates/index.snf (excerpt)"
 <hk-sections />
 <hk-schema>
   {

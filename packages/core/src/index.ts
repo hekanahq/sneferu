@@ -16,3 +16,4 @@ export * from './page-types';
 export * from './context-types';
 export * from './paginate';
 export * from './tokens';
+export * from './extensions';

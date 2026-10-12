@@ -17,7 +17,7 @@ whole page. The excerpts show the first block of each section.
 
 <Example>
 
-```html title="examples/themes/bento/templates/index.sneferu (excerpt)"
+```html title="examples/themes/bento/templates/index.snf (excerpt)"
 <hk-sections />
 <hk-schema>
   {
@@ -62,7 +62,7 @@ page is a template listing its sections, like Bento's above:
 
 <Example>
 
-```html title="examples/themes/creator/templates/index.sneferu (excerpt)"
+```html title="examples/themes/creator/templates/index.snf (excerpt)"
 <hk-sections />
 <hk-schema>
   {
@@ -81,7 +81,7 @@ page is a template listing its sections, like Bento's above:
 </hk-schema>
 ```
 
-```html title="examples/themes/license/templates/index.sneferu (excerpt)"
+```html title="examples/themes/license/templates/index.snf (excerpt)"
 <hk-sections />
 <hk-schema>
   {
@@ -141,8 +141,8 @@ npx sneferu init bento
 cd bento
 ```
 
-Delete the starter's `sections/hero.sneferu`, `sections/featured.sneferu` and
-`blocks/chip.sneferu`; the theme writes its own.
+Delete the starter's `sections/hero.snf`, `sections/featured.snf` and
+`blocks/chip.snf`; the theme writes its own.
 
 The dev preview's built-in sample products are game cards, and its only
 collection is `featured`. To preview with this store's own products, write
@@ -230,7 +230,7 @@ the files and sets the family on the theme root, so the stylesheet has no
 
 ## 4. Layout
 
-```html title="examples/themes/bento/layout/theme.sneferu"
+```html title="examples/themes/bento/layout/theme.snf"
 <div class="bt">
   <hk-section-group name="header" />
   <main><hk-slot name="content" /></main>
@@ -243,7 +243,7 @@ The header and the footer are [section groups](18-section-groups.mdx):
 `bento-header` and `bento-footer`, and the merchant edits them once for the
 whole store.
 
-```html title="examples/themes/bento/sections/bento-header.sneferu"
+```html title="examples/themes/bento/sections/bento-header.snf"
 <header class="bt-header">
   <div class="bt-wrap bt-header-row">
     <div class="bt-start">
@@ -310,7 +310,7 @@ whole store.
 - The phone menu is `<details>`/`<summary>`: it opens without script.
 - Icons are `<hk-icon name="shopping-bag" />` from the bundled set. The filled
   avatar has no match in the set, so it stays an inline SVG in
-  `snippets/glyph.sneferu`.
+  `snippets/glyph.snf`.
 
 ## 5. The template
 
@@ -325,7 +325,7 @@ block has its own collection, words and colours.
 
 <Example>
 
-```html title="examples/themes/bento/sections/bento.sneferu"
+```html title="examples/themes/bento/sections/bento.snf"
 <section class="bt-bento" id="shop">
   <div class="bt-wrap bt-bento-grid">
     {% for block in section.blocks %}
@@ -346,7 +346,7 @@ block has its own collection, words and colours.
 </hk-schema>
 ```
 
-```html title="examples/themes/bento/blocks/shelf.sneferu"
+```html title="examples/themes/bento/blocks/shelf.snf"
 <div class="bt-shelf" id="{{ block.settings.list }}">
   <a class="bt-head" data-tone="{{ block.settings.head }}" href="{{ url(block.settings.link) }}">
     <h2>{{ block.settings.title }}</h2>
@@ -496,7 +496,7 @@ The grid and the covers:
 
 <Example>
 
-```html title="examples/themes/bento/sections/band.sneferu"
+```html title="examples/themes/bento/sections/band.snf"
 <section class="bt-band-wrap">
   <div class="bt-wrap">
     <div class="bt-band">

@@ -16,6 +16,7 @@ import { formatDocument } from './format';
 import { findThemeRoot, indexTheme, type ThemeIndex } from './theme';
 import { checkUrl, diagnosticUrl, type LangData } from './types';
 import { codeDoc } from './docs';
+import { isTemplateFile } from '@hekana/sneferu-core';
 
 const data = dataJson as unknown as LangData;
 const connection = createConnection(ProposedFeatures.all);
@@ -193,7 +194,7 @@ connection.onDefinition((p) => {
 
 connection.onDocumentLinks((p) => {
   const doc = documents.get(p.textDocument.uri);
-  if (!doc || !doc.uri.endsWith('.sneferu')) return [];
+  if (!doc || !isTemplateFile(doc.uri)) return [];
   const abs = pathOf(doc.uri);
   const root = rootOf(abs);
   if (!root) return [];

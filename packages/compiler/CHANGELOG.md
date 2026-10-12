@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.4.2
+
+### Patch Changes
+
+- Theme files end in `.snf`. `.sneferu` still works everywhere and a theme may mix the two; one name in both forms in one folder is SN3044. `sneferu init` writes `.snf`; `render 'name'` and section types resolve either; messages name the real file. The Prettier plugin registers `.snf`.
+- Updated dependencies
+  - @hekana/sneferu-core@0.4.2
+  - @hekana/sneferu-templates-default@0.4.2
+
 ## 0.4.1
 
 ### Patch Changes

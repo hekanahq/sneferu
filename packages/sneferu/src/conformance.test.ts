@@ -10,7 +10,7 @@ import { COMMERCE_STRINGS } from '@hekana/sneferu-components';
 const theme = fileURLToPath(new URL('../../templates-default/theme', import.meta.url));
 const walk = (d: string): string[] => readdirSync(d).flatMap((f) => (statSync(join(d, f)).isDirectory() ? walk(join(d, f)) : [join(d, f)]));
 const files = walk(theme).map((p) => relative(theme, p).split('\\').join('/'));
-const sources = files.filter((p) => p.endsWith('.sneferu'));
+const sources = files.filter((p) => /\.(snf|sneferu)$/.test(p));
 
 /** What may stay literal: punctuation, symbols and digits only; structural store routes; fixed token and layout values. */
 const ALLOW = {
@@ -66,7 +66,7 @@ describe('the default store has no static copy, link or colour outside settings,
 });
 
 describe('every section and block declares labelled, bounded settings the inspector can draw', () => {
-  const schemas = files.filter((p) => /^(sections|blocks)\/.*\.sneferu$/.test(p)).map((p) => {
+  const schemas = files.filter((p) => /^(sections|blocks)\/.*\.(snf|sneferu)$/.test(p)).map((p) => {
     const raw = parseTemplate(readFileSync(join(theme, p), 'utf8'), p).schema as { name?: unknown; settings?: Record<string, Record<string, unknown>> };
     return { p, raw };
   });

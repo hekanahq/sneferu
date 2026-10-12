@@ -1,4 +1,4 @@
-import { err, LIMITS, type Diagnostic } from '@hekana/sneferu-core';
+import { err, LIMITS, TEMPLATE_FILE, isTemplateFile, stripTemplateExtension, type Diagnostic } from '@hekana/sneferu-core';
 export interface ThemeFile { path: string; bytes: Uint8Array }
 
 /** The asset types the store serves: the CLI and the server agree on this. Fonts, JS and .ico still compile but are not served. */
@@ -7,7 +7,7 @@ export const IMAGE_ASSET = /\.(png|jpe?g|webp|avif|gif|svg)$/;
 const SEGMENT = /^[a-z0-9][a-z0-9._-]*$/;
 const ALLOWED: Record<string, RegExp> = {
   '': /^theme\.json$/,
-  layout: /\.sneferu$/, templates: /\.sneferu$/, sections: /\.sneferu$/, blocks: /\.sneferu$/, snippets: /\.sneferu$/,
+  layout: TEMPLATE_FILE, templates: TEMPLATE_FILE, sections: TEMPLATE_FILE, blocks: TEMPLATE_FILE, snippets: TEMPLATE_FILE,
   assets: /\.(css|js|png|jpe?g|webp|avif|gif|svg|woff2?|ttf|otf|ico)$/,
   locales: /^[a-z]{2}\.json$/, migrations: /\.json$/, groups: /^(header|footer|announcement)\.json$/,
 };
@@ -25,6 +25,8 @@ export function checkFiles(files: ThemeFile[]): Diagnostic[] {
   const total = files.reduce((n, f) => n + f.bytes.byteLength, 0);
   if (total > LIMITS.totalBytes) out.push(err('SN3006', `package is ${(total / 1048576).toFixed(1)} MB (max 25 MB)`));
   const seen = new Set<string>();
+  /** `sections/hero` → the first of `sections/hero.snf` / `sections/hero.sneferu` seen */
+  const stems = new Map<string, string>();
   for (const f of files) {
     const p = f.path;
     if (p.startsWith('/') || p.includes('\\') || p.split('/').some((s) => s === '..' || s === '.' || !SEGMENT.test(s))) { out.push(err('SN3002', `invalid path '${p}'`, { file: p })); continue; }
@@ -37,7 +39,16 @@ export function checkFiles(files: ThemeFile[]): Diagnostic[] {
     if (RESERVED_DIRS.has(dir) && parts[1]!.startsWith(RESERVED_PREFIX)) out.push(err('SN3043', `'${p}': names starting with '${RESERVED_PREFIX}' are reserved for the default store`, { file: p }));
     if (dir === 'assets' && f.bytes.byteLength > LIMITS.assetBytes) out.push(err('SN3007', `asset over 2 MB: '${p}'`, { file: p }));
     if (dir === 'groups' && f.bytes.byteLength > GROUP_FILE_BYTES) out.push(err('SN3036', `group file over ${GROUP_FILE_BYTES / 1024} KB: '${p}'`, { file: p }));
-    if (p.endsWith('.sneferu') && f.bytes.byteLength > LIMITS.templateBytes) out.push(err('SN3008', `template over 300 KB: '${p}'`, { file: p }));
+    if (isTemplateFile(p)) {
+      const stem = stripTemplateExtension(p);
+      const other = stems.get(stem);
+      if (other !== undefined) {
+        const [snf, old] = other.endsWith('.snf') ? [other, p] : [p, other];
+        out.push(err('SN3044', `'${snf}' and '${old}' are the same file in two forms (.snf and .sneferu): keep one`, { file: old })); continue;
+      }
+      stems.set(stem, p);
+    }
+    if (isTemplateFile(p) && f.bytes.byteLength > LIMITS.templateBytes) out.push(err('SN3008', `template over 300 KB: '${p}'`, { file: p }));
   }
   return out;
 }

@@ -34,7 +34,7 @@ export function prettierConfig(file: string, root?: string): Record<string, unkn
 }
 
 /**
- * Formats a .sneferu file, theme.json or a locale with Prettier and the Sneferu
+ * Formats a .snf (or .sneferu) file, theme.json or a locale with Prettier and the Sneferu
  * plugin, like `sneferu format`. Returns undefined when the file does not parse
  * or when formatting would change what the compiler makes of it. Editor tab
  * settings are ignored on purpose: the result matches `sneferu format`.
@@ -47,7 +47,7 @@ export async function formatDocument(path: string, text: string, opts: { root?: 
       printWidth: 120,
       ...config,
       filepath: path,
-      parser: path.endsWith('.sneferu') ? 'sneferu' : 'json',
+      parser: /\.(snf|sneferu)$/.test(path) ? 'sneferu' : 'json',
       plugins: [sneferuPlugin, babel, estree],
     } as Options);
   } catch { return undefined; }

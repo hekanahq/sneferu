@@ -3,7 +3,7 @@ import { parse, type Node, type Root } from './parse';
 import { print } from './print';
 
 export const languages: Plugin['languages'] = [
-  { name: 'Sneferu', parsers: ['sneferu'], extensions: ['.sneferu'], vscodeLanguageIds: ['sneferu'] },
+  { name: 'Sneferu', parsers: ['sneferu'], extensions: ['.snf', '.sneferu'], vscodeLanguageIds: ['sneferu'] },
 ];
 
 export const parsers: Plugin<Node | Root>['parsers'] = {

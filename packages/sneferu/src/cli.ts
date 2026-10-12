@@ -9,7 +9,7 @@ import { runLogout } from './commands/logout';
 import { runWhoami } from './commands/whoami';
 import { runFormat } from './commands/format';
 
-const program = new Command().name('sneferu').description('Build Hekana themes with Sneferu').version('0.4.1');
+const program = new Command().name('sneferu').description('Build Hekana themes with Sneferu').version('0.4.2');
 program.command('init').argument('[dir]', 'folder to create', 'my-theme').option('--force', 'write into a non-empty folder')
   .option('--template <name>', 'what to scaffold (starter: a complete store)', 'starter')
   .action((dir: string, o: { force?: boolean; template?: string }) => { try { runInit(dir, o); console.log(`✔ created ${dir} — next: cd ${dir} && npx sneferu dev`); } catch (e) { console.error(`✖ ${(e as Error).message}`); process.exitCode = 2; } });
@@ -18,7 +18,7 @@ program.command('validate').argument('[dir]', 'theme folder', '.')
 program.command('build').argument('[dir]', 'theme folder', '.').option('--out <dir>', 'output folder', 'dist')
   .action((dir: string, o: { out: string }) => { const r = runBuild(dir, o.out); console.log(r.output); process.exitCode = r.ok ? 0 : 1; });
 program.command('format').argument('[dir]', 'theme folder', '.').option('--check', 'only check; exit 1 if a file is not formatted (for CI)')
-  .description('format .sneferu files, theme.json and locales with Prettier and the Sneferu plugin')
+  .description('format .snf (and .sneferu) files, theme.json and locales with Prettier and the Sneferu plugin')
   .action(async (dir: string, o: { check?: boolean }) => { const r = await runFormat(dir, { check: o.check === true }); (r.ok ? console.log : console.error)(r.output); process.exitCode = r.ok ? 0 : 1; });
 program.command('dev').argument('[dir]', 'theme folder', '.').option('--port <n>', 'port', '4100')
   .option('--data <file>', 'sample data JSON (default: .sneferu-dev/data.json when it exists)')

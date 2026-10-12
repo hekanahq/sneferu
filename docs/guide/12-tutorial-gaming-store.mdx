@@ -19,7 +19,7 @@ below show the first block of each section.
 
 <Example>
 
-```html title="examples/themes/arcade/templates/index.sneferu (excerpt)"
+```html title="examples/themes/arcade/templates/index.snf (excerpt)"
 <hk-sections />
 <hk-schema>
   {
@@ -78,7 +78,7 @@ Two more gaming themes were built the same way:
 
 <Example>
 
-```html title="examples/themes/console/templates/index.sneferu (excerpt)"
+```html title="examples/themes/console/templates/index.snf (excerpt)"
 <hk-sections />
 <hk-schema>
   {
@@ -118,7 +118,7 @@ Two more gaming themes were built the same way:
 </hk-schema>
 ```
 
-```html title="examples/themes/esports/templates/index.sneferu (excerpt)"
+```html title="examples/themes/esports/templates/index.snf (excerpt)"
 <hk-sections />
 <hk-schema>
   {
@@ -163,7 +163,7 @@ Two more gaming themes were built the same way:
 
 <Steps>
   1. `npx sneferu init arcade`, then `cd arcade`.
-  2. Delete `sections/hero.sneferu`, `sections/featured.sneferu` and `blocks/`.
+  2. Delete `sections/hero.snf`, `sections/featured.snf` and `blocks/`.
   3. Keep `npx sneferu dev` running in a second terminal and open
      `http://127.0.0.1:4100` (Arabic is the default locale once step 2 below is
      done; add `?locale=en` for English).
@@ -247,7 +247,7 @@ so tabs, chips and tiles sit directly in their flex or grid row.
 Words the merchant may change are settings with `"localized": true` and a
 default in both languages, so the editor shows one field per language:
 
-```json title="examples/themes/arcade/sections/arcade-hero.sneferu (schema excerpt)"
+```json title="examples/themes/arcade/sections/arcade-hero.snf (schema excerpt)"
 "title": {
   "type": "text",
   "label": "Title",
@@ -281,7 +281,7 @@ The header and the footer are the same on every page, so they are
 [section groups](18-section-groups.mdx): the layout places them, and each is
 an ordinary section the merchant can edit once for the whole store.
 
-```html title="examples/themes/arcade/layout/theme.sneferu"
+```html title="examples/themes/arcade/layout/theme.snf"
 <svg class="arc-defs" width="0" height="0" aria-hidden="true">
   <defs>
     <linearGradient id="arc-grad" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
@@ -314,7 +314,7 @@ an ordinary section the merchant can edit once for the whole store.
 
 <Example>
 
-```html title="examples/themes/arcade/sections/arcade-header.sneferu"
+```html title="examples/themes/arcade/sections/arcade-header.snf"
 <header class="arc-header">
   <hk-container>
     <div class="arc-bar">
@@ -387,7 +387,7 @@ an ordinary section the merchant can edit once for the whole store.
 
 <Example>
 
-```html title="examples/themes/arcade/sections/arcade-hero.sneferu"
+```html title="examples/themes/arcade/sections/arcade-hero.snf"
 <hk-section padding-y="32" mobile-padding-y="16" class="arc-hero">
   <nav class="arc-tabs" aria-label="{{ t('platforms') }}">
     {% for block in section.blocks %}
@@ -473,7 +473,7 @@ an ordinary section the merchant can edit once for the whole store.
 </hk-schema>
 ```
 
-```html title="examples/themes/arcade/blocks/tab.sneferu"
+```html title="examples/themes/arcade/blocks/tab.snf"
 <a class="arc-tab" href="{{ url(block.settings.link) }}">{{ block.settings.label }}</a>
 <hk-schema>
   {
@@ -500,7 +500,7 @@ an ordinary section the merchant can edit once for the whole store.
 </hk-schema>
 ```
 
-```html title="examples/themes/arcade/blocks/chip.sneferu"
+```html title="examples/themes/arcade/blocks/chip.snf"
 {% if block.settings.amount %}
   <a class="arc-chip" href="{{ url('/search') }}">
     <span class="arc-chip-icon">{% render 'glyph', name: 'coin' %}</span>
@@ -571,7 +571,7 @@ an ordinary section the merchant can edit once for the whole store.
 
 <Example>
 
-```html title="examples/themes/arcade/sections/arcade-categories.sneferu"
+```html title="examples/themes/arcade/sections/arcade-categories.snf"
 <hk-section padding-y="24" mobile-padding-y="16" class="arc-cats">
   {% if section.settings.heading %}
     <hk-heading text="{{ section.settings.heading }}" level="h2" size="24" mobile-size="20" class="arc-h2" />
@@ -606,7 +606,7 @@ an ordinary section the merchant can edit once for the whole store.
 </hk-schema>
 ```
 
-```html title="examples/themes/arcade/blocks/tile.sneferu"
+```html title="examples/themes/arcade/blocks/tile.snf"
 <a class="arc-tile" href="{{ url(block.settings.link) }}">
   <span class="arc-tile-icon">
     {% if block.settings.icon == 'gem' %}
@@ -673,7 +673,7 @@ an ordinary section the merchant can edit once for the whole store.
    `select` setting). The template seeds six; the merchant can add up to
    twelve.
 3. Most icons are `hk-icon`. The set has no gem, so `in-game currency` keeps
-   one inline SVG from `snippets/glyph.sneferu`: a theme can still draw a glyph
+   one inline SVG from `snippets/glyph.snf`: a theme can still draw a glyph
    the set lacks.
 4. The icons take the shared gradient in CSS:
    `.arc-tile-icon .ic { stroke: url(#arc-grad); }`.
@@ -682,7 +682,7 @@ an ordinary section the merchant can edit once for the whole store.
 
 <Example>
 
-```html title="examples/themes/arcade/sections/arcade-steps.sneferu"
+```html title="examples/themes/arcade/sections/arcade-steps.snf"
 <hk-section padding-y="48" mobile-padding-y="32" class="arc-steps">
   <hk-stack gap="24" align="center">
     <hk-heading
@@ -724,7 +724,7 @@ an ordinary section the merchant can edit once for the whole store.
 </hk-schema>
 ```
 
-```html title="examples/themes/arcade/blocks/step.sneferu"
+```html title="examples/themes/arcade/blocks/step.snf"
 <div class="arc-step">
   <span class="arc-step-icon"><hk-icon name="{{ block.settings.icon }}" class="ic" /></span>
   <span class="arc-step-n"></span>
@@ -783,7 +783,7 @@ after an online payment is confirmed, the code is sent by email automatically.
 
 <Example>
 
-```html title="examples/themes/arcade/sections/arcade-products.sneferu"
+```html title="examples/themes/arcade/sections/arcade-products.snf"
 <hk-section padding-y="40" mobile-padding-y="28" class="arc-products">
   <hk-stack gap="20">
     <div class="arc-row-head">
@@ -851,7 +851,7 @@ styles `.arc-grid .sn-product-card`, `.sn-title` and `.sn-price`.
 
 <Example>
 
-```html title="examples/themes/arcade/sections/arcade-faq.sneferu"
+```html title="examples/themes/arcade/sections/arcade-faq.snf"
 <hk-section padding-y="48" mobile-padding-y="32" class="arc-faq">
   <div id="faq" class="arc-faq-wrap">
     <hk-heading text="{{ section.settings.heading }}" level="h2" size="28" mobile-size="20" class="arc-h2" />
@@ -884,7 +884,7 @@ styles `.arc-grid .sn-product-card`, `.sn-title` and `.sn-price`.
 </hk-schema>
 ```
 
-```html title="examples/themes/arcade/blocks/faq-item.sneferu"
+```html title="examples/themes/arcade/blocks/faq-item.snf"
 {% if block.settings.question %}
   <details class="arc-faq-item">
     <summary>{{ block.settings.question }}<hk-icon name="chevron-down" class="ic" /></summary>
@@ -954,4 +954,4 @@ list of what changed is in `examples/GAPS-gaming.md`. What is still missing:
 | no cart tag (no cart count, no add-to-cart) | the cart is an icon link to `/cart`; "Buy" buttons link to the product page |
 | no carousel and no JavaScript | menus and questions use `<details>`; the Console carousel is scroll-snap with anchor links |
 | images in `assets/` are served from 0.3, but these themes bundle none | icons are `hk-icon` plus a few inline SVG glyphs, hero art is inline SVG, product art comes from products |
-| the icon set has 71 icons | a glyph the set lacks (a gem, a coin) is inline SVG in `snippets/glyph.sneferu` |
+| the icon set has 71 icons | a glyph the set lacks (a gem, a coin) is inline SVG in `snippets/glyph.snf` |

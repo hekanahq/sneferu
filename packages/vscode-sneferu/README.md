@@ -10,7 +10,7 @@ compiler, theme checks, formatting and a live preview beside your editor.
 
 ### Language support
 
-- Highlighting for `.sneferu` files: HTML, `hk-*` tags, `{{ expression | filter }}`,
+- Highlighting for `.snf` files (and the older `.sneferu`): HTML, `hk-*` tags, `{{ expression | filter }}`,
   `{% if / for / render %}` and the JSON inside `<hk-schema>`.
 - Comment toggling, bracket and quote auto-closing, closing tags added when you type `>`,
   and linked editing: rename `<hk-stack>` and its `</hk-stack>` together.

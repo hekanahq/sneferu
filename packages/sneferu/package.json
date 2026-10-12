@@ -1,7 +1,7 @@
 {
   "name": "@hekana/sneferu",
-  "version": "0.4.1",
-  "description": "Sneferu \u2014 build Hekana themes. npx sneferu init",
+  "version": "0.4.2",
+  "description": "Sneferu — build Hekana themes. npx sneferu init",
   "type": "module",
   "bin": {
     "sneferu": "./dist/cli.js",

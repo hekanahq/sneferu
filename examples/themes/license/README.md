@@ -30,7 +30,7 @@ start from the new defaults.
 
 ## Pages
 
-License writes only the home page (`templates/index.sneferu`). The product,
+License writes only the home page (`templates/index.snf`). The product,
 collection, search, cart, content page and 404 templates come from the SDK's
 default store ([page types](../../../docs/guide/16-page-types.mdx)), drawn with
 License's tokens, fonts and layout. `assets/theme.css` restyles what the default
@@ -60,21 +60,21 @@ setting of the header section) and from the cart icon.
 
 ```
 assets/theme.css
-blocks/faq-item.sneferu
-blocks/feature.sneferu
+blocks/faq-item.snf
+blocks/feature.snf
 groups/footer.json
 groups/header.json
-layout/theme.sneferu
+layout/theme.snf
 locales/ar.json
 locales/en.json
-sections/apps.sneferu
-sections/faq.sneferu
-sections/features.sneferu
-sections/license-footer.sneferu
-sections/license-header.sneferu
-sections/plans-hero.sneferu
-snippets/glyph.sneferu
-templates/index.sneferu
+sections/apps.snf
+sections/faq.snf
+sections/features.snf
+sections/license-footer.snf
+sections/license-header.snf
+sections/plans-hero.snf
+snippets/glyph.snf
+templates/index.snf
 theme.json
 ```
 
@@ -133,7 +133,7 @@ tokens makes the "no violet" rule a one-line check.
 
 ## 2. Layout
 
-```html title="layout/theme.sneferu"
+```html title="layout/theme.snf"
 <div class="ls">
   <hk-section-group name="header" />
   <main><hk-slot name="content" /></main>
@@ -147,7 +147,7 @@ The header and the footer are [section groups](../../../docs/guide/18-section-gr
 whole store. The header also holds the cart: the cart link carries `data-hk-open="cart-drawer"` and
 `<hk-cart-count />`, and `<hk-cart-drawer>` lists the lines (a plain link to the cart page without JavaScript).
 
-```html title="sections/license-header.sneferu"
+```html title="sections/license-header.snf"
 <header class="ls-header">
   <div class="ls-wrap ls-header-row">
     <details class="ls-menu">
@@ -210,7 +210,7 @@ links to the same page in the other language.
 
 ## 3. Hero and plan cards
 
-```html title="sections/plans-hero.sneferu"
+```html title="sections/plans-hero.snf"
 <section class="ls-hero" id="plans">
   <div class="ls-wrap ls-hero-row">
     <div class="ls-hero-copy">
@@ -337,7 +337,7 @@ beat the general link rule, or the text inherits the light page colour:
 
 ## 4. Features
 
-```html title="sections/features.sneferu"
+```html title="sections/features.snf"
 <section class="ls-features" id="features">
   <div class="ls-wrap">
     <div class="ls-head">
@@ -387,11 +387,11 @@ beat the general link rule, or the text inherits the light page colour:
 
 Each feature is a block with one localized line; the template seeds eight,
 and the merchant can have up to twelve. The check box in front is the theme's
-own glyph (`snippets/glyph.sneferu`): the icon set's `check` has no box.
+own glyph (`snippets/glyph.snf`): the icon set's `check` has no box.
 
 ## 5. Apps
 
-```html title="sections/apps.sneferu"
+```html title="sections/apps.snf"
 <section class="ls-apps" id="apps">
   <div class="ls-wrap">
     <div class="ls-head">
@@ -464,7 +464,7 @@ part the card renders inside `<div class="sn-product-card-wrap ls-app">`, so
 
 ## 6. FAQ
 
-```html title="sections/faq.sneferu"
+```html title="sections/faq.snf"
 <section class="ls-faq" id="faq">
   <div class="ls-wrap">
     <h2 class="ls-h2">{{ section.settings.heading }}</h2>
@@ -499,7 +499,7 @@ part the card renders inside `<div class="sn-product-card-wrap ls-app">`, so
 </hk-schema>
 ```
 
-```html title="blocks/faq-item.sneferu"
+```html title="blocks/faq-item.snf"
 <details class="ls-faq-item">
   <summary>
     <span>{{ block.settings.question }}</span>
@@ -594,7 +594,7 @@ left in the locale files; the copy is in settings and blocks.
 npx sneferu init license          # start from the starter theme
 cd license
 # replace the starter files with the ones above, then:
-npx sneferu format              # indent .sneferu, theme.json and locales
+npx sneferu format              # indent .snf, theme.json and locales
 npx sneferu validate            # must print: theme license@1.1.0 is valid
 npx sneferu dev                 # http://127.0.0.1:4100, add ?locale=en for English
 ```

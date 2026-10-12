@@ -3,6 +3,7 @@
  "name": "Sneferu",
  "scopeName": "text.html.sneferu",
  "fileTypes": [
+  "snf",
   "sneferu"
  ],
  "patterns": [

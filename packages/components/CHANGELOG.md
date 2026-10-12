@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.2
+
+### Patch Changes
+
+- Updated dependencies
+  - @hekana/sneferu-core@0.4.2
+
 ## 0.4.1
 
 ### Patch Changes

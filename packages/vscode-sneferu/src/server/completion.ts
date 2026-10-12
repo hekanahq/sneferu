@@ -80,7 +80,7 @@ export function complete(env: Env): CompletionItem[] {
       ['endif', 'endif', 'Closes {% if %}.'],
       ['for', 'for ${1:item} in ${2:collection(\'featured\').products} %}$0{% endfor', 'Loop over an array (default limit 50, maximum 250).'],
       ['endfor', 'endfor', 'Closes {% for %}.'],
-      ['render', "render '${1:snippet}'", 'Render snippets/<name>.sneferu, with optional `key: value` arguments.'],
+      ['render', "render '${1:snippet}'", 'Render snippets/<name>.snf, with optional `key: value` arguments.'],
     ];
     return D.map(([label, insert, doc]) => ({ label, kind: CompletionItemKind.Keyword, documentation: md(doc), insertText: insert, insertTextFormat: InsertTextFormat.Snippet }));
   }
@@ -98,7 +98,7 @@ export function complete(env: Env): CompletionItem[] {
       if (!theme || !loc) return [];
       return [...loc.entries()].map(([k, v]) => ({ label: k, kind: CompletionItemKind.Text, detail: v.value, documentation: md(translationDoc(theme, k)) }));
     }
-    if (e.fn === 'render') return (theme?.snippets ?? []).map((s) => ({ label: s, kind: CompletionItemKind.File, detail: `snippets/${s}.sneferu` }));
+    if (e.fn === 'render') return (theme?.snippets ?? []).map((s) => ({ label: s, kind: CompletionItemKind.File, detail: theme!.fileOf('snippets', s) }));
     if (e.fn === 'asset_url') return (theme?.assets ?? []).map((a) => ({ label: a.path.slice(7), kind: CompletionItemKind.File, detail: `${Math.ceil(a.size / 1024)} KB` }));
     if (e.fn === 'settings') return (theme?.manifest.settings ?? []).map((f) => ({ label: f.key, kind: CompletionItemKind.Variable, detail: f.type, documentation: md(fieldDoc(f)) }));
     return [];

@@ -10,11 +10,11 @@ Node.js or `npm install` to use it.
 <Example stack>
 
 ```bash
-code --install-extension sneferu-0.1.0.vsix
+code --install-extension sneferu-0.2.0.vsix
 ```
 
-<Result label="VS Code" url="arcade/sections/arcade-products.sneferu">
-  <Shot tab="Completion" src="../images/vscode-completion@2x.webp" alt="VS Code with a .sneferu file open and a completion list of hk-* tags: hk-badge, hk-block, hk-button, hk-card and more, each with its label and category" caption="Typing <hk- lists every tag, with its category." />
+<Result label="VS Code" url="arcade/sections/arcade-products.snf">
+  <Shot tab="Completion" src="../images/vscode-completion@2x.webp" alt="VS Code with a .snf file open and a completion list of hk-* tags: hk-badge, hk-block, hk-button, hk-card and more, each with its label and category" caption="Typing <hk- lists every tag, with its category." />
   <Shot tab="Hover" src="../images/vscode-hover@2x.webp" alt="A hover box over hk-product-grid showing its attributes products, limit and columns with types, ranges and defaults, and a link to the tag reference" caption="Hover a tag for its props, ranges and defaults." />
   <Shot tab="Diagnostics" src="../images/vscode-diagnostics@2x.webp" alt="An unknown tag hk-imagez underlined in red, with the message: unknown tag hk-imagez, did you mean hk-image, SN2003; the Problems panel lists it with a link on the code" caption="Compiler errors appear as you type; the code links to its fix." />
   <Shot tab="Preview" src="../images/vscode-preview@2x.webp" alt="The editor on the left and the Arcade theme rendered in a preview panel on the right, with Desktop, Tablet, Phone, AR, EN, Inspect, Reload and Browser buttons" caption="Sneferu: Open Preview runs sneferu dev beside the editor." />
@@ -29,12 +29,12 @@ The extension is published by Hekana as `hekana.sneferu`.
 ### From the .vsix file (now)
 
 <Steps>
-  1. Download [sneferu-0.1.0.vsix](https://hekana.dev/developers/downloads/sneferu-0.1.0.vsix).
+  1. Download [sneferu-0.2.0.vsix](https://hekana.dev/developers/downloads/sneferu-0.2.0.vsix).
   2. In VS Code open the Extensions view, click the `…` menu at its top and
      choose **Install from VSIX…**, then pick the file. Or run
-     `code --install-extension sneferu-0.1.0.vsix` in a terminal.
+     `code --install-extension sneferu-0.2.0.vsix` in a terminal.
   3. Open a theme folder (the folder with `theme.json`). The extension starts
-     when the folder has a `theme.json` or when you open a `.sneferu` file.
+     when the folder has a `theme.json` or when you open a `.snf` (or `.sneferu`) file.
 </Steps>
 
 ### From the Marketplace (soon)
@@ -45,7 +45,7 @@ run `code --install-extension hekana.sneferu`. Editors that use Open VSX
 An installed `.vsix` updates from the Marketplace like any other extension.
 
 If you followed [Format your theme](10-format-your-theme.mdx) and mapped
-`*.sneferu` to `html` in `.vscode/settings.json`, remove that mapping: the
+`*.snf` or `*.sneferu` to `html` in `.vscode/settings.json`, remove that mapping: the
 extension registers the `sneferu` language and formats it itself. Prettier and
 `.prettierrc` keep working for the CLI and for CI.
 
@@ -155,7 +155,7 @@ A snippet that no file renders with `{% render %}`. Shown as a hint.
 
 Ctrl+click (Cmd+click on macOS), or F12, on:
 
-- `{% render 'name' %}`: opens `snippets/name.sneferu`
+- `{% render 'name' %}`: opens `snippets/name.snf`, or `snippets/name.sneferu` when the theme still uses the older extension
 - a translation key: its line in each locale file
 - `section.settings.<key>` or `settings.<key>`: the setting in the schema or `theme.json`
 - a section `"type"` in a template's `<hk-schema>`: the section file
@@ -182,7 +182,7 @@ makes of the file is refused. To format on save, add to `.vscode/settings.json`:
 ## Live preview
 
 **Sneferu: Open Preview** (Ctrl+Shift+P, then type it), or the preview button at the
-top right of a `.sneferu` editor, starts `sneferu dev` for the theme and opens
+top right of a `.snf` editor, starts `sneferu dev` for the theme and opens
 the preview beside the editor.
 
 - **Desktop**, **Tablet** (820 px) and **Phone** (390 px) set the width.

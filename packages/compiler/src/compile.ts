@@ -1,4 +1,4 @@
-import { IR_VERSION, ENGINE_VERSION, GROUP_NAMES, PAGE_TYPES, err, isGroupName, parseTemplateName, warn, hasErrors, normalizeFieldLabels, normalizeLabel, tokenSettings, validateIR, sectionAllowedOn, type Diagnostic, type FieldSchema, type GroupName, type IRNode, type PageNode, type TagRegistry } from '@hekana/sneferu-core';
+import { IR_VERSION, ENGINE_VERSION, GROUP_NAMES, PAGE_TYPES, err, isGroupName, parseTemplateName, warn, hasErrors, normalizeFieldLabels, normalizeLabel, tokenSettings, validateIR, sectionAllowedOn, isTemplateFile, stripTemplateExtension, TEMPLATE_EXTENSION, type Diagnostic, type FieldSchema, type GroupName, type IRNode, type PageNode, type TagRegistry } from '@hekana/sneferu-core';
 import { checkFiles, IMAGE_ASSET, type ThemeFile } from './files';
 import { validateManifest, type Manifest } from './manifest';
 import { parseTemplate } from './parser';
@@ -114,7 +114,7 @@ export function compileTheme(files: ThemeFile[], registry: TagRegistry, options:
   const diagnostics: Diagnostic[] = checkFiles(files);
   const text = new Map<string, string>();
   for (const f of files) {
-    if (!f.path.endsWith('.sneferu') && !f.path.endsWith('.json')) continue;
+    if (!isTemplateFile(f.path) && !f.path.endsWith('.json')) continue;
     try { text.set(f.path, dec.decode(f.bytes)); } catch { diagnostics.push(err('SN3022', 'file is not valid UTF-8', { file: f.path })); }
   }
   const mt = text.get('theme.json');
@@ -128,8 +128,10 @@ export function compileTheme(files: ThemeFile[], registry: TagRegistry, options:
   const manifestTokens = isObj(manifestJson) && isObj(manifestJson.tokens) ? manifestJson.tokens : {};
   const authored: Record<string, unknown> = isObj(manifestJson) && isObj(manifestJson.settings) ? manifestJson.settings : {};
   const themeSettings: Record<string, unknown> = { ...(isObj(manifestTokens.colors) ? tokenSettings(manifestTokens as never) : {}), ...authored };
-  const byDir = (dir: string) => [...text.keys()].filter((p) => p.startsWith(`${dir}/`) && p.endsWith('.sneferu')).sort();
-  const nameOf = (p: string) => p.split('/').pop()!.replace(/\.sneferu$/, '');
+  const byDir = (dir: string) => [...text.keys()].filter((p) => p.startsWith(`${dir}/`) && isTemplateFile(p)).sort();
+  const nameOf = (p: string) => stripTemplateExtension(p.split('/').pop()!);
+  /** The real file of `sections/hero`: `.snf` or `.sneferu`; for a missing one, the `.snf` it should be. */
+  const fileOf = (stem: string) => [...text.keys()].find((p) => isTemplateFile(p) && stripTemplateExtension(p) === stem) ?? `${stem}${TEMPLATE_EXTENSION}`;
   const snippetNames = new Set(byDir('snippets').map(nameOf));
   const knownTags = new Set([...registry.names(), 'hk-block', 'hk-part']);
 
@@ -148,15 +150,16 @@ export function compileTheme(files: ThemeFile[], registry: TagRegistry, options:
     return { ir, schema: parsed.schema };
   };
 
-  if (!text.has('layout/theme.sneferu')) diagnostics.push(err('SN3023', 'layout/theme.sneferu is missing'));
-  const layout = text.has('layout/theme.sneferu') ? compileOne('layout/theme.sneferu', 'layout').ir : [];
+  const layoutFile = fileOf('layout/theme');
+  if (!text.has(layoutFile)) diagnostics.push(err('SN3023', `${layoutFile} is missing`));
+  const layout = text.has(layoutFile) ? compileOne(layoutFile, 'layout').ir : [];
   const sections: Artifact['sections'] = {};
   for (const p of byDir('sections')) { const c = compileOne(p, 'section'); sections[nameOf(p)] = { ir: c.ir, schema: asSchema(c.schema, p, diagnostics) }; }
   const blocks: Artifact['blocks'] = {};
   for (const p of byDir('blocks')) { const c = compileOne(p, 'block'); blocks[nameOf(p)] = { ir: c.ir, schema: asSchema(c.schema, p, diagnostics) }; }
   const snippets: Artifact['snippets'] = {};
   for (const p of byDir('snippets')) snippets[nameOf(p)] = compileOne(p, 'snippet').ir;
-  for (const c of snippetCycles(snippets)) diagnostics.push(err('SN3027', `snippet include cycle: ${c.join(' → ')}`, { file: `snippets/${c[0]}.sneferu` }));
+  for (const c of snippetCycles(snippets)) diagnostics.push(err('SN3027', `snippet include cycle: ${c.join(' → ')}`, { file: fileOf(`snippets/${c[0]}`) }));
   const templates: Artifact['templates'] = {};
   const templateSections: Artifact['templateSections'] = {};
   const entryCheck = (file: string, label: string, where: string, kind: 'template' | 'group') => ({
@@ -173,14 +176,14 @@ export function compileTheme(files: ThemeFile[], registry: TagRegistry, options:
   for (const p of byDir('templates')) {
     const c = compileOne(p, 'template');
     const name = nameOf(p);
-    if (!parseTemplateName(name)) diagnostics.push(err('SN3035', `'templates/${name}.sneferu' is not a page type: use index, product, collection, search, cart, page or 404 (product, collection and page also take an alternate: product.codes)`, { file: p }));
+    if (!parseTemplateName(name)) diagnostics.push(err('SN3035', `'${p}' is not a page type: use index, product, collection, search, cart, page or 404 (product, collection and page also take an alternate: product.codes)`, { file: p }));
     templates[name] = c.ir;
     const rawSections = isObj(c.schema) ? c.schema.sections : undefined;
     const declared = checkEntries(rawSections, entryCheck(p, `template ${name}`, name, 'template'), diagnostics);
     checkPlacement(declared, name, p, `template ${name}`);
     templateSections[name] = declared as Artifact['templateSections'][string];
   }
-  if (!templates.index) diagnostics.push(err('SN3024', 'templates/index.sneferu is missing'));
+  if (!templates.index) diagnostics.push(err('SN3024', `${fileOf('templates/index')} is missing`));
 
   // groups: which ones the layout places, and the theme's defaults for them
   const placed = placedGroups(layout);
@@ -197,7 +200,7 @@ export function compileTheme(files: ThemeFile[], registry: TagRegistry, options:
     const entries = checkEntries(json.sections, entryCheck(path, `group ${g}`, g, 'group'), diagnostics);
     checkPlacement(entries, g, path, `group ${g}`);
     groups[g] = toNodes(entries);
-    if (!placed.has(g)) diagnostics.push(warn('SN3039', `${path} is never used: layout/theme.sneferu has no <hk-section-group name="${g}" />`, { file: path }));
+    if (!placed.has(g)) diagnostics.push(warn('SN3039', `${path} is never used: ${layoutFile} has no <hk-section-group name="${g}" />`, { file: path }));
   }
 
   const locales: Artifact['locales'] = {};
@@ -207,13 +210,13 @@ export function compileTheme(files: ThemeFile[], registry: TagRegistry, options:
     const json = parsed;
     const bad = !isObj(json) ? '(root)' : Object.keys(json).find((k) => typeof json[k] !== 'string');
     if (bad !== undefined) { diagnostics.push(err('SN3025', `locale must be a flat object of strings; "${bad}" is not a string`, { file: p })); continue; }
-    locales[nameOf(p.replace(/\.json$/, '.sneferu'))] = json as Record<string, string>;
+    locales[p.split('/').pop()!.replace(/\.json$/, '')] = json as Record<string, string>;
   }
   const assets = files.filter((f) => f.path.startsWith('assets/')).sort((a, b) => (a.path < b.path ? -1 : a.path > b.path ? 1 : 0)).map((f) => ({ path: f.path, size: f.bytes.byteLength, hash: hash64(Array.from(f.bytes, (b) => String.fromCharCode(b)).join('')) }));
 
   for (const a of assets) if (!/\.css$/.test(a.path) && !IMAGE_ASSET.test(a.path)) diagnostics.push(warn('SN3034', `asset '${a.path}' is not served on the store (only images are)`, { file: a.path }));
-  for (const [name, b] of Object.entries(sections)) for (const t of b.schema.blocks?.allowed ?? []) if (!Object.hasOwn(blocks, t)) diagnostics.push(err('SN3042', `section '${name}' allows block '${t}', which is not in blocks/`, { file: `sections/${name}.sneferu` }));
-  for (const [name, b] of Object.entries(blocks)) for (const t of b.schema.blocks?.allowed ?? []) if (!Object.hasOwn(blocks, t)) diagnostics.push(err('SN3042', `block '${name}' allows block '${t}', which is not in blocks/`, { file: `blocks/${name}.sneferu` }));
+  for (const [name, b] of Object.entries(sections)) for (const t of b.schema.blocks?.allowed ?? []) if (!Object.hasOwn(blocks, t)) diagnostics.push(err('SN3042', `section '${name}' allows block '${t}', which is not in blocks/`, { file: fileOf(`sections/${name}`) }));
+  for (const [name, b] of Object.entries(blocks)) for (const t of b.schema.blocks?.allowed ?? []) if (!Object.hasOwn(blocks, t)) diagnostics.push(err('SN3042', `block '${name}' allows block '${t}', which is not in blocks/`, { file: fileOf(`blocks/${name}`) }));
 
   if (hasErrors(diagnostics) || !mv.manifest) return { diagnostics };
   const manifest = { ...mv.manifest, settings: { ...tokenSettings(mv.manifest.tokens), ...mv.manifest.settings } };

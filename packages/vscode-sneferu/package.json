@@ -2,7 +2,7 @@
   "name": "sneferu",
   "displayName": "Sneferu",
   "description": "Official Sneferu support for Hekana themes: syntax highlighting, completion, hover docs, live diagnostics, theme checks, formatting and a live preview.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "publisher": "hekana",
   "private": true,
   "license": "SEE LICENSE IN LICENSE",
@@ -51,6 +51,7 @@
           "sneferu"
         ],
         "extensions": [
+          ".snf",
           ".sneferu"
         ],
         "configuration": "./language-configuration.json",

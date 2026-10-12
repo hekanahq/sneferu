@@ -1,6 +1,6 @@
 # Sneferu language reference
 
-A theme is a folder of `.sneferu` templates (HTML with `hk-*` tags, `{{ }}` output and `{% %}` directives), a `theme.json` manifest, locale files and assets. `sneferu build` compiles it to one JSON artifact; the runtime renders that artifact to HTML. Templates cannot run code: the only way to produce output is the grammar below.
+A theme is a folder of `.snf` templates (the older `.sneferu` extension still works) (HTML with `hk-*` tags, `{{ }}` output and `{% %}` directives), a `theme.json` manifest, locale files and assets. `sneferu build` compiles it to one JSON artifact; the runtime renders that artifact to HTML. Templates cannot run code: the only way to produce output is the grammar below.
 
 ## Grammar
 
@@ -59,7 +59,7 @@ Notes:
 | - | - |
 | `{% if expr %}` / `{% elsif expr %}` / `{% else %}` / `{% endif %}` | `{% if product.compare_at > product.price %}<hk-badge text="{{ 'sale' \| t }}" />{% endif %}` |
 | `{% for x in expr [limit:n \| limit:setting] %}` / `{% endfor %}` | `{% for p in collection('featured').products limit: 8 %}{{ p.title }}{% endfor %}` |
-| `{% render 'snippet', key: expr %}` | `{% render 'price-tag', amount: p.price %}` renders `snippets/price-tag.sneferu` with `amount` in scope |
+| `{% render 'snippet', key: expr %}` | `{% render 'price-tag', amount: p.price %}` renders `snippets/price-tag.snf` with `amount` in scope |
 | `<hk-slot name="content" />` | layout and templates only: where the template (in a layout) or the sections (in a template) go |
 | `<hk-sections />` | shorthand for the `sections` slot, used in templates |
 | `<hk-schema>{json}</hk-schema>` | declares settings (sections, blocks) or default sections (templates) |
@@ -76,7 +76,7 @@ A section lists its blocks with a loop over `section.blocks` and renders each wi
 {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
 ```
 
-Each block is rendered from `blocks/<type>.sneferu` with `block` in scope (`block.id`, `block.type`, `block.settings.*`) and wrapped in `<div data-hk-block="<id>">`. A block whose type is not in the theme is skipped with SN4012.
+Each block is rendered from `blocks/<type>.snf` with `block` in scope (`block.id`, `block.type`, `block.settings.*`) and wrapped in `<div data-hk-block="<id>">`. A block whose type is not in the theme is skipped with SN4012.
 
 ### Parts
 
@@ -197,11 +197,11 @@ When a render budget is exceeded, the offending section degrades to a comment an
 
 ```
 theme.json           manifest
-layout/theme.sneferu the page frame (header, <hk-slot name="content" />, footer)
-templates/*.sneferu  one per page type; templates/index.sneferu is required
-sections/*.sneferu   reusable page parts with settings and blocks
-blocks/*.sneferu     items inside a section, rendered with hk-block
-snippets/*.sneferu   partials used with {% render %}
+layout/theme.snf     the page frame (header, <hk-slot name="content" />, footer)
+templates/*.snf      one per page type; templates/index.snf is required
+sections/*.snf       reusable page parts with settings and blocks
+blocks/*.snf         items inside a section, rendered with hk-block
+snippets/*.snf       partials used with {% render %}
 assets/              css, js, images, fonts (png jpg webp avif gif svg woff woff2 ttf otf ico); fonts here are not served on the store, use tokens.fonts
 locales/<xx>.json    flat key to text maps (en.json, …); every value must be a string (SN3025)
 migrations/*.json    settings migrations
@@ -211,11 +211,11 @@ File and folder names are lower-case letters, digits, `.`, `_`, `-`. Symlinks, `
 
 | Role | What it does | Starter example |
 | - | - | - |
-| Layout | wraps every page; the content slot receives the template | `layout/theme.sneferu` |
-| Template | page type; usually just `<hk-sections />` plus a `<hk-schema>` listing default sections | `templates/index.sneferu` |
-| Section | rendered inside `<div data-hk-section="<id>">`; has a `<hk-schema>` | `sections/hero.sneferu` |
-| Block | a repeatable item inside a section | `blocks/chip.sneferu` |
-| Snippet | a partial, no schema (the starter has none) | `snippets/<name>.sneferu` |
+| Layout | wraps every page; the content slot receives the template | `layout/theme.snf` |
+| Template | page type; usually just `<hk-sections />` plus a `<hk-schema>` listing default sections | `templates/index.snf` |
+| Section | rendered inside `<div data-hk-section="<id>">`; has a `<hk-schema>` | `sections/hero.snf` |
+| Block | a repeatable item inside a section | `blocks/chip.snf` |
+| Snippet | a partial, no schema (the starter has none) | `snippets/<name>.snf` |
 
 Template example (default sections for the page):
 
