@@ -175,7 +175,7 @@ has the details; it needs the CLI from Sneferu main after #16.)
 {
   "id": "bento",
   "name": "Bento",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "Hekana",
   "description": "A soft pastel bento-grid theme for printables, templates and e-books",
   "category": "digital",
@@ -255,12 +255,6 @@ whole store.
       <a class="bt-icon bt-hide-phone" href="{{ url('/wishlist') }}" aria-label="{{ t('wishlist') }}"><hk-icon
           name="heart"
         /></a>
-      <a
-        class="bt-icon bt-hide-phone"
-        href="{{ url('/cart') }}"
-        data-hk-open="cart-drawer"
-        aria-label="{{ t('cart') }}"
-      ><hk-icon name="shopping-bag" /></a>
       <a class="bt-logo" href="{{ store.url }}">{{ store.name }}</a>
     </div>
     <div class="bt-end">
@@ -280,7 +274,7 @@ whole store.
           <a href="{{ url('/search') }}">{{ t('search') }}</a>
           <a href="{{ url('/cart') }}" data-hk-open="cart-drawer">{{ t('cart') }}</a>
           <a href="{{ url('/wishlist') }}">{{ t('wishlist') }}</a>
-          <a href="{{ t('href_other_locale') }}">{{ t('other_locale') }}</a>
+          <hk-locale-switch />
         </div>
       </details>
     </div>
@@ -311,9 +305,8 @@ whole store.
   they open `<hk-cart-drawer>`, without them they go to the cart page.
   `<hk-cart-count />` shows the number of items.
 - All words are `t('…')`. Links go through `url()`: `url('/cart')` is `/cart`
-  on an Arabic page and `/en/cart` on an English one. Only the language switch,
-  which must go to the other language, keeps its link in the locale files
-  (`href_other_locale`).
+  on an Arabic page and `/en/cart` on an English one. The language switch is
+  `<hk-locale-switch />`: it links to the same page in the other language.
 - The phone menu is `<details>`/`<summary>`: it opens without script.
 - Icons are `<hk-icon name="shopping-bag" />` from the bundled set. The filled
   avatar has no match in the set, so it stays an inline SVG in
@@ -630,5 +623,5 @@ is still missing:
 | no cart tag (no cart count, no add-to-cart) | the cart is an icon link to `/cart`; buy buttons link to the product page |
 | no carousel and no JavaScript | menus and questions use `<details>`; Creator's covers row is scroll-snap with anchor dots |
 | images in `assets/` are served from 0.3, but these themes bundle none | art comes from products, inline SVG, or an `image` setting with an `https://` default |
-| `url()` cannot link to the other language | the language switch link (`href_other_locale`) stays in the locale files |
+| `url()` cannot link to the other language | `<hk-locale-switch />` links to the same page in the other language (since Sneferu 0.4) |
 | `money` prints two decimals unless the theme sets `"money": { "format": "whole" }` | these themes keep two decimals (`EGP 69.00`) |

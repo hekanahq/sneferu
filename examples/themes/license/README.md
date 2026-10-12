@@ -156,7 +156,7 @@ whole store. The header also holds the cart: the cart link carries `data-hk-open
         <a href="{{ url('/') }}#plans">{{ t('nav_plans') }}</a>
         <a href="{{ url('/') }}#apps">{{ t('nav_apps') }}</a>
         <a href="{{ url('/') }}#faq">{{ t('nav_faq') }}</a>
-        <a href="{{ t('href_other_locale') }}">{{ t('other_locale') }}</a>
+        <hk-locale-switch />
       </div>
     </details>
     <a class="ls-logo" href="{{ store.url }}">{{ store.name }}</a>
@@ -205,8 +205,8 @@ whole store. The header also holds the cart: the cart link carries `data-hk-open
 The search box is `<hk-search-form class="ls-search">`, a form that sends the
 shopper to the store's search page, styled like the mockup's pill field; on
 phones only its button shows. Account and cart are icon links with `hk-icon`.
-Links go through `url()`; only the language switch keeps its target in the
-locale files (`href_other_locale`).
+Links go through `url()`; the language switch is `<hk-locale-switch />`, which
+links to the same page in the other language.
 
 ## 3. Hero and plan cards
 
@@ -579,8 +579,6 @@ cash on delivery.
   "search": "Search for an app",
   "account": "My account",
   "cart": "Cart",
-  "href_other_locale": "/",
-  "other_locale": "العربية",
   "buy": "Buy",
   "all_apps": "All apps",
   "footer_note": "Digital products: the licence key and download link are emailed after online payment. Cash on delivery is not available."
@@ -643,5 +641,5 @@ Still open:
 - Bundled images are served from 0.3, but this theme still ships none (no new
   art was made for 1.1.0): art comes from products, inline SVG, or an `image`
   setting with an `https://` default.
-- `url()` always links within the page's language, so the language switch
-  keeps its target in the locale files (`href_other_locale`).
+- `url()` always links within the page's language; since 1.2.0 the language
+  switch is `<hk-locale-switch />`, which keeps the page.

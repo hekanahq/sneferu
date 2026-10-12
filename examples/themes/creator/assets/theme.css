@@ -120,4 +120,6 @@
 .cr-tools { display: flex; align-items: center; gap: 4px; }
 .cr-cart { position: relative; display: grid; place-items: center; width: 44px; height: 44px; text-decoration: none; }
 .cr-cart:hover { color: var(--hk-color-accent); }
-.cr-cart .sn-cart-count { position: absolute; top: 2px; inset-inline-end: 0; }
+.cr-cart .sn-cart-count { position: absolute; top: -2px; inset-inline-end: -8px; }
+/* The language switch keeps the page; it looks like the old footer link */
+a.cr-footer-locale.sn-locale-switch { padding-inline: 0; }

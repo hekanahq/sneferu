@@ -18,7 +18,7 @@
           <a href="{{ url('/') }}#what">{{ t('nav_what') }}</a>
           <a href="{{ url('/') }}#about">{{ t('nav_about') }}</a>
           <a href="{{ url('/products') }}">{{ t('all_products') }}</a>
-          <a href="{{ t('href_other_locale') }}">{{ t('other_locale') }}</a>
+          <hk-locale-switch />
         </div>
       </details>
     </div>

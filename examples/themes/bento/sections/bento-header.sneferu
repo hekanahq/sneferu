@@ -9,12 +9,6 @@
       <a class="bt-icon bt-hide-phone" href="{{ url('/wishlist') }}" aria-label="{{ t('wishlist') }}"><hk-icon
           name="heart"
         /></a>
-      <a
-        class="bt-icon bt-hide-phone"
-        href="{{ url('/cart') }}"
-        data-hk-open="cart-drawer"
-        aria-label="{{ t('cart') }}"
-      ><hk-icon name="shopping-bag" /></a>
       <a class="bt-logo" href="{{ store.url }}">{{ store.name }}</a>
     </div>
     <div class="bt-end">
@@ -34,7 +28,7 @@
           <a href="{{ url('/search') }}">{{ t('search') }}</a>
           <a href="{{ url('/cart') }}" data-hk-open="cart-drawer">{{ t('cart') }}</a>
           <a href="{{ url('/wishlist') }}">{{ t('wishlist') }}</a>
-          <a href="{{ t('href_other_locale') }}">{{ t('other_locale') }}</a>
+          <hk-locale-switch />
         </div>
       </details>
     </div>

@@ -179,3 +179,5 @@ form.ls-search .sn-search-button:hover { color: var(--hk-color-text); }
 .sf-badge, .sf-chip[aria-current=true] { color: var(--hk-color-background); }
 .sf-chip[aria-current=true] { background: var(--hk-color-accent); border-color: var(--hk-color-accent); }
 .sf-cart-aside, .sf-note-muted, dialog.sn-cart-drawer { background: var(--hk-color-secondary); border-color: var(--hk-color-line); color: var(--hk-color-text); }
+/* The language switch keeps the page; it looks like the old footer link */
+a.ls-locale.sn-locale-switch { padding-inline: 0; }

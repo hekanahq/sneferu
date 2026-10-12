@@ -124,8 +124,6 @@
 }
 
 /* Cart, product, collection, search and 404 pages: the SDK's default store, in Bento's style */
-/* Dark text on the peach accent: white on peach is 2.3:1 (the runtime picks white for this colour). */
-.bt { --hk-color-on-accent: var(--hk-color-text); }
 .bt-icon .sn-cart-count { position: absolute; top: 0; inset-inline-end: -2px; }
 .sf-card { padding: 10px; border-radius: 18px; background: var(--hk-color-warm); }
 .sf-card:nth-child(4n + 2) { background: var(--hk-color-sky); }
@@ -142,3 +140,5 @@
 .bt-tabs-row a { min-width: 44px; justify-content: center; }
 /* Phones: the cart icon stays in the header so the drawer is one tap away */
 @media (max-width: 639px) { .bt-end .bt-hide-phone[data-hk-open] { display: grid; } }
+/* The language switch keeps the page; it looks like the old footer link */
+a.bt-locale.sn-locale-switch { padding-inline: 0; }

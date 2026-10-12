@@ -21,7 +21,7 @@
 /* Header */
 .arc-header { position: sticky; top: 0; z-index: 10; background: rgba(7, 10, 15, 0.85); backdrop-filter: blur(10px); border-bottom: 1px solid var(--hk-color-line); }
 .arc-bar { display: flex; align-items: center; gap: 16px; min-height: 64px; }
-.arc-logo { font-weight: 700; font-size: 20px; letter-spacing: 0.01em; background: var(--arc-grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.arc-logo { display: inline-flex; align-items: center; min-height: 44px; font-weight: 700; font-size: 20px; letter-spacing: 0.01em; background: var(--arc-grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .arc-search { flex: 1; max-width: 460px; margin-inline-start: auto; flex-wrap: nowrap; align-items: center; gap: 12px; min-height: 44px; padding-inline: 18px 4px; border-radius: 999px; border: 1px solid rgba(34, 211, 238, 0.35); background: rgba(12, 18, 25, 0.8); color: var(--hk-color-muted); font-size: 14px; }
 .arc-search:hover, .arc-search:focus-within { border-color: var(--arc-cyan); }
 form.arc-search input { min-height: 44px; padding: 0; border: 0; outline: 0; background: transparent; color: var(--hk-color-text); font-size: 14px; }

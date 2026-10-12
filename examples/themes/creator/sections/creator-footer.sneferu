@@ -2,7 +2,7 @@
   <div class="cr-wrap cr-footer-row">
     <p class="cr-footer-name">{{ store.name }}</p>
     <p class="cr-footer-note">{{ t('footer_note') }}</p>
-    <a class="cr-footer-locale" href="{{ t('href_other_locale') }}">{{ t('other_locale') }}</a>
+    <hk-locale-switch class="cr-footer-locale" />
   </div>
 </footer>
 <hk-schema>

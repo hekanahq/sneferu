@@ -169,7 +169,7 @@ whole store. The header also holds the cart: the cart link carries `data-hk-open
           <a href="{{ url('/') }}#what">{{ t('nav_what') }}</a>
           <a href="{{ url('/') }}#about">{{ t('nav_about') }}</a>
           <a href="{{ url('/products') }}">{{ t('all_products') }}</a>
-          <a href="{{ t('href_other_locale') }}">{{ t('other_locale') }}</a>
+          <hk-locale-switch />
         </div>
       </details>
     </div>
@@ -531,8 +531,6 @@ edit them or add up to eight.
   "nav_about": "About me",
   "menu": "Menu",
   "all_products": "All products",
-  "href_other_locale": "/",
-  "other_locale": "العربية",
   "shop_heading": "Courses, e-books and templates",
   "footer_note": "All products are digital: your download link is emailed after online payment. Cash on delivery is not available.",
   "cart": "Cart"
@@ -594,5 +592,5 @@ Still open:
 - Bundled images are served from 0.3, but this theme still ships none (no new
   art was made for 1.1.0): art comes from products, inline SVG, or an `image`
   setting with an `https://` default.
-- `url()` always links within the page's language, so the language switch
-  keeps its target in the locale files (`href_other_locale`).
+- `url()` always links within the page's language; since 1.2.0 the language
+  switch is `<hk-locale-switch />`, which keeps the page.

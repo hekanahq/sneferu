@@ -41,8 +41,8 @@ search and 404 pages"):
   shelves (sand, sky, sage, peach in turn), with rounded corners;
 - buttons, chips and the search field are pills; text links use the ink colour
   (peach text on white is 2.3:1);
-- text on the peach accent is the ink colour, set in the stylesheet
-  (`.bt { --hk-color-on-accent: … }`), because the runtime picks white for this peach;
+- text on the peach accent is dark: the runtime picks the text colour with the
+  higher contrast (Sneferu 0.4.x), so white-on-peach (2.3:1) no longer happens;
 - the muted grey is a little darker (`#5F6474`) and the teal band's text is ink, for 4.5:1;
 - on phones the header keeps a cart icon; icons, the logo and the tabs are 44 px.
 
@@ -172,12 +172,6 @@ whole store. The header also holds the cart: the cart link carries `data-hk-open
       <a class="bt-icon bt-hide-phone" href="{{ url('/wishlist') }}" aria-label="{{ t('wishlist') }}"><hk-icon
           name="heart"
         /></a>
-      <a
-        class="bt-icon bt-hide-phone"
-        href="{{ url('/cart') }}"
-        data-hk-open="cart-drawer"
-        aria-label="{{ t('cart') }}"
-      ><hk-icon name="shopping-bag" /></a>
       <a class="bt-logo" href="{{ store.url }}">{{ store.name }}</a>
     </div>
     <div class="bt-end">
@@ -197,7 +191,7 @@ whole store. The header also holds the cart: the cart link carries `data-hk-open
           <a href="{{ url('/search') }}">{{ t('search') }}</a>
           <a href="{{ url('/cart') }}" data-hk-open="cart-drawer">{{ t('cart') }}</a>
           <a href="{{ url('/wishlist') }}">{{ t('wishlist') }}</a>
-          <a href="{{ t('href_other_locale') }}">{{ t('other_locale') }}</a>
+          <hk-locale-switch />
         </div>
       </details>
     </div>
@@ -228,9 +222,8 @@ whole store. The header also holds the cart: the cart link carries `data-hk-open
 - `{{ store.name }}` and `{{ store.url }}` come from the store. Every other
   word is `t('…')`, read from `locales/ar.json` or `locales/en.json`.
 - Links go through `url()`: `href="{{ url('/cart') }}"` is `/cart` in Arabic
-  and `/en/cart` in English. Only the language switch keeps its target in the
-  locale files (`href_other_locale`), since `url()` stays in the page's
-  language.
+  and `/en/cart` in English. The language switch is `<hk-locale-switch />`, which links to the
+  same page in the other language.
 - The phone menu is a `<details>` element: it opens and closes without script
   (themes cannot run JavaScript).
 - Icons are `<hk-icon>` from the bundled Lucide set (`heart`,
@@ -629,8 +622,6 @@ All interface text is in the two locale files, with the same keys:
   "cart": "Cart",
   "search": "Search",
   "all_products": "All products",
-  "href_other_locale": "/",
-  "other_locale": "العربية",
   "tabs_label": "Categories",
   "chip_instant": "Instant download",
   "chip_pdf": "PDF",
@@ -710,5 +701,5 @@ Still open:
 - Bundled images are served from 0.3, but this theme still ships none (no new
   art was made for 1.1.0): art comes from products, inline SVG, or an `image`
   setting with an `https://` default.
-- `url()` always links within the page's language, so the language switch
-  keeps its target in the locale files (`href_other_locale`).
+- `url()` always links within the page's language; since 1.2.0 the language
+  switch is `<hk-locale-switch />`, which keeps the page.
