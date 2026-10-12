@@ -42,7 +42,7 @@ export const hkVariantPicker: HkTag = {
     const select = p.display === 'select';
     const sel = selectedVariant(prod, variants);
     const pid = productId(prod);
-    const groups = options ?? [{ name: str(c, 'variant'), values: variants.map((v) => v.id), titles: variants.map((v) => v.title || v.id) }];
+    const groups = options ?? [{ name: str(c, 'variant'), values: variants.map((v) => v.id), titles: variants.map((v, k) => v.title.trim() || `${str(c, 'option')} ${k + 1}`) }];
     const checked = (i: number, value: string): boolean => (options ? sel?.options[i] === value : sel?.id === value);
     const html = groups.map((g, i) => {
       const name = `hk-${c.id}-${i}`;
@@ -96,16 +96,23 @@ export const hkAddToCart: HkTag = {
     const pid = productId(prod);
     const add = label(c, p.label, 'add_to_cart');
     const out = label(c, p.soldOutLabel, 'sold_out');
-    const action = typeof prod.url === 'string' && prod.url ? ` action="${escapeAttr(link(c, prod.url))}"` : '';
+    const style = p.variant === 'outline' ? 'outline' : 'solid';
+    const x = passthrough(p);
+    const target = typeof prod.url === 'string' && prod.url ? link(c, prod.url) : '#';
+    // no safe product page to post to: a plain link to the cart page, never a form that submits to the current page
+    if (target === '#') {
+      return `<div class="sn-${c.id} sn-add-to-cart${x.cls}"${x.attrs}>`
+        + (available ? `<a class="sn-btn sn-btn-${style} sn-atc-button" href="${escapeAttr(link(c, '/cart'))}">${escapeText(str(c, 'view_cart'))}</a>`
+          : `<button type="button" class="sn-btn sn-btn-${style} sn-atc-button" disabled>${escapeText(out)}</button>`)
+        + '</div>';
+    }
     const qty = p.quantity === false
       ? `<input type="hidden" name="quantity" value="${rules.min}">`
       : `<div class="sn-qty"><button type="button" class="sn-qty-btn" data-hk-qty="dec" aria-label="${escapeAttr(str(c, 'quantity_decrease'))}">${tagIcon(c, 'minus', 16, 2)}</button>`
         + `<input type="number" class="sn-qty-input" name="quantity" value="${rules.min}" min="${rules.min}" step="${rules.step}"${rules.max !== null ? ` max="${rules.max}"` : ''} inputmode="numeric" aria-label="${escapeAttr(str(c, 'quantity'))}">`
         + `<button type="button" class="sn-qty-btn" data-hk-qty="inc" aria-label="${escapeAttr(str(c, 'quantity_increase'))}">${tagIcon(c, 'plus', 16, 2)}</button></div>`;
     const config = { productId: pid, variantId: sel?.id ?? null, min: rules.min, step: rules.step, max: rules.max, available };
-    const x = passthrough(p);
-    const style = p.variant === 'outline' ? 'outline' : 'solid';
-    return `<form class="sn-${c.id} sn-add-to-cart${x.cls}"${x.attrs}${action} method="get" data-hk-controller="add-to-cart" data-hk-product="${escapeAttr(pid)}" data-hk-config="${jsonAttr(config)}">`
+    return `<form class="sn-${c.id} sn-add-to-cart${x.cls}"${x.attrs} action="${escapeAttr(target)}" method="get" data-hk-controller="add-to-cart" data-hk-product="${escapeAttr(pid)}" data-hk-config="${jsonAttr(config)}">`
       + qty
       + `<input type="hidden" name="variant" value="${escapeAttr(sel?.id ?? '')}">`
       + `<button type="submit" class="sn-btn sn-btn-${style} sn-atc-button" data-hk-label="${escapeAttr(add)}" data-hk-soldout="${escapeAttr(out)}"${available ? '' : ' disabled'}>${escapeText(available ? add : out)}</button>`
@@ -140,7 +147,7 @@ const ITEMS_CSS = [
 
 export const hkCartItems: HkTag = {
   name: 'hk-cart-items', version: 1, category: 'commerce',
-  props: { checkoutLabel: { type: 'text', label: L('نص رابط الدفع', 'Checkout link label') } },
+  props: { checkoutLabel: { type: 'text', label: L('نص رابط السلة (بدون جافاسكريبت)', 'Cart link label (no JavaScript)') } },
   allowedParents: '*', allowedChildren: ['hk-part'], parts: ['empty'], responsive: [], bindable: '*', controller: 'cart-items', strings: COMMERCE_STRINGS,
   editor: ed('بنود السلة', 'Cart items'),
   render(p, c) {
@@ -151,7 +158,7 @@ export const hkCartItems: HkTag = {
     // the fallback link is what a visitor sees when the controller bundle never runs
     return `<div class="sn-${c.id} sn-cart-items${x.cls}"${x.attrs} data-hk-controller="cart-items"><ul class="sn-cart-list" data-hk-list hidden></ul>`
       + `<div class="sn-cart-empty" data-hk-empty>${empty}</div>`
-      + `<a class="sn-cart-fallback" data-hk-fallback href="${escapeAttr(link(c, '/checkout'))}">${escapeText(label(c, p.checkoutLabel, 'checkout'))}</a></div>`;
+      + `<a class="sn-cart-fallback" data-hk-fallback href="${escapeAttr(link(c, '/cart'))}">${escapeText(label(c, p.checkoutLabel, 'view_cart'))}</a></div>`;
   },
 };
 

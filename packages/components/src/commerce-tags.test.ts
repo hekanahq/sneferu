@@ -131,6 +131,16 @@ describe('hk-variant-picker', () => {
       expect((config(html) as { options: unknown[] }).options).toEqual([]);
     }
   });
+  it('names an untitled variant "Option N" in the flat list, never by its id', () => {
+    const untitled = { options: undefined, variants: [{ id: 'gid://v/91', options: [] }, { id: 'v2', title: '  ', options: [] }, { id: 'v3', title: 'Big', options: [] }] };
+    const { html } = run('hk-variant-picker', { product: product(untitled) });
+    expect(html).toContain('value="gid://v/91" checked><span>Option 1</span>');
+    expect(html).toContain('value="v2"><span>Option 2</span>');
+    expect(html).toContain('<span>Big</span>');
+    expect(html).not.toContain('<span>gid://v/91</span>');
+    expect(run('hk-variant-picker', { product: product(untitled), display: 'select' }, { locale: 'ar' }).html).toContain('>خيار 1</option>');
+    expect(run('hk-variant-picker', { product: product(untitled) }, { t: { option: 'Choice' } }).html).toContain('<span>Choice 2</span>');
+  });
   it('prints nothing for a product with a single variant, and survives garbage', () => {
     expect(run('hk-variant-picker', { product: product({ variants: [{ id: 'v1', title: 'Default', options: [] }], options: [] }) }).html).toBe('');
     expect(run('hk-variant-picker', { product: product({ variants: 'x' }) }).html).toBe('');
@@ -191,6 +201,15 @@ describe('hk-add-to-cart', () => {
     expect(config(html)).toMatchObject({ variantId: null, available: true });
     expect(html).toContain('<input type="hidden" name="variant" value="">');
   });
+  it('without a safe product url renders a link to the cart page styled as the button, never a form to the current page', () => {
+    for (const url of [undefined, '', 'javascript:alert(1)', '//evil.test/x', 7]) {
+      const { html } = run('hk-add-to-cart', { product: product({ url }) });
+      expect(html, String(url)).not.toContain('<form');
+      expect(html, String(url)).toContain('<a class="sn-btn sn-btn-solid sn-atc-button" href="/en/cart">View cart</a>');
+      expect(html, String(url)).not.toContain('evil');
+    }
+    expect(run('hk-add-to-cart', { product: product({ url: undefined }), variant: 'outline' }, { locale: 'ar' }).html).toContain('<a class="sn-btn sn-btn-outline sn-atc-button" href="/cart">عرض السلة</a>');
+  });
   it('escapes everything and bounds labels', () => {
     const { html } = run('hk-add-to-cart', { product: product({ id: '"><b>', url: '/p?a="x"' }), label: '<i>x</i>'.repeat(40) });
     expect(html).not.toContain('<b>');
@@ -204,13 +223,14 @@ describe('cart tags', () => {
     const { html } = run('hk-cart-count', {});
     expect(html).toBe('<span class="sn-c1 sn-cart-count" data-hk-controller="cart-count" aria-live="polite" hidden></span>');
   });
-  it('hk-cart-items has a hidden list, the theme empty state and a fallback link to checkout', () => {
+  it('hk-cart-items has a hidden list, the theme empty state and a fallback link to the cart page', () => {
     const { html } = run('hk-cart-items', {}, { kids: { empty: '<p>Nothing here</p>' } });
     expect(html).toContain('<ul class="sn-cart-list" data-hk-list hidden></ul>');
     expect(html).toContain('<div class="sn-cart-empty" data-hk-empty><p>Nothing here</p></div>');
-    expect(html).toContain('<a class="sn-cart-fallback" data-hk-fallback href="/en/checkout">Checkout</a>');
+    expect(html).toContain('<a class="sn-cart-fallback" data-hk-fallback href="/en/cart">View cart</a>');
     expect(run('hk-cart-items', {}).html).toContain('<p>Your cart is empty</p>');
-    expect(run('hk-cart-items', { checkoutLabel: 'Pay' }, { locale: 'ar' }).html).toContain('href="/checkout">Pay</a>');
+    expect(run('hk-cart-items', { checkoutLabel: 'Pay' }, { locale: 'ar' }).html).toContain('href="/cart">Pay</a>');
+    expect(run('hk-cart-items', {}, { locale: 'ar' }).html).toContain('href="/cart">عرض السلة</a>');
   });
   it('hk-cart-summary has the subtotal binding and a checkout link', () => {
     const { html } = run('hk-cart-summary', { subtotalLabel: 'Total' });

@@ -9,6 +9,7 @@
 - Section `templates` allow-list (SN3040, SN3041); SN3042 for `blocks.allowed` naming a missing block.
 - The artifact gains `groups`, `localeKeys`, `defaults`, token settings in `manifest.settings` and the words of the tags a theme uses in `locales`.
 - The default store fills in missing page templates and group defaults (`compileTheme` option `defaults`; `withDefaults()` for stored artifacts).
+- SN3043: section, block and snippet file names starting with `hk-` are reserved for the default store.
 
 ## 0.3.0
 

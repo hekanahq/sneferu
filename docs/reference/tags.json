@@ -1316,7 +1316,7 @@
           "type": "text",
           "responsive": false,
           "label": {
-            "en": "Checkout link label"
+            "en": "Cart link label (no JavaScript)"
           }
         }
       ]
