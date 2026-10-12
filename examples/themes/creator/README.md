@@ -20,7 +20,7 @@ What the theme uses: `hk-product-card` with its `badge` part (the badge and
 the kind label), a CSS scroll-snap row for the carousel (no script),
 `{% render %}` with arguments, `collection` settings, blocks seeded by the
 template, localized text settings, an `image` setting, `hk-icon` and
-`hk-button`. Version 1.1.0 is built on Sneferu 0.3.
+`hk-button`. Version 1.2.0 is built on Sneferu 0.4.
 
 ## Upgrading from 1.0
 
@@ -28,16 +28,49 @@ In 1.1.0 the numbered settings and locale-text fallbacks became blocks and
 localized settings; values saved under 1.0 are not carried over, so the sections
 start from the new defaults.
 
+## Pages
+
+Creator writes only the home page (`templates/index.sneferu`). The product,
+collection, search, cart, content page and 404 templates come from the SDK's
+default store ([page types](../../../docs/guide/16-page-types.mdx)), drawn with
+Creator's tokens, fonts and layout. `assets/theme.css` restyles what the default
+store would otherwise draw in its own way (the block "Cart, product, collection,
+search and 404 pages"):
+
+- the theme had no cart link: the header now has a bag icon with the item count
+  next to the menu, and it opens the cart drawer;
+- the accent orange is a little deeper (`#B94A1B`, was `#E2622E`) and `on-accent` is
+  white, so white button text and orange links reach 4.5:1 on white and on the paper
+  background;
+- the link reset is `:where(.cr a)`, so the default store's buttons keep their own text colour;
+- header links and the carousel dots are 44 px tall.
+
+The header group holds the cart drawer: it opens when an item is added (a
+setting of the header section) and from the cart icon.
+
+| Page | URL in `sneferu dev` |
+| - | - |
+| Product | `/products/sample-2` |
+| Collection | `/category/gift-cards`, `/products` |
+| Search | `/search?q=card` |
+| Cart | `/cart` |
+| Content page | `/pages/about` |
+| 404 | any other path |
+
 ## Files
 
 ```
 assets/theme.css
 blocks/get-item.sneferu
+groups/footer.json
+groups/header.json
 layout/theme.sneferu
 locales/ar.json
 locales/en.json
 sections/author.sneferu
 sections/covers.sneferu
+sections/creator-footer.sneferu
+sections/creator-header.sneferu
 sections/what-you-get.sneferu
 snippets/cover.sneferu
 templates/index.sneferu
@@ -67,7 +100,7 @@ the product is listed under.
 {
   "id": "creator",
   "name": "Creator",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "Hekana",
   "description": "An editorial theme for one creator selling courses, e-books and templates",
   "category": "digital",
@@ -80,11 +113,12 @@ the product is listed under.
     "colors": {
       "primary": "#151515",
       "secondary": "#0F1A24",
-      "accent": "#E2622E",
+      "accent": "#B94A1B",
       "background": "#F3F0EA",
       "text": "#151515",
       "muted": "#716B64",
-      "line": "#CFC8BE"
+      "line": "#CFC8BE",
+      "on-accent": "#FFFFFF"
     },
     "layout": { "contentWidth": "1040px" },
     "fonts": {
@@ -102,36 +136,65 @@ the product is listed under.
 
 ```html title="layout/theme.sneferu"
 <div class="cr">
-  <header class="cr-header">
-    <div class="cr-wrap cr-header-row">
-      <nav class="cr-nav" aria-label="{{ t('nav_label') }}">
-        <a class="cr-brand" href="{{ store.url }}">{{ store.name }}</a>
-        <a class="cr-link" href="#shop">{{ t('nav_shop') }}</a>
-        <a class="cr-link" href="#what">{{ t('nav_what') }}</a>
-        <a class="cr-link" href="#about">{{ t('nav_about') }}</a>
-      </nav>
+  <hk-section-group name="header" />
+  <main><hk-slot name="content" /></main>
+  <hk-section-group name="footer" />
+</div>
+```
+
+The header and the footer are [section groups](../../../docs/guide/18-section-groups.mdx): the layout places
+`<hk-section-group name="header" />` and `<hk-section-group name="footer" />`, `groups/header.json` and
+`groups/footer.json` start them with `creator-header` and `creator-footer`, and the merchant edits them once for the
+whole store. The header also holds the cart: the cart link carries `data-hk-open="cart-drawer"` and
+`<hk-cart-count />`, and `<hk-cart-drawer>` lists the lines (a plain link to the cart page without JavaScript).
+
+```html title="sections/creator-header.sneferu"
+<header class="cr-header">
+  <div class="cr-wrap cr-header-row">
+    <nav class="cr-nav" aria-label="{{ t('nav_label') }}">
+      <a class="cr-brand" href="{{ store.url }}">{{ store.name }}</a>
+      <a class="cr-link" href="{{ url('/') }}#shop">{{ t('nav_shop') }}</a>
+      <a class="cr-link" href="{{ url('/') }}#what">{{ t('nav_what') }}</a>
+      <a class="cr-link" href="{{ url('/') }}#about">{{ t('nav_about') }}</a>
+    </nav>
+    <div class="cr-tools">
+      <a class="cr-cart" href="{{ url('/cart') }}" data-hk-open="cart-drawer" aria-label="{{ t('cart') }}"><hk-icon
+          name="shopping-bag"
+          size="22"
+        /><hk-cart-count /></a>
       <details class="cr-menu">
         <summary class="cr-menu-button" aria-label="{{ t('menu') }}"><hk-icon name="menu" size="22" /></summary>
         <div class="cr-menu-panel">
-          <a href="#shop">{{ t('nav_shop') }}</a>
-          <a href="#what">{{ t('nav_what') }}</a>
-          <a href="#about">{{ t('nav_about') }}</a>
+          <a href="{{ url('/') }}#shop">{{ t('nav_shop') }}</a>
+          <a href="{{ url('/') }}#what">{{ t('nav_what') }}</a>
+          <a href="{{ url('/') }}#about">{{ t('nav_about') }}</a>
           <a href="{{ url('/products') }}">{{ t('all_products') }}</a>
           <a href="{{ t('href_other_locale') }}">{{ t('other_locale') }}</a>
         </div>
       </details>
     </div>
-  </header>
-  <main><hk-slot name="content" /></main>
-  <footer class="cr-footer">
-    <div class="cr-wrap cr-footer-row">
-      <p class="cr-footer-name">{{ store.name }}</p>
-      <p class="cr-footer-note">{{ t('footer_note') }}</p>
-      <a class="cr-footer-locale" href="{{ t('href_other_locale') }}">{{ t('other_locale') }}</a>
-    </div>
-  </footer>
-</div>
+  </div>
+  <hk-cart-drawer open-on-add="{{ section.settings.drawer_on_add }}">
+    <hk-cart-items />
+    <hk-cart-summary />
+  </hk-cart-drawer>
+</header>
+<hk-schema>
+  {
+    "name": "Header",
+    "version": 1,
+    "templates": ["header"],
+    "settings": {
+      "drawer_on_add": {
+        "type": "boolean",
+        "label": "Open the cart when an item is added",
+        "default": true
+      }
+    }
+  }
+</hk-schema>
 ```
+
 
 The menu button is a `<details>`/`<summary>` pair, so it opens without script.
 On phones the stylesheet hides all but the store name and the first link.
@@ -296,9 +359,10 @@ rendered and every second one is hidden, which leaves one dot per pair:
   position: absolute; top: 18px; inset-inline-end: 18px;
   color: #FFFFFF; font-size: 11px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; opacity: .9;
 }
-.cr-dots { display: flex; justify-content: center; gap: 10px; margin-top: 28px; }
-.cr-dots a { width: 9px; height: 9px; border-radius: 50%; background: var(--hk-color-line); }
-.cr-dots a:first-child { background: var(--hk-color-text); }
+.cr-dots { display: flex; justify-content: center; gap: 0; margin-top: 16px; }
+.cr-dots a { display: grid; place-items: center; width: 28px; height: 44px; }
+.cr-dots a::after { content: ''; width: 9px; height: 9px; border-radius: 50%; background: var(--hk-color-line); }
+.cr-dots a:first-child::after { background: var(--hk-color-text); }
 .cr-dots a:nth-child(even) { display: none; }
 ```
 
@@ -470,7 +534,8 @@ edit them or add up to eight.
   "href_other_locale": "/",
   "other_locale": "العربية",
   "shop_heading": "Courses, e-books and templates",
-  "footer_note": "All products are digital: your download link is emailed after online payment. Cash on delivery is not available."
+  "footer_note": "All products are digital: your download link is emailed after online payment. Cash on delivery is not available.",
+  "cart": "Cart"
 }
 ```
 

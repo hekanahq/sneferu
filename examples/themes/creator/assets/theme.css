@@ -5,7 +5,7 @@
   line-height: 1.6;
   min-height: 100vh;
 }
-.cr a { color: inherit; }
+:where(.cr a) { color: inherit; }
 .cr-wrap { max-width: var(--hk-content-width); margin-inline: auto; padding-inline: 24px; }
 .cr-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
@@ -13,8 +13,8 @@
 .cr-header { padding-block: 28px 8px; }
 .cr-header-row { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
 .cr-nav { display: flex; align-items: center; gap: 44px; }
-.cr-brand { font-weight: 700; font-size: 15px; text-decoration: none; }
-.cr-link { font-size: 14px; font-weight: 500; text-decoration: none; }
+.cr-brand { display: inline-flex; align-items: center; min-height: 44px; font-weight: 700; font-size: 15px; text-decoration: none; }
+.cr-link { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 44px; font-size: 14px; font-weight: 500; text-decoration: none; }
 .cr-link:hover, .cr-brand:hover { color: var(--hk-color-accent); }
 .cr-menu { position: relative; }
 .cr-menu-button { list-style: none; cursor: pointer; display: grid; place-items: center; width: 44px; height: 44px; margin-inline-end: -11px; }
@@ -54,9 +54,10 @@
   position: absolute; top: 18px; inset-inline-end: 18px;
   color: #FFFFFF; font-size: 11px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; opacity: .9;
 }
-.cr-dots { display: flex; justify-content: center; gap: 10px; margin-top: 28px; }
-.cr-dots a { width: 9px; height: 9px; border-radius: 50%; background: var(--hk-color-line); }
-.cr-dots a:first-child { background: var(--hk-color-text); }
+.cr-dots { display: flex; justify-content: center; gap: 0; margin-top: 16px; }
+.cr-dots a { display: grid; place-items: center; width: 28px; height: 44px; }
+.cr-dots a::after { content: ''; width: 9px; height: 9px; border-radius: 50%; background: var(--hk-color-line); }
+.cr-dots a:first-child::after { background: var(--hk-color-text); }
 .cr-dots a:nth-child(even) { display: none; }
 
 /* What you get */
@@ -114,3 +115,9 @@
   .cr-author-row { flex-direction: column-reverse; align-items: stretch; }
   .cr-cta.sn-btn { width: 100%; }
 }
+
+/* Cart, product, collection, search and 404 pages: the SDK's default store, in Creator's style */
+.cr-tools { display: flex; align-items: center; gap: 4px; }
+.cr-cart { position: relative; display: grid; place-items: center; width: 44px; height: 44px; text-decoration: none; }
+.cr-cart:hover { color: var(--hk-color-accent); }
+.cr-cart .sn-cart-count { position: absolute; top: 2px; inset-inline-end: 0; }

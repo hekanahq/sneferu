@@ -1,30 +1,5 @@
 <div class="cr">
-  <header class="cr-header">
-    <div class="cr-wrap cr-header-row">
-      <nav class="cr-nav" aria-label="{{ t('nav_label') }}">
-        <a class="cr-brand" href="{{ store.url }}">{{ store.name }}</a>
-        <a class="cr-link" href="#shop">{{ t('nav_shop') }}</a>
-        <a class="cr-link" href="#what">{{ t('nav_what') }}</a>
-        <a class="cr-link" href="#about">{{ t('nav_about') }}</a>
-      </nav>
-      <details class="cr-menu">
-        <summary class="cr-menu-button" aria-label="{{ t('menu') }}"><hk-icon name="menu" size="22" /></summary>
-        <div class="cr-menu-panel">
-          <a href="#shop">{{ t('nav_shop') }}</a>
-          <a href="#what">{{ t('nav_what') }}</a>
-          <a href="#about">{{ t('nav_about') }}</a>
-          <a href="{{ url('/products') }}">{{ t('all_products') }}</a>
-          <a href="{{ t('href_other_locale') }}">{{ t('other_locale') }}</a>
-        </div>
-      </details>
-    </div>
-  </header>
+  <hk-section-group name="header" />
   <main><hk-slot name="content" /></main>
-  <footer class="cr-footer">
-    <div class="cr-wrap cr-footer-row">
-      <p class="cr-footer-name">{{ store.name }}</p>
-      <p class="cr-footer-note">{{ t('footer_note') }}</p>
-      <a class="cr-footer-locale" href="{{ t('href_other_locale') }}">{{ t('other_locale') }}</a>
-    </div>
-  </footer>
+  <hk-section-group name="footer" />
 </div>

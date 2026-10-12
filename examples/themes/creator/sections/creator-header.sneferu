@@ -1,0 +1,44 @@
+<header class="cr-header">
+  <div class="cr-wrap cr-header-row">
+    <nav class="cr-nav" aria-label="{{ t('nav_label') }}">
+      <a class="cr-brand" href="{{ store.url }}">{{ store.name }}</a>
+      <a class="cr-link" href="{{ url('/') }}#shop">{{ t('nav_shop') }}</a>
+      <a class="cr-link" href="{{ url('/') }}#what">{{ t('nav_what') }}</a>
+      <a class="cr-link" href="{{ url('/') }}#about">{{ t('nav_about') }}</a>
+    </nav>
+    <div class="cr-tools">
+      <a class="cr-cart" href="{{ url('/cart') }}" data-hk-open="cart-drawer" aria-label="{{ t('cart') }}"><hk-icon
+          name="shopping-bag"
+          size="22"
+        /><hk-cart-count /></a>
+      <details class="cr-menu">
+        <summary class="cr-menu-button" aria-label="{{ t('menu') }}"><hk-icon name="menu" size="22" /></summary>
+        <div class="cr-menu-panel">
+          <a href="{{ url('/') }}#shop">{{ t('nav_shop') }}</a>
+          <a href="{{ url('/') }}#what">{{ t('nav_what') }}</a>
+          <a href="{{ url('/') }}#about">{{ t('nav_about') }}</a>
+          <a href="{{ url('/products') }}">{{ t('all_products') }}</a>
+          <a href="{{ t('href_other_locale') }}">{{ t('other_locale') }}</a>
+        </div>
+      </details>
+    </div>
+  </div>
+  <hk-cart-drawer open-on-add="{{ section.settings.drawer_on_add }}">
+    <hk-cart-items />
+    <hk-cart-summary />
+  </hk-cart-drawer>
+</header>
+<hk-schema>
+  {
+    "name": "Header",
+    "version": 1,
+    "templates": ["header"],
+    "settings": {
+      "drawer_on_add": {
+        "type": "boolean",
+        "label": "Open the cart when an item is added",
+        "default": true
+      }
+    }
+  }
+</hk-schema>
