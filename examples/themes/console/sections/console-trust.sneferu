@@ -1,14 +1,18 @@
 <hk-section padding-y="20" class="cc-trust">
   <ul class="cc-trust-list">
-    {% render 'trust', icon: 'bolt', label: t('trust_instant') %}
-    {% render 'trust', icon: 'lock', label: t('trust_secure') %}
-    {% render 'trust', icon: 'pay', label: t('trust_egp') %}
+    {% for block in section.blocks %}
+      <hk-block of="{{ block }}" />
+    {% endfor %}
   </ul>
 </hk-section>
 <hk-schema>
   {
     "name": "Trust strip",
     "version": 1,
-    "settings": {}
+    "settings": {},
+    "blocks": {
+      "allowed": ["trust"],
+      "max": 4
+    }
   }
 </hk-schema>

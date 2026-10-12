@@ -1,0 +1,25 @@
+<a
+  class="cc-seg-item"
+  data-active="{{ block.settings.highlight }}"
+  href="{{ url('/search') }}"
+>{{ block.settings.amount | money: 'whole', 'major' }}</a>
+<hk-schema>
+  {
+    "name": "Amount",
+    "version": 1,
+    "settings": {
+      "amount": {
+        "type": "number",
+        "label": "Amount (EGP)",
+        "default": 500,
+        "min": 1,
+        "max": 100000
+      },
+      "highlight": {
+        "type": "boolean",
+        "label": "Highlight",
+        "default": false
+      }
+    }
+  }
+</hk-schema>

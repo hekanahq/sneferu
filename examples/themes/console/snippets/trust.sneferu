@@ -1,4 +1,0 @@
-<li class="cc-trust-item">
-  <span class="cc-trust-icon">{% render 'icon', name: icon %}</span>
-  <span>{{ label }}</span>
-</li>

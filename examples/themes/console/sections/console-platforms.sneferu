@@ -1,7 +1,7 @@
 <hk-section padding-y="32" mobile-padding-y="24" class="cc-platforms-row">
   <hk-stack gap="24" align="center">
     <hk-heading
-      text="{{ section.settings.heading | default: t('platforms_heading') }}"
+      text="{{ section.settings.heading }}"
       level="h2"
       size="24"
       mobile-size="20"
@@ -9,11 +9,9 @@
       class="cc-h2"
     />
     <div class="cc-plats">
-      {% render 'platform', icon: 'monitor', handle: 'gift-cards', label: t('plat_pc') %}
-      {% render 'platform', icon: 'gamepad', handle: 'gift-cards', label: t('plat_console') %}
-      {% render 'platform', icon: 'gem', handle: 'game-currency', label: t('plat_currency') %}
-      {% render 'platform', icon: 'phone', handle: 'top-ups', label: t('plat_mobile') %}
-      {% render 'platform', icon: 'calendar', handle: 'subscriptions', label: t('plat_subs') %}
+      {% for block in section.blocks %}
+        <hk-block of="{{ block }}" />
+      {% endfor %}
     </div>
   </hk-stack>
 </hk-section>
@@ -24,10 +22,18 @@
     "settings": {
       "heading": {
         "type": "text",
-        "label": "Heading (empty = theme text)",
-        "default": "",
+        "label": "Heading",
+        "localized": true,
+        "default": {
+          "ar": "تسوق حسب المنصة",
+          "en": "Shop by platform"
+        },
         "maxLength": 60
       }
+    },
+    "blocks": {
+      "allowed": ["platform"],
+      "max": 8
     }
   }
 </hk-schema>
