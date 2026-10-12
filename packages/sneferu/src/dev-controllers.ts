@@ -12,8 +12,8 @@ export function controllersBundle(): string | undefined {
  * come from the page (the heading and the price on it), so the cart drawer and cart page work while you build.
  */
 const STRINGS = {
-  en: { add_to_cart: 'Add to cart', added: 'Added to the cart', sold_out: 'Sold out', money: 'EGP {n}', remove: 'Remove', subtotal: 'Subtotal', checkout: 'Checkout', empty: 'Your cart is empty', quantity: 'Quantity', close: 'Close' },
-  ar: { add_to_cart: 'أضف للسلة', added: 'اتضاف للسلة', sold_out: 'نفد المخزون', money: '{n} ج.م', remove: 'حذف', subtotal: 'المجموع', checkout: 'إتمام الشراء', empty: 'سلتك فاضية', quantity: 'الكمية', close: 'إغلاق' },
+  en: { add_to_cart: 'Add to cart', added: 'Added to the cart', sold_out: 'Sold out', money: 'EGP {n}', remove: 'Remove', subtotal: 'Subtotal', checkout: 'Checkout', empty: 'Your cart is empty', quantity: 'Quantity', increase: 'Increase quantity', decrease: 'Decrease quantity', add_failed: 'Could not add to the cart. Try again.', close: 'Close' },
+  ar: { add_to_cart: 'أضف للسلة', added: 'اتضاف للسلة', sold_out: 'نفد المخزون', money: '{n} ج.م', remove: 'حذف', subtotal: 'المجموع', checkout: 'إتمام الشراء', empty: 'سلتك فاضية', quantity: 'الكمية', increase: 'زوّد الكمية', decrease: 'قلّل الكمية', add_failed: 'ماقدرناش نضيفه للسلة، جرّب تاني', close: 'إغلاق' },
 } as const;
 const HOST_BODY = `
 import { startControllers } from '/__controllers.js';

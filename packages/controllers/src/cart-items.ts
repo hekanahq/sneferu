@@ -1,6 +1,14 @@
 import { listen, mk, safeUrl, setHidden, type Ctl } from './dom';
 import type { CartLine } from './host';
 
+/** A whole number of at least 1 from a host value, else 1. */
+const whole = (x: unknown) => (typeof x === 'number' && Number.isFinite(x) && x >= 1 ? Math.floor(x) : 1);
+/** The quantity after one step up, or null when that would pass maxQuantity. */
+const up = (l: CartLine) => {
+  const n = l.quantity + whole(l.quantityStep);
+  return l.maxQuantity != null && n > l.maxQuantity ? null : n;
+};
+
 export const cartItems: Ctl = (el, host) => {
   const list = el.querySelector<HTMLElement>('[data-hk-list]');
   const empty = el.querySelector<HTMLElement>('[data-hk-empty]');
@@ -36,9 +44,9 @@ export const cartItems: Ctl = (el, host) => {
       b.setAttribute('aria-label', label);
       return b;
     };
-    const inc = btn('inc', 'sn-cart-item-qty-btn', '+', host.t('quantity'));
-    if (l.maxQuantity != null && l.quantity >= l.maxQuantity) inc.setAttribute('aria-disabled', 'true');
-    q.append(btn('dec', 'sn-cart-item-qty-btn', '-', host.t('quantity')), mk('span', 'sn-cart-item-qty-value', String(l.quantity)), inc);
+    const inc = btn('inc', 'sn-cart-item-qty-btn', '+', host.t('increase'));
+    if (up(l) === null) inc.setAttribute('aria-disabled', 'true');
+    q.append(btn('dec', 'sn-cart-item-qty-btn', '-', host.t('decrease')), mk('span', 'sn-cart-item-qty-value', String(l.quantity)), inc);
     li.appendChild(q);
     li.appendChild(btn('remove', 'sn-cart-item-remove', '×', host.t('remove')));
     return li;
@@ -67,9 +75,10 @@ export const cartItems: Ctl = (el, host) => {
     const l = lines.find((x) => x.key === key);
     if (!b || !l) return;
     const act = b.getAttribute('data-hk-act');
-    if (act === 'remove' || (act === 'dec' && l.quantity <= 1)) host.remove(l.key);
-    else if (act === 'dec') host.update(l.key, l.quantity - 1);
-    else if (act === 'inc' && !(l.maxQuantity != null && l.quantity >= l.maxQuantity)) host.update(l.key, l.quantity + 1);
+    const down = l.quantity - whole(l.quantityStep);
+    if (act === 'remove' || (act === 'dec' && down < whole(l.minQuantity))) host.remove(l.key);
+    else if (act === 'dec') host.update(l.key, down);
+    else if (act === 'inc') { const n = up(l); if (n !== null) host.update(l.key, n); }
   };
 
   render(host.get());

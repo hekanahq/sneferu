@@ -8,6 +8,10 @@ export interface CartLine {
   url?: string;
   unitPrice: number;
   quantity: number;
+  /** The least quantity the line may have (a whole number, default 1); decreasing below it removes the line. */
+  minQuantity?: number;
+  /** The quantity steppers add or take away (a whole number, default 1). */
+  quantityStep?: number;
   maxQuantity?: number;
 }
 
@@ -20,6 +24,9 @@ export type CartText =
   | 'checkout'
   | 'empty'
   | 'quantity'
+  | 'increase'
+  | 'decrease'
+  | 'add_failed'
   | 'close';
 
 export interface CartHost {
