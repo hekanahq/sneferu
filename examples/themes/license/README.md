@@ -17,14 +17,14 @@ mockup so it reads right to left. Live:
 [/en](https://demo-license.hekana.com/en).
 
 What the theme uses: plan cards built from real products with `hk-price`, a
-`data-*` attribute set from an expression, `hk-product-card` with a sibling
-button, `<details>` for the FAQ, and blocks with a locale fallback.
+`data-*` attribute set from an expression, `hk-product-card` with a Buy link in
+its `actions` part, `collection` settings, `hk-search-form`, `hk-icon`,
+`<details>` for the FAQ, localized settings and blocks seeded by the template.
+Version 1.1.0 is built on Sneferu 0.3.
 
 ## Files
 
 ```
-theme.json
-assets/fonts.css
 assets/theme.css
 blocks/faq-item.sneferu
 blocks/feature.sneferu
@@ -35,10 +35,9 @@ sections/apps.sneferu
 sections/faq.sneferu
 sections/features.sneferu
 sections/plans-hero.sneferu
-snippets/faq-item.sneferu
-snippets/feature.sneferu
-snippets/icon.sneferu
+snippets/glyph.sneferu
 templates/index.sneferu
+theme.json
 ```
 
 Next to the theme: `README.md` and `docs/` (this tutorial and its pictures),
@@ -50,7 +49,10 @@ they are never checked and never pushed.
 | Handle | Used by |
 | - | - |
 | `bundles` | the three plan cards (first three products, in store order) |
-| `apps` | the three app cards |
+| `apps` | the app cards (three by default) |
+
+Both are defaults of `collection` settings (`plans` in the hero, `list` in the
+apps section); the merchant can pick other categories in the editor.
 
 ## 1. Manifest and tokens
 
@@ -58,7 +60,7 @@ they are never checked and never pushed.
 {
   "id": "license",
   "name": "License",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "author": "Hekana",
   "description": "A dark theme for software licences, subscriptions and digital tools",
   "category": "digital",
@@ -79,7 +81,11 @@ they are never checked and never pushed.
       "tier-deep": "#15365F",
       "line": "#26324B"
     },
-    "layout": { "contentWidth": "1040px" }
+    "layout": { "contentWidth": "1040px" },
+    "fonts": {
+      "heading": "Readex Pro",
+      "body": "Readex Pro"
+    }
   }
 }
 ```
@@ -94,9 +100,7 @@ tokens makes the "no violet" rule a one-line check.
   <header class="ls-header">
     <div class="ls-wrap ls-header-row">
       <details class="ls-menu">
-        <summary class="ls-icon-link" aria-label="{{ t('menu') }}">
-          {% render 'icon', name: 'menu' %}
-        </summary>
+        <summary class="ls-icon-link" aria-label="{{ t('menu') }}"><hk-icon name="menu" class="ls-icon" /></summary>
         <div class="ls-menu-panel">
           <a href="#plans">{{ t('nav_plans') }}</a>
           <a href="#apps">{{ t('nav_apps') }}</a>
@@ -112,20 +116,17 @@ tokens makes the "no violet" rule a one-line check.
         <a href="#faq">{{ t('nav_faq') }}</a>
       </nav>
       <div class="ls-tools">
-        <a class="ls-search" href="{{ t('href_search') }}">
-          <span>{{ t('search') }}</span>
-          {% render 'icon', name: 'search' %}
-        </a>
-        <a
-          class="ls-icon-link"
-          href="{{ t('href_account') }}"
-          aria-label="{{ t('account') }}"
-        >{% render 'icon', name: 'user' %}</a>
-        <a
-          class="ls-icon-link"
-          href="{{ t('href_cart') }}"
-          aria-label="{{ t('cart') }}"
-        >{% render 'icon', name: 'bag' %}</a>
+        <hk-search-form placeholder="{{ t('search') }}" class="ls-search" />
+        <a class="ls-icon-link" href="{{ url('/account') }}" aria-label="{{ t('account') }}"><hk-icon
+            name="user"
+            size="18"
+            class="ls-icon"
+          /></a>
+        <a class="ls-icon-link" href="{{ url('/cart') }}" aria-label="{{ t('cart') }}"><hk-icon
+            name="shopping-bag"
+            size="18"
+            class="ls-icon"
+          /></a>
       </div>
     </div>
   </header>
@@ -140,8 +141,11 @@ tokens makes the "no violet" rule a one-line check.
 </div>
 ```
 
-There are no form inputs in a theme, so the search box is a link to the
-store's search page, styled like a field. Account and cart are icon links.
+The search box is `<hk-search-form class="ls-search">`, a form that sends the
+shopper to the store's search page, styled like the mockup's pill field; on
+phones only its button shows. Account and cart are icon links with `hk-icon`.
+Links go through `url()`; only the language switch keeps its target in the
+locale files (`href_other_locale`).
 
 ## 3. Hero and plan cards
 
@@ -150,21 +154,21 @@ store's search page, styled like a field. Account and cart are icon links.
   <div class="ls-wrap ls-hero-row">
     <div class="ls-hero-copy">
       <h1 class="ls-h1">
-        <span class="ls-accent">{{ section.settings.line1 | default: t('hero_line1') }}</span>
-        <span>{{ section.settings.line2 | default: t('hero_line2') }}</span>
+        <span class="ls-accent">{{ section.settings.line1 }}</span>
+        <span>{{ section.settings.line2 }}</span>
       </h1>
-      <p class="ls-lead">{{ section.settings.text | default: t('hero_text') }}</p>
+      <p class="ls-lead">{{ section.settings.text }}</p>
       <a class="ls-btn ls-btn-sm" href="#apps">
-        <span>{{ section.settings.button | default: t('hero_button') }}</span>
-        {% render 'icon', name: 'download' %}
+        <span>{{ section.settings.button }}</span>
+        <hk-icon name="download" size="18" stroke="2.5" class="ls-icon" />
       </a>
     </div>
     <div class="ls-tiers">
-      {% for p in collection('bundles').products limit: 3 %}
+      {% for p in collection(section.settings.plans).products limit: 3 %}
         <a class="ls-tier" href="{{ p.url }}" data-best="{{ forloop.index == 2 }}">
           <span class="ls-tier-name">{{ p.title }}</span>
           <hk-price amount="{{ p.price }}" compare-at="{{ p.compare_at }}" class="ls-tier-price" />
-          <span class="ls-tier-note">{{ t('tier_note') }}</span>
+          <span class="ls-tier-note">{{ section.settings.tier_note }}</span>
           <span class="ls-tier-buy">{{ t('buy') }}</span>
         </a>
       {% endfor %}
@@ -178,35 +182,70 @@ store's search page, styled like a field. Account and cart are icon links.
     "settings": {
       "line1": {
         "type": "text",
-        "label": "Heading, first line (empty: the theme's own words)",
-        "default": "",
+        "label": "Heading, first line",
+        "localized": true,
+        "default": {
+          "ar": "كل البرامج اللي بتحتاجها",
+          "en": "Every app you need"
+        },
         "maxLength": 60
       },
       "line2": {
         "type": "text",
         "label": "Heading, second line",
-        "default": "",
+        "localized": true,
+        "default": {
+          "ar": "بترخيص واحد",
+          "en": "on one licence"
+        },
         "maxLength": 60
       },
       "text": {
         "type": "textarea",
         "label": "Text",
-        "default": "",
+        "localized": true,
+        "default": {
+          "ar": "اشترك في الباقة اللي تناسبك، ومفتاح الترخيص يوصلك على الإيميل بعد الدفع أونلاين.",
+          "en": "Pick the plan that suits you. Your licence key is emailed after online payment."
+        },
         "maxLength": 200
       },
       "button": {
         "type": "text",
         "label": "Button",
-        "default": "",
+        "localized": true,
+        "default": {
+          "ar": "شوف البرامج",
+          "en": "See the apps"
+        },
         "maxLength": 30
+      },
+      "plans": {
+        "type": "collection",
+        "label": "Plans (the first three; the second is highlighted)",
+        "default": "bundles"
+      },
+      "tier_note": {
+        "type": "text",
+        "label": "Line under each plan price",
+        "localized": true,
+        "default": {
+          "ar": "كل البرامج في ترخيص واحد",
+          "en": "All apps on one licence"
+        },
+        "maxLength": 60
       }
     }
   }
 </hk-schema>
 ```
 
-- The plans are products in the `bundles` collection, so their names, prices
-  and links come from the store, not from settings.
+- The plans are products in the collection picked in the `plans` setting
+  (default `bundles`), so their names, prices and links come from the store,
+  not from settings. The loop keeps `limit: 3`: the design is three cards with
+  the middle one highlighted.
+- The heading, text, button and the line under each price are localized
+  settings with Arabic and English defaults.
 - `data-best="{{ forloop.index == 2 }}"` prints `true` on the middle card. A
   comparison inside `{{ }}` prints `true` or `false`, and the CSS outlines the
   card whose attribute is `true`:
@@ -241,24 +280,13 @@ beat the general link rule, or the text inherits the light page colour:
 <section class="ls-features" id="features">
   <div class="ls-wrap">
     <div class="ls-head">
-      <h2 class="ls-h2">{{ section.settings.heading | default: t('features_heading') }}</h2>
-      <p class="ls-side">{{ t('features_side') }}</p>
+      <h2 class="ls-h2">{{ section.settings.heading }}</h2>
+      <p class="ls-side">{{ section.settings.side }}</p>
     </div>
     <div class="ls-feature-grid">
-      {% if section.blocks %}
-        {% for block in section.blocks %}
-          <hk-block of="{{ block }}" />
-        {% endfor %}
-      {% else %}
-        {% render 'feature', text: t('feature_1') %}
-        {% render 'feature', text: t('feature_2') %}
-        {% render 'feature', text: t('feature_3') %}
-        {% render 'feature', text: t('feature_4') %}
-        {% render 'feature', text: t('feature_5') %}
-        {% render 'feature', text: t('feature_6') %}
-        {% render 'feature', text: t('feature_7') %}
-        {% render 'feature', text: t('feature_8') %}
-      {% endif %}
+      {% for block in section.blocks %}
+        <hk-block of="{{ block }}" />
+      {% endfor %}
     </div>
   </div>
 </section>
@@ -269,9 +297,23 @@ beat the general link rule, or the text inherits the light page colour:
     "settings": {
       "heading": {
         "type": "text",
-        "label": "Heading (empty: the theme's own words)",
-        "default": "",
+        "label": "Heading",
+        "localized": true,
+        "default": {
+          "ar": "في كل ترخيص",
+          "en": "In every licence"
+        },
         "maxLength": 60
+      },
+      "side": {
+        "type": "text",
+        "label": "Side note",
+        "localized": true,
+        "default": {
+          "ar": "من غير شحن ومن غير انتظار",
+          "en": "Nothing to ship, nothing to wait for"
+        },
+        "maxLength": 80
       }
     },
     "blocks": {
@@ -282,13 +324,9 @@ beat the general link rule, or the text inherits the light page colour:
 </hk-schema>
 ```
 
-```html title="snippets/feature.sneferu"
-<p class="ls-feature">
-  {% render 'icon', name: 'check' %}<span>{{ text }}</span>
-</p>
-```
-
-Up to twelve feature blocks; with none, eight items from the locale files.
+Each feature is a block with one localized line; the template seeds eight,
+and the merchant can have up to twelve. The check box in front is the theme's
+own glyph (`snippets/glyph.sneferu`): the icon set's `check` has no box.
 
 ## 5. Apps
 
@@ -296,19 +334,20 @@ Up to twelve feature blocks; with none, eight items from the locale files.
 <section class="ls-apps" id="apps">
   <div class="ls-wrap">
     <div class="ls-head">
-      <h2 class="ls-h2">{{ section.settings.heading | default: t('apps_heading') }}</h2>
-      <p class="ls-side">{{ t('apps_side') }}</p>
+      <h2 class="ls-h2">{{ section.settings.heading }}</h2>
+      <p class="ls-side">{{ section.settings.side }}</p>
     </div>
     <div class="ls-apps-grid">
-      <a class="ls-all" href="{{ t('href_products') }}">
+      <a class="ls-all" href="{{ url('/products') }}">
         <span>{{ t('all_apps') }}</span>
-        {% render 'icon', name: 'download' %}
+        <hk-icon name="download" size="18" stroke="2.5" class="ls-icon" />
       </a>
-      {% for p in collection('apps').products limit: 3 %}
-        <div class="ls-app">
-          <hk-product-card product="{{ p }}" class="ls-app-card" />
-          <a class="ls-app-buy" href="{{ p.url }}" aria-hidden="true" tabindex="-1">{{ t('buy') }}</a>
-        </div>
+      {% for p in collection(section.settings.list).products limit: section.settings.count %}
+        <hk-product-card product="{{ p }}" class="ls-app">
+          <hk-part name="actions">
+            <a class="ls-app-buy" href="{{ p.url }}" aria-hidden="true" tabindex="-1">{{ t('buy') }}</a>
+          </hk-part>
+        </hk-product-card>
       {% endfor %}
     </div>
   </div>
@@ -320,9 +359,36 @@ Up to twelve feature blocks; with none, eight items from the locale files.
     "settings": {
       "heading": {
         "type": "text",
-        "label": "Heading (empty: the theme's own words)",
-        "default": "",
+        "label": "Heading",
+        "localized": true,
+        "default": {
+          "ar": "البرامج",
+          "en": "Apps"
+        },
         "maxLength": 60
+      },
+      "side": {
+        "type": "text",
+        "label": "Side note",
+        "localized": true,
+        "default": {
+          "ar": "ترخيص لكل برنامج لوحده",
+          "en": "A licence for each app on its own"
+        },
+        "maxLength": 80
+      },
+      "list": {
+        "type": "collection",
+        "label": "Collection",
+        "default": "apps"
+      },
+      "count": {
+        "type": "range",
+        "label": "Apps",
+        "default": 3,
+        "min": 1,
+        "max": 9,
+        "step": 1
       }
     }
   }
@@ -330,26 +396,21 @@ Up to twelve feature blocks; with none, eight items from the locale files.
 ```
 
 `hk-product-card` gives the icon, name and price as one link. The "Buy" chip
-under it is a second link to the same product, hidden from screen readers so
-the product is announced once.
+under it is the card's `actions` part: a second link to the same product,
+hidden from screen readers so the product is announced once. With an `actions`
+part the card renders inside `<div class="sn-product-card-wrap ls-app">`, so
+`ls-app` styles the whole tile. The number of apps is a `range` setting.
 
 ## 6. FAQ
 
 ```html title="sections/faq.sneferu"
 <section class="ls-faq" id="faq">
   <div class="ls-wrap">
-    <h2 class="ls-h2">{{ section.settings.heading | default: t('faq_heading') }}</h2>
+    <h2 class="ls-h2">{{ section.settings.heading }}</h2>
     <div class="ls-faq-list">
-      {% if section.blocks %}
-        {% for block in section.blocks %}
-          <hk-block of="{{ block }}" />
-        {% endfor %}
-      {% else %}
-        {% render 'faq-item', q: t('faq_1_q'), a: t('faq_1_a') %}
-        {% render 'faq-item', q: t('faq_2_q'), a: t('faq_2_a') %}
-        {% render 'faq-item', q: t('faq_3_q'), a: t('faq_3_a') %}
-        {% render 'faq-item', q: t('faq_4_q'), a: t('faq_4_a') %}
-      {% endif %}
+      {% for block in section.blocks %}
+        <hk-block of="{{ block }}" />
+      {% endfor %}
     </div>
   </div>
 </section>
@@ -360,8 +421,12 @@ the product is announced once.
     "settings": {
       "heading": {
         "type": "text",
-        "label": "Heading (empty: the theme's own words)",
-        "default": "",
+        "label": "Heading",
+        "localized": true,
+        "default": {
+          "ar": "أسئلة بتتكرر",
+          "en": "Common questions"
+        },
         "maxLength": 60
       }
     },
@@ -373,24 +438,47 @@ the product is announced once.
 </hk-schema>
 ```
 
-```html title="snippets/faq-item.sneferu"
+```html title="blocks/faq-item.sneferu"
 <details class="ls-faq-item">
   <summary>
-    <span>{{ q }}</span>
-    <svg class="ls-chevron" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path
-        d="M6 9l6 6 6-6"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      /></svg>
+    <span>{{ block.settings.question }}</span>
+    <hk-icon name="chevron-down" size="16" class="ls-chevron" />
   </summary>
-  <p>{{ a }}</p>
+  <p>{{ block.settings.answer }}</p>
 </details>
+<hk-schema>
+  {
+    "name": "Question",
+    "version": 1,
+    "settings": {
+      "question": {
+        "type": "text",
+        "label": "Question",
+        "localized": true,
+        "default": {
+          "ar": "المفتاح بيوصلني إزاي؟",
+          "en": "How do I receive my key?"
+        },
+        "maxLength": 120
+      },
+      "answer": {
+        "type": "textarea",
+        "label": "Answer",
+        "localized": true,
+        "default": {
+          "ar": "بعد ما الدفع أونلاين يتم، بيوصلك إيميل فيه مفتاح الترخيص ورابط التحميل.",
+          "en": "Once your online payment goes through, you get an email with the licence key and the download link."
+        },
+        "maxLength": 600
+      }
+    }
+  }
+</hk-schema>
 ```
 
-Each question is a `<details>` element, so it opens and closes without script.
+Each question is a block and a `<details>` element, so it opens and closes
+without script; the template seeds four. The rounded first and last rows are
+picked through the block wrappers: `[data-hk-block]:first-child > .ls-faq-item`.
 The chevron turns with `.ls-faq-item[open] .ls-chevron { transform: rotate(180deg); }`.
 The answers state only what is true for digital products on Hekana: the key
 and the download link arrive by email after online payment, and there is no
@@ -405,7 +493,8 @@ cash on delivery.
   .ls-header { padding-block: 10px; }
   .ls-header-row { gap: 8px; }
   .ls-search { width: 40px; padding: 0; justify-content: center; border: 0; }
-  .ls-search span { display: none; }
+  form.ls-search input { display: none; }
+  form.ls-search .sn-search-button { color: var(--hk-color-text); }
   .ls-hero { padding-block: 24px 28px; }
   .ls-hero-row { grid-template-columns: 1fr; gap: 26px; }
   .ls-hero-copy { text-align: center; display: flex; flex-direction: column; align-items: center; }
@@ -418,7 +507,7 @@ cash on delivery.
 
 ## 8. Words
 
-```json title="locales/en.json (excerpt)"
+```json title="locales/en.json"
 {
   "nav_label": "Main menu",
   "nav_plans": "Plans",
@@ -429,19 +518,17 @@ cash on delivery.
   "search": "Search for an app",
   "account": "My account",
   "cart": "Cart",
-  "href_search": "/en/search",
-  "href_account": "/en/account",
-  "href_cart": "/en/cart",
-  "href_products": "/en/products",
   "href_other_locale": "/",
   "other_locale": "العربية",
-  "hero_line1": "Every app you need",
-  "hero_line2": "on one licence",
-  "hero_text": "Pick the plan that suits you. Your licence key is emailed after online payment.",
-  "hero_button": "See the apps",
+  "buy": "Buy",
+  "all_apps": "All apps",
+  "footer_note": "Digital products: the licence key and download link are emailed after online payment. Cash on delivery is not available."
+}
 ```
 
-The Arabic file has the same keys in Egyptian Arabic.
+The Arabic file has the same keys in Egyptian Arabic. Only interface words are
+left in the locale files; the copy is in settings and blocks.
+
 ## Reproduce it
 
 ```bash
@@ -449,15 +536,13 @@ npx @hekana/sneferu init license          # start from the starter theme
 cd license
 # replace the starter files with the ones above, then:
 npx @hekana/sneferu format              # indent .sneferu, theme.json and locales
-npx @hekana/sneferu validate            # must print: theme license@1.0.1 is valid
+npx @hekana/sneferu validate            # must print: theme license@1.1.0 is valid
 npx @hekana/sneferu dev                 # http://127.0.0.1:4100, add ?locale=en for English
 ```
 
 `dev` reads `.sneferu-dev/data.json` (in this folder) as sample data, so the
 preview shows this store's products and the collections the sections use
-(`sneferu dev --data <file>` points at another file). That needs the CLI from
-Sneferu main after #16; on 0.2.0 the preview shows the built-in sample
-products and the category collections are empty.
+(`sneferu dev --data <file>` points at another file).
 
 To put it on a store, sign in once and push to your dev store:
 
@@ -469,26 +554,33 @@ npx @hekana/sneferu push . --package <your-slug> --dev-store
 The `--package` slug must equal `id` in `theme.json`, so change both to a
 slug of your own; `license` here is the slug Hekana uses for its own copy. Bump
 `version` in `theme.json` before every push: a pushed version cannot be
-replaced. The live store must have product categories with the handles the
-theme reads (see "Data it needs" above). During this release only the home
+replaced. On a live store, either create product categories with the default
+handles (see "Data it needs" above) or pick the categories in the editor. During this release only the home
 page (`/`, and `/en`) is rendered by the theme; product, category and cart
 pages use the store's regular theme.
 
 ## Notes and limits met on the way
 
-These came up while building the theme and are tracked as SDK gaps:
+Version 1.0 was built on Sneferu 0.2 and worked around five SDK gaps. Version
+1.1.0 uses the Sneferu 0.3 features that close them:
 
-- Bundled images: `asset_url()` is empty on the live storefront for now, so the
-  theme ships no images of its own; art comes from products, inline SVG, or an
-  `image` setting with an `https://` default.
-- Fonts: there is no font loader yet. `assets/fonts.css` holds `@font-face`
-  rules that point at `https://fonts.gstatic.com` (the storefront allows
-  `https:` fonts), Arabic and Latin subsets only.
-- Collections: `collection('…')` takes a literal handle, so the handles are
-  fixed in the templates and the store's categories must use them.
-- One value per setting for every language: the sections print
-  `{{ section.settings.x | default: t('x') }}`, so an empty setting shows the
-  locale text, and list sections fall back to locale keys when the merchant
-  has added no blocks.
-- Links: there is no localized link helper, so URLs that must keep `/en` live
-  in the locale files (`"href_products": "/en/products"` in `en.json`).
+- Fonts: `tokens.fonts` with a catalogue font replaces `assets/fonts.css`
+  (`@font-face` rules pointing at Google Fonts).
+- Collections: `collection` settings, with the old handles as defaults, replace
+  the handles written into the templates.
+- Words: `"localized": true` settings with Arabic and English defaults replace
+  empty settings printed with `default: t('…')`.
+- Lists: template default blocks replace the locale-key fallback shown while a
+  section had no blocks.
+- Links: `url('/products')` replaces link paths in the locale files.
+- Icons: `hk-icon` replaces the inline SVG set (only the boxed check stays).
+- Search: `hk-search-form` replaces a link styled as a field.
+- App cards: the card's `actions` part replaces the wrapper around the card.
+
+Still open:
+
+- Bundled images are served from 0.3, but this theme still ships none (no new
+  art was made for 1.1.0): art comes from products, inline SVG, or an `image`
+  setting with an `https://` default.
+- `url()` always links within the page's language, so the language switch
+  keeps its target in the locale files (`href_other_locale`).

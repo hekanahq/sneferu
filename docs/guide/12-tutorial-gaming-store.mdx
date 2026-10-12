@@ -12,27 +12,46 @@ longer walkthrough in its `README.md`.
 The mockup was generated as a design brief. Its Arabic is placeholder text, its
 prices were in dollars, and its cyan-to-magenta glow becomes cyan-to-lime.
 
+The home page template lists its sections, and seeds the repeated items (tabs,
+amount chips, tiles, steps, questions) as blocks, so a fresh install shows the
+whole page and the merchant can add, remove and reorder each item. The excerpts
+below show the first block of each section.
+
 <Example>
 
-```html title="examples/themes/arcade/templates/index.sneferu"
+```html title="examples/themes/arcade/templates/index.sneferu (excerpt)"
 <hk-sections />
 <hk-schema>
   {
     "sections": [
       {
-        "type": "arcade-hero"
+        "type": "arcade-hero",
+        "blocks": [
+          {"type": "tab", "settings": {"label": {"ar": "PC", "en": "PC"}, "link": "/products"}},
+          … 12 more
+        ]
       },
       {
-        "type": "arcade-categories"
+        "type": "arcade-categories",
+        "blocks": [
+          {"type": "tile", "settings": {"title": {"ar": "كروت الهدايا", "en": "Gift cards"}, "link": "/category/gift-cards", "icon": "credit-card"}},
+          … 5 more
+        ]
       },
       {
-        "type": "arcade-steps"
+        "type": "arcade-steps",
+        "blocks": [
+          {"type": "step", "settings": {"icon": "credit-card", "title": {"ar": "اختار وادفع أونلاين", "en": "Pick and pay online"}, "text": {"ar": "اختار الكارت والقيمة، وادفع أونلاين.", "en": "Choose the card and the amount, then pay online."}}},
+          … 2 more
+        ]
       },
+      { "type": "arcade-products" },
       {
-        "type": "arcade-products"
-      },
-      {
-        "type": "arcade-faq"
+        "type": "arcade-faq",
+        "blocks": [
+          {"type": "faq-item", "settings": {"question": {"ar": "الكود بيوصل إمتى؟", "en": "When does the code arrive?"}, "answer": {"ar": "بعد ما الدفع الأونلاين يتأكد، الكود بيتبعت أوتوماتيك على الإيميل اللي كتبته في الطلب.", "en": "Once your online payment is confirmed, the code is sent automatically to the email on your order."}}},
+          … 4 more
+        ]
       }
     ]
   }
@@ -59,50 +78,72 @@ Two more gaming themes were built the same way:
 
 <Example>
 
-```html title="examples/themes/console/templates/index.sneferu"
+```html title="examples/themes/console/templates/index.sneferu (excerpt)"
 <hk-sections />
 <hk-schema>
   {
     "sections": [
+      { "type": "console-showcase" },
       {
-        "type": "console-showcase"
+        "type": "console-amounts",
+        "blocks": [
+          {"type": "amount", "settings": {"amount": 200, "highlight": false}},
+          … 2 more
+        ]
       },
       {
-        "type": "console-amounts"
+        "type": "console-platforms",
+        "blocks": [
+          {"type": "platform", "settings": {"icon": "monitor", "label": {"ar": "كمبيوتر", "en": "PC"}, "link": "/category/gift-cards"}},
+          … 4 more
+        ]
       },
       {
-        "type": "console-platforms"
+        "type": "console-trust",
+        "blocks": [
+          {"type": "trust", "settings": {"icon": "zap", "label": {"ar": "تسليم فوري للكود", "en": "Instant code delivery"}}},
+          … 2 more
+        ]
       },
+      { "type": "console-products" },
       {
-        "type": "console-trust"
-      },
-      {
-        "type": "console-products"
-      },
-      {
-        "type": "console-faq"
+        "type": "console-faq",
+        "blocks": [
+          {"type": "faq-item", "settings": {"question": {"ar": "الكود بيوصل إمتى؟", "en": "When does the code arrive?"}, "answer": {"ar": "بعد ما الدفع الأونلاين يتأكد، الكود بيتبعت أوتوماتيك على الإيميل اللي كتبته في الطلب.", "en": "Once your online payment is confirmed, the code is sent automatically to the email on your order."}}},
+          … 3 more
+        ]
       }
     ]
   }
 </hk-schema>
 ```
 
-```html title="examples/themes/esports/templates/index.sneferu"
+```html title="examples/themes/esports/templates/index.sneferu (excerpt)"
 <hk-sections />
 <hk-schema>
   {
     "sections": [
+      { "type": "esports-hero" },
       {
-        "type": "esports-hero"
+        "type": "esports-products",
+        "blocks": [
+          {"type": "tab", "settings": {"label": {"ar": "الكل", "en": "All"}, "link": "/products"}},
+          … 2 more
+        ]
       },
       {
-        "type": "esports-products"
+        "type": "esports-steps",
+        "blocks": [
+          {"type": "step", "settings": {"icon": "credit-card", "title": {"ar": "اختار وادفع أونلاين", "en": "Pick and pay online"}, "text": {"ar": "اختار الكارت والقيمة، وادفع أونلاين.", "en": "Choose the card and the amount, then pay online."}}},
+          … 2 more
+        ]
       },
       {
-        "type": "esports-steps"
-      },
-      {
-        "type": "esports-faq"
+        "type": "esports-faq",
+        "blocks": [
+          {"type": "faq-item", "settings": {"question": {"ar": "الكود بيوصل إمتى؟", "en": "When does the code arrive?"}, "answer": {"ar": "بعد ما الدفع الأونلاين يتأكد، الكود بيتبعت أوتوماتيك على الإيميل اللي كتبته في الطلب.", "en": "Once your online payment is confirmed, the code is sent automatically to the email on your order."}}},
+          … 4 more
+        ]
       }
     ]
   }
@@ -137,7 +178,7 @@ The store needs products and four categories with these handles:
 {
   "id": "arcade",
   "name": "Arcade",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "author": "Hekana",
   "description": "A dark gaming store for gift cards and top-ups: neon cyan and lime, amount chips, category tiles, redeem steps.",
   "category": "gaming",
@@ -157,7 +198,11 @@ The store needs products and four categories with these handles:
       "surface": "#0C1219",
       "line": "#1C2A36"
     },
-    "layout": { "contentWidth": "1200px" }
+    "layout": { "contentWidth": "1200px" },
+    "fonts": {
+      "heading": "Rubik",
+      "body": "Rubik"
+    }
   }
 }
 ```
@@ -165,7 +210,10 @@ The store needs products and four categories with these handles:
 1. `defaultLocale: "ar"` makes `/` Arabic, right to left; `/en` is English.
 2. `primary` is the cyan and `accent` the lime. Extra keys (`muted`,
    `surface`, `line`) become `--hk-color-muted` and so on.
-3. The stylesheet builds its one gradient from the two tokens:
+3. `tokens.fonts` picks Rubik, a catalogue font with Arabic and Latin glyphs,
+   for headings and body text. Hekana serves the font files and writes the
+   `@font-face` rules; the theme ships no font files and no `font-family`.
+4. The stylesheet builds its one gradient from the two tokens:
 
 ```css title="examples/themes/arcade/assets/theme.css (excerpt)"
 /* Arcade: near-black ground, neon cyan + lime. Colours come from theme.json tokens. */
@@ -175,7 +223,6 @@ The store needs products and four categories with these handles:
   --arc-grad: linear-gradient(90deg, var(--arc-cyan), var(--arc-lime));
   --arc-glow: 0 0 0 1px rgba(34, 211, 238, 0.35), 0 0 18px rgba(34, 211, 238, 0.18);
   min-height: 100vh;
-  font-family: 'Rubik', system-ui, sans-serif;
   line-height: 1.6;
   background:
     radial-gradient(900px 420px at 50% -120px, rgba(34, 211, 238, 0.12), transparent 70%),
@@ -186,35 +233,47 @@ The store needs products and four categories with these handles:
 :where([data-hk-theme='arcade'] h1, [data-hk-theme='arcade'] h2, [data-hk-theme='arcade'] p) { margin: 0; }
 .arc-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
 .ic { width: 24px; height: 24px; flex: none; }
+/* Block wrappers take no room: tabs, chips, tiles and steps lay out as before. */
+[data-hk-theme='arcade'] [data-hk-block] { display: contents; }
 ```
 
 `:where(…)` keeps the link and heading resets at zero specificity, so a single
-class such as `.arc-chip` can still set its own colour.
+class such as `.arc-chip` can still set its own colour. `[data-hk-block] {
+display: contents; }` lets a block's wrapper `<div>` disappear from the layout,
+so tabs, chips and tiles sit directly in their flex or grid row.
 
-## 3. Words and links in the locale files
+## 3. Words, settings and links
 
-A section setting has one value for every language, so the theme keeps its
-words in `locales/ar.json` and `locales/en.json` and gives text settings an
-empty default. Internal links live there too: a plain `href="/products"` would
-send an English shopper to the Arabic page.
+Words the merchant may change are settings with `"localized": true` and a
+default in both languages, so the editor shows one field per language:
 
-```json title="examples/themes/arcade/locales/en.json (excerpt)"
-{
-  "url_prefix": "/en",
-  "url_home": "/en",
-  "url_products": "/en/products",
-  "url_search": "/en/search",
-  "hero_title": "Game cards and top-ups",
-  "egp": "EGP"
+```json title="examples/themes/arcade/sections/arcade-hero.sneferu (schema excerpt)"
+"title": {
+  "type": "text",
+  "label": "Title",
+  "localized": true,
+  "default": { "ar": "كروت الألعاب والشحن", "en": "Game cards and top-ups" },
+  "maxLength": 80
 }
 ```
 
-`locales/ar.json` has the same keys, with `url_prefix` empty, the paths
-without `/en`, and the words in Egyptian Arabic.
+`{{ section.settings.title }}` prints the value for the page's language. Words
+that belong to the interface (menu, cart, "View all", empty states) stay in
+`locales/ar.json` and `locales/en.json`:
 
-In a template: `href="{{ t('url_products') }}"`, and
-`{{ section.settings.title | default: t('hero_title') }}` for text a merchant
-may override.
+```json title="examples/themes/arcade/locales/en.json (excerpt)"
+{
+  "menu": "Menu",
+  "cart": "Cart",
+  "search_placeholder": "Search for a game or card",
+  "view_all": "View all"
+}
+```
+
+Internal links go through `url()`: `href="{{ url('/products') }}"` is
+`/products` on an Arabic page and `/en/products` on an English one. A plain
+`href="/products"` would send an English shopper to the Arabic page.
+`<hk-button href="/products">` does this by itself.
 
 ## 4. Header and footer
 
@@ -233,23 +292,22 @@ may override.
   <hk-container>
     <div class="arc-bar">
       <details class="arc-menu">
-        <summary aria-label="{{ t('menu') }}">
-          {% render 'icon', name: 'menu' %}
-        </summary>
+        <summary aria-label="{{ t('menu') }}"><hk-icon name="menu" size="24" class="ic" /></summary>
         <nav class="arc-menu-panel">
-          <a href="{{ t('url_home') }}">{{ t('nav_home') }}</a>
-          <a href="{{ t('url_products') }}">{{ t('nav_all') }}</a>
-          <a href="{{ t('url_prefix') }}/category/gift-cards">{{ t('cat_gift_cards') }}</a>
-          <a href="{{ t('url_prefix') }}/category/game-currency">{{ t('cat_currency') }}</a>
+          <a href="{{ url('/') }}">{{ t('nav_home') }}</a>
+          <a href="{{ url('/products') }}">{{ t('nav_all') }}</a>
+          <a href="{{ url('/category/gift-cards') }}">{{ t('cat_gift_cards') }}</a>
+          <a href="{{ url('/category/game-currency') }}">{{ t('cat_currency') }}</a>
           <a href="#faq">{{ t('nav_faq') }}</a>
         </nav>
       </details>
-      <a class="arc-logo" href="{{ t('url_home') }}">{{ store.name }}</a>
-      <a class="arc-search" href="{{ t('url_search') }}">
-        <span>{{ t('search_placeholder') }}</span>
-        {% render 'icon', name: 'search' %}
-      </a>
-      <a class="arc-cart" href="{{ t('url_cart') }}" aria-label="{{ t('cart') }}">{% render 'icon', name: 'cart' %}</a>
+      <a class="arc-logo" href="{{ url('/') }}">{{ store.name }}</a>
+      <hk-search-form placeholder="{{ t('search_placeholder') }}" class="arc-search" />
+      <a class="arc-cart" href="{{ url('/cart') }}" aria-label="{{ t('cart') }}"><hk-icon
+          name="shopping-cart"
+          size="24"
+          class="ic"
+        /></a>
     </div>
   </hk-container>
 </header>
@@ -262,10 +320,10 @@ may override.
         <p>{{ t('footer_about') }}</p>
       </div>
       <nav class="arc-footer-links" aria-label="{{ t('footer_links') }}">
-        <a href="{{ t('url_products') }}">{{ t('nav_all') }}</a>
-        <a href="{{ t('url_prefix') }}/category/gift-cards">{{ t('cat_gift_cards') }}</a>
-        <a href="{{ t('url_prefix') }}/category/game-currency">{{ t('cat_currency') }}</a>
-        <a href="{{ t('url_prefix') }}/category/top-ups">{{ t('cat_topups') }}</a>
+        <a href="{{ url('/products') }}">{{ t('nav_all') }}</a>
+        <a href="{{ url('/category/gift-cards') }}">{{ t('cat_gift_cards') }}</a>
+        <a href="{{ url('/category/game-currency') }}">{{ t('cat_currency') }}</a>
+        <a href="{{ url('/category/top-ups') }}">{{ t('cat_topups') }}</a>
         <a href="#faq">{{ t('nav_faq') }}</a>
       </nav>
     </div>
@@ -285,11 +343,13 @@ may override.
    `arc-grad`, that every tile icon reuses through CSS.
 2. `<details>` and `<summary>` are the phone menu: it opens with no
    JavaScript. CSS shows it only under 640 px.
-3. The search field is a link to the store's search page; themes have no form
-   inputs.
-4. `{% render 'icon', name: 'cart' %}` draws an icon from
-   `snippets/icon.sneferu`, a set of inline SVG icons on a 24 px grid picked by
-   name.
+3. `<hk-search-form>` is the search field: a real form that sends the shopper
+   to the store's search page (`/en/search` on English pages). The theme only
+   styles it: `.arc-search` draws the rounded field around the input and the
+   button.
+4. `<hk-icon name="shopping-cart" size="24" class="ic" />` draws an icon from
+   the bundled Lucide set. `class="ic"` lets the stylesheet size and colour it
+   like the theme's own glyphs.
 
 ## 5. Hero: tabs, title and amount chips
 
@@ -298,27 +358,13 @@ may override.
 ```html title="examples/themes/arcade/sections/arcade-hero.sneferu"
 <hk-section padding-y="32" mobile-padding-y="16" class="arc-hero">
   <nav class="arc-tabs" aria-label="{{ t('platforms') }}">
-    <a class="arc-tab is-active" href="{{ t('url_products') }}">{{ section.settings.tab_1 | default: t('tab_1') }}</a>
-    <a
-      class="arc-tab"
-      href="{{ t('url_prefix') }}/category/gift-cards"
-    >{{ section.settings.tab_2 | default: t('tab_2') }}</a>
-    <a
-      class="arc-tab"
-      href="{{ t('url_prefix') }}/category/gift-cards"
-    >{{ section.settings.tab_3 | default: t('tab_3') }}</a>
-    <a
-      class="arc-tab"
-      href="{{ t('url_prefix') }}/category/gift-cards"
-    >{{ section.settings.tab_4 | default: t('tab_4') }}</a>
-    <a
-      class="arc-tab"
-      href="{{ t('url_prefix') }}/category/top-ups"
-    >{{ section.settings.tab_5 | default: t('tab_5') }}</a>
+    {% for block in section.blocks %}
+      {% if block.type == 'tab' %}<hk-block of="{{ block }}" />{% endif %}
+    {% endfor %}
   </nav>
   <hk-stack gap="28" mobile-gap="20" align="center">
     <hk-heading
-      text="{{ section.settings.title | default: t('hero_title') }}"
+      text="{{ section.settings.title }}"
       level="h1"
       size="44"
       tablet-size="36"
@@ -327,26 +373,21 @@ may override.
       class="arc-title"
     />
     <div class="arc-chips">
-      {% render 'chip', amount: section.settings.amount_1 %}
-      {% render 'chip', amount: section.settings.amount_2 %}
-      {% render 'chip', amount: section.settings.amount_3 %}
-      {% render 'chip', amount: section.settings.amount_4 %}
-      {% render 'chip', amount: section.settings.amount_5 %}
-      {% render 'chip', amount: section.settings.amount_6 %}
-      {% render 'chip', amount: section.settings.amount_7 %}
-      {% render 'chip', amount: section.settings.amount_8 %}
+      {% for block in section.blocks %}
+        {% if block.type == 'chip' %}<hk-block of="{{ block }}" />{% endif %}
+      {% endfor %}
     </div>
     <div class="arc-actions">
       <hk-button
-        label="{{ t('browse_cards') }}"
-        href="{{ t('url_prefix') }}/category/gift-cards"
+        label="{{ section.settings.button }}"
+        href="{{ section.settings.button_link }}"
         variant="outline"
         size="sm"
         class="arc-browse"
       />
       <span class="arc-instant">
-        <span class="arc-instant-icon">{% render 'icon', name: 'bolt' %}</span>
-        {{ t('instant_delivery') }}
+        <span class="arc-instant-icon"><hk-icon name="zap" class="ic" /></span>
+        {{ section.settings.note }}
       </span>
     </div>
   </hk-stack>
@@ -358,109 +399,98 @@ may override.
     "settings": {
       "title": {
         "type": "text",
-        "label": "Title (empty = theme text)",
-        "default": "",
+        "label": "Title",
+        "localized": true,
+        "default": {
+          "ar": "كروت الألعاب والشحن",
+          "en": "Game cards and top-ups"
+        },
         "maxLength": 80
       },
-      "tab_1": {
+      "button": {
         "type": "text",
-        "label": "Tab 1",
-        "default": "",
+        "label": "Button",
+        "localized": true,
+        "default": {
+          "ar": "تصفح الكروت",
+          "en": "Browse cards"
+        },
+        "maxLength": 30
+      },
+      "button_link": {
+        "type": "link",
+        "label": "Button link",
+        "default": "/category/gift-cards"
+      },
+      "note": {
+        "type": "text",
+        "label": "Note next to the button",
+        "localized": true,
+        "default": {
+          "ar": "تسليم فوري",
+          "en": "Instant delivery"
+        },
+        "maxLength": 40
+      }
+    },
+    "blocks": {
+      "allowed": ["tab", "chip"],
+      "max": 16
+    }
+  }
+</hk-schema>
+```
+
+```html title="examples/themes/arcade/blocks/tab.sneferu"
+<a class="arc-tab" href="{{ url(block.settings.link) }}">{{ block.settings.label }}</a>
+<hk-schema>
+  {
+    "name": "Platform tab",
+    "version": 1,
+    "settings": {
+      "label": {
+        "type": "text",
+        "label": "Label",
+        "localized": true,
+        "default": {
+          "ar": "PC",
+          "en": "PC"
+        },
         "maxLength": 24
       },
-      "tab_2": {
-        "type": "text",
-        "label": "Tab 2",
-        "default": "",
-        "maxLength": 24
-      },
-      "tab_3": {
-        "type": "text",
-        "label": "Tab 3",
-        "default": "",
-        "maxLength": 24
-      },
-      "tab_4": {
-        "type": "text",
-        "label": "Tab 4",
-        "default": "",
-        "maxLength": 24
-      },
-      "tab_5": {
-        "type": "text",
-        "label": "Tab 5",
-        "default": "",
-        "maxLength": 24
-      },
-      "amount_1": {
-        "type": "number",
-        "label": "Amount 1 (EGP)",
-        "default": 100,
-        "min": 0,
-        "max": 100000
-      },
-      "amount_2": {
-        "type": "number",
-        "label": "Amount 2 (EGP)",
-        "default": 200,
-        "min": 0,
-        "max": 100000
-      },
-      "amount_3": {
-        "type": "number",
-        "label": "Amount 3 (EGP)",
-        "default": 300,
-        "min": 0,
-        "max": 100000
-      },
-      "amount_4": {
-        "type": "number",
-        "label": "Amount 4 (EGP)",
-        "default": 500,
-        "min": 0,
-        "max": 100000
-      },
-      "amount_5": {
-        "type": "number",
-        "label": "Amount 5 (EGP)",
-        "default": 750,
-        "min": 0,
-        "max": 100000
-      },
-      "amount_6": {
-        "type": "number",
-        "label": "Amount 6 (EGP)",
-        "default": 1000,
-        "min": 0,
-        "max": 100000
-      },
-      "amount_7": {
-        "type": "number",
-        "label": "Amount 7 (EGP)",
-        "default": 1500,
-        "min": 0,
-        "max": 100000
-      },
-      "amount_8": {
-        "type": "number",
-        "label": "Amount 8 (EGP)",
-        "default": 2000,
-        "min": 0,
-        "max": 100000
+      "link": {
+        "type": "link",
+        "label": "Link",
+        "default": "/products"
       }
     }
   }
 </hk-schema>
 ```
 
-```html title="examples/themes/arcade/snippets/chip.sneferu"
-{% if amount %}
-  <a class="arc-chip" href="{{ t('url_search') }}">
-    <span class="arc-chip-icon">{% render 'icon', name: 'coin' %}</span>
-    <span class="arc-chip-amount">{{ amount }}</span>
-    <span class="arc-chip-cur">{{ t('egp') }}</span>
+```html title="examples/themes/arcade/blocks/chip.sneferu"
+{% if block.settings.amount %}
+  <a class="arc-chip" href="{{ url('/search') }}">
+    <span class="arc-chip-icon">{% render 'glyph', name: 'coin' %}</span>
+    <span class="arc-chip-amount">{{ block.settings.amount | money: 'whole', 'major' }}</span>
+    <span class="arc-chip-short" aria-hidden="true">{{ block.settings.amount }}</span>
   </a>
 {% endif %}
+<hk-schema>
+  {
+    "name": "Amount chip",
+    "version": 1,
+    "settings": {
+      "amount": {
+        "type": "number",
+        "label": "Amount (EGP)",
+        "default": 100,
+        "min": 0,
+        "max": 100000
+      }
+    }
+  }
+</hk-schema>
 ```
 
 <Result url="demo-arcade.hekana.com/en">
@@ -470,13 +500,17 @@ may override.
 
 </Example>
 
-1. The tabs are plain links; the first carries `is-active` for the glow.
-2. Template default sections cannot carry blocks, so the eight amounts are
-   eight `number` settings. A fresh install shows all eight; the chip snippet
-   skips an amount set to `0`.
-3. `money` formats prices in piastres. These amounts are whole pounds, so the
-   chip prints the number and `t('egp')`.
-4. The `hk-button` gets `class="arc-browse"`, and the stylesheet draws its
+1. The hero takes two block types, `tab` and `chip`, and loops over its
+   blocks twice: tabs into the `<nav>`, chips into the chip row. The template
+   seeds five tabs and eight chips; the merchant edits, adds or removes them.
+2. The first tab gets the glow from CSS
+   (`.arc-tabs > [data-hk-block]:first-child .arc-tab`), so there is no
+   `is-active` setting to keep in sync.
+3. `url(block.settings.link)` keeps a tab's link in the page's language.
+4. The amounts are whole pounds, so `money: 'whole', 'major'` reads the number
+   as pounds and prints `EGP 100` / `100 ج.م`. On phones a second, plain
+   number replaces it, so six chips fit in one row.
+5. The `hk-button` gets `class="arc-browse"`, and the stylesheet draws its
    gradient border.
 
 ```css title="examples/themes/arcade/assets/theme.css (excerpt)"
@@ -484,7 +518,7 @@ may override.
 .arc-tabs { display: flex; justify-content: center; gap: 4px; width: fit-content; max-width: 100%; margin: 0 auto 40px; padding: 4px; border-radius: 999px; border: 1px solid transparent; background: linear-gradient(var(--hk-color-background), var(--hk-color-background)) padding-box, linear-gradient(90deg, rgba(34, 211, 238, 0.7), rgba(163, 230, 53, 0.55)) border-box; overflow-x: auto; scrollbar-width: none; }
 .arc-tab { display: inline-flex; align-items: center; min-height: 40px; padding-inline: 26px; border-radius: 999px; font-size: 14px; font-weight: 500; color: var(--hk-color-text); white-space: nowrap; border: 1px solid transparent; }
 .arc-tab:hover { color: var(--arc-cyan); }
-.arc-tab.is-active { border-color: var(--arc-cyan); box-shadow: 0 0 14px rgba(34, 211, 238, 0.45), inset 0 0 10px rgba(34, 211, 238, 0.15); }
+.arc-tabs > [data-hk-block]:first-child .arc-tab { border-color: var(--arc-cyan); box-shadow: 0 0 14px rgba(34, 211, 238, 0.45), inset 0 0 10px rgba(34, 211, 238, 0.15); }
 .arc-title { font-weight: 700; letter-spacing: 0; }
 .arc-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
 @media (min-width: 1024px) { .arc-chips { flex-wrap: nowrap; } }
@@ -492,7 +526,7 @@ may override.
 .arc-chip:hover { transform: translateY(-2px); box-shadow: 0 0 22px rgba(34, 211, 238, 0.55), 0 0 30px rgba(163, 230, 53, 0.3); }
 .arc-chip-icon { display: inline-flex; width: 26px; height: 26px; align-items: center; justify-content: center; border-radius: 50%; background: rgba(4, 19, 26, 0.85); color: var(--arc-cyan); }
 .arc-chip-icon .ic { width: 18px; height: 18px; }
-.arc-chip-cur { font-size: 11px; font-weight: 600; }
+.arc-chip-short { display: none; }
 .arc-actions { width: 100%; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; }
 .arc-browse { justify-self: start; }
 .sn-btn.arc-browse { display: inline-flex; align-items: center; line-height: 1; min-height: 44px; padding-inline: 18px; border-radius: 12px; border: 1px solid transparent; font-size: 14px; color: var(--hk-color-text); background: linear-gradient(var(--hk-color-background), var(--hk-color-background)) padding-box, linear-gradient(90deg, var(--arc-cyan), var(--arc-lime)) border-box; }
@@ -511,12 +545,9 @@ may override.
     <hk-heading text="{{ section.settings.heading }}" level="h2" size="24" mobile-size="20" class="arc-h2" />
   {% endif %}
   <hk-grid columns="3" mobile-columns="2" gap="16" mobile-gap="12">
-    {% render 'tile', icon: section.settings.icon_1, handle: section.settings.handle_1, title: section.settings.title_1 | default: t('cat_gift_cards') %}
-    {% render 'tile', icon: section.settings.icon_2, handle: section.settings.handle_2, title: section.settings.title_2 | default: t('cat_currency') %}
-    {% render 'tile', icon: section.settings.icon_3, handle: section.settings.handle_3, title: section.settings.title_3 | default: t('cat_topups') %}
-    {% render 'tile', icon: section.settings.icon_4, handle: section.settings.handle_4, title: section.settings.title_4 | default: t('cat_subscriptions') %}
-    {% render 'tile', icon: section.settings.icon_5, handle: section.settings.handle_5, title: section.settings.title_5 | default: t('cat_console') %}
-    {% render 'tile', icon: section.settings.icon_6, handle: section.settings.handle_6, title: section.settings.title_6 | default: t('cat_mobile') %}
+    {% for block in section.blocks %}
+      <hk-block of="{{ block }}" />
+    {% endfor %}
   </hk-grid>
 </hk-section>
 <hk-schema>
@@ -527,127 +558,75 @@ may override.
       "heading": {
         "type": "text",
         "label": "Heading (optional)",
-        "default": "",
+        "localized": true,
+        "default": {
+          "ar": "",
+          "en": ""
+        },
         "maxLength": 60
-      },
-      "title_1": {
-        "type": "text",
-        "label": "Tile 1 title",
-        "default": "",
-        "maxLength": 32
-      },
-      "handle_1": {
-        "type": "text",
-        "label": "Tile 1 category handle",
-        "default": "gift-cards",
-        "maxLength": 60
-      },
-      "icon_1": {
-        "type": "select",
-        "label": "Tile 1 icon",
-        "options": ["card", "coins", "gem", "bolt", "gamepad", "calendar", "phone", "trophy"],
-        "default": "card"
-      },
-      "title_2": {
-        "type": "text",
-        "label": "Tile 2 title",
-        "default": "",
-        "maxLength": 32
-      },
-      "handle_2": {
-        "type": "text",
-        "label": "Tile 2 category handle",
-        "default": "game-currency",
-        "maxLength": 60
-      },
-      "icon_2": {
-        "type": "select",
-        "label": "Tile 2 icon",
-        "options": ["card", "coins", "gem", "bolt", "gamepad", "calendar", "phone", "trophy"],
-        "default": "gem"
-      },
-      "title_3": {
-        "type": "text",
-        "label": "Tile 3 title",
-        "default": "",
-        "maxLength": 32
-      },
-      "handle_3": {
-        "type": "text",
-        "label": "Tile 3 category handle",
-        "default": "top-ups",
-        "maxLength": 60
-      },
-      "icon_3": {
-        "type": "select",
-        "label": "Tile 3 icon",
-        "options": ["card", "coins", "gem", "bolt", "gamepad", "calendar", "phone", "trophy"],
-        "default": "bolt"
-      },
-      "title_4": {
-        "type": "text",
-        "label": "Tile 4 title",
-        "default": "",
-        "maxLength": 32
-      },
-      "handle_4": {
-        "type": "text",
-        "label": "Tile 4 category handle",
-        "default": "subscriptions",
-        "maxLength": 60
-      },
-      "icon_4": {
-        "type": "select",
-        "label": "Tile 4 icon",
-        "options": ["card", "coins", "gem", "bolt", "gamepad", "calendar", "phone", "trophy"],
-        "default": "calendar"
-      },
-      "title_5": {
-        "type": "text",
-        "label": "Tile 5 title",
-        "default": "",
-        "maxLength": 32
-      },
-      "handle_5": {
-        "type": "text",
-        "label": "Tile 5 category handle",
-        "default": "gift-cards",
-        "maxLength": 60
-      },
-      "icon_5": {
-        "type": "select",
-        "label": "Tile 5 icon",
-        "options": ["card", "coins", "gem", "bolt", "gamepad", "calendar", "phone", "trophy"],
-        "default": "gamepad"
-      },
-      "title_6": {
-        "type": "text",
-        "label": "Tile 6 title",
-        "default": "",
-        "maxLength": 32
-      },
-      "handle_6": {
-        "type": "text",
-        "label": "Tile 6 category handle",
-        "default": "top-ups",
-        "maxLength": 60
-      },
-      "icon_6": {
-        "type": "select",
-        "label": "Tile 6 icon",
-        "options": ["card", "coins", "gem", "bolt", "gamepad", "calendar", "phone", "trophy"],
-        "default": "phone"
       }
+    },
+    "blocks": {
+      "allowed": ["tile"],
+      "max": 12
     }
   }
 </hk-schema>
 ```
 
-```html title="examples/themes/arcade/snippets/tile.sneferu"
-<a class="arc-tile" href="{{ t('url_prefix') }}/category/{{ handle }}">
-  <span class="arc-tile-icon">{% render 'icon', name: icon %}</span>
-  <span class="arc-tile-title">{{ title }}</span>
+```html title="examples/themes/arcade/blocks/tile.sneferu"
+<a class="arc-tile" href="{{ url(block.settings.link) }}">
+  <span class="arc-tile-icon">
+    {% if block.settings.icon == 'gem' %}
+      {% render 'glyph', name: 'gem' %}
+    {% else %}
+      <hk-icon name="{{ block.settings.icon }}" class="ic" />
+    {% endif %}
+  </span>
+  <span class="arc-tile-title">{{ block.settings.title }}</span>
 </a>
+<hk-schema>
+  {
+    "name": "Category tile",
+    "version": 1,
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": "Title",
+        "localized": true,
+        "default": {
+          "ar": "كروت الهدايا",
+          "en": "Gift cards"
+        },
+        "maxLength": 32
+      },
+      "link": {
+        "type": "link",
+        "label": "Link",
+        "default": "/category/gift-cards"
+      },
+      "icon": {
+        "type": "select",
+        "label": "Icon",
+        "options": [
+          "credit-card",
+          "gem",
+          "zap",
+          "calendar",
+          "gamepad-2",
+          "smartphone",
+          "trophy",
+          "gift",
+          "monitor",
+          "headphones",
+          "key",
+          "sparkles"
+        ],
+        "default": "credit-card"
+      }
+    }
+  }
+</hk-schema>
 ```
 
 <Result url="demo-arcade.hekana.com/en">
@@ -658,8 +637,13 @@ may override.
 </Example>
 
 1. `hk-grid columns="3" mobile-columns="2"` sets the columns per width.
-2. Each tile has a title, a category handle and an icon (a `select` setting).
-3. The icons take the shared gradient in CSS:
+2. Each tile is a `tile` block with a localized title, a link and an icon (a
+   `select` setting). The template seeds six; the merchant can add up to
+   twelve.
+3. Most icons are `hk-icon`. The set has no gem, so `in-game currency` keeps
+   one inline SVG from `snippets/glyph.sneferu`: a theme can still draw a glyph
+   the set lacks.
+4. The icons take the shared gradient in CSS:
    `.arc-tile-icon .ic { stroke: url(#arc-grad); }`.
 
 ## 7. How you get your code
@@ -670,18 +654,18 @@ may override.
 <hk-section padding-y="48" mobile-padding-y="32" class="arc-steps">
   <hk-stack gap="24" align="center">
     <hk-heading
-      text="{{ section.settings.heading | default: t('steps_heading') }}"
+      text="{{ section.settings.heading }}"
       level="h2"
       size="28"
       mobile-size="20"
       align="center"
       class="arc-h2"
     />
-    <ol class="arc-step-list">
-      {% render 'step', n: 1, icon: 'pay', title: t('step_1_title'), text: t('step_1_text') %}
-      {% render 'step', n: 2, icon: 'mail', title: t('step_2_title'), text: t('step_2_text') %}
-      {% render 'step', n: 3, icon: 'trophy', title: t('step_3_title'), text: t('step_3_text') %}
-    </ol>
+    <div class="arc-step-list">
+      {% for block in section.blocks %}
+        <hk-block of="{{ block }}" />
+      {% endfor %}
+    </div>
   </hk-stack>
 </hk-section>
 <hk-schema>
@@ -691,22 +675,64 @@ may override.
     "settings": {
       "heading": {
         "type": "text",
-        "label": "Heading (empty = theme text)",
-        "default": "",
+        "label": "Heading",
+        "localized": true,
+        "default": {
+          "ar": "إزاي تستلم الكود",
+          "en": "How you get your code"
+        },
         "maxLength": 60
       }
+    },
+    "blocks": {
+      "allowed": ["step"],
+      "max": 4
     }
   }
 </hk-schema>
 ```
 
-```html title="examples/themes/arcade/snippets/step.sneferu"
-<li class="arc-step">
-  <span class="arc-step-icon">{% render 'icon', name: icon %}</span>
-  <span class="arc-step-n">{{ n }}</span>
-  <strong class="arc-step-title">{{ title }}</strong>
-  <span class="arc-step-text">{{ text }}</span>
-</li>
+```html title="examples/themes/arcade/blocks/step.sneferu"
+<div class="arc-step">
+  <span class="arc-step-icon"><hk-icon name="{{ block.settings.icon }}" class="ic" /></span>
+  <span class="arc-step-n"></span>
+  <strong class="arc-step-title">{{ block.settings.title }}</strong>
+  <span class="arc-step-text">{{ block.settings.text }}</span>
+</div>
+<hk-schema>
+  {
+    "name": "Step",
+    "version": 1,
+    "settings": {
+      "icon": {
+        "type": "select",
+        "label": "Icon",
+        "options": ["credit-card", "wallet", "mail", "trophy", "zap", "key", "gamepad-2", "shield-check"],
+        "default": "credit-card"
+      },
+      "title": {
+        "type": "text",
+        "label": "Title",
+        "localized": true,
+        "default": {
+          "ar": "اختار وادفع أونلاين",
+          "en": "Pick and pay online"
+        },
+        "maxLength": 60
+      },
+      "text": {
+        "type": "text",
+        "label": "Text",
+        "localized": true,
+        "default": {
+          "ar": "اختار الكارت والقيمة، وادفع أونلاين.",
+          "en": "Choose the card and the amount, then pay online."
+        },
+        "maxLength": 140
+      }
+    }
+  }
+</hk-schema>
 ```
 
 <Result url="demo-arcade.hekana.com/en">
@@ -716,8 +742,10 @@ may override.
 
 </Example>
 
-The copy describes what a Hekana digital store does: after an online payment is
-confirmed, the code is sent by email automatically.
+Each step is a block. The number is not a setting: a CSS counter on the list
+(`counter-reset: arc-step` and `content: counter(arc-step)`) numbers the steps
+in the merchant's order. The copy describes what a Hekana digital store does:
+after an online payment is confirmed, the code is sent by email automatically.
 
 ## 8. Products and questions
 
@@ -727,18 +755,12 @@ confirmed, the code is sent by email automatically.
 <hk-section padding-y="40" mobile-padding-y="28" class="arc-products">
   <hk-stack gap="20">
     <div class="arc-row-head">
-      <hk-heading
-        text="{{ section.settings.heading | default: t('products_heading') }}"
-        level="h2"
-        size="28"
-        mobile-size="20"
-        class="arc-h2"
-      />
-      <a class="arc-more" href="{{ t('url_products') }}">{{ t('view_all') }}</a>
+      <hk-heading text="{{ section.settings.heading }}" level="h2" size="28" mobile-size="20" class="arc-h2" />
+      <a class="arc-more" href="{{ url('/products') }}">{{ t('view_all') }}</a>
     </div>
-    {% if collection('featured').products %}
+    {% if collection(section.settings.list).products %}
       <hk-product-grid
-        products="{{ collection('featured').products }}"
+        products="{{ collection(section.settings.list).products }}"
         limit="{{ section.settings.count }}"
         columns="4"
         tablet-columns="3"
@@ -757,9 +779,18 @@ confirmed, the code is sent by email automatically.
     "settings": {
       "heading": {
         "type": "text",
-        "label": "Heading (empty = theme text)",
-        "default": "",
+        "label": "Heading",
+        "localized": true,
+        "default": {
+          "ar": "كروت مختارة",
+          "en": "Featured cards"
+        },
         "maxLength": 60
+      },
+      "list": {
+        "type": "collection",
+        "label": "Collection",
+        "default": "featured"
       },
       "count": {
         "type": "range",
@@ -781,6 +812,8 @@ confirmed, the code is sent by email automatically.
 
 </Example>
 
+The `list` setting is a `collection` picker that defaults to `featured`;
+`collection(section.settings.list)` reads whatever the merchant picks.
 `hk-product-grid` renders one `sn-product-card` per product; the stylesheet
 styles `.arc-grid .sn-product-card`, `.sn-title` and `.sn-price`.
 
@@ -789,18 +822,10 @@ styles `.arc-grid .sn-product-card`, `.sn-title` and `.sn-price`.
 ```html title="examples/themes/arcade/sections/arcade-faq.sneferu"
 <hk-section padding-y="48" mobile-padding-y="32" class="arc-faq">
   <div id="faq" class="arc-faq-wrap">
-    <hk-heading
-      text="{{ section.settings.heading | default: t('faq_heading') }}"
-      level="h2"
-      size="28"
-      mobile-size="20"
-      class="arc-h2"
-    />
-    {% render 'faq-item', q: t('faq_1_q'), a: t('faq_1_a') %}
-    {% render 'faq-item', q: t('faq_2_q'), a: t('faq_2_a') %}
-    {% render 'faq-item', q: t('faq_3_q'), a: t('faq_3_a') %}
-    {% render 'faq-item', q: t('faq_4_q'), a: t('faq_4_a') %}
-    {% render 'faq-item', q: t('faq_5_q'), a: t('faq_5_a') %}
+    <hk-heading text="{{ section.settings.heading }}" level="h2" size="28" mobile-size="20" class="arc-h2" />
+    {% for block in section.blocks %}
+      <hk-block of="{{ block }}" />
+    {% endfor %}
   </div>
 </hk-section>
 <hk-schema>
@@ -810,24 +835,58 @@ styles `.arc-grid .sn-product-card`, `.sn-title` and `.sn-price`.
     "settings": {
       "heading": {
         "type": "text",
-        "label": "Heading (empty = theme text)",
-        "default": "",
+        "label": "Heading",
+        "localized": true,
+        "default": {
+          "ar": "أسئلة شائعة",
+          "en": "Questions"
+        },
         "maxLength": 60
       }
+    },
+    "blocks": {
+      "allowed": ["faq-item"],
+      "max": 12
     }
   }
 </hk-schema>
 ```
 
-```html title="examples/themes/arcade/snippets/faq-item.sneferu"
-{% if q %}
+```html title="examples/themes/arcade/blocks/faq-item.sneferu"
+{% if block.settings.question %}
   <details class="arc-faq-item">
-    <summary>
-      {{ q }}{% render 'icon', name: 'chevron' %}
-    </summary>
-    <p>{{ a }}</p>
+    <summary>{{ block.settings.question }}<hk-icon name="chevron-down" class="ic" /></summary>
+    <p>{{ block.settings.answer }}</p>
   </details>
 {% endif %}
+<hk-schema>
+  {
+    "name": "Question",
+    "version": 1,
+    "settings": {
+      "question": {
+        "type": "text",
+        "label": "Question",
+        "localized": true,
+        "default": {
+          "ar": "الكود بيوصل إمتى؟",
+          "en": "When does the code arrive?"
+        },
+        "maxLength": 120
+      },
+      "answer": {
+        "type": "textarea",
+        "label": "Answer",
+        "localized": true,
+        "default": {
+          "ar": "بعد ما الدفع الأونلاين يتأكد، الكود بيتبعت أوتوماتيك على الإيميل اللي كتبته في الطلب.",
+          "en": "Once your online payment is confirmed, the code is sent automatically to the email on your order."
+        },
+        "maxLength": 600
+      }
+    }
+  }
+</hk-schema>
 ```
 
 <Result url="demo-arcade.hekana.com/en">
@@ -837,14 +896,14 @@ styles `.arc-grid .sn-product-card`, `.sn-title` and `.sn-price`.
 
 </Example>
 
-Each question is a `<details>`: it opens on tap, with no JavaScript. The
-questions are about codes and payment, not shipping.
+Each question is a block, and a `<details>`: it opens on tap, with no
+JavaScript. The questions are about codes and payment, not shipping.
 
 ## 9. Check, preview and push
 
 <Steps>
   1. `npx @hekana/sneferu format` indents every file.
-  2. `npx @hekana/sneferu validate` prints `✔ theme arcade@1.0.1 is valid`.
+  2. `npx @hekana/sneferu validate` prints `✔ theme arcade@1.1.0 is valid`.
   3. In `dev`, check `?locale=en` and a window under 640 px.
   4. Change `id` in `theme.json` to a slug of your own, then
      `npx @hekana/sneferu push . --package <your-slug> --dev-store`.
@@ -855,14 +914,12 @@ and cart pages use the store's regular theme.
 
 ## What to know before you build your own
 
+The three gaming themes were first built on Sneferu 0.2 and moved to 0.3; the
+list of what changed is in `examples/GAPS-gaming.md`. What is still missing:
+
 | Limit | What the three gaming themes do |
 | - | - |
-| no icon tag | one `icon` snippet of inline SVG |
-| images in `assets/` are served on the store from 0.3 (fonts, scripts and icons are not) | this theme bundles no images: icons and hero art are inline SVG, product art comes from products |
-| fonts in `assets/` are not served on the store (use `tokens.fonts`) | `@font-face` rules pointing at `https://fonts.gstatic.com` |
-| one value per setting for every language | text settings default to `""`, with `default: t('…')` |
-| links do not follow the locale | link paths in the locale files (`url_products`) |
-| template default sections cannot carry blocks | repeated items are numbered settings or locale keys |
-| a `for` limit is fixed text | `limit: 10`; `hk-product-grid limit` does take a setting |
-| `hk-product-card` has no badge or button slot | wrap it: ribbon before, a Buy link after |
-| no form inputs and no JavaScript | search is a link; menus and questions use `<details>`; the Console carousel is scroll-snap with anchor links |
+| no cart tag (no cart count, no add-to-cart) | the cart is an icon link to `/cart`; "Buy" buttons link to the product page |
+| no carousel and no JavaScript | menus and questions use `<details>`; the Console carousel is scroll-snap with anchor links |
+| images in `assets/` are served from 0.3, but these themes bundle none | icons are `hk-icon` plus a few inline SVG glyphs, hero art is inline SVG, product art comes from products |
+| the icon set has 71 icons | a glyph the set lacks (a gem, a coin) is inline SVG in `snippets/glyph.sneferu` |

@@ -16,16 +16,15 @@ its prices were in dollars. Live:
 [demo-creator.hekana.com](https://demo-creator.hekana.com) and
 [/en](https://demo-creator.hekana.com/en).
 
-What the theme uses: `hk-product-card` inside a positioned wrapper (for the
-badge), a CSS scroll-snap row for the carousel (no script), `{% render %}`
-with arguments, blocks with a locale fallback, an `image` setting, and
-`hk-button`.
+What the theme uses: `hk-product-card` with its `badge` part (the badge and
+the kind label), a CSS scroll-snap row for the carousel (no script),
+`{% render %}` with arguments, `collection` settings, blocks seeded by the
+template, localized text settings, an `image` setting, `hk-icon` and
+`hk-button`. Version 1.1.0 is built on Sneferu 0.3.
 
 ## Files
 
 ```
-theme.json
-assets/fonts.css
 assets/theme.css
 blocks/get-item.sneferu
 layout/theme.sneferu
@@ -35,8 +34,8 @@ sections/author.sneferu
 sections/covers.sneferu
 sections/what-you-get.sneferu
 snippets/cover.sneferu
-snippets/get-item.sneferu
 templates/index.sneferu
+theme.json
 ```
 
 Next to the theme: `README.md` and `docs/` (this tutorial and its pictures),
@@ -51,8 +50,10 @@ they are never checked and never pushed.
 | `ebooks` | E-book |
 | `templates` | Templates |
 
-A product has no "type" field a theme can read, so the kind label comes from
-the collection the product is listed under.
+These are the defaults of the covers section's three `collection` settings;
+the merchant can pick other categories in the editor. The label on each cover
+is a localized setting next to its collection, so it describes the collection
+the product is listed under.
 
 ## 1. Manifest and tokens
 
@@ -60,7 +61,7 @@ the collection the product is listed under.
 {
   "id": "creator",
   "name": "Creator",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "Hekana",
   "description": "An editorial theme for one creator selling courses, e-books and templates",
   "category": "digital",
@@ -79,7 +80,11 @@ the collection the product is listed under.
       "muted": "#716B64",
       "line": "#CFC8BE"
     },
-    "layout": { "contentWidth": "1040px" }
+    "layout": { "contentWidth": "1040px" },
+    "fonts": {
+      "heading": "IBM Plex Sans Arabic",
+      "body": "IBM Plex Sans Arabic"
+    }
   }
 }
 ```
@@ -100,16 +105,12 @@ the collection the product is listed under.
         <a class="cr-link" href="#about">{{ t('nav_about') }}</a>
       </nav>
       <details class="cr-menu">
-        <summary class="cr-menu-button" aria-label="{{ t('menu') }}">
-          <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">
-            <path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-          </svg>
-        </summary>
+        <summary class="cr-menu-button" aria-label="{{ t('menu') }}"><hk-icon name="menu" size="22" /></summary>
         <div class="cr-menu-panel">
           <a href="#shop">{{ t('nav_shop') }}</a>
           <a href="#what">{{ t('nav_what') }}</a>
           <a href="#about">{{ t('nav_about') }}</a>
-          <a href="{{ t('href_products') }}">{{ t('all_products') }}</a>
+          <a href="{{ url('/products') }}">{{ t('all_products') }}</a>
           <a href="{{ t('href_other_locale') }}">{{ t('other_locale') }}</a>
         </div>
       </details>
@@ -136,24 +137,24 @@ On phones the stylesheet hides all but the store name and the first link.
   <div class="cr-wrap">
     <h2 class="cr-hidden">{{ t('shop_heading') }}</h2>
     <div class="cr-track">
-      {% for p in collection('courses').products limit: 6 %}
-        {% render 'cover', p: p, kind: t('kind_course'), slot: 'course' %}
+      {% for p in collection(section.settings.list_1).products limit: section.settings.count %}
+        {% render 'cover', p: p, kind: section.settings.kind_1, slot: 'course' %}
       {% endfor %}
-      {% for p in collection('ebooks').products limit: 6 %}
-        {% render 'cover', p: p, kind: t('kind_ebook'), slot: 'ebook' %}
+      {% for p in collection(section.settings.list_2).products limit: section.settings.count %}
+        {% render 'cover', p: p, kind: section.settings.kind_2, slot: 'ebook' %}
       {% endfor %}
-      {% for p in collection('templates').products limit: 6 %}
-        {% render 'cover', p: p, kind: t('kind_template'), slot: 'template' %}
+      {% for p in collection(section.settings.list_3).products limit: section.settings.count %}
+        {% render 'cover', p: p, kind: section.settings.kind_3, slot: 'template' %}
       {% endfor %}
     </div>
     <nav class="cr-dots" aria-label="{{ t('shop_heading') }}">
-      {% for p in collection('courses').products limit: 6 %}
+      {% for p in collection(section.settings.list_1).products limit: section.settings.count %}
         <a href="#course-{{ forloop.index }}" aria-label="{{ p.title }}"></a>
       {% endfor %}
-      {% for p in collection('ebooks').products limit: 6 %}
+      {% for p in collection(section.settings.list_2).products limit: section.settings.count %}
         <a href="#ebook-{{ forloop.index }}" aria-label="{{ p.title }}"></a>
       {% endfor %}
-      {% for p in collection('templates').products limit: 6 %}
+      {% for p in collection(section.settings.list_3).products limit: section.settings.count %}
         <a href="#template-{{ forloop.index }}" aria-label="{{ p.title }}"></a>
       {% endfor %}
     </nav>
@@ -166,23 +167,84 @@ On phones the stylesheet hides all but the store name and the first link.
     "settings": {
       "badge": {
         "type": "text",
-        "label": "Badge on every cover (empty: the theme's own words)",
-        "default": "",
+        "label": "Badge on every cover",
+        "localized": true,
+        "default": {
+          "ar": "وصول فوري",
+          "en": "Instant access"
+        },
         "maxLength": 30
+      },
+      "list_1": {
+        "type": "collection",
+        "label": "First collection",
+        "default": "courses"
+      },
+      "kind_1": {
+        "type": "text",
+        "label": "First collection: label on the cover",
+        "localized": true,
+        "default": {
+          "ar": "كورس أونلاين",
+          "en": "Online course"
+        },
+        "maxLength": 30
+      },
+      "list_2": {
+        "type": "collection",
+        "label": "Second collection",
+        "default": "ebooks"
+      },
+      "kind_2": {
+        "type": "text",
+        "label": "Second collection: label on the cover",
+        "localized": true,
+        "default": {
+          "ar": "كتاب إلكتروني",
+          "en": "E-book"
+        },
+        "maxLength": 30
+      },
+      "list_3": {
+        "type": "collection",
+        "label": "Third collection",
+        "default": "templates"
+      },
+      "kind_3": {
+        "type": "text",
+        "label": "Third collection: label on the cover",
+        "localized": true,
+        "default": {
+          "ar": "قوالب",
+          "en": "Templates"
+        },
+        "maxLength": 30
+      },
+      "count": {
+        "type": "range",
+        "label": "Products from each collection",
+        "default": 6,
+        "min": 1,
+        "max": 12,
+        "step": 1
       }
     }
   }
 </hk-schema>
 ```
 
-Three loops, one per collection, feed one row. Each passes the product, the
-label for its kind and a short `slot` name to the `cover` snippet:
+Three loops, one per `collection` setting, feed one row; each takes
+`limit: section.settings.count` products. Each passes the product, the label
+for its kind and a short `slot` name to the `cover` snippet:
 
 ```html title="snippets/cover.sneferu"
 <article class="cr-cover" id="{{ slot }}-{{ forloop.index }}">
-  <hk-product-card product="{{ p }}" class="cr-card" />
-  <span class="cr-flag">{{ section.settings.badge | default: t('instant_access') }}</span>
-  <span class="cr-kind">{{ kind }}</span>
+  <hk-product-card product="{{ p }}" class="cr-card">
+    <hk-part name="badge">
+      <span class="cr-flag">{{ section.settings.badge }}</span>
+      <span class="cr-kind">{{ kind }}</span>
+    </hk-part>
+  </hk-product-card>
 </article>
 ```
 
@@ -191,11 +253,10 @@ label for its kind and a short `slot` name to the `cover` snippet:
   scrolls the row to that cover.
 - `forloop` inside a snippet is the loop of the caller: a snippet sees its
   arguments plus the caller's scope.
-- The badge reads the section setting `badge` and falls back to the locale
-  text: `{{ section.settings.badge | default: t('instant_access') }}`.
-- The badge and the label are siblings of `hk-product-card`, placed over the
-  image by CSS. The card renders `a > img + .sn-title + .sn-price` and has no
-  slot of its own.
+- The badge reads the section setting `badge`, a localized text with
+  "Instant access" in both languages as its default.
+- The badge and the label are the card's `badge` part: they render inside the
+  card's link, before the image, and CSS places them over the image.
 
 The row is CSS grid with `grid-auto-flow: column`: every cover is half the row
 wide, the row scrolls sideways and snaps to each cover. On phones it becomes a
@@ -240,18 +301,11 @@ rendered and every second one is hidden, which leaves one dot per pair:
 ```html title="sections/what-you-get.sneferu"
 <section class="cr-what" id="what">
   <div class="cr-wrap">
-    <h2 class="cr-h2">{{ section.settings.heading | default: t('what_heading') }}</h2>
+    <h2 class="cr-h2">{{ section.settings.heading }}</h2>
     <div class="cr-list">
-      {% if section.blocks %}
-        {% for block in section.blocks %}
-          <hk-block of="{{ block }}" />
-        {% endfor %}
-      {% else %}
-        {% render 'get-item', term: t('get_1_term'), text: t('get_1_text') %}
-        {% render 'get-item', term: t('get_2_term'), text: t('get_2_text') %}
-        {% render 'get-item', term: t('get_3_term'), text: t('get_3_text') %}
-        {% render 'get-item', term: t('get_4_term'), text: t('get_4_text') %}
-      {% endif %}
+      {% for block in section.blocks %}
+        <hk-block of="{{ block }}" />
+      {% endfor %}
     </div>
   </div>
 </section>
@@ -262,8 +316,12 @@ rendered and every second one is hidden, which leaves one dot per pair:
     "settings": {
       "heading": {
         "type": "text",
-        "label": "Heading (empty: the theme's own words)",
-        "default": "",
+        "label": "Heading",
+        "localized": true,
+        "default": {
+          "ar": "هتاخد إيه مع كل منتج",
+          "en": "What you get with every product"
+        },
         "maxLength": 80
       }
     },
@@ -276,7 +334,12 @@ rendered and every second one is hidden, which leaves one dot per pair:
 ```
 
 ```html title="blocks/get-item.sneferu"
-{% render 'get-item', term: block.settings.term, text: block.settings.text %}
+<p class="cr-item">
+  <span class="cr-tick" aria-hidden="true"></span>
+  <strong>{{ block.settings.term }}</strong>
+  <span class="cr-dash" aria-hidden="true">-</span>
+  <span>{{ block.settings.text }}</span>
+</p>
 <hk-schema>
   {
     "name": "What you get: item",
@@ -285,13 +348,21 @@ rendered and every second one is hidden, which leaves one dot per pair:
       "term": {
         "type": "text",
         "label": "Item",
-        "default": "Lessons",
+        "localized": true,
+        "default": {
+          "ar": "الدروس",
+          "en": "Lessons"
+        },
         "maxLength": 40
       },
       "text": {
         "type": "text",
         "label": "Detail",
-        "default": "Recorded videos you keep",
+        "localized": true,
+        "default": {
+          "ar": "فيديوهات مسجّلة تتفرج عليها في الوقت اللي يناسبك",
+          "en": "Recorded videos you watch when it suits you"
+        },
         "maxLength": 120
       }
     }
@@ -299,19 +370,9 @@ rendered and every second one is hidden, which leaves one dot per pair:
 </hk-schema>
 ```
 
-```html title="snippets/get-item.sneferu"
-<p class="cr-item">
-  <span class="cr-tick" aria-hidden="true"></span>
-  <strong>{{ term }}</strong>
-  <span class="cr-dash" aria-hidden="true">-</span>
-  <span>{{ text }}</span>
-</p>
-```
-
-The merchant can add up to eight items as blocks. Template default sections
-cannot carry blocks, so a new store has none; in that case the section renders
-four items from the locale files, in the page's language. Both paths draw the
-same `get-item` snippet.
+Each item is a `get-item` block with a localized term and detail. The template
+seeds four, so a new store shows the list in both languages; the merchant can
+edit them or add up to eight.
 
 ## 5. The author strip
 
@@ -324,15 +385,11 @@ same `get-item` snippet.
           <img class="cr-avatar" src="{{ section.settings.photo }}" alt="" width="56" height="56" loading="lazy" />
         {% endif %}
         <div>
-          <p class="cr-name">{{ section.settings.name | default: t('author_name') }}</p>
-          <p class="cr-role">{{ section.settings.role | default: t('author_role') }}</p>
+          <p class="cr-name">{{ section.settings.name }}</p>
+          <p class="cr-role">{{ section.settings.role }}</p>
         </div>
       </div>
-      <hk-button
-        label="{{ section.settings.button | default: t('author_cta') }}"
-        href="{{ section.settings.link | default: t('href_products') }}"
-        class="cr-cta"
-      />
+      <hk-button label="{{ section.settings.button }}" href="{{ section.settings.link }}" class="cr-cta" />
     </div>
   </div>
 </section>
@@ -348,26 +405,38 @@ same `get-item` snippet.
       },
       "name": {
         "type": "text",
-        "label": "Name (empty: the theme's own words)",
-        "default": "",
+        "label": "Name",
+        "localized": true,
+        "default": {
+          "ar": "منى سليم",
+          "en": "Mona Selim"
+        },
         "maxLength": 60
       },
       "role": {
         "type": "text",
         "label": "One line about you",
-        "default": "",
+        "localized": true,
+        "default": {
+          "ar": "مصممة واجهات ومدرّبة تصميم",
+          "en": "Interface designer and design trainer"
+        },
         "maxLength": 100
       },
       "button": {
         "type": "text",
         "label": "Button",
-        "default": "",
+        "localized": true,
+        "default": {
+          "ar": "تصفّح كل المنتجات",
+          "en": "Browse all products"
+        },
         "maxLength": 30
       },
       "link": {
         "type": "link",
         "label": "Button link",
-        "default": ""
+        "default": "/products"
       }
     }
   }
@@ -375,14 +444,16 @@ same `get-item` snippet.
 ```
 
 - `photo` is an `image` setting whose default is an `https://` URL. The theme
-  does not bundle the photo: `asset_url()` is empty on the live storefront in
-  this release.
+  does not bundle the photo.
+- Name, role and button text are localized settings; the button link is a
+  `link` setting (default `/products`) that `hk-button` keeps in the page's
+  language.
 - `{% if section.settings.photo %}` drops the image when the merchant clears it.
 - `hk-button` is styled through the class passed to it (`cr-cta`).
 
 ## 6. Words
 
-```json title="locales/en.json (excerpt)"
+```json title="locales/en.json"
 {
   "nav_label": "Main menu",
   "nav_shop": "Products",
@@ -390,17 +461,16 @@ same `get-item` snippet.
   "nav_about": "About me",
   "menu": "Menu",
   "all_products": "All products",
-  "href_products": "/en/products",
   "href_other_locale": "/",
   "other_locale": "العربية",
   "shop_heading": "Courses, e-books and templates",
-  "instant_access": "Instant access",
-  "kind_course": "Online course",
-  "kind_ebook": "E-book",
-  "kind_template": "Templates",
+  "footer_note": "All products are digital: your download link is emailed after online payment. Cash on delivery is not available."
+}
 ```
 
-The Arabic file has the same keys in Egyptian Arabic.
+The Arabic file has the same keys in Egyptian Arabic. Only interface words are
+left in the locale files; the copy is in settings and blocks.
+
 ## Reproduce it
 
 ```bash
@@ -408,15 +478,13 @@ npx @hekana/sneferu init creator          # start from the starter theme
 cd creator
 # replace the starter files with the ones above, then:
 npx @hekana/sneferu format              # indent .sneferu, theme.json and locales
-npx @hekana/sneferu validate            # must print: theme creator@1.0.0 is valid
+npx @hekana/sneferu validate            # must print: theme creator@1.1.0 is valid
 npx @hekana/sneferu dev                 # http://127.0.0.1:4100, add ?locale=en for English
 ```
 
 `dev` reads `.sneferu-dev/data.json` (in this folder) as sample data, so the
 preview shows this store's products and the collections the sections use
-(`sneferu dev --data <file>` points at another file). That needs the CLI from
-Sneferu main after #16; on 0.2.0 the preview shows the built-in sample
-products and the category collections are empty.
+(`sneferu dev --data <file>` points at another file).
 
 To put it on a store, sign in once and push to your dev store:
 
@@ -428,26 +496,32 @@ npx @hekana/sneferu push . --package <your-slug> --dev-store
 The `--package` slug must equal `id` in `theme.json`, so change both to a
 slug of your own; `creator` here is the slug Hekana uses for its own copy. Bump
 `version` in `theme.json` before every push: a pushed version cannot be
-replaced. The live store must have product categories with the handles the
-theme reads (see "Data it needs" above). During this release only the home
+replaced. On a live store, either create product categories with the default
+handles (see "Data it needs" above) or pick the categories in the editor. During this release only the home
 page (`/`, and `/en`) is rendered by the theme; product, category and cart
 pages use the store's regular theme.
 
 ## Notes and limits met on the way
 
-These came up while building the theme and are tracked as SDK gaps:
+Version 1.0 was built on Sneferu 0.2 and worked around five SDK gaps. Version
+1.1.0 uses the Sneferu 0.3 features that close them:
 
-- Bundled images: `asset_url()` is empty on the live storefront for now, so the
-  theme ships no images of its own; art comes from products, inline SVG, or an
-  `image` setting with an `https://` default.
-- Fonts: there is no font loader yet. `assets/fonts.css` holds `@font-face`
-  rules that point at `https://fonts.gstatic.com` (the storefront allows
-  `https:` fonts), Arabic and Latin subsets only.
-- Collections: `collection('…')` takes a literal handle, so the handles are
-  fixed in the templates and the store's categories must use them.
-- One value per setting for every language: the sections print
-  `{{ section.settings.x | default: t('x') }}`, so an empty setting shows the
-  locale text, and list sections fall back to locale keys when the merchant
-  has added no blocks.
-- Links: there is no localized link helper, so URLs that must keep `/en` live
-  in the locale files (`"href_products": "/en/products"` in `en.json`).
+- Fonts: `tokens.fonts` with a catalogue font replaces `assets/fonts.css`
+  (`@font-face` rules pointing at Google Fonts).
+- Collections: `collection` settings, with the old handles as defaults, replace
+  the handles written into the templates.
+- Words: `"localized": true` settings with Arabic and English defaults replace
+  empty settings printed with `default: t('…')`.
+- Lists: template default blocks replace the locale-key fallback shown while a
+  section had no blocks.
+- Links: `url('/products')` replaces link paths in the locale files.
+- Icons: `hk-icon name="menu"` replaces the inline SVG menu icon.
+- Cover badge: the card's `badge` part replaces badges placed next to the card.
+
+Still open:
+
+- Bundled images are served from 0.3, but this theme still ships none (no new
+  art was made for 1.1.0): art comes from products, inline SVG, or an `image`
+  setting with an `https://` default.
+- `url()` always links within the page's language, so the language switch
+  keeps its target in the locale files (`href_other_locale`).

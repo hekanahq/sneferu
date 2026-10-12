@@ -17,24 +17,26 @@ and its lavender and pink tiles were replaced with sky blue and peach. Live:
 [/en](https://demo-bento.hekana.com/en).
 
 What the theme uses: plain HTML for structure, `hk-product-card` for every
-product, `hk-button` for the band's button, one snippet called twice with a
-collection passed in, `data-*` attributes for colour, and one stylesheet.
+product (with the "New" label in its `badge` part), `hk-button` for the band's
+button, `hk-icon`, shelf blocks that each read their own `collection` setting,
+localized settings, `data-*` attributes for colour, and one stylesheet.
+Version 1.1.0 is built on Sneferu 0.3.
 
 ## Files
 
 ```
-theme.json
-assets/fonts.css
 assets/theme.css
+blocks/shelf.sneferu
+blocks/tab.sneferu
 layout/theme.sneferu
 locales/ar.json
 locales/en.json
 sections/band.sneferu
 sections/bento.sneferu
 sections/tabs.sneferu
-snippets/icon.sneferu
-snippets/shelf.sneferu
+snippets/glyph.sneferu
 templates/index.sneferu
+theme.json
 ```
 
 Next to the theme: `README.md` and `docs/` (this tutorial and its pictures),
@@ -43,8 +45,9 @@ they are never checked and never pushed.
 
 ## Data it needs
 
-Two product categories with these handles, each with at least three products
-that have an image:
+Two product categories, each with at least three products that have an image.
+These handles are the defaults of the two shelves' `collection` settings; the
+merchant can pick other categories in the editor:
 
 | Handle | Used by |
 | - | - |
@@ -60,7 +63,7 @@ Prices are in piastres in the data and printed by `hk-price`, for example
 {
   "id": "bento",
   "name": "Bento",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "Hekana",
   "description": "A soft pastel bento-grid theme for printables, templates and e-books",
   "category": "digital",
@@ -84,7 +87,11 @@ Prices are in piastres in the data and printed by `hk-price`, for example
       "teal": "#74B8AE",
       "line": "#E8E6E1"
     },
-    "layout": { "contentWidth": "1040px" }
+    "layout": { "contentWidth": "1040px" },
+    "fonts": {
+      "heading": "Baloo Bhaijaan 2",
+      "body": "Baloo Bhaijaan 2"
+    }
   }
 }
 ```
@@ -106,41 +113,31 @@ Prices are in piastres in the data and printed by `hk-price`, for example
       <div class="bt-start">
         <a
           class="bt-icon bt-user"
-          href="{{ t('href_account') }}"
+          href="{{ url('/account') }}"
           aria-label="{{ t('account') }}"
-        >{% render 'icon', name: 'user' %}</a>
-        <a
-          class="bt-icon bt-hide-phone"
-          href="{{ t('href_wishlist') }}"
-          aria-label="{{ t('wishlist') }}"
-        >{% render 'icon', name: 'heart' %}</a>
-        <a
-          class="bt-icon bt-hide-phone"
-          href="{{ t('href_cart') }}"
-          aria-label="{{ t('cart') }}"
-        >{% render 'icon', name: 'bag' %}</a>
+        >{% render 'glyph', name: 'user' %}</a>
+        <a class="bt-icon bt-hide-phone" href="{{ url('/wishlist') }}" aria-label="{{ t('wishlist') }}"><hk-icon
+            name="heart"
+          /></a>
+        <a class="bt-icon bt-hide-phone" href="{{ url('/cart') }}" aria-label="{{ t('cart') }}"><hk-icon
+            name="shopping-bag"
+          /></a>
         <a class="bt-logo" href="{{ store.url }}">{{ store.name }}</a>
       </div>
       <div class="bt-end">
-        <a
-          class="bt-icon bt-hide-phone"
-          href="{{ t('href_cart') }}"
-          aria-label="{{ t('cart') }}"
-        >{% render 'icon', name: 'bag' %}</a>
-        <a
-          class="bt-icon bt-hide-phone"
-          href="{{ t('href_search') }}"
-          aria-label="{{ t('search') }}"
-        >{% render 'icon', name: 'search' %}</a>
-        <a class="bt-pill" href="{{ t('href_products') }}">{{ t('all_products') }}</a>
+        <a class="bt-icon bt-hide-phone" href="{{ url('/cart') }}" aria-label="{{ t('cart') }}"><hk-icon
+            name="shopping-bag"
+          /></a>
+        <a class="bt-icon bt-hide-phone" href="{{ url('/search') }}" aria-label="{{ t('search') }}"><hk-icon
+            name="search"
+          /></a>
+        <a class="bt-pill" href="{{ url('/products') }}">{{ t('all_products') }}</a>
         <details class="bt-menu">
-          <summary class="bt-icon" aria-label="{{ t('menu') }}">
-            {% render 'icon', name: 'menu' %}
-          </summary>
+          <summary class="bt-icon" aria-label="{{ t('menu') }}"><hk-icon name="menu" size="22" /></summary>
           <div class="bt-menu-panel">
-            <a href="{{ t('href_search') }}">{{ t('search') }}</a>
-            <a href="{{ t('href_cart') }}">{{ t('cart') }}</a>
-            <a href="{{ t('href_wishlist') }}">{{ t('wishlist') }}</a>
+            <a href="{{ url('/search') }}">{{ t('search') }}</a>
+            <a href="{{ url('/cart') }}">{{ t('cart') }}</a>
+            <a href="{{ url('/wishlist') }}">{{ t('wishlist') }}</a>
             <a href="{{ t('href_other_locale') }}">{{ t('other_locale') }}</a>
           </div>
         </details>
@@ -161,122 +158,176 @@ Prices are in piastres in the data and printed by `hk-price`, for example
 - `<hk-slot name="content" />` is where the template's sections go.
 - `{{ store.name }}` and `{{ store.url }}` come from the store. Every other
   word is `t('…')`, read from `locales/ar.json` or `locales/en.json`.
-- Links that must stay in the current language read their URL from the locale
-  files too: `href="{{ t('href_cart') }}"` is `/cart` in Arabic and `/en/cart`
-  in English.
+- Links go through `url()`: `href="{{ url('/cart') }}"` is `/cart` in Arabic
+  and `/en/cart` in English. Only the language switch keeps its target in the
+  locale files (`href_other_locale`), since `url()` stays in the page's
+  language.
 - The phone menu is a `<details>` element: it opens and closes without script
   (themes cannot run JavaScript).
-- Icons are inline SVG in one snippet, chosen by name:
+- Icons are `<hk-icon>` from the bundled Lucide set (`heart`,
+  `shopping-bag`, `search`, `menu`, `plus`). The filled avatar has no match in
+  the set, so it stays inline SVG in one snippet:
 
-```html title="snippets/icon.sneferu (excerpt)"
-{% if name == 'search' %}
-  <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle
-      cx="11"
-      cy="11"
-      r="7"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-    /><path d="M20 20l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg>
-{% elsif name == 'bag' %}
+```html title="snippets/glyph.sneferu"
+{% if name == 'user' %}
+  <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><circle
+      cx="13"
+      cy="13"
+      r="13"
+      fill="currentColor"
+    /><circle cx="13" cy="10.5" r="4" fill="#FFFFFF" /><path
+      d="M5.5 21.5c1.4-3.3 4.3-5 7.5-5s6.1 1.7 7.5 5"
+      fill="#FFFFFF"
+    /></svg>
+{% endif %}
 ```
 
 ## 3. The template
 
-```html title="templates/index.sneferu"
+```html title="templates/index.sneferu (excerpt)"
 <hk-sections />
 <hk-schema>
   {
     "sections": [
       {
-        "type": "tabs"
+        "type": "tabs",
+        "blocks": [
+          {"type": "tab", "settings": {"label": {"ar": "الكل", "en": "All"}, "link": "#shop", "current": true}},
+          … 3 more
+        ]
       },
       {
-        "type": "bento"
+        "type": "bento",
+        "blocks": [
+          {"type": "shelf", "settings": {"list": "printables", "title": {"ar": "مطبوعات للبيت والمدرسة", "en": "Printables for home and school"}, "note": {"ar": "للأطفال", "en": "For kids"}, "link": "/category/printables", "count": 3, "head": "peach", "panel": "sky"}},
+          … 1 more
+        ]
       },
-      {
-        "type": "band"
-      }
+      { "type": "band" }
     ]
   }
 </hk-schema>
 ```
 
-The home page is three sections, in this order. A merchant can reorder them or
-add more in the builder.
+The home page is three sections, in this order, with their default blocks:
+four tabs and two shelves. The excerpt shows the first block of each; the file
+has all of them. A merchant can reorder the sections, edit the blocks or add
+more in the builder.
 
 ## 4. Category tabs
 
 ```html title="sections/tabs.sneferu"
 <nav class="bt-tabs" aria-label="{{ t('tabs_label') }}">
   <div class="bt-wrap bt-tabs-row">
-    <a href="#shop" aria-current="page">{{ t('tab_all') }}</a>
-    <a href="#printables">{{ t('tab_printables') }}</a>
-    <a href="#templates">{{ t('tab_templates') }}</a>
-    <a href="{{ t('href_products') }}">{{ t('tab_everything') }}</a>
+    {% for block in section.blocks %}
+      <hk-block of="{{ block }}" />
+    {% endfor %}
   </div>
 </nav>
 <hk-schema>
   {
     "name": "Category tabs",
     "version": 1,
-    "settings": {}
+    "settings": {},
+    "blocks": {
+      "allowed": ["tab"],
+      "max": 8
+    }
   }
 </hk-schema>
 ```
 
-A row of links. The first is marked `aria-current="page"`, and the stylesheet
-gives that one the accent colour and underline. The two category tabs jump to
+```html title="blocks/tab.sneferu"
+<a href="{{ url(block.settings.link) }}" aria-current="{{ block.settings.current }}">{{ block.settings.label }}</a>
+<hk-schema>
+  {
+    "name": "Tab",
+    "version": 1,
+    "settings": {
+      "label": {
+        "type": "text",
+        "label": "Label",
+        "localized": true,
+        "default": {
+          "ar": "الكل",
+          "en": "All"
+        },
+        "maxLength": 30
+      },
+      "link": {
+        "type": "link",
+        "label": "Link (a page, or #<collection handle> for a shelf on this page)",
+        "default": "#shop"
+      },
+      "current": {
+        "type": "boolean",
+        "label": "Underlined as the current tab",
+        "default": false
+      }
+    }
+  }
+</hk-schema>
+```
+
+A row of `tab` blocks: a localized label, a link and a `current` switch. The
+switch prints `aria-current="true"` or `"false"`, and the stylesheet gives the
+current one the accent colour and underline. The two category tabs jump to
 the shelves below (`#printables`, `#templates`), the last opens the store's
 product list.
 
 ## 5. The bento shelves
 
-The section renders the same snippet twice, passing a different collection and
-a different pair of colours each time:
+The section renders its `shelf` blocks; the template seeds two, each with its
+own collection and pair of colours:
 
 ```html title="sections/bento.sneferu"
 <section class="bt-bento" id="shop">
   <div class="bt-wrap bt-bento-grid">
-    {% render 'shelf', c: collection('printables'), key: 'printables', title: t('printables_title'), note: t('printables_note'), href: t('href_printables'), head: 'peach', panel: 'sky' %}
-    {% render 'shelf', c: collection('templates'), key: 'templates', title: t('templates_title'), note: t('templates_note'), href: t('href_templates'), head: 'sage', panel: 'warm' %}
+    {% for block in section.blocks %}
+      <hk-block of="{{ block }}" />
+    {% endfor %}
   </div>
 </section>
 <hk-schema>
   {
     "name": "Bento shelves",
     "version": 1,
-    "settings": {}
+    "settings": {},
+    "blocks": {
+      "allowed": ["shelf"],
+      "max": 4
+    }
   }
 </hk-schema>
 ```
 
-`collection('printables')` is a lookup: it returns the category with that
-handle (or an empty list). Passing it as `c:` gives the snippet the whole
-collection, so the snippet does not need to know which category it shows.
+`collection(block.settings.list)` returns the category the merchant picked for
+that shelf (`printables` and `templates` by default), or an empty list when none
+is picked.
 
-```html title="snippets/shelf.sneferu"
-<div class="bt-shelf" id="{{ key }}">
-  <a class="bt-head" data-tone="{{ head }}" href="{{ href }}">
-    <h2>{{ title }}</h2>
+```html title="blocks/shelf.sneferu"
+<div class="bt-shelf" id="{{ block.settings.list }}">
+  <a class="bt-head" data-tone="{{ block.settings.head }}" href="{{ url(block.settings.link) }}">
+    <h2>{{ block.settings.title }}</h2>
     <span class="bt-thumbs" aria-hidden="true">
-      {% for p in c.products limit: 5 %}
+      {% for p in collection(block.settings.list).products limit: 5 %}
         {% if p.image %}<img src="{{ p.image.url }}" alt="" width="28" height="28" loading="lazy" />{% endif %}
       {% endfor %}
     </span>
   </a>
-  <div class="bt-panel" data-tone="{{ panel }}">
+  <div class="bt-panel" data-tone="{{ block.settings.panel }}">
     <div class="bt-chips">
       <span class="bt-chip bt-chip-on">{{ t('chip_instant') }}</span>
       <span class="bt-chip">{{ t('chip_pdf') }}</span>
-      <span class="bt-chip">{{ note }}</span>
+      <span class="bt-chip">{{ block.settings.note }}</span>
     </div>
-    {% if c.products %}
+    {% if collection(block.settings.list).products %}
       <div class="bt-covers">
-        {% for p in c.products limit: 3 %}
+        {% for p in collection(block.settings.list).products limit: block.settings.count %}
           <div class="bt-cover">
-            <hk-product-card product="{{ p }}" class="bt-card" />
-            {% if forloop.first %}<span class="bt-new">{{ t('badge_new') }}</span>{% endif %}
+            <hk-product-card product="{{ p }}" class="bt-card">
+              <hk-part name="badge">{% if forloop.first %}<span class="bt-new">{{ t('badge_new') }}</span>{% endif %}</hk-part>
+            </hk-product-card>
           </div>
         {% endfor %}
       </div>
@@ -285,28 +336,89 @@ collection, so the snippet does not need to know which category it shows.
     {% endif %}
     <a
       class="bt-more"
-      href="{{ href }}"
-      aria-label="{{ t('see_all') }}: {{ title }}"
-    >{% render 'icon', name: 'plus' %}</a>
+      href="{{ url(block.settings.link) }}"
+      aria-label="{{ t('see_all') }}: {{ block.settings.title }}"
+    ><hk-icon name="plus" size="18" stroke="2.5" /></a>
   </div>
 </div>
+<hk-schema>
+  {
+    "name": "Shelf",
+    "version": 1,
+    "settings": {
+      "list": {
+        "type": "collection",
+        "label": "Collection",
+        "default": "printables"
+      },
+      "title": {
+        "type": "text",
+        "label": "Title",
+        "localized": true,
+        "default": {
+          "ar": "مطبوعات للبيت والمدرسة",
+          "en": "Printables for home and school"
+        },
+        "maxLength": 60
+      },
+      "note": {
+        "type": "text",
+        "label": "Third chip",
+        "localized": true,
+        "default": {
+          "ar": "للأطفال",
+          "en": "For kids"
+        },
+        "maxLength": 30
+      },
+      "link": {
+        "type": "link",
+        "label": "Link of the title and the + button",
+        "default": "/category/printables"
+      },
+      "count": {
+        "type": "range",
+        "label": "Covers",
+        "default": 3,
+        "min": 1,
+        "max": 6,
+        "step": 1
+      },
+      "head": {
+        "type": "select",
+        "label": "Title colour",
+        "options": ["peach", "sage", "sky", "warm"],
+        "default": "peach"
+      },
+      "panel": {
+        "type": "select",
+        "label": "Panel colour",
+        "options": ["peach", "sage", "sky", "warm"],
+        "default": "sky"
+      }
+    }
+  }
+</hk-schema>
 ```
 
 How it works:
 
-- `data-tone="{{ head }}"` writes `peach`, `sage`, `sky` or `warm`, and one CSS
+- `data-tone="{{ block.settings.head }}"` writes `peach`, `sage`, `sky` or `warm`, and one CSS
   rule per tone sets the background. Dynamic `style="…"` is not allowed in
   templates; `data-*` plus CSS is the way to vary a colour per item.
-- `{% for p in c.products limit: 5 %}` draws up to five round thumbnails from
-  `p.image.url`.
-- `{% if c.products %}` is false for an empty collection, so an empty category
+- The thumbnail loop (`limit: 5`) draws up to five round thumbnails from
+  `p.image.url`; the covers loop takes `limit: block.settings.count`, a `range`
+  setting (default 3).
+- `{% if collection(block.settings.list).products %}` is false for an empty collection, so an empty category
   shows a line of text instead of an empty panel.
 - `<hk-product-card product="{{ p }}" class="bt-card" />` renders a link with
   the image, `.sn-title` and the price. The extra class is how the stylesheet
   reaches it.
 - `{% if forloop.first %}` puts the "New" badge on the first cover only. The
-  badge is a sibling of the card, positioned over it by CSS, because the card's
-  own markup has no slot for a badge.
+  badge is the card's `badge` part, so it renders inside the card's link,
+  before the image, and CSS positions it over the corner.
+- The shelf's `id` is the collection handle, so the tabs' `#printables` and
+  `#templates` links scroll to it.
 
 The CSS for the grid, the tiles and the covers:
 
@@ -352,14 +464,10 @@ The CSS for the grid, the tiles and the covers:
   <div class="bt-wrap">
     <div class="bt-band">
       <div>
-        <h2>{{ section.settings.heading | default: t('band_heading') }}</h2>
-        <p>{{ section.settings.text | default: t('band_text') }}</p>
+        <h2>{{ section.settings.heading }}</h2>
+        <p>{{ section.settings.text }}</p>
       </div>
-      <hk-button
-        label="{{ section.settings.button | default: t('band_button') }}"
-        href="{{ t('href_products') }}"
-        class="bt-band-button"
-      />
+      <hk-button label="{{ section.settings.button }}" href="{{ section.settings.link }}" class="bt-band-button" />
     </div>
   </div>
 </section>
@@ -370,31 +478,48 @@ The CSS for the grid, the tiles and the covers:
     "settings": {
       "heading": {
         "type": "text",
-        "label": "Heading (empty: the theme's own words)",
-        "default": "",
+        "label": "Heading",
+        "localized": true,
+        "default": {
+          "ar": "اطبع النهارده",
+          "en": "Print it today"
+        },
         "maxLength": 80
       },
       "text": {
         "type": "textarea",
         "label": "Text",
-        "default": "",
+        "localized": true,
+        "default": {
+          "ar": "ادفع أونلاين ورابط التحميل يوصلك على الإيميل على طول.",
+          "en": "Pay online and the download link is emailed to you right away."
+        },
         "maxLength": 200
       },
       "button": {
         "type": "text",
         "label": "Button",
-        "default": "",
+        "localized": true,
+        "default": {
+          "ar": "تصفّح كل المنتجات",
+          "en": "Browse all products"
+        },
         "maxLength": 30
+      },
+      "link": {
+        "type": "link",
+        "label": "Button link",
+        "default": "/products"
       }
     }
   }
 </hk-schema>
 ```
 
-Each setting defaults to an empty string, and the template prints
-`{{ section.settings.heading | default: t('band_heading') }}`. Until the
-merchant types a heading, the page shows the locale text in the page's
-language; after that, the merchant's words.
+The text settings are `"localized": true`, with an Arabic and an English
+default, and the template prints `{{ section.settings.heading }}`: the value
+for the page's language. The button link is a `link` setting that `hk-button`
+keeps in the page's language.
 
 `hk-button` renders `<a class="sn-btn sn-btn-solid">`. It brings no visual
 style of its own, so the theme styles it through its class:
@@ -403,7 +528,6 @@ style of its own, so the theme styles it through its class:
 .bt-band-button.sn-btn {
   display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding-inline: 34px; border-radius: 999px;
   background: var(--hk-color-primary); color: #FFFFFF; border: 0; font-size: 16px; font-weight: 600;
-}
 ```
 
 ## 7. Phones
@@ -428,7 +552,7 @@ groups so `order` can put the menu first and the "All products" pill last:
 
 All interface text is in the two locale files, with the same keys:
 
-```json title="locales/en.json (excerpt)"
+```json title="locales/en.json"
 {
   "menu": "Menu",
   "account": "My account",
@@ -436,25 +560,16 @@ All interface text is in the two locale files, with the same keys:
   "cart": "Cart",
   "search": "Search",
   "all_products": "All products",
-  "href_account": "/en/account",
-  "href_wishlist": "/en/wishlist",
-  "href_cart": "/en/cart",
-  "href_search": "/en/search",
-  "href_products": "/en/products",
-  "href_printables": "/en/category/printables",
-  "href_templates": "/en/category/templates",
   "href_other_locale": "/",
   "other_locale": "العربية",
   "tabs_label": "Categories",
-  "tab_all": "All",
-  "tab_printables": "Printables",
-  "tab_templates": "Templates and e-books",
-  "tab_everything": "All products",
-  "printables_title": "Printables for home and school",
-  "printables_note": "For kids",
-  "templates_title": "Templates and e-books for work",
-  "templates_note": "For projects",
   "chip_instant": "Instant download",
+  "chip_pdf": "PDF",
+  "badge_new": "New",
+  "see_all": "See all",
+  "empty": "No products here yet.",
+  "footer_note": "Every product is a digital file: your download link is emailed after online payment. Cash on delivery is not available."
+}
 ```
 
 The Arabic file has the same keys in Egyptian Arabic. Prices and dates are
@@ -481,15 +596,13 @@ npx @hekana/sneferu init bento          # start from the starter theme
 cd bento
 # replace the starter files with the ones above, then:
 npx @hekana/sneferu format              # indent .sneferu, theme.json and locales
-npx @hekana/sneferu validate            # must print: theme bento@1.0.0 is valid
+npx @hekana/sneferu validate            # must print: theme bento@1.1.0 is valid
 npx @hekana/sneferu dev                 # http://127.0.0.1:4100, add ?locale=en for English
 ```
 
 `dev` reads `.sneferu-dev/data.json` (in this folder) as sample data, so the
 preview shows this store's products and the collections the sections use
-(`sneferu dev --data <file>` points at another file). That needs the CLI from
-Sneferu main after #16; on 0.2.0 the preview shows the built-in sample
-products and the category collections are empty.
+(`sneferu dev --data <file>` points at another file).
 
 To put it on a store, sign in once and push to your dev store:
 
@@ -501,26 +614,32 @@ npx @hekana/sneferu push . --package <your-slug> --dev-store
 The `--package` slug must equal `id` in `theme.json`, so change both to a
 slug of your own; `bento` here is the slug Hekana uses for its own copy. Bump
 `version` in `theme.json` before every push: a pushed version cannot be
-replaced. The live store must have product categories with the handles the
-theme reads (see "Data it needs" above). During this release only the home
+replaced. On a live store, either create product categories with the default
+handles (see "Data it needs" above) or pick the categories in the editor. During this release only the home
 page (`/`, and `/en`) is rendered by the theme; product, category and cart
 pages use the store's regular theme.
 
 ## Notes and limits met on the way
 
-These came up while building the theme and are tracked as SDK gaps:
+Version 1.0 was built on Sneferu 0.2 and worked around five SDK gaps. Version
+1.1.0 uses the Sneferu 0.3 features that close them:
 
-- Bundled images: `asset_url()` is empty on the live storefront for now, so the
-  theme ships no images of its own; art comes from products, inline SVG, or an
-  `image` setting with an `https://` default.
-- Fonts: there is no font loader yet. `assets/fonts.css` holds `@font-face`
-  rules that point at `https://fonts.gstatic.com` (the storefront allows
-  `https:` fonts), Arabic and Latin subsets only.
-- Collections: `collection('…')` takes a literal handle, so the handles are
-  fixed in the templates and the store's categories must use them.
-- One value per setting for every language: the sections print
-  `{{ section.settings.x | default: t('x') }}`, so an empty setting shows the
-  locale text, and list sections fall back to locale keys when the merchant
-  has added no blocks.
-- Links: there is no localized link helper, so URLs that must keep `/en` live
-  in the locale files (`"href_products": "/en/products"` in `en.json`).
+- Fonts: `tokens.fonts` with a catalogue font replaces `assets/fonts.css`
+  (`@font-face` rules pointing at Google Fonts).
+- Collections: `collection` settings, with the old handles as defaults, replace
+  the handles written into the templates.
+- Words: `"localized": true` settings with Arabic and English defaults replace
+  empty settings printed with `default: t('…')`.
+- Lists: template default blocks replace the locale-key fallback shown while a
+  section had no blocks.
+- Links: `url('/products')` replaces link paths in the locale files.
+- Icons: `hk-icon` replaces the inline SVG set (only the filled avatar stays).
+- "New" label: the card's `badge` part replaces a label placed next to the card.
+
+Still open:
+
+- Bundled images are served from 0.3, but this theme still ships none (no new
+  art was made for 1.1.0): art comes from products, inline SVG, or an `image`
+  setting with an `https://` default.
+- `url()` always links within the page's language, so the language switch
+  keeps its target in the locale files (`href_other_locale`).
