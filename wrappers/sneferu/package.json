@@ -4,8 +4,8 @@
   "description": "Sneferu: build Hekana themes. The short name for @hekana/sneferu. npx sneferu init",
   "type": "module",
   "bin": {
-    "sneferu": "./bin/sneferu.js",
-    "snf": "./bin/sneferu.js"
+    "sneferu": "bin/sneferu.js",
+    "snf": "bin/sneferu.js"
   },
   "files": [
     "bin"

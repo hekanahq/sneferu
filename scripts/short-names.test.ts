@@ -23,7 +23,7 @@ describe('short names `sneferu` and `create-sneferu` wrap @hekana/sneferu at the
   });
 
   it('`sneferu` exposes the same commands as @hekana/sneferu', () => {
-    expect(json('wrappers/sneferu/package.json').bin).toEqual({ sneferu: './bin/sneferu.js', snf: './bin/sneferu.js' });
+    expect(json('wrappers/sneferu/package.json').bin).toEqual({ sneferu: 'bin/sneferu.js', snf: 'bin/sneferu.js' });
     expect(Object.keys(main.bin).sort()).toEqual(['sneferu', 'snf']);
   });
 

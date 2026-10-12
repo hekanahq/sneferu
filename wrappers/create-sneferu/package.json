@@ -4,7 +4,7 @@
   "description": "npm create sneferu my-theme: start a Hekana theme with Sneferu",
   "type": "module",
   "bin": {
-    "create-sneferu": "./bin/create-sneferu.js"
+    "create-sneferu": "bin/create-sneferu.js"
   },
   "files": [
     "bin"
