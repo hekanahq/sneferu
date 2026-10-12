@@ -1,0 +1,52 @@
+<a class="arc-tile" href="{{ url(block.settings.link) }}">
+  <span class="arc-tile-icon">
+    {% if block.settings.icon == 'gem' %}
+      {% render 'glyph', name: 'gem' %}
+    {% else %}
+      <hk-icon name="{{ block.settings.icon }}" class="ic" />
+    {% endif %}
+  </span>
+  <span class="arc-tile-title">{{ block.settings.title }}</span>
+</a>
+<hk-schema>
+  {
+    "name": "Category tile",
+    "version": 1,
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": "Title",
+        "localized": true,
+        "default": {
+          "ar": "كروت الهدايا",
+          "en": "Gift cards"
+        },
+        "maxLength": 32
+      },
+      "link": {
+        "type": "link",
+        "label": "Link",
+        "default": "/category/gift-cards"
+      },
+      "icon": {
+        "type": "select",
+        "label": "Icon",
+        "options": [
+          "credit-card",
+          "gem",
+          "zap",
+          "calendar",
+          "gamepad-2",
+          "smartphone",
+          "trophy",
+          "gift",
+          "monitor",
+          "headphones",
+          "key",
+          "sparkles"
+        ],
+        "default": "credit-card"
+      }
+    }
+  }
+</hk-schema>
