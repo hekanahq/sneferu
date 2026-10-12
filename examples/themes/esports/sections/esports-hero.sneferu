@@ -2,24 +2,15 @@
   <div class="es-hero">
     <div class="es-hero-copy">
       <hk-heading
-        text="{{ section.settings.title | default: t('hero_title') }}"
+        text="{{ section.settings.title }}"
         level="h1"
         size="56"
         tablet-size="44"
         mobile-size="28"
         class="es-hero-title"
       />
-      <hk-text
-        text="{{ section.settings.subtitle | default: t('hero_subtitle') }}"
-        size="20"
-        mobile-size="14"
-        class="es-hero-sub"
-      />
-      <hk-button
-        label="{{ section.settings.button | default: t('hero_button') }}"
-        href="{{ t('url_products') }}"
-        class="es-cta"
-      />
+      <hk-text text="{{ section.settings.subtitle }}" size="20" mobile-size="14" class="es-hero-sub" />
+      <hk-button label="{{ section.settings.button }}" href="{{ section.settings.button_link }}" class="es-cta" />
     </div>
     <div class="es-hero-art">
       {% render 'hero-art' %}
@@ -40,21 +31,38 @@
     "settings": {
       "title": {
         "type": "text",
-        "label": "Title (empty = theme text)",
-        "default": "",
+        "label": "Title",
+        "localized": true,
+        "default": {
+          "ar": "اشحن دلوقتي",
+          "en": "Top up now"
+        },
         "maxLength": 40
       },
       "subtitle": {
         "type": "text",
-        "label": "Subtitle (empty = theme text)",
-        "default": "",
+        "label": "Subtitle",
+        "localized": true,
+        "default": {
+          "ar": "خصومات على باقات مختارة من ألعابك",
+          "en": "Discounts on selected packs for your games"
+        },
         "maxLength": 80
       },
       "button": {
         "type": "text",
-        "label": "Button (empty = theme text)",
-        "default": "",
+        "label": "Button",
+        "localized": true,
+        "default": {
+          "ar": "اشحن دلوقتي",
+          "en": "Top up now"
+        },
         "maxLength": 24
+      },
+      "button_link": {
+        "type": "link",
+        "label": "Button link",
+        "default": "/products"
       },
       "show_offer": {
         "type": "boolean",

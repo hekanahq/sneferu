@@ -1,8 +1,0 @@
-{% if q %}
-  <details class="es-faq-item">
-    <summary>
-      {{ q }}{% render 'icon', name: 'chevron' %}
-    </summary>
-    <p>{{ a }}</p>
-  </details>
-{% endif %}

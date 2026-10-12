@@ -1,6 +1,0 @@
-<li class="es-step">
-  <span class="es-step-icon">{% render 'icon', name: icon %}</span>
-  <span class="es-step-n">{{ n }}</span>
-  <strong class="es-step-title">{{ title }}</strong>
-  <span class="es-step-text">{{ text }}</span>
-</li>

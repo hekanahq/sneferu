@@ -1,7 +1,0 @@
-<div class="es-card">
-  <span
-    class="es-ribbon"
-  >{% if p.compare_at > p.price %}{{ t('ribbon_sale') }}{% else %}{{ t('ribbon_pick') }}{% endif %}</span>
-  <hk-product-card product="{{ p }}" class="es-pc" />
-  <a class="es-buy" href="{{ p.url }}">{{ t('buy') }}</a>
-</div>
