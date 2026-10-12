@@ -4,8 +4,13 @@ import { hkBadge, hkButton, hkCard, hkHeading, hkImage, hkRichText, hkText } fro
 import { hkPrice, hkProductCard, hkProductGrid, formatMoney } from './commerce';
 import { hkIcon } from './icon';
 import { hkSearchForm } from './search';
+import { hkProductGallery } from './gallery';
+import { hkPagination, hkLocaleSwitch } from './pagination';
+import { hkVariantPicker, hkAddToCart, hkCartCount, hkCartItems, hkCartSummary, hkCartDrawer } from './cart';
+import { hkSectionGroup } from './group';
 
-export const BASE_TAGS = [hkSection, hkContainer, hkStack, hkGrid, hkHeading, hkText, hkRichText, hkImage, hkButton, hkCard, hkBadge, hkIcon, hkSearchForm, hkPrice, hkProductCard, hkProductGrid];
+export const BASE_TAGS = [hkSection, hkContainer, hkStack, hkGrid, hkHeading, hkText, hkRichText, hkImage, hkButton, hkCard, hkBadge, hkIcon, hkSearchForm, hkPrice, hkProductCard, hkProductGrid,
+  hkProductGallery, hkPagination, hkLocaleSwitch, hkVariantPicker, hkAddToCart, hkCartCount, hkCartItems, hkCartSummary, hkCartDrawer, hkSectionGroup];
 export function createDefaultRegistry(): TagRegistry {
   const r = new TagRegistry();
   for (const t of BASE_TAGS) r.register(t);
@@ -22,3 +27,9 @@ export { hkIcon, iconSvg, iconSize, iconStroke, isIconName, FLIP_CSS } from './i
 export { ICONS, ICON_NAMES, FLIP_ICONS } from './icons';
 export { hkSearchForm, VISUALLY_HIDDEN_CSS } from './search';
 export { pickVariant, srcsetOf, candidatesOf, type ImageRef, type ImageCandidate } from './image-src';
+export { hkProductGallery, GALLERY_CSS } from './gallery';
+export { hkPagination, hkLocaleSwitch, PAGINATION_CSS } from './pagination';
+export { hkVariantPicker, hkAddToCart, hkCartCount, hkCartItems, hkCartSummary, hkCartDrawer } from './cart';
+export { hkSectionGroup } from './group';
+export { COMMERCE_STRINGS } from './strings';
+export { imagesOf, variantsOf, optionsOf, selectedVariant, qtyRules } from './product-view';

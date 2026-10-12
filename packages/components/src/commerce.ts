@@ -2,6 +2,7 @@ import { escapeAttr, escapeText, formatAmount, isMoneyFormat, moneyText, safeUrl
 import { px, responsiveCss, safeImageSrc } from './css';
 import { passthrough } from './attrs';
 import { srcsetOf } from './image-src';
+import { productId, productObject } from './product-view';
 
 type Extra = { cls: string; attrs: string };
 const NONE: Extra = { cls: '', attrs: '' };
@@ -23,11 +24,11 @@ const moneyHtml = (minor: unknown, locale: 'ar' | 'en', format: MoneyFormat): st
   return moneyText(escapeText(formatAmount(n, 'whole')), locale, 'EGP', (s) => `<bdi>${s}</bdi>`);
 };
 
-const priceHtml = (id: string, amount: unknown, compareAt: unknown, c: TagRenderContext, x: Extra = NONE, format?: unknown) => {
+const priceHtml = (id: string, amount: unknown, compareAt: unknown, c: TagRenderContext, x: Extra = NONE, format?: unknown, bind = '') => {
   const f: MoneyFormat = isMoneyFormat(format) ? format : isMoneyFormat(c.money) ? c.money : 'decimal';
   const now = moneyHtml(amount, c.locale, f);
   const was = typeof compareAt === 'number' && typeof amount === 'number' && compareAt > amount ? ` <s class="sn-was">${moneyHtml(compareAt, c.locale, f)}</s>` : '';
-  return `<span class="sn-${id} sn-price${x.cls}"${x.attrs}><span class="sn-now">${now}</span>${was}</span>`;
+  return `<span class="sn-${id} sn-price${x.cls}"${x.attrs}${bind}><span class="sn-now">${now}</span>${was}</span>`;
 };
 
 export const hkPrice: HkTag = {
@@ -36,9 +37,16 @@ export const hkPrice: HkTag = {
     amount: { type: 'number', label: L('السعر', 'Price') },
     compareAt: { type: 'number', label: L('السعر قبل الخصم', 'Compare at') },
     format: { type: 'select', label: L('شكل الرقم', 'Number format'), options: ['decimal', 'whole'] },
+    product: { type: 'data', label: L('منتج بأنواع', 'Product with variants') },
   },
   allowedParents: '*', allowedChildren: [], responsive: [], bindable: '*', editor: ed('السعر', 'Price'),
-  render: (p, c) => priceHtml(c.id, p.amount, p.compareAt, c, passthrough(p), p.format),
+  // `product`: when it has variants the price follows the variant picked (the variant picker controller rewrites it)
+  render(p, c) {
+    const prod = productObject(p.product);
+    const bind = prod && Array.isArray(prod.variants) && prod.variants.length > 1 ? ` data-hk-bind="price" data-hk-product="${escapeAttr(productId(prod))}"` : '';
+    if (bind) c.controller('variant-picker');
+    return priceHtml(c.id, p.amount, p.compareAt, c, passthrough(p), p.format, bind);
+  },
 };
 
 type ProductView = { title?: unknown; url?: unknown; price?: unknown; compare_at?: unknown; image?: { url?: unknown } | unknown };

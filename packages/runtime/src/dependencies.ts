@@ -3,15 +3,19 @@ import type { ArtifactLike, PageNode } from './page';
 
 /** At most this many collections are preloaded for one page. */
 export const MAX_PAGE_COLLECTIONS = 8;
+/** At most this many products named by `product(…)` are preloaded for one page. */
+export const MAX_PAGE_PRODUCTS = 12;
 const HANDLE = /^[a-z0-9][a-z0-9-]{0,99}$/;
 
-export interface PageDependencies { collections: string[]; categories: boolean }
+export interface PageDependencies { collections: string[]; products: string[]; categories: boolean }
 export interface PageDependencyOptions {
   template: string;
   /** The page's saved sections; without them the template's default sections are used. */
   sections?: PageNode[] | null;
   /** Stored theme settings (the values `settings.*` reads). */
   settings?: Record<string, unknown>;
+  /** The merchant's shared groups; groups not given here count with the theme's defaults (artifact.groups). */
+  groups?: Partial<Record<string, PageNode[]>> | null;
 }
 
 type Rec = Record<string, unknown>;
@@ -21,10 +25,13 @@ const own = (o: Rec, k: string): unknown => (Object.hasOwn(o, k) ? o[k] : undefi
 
 class Acc {
   handles = new Set<string>();
+  productHandles = new Set<string>();
   categories = false;
   get full() { return this.handles.size >= MAX_PAGE_COLLECTIONS; }
-  get done() { return this.full && this.categories; }
+  get fullProducts() { return this.productHandles.size >= MAX_PAGE_PRODUCTS; }
+  get done() { return this.full && this.fullProducts && this.categories; }
   add(h: unknown) { if (typeof h === 'string' && HANDLE.test(h) && !this.full) this.handles.add(h); }
+  addProduct(h: unknown) { if (typeof h === 'string' && HANDLE.test(h) && !this.fullProducts) this.productHandles.add(h); }
 }
 
 function fromExpr(e: unknown, out: Acc, d: number): void {
@@ -35,6 +42,7 @@ function fromExpr(e: unknown, out: Acc, d: number): void {
       const args = arr(x.args);
       if (x.fn === 'collections') out.categories = true;
       if (x.fn === 'collection' && rec(args[0]).k === 'lit') out.add(rec(args[0]).v);
+      if (x.fn === 'product' && rec(args[0]).k === 'lit') out.addProduct(rec(args[0]).v);
       for (const a of args) fromExpr(a, out, d + 1);
       return;
     }
@@ -76,16 +84,17 @@ function fromNodes(nodes: unknown, out: Acc, d: number): void {
   }
 }
 
-/** The value of every `collection` field: the stored string, else the default (as the renderer coerces it). */
+/** The value of every `collection` and `product` field: the stored string, else the default (as the renderer coerces it). */
 function fromSettings(schema: unknown, stored: unknown, out: Acc): void {
   const fields = rec(schema);
   const values = rec(stored);
   for (const k of Object.keys(fields)) {
-    if (out.full) return;
+    if (out.full && out.fullProducts) return;
     const f = rec(fields[k]);
-    if (f.type !== 'collection') continue;
+    if (f.type !== 'collection' && f.type !== 'product') continue;
     const v = own(values, k);
-    out.add(typeof v === 'string' ? v : f.default);
+    const handle = typeof v === 'string' ? v : f.default;
+    if (f.type === 'collection') out.add(handle); else out.addProduct(handle);
   }
 }
 
@@ -119,25 +128,27 @@ export function pageDependencies(artifact: ArtifactLike, opts: PageDependencyOpt
       const r = rec(s);
       return { type: r.type, props: r.settings, children: arr(r.blocks).map((b) => ({ type: rec(b).type, props: rec(b).settings })) };
     });
-    for (const node of used) {
-      if (out.done) break;
+    const visit = (node: unknown, depth: number): void => {
+      if (out.done || depth > 3) return;
       const n = rec(node);
-      if (typeof n.type !== 'string' || n.hidden) continue;
-      const def = rec(own(sectionDefs, n.type));
+      if (typeof n.type !== 'string' || n.hidden) return;
+      const def = rec(own(depth === 0 ? sectionDefs : blockDefs, n.type));
       fromNodes(def.ir, out, 0);
       fromSettings(rec(def.schema).settings, n.props, out);
-      for (const child of arr(n.children)) {
-        const c = rec(child);
-        if (typeof c.type !== 'string' || c.hidden) continue;
-        const bdef = rec(own(blockDefs, c.type));
-        fromNodes(bdef.ir, out, 0);
-        fromSettings(rec(bdef.schema).settings, c.props, out);
-      }
+      for (const child of arr(n.children)) visit(child, depth + 1);
+    };
+    for (const node of used) visit(node, 0);
+    // shared groups: the merchant's tree for a group, else the theme's default for it
+    const given = rec(rec(opts).groups);
+    const defaults = rec(a.groups);
+    for (const g of ['header', 'footer', 'announcement']) {
+      const tree = own(given, g) !== undefined ? own(given, g) : own(defaults, g);
+      for (const node of arr(tree)) visit(node, 0);
     }
     // snippets last: the merchant's picks above must not be crowded out by the cap
     for (const ir of Object.values(rec(a.snippets))) fromNodes(ir, out, 0);
-    return { collections: [...out.handles], categories: out.categories };
+    return { collections: [...out.handles], products: [...out.productHandles], categories: out.categories };
   } catch {
-    return { collections: [], categories: false };
+    return { collections: [], products: [], categories: false };
   }
 }
