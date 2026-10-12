@@ -102,6 +102,13 @@ For different text per language, split the file by locale:
 request: save it and reload the page. A file that is not valid JSON shows an
 error page naming the file.
 
+`init` writes a complete store: a layout with header, footer and announcement
+groups, a template for every page type (home, product, collection, search,
+cart, page, 404), the sections, blocks and snippets they use, tokens in
+`theme.json` and `assets/theme.css`. `npx @hekana/sneferu init --template starter`
+is the same thing (`starter` is the only template for now). Everything in it
+is editable by the merchant: see [Make everything editable](19-make-everything-editable.mdx).
+
 ## Check: `validate`
 
 ```bash

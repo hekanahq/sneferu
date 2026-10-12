@@ -1,0 +1,108 @@
+# 19. Make everything editable
+
+A merchant should be able to change every word, link, image, number and colour
+of a store without touching code. The rule for a theme is short: **nothing
+visible is written into a template.** It comes from one of five places.
+
+| It is | Put it in | The merchant edits it in |
+| - | - | - |
+| A heading, a paragraph, a button label | a `text` or `textarea` section setting with `"localized": true` | the section's panel, one box per language |
+| A link or an image | a `link` or `image` setting | the section's panel |
+| A repeated item (a menu link, a payment icon) | a **block** | add, remove and reorder in the section |
+| A small label (`Sale`, `Sold out`, a screen reader name) | a **locale key**, `{{ t('sale') }}` | the language editor |
+| A colour, font, radius, spacing or button style | a **theme token** | the theme panel |
+
+## Settings
+
+<Example>
+
+```html title="sections/not-found.sneferu"
+<hk-section padding-y="{{ section.settings.padding_y }}">
+  <hk-heading text="{{ section.settings.title }}" level="h1" />
+  {% render 'button', label: section.settings.button_label, href: section.settings.button_link, style: 'solid' %}
+</hk-section>
+<hk-schema>
+  {
+    "name": { "en": "Page not found", "ar": "صفحة غير موجودة" },
+    "version": 1,
+    "templates": ["404"],
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": { "en": "Heading", "ar": "العنوان" },
+        "default": { "en": "This page does not exist", "ar": "الصفحة دي مش موجودة" },
+        "localized": true,
+        "maxLength": 80
+      },
+      "button_label": { "type": "text", "label": { "en": "Button", "ar": "الزر" }, "default": { "en": "Back to the home page", "ar": "ارجع للرئيسية" }, "localized": true, "maxLength": 30 },
+      "button_link": { "type": "link", "label": { "en": "Button link", "ar": "رابط الزر" }, "default": "/" },
+      "padding_y": { "type": "range", "label": { "en": "Vertical padding", "ar": "المسافة الرأسية" }, "min": 0, "max": 160, "step": 8, "default": 64 }
+    }
+  }
+</hk-schema>
+```
+
+<Result>
+  <Shot src="../images/page-cart@2x.webp" alt="A cart page whose heading, empty-state text and buttons all come from section settings" caption="The default cart page: every line of text is a setting." />
+</Result>
+
+</Example>
+
+Give every setting a label in both languages, a default, a limit (`maxLength`,
+`min`, `max`) and `visible_if` when a setting only matters for another
+(`"visible_if": { "setting": "show_newsletter", "equals": true }`). Hide an
+optional line with `{% if section.settings.text %}`: an empty box prints nothing.
+
+## Blocks for repeated items
+
+A menu, a list of social links, product page rows: use blocks. The merchant
+adds, removes, reorders and hides them, and `blocks.max` bounds them. The
+default product page is a section whose blocks are the title, price, variant
+picker, buy button, description and tags: which ones show, and in what order,
+is the merchant's choice.
+
+## Locale keys
+
+Small labels live in `locales/<lang>.json` and are read with `t('key')`. The
+compiled artifact lists every key a merchant may change (`artifact.localeKeys`),
+including the words the commerce tags print themselves (`add_to_cart`,
+`sold_out`, `checkout`, ...). The host passes the merchant's text per language:
+
+```ts
+renderPage(artifact, { template, ctx, registry, locale_overrides: { ar: { sale: 'تخفيض' } } });
+```
+
+A key that is not listed, a value that is not a string, more than 500 keys or
+500 characters of text are ignored.
+
+## Tokens
+
+`theme.json` `tokens` become **theme settings** automatically: one colour per
+token, the three font roles (from the curated catalogue), corner radius, a
+spacing scale, a button style and the content width. The runtime turns the
+merchant's choices into CSS custom properties, so a stylesheet that uses them
+follows the panel:
+
+```css
+.card { border-radius: var(--hk-radius); padding: var(--hk-space-3); background: var(--hk-color-background); }
+.sn-btn { background: var(--hk-btn-bg); color: var(--hk-btn-fg); border-color: var(--hk-btn-border); }
+```
+
+| Variable | From |
+| - | - |
+| `--hk-color-<token>`, `--hk-color-on-primary`, `--hk-color-on-accent` | the colour settings (`on-*` is white or near black, whichever reads better) |
+| `--hk-radius-sm`, `--hk-radius`, `--hk-radius-lg` | `token_radius` (0 to 32 px) |
+| `--hk-space-1` to `--hk-space-6` | `token_spacing`: compact, comfortable or spacious |
+| `--hk-content-width` | `token_container_width` |
+| `--hk-btn-bg`, `--hk-btn-fg`, `--hk-btn-border` | `token_button_style`: solid, outline or soft |
+| `--hk-font-heading`, `--hk-font-body`, `--hk-font-mono` | `token_font_*` |
+
+A theme's own setting with one of these names replaces the standard one.
+`renderPage` returns the ready CSS as `tokenCss` and `fontCss`.
+
+## Check yourself
+
+The default store is held to this rule by a test: no static text, link or colour
+literal in its templates, only settings, locale keys and tokens. Run the same
+check on your theme by reading `sneferu validate`, then change a token in
+`theme.json` and reload `sneferu dev`: every page should follow.

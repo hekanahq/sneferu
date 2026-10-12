@@ -110,6 +110,8 @@ This is the only way to output HTML from data. See [Security and limits](guide/0
 | `section` | in sections: `section.id`, `section.type`, `section.settings.*`, `section.blocks` |
 | `block` | in blocks: `block.id`, `block.type`, `block.settings.*` |
 | `locale`, `dir` | `ar` / `en`, `rtl` / `ltr` |
+| `request`, `localization` | the path, the page type and the same page in the other language (see [Page types](guide/16-page-types.mdx)) |
+| `product`, `collection`, `search`, `page`, `paginate` | the page's data, only on the template of that page type |
 | `forloop` | inside `{% for %}`: `forloop.index` (from 1), `forloop.first`, `forloop.last` |
 | loop variable, `render` arguments | as named by the template |
 
@@ -136,14 +138,14 @@ Apply with `|`, arguments after `:` (`{{ title | truncate: 40 }}`).
 
 ## Lookups
 
-Called like functions with literal arguments only, except `collection()`, which also takes a `collection` setting, and `url()`, which takes any one expression.
+Called like functions with literal arguments only, except `collection()` and `product()`, which also take a setting of their type, and `url()`, which takes any one expression.
 
 | Lookup | Returns |
 | - | - |
 | `collection('handle')` | the collection (use `.products`); an empty collection if missing |
 | `collection(section.settings.list)` | the collection picked in a `collection` setting (`section.settings.*`, `block.settings.*` or `settings.*`); an empty collection when nothing is picked. A missing or wrongly typed setting is SN2012 |
 | `collections()` | the store's categories, at most 50: `[{ handle, title, url, image, count }]` |
-| `product('handle')` | the product, or nothing |
+| `product('handle')`, `product(section.settings.pick)` | the product (a handle, or a `product` setting; nothing when missing) |
 | `t('key')` | the translation (same fallback as the `t` filter); the key if missing |
 | `settings('key')` | one theme setting |
 | `asset_url('hero.webp')` | URL of an image in `assets/` (the `assets/` prefix is optional; empty when unknown). See [Images and assets](guide/15-images-and-assets.mdx) |
