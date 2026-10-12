@@ -1,0 +1,11 @@
+{
+  "sections": [
+    {
+      "id": "header",
+      "type": "arcade-header",
+      "settings": {
+        "drawer_on_add": true
+      }
+    }
+  ]
+}

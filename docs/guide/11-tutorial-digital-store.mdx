@@ -175,7 +175,7 @@ has the details; it needs the CLI from Sneferu main after #16.)
 {
   "id": "bento",
   "name": "Bento",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "Hekana",
   "description": "A soft pastel bento-grid theme for printables, templates and e-books",
   "category": "digital",
@@ -191,7 +191,7 @@ has the details; it needs the CLI from Sneferu main after #16.)
       "accent": "#E9946C",
       "background": "#FFFFFF",
       "text": "#1F2433",
-      "muted": "#6E7383",
+      "muted": "#5F6474",
       "sage": "#CFE3D7",
       "peach": "#F7C9AF",
       "warm": "#FCF1EA",
@@ -232,58 +232,81 @@ the files and sets the family on the theme root, so the stylesheet has no
 
 ```html title="examples/themes/bento/layout/theme.sneferu"
 <div class="bt">
-  <header class="bt-header">
-    <div class="bt-wrap bt-header-row">
-      <div class="bt-start">
-        <a
-          class="bt-icon bt-user"
-          href="{{ url('/account') }}"
-          aria-label="{{ t('account') }}"
-        >{% render 'glyph', name: 'user' %}</a>
-        <a class="bt-icon bt-hide-phone" href="{{ url('/wishlist') }}" aria-label="{{ t('wishlist') }}"><hk-icon
-            name="heart"
-          /></a>
-        <a class="bt-icon bt-hide-phone" href="{{ url('/cart') }}" aria-label="{{ t('cart') }}"><hk-icon
-            name="shopping-bag"
-          /></a>
-        <a class="bt-logo" href="{{ store.url }}">{{ store.name }}</a>
-      </div>
-      <div class="bt-end">
-        <a class="bt-icon bt-hide-phone" href="{{ url('/cart') }}" aria-label="{{ t('cart') }}"><hk-icon
-            name="shopping-bag"
-          /></a>
-        <a class="bt-icon bt-hide-phone" href="{{ url('/search') }}" aria-label="{{ t('search') }}"><hk-icon
-            name="search"
-          /></a>
-        <a class="bt-pill" href="{{ url('/products') }}">{{ t('all_products') }}</a>
-        <details class="bt-menu">
-          <summary class="bt-icon" aria-label="{{ t('menu') }}"><hk-icon name="menu" size="22" /></summary>
-          <div class="bt-menu-panel">
-            <a href="{{ url('/search') }}">{{ t('search') }}</a>
-            <a href="{{ url('/cart') }}">{{ t('cart') }}</a>
-            <a href="{{ url('/wishlist') }}">{{ t('wishlist') }}</a>
-            <a href="{{ t('href_other_locale') }}">{{ t('other_locale') }}</a>
-          </div>
-        </details>
-      </div>
-    </div>
-  </header>
+  <hk-section-group name="header" />
   <main><hk-slot name="content" /></main>
-  <footer class="bt-footer">
-    <div class="bt-wrap bt-footer-row">
-      <p class="bt-footer-name">{{ store.name }}</p>
-      <p class="bt-footer-note">{{ t('footer_note') }}</p>
-      <a href="{{ t('href_other_locale') }}">{{ t('other_locale') }}</a>
-    </div>
-  </footer>
+  <hk-section-group name="footer" />
 </div>
 ```
 
+The header and the footer are [section groups](18-section-groups.mdx):
+`groups/header.json` and `groups/footer.json` start them with the sections
+`bento-header` and `bento-footer`, and the merchant edits them once for the
+whole store.
+
+```html title="examples/themes/bento/sections/bento-header.sneferu"
+<header class="bt-header">
+  <div class="bt-wrap bt-header-row">
+    <div class="bt-start">
+      <a
+        class="bt-icon bt-user"
+        href="{{ url('/account') }}"
+        aria-label="{{ t('account') }}"
+      >{% render 'glyph', name: 'user' %}</a>
+      <a class="bt-icon bt-hide-phone" href="{{ url('/wishlist') }}" aria-label="{{ t('wishlist') }}"><hk-icon
+          name="heart"
+        /></a>
+      <a class="bt-logo" href="{{ store.url }}">{{ store.name }}</a>
+    </div>
+    <div class="bt-end">
+      <a
+        class="bt-icon bt-hide-phone"
+        href="{{ url('/cart') }}"
+        data-hk-open="cart-drawer"
+        aria-label="{{ t('cart') }}"
+      ><hk-icon name="shopping-bag" /><hk-cart-count /></a>
+      <a class="bt-icon bt-hide-phone" href="{{ url('/search') }}" aria-label="{{ t('search') }}"><hk-icon
+          name="search"
+        /></a>
+      <a class="bt-pill" href="{{ url('/products') }}">{{ t('all_products') }}</a>
+      <details class="bt-menu">
+        <summary class="bt-icon" aria-label="{{ t('menu') }}"><hk-icon name="menu" size="22" /></summary>
+        <div class="bt-menu-panel">
+          <a href="{{ url('/search') }}">{{ t('search') }}</a>
+          <a href="{{ url('/cart') }}" data-hk-open="cart-drawer">{{ t('cart') }}</a>
+          <a href="{{ url('/wishlist') }}">{{ t('wishlist') }}</a>
+          <hk-locale-switch />
+        </div>
+      </details>
+    </div>
+  </div>
+  <hk-cart-drawer open-on-add="{{ section.settings.drawer_on_add }}">
+    <hk-cart-items />
+    <hk-cart-summary />
+  </hk-cart-drawer>
+</header>
+<hk-schema>
+  {
+    "name": "Header",
+    "version": 1,
+    "templates": ["header"],
+    "settings": {
+      "drawer_on_add": {
+        "type": "boolean",
+        "label": "Open the cart when an item is added",
+        "default": true
+      }
+    }
+  }
+</hk-schema>
+```
+
 - The page goes where `<hk-slot name="content" />` is.
+- Cart links carry `data-hk-open="cart-drawer"`: with the controllers running
+  they open `<hk-cart-drawer>`, without them they go to the cart page.
+  `<hk-cart-count />` shows the number of items.
 - All words are `t('…')`. Links go through `url()`: `url('/cart')` is `/cart`
-  on an Arabic page and `/en/cart` on an English one. Only the language switch,
-  which must go to the other language, keeps its link in the locale files
-  (`href_other_locale`).
+  on an Arabic page and `/en/cart` on an English one. The language switch is
+  `<hk-locale-switch />`: it links to the same page in the other language.
 - The phone menu is `<details>`/`<summary>`: it opens without script.
 - Icons are `<hk-icon name="shopping-bag" />` from the bundled set. The filled
   avatar has no match in the set, so it stays an inline SVG in
@@ -559,7 +582,7 @@ shelves and rearranges the header:
   .bt-start, .bt-end { display: contents; }
   .bt-menu { order: -1; }
   .bt-logo { margin: 0; }
-  .bt-pill { margin-inline: auto 0; min-height: 40px; padding-inline: 18px; font-size: 13px; }
+  .bt-pill { margin-inline: auto 0; min-height: 44px; padding-inline: 18px; font-size: 13px; }
   .bt-user { display: none; }
   .bt-tabs { padding-block: 4px 10px; }
   .bt-tabs-row { justify-content: flex-start; gap: 20px; }
@@ -600,5 +623,5 @@ is still missing:
 | no cart tag (no cart count, no add-to-cart) | the cart is an icon link to `/cart`; buy buttons link to the product page |
 | no carousel and no JavaScript | menus and questions use `<details>`; Creator's covers row is scroll-snap with anchor dots |
 | images in `assets/` are served from 0.3, but these themes bundle none | art comes from products, inline SVG, or an `image` setting with an `https://` default |
-| `url()` cannot link to the other language | the language switch link (`href_other_locale`) stays in the locale files |
+| `url()` cannot link to the other language | `<hk-locale-switch />` links to the same page in the other language (since Sneferu 0.4) |
 | `money` prints two decimals unless the theme sets `"money": { "format": "whole" }` | these themes keep two decimals (`EGP 69.00`) |

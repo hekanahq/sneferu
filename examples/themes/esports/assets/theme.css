@@ -2,6 +2,7 @@
 [data-hk-theme='esports'] {
   --es-lime: var(--hk-color-accent);
   --es-cut: 28px;
+  min-height: 100vh;
   line-height: 1.6;
   background: radial-gradient(1000px 500px at 50% 0, rgba(31, 122, 85, 0.16), transparent 70%), var(--hk-color-background);
 }
@@ -15,12 +16,12 @@
 /* Header */
 .es-header { border-bottom: 1px solid var(--hk-color-line); background: rgba(7, 10, 9, 0.9); }
 .es-bar { display: flex; align-items: center; gap: 20px; min-height: 76px; }
-.es-logo { display: inline-flex; align-items: center; gap: 10px; color: var(--es-lime); font-weight: 900; font-size: 18px; }
+.es-logo { display: inline-flex; align-items: center; min-height: 44px; min-width: 44px; gap: 10px; color: var(--es-lime); font-weight: 900; font-size: 18px; }
 .es-logo span { color: var(--hk-color-text); }
 .es-mark { width: 38px; height: 38px; }
 .es-search { flex: 0 1 300px; flex-wrap: nowrap; align-items: center; gap: 2px; min-height: 44px; padding-inline: 2px 14px; border-radius: 10px; border: 1px solid #2A3A31; background: #0D1411; color: var(--hk-color-muted); font-size: 14px; }
 .es-search:hover, .es-search:focus-within { border-color: var(--es-lime); }
-form.es-search input { min-height: 42px; padding: 0; border: 0; outline: 0; background: transparent; color: var(--hk-color-text); font-size: 14px; }
+form.es-search input { min-height: 44px; padding: 0; border: 0; outline: 0; background: transparent; color: var(--hk-color-text); font-size: 14px; }
 form.es-search input::placeholder { color: var(--hk-color-muted); }
 form.es-search .sn-search-button { order: -1; border: 0; background: transparent; color: var(--hk-color-muted); }
 form.es-search .sn-search-button .sn-icon { width: 18px; height: 18px; }
@@ -115,13 +116,12 @@ form.es-search .sn-search-button:hover { color: var(--es-lime); }
   .es-menu { display: block; }
   .es-logo span { display: none; }
   .es-mark { width: 30px; height: 30px; }
-  .es-search { min-height: 40px; font-size: 13px; padding-inline: 0 10px; }
+  .es-search { min-height: 44px; font-size: 13px; padding-inline: 0 10px; }
   form.es-search input { font-size: 13px; }
-  .es-icon:last-child { display: none; }
-  .es-icon:nth-last-child(2) { display: inline-flex; }
+  .es-icon:last-child { display: inline-flex; }
   .es-hero { min-height: 230px; grid-template-columns: 1.15fr 1fr; border-radius: 12px; }
   .es-hero-copy { padding: 22px 14px; gap: 8px; }
-  .sn-btn.es-cta { min-height: 40px; padding-inline: 18px; font-size: 14px; }
+  .sn-btn.es-cta { min-height: 44px; padding-inline: 18px; font-size: 14px; }
   .es-offer { top: 10px; inset-inline-end: 10px; padding: 6px 10px; }
   .es-offer-num { font-size: 20px; }
   .es-offer-top, .es-offer-bottom { font-size: 10px; }
@@ -130,3 +130,18 @@ form.es-search .sn-search-button:hover { color: var(--es-lime); }
   .es-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
   .es-step-list { grid-template-columns: 1fr; }
 }
+
+/* Cart, product, collection, search and 404 pages: the SDK's default store, in Esports' style */
+.es-icon { position: relative; }
+.es-icon .sn-cart-count { position: absolute; top: 2px; inset-inline-end: 0; color: #0A120C; }
+.sf-card { padding: 12px; border-radius: 10px; background: linear-gradient(180deg, #121B16, #0D1310); border: 1px solid var(--hk-color-line); text-align: center; }
+.sf-card:hover { border-color: rgba(198, 242, 90, 0.5); }
+.sf-card-link { justify-items: center; }
+.sf-card-media { width: 78%; border-radius: 8px; }
+.sf-card-title { font-size: 14px; font-weight: 700; line-height: 1.4; color: #DDE7E0; }
+.sf-card .sn-price { font-size: 18px; font-weight: 900; }
+.sf-card .sn-was { display: block; font-size: 12px; font-weight: 600; margin-inline-start: 0; }
+.sn-was { opacity: 1; color: var(--hk-color-muted); }
+.sf-badge, .sf-chip[aria-current=true] { color: #0A120C; }
+.sf-chip[aria-current=true] { background: var(--es-lime); border-color: var(--es-lime); }
+.sf-cart-aside, .sf-note-muted, dialog.sn-cart-drawer { background: #0D1411; border-color: var(--hk-color-line); color: var(--hk-color-text); }

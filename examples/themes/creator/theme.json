@@ -1,7 +1,7 @@
 {
   "id": "creator",
   "name": "Creator",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "Hekana",
   "description": "An editorial theme for one creator selling courses, e-books and templates",
   "category": "digital",
@@ -14,11 +14,12 @@
     "colors": {
       "primary": "#151515",
       "secondary": "#0F1A24",
-      "accent": "#E2622E",
+      "accent": "#B94A1B",
       "background": "#F3F0EA",
       "text": "#151515",
       "muted": "#716B64",
-      "line": "#CFC8BE"
+      "line": "#CFC8BE",
+      "on-accent": "#FFFFFF"
     },
     "layout": { "contentWidth": "1040px" },
     "fonts": {

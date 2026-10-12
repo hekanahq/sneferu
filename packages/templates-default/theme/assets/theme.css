@@ -29,7 +29,7 @@
 .sf-header{border-bottom:1px solid color-mix(in srgb,var(--hk-color-text) 12%,transparent)}
 .sf-sticky-true{position:sticky;top:0;z-index:50}
 .sf-header-bar{display:flex;align-items:center;gap:var(--hk-space-3,16px);min-height:64px;flex-wrap:wrap}
-.sf-logo{display:inline-flex;align-items:center;gap:8px;color:inherit;text-decoration:none;font-weight:700;font-size:20px}
+.sf-logo{display:inline-flex;align-items:center;min-height:44px;gap:8px;color:inherit;text-decoration:none;font-weight:700;font-size:20px}
 .sf-logo-img{width:auto;height:auto;max-width:200px}
 .sf-logo-h-24{height:24px}.sf-logo-h-32{height:32px}.sf-logo-h-40{height:40px}.sf-logo-h-48{height:48px}.sf-logo-h-64{height:64px}
 .sf-nav{display:flex;align-items:center;gap:var(--hk-space-2,8px);flex:1;flex-wrap:wrap}
@@ -114,3 +114,22 @@
 .sf-hero-text{display:grid;gap:var(--hk-space-2,8px);justify-items:start}
 .sf-hero.sf-align-center .sf-hero-text{justify-items:center;text-align:center}
 .sn-cart-fallback{display:inline-flex;align-items:center;min-height:44px;color:var(--hk-color-accent)}
+/* cart lines (page and drawer): image, title and price on top, the stepper and remove below */
+.sn-cart-list .sn-cart-item{grid-template-columns:72px minmax(0,1fr) auto;grid-template-areas:"img title price" "img variant variant" "img qty remove";column-gap:var(--hk-space-3,16px);row-gap:4px;align-items:center;padding-block:var(--hk-space-3,16px);border-bottom:1px solid color-mix(in srgb,var(--hk-color-text) 12%,transparent)}
+.sn-cart-list .sn-cart-item:not(:has(.sn-cart-item-image)){grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"title price" "variant variant" "qty remove"}
+.sn-cart-list .sn-cart-item-image{grid-area:img;align-self:start}
+.sn-cart-list .sn-cart-item-title{grid-area:title;align-self:center;display:inline-flex;align-items:center;min-height:44px}
+.sn-cart-list .sn-cart-item-variant{grid-area:variant;unicode-bidi:plaintext;text-align:start}
+.sn-cart-list .sn-cart-item-price{grid-area:price;justify-self:end;font-weight:600;white-space:nowrap}
+.sn-cart-list .sn-cart-item-qty{grid-area:qty;justify-self:start;gap:0;border:1px solid color-mix(in srgb,var(--hk-color-text) 20%,transparent);border-radius:var(--hk-radius,8px)}
+.sn-cart-list .sn-cart-item-qty button{font-size:18px}
+.sn-cart-list .sn-cart-item-qty button:focus-visible,.sn-cart-list .sn-cart-item-remove:focus-visible{outline:2px solid var(--hk-color-accent);outline-offset:-2px}
+.sn-cart-list .sn-cart-item-remove{grid-area:remove;justify-self:end;font-size:20px;opacity:.75}
+.sn-cart-list .sn-cart-item-remove:hover{opacity:1}
+/* search forms in the default pages: the theme's colours, not the browser's white box */
+.sf-search-page-form .sn-search,.sf-search-panel .sn-search{display:flex;flex-wrap:nowrap;align-items:center;gap:var(--hk-space-1,4px);border:1px solid color-mix(in srgb,var(--hk-color-text) 22%,transparent);border-radius:var(--hk-radius,8px);padding-inline:var(--hk-space-2,8px) 0}
+.sf-search-page-form .sn-search input,.sf-search-panel .sn-search input{flex:1;min-width:0;min-height:44px;padding:0;border:0;outline:0;background:transparent;color:inherit;font:inherit}
+.sf-search-page-form .sn-search input::placeholder,.sf-search-panel .sn-search input::placeholder{color:inherit;opacity:.65}
+.sf-search-page-form .sn-search:focus-within,.sf-search-panel .sn-search:focus-within{border-color:var(--hk-color-accent)}
+.sf-search-page-form .sn-search-button,.sf-search-panel .sn-search-button{border:0;background:transparent;color:inherit}
+.sf-not-found .sf-search-page-form{width:min(520px,100%)}

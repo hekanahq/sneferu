@@ -1,0 +1,11 @@
+{
+  "sections": [
+    {
+      "id": "header",
+      "type": "console-header",
+      "settings": {
+        "drawer_on_add": true
+      }
+    }
+  ]
+}

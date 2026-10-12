@@ -1,7 +1,7 @@
 {
   "id": "bento",
   "name": "Bento",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "Hekana",
   "description": "A soft pastel bento-grid theme for printables, templates and e-books",
   "category": "digital",
@@ -17,7 +17,7 @@
       "accent": "#E9946C",
       "background": "#FFFFFF",
       "text": "#1F2433",
-      "muted": "#6E7383",
+      "muted": "#5F6474",
       "sage": "#CFE3D7",
       "peach": "#F7C9AF",
       "warm": "#FCF1EA",

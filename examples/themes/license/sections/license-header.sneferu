@@ -1,0 +1,51 @@
+<header class="ls-header">
+  <div class="ls-wrap ls-header-row">
+    <details class="ls-menu">
+      <summary class="ls-icon-link" aria-label="{{ t('menu') }}"><hk-icon name="menu" class="ls-icon" /></summary>
+      <div class="ls-menu-panel">
+        <a href="{{ url('/') }}#plans">{{ t('nav_plans') }}</a>
+        <a href="{{ url('/') }}#apps">{{ t('nav_apps') }}</a>
+        <a href="{{ url('/') }}#faq">{{ t('nav_faq') }}</a>
+        <hk-locale-switch />
+      </div>
+    </details>
+    <a class="ls-logo" href="{{ store.url }}">{{ store.name }}</a>
+    <nav class="ls-nav" aria-label="{{ t('nav_label') }}">
+      <a href="{{ url('/') }}#plans">{{ t('nav_plans') }}</a>
+      <a href="{{ url('/') }}#features">{{ t('nav_features') }}</a>
+      <a href="{{ url('/') }}#apps">{{ t('nav_apps') }}</a>
+      <a href="{{ url('/') }}#faq">{{ t('nav_faq') }}</a>
+    </nav>
+    <div class="ls-tools">
+      <hk-search-form placeholder="{{ t('search') }}" class="ls-search" />
+      <a class="ls-icon-link" href="{{ url('/account') }}" aria-label="{{ t('account') }}"><hk-icon
+          name="user"
+          size="18"
+          class="ls-icon"
+        /></a>
+      <a class="ls-icon-link" href="{{ url('/cart') }}" data-hk-open="cart-drawer" aria-label="{{ t('cart') }}"><hk-icon
+          name="shopping-bag"
+          size="18"
+          class="ls-icon"
+        /><hk-cart-count /></a>
+    </div>
+  </div>
+  <hk-cart-drawer open-on-add="{{ section.settings.drawer_on_add }}">
+    <hk-cart-items />
+    <hk-cart-summary />
+  </hk-cart-drawer>
+</header>
+<hk-schema>
+  {
+    "name": "Header",
+    "version": 1,
+    "templates": ["header"],
+    "settings": {
+      "drawer_on_add": {
+        "type": "boolean",
+        "label": "Open the cart when an item is added",
+        "default": true
+      }
+    }
+  }
+</hk-schema>

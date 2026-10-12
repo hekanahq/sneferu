@@ -1,0 +1,14 @@
+<footer class="cr-footer">
+  <div class="cr-wrap cr-footer-row">
+    <p class="cr-footer-name">{{ store.name }}</p>
+    <p class="cr-footer-note">{{ t('footer_note') }}</p>
+    <hk-locale-switch class="cr-footer-locale" />
+  </div>
+</footer>
+<hk-schema>
+  {
+    "name": "Footer",
+    "version": 1,
+    "templates": ["footer"]
+  }
+</hk-schema>

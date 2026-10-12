@@ -1,0 +1,14 @@
+<footer class="bt-footer">
+  <div class="bt-wrap bt-footer-row">
+    <p class="bt-footer-name">{{ store.name }}</p>
+    <p class="bt-footer-note">{{ t('footer_note') }}</p>
+    <hk-locale-switch class="bt-locale" />
+  </div>
+</footer>
+<hk-schema>
+  {
+    "name": "Footer",
+    "version": 1,
+    "templates": ["footer"]
+  }
+</hk-schema>

@@ -22,7 +22,7 @@ What the theme uses: plain HTML for structure, `hk-section`, `hk-stack`,
 `hk-search-form`, five block types (tab, chip, tile, step, question) that the
 template seeds with the page's items, one snippet for the two glyphs the icon
 set lacks, `<details>` for the phone menu and the FAQ, and one stylesheet.
-There is no JavaScript. Version 1.1.0 is built on Sneferu 0.3; the 0.2
+There is no JavaScript. Version 1.2.0 is built on Sneferu 0.4; the 0.2
 workarounds it replaced are listed in `../../GAPS-gaming.md`.
 
 ## Upgrading from 1.0
@@ -30,6 +30,34 @@ workarounds it replaced are listed in `../../GAPS-gaming.md`.
 In 1.1.0 the numbered settings and locale-text fallbacks became blocks and
 localized settings; values saved under 1.0 are not carried over, so the sections
 start from the new defaults.
+
+## Pages
+
+Arcade writes only the home page (`templates/index.sneferu`). The product,
+collection, search, cart, content page and 404 templates come from the SDK's
+default store ([page types](../../../docs/guide/16-page-types.mdx)), drawn with
+Arcade's tokens, fonts and layout. `assets/theme.css` restyles what the default
+store would otherwise draw in its own way (the block "Cart, product, collection,
+search and 404 pages"):
+
+- product cards on collection and search pages use the home grid's card: dark
+  surface, thin line, cyan glow on hover, lime price;
+- the sale badge, the active sort or filter chip and the cart count use dark
+  text on the neon colours;
+- the cart summary, the delivery note and the cart drawer sit on the surface
+  colour instead of the page background.
+
+The header group holds the cart drawer: it opens when an item is added (a
+setting of the header section) and from the cart icon.
+
+| Page | URL in `sneferu dev` |
+| - | - |
+| Product | `/products/sample-2` |
+| Collection | `/category/gift-cards`, `/products` |
+| Search | `/search?q=card` |
+| Cart | `/cart` |
+| Content page | `/pages/about` |
+| 404 | any other path |
 
 ## Files
 
@@ -40,11 +68,15 @@ blocks/faq-item.sneferu
 blocks/step.sneferu
 blocks/tab.sneferu
 blocks/tile.sneferu
+groups/footer.json
+groups/header.json
 layout/theme.sneferu
 locales/ar.json
 locales/en.json
 sections/arcade-categories.sneferu
 sections/arcade-faq.sneferu
+sections/arcade-footer.sneferu
+sections/arcade-header.sneferu
 sections/arcade-hero.sneferu
 sections/arcade-products.sneferu
 sections/arcade-steps.sneferu
@@ -83,7 +115,7 @@ Delete the starter's `sections/hero.sneferu`, `sections/featured.sneferu` and
 {
   "id": "arcade",
   "name": "Arcade",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "Hekana",
   "description": "A dark gaming store for gift cards and top-ups: neon cyan and lime, amount chips, category tiles, redeem steps.",
   "category": "gaming",
@@ -169,6 +201,18 @@ with `stroke: url(#arc-grad)`.
     </linearGradient>
   </defs>
 </svg>
+<hk-section-group name="header" />
+<main class="arc-main"><hk-slot name="content" /></main>
+<hk-section-group name="footer" />
+```
+
+The header and the footer are [section groups](../../../docs/guide/18-section-groups.mdx): the layout places
+`<hk-section-group name="header" />` and `<hk-section-group name="footer" />`, `groups/header.json` and
+`groups/footer.json` start them with `arcade-header` and `arcade-footer`, and the merchant edits them once for the
+whole store. The header also holds the cart: the cart link carries `data-hk-open="cart-drawer"` and
+`<hk-cart-count />`, and `<hk-cart-drawer>` lists the lines (a plain link to the cart page without JavaScript).
+
+```html title="sections/arcade-header.sneferu"
 <header class="arc-header">
   <hk-container>
     <div class="arc-bar">
@@ -179,39 +223,39 @@ with `stroke: url(#arc-grad)`.
           <a href="{{ url('/products') }}">{{ t('nav_all') }}</a>
           <a href="{{ url('/category/gift-cards') }}">{{ t('cat_gift_cards') }}</a>
           <a href="{{ url('/category/game-currency') }}">{{ t('cat_currency') }}</a>
-          <a href="#faq">{{ t('nav_faq') }}</a>
+          <a href="{{ url('/') }}#faq">{{ t('nav_faq') }}</a>
         </nav>
       </details>
       <a class="arc-logo" href="{{ url('/') }}">{{ store.name }}</a>
       <hk-search-form placeholder="{{ t('search_placeholder') }}" class="arc-search" />
-      <a class="arc-cart" href="{{ url('/cart') }}" aria-label="{{ t('cart') }}"><hk-icon
+      <a class="arc-cart" href="{{ url('/cart') }}" data-hk-open="cart-drawer" aria-label="{{ t('cart') }}"><hk-icon
           name="shopping-cart"
           size="24"
           class="ic"
-        /></a>
+        /><hk-cart-count /></a>
     </div>
   </hk-container>
+  <hk-cart-drawer open-on-add="{{ section.settings.drawer_on_add }}">
+    <hk-cart-items />
+    <hk-cart-summary />
+  </hk-cart-drawer>
 </header>
-<main class="arc-main"><hk-slot name="content" /></main>
-<footer class="arc-footer">
-  <hk-container>
-    <div class="arc-footer-grid">
-      <div class="arc-footer-brand">
-        <span class="arc-logo">{{ store.name }}</span>
-        <p>{{ t('footer_about') }}</p>
-      </div>
-      <nav class="arc-footer-links" aria-label="{{ t('footer_links') }}">
-        <a href="{{ url('/products') }}">{{ t('nav_all') }}</a>
-        <a href="{{ url('/category/gift-cards') }}">{{ t('cat_gift_cards') }}</a>
-        <a href="{{ url('/category/game-currency') }}">{{ t('cat_currency') }}</a>
-        <a href="{{ url('/category/top-ups') }}">{{ t('cat_topups') }}</a>
-        <a href="#faq">{{ t('nav_faq') }}</a>
-      </nav>
-    </div>
-    <p class="arc-copy">© {{ store.name }}</p>
-  </hk-container>
-</footer>
+<hk-schema>
+  {
+    "name": "Header",
+    "version": 1,
+    "templates": ["header"],
+    "settings": {
+      "drawer_on_add": {
+        "type": "boolean",
+        "label": "Open the cart when an item is added",
+        "default": true
+      }
+    }
+  }
+</hk-schema>
 ```
+
 
 - `<hk-search-form class="arc-search">` is the search box: a form that sends
   the shopper to the store's search page. The stylesheet draws the rounded
@@ -246,14 +290,14 @@ with `stroke: url(#arc-grad)`.
 /* Header */
 .arc-header { position: sticky; top: 0; z-index: 10; background: rgba(7, 10, 15, 0.85); backdrop-filter: blur(10px); border-bottom: 1px solid var(--hk-color-line); }
 .arc-bar { display: flex; align-items: center; gap: 16px; min-height: 64px; }
-.arc-logo { font-weight: 700; font-size: 20px; letter-spacing: 0.01em; background: var(--arc-grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.arc-logo { display: inline-flex; align-items: center; min-height: 44px; font-weight: 700; font-size: 20px; letter-spacing: 0.01em; background: var(--arc-grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .arc-search { flex: 1; max-width: 460px; margin-inline-start: auto; flex-wrap: nowrap; align-items: center; gap: 12px; min-height: 44px; padding-inline: 18px 4px; border-radius: 999px; border: 1px solid rgba(34, 211, 238, 0.35); background: rgba(12, 18, 25, 0.8); color: var(--hk-color-muted); font-size: 14px; }
 .arc-search:hover, .arc-search:focus-within { border-color: var(--arc-cyan); }
-form.arc-search input { min-height: 42px; padding: 0; border: 0; outline: 0; background: transparent; color: var(--hk-color-text); font-size: 14px; }
+form.arc-search input { min-height: 44px; padding: 0; border: 0; outline: 0; background: transparent; color: var(--hk-color-text); font-size: 14px; }
 form.arc-search input::placeholder { color: var(--hk-color-muted); }
 form.arc-search .sn-search-button { border: 0; border-radius: 999px; background: transparent; color: var(--hk-color-muted); }
 form.arc-search .sn-search-button:hover { color: var(--arc-cyan); }
-.arc-cart { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 12px; color: var(--hk-color-text); }
+.arc-cart { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 12px; color: var(--hk-color-text); }
 .arc-cart:hover, .arc-menu summary:hover { color: var(--arc-cyan); }
 .arc-menu { position: relative; display: none; }
 .arc-menu summary { list-style: none; display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; cursor: pointer; color: var(--hk-color-text); }
@@ -453,7 +497,7 @@ the English file:
 ```css title="assets/theme.css (hero)"
 /* Hero: platform tabs, title, amount chips */
 .arc-tabs { display: flex; justify-content: center; gap: 4px; width: fit-content; max-width: 100%; margin: 0 auto 40px; padding: 4px; border-radius: 999px; border: 1px solid transparent; background: linear-gradient(var(--hk-color-background), var(--hk-color-background)) padding-box, linear-gradient(90deg, rgba(34, 211, 238, 0.7), rgba(163, 230, 53, 0.55)) border-box; overflow-x: auto; scrollbar-width: none; }
-.arc-tab { display: inline-flex; align-items: center; min-height: 40px; padding-inline: 26px; border-radius: 999px; font-size: 14px; font-weight: 500; color: var(--hk-color-text); white-space: nowrap; border: 1px solid transparent; }
+.arc-tab { display: inline-flex; align-items: center; min-height: 44px; padding-inline: 26px; border-radius: 999px; font-size: 14px; font-weight: 500; color: var(--hk-color-text); white-space: nowrap; border: 1px solid transparent; }
 .arc-tab:hover { color: var(--arc-cyan); }
 .arc-tabs > [data-hk-block]:first-child .arc-tab { border-color: var(--arc-cyan); box-shadow: 0 0 14px rgba(34, 211, 238, 0.45), inset 0 0 10px rgba(34, 211, 238, 0.15); }
 .arc-title { font-weight: 700; letter-spacing: 0; }
@@ -833,7 +877,7 @@ section shows the `empty_products` line instead. Each question is a
 .arc-grid .sn-product-card img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 10px; background: #0A1016; }
 .arc-grid .sn-title { font-weight: 500; font-size: 15px; padding-inline: 4px; }
 .arc-grid .sn-price { padding-inline: 4px; font-weight: 700; color: var(--arc-lime); }
-.sn-was { color: var(--hk-color-muted); font-weight: 400; margin-inline-start: 6px; font-size: 13px; }
+.sn-was { opacity: 1; color: var(--hk-color-muted); font-weight: 400; margin-inline-start: 6px; font-size: 13px; }
 .arc-empty { color: var(--hk-color-muted); }
 
 /* FAQ */
@@ -913,9 +957,9 @@ the first block of each list; the file has all of them.
   .arc-logo { font-size: 17px; margin-inline-end: auto; }
   .arc-search { order: 3; flex-basis: 100%; max-width: none; margin: 0; min-height: 44px; }
   .arc-tabs { display: none; }
-  .arc-tab { padding-inline: 14px; min-height: 36px; font-size: 13px; }
+  .arc-tab { padding-inline: 14px; font-size: 13px; }
   .arc-chips { width: 100%; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; }
-  .arc-chip { min-height: 30px; padding-inline: 4px; gap: 3px; justify-content: center; font-size: 12px; border-radius: 6px; }
+  .arc-chip { min-height: 44px; padding-inline: 4px; gap: 3px; justify-content: center; font-size: 12px; border-radius: 6px; }
   .arc-chip-icon { width: 14px; height: 14px; }
   .arc-chip-icon .ic { width: 11px; height: 11px; }
   .arc-chip-amount { display: none; }

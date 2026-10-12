@@ -20,7 +20,7 @@ What the theme uses: plain HTML for structure, `hk-product-card` for every
 product (with the "New" label in its `badge` part), `hk-button` for the band's
 button, `hk-icon`, shelf blocks that each read their own `collection` setting,
 localized settings, `data-*` attributes for colour, and one stylesheet.
-Version 1.1.0 is built on Sneferu 0.3.
+Version 1.2.0 is built on Sneferu 0.4.
 
 ## Upgrading from 1.0
 
@@ -28,16 +28,50 @@ In 1.1.0 the numbered settings and locale-text fallbacks became blocks and
 localized settings; values saved under 1.0 are not carried over, so the sections
 start from the new defaults.
 
+## Pages
+
+Bento writes only the home page (`templates/index.sneferu`). The product,
+collection, search, cart, content page and 404 templates come from the SDK's
+default store ([page types](../../../docs/guide/16-page-types.mdx)), drawn with
+Bento's tokens, fonts and layout. `assets/theme.css` restyles what the default
+store would otherwise draw in its own way (the block "Cart, product, collection,
+search and 404 pages"):
+
+- product cards on collection and search pages are pastel tiles like the home
+  shelves (sand, sky, sage, peach in turn), with rounded corners;
+- buttons, chips and the search field are pills; text links use the ink colour
+  (peach text on white is 2.3:1);
+- text on the peach accent is dark: the runtime picks the text colour with the
+  higher contrast (Sneferu 0.4.x), so white-on-peach (2.3:1) no longer happens;
+- the muted grey is a little darker (`#5F6474`) and the teal band's text is ink, for 4.5:1;
+- on phones the header keeps a cart icon; icons, the logo and the tabs are 44 px.
+
+The header group holds the cart drawer: it opens when an item is added (a
+setting of the header section) and from the cart icon.
+
+| Page | URL in `sneferu dev` |
+| - | - |
+| Product | `/products/sample-2` |
+| Collection | `/category/gift-cards`, `/products` |
+| Search | `/search?q=card` |
+| Cart | `/cart` |
+| Content page | `/pages/about` |
+| 404 | any other path |
+
 ## Files
 
 ```
 assets/theme.css
 blocks/shelf.sneferu
 blocks/tab.sneferu
+groups/footer.json
+groups/header.json
 layout/theme.sneferu
 locales/ar.json
 locales/en.json
 sections/band.sneferu
+sections/bento-footer.sneferu
+sections/bento-header.sneferu
 sections/bento.sneferu
 sections/tabs.sneferu
 snippets/glyph.sneferu
@@ -69,7 +103,7 @@ Prices are in piastres in the data and printed by `hk-price`, for example
 {
   "id": "bento",
   "name": "Bento",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "Hekana",
   "description": "A soft pastel bento-grid theme for printables, templates and e-books",
   "category": "digital",
@@ -85,7 +119,7 @@ Prices are in piastres in the data and printed by `hk-price`, for example
       "accent": "#E9946C",
       "background": "#FFFFFF",
       "text": "#1F2433",
-      "muted": "#6E7383",
+      "muted": "#5F6474",
       "sage": "#CFE3D7",
       "peach": "#F7C9AF",
       "warm": "#FCF1EA",
@@ -114,60 +148,82 @@ Prices are in piastres in the data and printed by `hk-price`, for example
 
 ```html title="layout/theme.sneferu"
 <div class="bt">
-  <header class="bt-header">
-    <div class="bt-wrap bt-header-row">
-      <div class="bt-start">
-        <a
-          class="bt-icon bt-user"
-          href="{{ url('/account') }}"
-          aria-label="{{ t('account') }}"
-        >{% render 'glyph', name: 'user' %}</a>
-        <a class="bt-icon bt-hide-phone" href="{{ url('/wishlist') }}" aria-label="{{ t('wishlist') }}"><hk-icon
-            name="heart"
-          /></a>
-        <a class="bt-icon bt-hide-phone" href="{{ url('/cart') }}" aria-label="{{ t('cart') }}"><hk-icon
-            name="shopping-bag"
-          /></a>
-        <a class="bt-logo" href="{{ store.url }}">{{ store.name }}</a>
-      </div>
-      <div class="bt-end">
-        <a class="bt-icon bt-hide-phone" href="{{ url('/cart') }}" aria-label="{{ t('cart') }}"><hk-icon
-            name="shopping-bag"
-          /></a>
-        <a class="bt-icon bt-hide-phone" href="{{ url('/search') }}" aria-label="{{ t('search') }}"><hk-icon
-            name="search"
-          /></a>
-        <a class="bt-pill" href="{{ url('/products') }}">{{ t('all_products') }}</a>
-        <details class="bt-menu">
-          <summary class="bt-icon" aria-label="{{ t('menu') }}"><hk-icon name="menu" size="22" /></summary>
-          <div class="bt-menu-panel">
-            <a href="{{ url('/search') }}">{{ t('search') }}</a>
-            <a href="{{ url('/cart') }}">{{ t('cart') }}</a>
-            <a href="{{ url('/wishlist') }}">{{ t('wishlist') }}</a>
-            <a href="{{ t('href_other_locale') }}">{{ t('other_locale') }}</a>
-          </div>
-        </details>
-      </div>
-    </div>
-  </header>
+  <hk-section-group name="header" />
   <main><hk-slot name="content" /></main>
-  <footer class="bt-footer">
-    <div class="bt-wrap bt-footer-row">
-      <p class="bt-footer-name">{{ store.name }}</p>
-      <p class="bt-footer-note">{{ t('footer_note') }}</p>
-      <a href="{{ t('href_other_locale') }}">{{ t('other_locale') }}</a>
-    </div>
-  </footer>
+  <hk-section-group name="footer" />
 </div>
 ```
+
+The header and the footer are [section groups](../../../docs/guide/18-section-groups.mdx): the layout places
+`<hk-section-group name="header" />` and `<hk-section-group name="footer" />`, `groups/header.json` and
+`groups/footer.json` start them with `bento-header` and `bento-footer`, and the merchant edits them once for the
+whole store. The header also holds the cart: the cart link carries `data-hk-open="cart-drawer"` and
+`<hk-cart-count />`, and `<hk-cart-drawer>` lists the lines (a plain link to the cart page without JavaScript).
+
+```html title="sections/bento-header.sneferu"
+<header class="bt-header">
+  <div class="bt-wrap bt-header-row">
+    <div class="bt-start">
+      <a
+        class="bt-icon bt-user"
+        href="{{ url('/account') }}"
+        aria-label="{{ t('account') }}"
+      >{% render 'glyph', name: 'user' %}</a>
+      <a class="bt-icon bt-hide-phone" href="{{ url('/wishlist') }}" aria-label="{{ t('wishlist') }}"><hk-icon
+          name="heart"
+        /></a>
+      <a class="bt-logo" href="{{ store.url }}">{{ store.name }}</a>
+    </div>
+    <div class="bt-end">
+      <a
+        class="bt-icon bt-hide-phone"
+        href="{{ url('/cart') }}"
+        data-hk-open="cart-drawer"
+        aria-label="{{ t('cart') }}"
+      ><hk-icon name="shopping-bag" /><hk-cart-count /></a>
+      <a class="bt-icon bt-hide-phone" href="{{ url('/search') }}" aria-label="{{ t('search') }}"><hk-icon
+          name="search"
+        /></a>
+      <a class="bt-pill" href="{{ url('/products') }}">{{ t('all_products') }}</a>
+      <details class="bt-menu">
+        <summary class="bt-icon" aria-label="{{ t('menu') }}"><hk-icon name="menu" size="22" /></summary>
+        <div class="bt-menu-panel">
+          <a href="{{ url('/search') }}">{{ t('search') }}</a>
+          <a href="{{ url('/cart') }}" data-hk-open="cart-drawer">{{ t('cart') }}</a>
+          <a href="{{ url('/wishlist') }}">{{ t('wishlist') }}</a>
+          <hk-locale-switch />
+        </div>
+      </details>
+    </div>
+  </div>
+  <hk-cart-drawer open-on-add="{{ section.settings.drawer_on_add }}">
+    <hk-cart-items />
+    <hk-cart-summary />
+  </hk-cart-drawer>
+</header>
+<hk-schema>
+  {
+    "name": "Header",
+    "version": 1,
+    "templates": ["header"],
+    "settings": {
+      "drawer_on_add": {
+        "type": "boolean",
+        "label": "Open the cart when an item is added",
+        "default": true
+      }
+    }
+  }
+</hk-schema>
+```
+
 
 - `<hk-slot name="content" />` is where the template's sections go.
 - `{{ store.name }}` and `{{ store.url }}` come from the store. Every other
   word is `t('…')`, read from `locales/ar.json` or `locales/en.json`.
 - Links go through `url()`: `href="{{ url('/cart') }}"` is `/cart` in Arabic
-  and `/en/cart` in English. Only the language switch keeps its target in the
-  locale files (`href_other_locale`), since `url()` stays in the page's
-  language.
+  and `/en/cart` in English. The language switch is `<hk-locale-switch />`, which links to the
+  same page in the other language.
 - The phone menu is a `<details>` element: it opens and closes without script
   (themes cannot run JavaScript).
 - Icons are `<hk-icon>` from the bundled Lucide set (`heart`,
@@ -457,7 +513,7 @@ The CSS for the grid, the tiles and the covers:
   background: var(--hk-color-primary); color: #FFFFFF; font-size: 11px; font-weight: 600;
 }
 .bt-more {
-  position: absolute; bottom: 14px; inset-inline-end: 14px; width: 40px; height: 40px; border-radius: 50%;
+  position: absolute; bottom: 14px; inset-inline-end: 14px; width: 44px; height: 44px; border-radius: 50%;
   display: grid; place-items: center; background: var(--hk-color-teal); color: #FFFFFF !important;
 }
 .bt-more:hover { filter: brightness(.95); }
@@ -551,7 +607,7 @@ groups so `order` can put the menu first and the "All products" pill last:
   .bt-start, .bt-end { display: contents; }
   .bt-menu { order: -1; }
   .bt-logo { margin: 0; }
-  .bt-pill { margin-inline: auto 0; min-height: 40px; padding-inline: 18px; font-size: 13px; }
+  .bt-pill { margin-inline: auto 0; min-height: 44px; padding-inline: 18px; font-size: 13px; }
 ```
 
 ## 8. Words
@@ -566,8 +622,6 @@ All interface text is in the two locale files, with the same keys:
   "cart": "Cart",
   "search": "Search",
   "all_products": "All products",
-  "href_other_locale": "/",
-  "other_locale": "العربية",
   "tabs_label": "Categories",
   "chip_instant": "Instant download",
   "chip_pdf": "PDF",
@@ -647,5 +701,5 @@ Still open:
 - Bundled images are served from 0.3, but this theme still ships none (no new
   art was made for 1.1.0): art comes from products, inline SVG, or an `image`
   setting with an `https://` default.
-- `url()` always links within the page's language, so the language switch
-  keeps its target in the locale files (`href_other_locale`).
+- `url()` always links within the page's language; since 1.2.0 the language
+  switch is `<hk-locale-switch />`, which keeps the page.

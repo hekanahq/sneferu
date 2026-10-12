@@ -1,0 +1,14 @@
+<footer class="ls-footer">
+  <div class="ls-wrap ls-footer-row">
+    <p class="ls-footer-name">{{ store.name }}</p>
+    <p class="ls-footer-note">{{ t('footer_note') }}</p>
+    <hk-locale-switch class="ls-locale" />
+  </div>
+</footer>
+<hk-schema>
+  {
+    "name": "Footer",
+    "version": 1,
+    "templates": ["footer"]
+  }
+</hk-schema>
