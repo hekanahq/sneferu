@@ -6,6 +6,7 @@ export default defineConfig({
     '@hekana/sneferu-core': src('core'), '@hekana/sneferu-compiler': src('compiler'),
     '@hekana/sneferu-runtime': src('runtime'), '@hekana/sneferu-components': src('components'),
     '@hekana/prettier-plugin-sneferu': src('prettier-plugin-sneferu'),
+    '@hekana/sneferu-controllers': src('controllers'), '@hekana/sneferu-templates-default': src('templates-default'),
   } },
   test: { include: ['packages/*/src/**/*.test.ts', 'scripts/**/*.test.ts'] },
 });
