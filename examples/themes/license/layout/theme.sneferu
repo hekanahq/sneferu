@@ -1,43 +1,5 @@
 <div class="ls">
-  <header class="ls-header">
-    <div class="ls-wrap ls-header-row">
-      <details class="ls-menu">
-        <summary class="ls-icon-link" aria-label="{{ t('menu') }}"><hk-icon name="menu" class="ls-icon" /></summary>
-        <div class="ls-menu-panel">
-          <a href="#plans">{{ t('nav_plans') }}</a>
-          <a href="#apps">{{ t('nav_apps') }}</a>
-          <a href="#faq">{{ t('nav_faq') }}</a>
-          <a href="{{ t('href_other_locale') }}">{{ t('other_locale') }}</a>
-        </div>
-      </details>
-      <a class="ls-logo" href="{{ store.url }}">{{ store.name }}</a>
-      <nav class="ls-nav" aria-label="{{ t('nav_label') }}">
-        <a href="#plans">{{ t('nav_plans') }}</a>
-        <a href="#features">{{ t('nav_features') }}</a>
-        <a href="#apps">{{ t('nav_apps') }}</a>
-        <a href="#faq">{{ t('nav_faq') }}</a>
-      </nav>
-      <div class="ls-tools">
-        <hk-search-form placeholder="{{ t('search') }}" class="ls-search" />
-        <a class="ls-icon-link" href="{{ url('/account') }}" aria-label="{{ t('account') }}"><hk-icon
-            name="user"
-            size="18"
-            class="ls-icon"
-          /></a>
-        <a class="ls-icon-link" href="{{ url('/cart') }}" aria-label="{{ t('cart') }}"><hk-icon
-            name="shopping-bag"
-            size="18"
-            class="ls-icon"
-          /></a>
-      </div>
-    </div>
-  </header>
+  <hk-section-group name="header" />
   <main><hk-slot name="content" /></main>
-  <footer class="ls-footer">
-    <div class="ls-wrap ls-footer-row">
-      <p class="ls-footer-name">{{ store.name }}</p>
-      <p class="ls-footer-note">{{ t('footer_note') }}</p>
-      <a href="{{ t('href_other_locale') }}">{{ t('other_locale') }}</a>
-    </div>
-  </footer>
+  <hk-section-group name="footer" />
 </div>

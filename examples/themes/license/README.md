@@ -20,7 +20,7 @@ What the theme uses: plan cards built from real products with `hk-price`, a
 `data-*` attribute set from an expression, `hk-product-card` with a Buy link in
 its `actions` part, `collection` settings, `hk-search-form`, `hk-icon`,
 `<details>` for the FAQ, localized settings and blocks seeded by the template.
-Version 1.1.0 is built on Sneferu 0.3.
+Version 1.2.0 is built on Sneferu 0.4.
 
 ## Upgrading from 1.0
 
@@ -28,18 +28,50 @@ In 1.1.0 the numbered settings and locale-text fallbacks became blocks and
 localized settings; values saved under 1.0 are not carried over, so the sections
 start from the new defaults.
 
+## Pages
+
+License writes only the home page (`templates/index.sneferu`). The product,
+collection, search, cart, content page and 404 templates come from the SDK's
+default store ([page types](../../../docs/guide/16-page-types.mdx)), drawn with
+License's tokens, fonts and layout. `assets/theme.css` restyles what the default
+store would otherwise draw in its own way (the block "Cart, product, collection,
+search and 404 pages"):
+
+- product cards on collection and search pages use the app card: the blue tier
+  gradient on navy with a thin line;
+- the link reset is `:where(.ls a)`, so the default store's lime buttons keep dark text;
+- the sale badge, the active chip and the cart count use dark text on lime;
+- the cart summary, the delivery note and the cart drawer sit on the secondary navy;
+- header links, icons, the search field and the app "Buy" buttons are 44 px tall.
+
+The header group holds the cart drawer: it opens when an item is added (a
+setting of the header section) and from the cart icon.
+
+| Page | URL in `sneferu dev` |
+| - | - |
+| Product | `/products/sample-2` |
+| Collection | `/category/gift-cards`, `/products` |
+| Search | `/search?q=card` |
+| Cart | `/cart` |
+| Content page | `/pages/about` |
+| 404 | any other path |
+
 ## Files
 
 ```
 assets/theme.css
 blocks/faq-item.sneferu
 blocks/feature.sneferu
+groups/footer.json
+groups/header.json
 layout/theme.sneferu
 locales/ar.json
 locales/en.json
 sections/apps.sneferu
 sections/faq.sneferu
 sections/features.sneferu
+sections/license-footer.sneferu
+sections/license-header.sneferu
 sections/plans-hero.sneferu
 snippets/glyph.sneferu
 templates/index.sneferu
@@ -66,7 +98,7 @@ apps section); the merchant can pick other categories in the editor.
 {
   "id": "license",
   "name": "License",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "Hekana",
   "description": "A dark theme for software licences, subscriptions and digital tools",
   "category": "digital",
@@ -103,49 +135,72 @@ tokens makes the "no violet" rule a one-line check.
 
 ```html title="layout/theme.sneferu"
 <div class="ls">
-  <header class="ls-header">
-    <div class="ls-wrap ls-header-row">
-      <details class="ls-menu">
-        <summary class="ls-icon-link" aria-label="{{ t('menu') }}"><hk-icon name="menu" class="ls-icon" /></summary>
-        <div class="ls-menu-panel">
-          <a href="#plans">{{ t('nav_plans') }}</a>
-          <a href="#apps">{{ t('nav_apps') }}</a>
-          <a href="#faq">{{ t('nav_faq') }}</a>
-          <a href="{{ t('href_other_locale') }}">{{ t('other_locale') }}</a>
-        </div>
-      </details>
-      <a class="ls-logo" href="{{ store.url }}">{{ store.name }}</a>
-      <nav class="ls-nav" aria-label="{{ t('nav_label') }}">
-        <a href="#plans">{{ t('nav_plans') }}</a>
-        <a href="#features">{{ t('nav_features') }}</a>
-        <a href="#apps">{{ t('nav_apps') }}</a>
-        <a href="#faq">{{ t('nav_faq') }}</a>
-      </nav>
-      <div class="ls-tools">
-        <hk-search-form placeholder="{{ t('search') }}" class="ls-search" />
-        <a class="ls-icon-link" href="{{ url('/account') }}" aria-label="{{ t('account') }}"><hk-icon
-            name="user"
-            size="18"
-            class="ls-icon"
-          /></a>
-        <a class="ls-icon-link" href="{{ url('/cart') }}" aria-label="{{ t('cart') }}"><hk-icon
-            name="shopping-bag"
-            size="18"
-            class="ls-icon"
-          /></a>
-      </div>
-    </div>
-  </header>
+  <hk-section-group name="header" />
   <main><hk-slot name="content" /></main>
-  <footer class="ls-footer">
-    <div class="ls-wrap ls-footer-row">
-      <p class="ls-footer-name">{{ store.name }}</p>
-      <p class="ls-footer-note">{{ t('footer_note') }}</p>
-      <a href="{{ t('href_other_locale') }}">{{ t('other_locale') }}</a>
-    </div>
-  </footer>
+  <hk-section-group name="footer" />
 </div>
 ```
+
+The header and the footer are [section groups](../../../docs/guide/18-section-groups.mdx): the layout places
+`<hk-section-group name="header" />` and `<hk-section-group name="footer" />`, `groups/header.json` and
+`groups/footer.json` start them with `license-header` and `license-footer`, and the merchant edits them once for the
+whole store. The header also holds the cart: the cart link carries `data-hk-open="cart-drawer"` and
+`<hk-cart-count />`, and `<hk-cart-drawer>` lists the lines (a plain link to the cart page without JavaScript).
+
+```html title="sections/license-header.sneferu"
+<header class="ls-header">
+  <div class="ls-wrap ls-header-row">
+    <details class="ls-menu">
+      <summary class="ls-icon-link" aria-label="{{ t('menu') }}"><hk-icon name="menu" class="ls-icon" /></summary>
+      <div class="ls-menu-panel">
+        <a href="{{ url('/') }}#plans">{{ t('nav_plans') }}</a>
+        <a href="{{ url('/') }}#apps">{{ t('nav_apps') }}</a>
+        <a href="{{ url('/') }}#faq">{{ t('nav_faq') }}</a>
+        <a href="{{ t('href_other_locale') }}">{{ t('other_locale') }}</a>
+      </div>
+    </details>
+    <a class="ls-logo" href="{{ store.url }}">{{ store.name }}</a>
+    <nav class="ls-nav" aria-label="{{ t('nav_label') }}">
+      <a href="{{ url('/') }}#plans">{{ t('nav_plans') }}</a>
+      <a href="{{ url('/') }}#features">{{ t('nav_features') }}</a>
+      <a href="{{ url('/') }}#apps">{{ t('nav_apps') }}</a>
+      <a href="{{ url('/') }}#faq">{{ t('nav_faq') }}</a>
+    </nav>
+    <div class="ls-tools">
+      <hk-search-form placeholder="{{ t('search') }}" class="ls-search" />
+      <a class="ls-icon-link" href="{{ url('/account') }}" aria-label="{{ t('account') }}"><hk-icon
+          name="user"
+          size="18"
+          class="ls-icon"
+        /></a>
+      <a class="ls-icon-link" href="{{ url('/cart') }}" data-hk-open="cart-drawer" aria-label="{{ t('cart') }}"><hk-icon
+          name="shopping-bag"
+          size="18"
+          class="ls-icon"
+        /><hk-cart-count /></a>
+    </div>
+  </div>
+  <hk-cart-drawer open-on-add="{{ section.settings.drawer_on_add }}">
+    <hk-cart-items />
+    <hk-cart-summary />
+  </hk-cart-drawer>
+</header>
+<hk-schema>
+  {
+    "name": "Header",
+    "version": 1,
+    "templates": ["header"],
+    "settings": {
+      "drawer_on_add": {
+        "type": "boolean",
+        "label": "Open the cart when an item is added",
+        "default": true
+      }
+    }
+  }
+</hk-schema>
+```
+
 
 The search box is `<hk-search-form class="ls-search">`, a form that sends the
 shopper to the store's search page, styled like the mockup's pill field; on
@@ -275,7 +330,7 @@ The button and card links need their text colour set with enough weight to
 beat the general link rule, or the text inherits the light page colour:
 
 ```css title="assets/theme.css (excerpt)"
-.ls a { color: inherit; text-decoration: none; }
+:where(.ls a) { color: inherit; text-decoration: none; }
 /* Text on lime is always the dark background colour (beats the link rule above). */
 .ls a.ls-btn, .ls a.ls-all, .ls a.ls-app-buy { color: var(--hk-color-background); }
 ```
