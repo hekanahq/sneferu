@@ -10,7 +10,7 @@ import { loadTheme } from '../load';
 import { pickSampleData, sampleContext, withSampleData } from '../sample-data';
 import { devPage } from '../dev-page';
 import { controllersBundle, devHostScript } from '../dev-controllers';
-import { resolveDevRoute, splitLocale } from '../dev-routes';
+import { plainNotFound, resolveDevRoute, splitLocale } from '../dev-routes';
 
 const TYPES: Record<string, string> = { '.css': 'text/css', '.js': 'text/javascript', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.woff': 'font/woff' };
 
@@ -97,6 +97,7 @@ export async function startDev(dir: string, port: number, opts: { data?: string 
         try { template = decodeURIComponent(url.pathname.slice('/__template/'.length)); } catch { template = ''; }
       } else {
         const route = resolveDevRoute({ path: split.path, query: url.searchParams, locale, defaultLocale: artifact.manifest.defaultLocale, products: ctx.products, collections: ctx.collections });
+        if (plainNotFound(route, artifact.templates)) { res.writeHead(404, { 'content-type': 'text/plain; charset=utf-8' }).end('404 Not found'); return; }
         ({ template, status, scope, path } = route);
       }
       const other = locale === 'ar' ? 'en' : 'ar';

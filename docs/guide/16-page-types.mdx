@@ -152,3 +152,5 @@ that uses it has its products preloaded (`pageDependencies(...).products`).
 `/category/<handle>?page=2`, `/search?q=card`, `/cart`, `/pages/about`, and a
 404 for anything else. Add `/en` or `/ar` to switch language, or
 `?template=product.codes` to preview an alternate.
+The 404 page uses your `templates/404.sneferu`, or the default store's when you
+have none; `/__template/<name>` still renders any template directly.

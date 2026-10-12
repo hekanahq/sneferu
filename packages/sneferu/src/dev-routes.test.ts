@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { resolveDevRoute, splitLocale, devUrl } from './dev-routes';
+import { resolveDevRoute, splitLocale, devUrl, plainNotFound } from './dev-routes';
 import { sampleContext } from './sample-data';
 
 const ctx = sampleContext('en', {}, 'en');
@@ -19,6 +19,12 @@ describe('dev routes', () => {
     for (const p of ['/nope', '/products/missing', '/category/ghost', '/pages/ghost', '/products/__proto__', '/products/constructor', '/products/%E0%A4%A', '/category/x/y']) {
       expect(route(p), p).toMatchObject({ template: '404', status: 404 });
     }
+  });
+  it('answers a plain 404 only when the theme has no 404 template', () => {
+    expect(plainNotFound(route('/nope'), { index: [] })).toBe(true);
+    expect(plainNotFound(route('/nope'), { index: [], '404': [] })).toBe(false);
+    expect(plainNotFound(route('/cart'), { index: [] })).toBe(false);
+    expect(plainNotFound(route('/nope'), Object.create({ '404': [] }))).toBe(true);
   });
   it('clamps page numbers and builds links that keep the query', () => {
     expect(route('/products', 'page=999').scope.paginate).toMatchObject({ page: 2, next_url: '' });
