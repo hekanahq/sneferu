@@ -115,6 +115,16 @@ describe('validateTemplate', () => {
       expect(v("{{ collection(section.settings.whatever).title }}", 'block')).toEqual([]);
     });
   });
+  describe('product settings (SN2012)', () => {
+    const schema = { pick: { type: 'product' }, name: { type: 'text' } };
+    const theme = { star: { type: 'product' } };
+    const v = (src: string) => validateTemplate(parseTemplate(src, 'f').nodes, { file: 'f', registry, snippets: new Set(), kind: 'section', settingsSchema: schema, themeSettings: theme });
+    it('accepts product settings and rejects other types', () => {
+      expect(v('{{ product(section.settings.pick).title }}{{ product(settings.star).title }}')).toEqual([]);
+      expect(v('{{ product(section.settings.name).title }}').map((d) => d.code)).toEqual(['SN2012']);
+      expect(v('{{ product(section.settings.nope).title }}').map((d) => d.code)).toEqual(['SN2012']);
+    });
+  });
   describe('<img> without width and height (SN2015)', () => {
     it('warns for a literal <img> missing either attribute', () => {
       for (const src of ['<img src="/a.png" alt="">', '<img src="/a.png" alt="" width="10">', '<img src="/a.png" alt="" height="10">']) expect(run(src), src).toContain('SN2015');

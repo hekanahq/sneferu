@@ -27,10 +27,15 @@ const stack = (e: FontEntry, locale: 'ar' | 'en'): string => {
  *
  * `fontBase` is where the files are served (`/hk2/fonts/`); when it is not a
  * safe, slash-terminated `/…` or `https://…` prefix, no `@font-face` is written.
+ *
+ * `settings` (resolved theme settings) may name other catalogue families through `token_font_heading|body|mono`.
  */
-export function themeFontCss(manifest: { id: string; tokens?: unknown }, locale: 'ar' | 'en', fontBase: string): string {
+export function themeFontCss(manifest: { id: string; tokens?: unknown }, locale: 'ar' | 'en', fontBase: string, settings?: Record<string, unknown>): string {
   const tokens = isObj(manifest.tokens) ? manifest.tokens : {};
-  const fonts = isObj(tokens.fonts) ? tokens.fonts : {};
+  const declared = isObj(tokens.fonts) ? tokens.fonts : {};
+  // the merchant's `token_font_*` settings pick a catalogue family over the manifest's ('default' keeps the manifest's)
+  const fonts: Record<string, unknown> = { ...declared };
+  if (isObj(settings)) for (const role of ['heading', 'body', 'mono']) { const v = settings[`token_font_${role}`]; if (typeof v === 'string' && v !== 'default' && Object.hasOwn(FONTS, v)) fonts[role] = v; }
   const ar = locale === 'ar';
   let heading = family(fonts.heading);
   let body = family(fonts.body);

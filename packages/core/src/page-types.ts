@@ -31,3 +31,24 @@ export function parseTemplateName(name: unknown): { type: PageType; alternate?: 
 export const pageKeyOf = (template: string): string => (template === 'index' ? '/' : template);
 /** The inverse of pageKeyOf. */
 export const templateOfPageKey = (key: string): string => (key === '/' ? 'index' : key);
+
+/** Names for the builder's page switcher and group editor. */
+export const PAGE_TYPE_LABELS: Readonly<Record<PageType, { ar: string; en: string }>> = Object.freeze({
+  index: { ar: 'الرئيسية', en: 'Home' }, product: { ar: 'المنتج', en: 'Product' }, collection: { ar: 'القسم', en: 'Collection' },
+  search: { ar: 'البحث', en: 'Search' }, cart: { ar: 'السلة', en: 'Cart' }, page: { ar: 'صفحة', en: 'Page' }, '404': { ar: 'غير موجود', en: 'Not found' },
+});
+export const GROUP_LABELS: Readonly<Record<GroupName, { ar: string; en: string }>> = Object.freeze({
+  header: { ar: 'الهيدر', en: 'Header' }, footer: { ar: 'الفوتر', en: 'Footer' }, announcement: { ar: 'شريط الإعلان', en: 'Announcement bar' },
+});
+
+/**
+ * Whether a section may be added to a template or group: its schema's optional `templates` allow-list
+ * (page types, group names or exact alternates such as `product.codes`); absent means everywhere.
+ * `where` is a template name (`product.codes`) or a group name (`header`).
+ */
+export function sectionAllowedOn(schema: { templates?: readonly string[] } | undefined, where: string): boolean {
+  const list = schema?.templates;
+  if (!Array.isArray(list)) return true;
+  const base = parseTemplateName(where)?.type ?? where;
+  return list.includes(where) || list.includes(base);
+}

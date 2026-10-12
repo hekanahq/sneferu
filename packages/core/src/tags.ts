@@ -45,6 +45,12 @@ export interface HkTag {
   bindable: string[] | '*';
   render(props: Record<string, unknown>, ctx: TagRenderContext): string;
   controller?: string;
+  /**
+   * The words the tag prints itself (`ctx.t(key)`), keyed by locale key. The compiler adds the ones a
+   * theme's tags use to the artifact's locales (the theme's own text wins), so the merchant can
+   * override them per language like any other key.
+   */
+  strings?: Record<string, { ar: string; en: string }>;
   a11y?: { role?: string; keyboard?: string; labelProp?: string };
   editor: { label: { ar: string; en: string }; group: string; insertable: boolean; privileged?: boolean };
 }

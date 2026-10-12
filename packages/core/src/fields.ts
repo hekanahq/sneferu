@@ -1,6 +1,8 @@
 export type FieldType =
   | 'text' | 'textarea' | 'rich_text' | 'number' | 'range' | 'boolean' | 'select' | 'color'
-  | 'image' | 'video' | 'link' | 'product' | 'collection' | 'spacing' | 'typography' | 'icon';
+  | 'image' | 'video' | 'link' | 'product' | 'collection' | 'spacing' | 'typography' | 'icon'
+  /** A value bound from the page (a product, `paginate`, `localization`), not something a merchant edits. */
+  | 'data';
 
 export interface Field {
   type: FieldType;
@@ -15,6 +17,8 @@ export interface Field {
   maxLength?: number;
   /** text, textarea, rich_text: the value may be { ar?, en? } and resolves by the page locale. */
   localized?: boolean;
+  /** Where the builder lists the field: theme settings use colors, typography, shape, layout, buttons. */
+  group?: string;
 }
 export type FieldSchema = Record<string, Field>;
 /** A field as an author writes it: the label may be "Text", { en } or { ar, en }. */

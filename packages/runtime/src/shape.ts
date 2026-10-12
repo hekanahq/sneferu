@@ -48,5 +48,13 @@ export function checkArtifactShape(a: unknown): Diagnostic[] {
         else if (s.blocks !== undefined && (!Array.isArray(s.blocks) || s.blocks.some((b) => !isObj(b) || typeof b.type !== 'string' || (b.settings !== undefined && !isObj(b.settings))))) bad(`templateSections.${k}[${i}].blocks`, 'must be an array of { type, settings? }'); });
     }
   }
+  const g = a.groups;
+  if (g !== undefined) {
+    if (!isObj(g)) bad('groups', 'must be an object');
+    else for (const [k, list] of Object.entries(g)) if (!Array.isArray(list) || list.some((n) => !isObj(n) || typeof n.type !== 'string')) bad(`groups.${k}`, 'must be an array of nodes with a string type');
+  }
+  if (a.localeKeys !== undefined && (!Array.isArray(a.localeKeys) || a.localeKeys.some((k) => typeof k !== 'string'))) bad('localeKeys', 'must be an array of strings');
+  const d = a.defaults;
+  if (d !== undefined && (!isObj(d) || !Array.isArray(d.templates) || !Array.isArray(d.sections) || typeof d.css !== 'string')) bad('defaults', 'must be { templates, groups, sections, css }');
   return out;
 }

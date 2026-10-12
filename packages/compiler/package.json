@@ -29,7 +29,8 @@
   },
   "license": "SEE LICENSE IN LICENSE",
   "dependencies": {
-    "@hekana/sneferu-core": "workspace:^"
+    "@hekana/sneferu-core": "workspace:^",
+    "@hekana/sneferu-templates-default": "workspace:^"
   },
   "publishConfig": {
     "access": "public"

@@ -35,6 +35,9 @@ importers:
       '@hekana/sneferu-core':
         specifier: workspace:^
         version: link:../core
+      '@hekana/sneferu-templates-default':
+        specifier: workspace:^
+        version: link:../templates-default
 
   packages/components:
     dependencies:

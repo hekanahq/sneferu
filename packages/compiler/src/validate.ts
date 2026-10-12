@@ -1,4 +1,4 @@
-import { err, warn, parseTemplateName, type Expr, isAllowedElement, isForbiddenAttribute, isForbiddenElement, isUrlAttribute, LIMITS, safeUrl, type Diagnostic, type HkTag, type TagRegistry } from '@hekana/sneferu-core';
+import { err, warn, isGroupName, GROUP_NAMES, parseTemplateName, type Expr, isAllowedElement, isForbiddenAttribute, isForbiddenElement, isUrlAttribute, LIMITS, safeUrl, type Diagnostic, type HkTag, type TagRegistry } from '@hekana/sneferu-core';
 import type { AstNode } from './ast';
 
 const ATTR_NAME = /^[a-z_:][a-z0-9_:.-]*$/;
@@ -59,6 +59,7 @@ export function validateTemplate(
   const bound = new Map<string, number>();
   const bind = (name: string, d: number) => bound.set(name, (bound.get(name) ?? 0) + d);
   const warned = new Set<string>();
+  const groupsSeen = new Set<string>();
 
   /** SN2012: a setting a template reads as a collection or a loop limit exists and has the right type. */
   const checkSetting = (p: (string | number)[], types: readonly string[], what: string, n: { loc: { line: number; col: number } }) => {
@@ -82,7 +83,7 @@ export function validateTemplate(
     if (!e || d > LIMITS.renderDepth) return;
     switch (e.k) {
       case 'lookup':
-        if (e.fn === 'collection' && e.args[0]?.k === 'path') checkSetting(e.args[0].p, ['collection'], `collection(${e.args[0].p.join('.')})`, n);
+        if ((e.fn === 'collection' || e.fn === 'product') && e.args[0]?.k === 'path') checkSetting(e.args[0].p, [e.fn], `${e.fn}(${e.args[0].p.join('.')})`, n);
         e.args.forEach((a) => exprs(a, n, d + 1)); break;
       case 'path':
         if (!e.from) pageObject(e.p[0], n);
@@ -128,6 +129,14 @@ export function validateTemplate(
             const v = (a.parts as string[]).join('');
             if (a.name !== 'srcset' && safeUrl(v) === '#' && v.trim() !== '#') out.push(err('SN2010', `unsafe URL in ${a.name}`, { file: opts.file, ...a.loc }));
           }
+        }
+        if (n.tag === 'hk-section-group') {
+          const nameAttr = n.attrs.find((a) => a.name === 'name');
+          const name = nameAttr && nameAttr.parts.every((p) => typeof p === 'string') ? (nameAttr.parts as string[]).join('') : undefined;
+          if (opts.kind !== 'layout') out.push(err('SN2018', '<hk-section-group> is only allowed in the layout', at(n)));
+          if (name === undefined || !isGroupName(name)) out.push(err('SN2017', `<hk-section-group> needs a fixed name="…" that is one of ${GROUP_NAMES.join(', ')}.${name ? suggest(name, GROUP_NAMES) : ''}`, at(n)));
+          else if (groupsSeen.has(name)) out.push(err('SN2019', `<hk-section-group name="${name}"> appears twice; a group sits in the layout once`, at(n)));
+          else groupsSeen.add(name);
         }
         if (n.tag === 'hk-slot' && opts.kind !== 'layout' && opts.kind !== 'template') out.push(err('SN2011', '<hk-slot> is only allowed in layout and templates', at(n)));
         if (n.tag === 'hk-part') {
