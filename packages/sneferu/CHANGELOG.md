@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.1
+
+### Patch Changes
+
+- CLI reports 0.4.1; picks up the compiler, runtime and dev 404 page changes.
+- Example themes are now 1.2.0 with every page type.
+
 ## 0.4.0
 
 ### Minor Changes
