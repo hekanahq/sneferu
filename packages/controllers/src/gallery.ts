@@ -17,6 +17,8 @@ export const gallery: Ctl = (el, _host, root) => {
     });
   };
   const idx = (t: Element | null) => (t ? thumbs.indexOf(t as HTMLElement) : -1);
+  // a stacked gallery shows every image; the thumbnails are plain anchors there
+  if (el.classList.contains('sn-gallery-stacked')) return;
   show(0);
 
   const onClick = (e: Event) => {
