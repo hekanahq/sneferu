@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.0
+
+### Minor Changes
+
+- Tags: `hk-product-gallery`, `hk-pagination`, `hk-locale-switch`, `hk-variant-picker`, `hk-add-to-cart`, `hk-cart-count`, `hk-cart-items`, `hk-cart-summary`, `hk-cart-drawer`, `hk-section-group`; `hk-price` follows the picked variant.
+
 ## 0.3.0
 
 ### Minor Changes

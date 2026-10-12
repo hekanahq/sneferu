@@ -23,20 +23,58 @@ visible is written into a template.** It comes from one of five places.
 </hk-section>
 <hk-schema>
   {
-    "name": { "en": "Page not found", "ar": "صفحة غير موجودة" },
+    "name": {
+      "en": "Page not found",
+      "ar": "صفحة غير موجودة"
+    },
     "version": 1,
     "templates": ["404"],
     "settings": {
       "title": {
         "type": "text",
-        "label": { "en": "Heading", "ar": "العنوان" },
-        "default": { "en": "This page does not exist", "ar": "الصفحة دي مش موجودة" },
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "en": "This page does not exist",
+          "ar": "الصفحة دي مش موجودة"
+        },
         "localized": true,
         "maxLength": 80
       },
-      "button_label": { "type": "text", "label": { "en": "Button", "ar": "الزر" }, "default": { "en": "Back to the home page", "ar": "ارجع للرئيسية" }, "localized": true, "maxLength": 30 },
-      "button_link": { "type": "link", "label": { "en": "Button link", "ar": "رابط الزر" }, "default": "/" },
-      "padding_y": { "type": "range", "label": { "en": "Vertical padding", "ar": "المسافة الرأسية" }, "min": 0, "max": 160, "step": 8, "default": 64 }
+      "button_label": {
+        "type": "text",
+        "label": {
+          "en": "Button",
+          "ar": "الزر"
+        },
+        "default": {
+          "en": "Back to the home page",
+          "ar": "ارجع للرئيسية"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "button_link": {
+        "type": "link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/"
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 160,
+        "step": 8,
+        "default": 64
+      }
     }
   }
 </hk-schema>

@@ -1,6 +1,6 @@
 {
   "name": "@hekana/sneferu",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Sneferu \u2014 build Hekana themes. npx @hekana/sneferu init",
   "type": "module",
   "bin": {

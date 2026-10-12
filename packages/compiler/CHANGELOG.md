@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.4.0
+
+### Minor Changes
+
+- Page type templates (SN3035), SN2016 for page objects used on the wrong template, `product(setting)`.
+- Section groups: `<hk-section-group>` (SN2017-SN2019), `groups/<name>.json` (SN3036-SN3039), nested blocks and `block_order`.
+- Section `templates` allow-list (SN3040, SN3041); SN3042 for `blocks.allowed` naming a missing block.
+- The artifact gains `groups`, `localeKeys`, `defaults`, token settings in `manifest.settings` and the words of the tags a theme uses in `locales`.
+- The default store fills in missing page templates and group defaults (`compileTheme` option `defaults`; `withDefaults()` for stored artifacts).
+
 ## 0.3.0
 
 ### Minor Changes

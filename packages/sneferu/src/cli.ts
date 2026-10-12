@@ -9,7 +9,7 @@ import { runLogout } from './commands/logout';
 import { runWhoami } from './commands/whoami';
 import { runFormat } from './commands/format';
 
-const program = new Command().name('sneferu').description('Build Hekana themes with Sneferu').version('0.3.0');
+const program = new Command().name('sneferu').description('Build Hekana themes with Sneferu').version('0.4.0');
 program.command('init').argument('[dir]', 'folder to create', 'my-theme').option('--force', 'write into a non-empty folder')
   .option('--template <name>', 'what to scaffold (starter: a complete store)', 'starter')
   .action((dir: string, o: { force?: boolean; template?: string }) => { try { runInit(dir, o); console.log(`✔ created ${dir} — next: cd ${dir} && npx @hekana/sneferu dev`); } catch (e) { console.error(`✖ ${(e as Error).message}`); process.exitCode = 2; } });

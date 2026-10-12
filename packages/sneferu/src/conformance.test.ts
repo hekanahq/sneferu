@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url';
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { parseTemplate } from '@hekana/sneferu-compiler';
-import type { AstNode } from '../../compiler/src/ast';
+type AstNode = ReturnType<typeof parseTemplate>['nodes'][number];
 import { FIELD_INSPECTORS, normalizeLabel } from '@hekana/sneferu-core';
 import { COMMERCE_STRINGS } from '@hekana/sneferu-components';
 

@@ -38,7 +38,8 @@ function themePage(dir: string) {
     if (r.diagnostics.length) throw new Error(`${dir}: ${r.diagnostics.map((d) => `${d.code} ${d.message}`).join('; ')}`);
     const html = devPage(artifact, { body: r.html, locale, css: r.css, themeCss, reloadScript: false });
     if (!r.html.includes('dir="ltr" lang="en"')) throw new Error(`${dir}: page is not dir="ltr" lang="en"`);
-    const text = html.replace(/<style>[\s\S]*?<\/style>/g, '').replace(/<[^>]+>/g, ' ');
+    // the language switch names the other language in that language; it is the one Arabic word on the page
+    const text = html.replace(/<a [^>]*hreflang="ar"[^>]*>[^<]*<\/a>/g, '').replace(/<style>[\s\S]*?<\/style>/g, '').replace(/<[^>]+>/g, ' ');
     if (ARABIC.test(text)) throw new Error(`${dir}: page contains Arabic text: ${text.match(new RegExp(`.{0,30}${ARABIC.source}.{0,30}`))?.[0]}`);
     return html;
   };

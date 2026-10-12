@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.0
+
+### Minor Changes
+
+- Version aligned with the other packages; no format changes.
+
 ## 0.3.0
 
 ### Minor Changes

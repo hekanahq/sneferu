@@ -34,7 +34,7 @@ const ctx = {
   assetUrl: () => '', imageUrl: (ref) => String(ref),
 };
 const out = renderPage(prepared.artifact, { template: 'index', ctx, registry });
-if (!out.html.includes(`data-hk-theme="${artifact.manifest.id}"`) || !out.html.includes('sn-product-card') || !themeTokenCss(artifact.manifest)) {
+if (!out.html.includes(`data-hk-theme="${artifact.manifest.id}"`) || !out.html.includes('sf-card') || !themeTokenCss(artifact.manifest)) {
   console.error('cjs smoke: render did not produce the expected markup', out.diagnostics);
   process.exit(1);
 }
