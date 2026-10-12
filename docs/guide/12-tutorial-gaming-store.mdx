@@ -277,7 +277,9 @@ Internal links go through `url()`: `href="{{ url('/products') }}"` is
 
 ## 4. Header and footer
 
-<Example>
+The header and the footer are the same on every page, so they are
+[section groups](18-section-groups.mdx): the layout places them, and each is
+an ordinary section the merchant can edit once for the whole store.
 
 ```html title="examples/themes/arcade/layout/theme.sneferu"
 <svg class="arc-defs" width="0" height="0" aria-hidden="true">
@@ -288,6 +290,31 @@ Internal links go through `url()`: `href="{{ url('/products') }}"` is
     </linearGradient>
   </defs>
 </svg>
+<hk-section-group name="header" />
+<main class="arc-main"><hk-slot name="content" /></main>
+<hk-section-group name="footer" />
+```
+
+`groups/header.json` says which section the header group starts with
+(`groups/footer.json` does the same for `arcade-footer`):
+
+```json title="examples/themes/arcade/groups/header.json"
+{
+  "sections": [
+    {
+      "id": "header",
+      "type": "arcade-header",
+      "settings": {
+        "drawer_on_add": true
+      }
+    }
+  ]
+}
+```
+
+<Example>
+
+```html title="examples/themes/arcade/sections/arcade-header.sneferu"
 <header class="arc-header">
   <hk-container>
     <div class="arc-bar">
@@ -298,38 +325,37 @@ Internal links go through `url()`: `href="{{ url('/products') }}"` is
           <a href="{{ url('/products') }}">{{ t('nav_all') }}</a>
           <a href="{{ url('/category/gift-cards') }}">{{ t('cat_gift_cards') }}</a>
           <a href="{{ url('/category/game-currency') }}">{{ t('cat_currency') }}</a>
-          <a href="#faq">{{ t('nav_faq') }}</a>
+          <a href="{{ url('/') }}#faq">{{ t('nav_faq') }}</a>
         </nav>
       </details>
       <a class="arc-logo" href="{{ url('/') }}">{{ store.name }}</a>
       <hk-search-form placeholder="{{ t('search_placeholder') }}" class="arc-search" />
-      <a class="arc-cart" href="{{ url('/cart') }}" aria-label="{{ t('cart') }}"><hk-icon
+      <a class="arc-cart" href="{{ url('/cart') }}" data-hk-open="cart-drawer" aria-label="{{ t('cart') }}"><hk-icon
           name="shopping-cart"
           size="24"
           class="ic"
-        /></a>
+        /><hk-cart-count /></a>
     </div>
   </hk-container>
+  <hk-cart-drawer open-on-add="{{ section.settings.drawer_on_add }}">
+    <hk-cart-items />
+    <hk-cart-summary />
+  </hk-cart-drawer>
 </header>
-<main class="arc-main"><hk-slot name="content" /></main>
-<footer class="arc-footer">
-  <hk-container>
-    <div class="arc-footer-grid">
-      <div class="arc-footer-brand">
-        <span class="arc-logo">{{ store.name }}</span>
-        <p>{{ t('footer_about') }}</p>
-      </div>
-      <nav class="arc-footer-links" aria-label="{{ t('footer_links') }}">
-        <a href="{{ url('/products') }}">{{ t('nav_all') }}</a>
-        <a href="{{ url('/category/gift-cards') }}">{{ t('cat_gift_cards') }}</a>
-        <a href="{{ url('/category/game-currency') }}">{{ t('cat_currency') }}</a>
-        <a href="{{ url('/category/top-ups') }}">{{ t('cat_topups') }}</a>
-        <a href="#faq">{{ t('nav_faq') }}</a>
-      </nav>
-    </div>
-    <p class="arc-copy">© {{ store.name }}</p>
-  </hk-container>
-</footer>
+<hk-schema>
+  {
+    "name": "Header",
+    "version": 1,
+    "templates": ["header"],
+    "settings": {
+      "drawer_on_add": {
+        "type": "boolean",
+        "label": "Open the cart when an item is added",
+        "default": true
+      }
+    }
+  }
+</hk-schema>
 ```
 
 <Result url="demo-arcade.hekana.com/en">
@@ -339,7 +365,7 @@ Internal links go through `url()`: `href="{{ url('/products') }}"` is
 
 </Example>
 
-1. The `<svg class="arc-defs">` at the top declares one gradient,
+1. The `<svg class="arc-defs">` in the layout declares one gradient,
    `arc-grad`, that every tile icon reuses through CSS.
 2. `<details>` and `<summary>` are the phone menu: it opens with no
    JavaScript. CSS shows it only under 640 px.
@@ -350,6 +376,12 @@ Internal links go through `url()`: `href="{{ url('/products') }}"` is
 4. `<hk-icon name="shopping-cart" size="24" class="ic" />` draws an icon from
    the bundled Lucide set. `class="ic"` lets the stylesheet size and colour it
    like the theme's own glyphs.
+5. The cart link carries `data-hk-open="cart-drawer"`: with the controllers
+   running it opens `<hk-cart-drawer>`, without them it is a plain link to the
+   cart page. `<hk-cart-count />` shows the number of items (see
+   [Cart and controllers](17-cart-and-controllers.mdx)).
+6. `"templates": ["header"]` keeps the section in the header group; the
+   `#faq` link goes through `url('/')` so it works from every page.
 
 ## 5. Hero: tabs, title and amount chips
 
@@ -516,7 +548,7 @@ Internal links go through `url()`: `href="{{ url('/products') }}"` is
 ```css title="examples/themes/arcade/assets/theme.css (excerpt)"
 /* Hero: platform tabs, title, amount chips */
 .arc-tabs { display: flex; justify-content: center; gap: 4px; width: fit-content; max-width: 100%; margin: 0 auto 40px; padding: 4px; border-radius: 999px; border: 1px solid transparent; background: linear-gradient(var(--hk-color-background), var(--hk-color-background)) padding-box, linear-gradient(90deg, rgba(34, 211, 238, 0.7), rgba(163, 230, 53, 0.55)) border-box; overflow-x: auto; scrollbar-width: none; }
-.arc-tab { display: inline-flex; align-items: center; min-height: 40px; padding-inline: 26px; border-radius: 999px; font-size: 14px; font-weight: 500; color: var(--hk-color-text); white-space: nowrap; border: 1px solid transparent; }
+.arc-tab { display: inline-flex; align-items: center; min-height: 44px; padding-inline: 26px; border-radius: 999px; font-size: 14px; font-weight: 500; color: var(--hk-color-text); white-space: nowrap; border: 1px solid transparent; }
 .arc-tab:hover { color: var(--arc-cyan); }
 .arc-tabs > [data-hk-block]:first-child .arc-tab { border-color: var(--arc-cyan); box-shadow: 0 0 14px rgba(34, 211, 238, 0.45), inset 0 0 10px rgba(34, 211, 238, 0.15); }
 .arc-title { font-weight: 700; letter-spacing: 0; }

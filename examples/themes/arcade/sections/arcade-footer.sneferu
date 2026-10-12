@@ -1,0 +1,25 @@
+<footer class="arc-footer">
+  <hk-container>
+    <div class="arc-footer-grid">
+      <div class="arc-footer-brand">
+        <span class="arc-logo">{{ store.name }}</span>
+        <p>{{ t('footer_about') }}</p>
+      </div>
+      <nav class="arc-footer-links" aria-label="{{ t('footer_links') }}">
+        <a href="{{ url('/products') }}">{{ t('nav_all') }}</a>
+        <a href="{{ url('/category/gift-cards') }}">{{ t('cat_gift_cards') }}</a>
+        <a href="{{ url('/category/game-currency') }}">{{ t('cat_currency') }}</a>
+        <a href="{{ url('/category/top-ups') }}">{{ t('cat_topups') }}</a>
+        <a href="{{ url('/') }}#faq">{{ t('nav_faq') }}</a>
+      </nav>
+    </div>
+    <p class="arc-copy">© {{ store.name }}</p>
+  </hk-container>
+</footer>
+<hk-schema>
+  {
+    "name": "Footer",
+    "version": 1,
+    "templates": ["footer"]
+  }
+</hk-schema>

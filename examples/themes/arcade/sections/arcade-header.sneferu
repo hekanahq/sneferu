@@ -1,0 +1,41 @@
+<header class="arc-header">
+  <hk-container>
+    <div class="arc-bar">
+      <details class="arc-menu">
+        <summary aria-label="{{ t('menu') }}"><hk-icon name="menu" size="24" class="ic" /></summary>
+        <nav class="arc-menu-panel">
+          <a href="{{ url('/') }}">{{ t('nav_home') }}</a>
+          <a href="{{ url('/products') }}">{{ t('nav_all') }}</a>
+          <a href="{{ url('/category/gift-cards') }}">{{ t('cat_gift_cards') }}</a>
+          <a href="{{ url('/category/game-currency') }}">{{ t('cat_currency') }}</a>
+          <a href="{{ url('/') }}#faq">{{ t('nav_faq') }}</a>
+        </nav>
+      </details>
+      <a class="arc-logo" href="{{ url('/') }}">{{ store.name }}</a>
+      <hk-search-form placeholder="{{ t('search_placeholder') }}" class="arc-search" />
+      <a class="arc-cart" href="{{ url('/cart') }}" data-hk-open="cart-drawer" aria-label="{{ t('cart') }}"><hk-icon
+          name="shopping-cart"
+          size="24"
+          class="ic"
+        /><hk-cart-count /></a>
+    </div>
+  </hk-container>
+  <hk-cart-drawer open-on-add="{{ section.settings.drawer_on_add }}">
+    <hk-cart-items />
+    <hk-cart-summary />
+  </hk-cart-drawer>
+</header>
+<hk-schema>
+  {
+    "name": "Header",
+    "version": 1,
+    "templates": ["header"],
+    "settings": {
+      "drawer_on_add": {
+        "type": "boolean",
+        "label": "Open the cart when an item is added",
+        "default": true
+      }
+    }
+  }
+</hk-schema>

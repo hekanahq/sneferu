@@ -24,11 +24,11 @@
 .arc-logo { font-weight: 700; font-size: 20px; letter-spacing: 0.01em; background: var(--arc-grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .arc-search { flex: 1; max-width: 460px; margin-inline-start: auto; flex-wrap: nowrap; align-items: center; gap: 12px; min-height: 44px; padding-inline: 18px 4px; border-radius: 999px; border: 1px solid rgba(34, 211, 238, 0.35); background: rgba(12, 18, 25, 0.8); color: var(--hk-color-muted); font-size: 14px; }
 .arc-search:hover, .arc-search:focus-within { border-color: var(--arc-cyan); }
-form.arc-search input { min-height: 42px; padding: 0; border: 0; outline: 0; background: transparent; color: var(--hk-color-text); font-size: 14px; }
+form.arc-search input { min-height: 44px; padding: 0; border: 0; outline: 0; background: transparent; color: var(--hk-color-text); font-size: 14px; }
 form.arc-search input::placeholder { color: var(--hk-color-muted); }
 form.arc-search .sn-search-button { border: 0; border-radius: 999px; background: transparent; color: var(--hk-color-muted); }
 form.arc-search .sn-search-button:hover { color: var(--arc-cyan); }
-.arc-cart { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 12px; color: var(--hk-color-text); }
+.arc-cart { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 12px; color: var(--hk-color-text); }
 .arc-cart:hover, .arc-menu summary:hover { color: var(--arc-cyan); }
 .arc-menu { position: relative; display: none; }
 .arc-menu summary { list-style: none; display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; cursor: pointer; color: var(--hk-color-text); }
@@ -39,7 +39,7 @@ form.arc-search .sn-search-button:hover { color: var(--arc-cyan); }
 
 /* Hero: platform tabs, title, amount chips */
 .arc-tabs { display: flex; justify-content: center; gap: 4px; width: fit-content; max-width: 100%; margin: 0 auto 40px; padding: 4px; border-radius: 999px; border: 1px solid transparent; background: linear-gradient(var(--hk-color-background), var(--hk-color-background)) padding-box, linear-gradient(90deg, rgba(34, 211, 238, 0.7), rgba(163, 230, 53, 0.55)) border-box; overflow-x: auto; scrollbar-width: none; }
-.arc-tab { display: inline-flex; align-items: center; min-height: 40px; padding-inline: 26px; border-radius: 999px; font-size: 14px; font-weight: 500; color: var(--hk-color-text); white-space: nowrap; border: 1px solid transparent; }
+.arc-tab { display: inline-flex; align-items: center; min-height: 44px; padding-inline: 26px; border-radius: 999px; font-size: 14px; font-weight: 500; color: var(--hk-color-text); white-space: nowrap; border: 1px solid transparent; }
 .arc-tab:hover { color: var(--arc-cyan); }
 .arc-tabs > [data-hk-block]:first-child .arc-tab { border-color: var(--arc-cyan); box-shadow: 0 0 14px rgba(34, 211, 238, 0.45), inset 0 0 10px rgba(34, 211, 238, 0.15); }
 .arc-title { font-weight: 700; letter-spacing: 0; }
@@ -84,7 +84,7 @@ form.arc-search .sn-search-button:hover { color: var(--arc-cyan); }
 .arc-grid .sn-product-card img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 10px; background: #0A1016; }
 .arc-grid .sn-title { font-weight: 500; font-size: 15px; padding-inline: 4px; }
 .arc-grid .sn-price { padding-inline: 4px; font-weight: 700; color: var(--arc-lime); }
-.sn-was { color: var(--hk-color-muted); font-weight: 400; margin-inline-start: 6px; font-size: 13px; }
+.sn-was { opacity: 1; color: var(--hk-color-muted); font-weight: 400; margin-inline-start: 6px; font-size: 13px; }
 .arc-empty { color: var(--hk-color-muted); }
 
 /* FAQ */
@@ -119,9 +119,9 @@ form.arc-search .sn-search-button:hover { color: var(--arc-cyan); }
   .arc-logo { font-size: 17px; margin-inline-end: auto; }
   .arc-search { order: 3; flex-basis: 100%; max-width: none; margin: 0; min-height: 44px; }
   .arc-tabs { display: none; }
-  .arc-tab { padding-inline: 14px; min-height: 36px; font-size: 13px; }
+  .arc-tab { padding-inline: 14px; font-size: 13px; }
   .arc-chips { width: 100%; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; }
-  .arc-chip { min-height: 30px; padding-inline: 4px; gap: 3px; justify-content: center; font-size: 12px; border-radius: 6px; }
+  .arc-chip { min-height: 44px; padding-inline: 4px; gap: 3px; justify-content: center; font-size: 12px; border-radius: 6px; }
   .arc-chip-icon { width: 14px; height: 14px; }
   .arc-chip-icon .ic { width: 11px; height: 11px; }
   .arc-chip-amount { display: none; }
@@ -142,3 +142,17 @@ form.arc-search .sn-search-button:hover { color: var(--arc-cyan); }
   .arc-step-text { font-size: 12px; }
   .arc-grid .sn-title { font-size: 13px; }
 }
+
+/* Cart, product, collection, search and 404 pages: the SDK's default store, in Arcade's colours */
+.arc-cart .sn-cart-count { position: absolute; top: 2px; inset-inline-end: 0; color: #04131A; }
+.sf-card { padding: 10px 10px 14px; border-radius: 14px; background: var(--hk-color-surface); border: 1px solid var(--hk-color-line); transition: border-color 0.15s, box-shadow 0.15s; }
+.sf-card:hover { border-color: var(--arc-cyan); box-shadow: var(--arc-glow); }
+.sf-card-media { border-radius: 10px; background: #0A1016; }
+.sf-card-title { font-weight: 500; font-size: 15px; padding-inline: 4px; }
+.sf-card .sn-price { padding-inline: 4px; font-weight: 700; color: var(--arc-lime); }
+.sf-badge { color: #04131A; }
+.sf-chip[aria-current=true] { background: var(--arc-cyan); border-color: var(--arc-cyan); color: #04131A; }
+.sf-cart-aside, .sf-note-muted { background: var(--hk-color-surface); border-color: var(--hk-color-line); }
+.sn-cart-drawer, dialog.sn-cart-drawer { background: var(--hk-color-surface); color: var(--hk-color-text); border-color: var(--hk-color-line); }
+.sf-breadcrumb a:hover, .sf-view-all:hover { color: var(--arc-cyan); }
+@media (max-width: 639px) { .sf-card-title { font-size: 13px; } }
