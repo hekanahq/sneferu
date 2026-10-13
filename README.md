@@ -1,16 +1,26 @@
 # Sneferu
 
-Build themes for Hekana stores. Sneferu is Hekana's theme language and SDK —
-HTML with `hk-*` tags, `{{ }}` and `{% if/for/render %}`, compiled to a safe
-artifact and previewed locally.
+Build themes for [Hekana](https://hekana.com) stores. Sneferu is Hekana's theme
+language and SDK: HTML with `hk-*` tags, `{{ }}` and `{% if/for/render %}`,
+compiled to a safe artifact and previewed locally with sample data.
 
-    npx sneferu init my-theme
+**Documentation: [hekana.dev](https://hekana.dev)** (guides, tutorials, tag and
+language reference, [llms.txt](https://hekana.dev/llms.txt) for AI assistants).
+
+## Quick start
+
+Node.js 20 or newer.
+
+    npx @hekana/sneferu init my-theme
     cd my-theme
-    npx sneferu dev        # http://127.0.0.1:4100 (English; ?locale=ar for Arabic)
-    npx sneferu validate
-    npx sneferu build      # dist/<id>-<version>.sneferu.json
+    npx @hekana/sneferu dev        # http://127.0.0.1:4100 (English; ?locale=ar for Arabic)
+    npx @hekana/sneferu validate
+    npx @hekana/sneferu build      # dist/<id>-<version>.sneferu.json
 
-Commands: `init`, `dev`, `validate`, `build`, `format` (`--check` for CI), `login`, `logout`, `whoami`, `push` (with a developer key; `--dev-store` publishes on your dev store).
+Or install it once with `npm i -g @hekana/sneferu` for the `sneferu` and `snf` commands.
+
+Commands: `init`, `dev`, `validate`, `build`, `format` (`--check` for CI), `login`,
+`logout`, `whoami`, `push` (with a developer key; `--dev-store` publishes on your dev store).
 
 To push you need a Hekana account (create one at https://dashboard.hekana.com/signup; the
 partner portal has no sign-up of its own), then turn on developer access at
@@ -19,7 +29,43 @@ the previously saved key for the same API. The server allows 30 pushes per hour 
 60 per developer, at most 5 versions waiting for review and at most 20 theme packages per
 developer. Reserved slugs: `starter`, `hekana`, `default`, `admin`, `official`, `theme`, `themes`, `test`, `demo`, `preview`, and anything starting with `hekana-`.
 
-Install: `npx sneferu <command>` (Node.js 20 or newer), or `npm i -g sneferu` for the `sneferu` / `snf` commands. Start a theme with `npm create sneferu my-theme`. `sneferu` is a short name for `@hekana/sneferu`; both install the same tool.
+## Packages
+
+| npm package | What it is |
+|---|---|
+| [`@hekana/sneferu`](https://www.npmjs.com/package/@hekana/sneferu) | The CLI: `init`, `dev`, `validate`, `build`, `format`, `login`, `push` |
+| [`@hekana/sneferu-core`](https://www.npmjs.com/package/@hekana/sneferu-core) | Parser, tag and filter definitions, diagnostics |
+| [`@hekana/sneferu-compiler`](https://www.npmjs.com/package/@hekana/sneferu-compiler) | Compiles a theme folder into one artifact; theme migrations |
+| [`@hekana/sneferu-runtime`](https://www.npmjs.com/package/@hekana/sneferu-runtime) | Renders a compiled artifact with store data |
+| [`@hekana/sneferu-components`](https://www.npmjs.com/package/@hekana/sneferu-components) | The built-in `hk-*` components and icons |
+| [`@hekana/sneferu-controllers`](https://www.npmjs.com/package/@hekana/sneferu-controllers) | Variant picker, add to cart and cart drawer, with no theme JavaScript |
+| [`@hekana/sneferu-templates-default`](https://www.npmjs.com/package/@hekana/sneferu-templates-default) | The default theme `init` starts from |
+| [`@hekana/prettier-plugin-sneferu`](https://www.npmjs.com/package/@hekana/prettier-plugin-sneferu) | Prettier plugin for `.snf` / `.sneferu` files |
+
+## Example themes
+
+Six complete themes in [examples/themes](examples/themes), each with a README,
+screenshots and a live demo store:
+[Arcade](examples/themes/arcade), [Console](examples/themes/console) and
+[Esports](examples/themes/esports) (gaming top-ups and gift cards);
+[Bento](examples/themes/bento), [Creator](examples/themes/creator) and
+[License](examples/themes/license) (digital products). The
+[gaming](https://hekana.dev/guide/tutorial-gaming-store) and
+[digital store](https://hekana.dev/guide/tutorial-digital-store) tutorials walk
+through Arcade and Bento.
+
+## VS Code extension
+
+[packages/vscode-sneferu](packages/vscode-sneferu): syntax highlighting,
+completion, hover docs, live diagnostics, theme checks, formatting and a live
+preview. Install it from the .vsix linked in
+[Editor setup: VS Code](https://hekana.dev/guide/vscode).
+
+## Development
+
+    pnpm install
+    pnpm build
+    pnpm test
 
 ## Developer guide
 
@@ -50,3 +96,12 @@ Install: `npx sneferu <command>` (Node.js 20 or newer), or `npm i -g sneferu` fo
 - [Tag reference](docs/reference/tags.mdx): every `hk-*` tag and prop (generated: `pnpm docs:tags`)
 - [Language reference](docs/language.mdx): grammar, directives, scope, filters
 - [Diagnostics](docs/diagnostics.mdx): every SN code and its fix
+
+## Contributing and security
+
+Issues are welcome; see [CONTRIBUTING.md](CONTRIBUTING.md). Report security
+problems privately as described in [SECURITY.md](SECURITY.md).
+
+## Licence
+
+[MIT](LICENSE), copyright (c) 2026 Hekana.

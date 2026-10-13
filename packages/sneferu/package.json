@@ -30,7 +30,7 @@
   "devDependencies": {
     "@types/node": "^22.9.0"
   },
-  "license": "SEE LICENSE IN LICENSE",
+  "license": "MIT",
   "publishConfig": {
     "access": "public"
   },

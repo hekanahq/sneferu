@@ -5,7 +5,7 @@
   "version": "0.2.0",
   "publisher": "hekana",
   "private": true,
-  "license": "SEE LICENSE IN LICENSE",
+  "license": "MIT",
   "homepage": "https://hekana.dev/guide/vscode",
   "repository": {
     "type": "git",

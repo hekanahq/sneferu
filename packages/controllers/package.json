@@ -30,7 +30,7 @@
   "devDependencies": {
     "happy-dom": "^20.0.0"
   },
-  "license": "SEE LICENSE IN LICENSE",
+  "license": "MIT",
   "publishConfig": {
     "access": "public"
   },

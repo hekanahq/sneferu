@@ -68,16 +68,12 @@ xvfb-run -a node packages/vscode-sneferu/test/run-e2e.mjs        # in a real VS 
 
 ## Decide before the first listing
 
-- **Repository link.** `repository` in package.json points at the SDK repo,
-  which is private, so the listing's Repository link would 404 for the public.
-  Either make the repo public or remove the field and publish with
-  `--allow-missing-repository` (vsce refuses to package without it otherwise).
-  `bugs` has the same problem; `https://hekana.dev` could be used instead.
+- **Repository link.** `repository` and `bugs` point at the public SDK repo
+  (`github.com/hekanahq/sneferu`), so the listing's links work.
 - **README pictures** load from `https://hekana.dev/developers/examples/vscode-*.webp`,
   which exist once the hekana.dev docs with the "Editor setup: VS Code" page are
   deployed. Deploy those first.
-- **Licence.** `LICENSE` is the SDK's ("all rights reserved, governed by the
-  Hekana developer terms"). The Marketplace shows it as is.
+- **Licence.** `LICENSE` is MIT, the same as the rest of the SDK.
 
 ## Later releases
 
