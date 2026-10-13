@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.5.1
+
+### Patch Changes
+
+- Licensed under MIT. The source is public at https://github.com/hekanahq/sneferu. No code changes.
+- Updated dependencies
+  - @hekana/sneferu-core@0.5.1
+  - @hekana/sneferu-compiler@0.5.1
+  - @hekana/sneferu-runtime@0.5.1
+  - @hekana/sneferu-components@0.5.1
+  - @hekana/sneferu-controllers@0.5.1
+  - @hekana/sneferu-templates-default@0.5.1
+  - @hekana/prettier-plugin-sneferu@0.5.1
+
 ## 0.5.0
 
 ### Minor Changes

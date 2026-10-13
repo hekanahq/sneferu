@@ -5,3 +5,4 @@ dist
 .sneferu-dev
 # example themes ship their dev sample data
 !examples/themes/*/.sneferu-dev
+.vscode-test/

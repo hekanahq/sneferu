@@ -1,6 +1,6 @@
 {
   "name": "@hekana/sneferu-core",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Sneferu contracts: IR, diagnostics, escaping, tag registry",
   "type": "module",
   "sideEffects": false,
@@ -32,5 +32,13 @@
     "access": "public"
   },
   "homepage": "https://hekana.dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hekanahq/sneferu.git",
+    "directory": "packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/hekanahq/sneferu/issues"
+  },
   "author": "Hekana"
 }

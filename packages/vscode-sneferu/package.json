@@ -2,7 +2,7 @@
   "name": "sneferu",
   "displayName": "Sneferu",
   "description": "Official Sneferu support for Hekana themes: syntax highlighting, completion, hover docs, live diagnostics, theme checks, formatting and a live preview.",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "publisher": "hekana",
   "private": true,
   "license": "MIT",
