@@ -1,4 +1,5 @@
 import type { PageNode } from './context-types';
+import { err, type Diagnostic } from './diagnostics';
 
 /** What one version step does to one kind of name: renames (old → new) and removals. */
 export interface MigrationOps { rename?: Record<string, string>; remove?: string[] }
@@ -36,16 +37,39 @@ const isRec = (v: unknown): v is Rec => typeof v === 'object' && v !== null && !
 const put = (o: Rec, k: string, v: unknown): void => { Object.defineProperty(o, k, { value: v, enumerable: true, writable: true, configurable: true }); };
 const own = (o: Rec | undefined, k: string): string | undefined => (o && Object.hasOwn(o, k) && typeof o[k] === 'string' ? (o[k] as string) : undefined);
 const has = (l: string[] | undefined, k: string): boolean => Array.isArray(l) && l.includes(k);
-const copy = (v: unknown, depth = 0): unknown => {
-  if (depth > MAX_DEPTH + 4) return null;
-  if (Array.isArray(v)) return v.map((x) => copy(x, depth + 1));
-  if (isRec(v)) { const o: Rec = {}; for (const k of Object.keys(v)) put(o, k, copy(v[k], depth + 1)); return o; }
+const COPY_DEPTH = 20;
+/** Deep copy of JSON data; `over.v` is set when it nests deeper than COPY_DEPTH (the copy is then unusable). */
+const copy = (v: unknown, over: { v: boolean }, depth = 0): unknown => {
+  if (depth > COPY_DEPTH) { over.v = true; return null; }
+  if (Array.isArray(v)) return v.map((x) => copy(x, over, depth + 1));
+  if (isRec(v)) { const o: Rec = {}; for (const k of Object.keys(v)) put(o, k, copy(v[k], over, depth + 1)); return o; }
   return v;
 };
 
+const opsOk = (v: unknown): boolean => {
+  if (v === undefined) return true;
+  if (!isRec(v) || Object.keys(v).some((k) => k !== 'rename' && k !== 'remove')) return false;
+  if (v.rename !== undefined && (!isRec(v.rename) || Object.keys(v.rename).some((k) => typeof (v.rename as Rec)[k] !== 'string'))) return false;
+  if (v.remove !== undefined && (!Array.isArray(v.remove) || v.remove.some((x) => typeof x !== 'string'))) return false;
+  return true;
+};
+const validMigration = (m: unknown): m is Migration =>
+  isRec(m) && typeof m.from === 'string' && typeof m.to === 'string' && compareSemver(m.from, m.to) === -1
+  && opsOk(m.settings) && opsOk(m.sections) && opsOk(m.blocks);
+
+/** Structural check of stored migrations (untrusted). Returns SN9015 diagnostics; never throws. */
+export function checkMigrationsShape(value: unknown): Diagnostic[] {
+  if (value === undefined) return [];
+  if (!Array.isArray(value)) return [err('SN9015', 'artifact migrations must be an array')];
+  const out: Diagnostic[] = [];
+  if (value.length > 100) out.push(err('SN9015', 'artifact migrations has more than 100 entries'));
+  value.slice(0, 100).forEach((m, i) => { if (!validMigration(m)) out.push(err('SN9015', `artifact migrations[${i}] must be { from, to, settings?, sections?, blocks? } with from older than to`)); });
+  return out;
+}
+
 /** The migrations to run from an installed version to a target, in order. Gaps between versions are allowed (a step with no file changes nothing). */
 function pathOf(migrations: Migration[], fromVersion: string, toVersion: string): Migration[] {
-  const ms = migrations.filter((m) => compareSemver(m.from, m.to) === -1)
+  const ms = migrations.filter(validMigration)
     .sort((a, b) => compareSemver(a.from, b.from)! || compareSemver(b.to, a.to)!);
   const out: Migration[] = [];
   let cur = fromVersion;
@@ -81,24 +105,24 @@ export function applyMigrations(input: MigrationInput, migrations: Migration[], 
   const settings = (isRec(input?.settings) ? input.settings : {}) as Rec;
   const pages = (isRec(input?.pages) ? input.pages : {}) as Record<string, PageNode[]>;
   const groups = isRec(input?.groups) ? (input.groups as Record<string, PageNode[]>) : undefined;
-  const clone = (): MigrationInput => ({
-    settings: copy(settings) as Rec,
-    pages: copy(pages) as Record<string, PageNode[]>,
-    ...(groups ? { groups: copy(groups) as Record<string, PageNode[]> } : {}),
-  });
   const lists = [...Object.keys(pages).map((k) => pages[k]!), ...(groups ? Object.keys(groups).map((k) => groups[k]!) : [])];
   const stats = nodeStats(lists);
-  report.kept = stats.ok ? stats.count : 0;
-  if (!stats.ok) { report.tooLarge = true; report.kept = 0; return { output: clone(), report }; }
+  const tooLarge = (): { output: MigrationInput; report: MigrationReport } => { report.tooLarge = true; report.kept = 0; report.migrated = []; report.dropped = []; return { output: input, report }; };
+  if (!stats.ok) return tooLarge();
+  report.kept = stats.count;
+  const over = { v: false };
+  let curSettings = copy(settings, over) as Rec;
+  let curPages = copy(pages, over) as Record<string, PageNode[]>;
+  let curGroups = groups ? (copy(groups, over) as Record<string, PageNode[]>) : undefined;
+  if (over.v) return tooLarge();
+  const done = (): { output: MigrationInput; report: MigrationReport } => ({ output: { settings: curSettings, pages: curPages, ...(curGroups ? { groups: curGroups } : {}) }, report });
 
   const order = compareSemver(fromVersion, toVersion);
-  if (order === undefined || order >= 0) return { output: clone(), report };
-  const steps = pathOf(Array.isArray(migrations) ? migrations : [], fromVersion, toVersion);
-  if (steps.length === 0) { report.missingPath = true; return { output: clone(), report }; }
-
-  let curSettings = copy(settings) as Rec;
-  let curPages = copy(pages) as Record<string, PageNode[]>;
-  let curGroups = groups ? (copy(groups) as Record<string, PageNode[]>) : undefined;
+  if (order === undefined || order >= 0) return done();
+  const list = Array.isArray(migrations) ? migrations : [];
+  const steps = pathOf(list, fromVersion, toVersion);
+  // a theme without migrations has nothing to say; with some, a gap that none of them spans is reported
+  if (steps.length === 0) { report.missingPath = list.some(validMigration); return done(); }
 
   const props = (p: Rec, ops: MigrationOps | undefined, path: string): void => {
     if (!ops) return;
@@ -107,10 +131,9 @@ export function applyMigrations(input: MigrationInput, migrations: Migration[], 
       if (has(ops.remove, k)) { report.dropped.push({ path: `${path}.${k}`, what: 'setting removed' }); continue; }
       const to = own(ops.rename, k);
       if (to === undefined) { if (!Object.hasOwn(next, k)) put(next, k, p[k]); continue; }
-      report.migrated.push({ path: `${path}.${k}`, from: k, to });
-      // a value already under the new name wins; the old one is reported, not merged
+      // a value already under the new name wins; the old one is reported as dropped, not merged
       if (Object.hasOwn(p, to)) report.dropped.push({ path: `${path}.${k}`, what: `setting '${k}' not carried: '${to}' already has a value` });
-      else put(next, to, p[k]);
+      else { report.migrated.push({ path: `${path}.${k}`, from: k, to }); put(next, to, p[k]); }
     }
     for (const k of Object.keys(p)) delete p[k];
     for (const k of Object.keys(next)) put(p, k, next[k]);
@@ -141,9 +164,7 @@ export function applyMigrations(input: MigrationInput, migrations: Migration[], 
     mapLists(curPages, 'pages');
     if (curGroups) mapLists(curGroups, 'groups');
   }
-  let kept = 0;
   const all = [...Object.keys(curPages).map((k) => curPages[k]!), ...(curGroups ? Object.keys(curGroups).map((k) => curGroups![k]!) : [])];
-  kept = nodeStats(all).count;
-  report.kept = kept;
-  return { output: { settings: curSettings, pages: curPages, ...(curGroups ? { groups: curGroups } : {}) }, report };
+  report.kept = nodeStats(all).count;
+  return done();
 }

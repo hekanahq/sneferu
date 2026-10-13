@@ -72,7 +72,7 @@ export function checkMigrations(files: { path: string; json: unknown | undefined
     }
     if (ok) list.push(m);
   }
-  // no two files for the same step, and no cycle (from < to makes one impossible, but a hand-edited graph is checked anyway)
+  // no two files for the same step (from < to is enforced per file, so a cycle cannot form)
   const seen = new Set<string>();
   for (const m of list) {
     const k = `${m.from}>${m.to}`;
@@ -80,17 +80,5 @@ export function checkMigrations(files: { path: string; json: unknown | undefined
     seen.add(k);
   }
   const sorted = [...list].sort((a, b) => compareSemver(a.from, b.from)! || compareSemver(a.to, b.to)!);
-  const edges = new Map<string, string[]>();
-  for (const m of sorted) edges.set(m.from, [...(edges.get(m.from) ?? []), m.to]);
-  const state = new Map<string, 1 | 2>();
-  const visit = (n: string): boolean => {
-    state.set(n, 1);
-    for (const t of edges.get(n) ?? []) {
-      if (state.get(t) === 1) return true;
-      if (!state.has(t) && visit(t)) return true;
-    }
-    state.set(n, 2); return false;
-  };
-  for (const n of edges.keys()) if (!state.has(n) && visit(n)) { out.push(err('SN3046', 'migrations form a cycle', { file: 'migrations' })); break; }
   return sorted;
 }

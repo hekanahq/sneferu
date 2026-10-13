@@ -65,10 +65,12 @@ The report:
 | `kept` | sections and blocks in the output |
 | `migrated` | `{ path, from, to }` for every renamed setting, section or block |
 | `dropped` | `{ path, what }` for everything removed. Show it to the merchant and ask for confirmation before publishing |
-| `missingPath` | the versions differ but no migration connects them; the output is an unchanged copy |
+| `missingPath` | the theme has migrations, the versions differ, and none of them falls between the two; the output is an unchanged copy. A theme with no migrations at all reports `false` |
 | `tooLarge` | the input is over the limits; nothing was migrated |
 
 If a merchant already has a value under the new name of a setting, that value wins and
 the old one appears in `dropped`.
+
+Migrations stored in an artifact are untrusted: malformed entries are skipped, never thrown on, and the runtime's artifact check reports them (SN9015).
 
 Running `applyMigrations` again on its own output changes nothing.

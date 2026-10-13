@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { applyMigrations, MAX_MIGRATION_NODES, type Migration, type MigrationInput } from './migrations';
+import { applyMigrations, checkMigrationsShape, MAX_MIGRATION_NODES, type Migration, type MigrationInput } from './migrations';
 
 const M: Migration[] = [
   { from: '1.1.0', to: '1.2.0', settings: { rename: { b_color: 'c_color' } }, sections: { remove: ['old_banner'] } },
@@ -56,7 +56,7 @@ describe('applyMigrations', () => {
     expect(report.missingPath).toBe(true);
     expect(output).toEqual(inp);
     expect(output).not.toBe(inp);
-    expect(applyMigrations(inp, [], '1.0.0', '1.1.0').report.missingPath).toBe(true);
+    expect(applyMigrations(inp, [], '1.0.0', '1.1.0').report.missingPath).toBe(false);
     expect(applyMigrations(inp, M, '1.2.0', '1.2.0').report.missingPath).toBe(false);
   });
   it('leaves unknown keys and types alone', () => {
@@ -104,5 +104,32 @@ describe('applyMigrations', () => {
     expect(applyMigrations({ settings: {}, pages: { p: [deep as never] } }, M, '1.0.0', '1.2.0').report.tooLarge).toBe(true);
     const ok = Array.from({ length: MAX_MIGRATION_NODES }, (_, i) => ({ id: `n${i}`, type: 'hero_v1' }));
     expect(applyMigrations({ settings: {}, pages: { p: ok } }, M, '1.0.0', '1.2.0').report.tooLarge).toBe(false);
+  });
+  it('skips malformed stored migrations instead of throwing', () => {
+    const junk = [null, 5, 'x', [], { from: 1, to: 2 }, { from: 'a', to: 'b' }, { from: '1.1.0', to: '1.0.0' }, { from: '1.0.0', to: '1.1.0', settings: { rename: 'no' } },
+      { from: '1.0.0', to: '1.1.0', settings: { rename: { a: 5 } } }, { from: '1.0.0', to: '1.1.0', blocks: { remove: [1] } }, { from: '1.0.0', to: '1.1.0', sections: null }] as unknown as Migration[];
+    const r = applyMigrations(input(), [...junk, ...M], '1.0.0', '1.2.0');
+    expect(r.output.settings).toEqual({ c_color: '#111', keep: 'k' });
+    expect(applyMigrations(input(), junk, '1.0.0', '1.2.0').report.missingPath).toBe(false);
+    expect(() => applyMigrations(input(), null as never, '1.0.0', '1.2.0')).not.toThrow();
+  });
+  it('validates the stored shape', () => {
+    expect(checkMigrationsShape(undefined)).toEqual([]);
+    expect(checkMigrationsShape(M)).toEqual([]);
+    expect(checkMigrationsShape('x').map((d) => d.code)).toEqual(['SN9015']);
+    expect(checkMigrationsShape([null, { from: '1.0.0', to: '1.1.0' }, { from: 'x' }]).length).toBe(2);
+  });
+  it('does not copy an oversized or too deeply nested input', () => {
+    const many = Array.from({ length: MAX_MIGRATION_NODES + 1 }, (_, i) => ({ id: `n${i}`, type: 'hero_v1' }));
+    const big = { settings: {}, pages: { p: many } };
+    expect(applyMigrations(big, M, '1.0.0', '1.2.0').output).toBe(big);
+    let v: unknown = 1; for (let i = 0; i < 40; i++) v = { v };
+    const r = applyMigrations({ settings: { deep: v }, pages: {} }, M, '1.0.0', '1.2.0');
+    expect(r.report.tooLarge).toBe(true);
+    expect(r.report.migrated).toEqual([]);
+  });
+  it('a colliding setting is dropped, not also migrated', () => {
+    const { report } = applyMigrations({ settings: { a_color: 'o', b_color: 'n' }, pages: {} }, M, '1.0.0', '1.1.0');
+    expect(report.migrated.some((m) => m.path === 'settings.a_color')).toBe(false);
   });
 });
