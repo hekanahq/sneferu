@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.5.1
+
+### Patch Changes
+
+- Licensed under MIT. The source is public at https://github.com/hekanahq/sneferu. No code changes.
+- Updated dependencies
+  - @hekana/sneferu-core@0.5.1
+
 ## 0.5.0
 
 ### Minor Changes
