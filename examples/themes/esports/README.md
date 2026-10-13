@@ -112,16 +112,7 @@ Delete the starter's sections and `blocks/`.
 
 ## 2. Manifest and tokens
 
-```json title="theme.json"
-{
-  "id": "esports",
-  "name": "Esports",
-  "version": "1.3.0",
-  "author": "Hekana",
-  "description": "A bold gaming top-up store: black and deep green, a lime accent, diagonal cuts, a wide hero and top-up cards with ribbons.",
-  "category": "gaming",
-  "engine": "hk2",
-  "engineCompatibility": "^2.0.0",
+```json title="theme.json (excerpt)"
   "defaultLocale": "ar",
   "locales": ["ar", "en"],
   "settings": {},
@@ -143,8 +134,9 @@ Delete the starter's sections and `blocks/`.
       "body": "Cairo"
     }
   }
-}
 ```
+
+[View the full file](theme.json#L10-L30)
 
 - `accent` is the lime of every button and the active tab. `secondary` is the
   deep green of the hero band. `ribbon` is the warm yellow of the card
@@ -163,6 +155,8 @@ font files and no `font-family` rule. The mark is the theme's own glyph:
 </svg>
 ```
 
+[View the full file](snippets/mark.snf)
+
 The mark is a plain SVG `X` drawn in `currentColor`. Every other icon is
 `<hk-icon>` from the bundled Lucide set: `menu`, `user`, `shopping-cart`,
 `credit-card`, `mail`, `gamepad-2`, `chevron-down`.
@@ -175,24 +169,29 @@ The mark is a plain SVG `X` drawn in `currentColor`. Every other icon is
 <hk-section-group name="footer" />
 ```
 
+[View the full file](layout/theme.snf)
+
 The header and the footer are [section groups](../../../docs/guide/18-section-groups.mdx): the layout places
 `<hk-section-group name="header" />` and `<hk-section-group name="footer" />`, `groups/header.json` and
 `groups/footer.json` start them with `esports-header` and `esports-footer`, and the merchant edits them once for the
 whole store. The header also holds the cart: the cart link carries `data-hk-open="cart-drawer"` and
 `<hk-cart-count />`, and `<hk-cart-drawer>` lists the lines (a plain link to the cart page without JavaScript).
 
-```html title="sections/esports-header.snf"
+```html title="sections/esports-header.snf (excerpt)"
 <header class="es-header">
   <hk-container>
     <div class="es-bar">
       <details class="es-menu">
         <summary aria-label="{{ t('menu') }}"><hk-icon name="menu" size="22" class="ic" /></summary>
         <nav class="es-menu-panel">
-          <a href="{{ url('/products') }}">{{ t('nav_all') }}</a>
-          <a href="{{ url('/category/game-currency') }}">{{ t('cat_currency') }}</a>
-          <a href="{{ url('/category/gift-cards') }}">{{ t('cat_gift_cards') }}</a>
-          <a href="{{ url('/category/top-ups') }}">{{ t('cat_topups') }}</a>
-          <a href="{{ url('/') }}#faq">{{ t('nav_faq') }}</a>
+          {% if menu(section.settings.menu).items %}{% for item in menu(section.settings.menu).items %}<a
+                href="{{ item.url }}"
+                aria-current="{{ item.active }}"
+              >{{ item.title }}</a>{% endfor %}{% else %}<a href="{{ url('/products') }}">{{ t('nav_all') }}</a>
+            <a href="{{ url('/category/game-currency') }}">{{ t('cat_currency') }}</a>
+            <a href="{{ url('/category/gift-cards') }}">{{ t('cat_gift_cards') }}</a>
+            <a href="{{ url('/category/top-ups') }}">{{ t('cat_topups') }}</a>
+            <a href="{{ url('/') }}#faq">{{ t('nav_faq') }}</a>{% endif %}
         </nav>
       </details>
       <a class="es-logo" href="{{ url('/') }}" aria-label="{{ store.name }}">
@@ -201,47 +200,12 @@ whole store. The header also holds the cart: the cart link carries `data-hk-open
       </a>
       <hk-search-form placeholder="{{ t('search_placeholder') }}" class="es-search" />
       <nav class="es-nav" aria-label="{{ t('nav_label') }}">
-        <a href="{{ url('/products') }}">{{ t('nav_all') }}</a>
-        <a class="is-hot" href="{{ url('/category/game-currency') }}">{{ t('cat_currency') }}</a>
-        <a href="{{ url('/category/gift-cards') }}">{{ t('cat_gift_cards') }}</a>
-        <a href="{{ url('/category/top-ups') }}">{{ t('cat_topups') }}</a>
-        <a href="{{ url('/') }}#faq">{{ t('nav_faq') }}</a>
-      </nav>
-      <a class="es-icon" href="{{ url('/account') }}" aria-label="{{ t('account') }}"><hk-icon
-          name="user"
-          size="22"
-          class="ic"
-        /></a>
-      <a class="es-icon" href="{{ url('/cart') }}" data-hk-open="cart-drawer" aria-label="{{ t('cart') }}"><hk-icon
-          name="shopping-cart"
-          size="22"
-          class="ic"
-        /><hk-cart-count /></a>
-    </div>
-  </hk-container>
-  <hk-cart-drawer open-on-add="{{ section.settings.drawer_on_add }}">
-    <hk-cart-items />
-    <hk-cart-summary />
-  </hk-cart-drawer>
-</header>
-<hk-schema>
-  {
-    "name": "Header",
-    "version": 1,
-    "templates": ["header"],
-    "settings": {
-      "drawer_on_add": {
-        "type": "boolean",
-        "label": "Open the cart when an item is added",
-        "default": true
-      }
-    }
-  }
-</hk-schema>
 ```
 
+[View the full file](sections/esports-header.snf#L1-L22)
 
-```css title="assets/theme.css (root and header)"
+
+```css title="assets/theme.css (excerpt)"
 /* Esports: black and deep green, lime accent, diagonal cuts. */
 [data-hk-theme='esports'] {
   --es-lime: var(--hk-color-accent);
@@ -267,21 +231,9 @@ whole store. The header also holds the cart: the cart link carries `data-hk-open
 .es-search:hover, .es-search:focus-within { border-color: var(--es-lime); }
 form.es-search input { min-height: 44px; padding: 0; border: 0; outline: 0; background: transparent; color: var(--hk-color-text); font-size: 14px; }
 form.es-search input::placeholder { color: var(--hk-color-muted); }
-form.es-search .sn-search-button { order: -1; border: 0; background: transparent; color: var(--hk-color-muted); }
-form.es-search .sn-search-button .sn-icon { width: 18px; height: 18px; }
-form.es-search .sn-search-button:hover { color: var(--es-lime); }
-.es-nav { display: flex; gap: 26px; margin-inline-start: auto; font-weight: 700; font-size: 15px; }
-.es-nav a { display: inline-flex; align-items: center; min-height: 44px; }
-.es-nav a.is-hot, .es-nav a:hover { color: var(--es-lime); }
-.es-icon { display: none; align-items: center; justify-content: center; width: 44px; height: 44px; }
-.es-icon:last-child { display: inline-flex; }
-.es-menu { position: relative; display: none; }
-.es-menu summary { list-style: none; display: inline-flex; width: 44px; height: 44px; align-items: center; justify-content: center; cursor: pointer; }
-.es-menu summary::-webkit-details-marker { display: none; }
-.es-menu-panel { position: absolute; z-index: 20; top: 52px; inset-inline-start: 0; min-width: 220px; display: grid; padding: 8px; border-radius: 12px; background: var(--hk-color-surface); border: 1px solid var(--hk-color-line); }
-.es-menu-panel a { display: flex; align-items: center; min-height: 44px; padding-inline: 12px; border-radius: 8px; font-weight: 700; }
-.es-menu-panel a:hover { background: rgba(198, 242, 90, 0.08); color: var(--es-lime); }
 ```
+
+[View the full file](assets/theme.css#L1-L25)
 
 - The account and cart icons are both in the markup; CSS shows the cart on
   desktop and the account icon on phones, as in the two mockup frames.
@@ -294,7 +246,7 @@ form.es-search .sn-search-button:hover { color: var(--es-lime); }
 
 ## 5. Hero: a slanted band and SVG art
 
-```html title="sections/esports-hero.snf"
+```html title="sections/esports-hero.snf (excerpt)"
 <hk-section padding-y="24" mobile-padding-y="12" class="es-hero-wrap">
   <div class="es-hero">
     <div class="es-hero-copy">
@@ -320,65 +272,11 @@ form.es-search .sn-search-button:hover { color: var(--es-lime); }
       </div>
     {% endif %}
   </div>
-</hk-section>
-<hk-schema>
-  {
-    "name": "Esports hero",
-    "version": 1,
-    "settings": {
-      "title": {
-        "type": "text",
-        "label": "Title",
-        "localized": true,
-        "default": {
-          "ar": "اشحن دلوقتي",
-          "en": "Top up now"
-        },
-        "maxLength": 40
-      },
-      "subtitle": {
-        "type": "text",
-        "label": "Subtitle",
-        "localized": true,
-        "default": {
-          "ar": "خصومات على باقات مختارة من ألعابك",
-          "en": "Discounts on selected packs for your games"
-        },
-        "maxLength": 80
-      },
-      "button": {
-        "type": "text",
-        "label": "Button",
-        "localized": true,
-        "default": {
-          "ar": "اشحن دلوقتي",
-          "en": "Top up now"
-        },
-        "maxLength": 24
-      },
-      "button_link": {
-        "type": "link",
-        "label": "Button link",
-        "default": "/products"
-      },
-      "show_offer": {
-        "type": "boolean",
-        "label": "Show the offer box",
-        "default": true
-      },
-      "offer_percent": {
-        "type": "number",
-        "label": "Offer percent",
-        "default": 20,
-        "min": 1,
-        "max": 90
-      }
-    }
-  }
-</hk-schema>
 ```
 
-```html title="snippets/hero-art.snf"
+[View the full file](sections/esports-hero.snf#L1-L25)
+
+```html title="snippets/hero-art.snf (excerpt)"
 <svg class="es-art" viewBox="0 0 520 340" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
   <defs>
     <linearGradient id="es-rim" x1="0" y1="0" x2="1" y2="1">
@@ -404,26 +302,11 @@ form.es-search .sn-search-button:hover { color: var(--es-lime); }
     <path d="M84 238 Q96 196 132 186" fill="none" stroke="url(#es-rim)" stroke-width="2" opacity="0.8" />
   </g>
   <g class="es-fig es-fig-right">
-    <path d="M330 340 L346 252 Q358 214 392 206 Q426 214 438 252 L452 340 Z" fill="url(#es-body)" />
-    <path
-      d="M364 248 L378 224 L406 224 L420 248 L404 266 L380 266 Z"
-      fill="#0B1310"
-      stroke="#2DD4A3"
-      stroke-width="1.6"
-    />
-    <path d="M378 244 h28" stroke="#C6F25A" stroke-width="3" stroke-linecap="round" />
-    <path d="M438 252 Q426 214 392 206" fill="none" stroke="#2DD4A3" stroke-width="2" opacity="0.9" />
-  </g>
-  <g class="es-fig es-fig-main">
-    <path d="M150 340 L178 200 Q196 86 262 56 Q328 86 346 200 L374 340 Z" fill="url(#es-body)" />
-    <path d="M206 186 Q210 112 262 92 Q314 112 318 186 Q296 214 262 218 Q228 214 206 186 Z" fill="#030504" />
-    <path d="M178 200 Q196 86 262 56 Q328 86 346 200" fill="none" stroke="url(#es-rim)" stroke-width="2.4" />
-    <path d="M232 260 L262 300 L292 260" fill="none" stroke="#C6F25A" stroke-width="2" opacity="0.6" />
-  </g>
-</svg>
 ```
 
-```css title="assets/theme.css (hero)"
+[View the full file](snippets/hero-art.snf#L1-L25)
+
+```css title="assets/theme.css (excerpt)"
 /* Hero: a slanted band, copy on the start side, art and offer box on the end side */
 .es-hero { position: relative; display: grid; grid-template-columns: 1fr 1.15fr; align-items: center; min-height: 400px; overflow: hidden; border-radius: 16px; isolation: isolate; }
 .es-hero::before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(105deg, #135C3F 0%, #0E3A29 38%, #0A1712 70%, #070A09 100%); clip-path: polygon(0 0, 66% 0, 54% 100%, 0 100%); }
@@ -441,6 +324,8 @@ form.es-search .sn-search-button:hover { color: var(--es-lime); }
 .es-offer-num { font-size: 40px; font-weight: 900; line-height: 1.2; color: var(--hk-color-text); }
 ```
 
+[View the full file](assets/theme.css#L41-L55)
+
 - The band is a `::before` layer cut with `clip-path: polygon(…)`. The
   polygon and the gradient are mirrored for `[dir='rtl']`, so the green side
   is always behind the text.
@@ -453,7 +338,7 @@ form.es-search .sn-search-button:hover { color: var(--es-lime); }
 
 ## 6. Tabs and top-up cards
 
-```html title="sections/esports-products.snf"
+```html title="sections/esports-products.snf (excerpt)"
 <hk-section padding-y="24" mobile-padding-y="16" class="es-products">
   <nav class="es-tabs" aria-label="{{ t('platforms') }}">
     {% for block in section.blocks %}
@@ -479,32 +364,9 @@ form.es-search .sn-search-button:hover { color: var(--es-lime); }
     <p class="es-empty">{{ t('empty_products') }}</p>
   {% endif %}
 </hk-section>
-<hk-schema>
-  {
-    "name": "Top-up cards",
-    "version": 1,
-    "settings": {
-      "list": {
-        "type": "collection",
-        "label": "Collection",
-        "default": "featured"
-      },
-      "count": {
-        "type": "range",
-        "label": "Products",
-        "default": 10,
-        "min": 2,
-        "max": 20,
-        "step": 1
-      }
-    },
-    "blocks": {
-      "allowed": ["tab"],
-      "max": 6
-    }
-  }
-</hk-schema>
 ```
+
+[View the full file](sections/esports-products.snf#L1-L25)
 
 ```html title="blocks/tab.snf"
 <a class="es-tab" href="{{ url(block.settings.link) }}">{{ block.settings.label }}</a>
@@ -533,7 +395,9 @@ form.es-search .sn-search-button:hover { color: var(--es-lime); }
 </hk-schema>
 ```
 
-```css title="assets/theme.css (tabs and cards)"
+[View the full file](blocks/tab.snf)
+
+```css title="assets/theme.css (excerpt)"
 /* Platform tabs */
 .es-tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 28px; }
 .es-tab { display: inline-flex; align-items: center; justify-content: center; min-width: 120px; min-height: 46px; padding-inline: 24px; border-radius: 8px; background: #121A16; border: 1px solid #1F2C25; font-weight: 800; font-size: 14px; }
@@ -556,6 +420,8 @@ form.es-search .sn-search-button:hover { color: var(--es-lime); }
 .es-empty { color: var(--hk-color-muted); text-align: center; }
 ```
 
+[View the full file](assets/theme.css#L57-L76)
+
 - The ribbon is the card's `badge` part (inside the link, before the image)
   and the Buy link its `actions` part (after the link). With an `actions` part
   the card renders inside `<div class="sn-product-card-wrap es-card">`, so
@@ -569,7 +435,7 @@ form.es-search .sn-search-button:hover { color: var(--es-lime); }
 
 ## 7. Steps and FAQ
 
-```html title="sections/esports-steps.snf"
+```html title="sections/esports-steps.snf (excerpt)"
 <hk-section padding-y="48" mobile-padding-y="32" class="es-steps">
   <hk-stack gap="24">
     <hk-heading text="{{ section.settings.heading }}" level="h2" size="32" mobile-size="22" class="es-h2" />
@@ -580,74 +446,22 @@ form.es-search .sn-search-button:hover { color: var(--es-lime); }
     </div>
   </hk-stack>
 </hk-section>
-<hk-schema>
-  {
-    "name": "How to redeem",
-    "version": 1,
-    "settings": {
-      "heading": {
-        "type": "text",
-        "label": "Heading",
-        "localized": true,
-        "default": {
-          "ar": "إزاي تستلم الكود",
-          "en": "How you get your code"
-        },
-        "maxLength": 60
-      }
-    },
-    "blocks": {
-      "allowed": ["step"],
-      "max": 4
-    }
-  }
-</hk-schema>
 ```
 
-```html title="blocks/step.snf"
+[View the full file](sections/esports-steps.snf#L1-L10)
+
+```html title="blocks/step.snf (excerpt)"
 <div class="es-step">
   <span class="es-step-icon"><hk-icon name="{{ block.settings.icon }}" size="22" class="ic" /></span>
   <span class="es-step-n"></span>
   <strong class="es-step-title">{{ block.settings.title }}</strong>
   <span class="es-step-text">{{ block.settings.text }}</span>
 </div>
-<hk-schema>
-  {
-    "name": "Step",
-    "version": 1,
-    "settings": {
-      "icon": {
-        "type": "select",
-        "label": "Icon",
-        "options": ["credit-card", "wallet", "mail", "gamepad-2", "trophy", "zap", "key", "shield-check"],
-        "default": "credit-card"
-      },
-      "title": {
-        "type": "text",
-        "label": "Title",
-        "localized": true,
-        "default": {
-          "ar": "اختار وادفع أونلاين",
-          "en": "Pick and pay online"
-        },
-        "maxLength": 60
-      },
-      "text": {
-        "type": "text",
-        "label": "Text",
-        "localized": true,
-        "default": {
-          "ar": "اختار الكارت والقيمة، وادفع أونلاين.",
-          "en": "Choose the card and the amount, then pay online."
-        },
-        "maxLength": 140
-      }
-    }
-  }
-</hk-schema>
 ```
 
-```html title="sections/esports-faq.snf"
+[View the full file](blocks/step.snf#L1-L6)
+
+```html title="sections/esports-faq.snf (excerpt)"
 <hk-section padding-y="48" mobile-padding-y="32" class="es-faq">
   <div id="faq" class="es-faq-wrap">
     <hk-heading text="{{ section.settings.heading }}" level="h2" size="28" mobile-size="20" class="es-h2" />
@@ -656,68 +470,22 @@ form.es-search .sn-search-button:hover { color: var(--es-lime); }
     {% endfor %}
   </div>
 </hk-section>
-<hk-schema>
-  {
-    "name": "FAQ",
-    "version": 1,
-    "settings": {
-      "heading": {
-        "type": "text",
-        "label": "Heading",
-        "localized": true,
-        "default": {
-          "ar": "أسئلة شائعة",
-          "en": "Questions"
-        },
-        "maxLength": 60
-      }
-    },
-    "blocks": {
-      "allowed": ["faq-item"],
-      "max": 12
-    }
-  }
-</hk-schema>
 ```
 
-```html title="blocks/faq-item.snf"
+[View the full file](sections/esports-faq.snf#L1-L8)
+
+```html title="blocks/faq-item.snf (excerpt)"
 {% if block.settings.question %}
   <details class="es-faq-item">
     <summary>{{ block.settings.question }}<hk-icon name="chevron-down" class="ic" /></summary>
     <p>{{ block.settings.answer }}</p>
   </details>
 {% endif %}
-<hk-schema>
-  {
-    "name": "Question",
-    "version": 1,
-    "settings": {
-      "question": {
-        "type": "text",
-        "label": "Question",
-        "localized": true,
-        "default": {
-          "ar": "الكود بيوصل إمتى؟",
-          "en": "When does the code arrive?"
-        },
-        "maxLength": 120
-      },
-      "answer": {
-        "type": "textarea",
-        "label": "Answer",
-        "localized": true,
-        "default": {
-          "ar": "بعد ما الدفع الأونلاين يتأكد، الكود بيتبعت أوتوماتيك على الإيميل اللي كتبته في الطلب.",
-          "en": "Once your online payment is confirmed, the code is sent automatically to the email on your order."
-        },
-        "maxLength": 600
-      }
-    }
-  }
-</hk-schema>
 ```
 
-```css title="assets/theme.css (steps, FAQ, footer)"
+[View the full file](blocks/faq-item.snf#L1-L6)
+
+```css title="assets/theme.css (excerpt)"
 /* Steps */
 .es-step-list { counter-reset: es-step; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 .es-step { counter-increment: es-step; position: relative; display: grid; gap: 6px; padding: 24px; background: var(--hk-color-surface); border: 1px solid var(--hk-color-line); clip-path: polygon(0 0, calc(100% - var(--es-cut)) 0, 100% var(--es-cut), 100% 100%, 0 100%); }
@@ -743,36 +511,9 @@ form.es-search .sn-search-button:hover { color: var(--es-lime); }
 .es-footer-row { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
 .es-footer-brand { display: grid; gap: 10px; max-width: 420px; }
 .es-footer-brand p { color: var(--hk-color-muted); font-size: 14px; }
-.es-footer-links { display: flex; flex-wrap: wrap; gap: 4px 22px; }
-.es-footer-links a { display: inline-flex; align-items: center; min-height: 44px; font-size: 14px; font-weight: 700; color: var(--hk-color-muted); }
-.es-footer-links a:hover { color: var(--es-lime); }
-.es-copy { margin-top: 16px; font-size: 13px; color: var(--hk-color-muted); }
-
-@media (max-width: 1023px) {
-  .es-nav { display: none; }
-  .es-search { flex: 1; margin-inline-start: auto; }
-  .es-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .es-hero-copy { padding: 32px; }
-}
-@media (max-width: 639px) {
-  .es-bar { gap: 8px; min-height: 64px; }
-  .es-menu { display: block; }
-  .es-logo span { display: none; }
-  .es-mark { width: 30px; height: 30px; }
-  .es-search { min-height: 44px; font-size: 13px; padding-inline: 0 10px; }
-  form.es-search input { font-size: 13px; }
-  .es-icon:last-child { display: inline-flex; }
-  .es-hero { min-height: 230px; grid-template-columns: 1.15fr 1fr; border-radius: 12px; }
-  .es-hero-copy { padding: 22px 14px; gap: 8px; }
-  .sn-btn.es-cta { min-height: 44px; padding-inline: 18px; font-size: 14px; }
-  .es-offer { top: 10px; inset-inline-end: 10px; padding: 6px 10px; }
-  .es-offer-num { font-size: 20px; }
-  .es-offer-top, .es-offer-bottom { font-size: 10px; }
-  .es-tabs { gap: 8px; }
-  .es-tab { flex: 1; min-width: 0; padding-inline: 8px; }
-  .es-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-  .es-step-list { grid-template-columns: 1fr; }
 ```
+
+[View the full file](assets/theme.css#L78-L102)
 
 The step cards have one corner cut off with `clip-path`, the same diagonal as
 the hero. Steps and questions are blocks; the step number is a CSS counter
@@ -805,6 +546,8 @@ the hero. Steps and questions are blocks; the step number is a CSS counter
 }
 ```
 
+[View the full file](locales/en.json)
+
 `locales/ar.json` has the same keys, with the words in Egyptian Arabic. The
 copy a merchant may change (hero text, tabs, steps, questions) is in localized
 settings and blocks, not here.
@@ -816,34 +559,27 @@ settings and blocks, not here.
 <hk-schema>
   {
     "sections": [
-      { "type": "esports-hero" },
+      {
+        "type": "esports-hero"
+      },
       {
         "type": "esports-products",
         "blocks": [
-          {"type": "tab", "settings": {"label": {"ar": "الكل", "en": "All"}, "link": "/products"}},
-          … 2 more
-        ]
-      },
-      {
-        "type": "esports-steps",
-        "blocks": [
-          {"type": "step", "settings": {"icon": "credit-card", "title": {"ar": "اختار وادفع أونلاين", "en": "Pick and pay online"}, "text": {"ar": "اختار الكارت والقيمة، وادفع أونلاين.", "en": "Choose the card and the amount, then pay online."}}},
-          … 2 more
-        ]
-      },
-      {
-        "type": "esports-faq",
-        "blocks": [
-          {"type": "faq-item", "settings": {"question": {"ar": "الكود بيوصل إمتى؟", "en": "When does the code arrive?"}, "answer": {"ar": "بعد ما الدفع الأونلاين يتأكد، الكود بيتبعت أوتوماتيك على الإيميل اللي كتبته في الطلب.", "en": "Once your online payment is confirmed, the code is sent automatically to the email on your order."}}},
-          … 4 more
-        ]
-      }
-    ]
-  }
-</hk-schema>
+          {
+            "type": "tab",
+            "settings": {
+              "label": {
+                "ar": "الكل",
+                "en": "All"
+              },
+              "link": "/products"
+            }
+          },
 ```
 
-```css title="assets/theme.css (tablet and phone)"
+[View the full file](templates/index.snf#L1-L20)
+
+```css title="assets/theme.css (excerpt)"
 @media (max-width: 1023px) {
   .es-nav { display: none; }
   .es-search { flex: 1; margin-inline-start: auto; }
@@ -869,6 +605,8 @@ settings and blocks, not here.
   .es-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
   .es-step-list { grid-template-columns: 1fr; }
 ```
+
+[View the full file](assets/theme.css#L108-L131)
 
 ## 10. Check, preview and push
 

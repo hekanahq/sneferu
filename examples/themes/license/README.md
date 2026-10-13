@@ -103,16 +103,7 @@ apps section); the merchant can pick other categories in the editor.
 
 ## 1. Manifest and tokens
 
-```json title="theme.json"
-{
-  "id": "license",
-  "name": "License",
-  "version": "1.3.0",
-  "author": "Hekana",
-  "description": "A dark theme for software licences, subscriptions and digital tools",
-  "category": "digital",
-  "engine": "hk2",
-  "engineCompatibility": "^2.0.0",
+```json title="theme.json (excerpt)"
   "defaultLocale": "ar",
   "locales": ["ar", "en"],
   "settings": {},
@@ -134,8 +125,9 @@ apps section); the merchant can pick other categories in the editor.
       "body": "Readex Pro"
     }
   }
-}
 ```
+
+[View the full file](theme.json#L10-L30)
 
 `tier` and `tier-deep` are the two blues of the plan cards. Keeping them as
 tokens makes the "no violet" rule a one-line check.
@@ -150,65 +142,43 @@ tokens makes the "no violet" rule a one-line check.
 </div>
 ```
 
+[View the full file](layout/theme.snf)
+
 The header and the footer are [section groups](../../../docs/guide/18-section-groups.mdx): the layout places
 `<hk-section-group name="header" />` and `<hk-section-group name="footer" />`, `groups/header.json` and
 `groups/footer.json` start them with `license-header` and `license-footer`, and the merchant edits them once for the
 whole store. The header also holds the cart: the cart link carries `data-hk-open="cart-drawer"` and
 `<hk-cart-count />`, and `<hk-cart-drawer>` lists the lines (a plain link to the cart page without JavaScript).
 
-```html title="sections/license-header.snf"
+```html title="sections/license-header.snf (excerpt)"
 <header class="ls-header">
   <div class="ls-wrap ls-header-row">
     <details class="ls-menu">
       <summary class="ls-icon-link" aria-label="{{ t('menu') }}"><hk-icon name="menu" class="ls-icon" /></summary>
       <div class="ls-menu-panel">
-        <a href="{{ url('/') }}#plans">{{ t('nav_plans') }}</a>
-        <a href="{{ url('/') }}#apps">{{ t('nav_apps') }}</a>
-        <a href="{{ url('/') }}#faq">{{ t('nav_faq') }}</a>
+        {% if menu(section.settings.menu).items %}{% for item in menu(section.settings.menu).items %}<a
+              href="{{ item.url }}"
+              aria-current="{{ item.active }}"
+            >{{ item.title }}</a>{% endfor %}{% else %}<a href="{{ url('/') }}#plans">{{ t('nav_plans') }}</a>
+          <a href="{{ url('/') }}#apps">{{ t('nav_apps') }}</a>
+          <a href="{{ url('/') }}#faq">{{ t('nav_faq') }}</a>{% endif %}
         <hk-locale-switch />
       </div>
     </details>
     <a class="ls-logo" href="{{ store.url }}">{{ store.name }}</a>
     <nav class="ls-nav" aria-label="{{ t('nav_label') }}">
-      <a href="{{ url('/') }}#plans">{{ t('nav_plans') }}</a>
-      <a href="{{ url('/') }}#features">{{ t('nav_features') }}</a>
-      <a href="{{ url('/') }}#apps">{{ t('nav_apps') }}</a>
-      <a href="{{ url('/') }}#faq">{{ t('nav_faq') }}</a>
+      {% if menu(section.settings.menu).items %}{% for item in menu(section.settings.menu).items %}<a
+            href="{{ item.url }}"
+            aria-current="{{ item.active }}"
+          >{{ item.title }}</a>{% endfor %}{% else %}<a href="{{ url('/') }}#plans">{{ t('nav_plans') }}</a>
+        <a href="{{ url('/') }}#features">{{ t('nav_features') }}</a>
+        <a href="{{ url('/') }}#apps">{{ t('nav_apps') }}</a>
+        <a href="{{ url('/') }}#faq">{{ t('nav_faq') }}</a>{% endif %}
     </nav>
     <div class="ls-tools">
-      <hk-search-form placeholder="{{ t('search') }}" class="ls-search" />
-      <a class="ls-icon-link" href="{{ url('/account') }}" aria-label="{{ t('account') }}"><hk-icon
-          name="user"
-          size="18"
-          class="ls-icon"
-        /></a>
-      <a class="ls-icon-link" href="{{ url('/cart') }}" data-hk-open="cart-drawer" aria-label="{{ t('cart') }}"><hk-icon
-          name="shopping-bag"
-          size="18"
-          class="ls-icon"
-        /><hk-cart-count /></a>
-    </div>
-  </div>
-  <hk-cart-drawer open-on-add="{{ section.settings.drawer_on_add }}">
-    <hk-cart-items />
-    <hk-cart-summary />
-  </hk-cart-drawer>
-</header>
-<hk-schema>
-  {
-    "name": "Header",
-    "version": 1,
-    "templates": ["header"],
-    "settings": {
-      "drawer_on_add": {
-        "type": "boolean",
-        "label": "Open the cart when an item is added",
-        "default": true
-      }
-    }
-  }
-</hk-schema>
 ```
+
+[View the full file](sections/license-header.snf#L1-L25)
 
 
 The search box is `<hk-search-form class="ls-search">`, a form that sends the
@@ -219,7 +189,7 @@ links to the same page in the other language.
 
 ## 3. Hero and plan cards
 
-```html title="sections/plans-hero.snf"
+```html title="sections/plans-hero.snf (excerpt)"
 <section class="ls-hero" id="plans">
   <div class="ls-wrap ls-hero-row">
     <div class="ls-hero-copy">
@@ -245,70 +215,9 @@ links to the same page in the other language.
     </div>
   </div>
 </section>
-<hk-schema>
-  {
-    "name": "Plans hero",
-    "version": 1,
-    "settings": {
-      "line1": {
-        "type": "text",
-        "label": "Heading, first line",
-        "localized": true,
-        "default": {
-          "ar": "كل البرامج اللي بتحتاجها",
-          "en": "Every app you need"
-        },
-        "maxLength": 60
-      },
-      "line2": {
-        "type": "text",
-        "label": "Heading, second line",
-        "localized": true,
-        "default": {
-          "ar": "بترخيص واحد",
-          "en": "on one licence"
-        },
-        "maxLength": 60
-      },
-      "text": {
-        "type": "textarea",
-        "label": "Text",
-        "localized": true,
-        "default": {
-          "ar": "اشترك في الباقة اللي تناسبك، ومفتاح الترخيص يوصلك على الإيميل بعد الدفع أونلاين.",
-          "en": "Pick the plan that suits you. Your licence key is emailed after online payment."
-        },
-        "maxLength": 200
-      },
-      "button": {
-        "type": "text",
-        "label": "Button",
-        "localized": true,
-        "default": {
-          "ar": "شوف البرامج",
-          "en": "See the apps"
-        },
-        "maxLength": 30
-      },
-      "plans": {
-        "type": "collection",
-        "label": "Plans (the first three; the second is highlighted)",
-        "default": "bundles"
-      },
-      "tier_note": {
-        "type": "text",
-        "label": "Line under each plan price",
-        "localized": true,
-        "default": {
-          "ar": "كل البرامج في ترخيص واحد",
-          "en": "All apps on one licence"
-        },
-        "maxLength": 60
-      }
-    }
-  }
-</hk-schema>
 ```
+
+[View the full file](sections/plans-hero.snf#L1-L25)
 
 - The plans are products in the collection picked in the `plans` setting
   (default `bundles`), so their names, prices and links come from the store,
@@ -332,6 +241,8 @@ links to the same page in the other language.
 .ls-tier-price .sn-now { font-size: 22px; font-weight: 700; line-height: 1.2; }
 ```
 
+[View the full file](assets/theme.css#L60-L68)
+
 - `hk-price` prints the amount with the currency and two decimals
   (`EGP 120.00`, `120.00 ج.م`).
 
@@ -344,9 +255,11 @@ beat the general link rule, or the text inherits the light page colour:
 .ls a.ls-btn, .ls a.ls-all, .ls a.ls-app-buy { color: var(--hk-color-background); }
 ```
 
+[View the full file](assets/theme.css#L10-L12)
+
 ## 4. Features
 
-```html title="sections/features.snf"
+```html title="sections/features.snf (excerpt)"
 <section class="ls-features" id="features">
   <div class="ls-wrap">
     <div class="ls-head">
@@ -360,39 +273,9 @@ beat the general link rule, or the text inherits the light page colour:
     </div>
   </div>
 </section>
-<hk-schema>
-  {
-    "name": "Features",
-    "version": 1,
-    "settings": {
-      "heading": {
-        "type": "text",
-        "label": "Heading",
-        "localized": true,
-        "default": {
-          "ar": "في كل ترخيص",
-          "en": "In every licence"
-        },
-        "maxLength": 60
-      },
-      "side": {
-        "type": "text",
-        "label": "Side note",
-        "localized": true,
-        "default": {
-          "ar": "من غير شحن ومن غير انتظار",
-          "en": "Nothing to ship, nothing to wait for"
-        },
-        "maxLength": 80
-      }
-    },
-    "blocks": {
-      "allowed": ["feature"],
-      "max": 12
-    }
-  }
-</hk-schema>
 ```
+
+[View the full file](sections/features.snf#L1-L13)
 
 Each feature is a block with one localized line; the template seeds eight,
 and the merchant can have up to twelve. The check box in front is the theme's
@@ -400,7 +283,7 @@ own glyph (`snippets/glyph.snf`): the icon set's `check` has no box.
 
 ## 5. Apps
 
-```html title="sections/apps.snf"
+```html title="sections/apps.snf (excerpt)"
 <section class="ls-apps" id="apps">
   <div class="ls-wrap">
     <div class="ls-head">
@@ -422,48 +305,9 @@ own glyph (`snippets/glyph.snf`): the icon set's `check` has no box.
     </div>
   </div>
 </section>
-<hk-schema>
-  {
-    "name": "Apps",
-    "version": 1,
-    "settings": {
-      "heading": {
-        "type": "text",
-        "label": "Heading",
-        "localized": true,
-        "default": {
-          "ar": "البرامج",
-          "en": "Apps"
-        },
-        "maxLength": 60
-      },
-      "side": {
-        "type": "text",
-        "label": "Side note",
-        "localized": true,
-        "default": {
-          "ar": "ترخيص لكل برنامج لوحده",
-          "en": "A licence for each app on its own"
-        },
-        "maxLength": 80
-      },
-      "list": {
-        "type": "collection",
-        "label": "Collection",
-        "default": "apps"
-      },
-      "count": {
-        "type": "range",
-        "label": "Apps",
-        "default": 3,
-        "min": 1,
-        "max": 9,
-        "step": 1
-      }
-    }
-  }
-</hk-schema>
 ```
+
+[View the full file](sections/apps.snf#L1-L21)
 
 `hk-product-card` gives the icon, name and price as one link. The "Buy" chip
 under it is the card's `actions` part: a second link to the same product,
@@ -473,7 +317,7 @@ part the card renders inside `<div class="sn-product-card-wrap ls-app">`, so
 
 ## 6. FAQ
 
-```html title="sections/faq.snf"
+```html title="sections/faq.snf (excerpt)"
 <section class="ls-faq" id="faq">
   <div class="ls-wrap">
     <h2 class="ls-h2">{{ section.settings.heading }}</h2>
@@ -484,31 +328,11 @@ part the card renders inside `<div class="sn-product-card-wrap ls-app">`, so
     </div>
   </div>
 </section>
-<hk-schema>
-  {
-    "name": "FAQ",
-    "version": 1,
-    "settings": {
-      "heading": {
-        "type": "text",
-        "label": "Heading",
-        "localized": true,
-        "default": {
-          "ar": "أسئلة بتتكرر",
-          "en": "Common questions"
-        },
-        "maxLength": 60
-      }
-    },
-    "blocks": {
-      "allowed": ["faq-item"],
-      "max": 12
-    }
-  }
-</hk-schema>
 ```
 
-```html title="blocks/faq-item.snf"
+[View the full file](sections/faq.snf#L1-L10)
+
+```html title="blocks/faq-item.snf (excerpt)"
 <details class="ls-faq-item">
   <summary>
     <span>{{ block.settings.question }}</span>
@@ -516,35 +340,9 @@ part the card renders inside `<div class="sn-product-card-wrap ls-app">`, so
   </summary>
   <p>{{ block.settings.answer }}</p>
 </details>
-<hk-schema>
-  {
-    "name": "Question",
-    "version": 1,
-    "settings": {
-      "question": {
-        "type": "text",
-        "label": "Question",
-        "localized": true,
-        "default": {
-          "ar": "المفتاح بيوصلني إزاي؟",
-          "en": "How do I receive my key?"
-        },
-        "maxLength": 120
-      },
-      "answer": {
-        "type": "textarea",
-        "label": "Answer",
-        "localized": true,
-        "default": {
-          "ar": "بعد ما الدفع أونلاين يتم، بيوصلك إيميل فيه مفتاح الترخيص ورابط التحميل.",
-          "en": "Once your online payment goes through, you get an email with the licence key and the download link."
-        },
-        "maxLength": 600
-      }
-    }
-  }
-</hk-schema>
 ```
+
+[View the full file](blocks/faq-item.snf#L1-L7)
 
 Each question is a block and a `<details>` element, so it opens and closes
 without script; the template seeds four. The rounded first and last rows are
@@ -575,6 +373,8 @@ cash on delivery.
   .ls-tier { padding: 12px 6px 10px; }
 ```
 
+[View the full file](assets/theme.css#L144-L159)
+
 ## 8. Words
 
 ```json title="locales/en.json"
@@ -593,6 +393,8 @@ cash on delivery.
   "footer_note": "Digital products: the licence key and download link are emailed after online payment. Cash on delivery is not available."
 }
 ```
+
+[View the full file](locales/en.json)
 
 The Arabic file has the same keys in Egyptian Arabic. Only interface words are
 left in the locale files; the copy is in settings and blocks.

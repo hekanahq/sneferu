@@ -105,16 +105,7 @@ the product is listed under.
 
 ## 1. Manifest and tokens
 
-```json title="theme.json"
-{
-  "id": "creator",
-  "name": "Creator",
-  "version": "1.3.0",
-  "author": "Hekana",
-  "description": "An editorial theme for one creator selling courses, e-books and templates",
-  "category": "digital",
-  "engine": "hk2",
-  "engineCompatibility": "^2.0.0",
+```json title="theme.json (excerpt)"
   "defaultLocale": "ar",
   "locales": ["ar", "en"],
   "settings": {},
@@ -135,8 +126,9 @@ the product is listed under.
       "body": "IBM Plex Sans Arabic"
     }
   }
-}
 ```
+
+[View the full file](theme.json#L10-L29)
 
 `line` and `muted` are extra colour keys; the stylesheet reads them as
 `var(--hk-color-line)` and `var(--hk-color-muted)`.
@@ -151,20 +143,29 @@ the product is listed under.
 </div>
 ```
 
+[View the full file](layout/theme.snf)
+
 The header and the footer are [section groups](../../../docs/guide/18-section-groups.mdx): the layout places
 `<hk-section-group name="header" />` and `<hk-section-group name="footer" />`, `groups/header.json` and
 `groups/footer.json` start them with `creator-header` and `creator-footer`, and the merchant edits them once for the
 whole store. The header also holds the cart: the cart link carries `data-hk-open="cart-drawer"` and
 `<hk-cart-count />`, and `<hk-cart-drawer>` lists the lines (a plain link to the cart page without JavaScript).
 
-```html title="sections/creator-header.snf"
+```html title="sections/creator-header.snf (excerpt)"
 <header class="cr-header">
   <div class="cr-wrap cr-header-row">
     <nav class="cr-nav" aria-label="{{ t('nav_label') }}">
       <a class="cr-brand" href="{{ store.url }}">{{ store.name }}</a>
-      <a class="cr-link" href="{{ url('/') }}#shop">{{ t('nav_shop') }}</a>
-      <a class="cr-link" href="{{ url('/') }}#what">{{ t('nav_what') }}</a>
-      <a class="cr-link" href="{{ url('/') }}#about">{{ t('nav_about') }}</a>
+      {% if menu(section.settings.menu).items %}{% for item in menu(section.settings.menu).items %}<a
+            class="cr-link"
+            href="{{ item.url }}"
+            aria-current="{{ item.active }}"
+          >{{ item.title }}</a>{% endfor %}{% else %}<a
+          class="cr-link"
+          href="{{ url('/') }}#shop"
+        >{{ t('nav_shop') }}</a>
+        <a class="cr-link" href="{{ url('/') }}#what">{{ t('nav_what') }}</a>
+        <a class="cr-link" href="{{ url('/') }}#about">{{ t('nav_about') }}</a>{% endif %}
     </nav>
     <div class="cr-tools">
       <a class="cr-cart" href="{{ url('/cart') }}" data-hk-open="cart-drawer" aria-label="{{ t('cart') }}"><hk-icon
@@ -174,35 +175,9 @@ whole store. The header also holds the cart: the cart link carries `data-hk-open
       <details class="cr-menu">
         <summary class="cr-menu-button" aria-label="{{ t('menu') }}"><hk-icon name="menu" size="22" /></summary>
         <div class="cr-menu-panel">
-          <a href="{{ url('/') }}#shop">{{ t('nav_shop') }}</a>
-          <a href="{{ url('/') }}#what">{{ t('nav_what') }}</a>
-          <a href="{{ url('/') }}#about">{{ t('nav_about') }}</a>
-          <a href="{{ url('/products') }}">{{ t('all_products') }}</a>
-          <hk-locale-switch />
-        </div>
-      </details>
-    </div>
-  </div>
-  <hk-cart-drawer open-on-add="{{ section.settings.drawer_on_add }}">
-    <hk-cart-items />
-    <hk-cart-summary />
-  </hk-cart-drawer>
-</header>
-<hk-schema>
-  {
-    "name": "Header",
-    "version": 1,
-    "templates": ["header"],
-    "settings": {
-      "drawer_on_add": {
-        "type": "boolean",
-        "label": "Open the cart when an item is added",
-        "default": true
-      }
-    }
-  }
-</hk-schema>
 ```
+
+[View the full file](sections/creator-header.snf#L1-L23)
 
 
 The menu button is a `<details>`/`<summary>` pair, so it opens without script.
@@ -210,7 +185,7 @@ On phones the stylesheet hides all but the store name and the first link.
 
 ## 3. The covers row
 
-```html title="sections/covers.snf"
+```html title="sections/covers.snf (excerpt)"
 <section class="cr-covers" id="shop">
   <div class="cr-wrap">
     <h2 class="cr-hidden">{{ t('shop_heading') }}</h2>
@@ -236,80 +211,9 @@ On phones the stylesheet hides all but the store name and the first link.
         <a href="#template-{{ forloop.index }}" aria-label="{{ p.title }}"></a>
       {% endfor %}
     </nav>
-  </div>
-</section>
-<hk-schema>
-  {
-    "name": "Covers",
-    "version": 1,
-    "settings": {
-      "badge": {
-        "type": "text",
-        "label": "Badge on every cover",
-        "localized": true,
-        "default": {
-          "ar": "وصول فوري",
-          "en": "Instant access"
-        },
-        "maxLength": 30
-      },
-      "list_1": {
-        "type": "collection",
-        "label": "First collection",
-        "default": "courses"
-      },
-      "kind_1": {
-        "type": "text",
-        "label": "First collection: label on the cover",
-        "localized": true,
-        "default": {
-          "ar": "كورس أونلاين",
-          "en": "Online course"
-        },
-        "maxLength": 30
-      },
-      "list_2": {
-        "type": "collection",
-        "label": "Second collection",
-        "default": "ebooks"
-      },
-      "kind_2": {
-        "type": "text",
-        "label": "Second collection: label on the cover",
-        "localized": true,
-        "default": {
-          "ar": "كتاب إلكتروني",
-          "en": "E-book"
-        },
-        "maxLength": 30
-      },
-      "list_3": {
-        "type": "collection",
-        "label": "Third collection",
-        "default": "templates"
-      },
-      "kind_3": {
-        "type": "text",
-        "label": "Third collection: label on the cover",
-        "localized": true,
-        "default": {
-          "ar": "قوالب",
-          "en": "Templates"
-        },
-        "maxLength": 30
-      },
-      "count": {
-        "type": "range",
-        "label": "Products from each collection",
-        "default": 6,
-        "min": 1,
-        "max": 12,
-        "step": 1
-      }
-    }
-  }
-</hk-schema>
 ```
+
+[View the full file](sections/covers.snf#L1-L25)
 
 Three loops, one per `collection` setting, feed one row; each takes
 `limit: section.settings.count` products. Each passes the product, the label
@@ -325,6 +229,8 @@ for its kind and a short `slot` name to the `cover` snippet:
   </hk-product-card>
 </article>
 ```
+
+[View the full file](snippets/cover.snf)
 
 - `{{ slot }}-{{ forloop.index }}` gives every cover an id (`course-1`,
   `ebook-2`, …). The dots under the row are links to those ids, so a click
@@ -367,17 +273,13 @@ rendered and every second one is hidden, which leaves one dot per pair:
 .cr-kind {
   position: absolute; top: 18px; inset-inline-end: 18px;
   color: #FFFFFF; font-size: 11px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; opacity: .9;
-}
-.cr-dots { display: flex; justify-content: center; gap: 0; margin-top: 16px; }
-.cr-dots a { display: grid; place-items: center; width: 28px; height: 44px; }
-.cr-dots a::after { content: ''; width: 9px; height: 9px; border-radius: 50%; background: var(--hk-color-line); }
-.cr-dots a:first-child::after { background: var(--hk-color-text); }
-.cr-dots a:nth-child(even) { display: none; }
 ```
+
+[View the full file](assets/theme.css#L31-L55)
 
 ## 4. What you get
 
-```html title="sections/what-you-get.snf"
+```html title="sections/what-you-get.snf (excerpt)"
 <section class="cr-what" id="what">
   <div class="cr-wrap">
     <h2 class="cr-h2">{{ section.settings.heading }}</h2>
@@ -388,66 +290,20 @@ rendered and every second one is hidden, which leaves one dot per pair:
     </div>
   </div>
 </section>
-<hk-schema>
-  {
-    "name": "What you get",
-    "version": 1,
-    "settings": {
-      "heading": {
-        "type": "text",
-        "label": "Heading",
-        "localized": true,
-        "default": {
-          "ar": "هتاخد إيه مع كل منتج",
-          "en": "What you get with every product"
-        },
-        "maxLength": 80
-      }
-    },
-    "blocks": {
-      "allowed": ["get-item"],
-      "max": 8
-    }
-  }
-</hk-schema>
 ```
 
-```html title="blocks/get-item.snf"
+[View the full file](sections/what-you-get.snf#L1-L10)
+
+```html title="blocks/get-item.snf (excerpt)"
 <p class="cr-item">
   <span class="cr-tick" aria-hidden="true"></span>
   <strong>{{ block.settings.term }}</strong>
   <span class="cr-dash" aria-hidden="true">-</span>
   <span>{{ block.settings.text }}</span>
 </p>
-<hk-schema>
-  {
-    "name": "What you get: item",
-    "version": 1,
-    "settings": {
-      "term": {
-        "type": "text",
-        "label": "Item",
-        "localized": true,
-        "default": {
-          "ar": "الدروس",
-          "en": "Lessons"
-        },
-        "maxLength": 40
-      },
-      "text": {
-        "type": "text",
-        "label": "Detail",
-        "localized": true,
-        "default": {
-          "ar": "فيديوهات مسجّلة تتفرج عليها في الوقت اللي يناسبك",
-          "en": "Recorded videos you watch when it suits you"
-        },
-        "maxLength": 120
-      }
-    }
-  }
-</hk-schema>
 ```
+
+[View the full file](blocks/get-item.snf#L1-L6)
 
 Each item is a `get-item` block with a localized term and detail. The template
 seeds four, so a new store shows the list in both languages; the merchant can
@@ -455,7 +311,7 @@ edit them or add up to eight.
 
 ## 5. The author strip
 
-```html title="sections/author.snf"
+```html title="sections/author.snf (excerpt)"
 <section class="cr-author" id="about">
   <div class="cr-wrap">
     <div class="cr-author-row">
@@ -472,55 +328,9 @@ edit them or add up to eight.
     </div>
   </div>
 </section>
-<hk-schema>
-  {
-    "name": "Author",
-    "version": 1,
-    "settings": {
-      "photo": {
-        "type": "image",
-        "label": "Photo",
-        "default": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/author.webp"
-      },
-      "name": {
-        "type": "text",
-        "label": "Name",
-        "localized": true,
-        "default": {
-          "ar": "منى سليم",
-          "en": "Mona Selim"
-        },
-        "maxLength": 60
-      },
-      "role": {
-        "type": "text",
-        "label": "One line about you",
-        "localized": true,
-        "default": {
-          "ar": "مصممة واجهات ومدرّبة تصميم",
-          "en": "Interface designer and design trainer"
-        },
-        "maxLength": 100
-      },
-      "button": {
-        "type": "text",
-        "label": "Button",
-        "localized": true,
-        "default": {
-          "ar": "تصفّح كل المنتجات",
-          "en": "Browse all products"
-        },
-        "maxLength": 30
-      },
-      "link": {
-        "type": "link",
-        "label": "Button link",
-        "default": "/products"
-      }
-    }
-  }
-</hk-schema>
 ```
+
+[View the full file](sections/author.snf#L1-L16)
 
 - `photo` is an `image` setting whose default is an `https://` URL. The theme
   does not bundle the photo.
@@ -545,6 +355,8 @@ edit them or add up to eight.
   "cart": "Cart"
 }
 ```
+
+[View the full file](locales/en.json)
 
 The Arabic file has the same keys in Egyptian Arabic. Only interface words are
 left in the locale files; the copy is in settings and blocks.
