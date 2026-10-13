@@ -4,11 +4,14 @@
       <details class="arc-menu">
         <summary aria-label="{{ t('menu') }}"><hk-icon name="menu" size="24" class="ic" /></summary>
         <nav class="arc-menu-panel">
-          <a href="{{ url('/') }}">{{ t('nav_home') }}</a>
-          <a href="{{ url('/products') }}">{{ t('nav_all') }}</a>
-          <a href="{{ url('/category/gift-cards') }}">{{ t('cat_gift_cards') }}</a>
-          <a href="{{ url('/category/game-currency') }}">{{ t('cat_currency') }}</a>
-          <a href="{{ url('/') }}#faq">{{ t('nav_faq') }}</a>
+          {% if menu(section.settings.menu).items %}{% for item in menu(section.settings.menu).items %}<a
+                href="{{ item.url }}"
+                aria-current="{{ item.active }}"
+              >{{ item.title }}</a>{% endfor %}{% else %}<a href="{{ url('/') }}">{{ t('nav_home') }}</a>
+            <a href="{{ url('/products') }}">{{ t('nav_all') }}</a>
+            <a href="{{ url('/category/gift-cards') }}">{{ t('cat_gift_cards') }}</a>
+            <a href="{{ url('/category/game-currency') }}">{{ t('cat_currency') }}</a>
+            <a href="{{ url('/') }}#faq">{{ t('nav_faq') }}</a>{% endif %}
         </nav>
       </details>
       <a class="arc-logo" href="{{ url('/') }}">{{ store.name }}</a>
@@ -31,6 +34,11 @@
     "version": 1,
     "templates": ["header"],
     "settings": {
+      "menu": {
+        "type": "menu",
+        "label": "Menu",
+        "default": "main"
+      },
       "drawer_on_add": {
         "type": "boolean",
         "label": "Open the cart when an item is added",

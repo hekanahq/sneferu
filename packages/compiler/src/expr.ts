@@ -72,7 +72,7 @@ class P {
         if (!LOOKUP_SET.has(t.v)) throw new Error(`'${t.v}' is not callable`);
         this.eat(); this.eat('punc', '(');
         const args: Expr[] = [];
-        if (t.v === 'collection' || t.v === 'product') args.push(this.handleArg(t.v));
+        if (t.v === 'collection' || t.v === 'product' || t.v === 'menu') args.push(this.handleArg(t.v));
         else if (t.v === 'collections') { if (!this.is('punc', ')')) throw new Error('collections() takes no arguments'); }
         else if (t.v === 'url') {
           if (this.is('punc', ')')) throw new Error('url() takes one argument: a path or an expression');
@@ -92,8 +92,8 @@ class P {
     }
     throw new Error(`unexpected '${t.v}'`);
   }
-  /** The one argument of collection() and product(): a handle literal or a setting path of that type. */
-  handleArg(fn: 'collection' | 'product'): Expr {
+  /** The one argument of collection(), product() and menu(): a handle literal or a setting path of that type. */
+  handleArg(fn: 'collection' | 'product' | 'menu'): Expr {
     const bad = new Error(`${fn}() takes a handle or a ${fn} setting`);
     const a = this.peek();
     let arg: Expr;

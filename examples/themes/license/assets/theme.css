@@ -131,6 +131,9 @@ form.ls-search .sn-search-button:hover { color: var(--hk-color-text); }
 .ls-footer-name { margin: 0; font-weight: 700; }
 .ls-footer-note { margin: 0; flex: 1 1 360px; color: var(--hk-color-muted); }
 .ls-footer-row > a { min-height: 44px; display: inline-flex; align-items: center; }
+.ls-footer-links { display: flex; flex-wrap: wrap; gap: 0 16px; flex-basis: 100%; }
+.ls-footer-links a { min-height: 44px; display: inline-flex; align-items: center; color: inherit; }
+.ls-footer-links a[aria-current=true] { text-decoration: underline; }
 
 /* Tablet */
 @media (max-width: 1023px) {

@@ -3,18 +3,24 @@
     <details class="ls-menu">
       <summary class="ls-icon-link" aria-label="{{ t('menu') }}"><hk-icon name="menu" class="ls-icon" /></summary>
       <div class="ls-menu-panel">
-        <a href="{{ url('/') }}#plans">{{ t('nav_plans') }}</a>
-        <a href="{{ url('/') }}#apps">{{ t('nav_apps') }}</a>
-        <a href="{{ url('/') }}#faq">{{ t('nav_faq') }}</a>
+        {% if menu(section.settings.menu).items %}{% for item in menu(section.settings.menu).items %}<a
+              href="{{ item.url }}"
+              aria-current="{{ item.active }}"
+            >{{ item.title }}</a>{% endfor %}{% else %}<a href="{{ url('/') }}#plans">{{ t('nav_plans') }}</a>
+          <a href="{{ url('/') }}#apps">{{ t('nav_apps') }}</a>
+          <a href="{{ url('/') }}#faq">{{ t('nav_faq') }}</a>{% endif %}
         <hk-locale-switch />
       </div>
     </details>
     <a class="ls-logo" href="{{ store.url }}">{{ store.name }}</a>
     <nav class="ls-nav" aria-label="{{ t('nav_label') }}">
-      <a href="{{ url('/') }}#plans">{{ t('nav_plans') }}</a>
-      <a href="{{ url('/') }}#features">{{ t('nav_features') }}</a>
-      <a href="{{ url('/') }}#apps">{{ t('nav_apps') }}</a>
-      <a href="{{ url('/') }}#faq">{{ t('nav_faq') }}</a>
+      {% if menu(section.settings.menu).items %}{% for item in menu(section.settings.menu).items %}<a
+            href="{{ item.url }}"
+            aria-current="{{ item.active }}"
+          >{{ item.title }}</a>{% endfor %}{% else %}<a href="{{ url('/') }}#plans">{{ t('nav_plans') }}</a>
+        <a href="{{ url('/') }}#features">{{ t('nav_features') }}</a>
+        <a href="{{ url('/') }}#apps">{{ t('nav_apps') }}</a>
+        <a href="{{ url('/') }}#faq">{{ t('nav_faq') }}</a>{% endif %}
     </nav>
     <div class="ls-tools">
       <hk-search-form placeholder="{{ t('search') }}" class="ls-search" />
@@ -41,6 +47,11 @@
     "version": 1,
     "templates": ["header"],
     "settings": {
+      "menu": {
+        "type": "menu",
+        "label": "Menu",
+        "default": "main"
+      },
       "drawer_on_add": {
         "type": "boolean",
         "label": "Open the cart when an item is added",

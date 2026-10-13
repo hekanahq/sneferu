@@ -47,6 +47,14 @@ export interface ThemeCollectionPage {
 export interface ThemeSearch { terms: string; results: ThemeProduct[]; results_count: number }
 export interface ThemeContentPage { title: string; body_html: string; handle: string; url: string }
 
+/** A menu link as the host supplies it (`RenderContext.menus`): final URLs, nested at most 3 levels. */
+export interface MenuItem { title: string; url: string; children?: MenuItem[] }
+/** A menu as the host supplies it, keyed by handle in `RenderContext.menus`. */
+export interface Menu { handle: string; title: string; items: MenuItem[] }
+/** What `menu('main')` returns to a template: `active` / `child_active` are computed from `request.path`. */
+export interface ThemeMenuItem { title: string; url: string; active: boolean; child_active: boolean; children: ThemeMenuItem[] }
+export interface ThemeMenu { handle: string; title: string; items: ThemeMenuItem[] }
+
 /** Built by the runtime on every page. */
 export interface ThemeRequest { path: string; page_type: string; locale: 'ar' | 'en' }
 export interface ThemeLocalization { locale: 'ar' | 'en'; alternate_locale: 'ar' | 'en' | null; alternate_url: string }

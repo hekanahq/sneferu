@@ -5,6 +5,7 @@ import type { Limits } from './budget';
 import { checkArtifactShape } from './shape';
 import { themeTokenCss } from './tokens';
 import { themeFontCss } from './fonts';
+import { bindMenuRequest } from './menus';
 
 interface Schemaed { ir: IRNode[]; schema: { settings: FieldSchema } }
 interface DefaultSection { type: string; settings: Record<string, unknown>; hidden?: boolean; blocks?: DefaultSection[] }
@@ -195,7 +196,9 @@ function render(artifact: ArtifactLike, opts: RenderOptions): RenderResult {
   const money = isMoneyFormat(mf) ? mf : isMoneyFormat(opts.ctx.money) ? opts.ctx.money : undefined;
   const ctx: RenderContext = { ...opts.ctx, locale, dir, settings, money, translations: withOverrides(artifact, opts.ctx, opts.locale_overrides, locale) };
   const env: Env = { ctx, registry: opts.registry, snippets: artifact.snippets, slots: {}, budget: new Budget(opts.limits), css: [], cssOnce: new Set(), controllers: new Set(), diagnostics: [], ids: { n: 0 }, depth: 0, include: 0 };
-  const base: Scope = { ...(opts.scope ?? {}), store: ctx.store, locale, dir, ...pageObjects(opts, artifact.manifest, locale) };
+  const page = pageObjects(opts, artifact.manifest, locale);
+  bindMenuRequest(ctx, page.request.path, locale);
+  const base: Scope = { ...(opts.scope ?? {}), store: ctx.store, locale, dir, ...page };
 
   const sections: PageNode[] = Array.isArray(opts.sections) ? opts.sections : (own(artifact.templateSections, opts.template) ?? []).map((s, i) => ({ id: `default-${i}`, type: s.type, props: s.settings, ...(Array.isArray(s.blocks) ? { children: s.blocks.map((b, j) => ({ id: `default-${i}-${j}`, type: b.type, props: b.settings })) } : {}) }));
 

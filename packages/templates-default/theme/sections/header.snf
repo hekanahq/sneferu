@@ -18,7 +18,20 @@
         {% endif %}
       </a>
       <nav class="sf-nav" aria-label="{{ t('menu') }}">
-        {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+        {% if menu(section.settings.menu).items %}
+          {% for item in menu(section.settings.menu).items %}
+            <div class="sf-nav-item">
+              <a class="sf-nav-link" href="{{ item.url }}" aria-current="{{ item.active }}">{{ item.title }}</a>
+              {% if item.children %}
+                <div class="sf-subnav">
+                  {% for sub in item.children %}
+                    <a class="sf-subnav-link" href="{{ sub.url }}" aria-current="{{ sub.active }}">{{ sub.title }}</a>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        {% else %}{% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}{% endif %}
       </nav>
       <div class="sf-header-actions">
         {% if section.settings.show_search %}
@@ -62,6 +75,14 @@
       "max": 8
     },
     "settings": {
+      "menu": {
+        "type": "menu",
+        "label": {
+          "en": "Menu (the links below show when it has none)",
+          "ar": "القائمة (الروابط اللي تحت بتظهر لو مفيهاش روابط)"
+        },
+        "default": "main"
+      },
       "logo": {
         "type": "image",
         "label": {

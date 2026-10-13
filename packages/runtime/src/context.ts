@@ -1,3 +1,4 @@
+import type { Menu } from '@hekana/sneferu-core';
 export interface Category { handle: string; title: string; url: string; image: { url: string } | null; count: number }
 export interface RenderContext {
   locale: 'ar' | 'en';
@@ -10,6 +11,13 @@ export interface RenderContext {
   products: Record<string, unknown>;
   /** The store's categories, for the `collections()` lookup (at most 50 are listed). */
   categories?: Category[];
+  /**
+   * The store's menus by handle, for the `menu()` lookup: `{ handle, title, items: [{ title, url, children? }] }`.
+   * URLs are final (locale prefix and store path already applied); the runtime checks them with safeUrl,
+   * keeps 3 levels and 250 links, and sets `active` / `child_active` from the page's request path.
+   * Preload the handles `pageDependencies().menus` lists. Absent: every menu is empty.
+   */
+  menus?: Record<string, Menu>;
   translations: Record<string, string>;
   fallbackTranslations: Record<string, string>;
   assetUrl(path: string): string;

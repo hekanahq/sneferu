@@ -3,6 +3,7 @@ import type { RenderContext, Scope } from './context';
 import { FILTER_IMPLS } from './filters';
 import { translate } from './translate';
 import { resolveUrl } from './url';
+import { lookupMenu } from './menus';
 
 const MAX_CATEGORIES = 50;
 const BLOCKED = new Set(['__proto__', 'prototype', 'constructor']);
@@ -42,6 +43,7 @@ function lookup(fn: string, args: unknown[], ctx: RenderContext): unknown {
     case 'settings': return get(ctx.settings, a0);
     case 'asset_url': { const p = assetPath(args[0]); return p === '' ? '' : ctx.assetUrl(p); }
     case 'url': return resolveUrl(ctx, args[0]);
+    case 'menu': return lookupMenu(ctx, args[0]);
     default: return undefined;
   }
 }

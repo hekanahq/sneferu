@@ -102,4 +102,19 @@ describe('dev server with sample data', () => {
     expect(html).toContain('<b>Notes</b>');
     dev.close();
   });
+  it('has main and footer sample menus with links in the page language', () => {
+    const en = sampleContext('en', {}, 'ar').menus!;
+    expect(Object.keys(en)).toEqual(['main', 'footer']);
+    expect(en.main!.items.map((i) => i.url)).toEqual(['/en', '/en/products', '/en/pages/about']);
+    expect(en.main!.items[1]!.children!.map((i) => i.url)).toEqual(['/en/category/new', '/en/category/gift-cards', '/en/category/subscriptions']);
+    expect(sampleContext('ar', {}, 'ar').menus!.footer!.items[0]).toEqual({ title: 'كل المنتجات', url: '/products' });
+    // sneferu dev on an English-first theme keeps Arabic links in Arabic
+    expect(sampleContext('ar', {}, 'en', { devLinks: true }).menus!.main!.items[1]!.url).toBe('/ar/products');
+  });
+  it('takes menus from your sample data', () => {
+    const ctx = withSampleData(sampleContext('en', {}, 'en'), pickSampleData({ menus: { main: { title: 'Mine', items: [{ title: 'A', url: '/a' }] }, bad: 'x', nope: { items: 'x' } } }, 'en'));
+    expect(ctx.menus!.main).toEqual({ handle: 'main', title: 'Mine', items: [{ title: 'A', url: '/a' }] });
+    expect(ctx.menus!.footer!.items.length).toBeGreaterThan(0);
+    expect(Object.keys(ctx.menus!)).toEqual(['main', 'footer']);
+  });
 });

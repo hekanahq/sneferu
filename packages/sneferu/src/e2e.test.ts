@@ -48,6 +48,21 @@ describe('starter theme end to end', () => {
     expect(r.html).toContain('EGP 520.00');
   });
 
+  it('prints the main and footer menus in the header and footer, else the group links', () => {
+    const ctx = sampleContext('en', artifact!.locales, 'en');
+    const r = renderPage(artifact!, { template: 'index', ctx, registry, request: { path: '/en/products' } });
+    expect(r.diagnostics).toEqual([]);
+    expect(r.html).toContain('<a class="sf-nav-link" href="/en/products" aria-current="true">Products</a>');
+    expect(r.html).toContain('<a class="sf-subnav-link" href="/en/category/gift-cards" aria-current="false">Gift cards</a>');
+    expect(r.html).toContain('<h3 class="sf-footer-title">Links</h3>');
+    expect(r.html).not.toContain('data-hk-block="nav-home"');
+    const bare = renderPage(artifact!, { template: 'index', ctx: { ...ctx, menus: {} }, registry, request: { path: '/en/products' } });
+    expect(bare.html).toContain('data-hk-block="nav-home"');
+    expect(bare.html).toContain('data-hk-block="col-shop"');
+    expect(bare.html).not.toContain('aria-current="true"');
+    expect(renderPage(artifact!, { template: 'index', ctx: { ...ctx, menus: undefined }, registry, request: { path: '/en/products' } }).html).toBe(bare.html);
+  });
+
   it('renders Arabic, right to left, when asked', () => {
     const r = renderPage(artifact!, { template: 'index', ctx: sampleContext('ar', artifact!.locales, 'en'), registry });
     expect(r.diagnostics).toEqual([]);

@@ -22,8 +22,17 @@ What the theme uses: plain HTML for structure, `hk-section`, `hk-stack`,
 `hk-search-form`, five block types (tab, chip, tile, step, question) that the
 template seeds with the page's items, one snippet for the two glyphs the icon
 set lacks, `<details>` for the phone menu and the FAQ, and one stylesheet.
-There is no JavaScript. Version 1.2.0 is built on Sneferu 0.4; the 0.2
+There is no JavaScript. Version 1.3.0 is built on Sneferu 0.5; the 0.2
 workarounds it replaced are listed in `../../GAPS-gaming.md`.
+
+## Menus (1.3.0)
+
+The header and footer each have a `menu` setting (`main` and `footer` by
+default) and print the store's menu with `menu(section.settings.menu)`: the
+top-level links, each with `aria-current` set on the page it points to. A store
+without that menu (or with an empty one) sees exactly the links of 1.2.0. The
+settings are new, nothing was renamed or removed, so 1.2.0 → 1.3.0 needs no
+migration.
 
 ## Upgrading from 1.0
 
@@ -115,7 +124,7 @@ Delete the starter's `sections/hero.snf`, `sections/featured.snf` and
 {
   "id": "arcade",
   "name": "Arcade",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "author": "Hekana",
   "description": "A dark gaming store for gift cards and top-ups: neon cyan and lime, amount chips, category tiles, redeem steps.",
   "category": "gaming",

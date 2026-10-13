@@ -5,9 +5,11 @@ import type { ArtifactLike, PageNode } from './page';
 export const MAX_PAGE_COLLECTIONS = 8;
 /** At most this many products named by `product(…)` are preloaded for one page. */
 export const MAX_PAGE_PRODUCTS = 12;
+/** At most this many menus named by `menu(…)` (literals and `menu` settings) are preloaded for one page. */
+export const MAX_PAGE_MENUS = 8;
 const HANDLE = /^[a-z0-9][a-z0-9-]{0,99}$/;
 
-export interface PageDependencies { collections: string[]; products: string[]; categories: boolean }
+export interface PageDependencies { collections: string[]; products: string[]; categories: boolean; menus: string[] }
 export interface PageDependencyOptions {
   template: string;
   /** The page's saved sections; without them the template's default sections are used. */
@@ -26,12 +28,15 @@ const own = (o: Rec, k: string): unknown => (Object.hasOwn(o, k) ? o[k] : undefi
 class Acc {
   handles = new Set<string>();
   productHandles = new Set<string>();
+  menuHandles = new Set<string>();
   categories = false;
   get full() { return this.handles.size >= MAX_PAGE_COLLECTIONS; }
   get fullProducts() { return this.productHandles.size >= MAX_PAGE_PRODUCTS; }
-  get done() { return this.full && this.fullProducts && this.categories; }
+  get fullMenus() { return this.menuHandles.size >= MAX_PAGE_MENUS; }
+  get done() { return this.full && this.fullProducts && this.fullMenus && this.categories; }
   add(h: unknown) { if (typeof h === 'string' && HANDLE.test(h) && !this.full) this.handles.add(h); }
   addProduct(h: unknown) { if (typeof h === 'string' && HANDLE.test(h) && !this.fullProducts) this.productHandles.add(h); }
+  addMenu(h: unknown) { if (typeof h === 'string' && HANDLE.test(h) && !this.fullMenus) this.menuHandles.add(h); }
 }
 
 function fromExpr(e: unknown, out: Acc, d: number): void {
@@ -43,6 +48,7 @@ function fromExpr(e: unknown, out: Acc, d: number): void {
       if (x.fn === 'collections') out.categories = true;
       if (x.fn === 'collection' && rec(args[0]).k === 'lit') out.add(rec(args[0]).v);
       if (x.fn === 'product' && rec(args[0]).k === 'lit') out.addProduct(rec(args[0]).v);
+      if (x.fn === 'menu' && rec(args[0]).k === 'lit') out.addMenu(rec(args[0]).v);
       for (const a of args) fromExpr(a, out, d + 1);
       return;
     }
@@ -84,33 +90,33 @@ function fromNodes(nodes: unknown, out: Acc, d: number): void {
   }
 }
 
-/** The value of every `collection` and `product` field: the stored string, else the default (as the renderer coerces it). */
+/** The value of every `collection`, `product` and `menu` field: the stored string, else the default (as the renderer coerces it). */
 function fromSettings(schema: unknown, stored: unknown, out: Acc): void {
   const fields = rec(schema);
   const values = rec(stored);
   for (const k of Object.keys(fields)) {
-    if (out.full && out.fullProducts) return;
+    if (out.full && out.fullProducts && out.fullMenus) return;
     const f = rec(fields[k]);
-    if (f.type !== 'collection' && f.type !== 'product') continue;
+    if (f.type !== 'collection' && f.type !== 'product' && f.type !== 'menu') continue;
     const v = own(values, k);
     const handle = typeof v === 'string' ? v : f.default;
-    if (f.type === 'collection') out.add(handle); else out.addProduct(handle);
+    if (f.type === 'collection') out.add(handle); else if (f.type === 'menu') out.addMenu(handle); else out.addProduct(handle);
   }
 }
 
 /**
  * Everything a page needs fetched BEFORE it renders (no fetches inside loops):
- * the collection handles it can ask for and whether it lists the store's
- * categories (`collections()`). Walks the layout, the template, the theme
+ * the collection, product and menu handles it can ask for and whether it lists
+ * the store's categories (`collections()`). Walks the layout, the template, the theme
  * settings, the sections and blocks the page uses (or the template's
  * defaults), then every snippet (a snippet can be rendered from anywhere);
- * adds the value of every `collection`-typed theme, section and block setting,
+ * adds the value of every `collection`, `product` and `menu` typed theme, section and block setting,
  * defaults included. Snippets come last so the cap never crowds out a
  * merchant's pick.
  *
  * The artifact is untrusted: only own properties are read, the walk is
- * depth-limited, handles must match /^[a-z0-9][a-z0-9-]{0,99}$/, at most 8 are
- * returned, and any failure yields an empty result instead of throwing.
+ * depth-limited, handles must match /^[a-z0-9][a-z0-9-]{0,99}$/, at most 8
+ * collections, 12 products and 8 menus are returned, and any failure yields an empty result instead of throwing.
  */
 export function pageDependencies(artifact: ArtifactLike, opts: PageDependencyOptions): PageDependencies {
   try {
@@ -147,8 +153,8 @@ export function pageDependencies(artifact: ArtifactLike, opts: PageDependencyOpt
     }
     // snippets last: the merchant's picks above must not be crowded out by the cap
     for (const ir of Object.values(rec(a.snippets))) fromNodes(ir, out, 0);
-    return { collections: [...out.handles], products: [...out.productHandles], categories: out.categories };
+    return { collections: [...out.handles], products: [...out.productHandles], categories: out.categories, menus: [...out.menuHandles] };
   } catch {
-    return { collections: [], products: [], categories: false };
+    return { collections: [], products: [], categories: false, menus: [] };
   }
 }

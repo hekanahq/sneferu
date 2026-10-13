@@ -42,6 +42,7 @@ Install: `npx sneferu <command>` (Node.js 20 or newer), or `npm i -g sneferu` fo
 17. [Cart and controllers](docs/guide/17-cart-and-controllers.mdx): `@hekana/sneferu-controllers`, the variant picker, add to cart and the cart drawer, with no theme JavaScript
 18. [Header, footer and section groups](docs/guide/18-section-groups.mdx): shared groups placed in the layout and edited once for the whole store
 19. [Make everything editable](docs/guide/19-make-everything-editable.mdx): where every word, link, image and colour of a theme comes from
+20. [Menus](docs/guide/20-menus.mdx): `menu('main')` and the `menu` setting: the store's navigation in the header and footer, with the active link marked
 
 ## Reference
 

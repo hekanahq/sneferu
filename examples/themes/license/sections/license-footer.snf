@@ -2,13 +2,27 @@
   <div class="ls-wrap ls-footer-row">
     <p class="ls-footer-name">{{ store.name }}</p>
     <p class="ls-footer-note">{{ t('footer_note') }}</p>
-    <hk-locale-switch class="ls-locale" />
+    <hk-locale-switch class="ls-locale" />{% if menu(section.settings.menu).items %}
+      <nav class="ls-footer-links" aria-label="{{ t('menu') }}">
+        {% for item in menu(section.settings.menu).items %}<a
+            href="{{ item.url }}"
+            aria-current="{{ item.active }}"
+          >{{ item.title }}</a>{% endfor %}
+      </nav>
+    {% endif %}
   </div>
 </footer>
 <hk-schema>
   {
     "name": "Footer",
     "version": 1,
-    "templates": ["footer"]
+    "templates": ["footer"],
+    "settings": {
+      "menu": {
+        "type": "menu",
+        "label": "Footer menu",
+        "default": "footer"
+      }
+    }
   }
 </hk-schema>

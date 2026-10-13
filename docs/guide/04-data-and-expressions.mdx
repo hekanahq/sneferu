@@ -20,11 +20,12 @@ run code. The full grammar is in [language.md](../language.mdx).
 
 ### Lookups
 
-Lookups take **literal** arguments (`collection('featured')`). Two take more:
+Lookups take **literal** arguments (`collection('featured')`). Some take more:
 `collection()` also takes a `collection` setting, so the merchant can choose the
 collection (see
 [Let the merchant choose a collection](#let-the-merchant-choose-a-collection)),
-and `url()` takes any one expression (see [Links](#links)). Any other argument,
+`product()` a `product` setting, `menu()` a `menu` setting (see
+[Menus](20-menus.mdx)), and `url()` takes any one expression (see [Links](#links)). Any other argument,
 such as `collection(product.title)`, is SN1105.
 
 | Lookup | Returns |
@@ -33,6 +34,7 @@ such as `collection(product.title)`, is SN1105.
 | `collection(section.settings.list)` | the collection the merchant picked in a `collection` setting; an empty collection when none is picked |
 | `collections()` | the store's categories (at most 50), see [List the store's categories](#list-the-stores-categories) |
 | `product('handle')` | the product, or nothing |
+| `menu('main')` | the store's menu: `.title`, `.items` (each `{ title, url, active, child_active, children }`). Takes a handle or a `menu` setting: `menu(section.settings.menu)`. A missing menu is `{ handle, title: '', items: [] }`, never an error. See [Menus](20-menus.mdx) |
 | `t('shop_now')` | the text from `locales/<locale>.json`, then the default locale, then the key itself |
 | `settings('accent')` | one theme setting (same as `settings.accent`) |
 | `asset_url('logo.svg')` | the URL of `assets/logo.svg` |

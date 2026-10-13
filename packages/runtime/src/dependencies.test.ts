@@ -79,10 +79,10 @@ describe('pageDependencies', () => {
     expect(pageDependencies(full, { template: 'index', sections: Array.from({ length: 20 }, (_, i) => ({ id: `s${i}`, type: 'grid', props: { list: `c-${i}` } })) }).categories).toBe(true);
   });
   it('never throws on a malformed artifact', () => {
-    expect(pageDependencies({} as never, { template: 'index' })).toEqual({ collections: [], products: [], categories: false });
-    expect(pageDependencies(null as never, { template: 'index' })).toEqual({ collections: [], products: [], categories: false });
-    expect(pageDependencies(artifact(), { template: '__proto__' })).toEqual({ collections: ['featured'], products: [], categories: false });
-    expect(pageDependencies(artifact(), { template: 'index', sections: 'x' as never })).toEqual({ collections: ['featured', 'new'], products: [], categories: false });
+    expect(pageDependencies({} as never, { template: 'index' })).toEqual({ collections: [], products: [], categories: false, menus: [] });
+    expect(pageDependencies(null as never, { template: 'index' })).toEqual({ collections: [], products: [], categories: false, menus: [] });
+    expect(pageDependencies(artifact(), { template: '__proto__' })).toEqual({ collections: ['featured'], products: [], categories: false, menus: [] });
+    expect(pageDependencies(artifact(), { template: 'index', sections: 'x' as never })).toEqual({ collections: ['featured', 'new'], products: [], categories: false, menus: [] });
     const junk = { manifest: { settings: 'x' }, layout: 'x', templates: { index: [null, 1, { k: 'loop' }, { k: 'el', attrs: 'x', children: [{ k: 'text', e: { k: 'lookup', fn: 'collection', args: 'x' } }] }] },
       templateSections: { index: [null, { type: 'hero' }, { type: 'faq', blocks: 'x' }, { type: 'faq', blocks: [null, {}] }] },
       sections: { hero: { schema: { settings: { list: null } } }, faq: null }, blocks: 'x', snippets: { a: 'x' } };
@@ -93,7 +93,7 @@ describe('pageDependencies', () => {
     expect(pageDependencies(nested, { template: 'index' }).collections).toEqual(['shallow', 'new']);
     const accessor = { ...artifact() } as Record<string, unknown>;
     Object.defineProperty(accessor, 'snippets', { get() { throw new Error('boom'); }, enumerable: true });
-    expect(pageDependencies(accessor as never, { template: 'index' })).toEqual({ collections: [], products: [], categories: false });
+    expect(pageDependencies(accessor as never, { template: 'index' })).toEqual({ collections: [], products: [], categories: false, menus: [] });
   });
   it('reads own properties only', () => {
     const proto = Object.create({ list: 'inherited' }) as Record<string, unknown>;
@@ -112,5 +112,19 @@ describe('pageDependencies', () => {
     expect(pageDependencies(a, { template: 'index', sections: [{ id: 'x', type: 'pick', props: { item: 'Not A Handle!' } }] }).products).toEqual(['from-layout']);
     const many = Array.from({ length: 30 }, (_, i) => ({ id: `n${i}`, type: 'pick', props: { item: `p-${i}` } }));
     expect(pageDependencies(a, { template: 'index', sections: many }).products).toHaveLength(12);
+  });
+
+  it('collects menu handles from menu() literals and menu settings (defaults included), at most 8', () => {
+    const menuOf = (arg: Expr): IRNode => ({ k: 'loop', as: 'i', src: { k: 'path', p: ['items'], from: { k: 'lookup', fn: 'menu', args: [arg] } }, limit: 50, body: [] });
+    const a: ArtifactLike = { ...artifact(),
+      layout: [menuOf(lit('main')), { k: 'slot', name: 'content' }],
+      sections: { nav: { ir: [menuOf(setting('section', 'menu'))], schema: { settings: { menu: { type: 'menu', label: lbl, default: 'footer' } } } } },
+      templateSections: { index: [{ type: 'nav', settings: {} }] },
+      groups: { header: [{ id: 'h', type: 'nav', props: { menu: 'top' } }] } };
+    expect(pageDependencies(a, { template: 'index' }).menus.sort()).toEqual(['footer', 'main', 'top']);
+    expect(pageDependencies(a, { template: 'index', sections: [{ id: 'x', type: 'nav', props: { menu: 'side' } }] }).menus.sort()).toEqual(['main', 'side', 'top']);
+    expect(pageDependencies(a, { template: 'index', sections: [{ id: 'x', type: 'nav', props: { menu: '__proto__' } }], groups: { header: [] } }).menus).toEqual(['main']);
+    const many = Array.from({ length: 20 }, (_, i) => ({ id: `n${i}`, type: 'nav', props: { menu: `m-${i}` } }));
+    expect(pageDependencies(a, { template: 'index', sections: many }).menus).toHaveLength(8);
   });
 });
