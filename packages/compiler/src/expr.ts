@@ -1,4 +1,4 @@
-import { FILTERS, LOOKUPS, type Expr, type FilterName, type LookupName } from '@hekana/sneferu-core';
+import { FILTERS, LOOKUPS, isSettingPath, type Expr, type FilterName, type LookupName } from '@hekana/sneferu-core';
 
 type Tok = { k: 'id' | 'str' | 'num' | 'op' | 'punc'; v: string };
 const FILTER_SET = new Set<string>(FILTERS);
@@ -119,14 +119,7 @@ class P {
   }
 }
 
-/**
- * `section.settings.<name>`, `block.settings.<name>` or `settings.<name>`: the paths a
- * merchant's choice can come from (collection() arguments and loop limits).
- */
-export function isSettingPath(p: readonly unknown[]): boolean {
-  if ((p[0] === 'section' || p[0] === 'block') && p[1] === 'settings') return p.length === 3 && typeof p[2] === 'string';
-  return p[0] === 'settings' && p.length === 2 && typeof p[1] === 'string';
-}
+export { isSettingPath } from '@hekana/sneferu-core';
 
 export function parseExpr(src: string): { expr?: Expr; error?: string } {
   const toks = tokenize(src);

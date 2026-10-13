@@ -117,4 +117,13 @@ describe('dev server with sample data', () => {
     expect(ctx.menus!.footer!.items.length).toBeGreaterThan(0);
     expect(Object.keys(ctx.menus!)).toEqual(['main', 'footer']);
   });
+  it('drops __proto__, constructor and prototype keys from your sample data', () => {
+    const raw = JSON.parse('{"store":{"__proto__":{"x":1},"name":"S"},"collections":{"__proto__":{"products":[]},"constructor":{"products":[]},"ok":{"products":[]}},"products":{"prototype":{"title":"p"},"a":{"title":"A"}},"menus":{"__proto__":{"items":[]},"main":{"items":[]}}}');
+    const d = pickSampleData(raw, 'en');
+    expect(Object.keys(d.collections!)).toEqual(['ok']);
+    expect(Object.keys(d.products!)).toEqual(['a']);
+    expect(Object.keys(d.menus!)).toEqual(['main']);
+    expect(Object.keys(d.store!)).toEqual(['name']);
+    expect(({} as Record<string, unknown>).x).toBeUndefined();
+  });
 });

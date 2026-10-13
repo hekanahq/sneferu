@@ -4,6 +4,7 @@
       "id": "header",
       "type": "header",
       "settings": {
+        "menu": "main",
         "show_search": true,
         "show_language": true,
         "show_cart": true

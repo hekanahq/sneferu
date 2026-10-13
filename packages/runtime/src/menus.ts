@@ -39,7 +39,8 @@ export function menuPathKey(url: string, locale: 'ar' | 'en'): string | undefine
 /**
  * The host's menu in the template shape. Untrusted input: only own properties are read, titles
  * are strings (cut to 200 characters), every URL passes safeUrl (unsafe gives '#'), nesting stops
- * at 3 levels and the menu at 250 links. `active`: the link's path is the page's path;
+ * at 3 levels and the menu at 250 links. `active`: the link's path is the page's path (a link with
+ * a `#…` part never is);
  * `child_active`: some link below it is active.
  */
 export function normalizeMenu(raw: unknown, handle: string, page?: { path: string; locale: 'ar' | 'en' }): ThemeMenu {
@@ -57,7 +58,8 @@ export function normalizeMenu(raw: unknown, handle: string, page?: { path: strin
       count++;
       const url = safeUrl(toStr(ownv(it, 'url')));
       const children = items(ownv(it, 'children'), depth + 1);
-      const key = current === undefined ? undefined : menuPathKey(url, page!.locale);
+      // a link to a part of a page (`/#faq`) is never the page itself
+      const key = current === undefined || url.includes('#') ? undefined : menuPathKey(url, page!.locale);
       out.push({
         title: toStr(ownv(it, 'title')).slice(0, MAX_TITLE),
         url,

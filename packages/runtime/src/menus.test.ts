@@ -8,7 +8,9 @@ import type { RenderContext } from './context';
 const main: Menu = { handle: 'main', title: 'Main', items: [
   { title: 'Home', url: '/' },
   { title: 'Shop', url: '/products', children: [{ title: 'Gift cards', url: '/category/gift-cards/' }, { title: 'Bad', url: 'javascript:alert(1)' }] },
-  { title: 'About', url: '/pages/about?x=1#team' },
+  { title: 'About', url: '/pages/about?x=1' },
+  { title: 'Team', url: '/pages/about#team' },
+  { title: 'FAQ', url: '/#faq' },
 ] };
 const ctx = (over: Partial<RenderContext> = {}): RenderContext => ({ locale: 'ar', dir: 'rtl', currency: 'EGP', store: {}, settings: {}, data: {}, collections: {}, products: {},
   translations: {}, fallbackTranslations: {}, assetUrl: (p) => p, imageUrl: (r) => String(r), menus: { main }, ...over });
@@ -20,7 +22,7 @@ describe('menu()', () => {
     const m = evaluate({ k: 'lookup', fn: 'menu', args: [lit('main')] }, {}, ctx()) as { handle: string; title: string; items: { title: string; url: string; children: unknown[] }[] };
     expect(m.handle).toBe('main');
     expect(m.title).toBe('Main');
-    expect(m.items.map((i) => i.title)).toEqual(['Home', 'Shop', 'About']);
+    expect(m.items.map((i) => i.title)).toEqual(['Home', 'Shop', 'About', 'Team', 'FAQ']);
     expect(m.items[1]!.children).toHaveLength(2);
     const scope = { section: { settings: { menu: 'main' } } };
     expect(evaluate(menuExpr({ k: 'path', p: ['section', 'settings', 'menu'] }, 'title'), scope, ctx())).toBe('Main');
@@ -74,7 +76,7 @@ describe('menu()', () => {
   it('marks active and child_active links from the request path', () => {
     const page = (path: string, locale: 'ar' | 'en' = 'ar') => normalizeMenu(main, 'main', { path, locale });
     const home = page('/');
-    expect(home.items.map((i) => i.active)).toEqual([true, false, false]);
+    expect(home.items.map((i) => i.active)).toEqual([true, false, false, false, false]);
     const cat = page('/category/gift-cards');
     expect(cat.items[1]!.active).toBe(false);
     expect(cat.items[1]!.child_active).toBe(true);
@@ -82,6 +84,9 @@ describe('menu()', () => {
     // trailing slash, query and hash do not matter
     expect(page('/products/').items[1]!.active).toBe(true);
     expect(page('/pages/about?y=2').items[2]!.active).toBe(true);
+    // a link to a part of a page is never active
+    expect(page('/pages/about').items[3]!.active).toBe(false);
+    expect(page('/').items[4]!.active).toBe(false);
     expect(page('').items.some((i) => i.active)).toBe(false);
   });
 
@@ -111,5 +116,16 @@ describe('menu()', () => {
     expect(r.html).toContain('<a href="/" data-active="false">Home</a><a href="/products" data-active="true">Shop</a>');
     const none = renderPage(artifact, { template: 'index', ctx: ctx({ menus: {} }), registry: new TagRegistry(), request: { path: '/products' } });
     expect(none.html).not.toContain('<a');
+  });
+
+  it('refuses a stored artifact whose menu() argument was tampered with (SN9017)', () => {
+    const tampered = (args: unknown): ArtifactLike => ({ manifest: { id: 'menus' }, templates: { index: [] }, templateSections: {}, sections: {}, blocks: {}, snippets: {},
+      layout: [{ k: 'text', e: { k: 'path', p: ['title'], from: { k: 'lookup', fn: 'menu', args } } } as IRNode] });
+    for (const args of [[{ k: 'path', p: ['product', 'title'] }], [], [{ k: 'lit', v: 'a' }, { k: 'lit', v: 'b' }], [{ k: 'lookup', fn: 't', args: [{ k: 'lit', v: 'main' }] }]]) {
+      const r = renderPage(tampered(args), { template: 'index', ctx: ctx(), registry: new TagRegistry() });
+      expect(r.html, JSON.stringify(args)).toBe('');
+      expect(r.diagnostics.map((d) => d.code)).toContain('SN9017');
+    }
+    expect(renderPage(tampered([{ k: 'lit', v: 'main' }]), { template: 'index', ctx: ctx(), registry: new TagRegistry() }).html).toContain('Main');
   });
 });

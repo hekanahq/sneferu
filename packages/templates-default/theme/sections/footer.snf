@@ -30,7 +30,7 @@
         </div>
       </div>
       {% if menu(section.settings.menu).items %}
-        <div class="sf-footer-col">
+        <div class="sf-footer-col sf-footer-menu-col">
           {% if menu(section.settings.menu).title %}
             <h3 class="sf-footer-title">{{ menu(section.settings.menu).title }}</h3>
           {% endif %}
@@ -49,6 +49,13 @@
               <div class="sf-footer-links">
                 {% for sub in item.children %}
                   <a href="{{ sub.url }}" aria-current="{{ sub.active }}">{{ sub.title }}</a>
+                  {% for leaf in sub.children %}
+                    <a
+                      class="sf-footer-deep"
+                      href="{{ leaf.url }}"
+                      aria-current="{{ leaf.active }}"
+                    >{{ leaf.title }}</a>
+                  {% endfor %}
                 {% endfor %}
               </div>
             </div>
@@ -86,10 +93,10 @@
       "menu": {
         "type": "menu",
         "label": {
-          "en": "Menu (the link columns show when it has none)",
-          "ar": "القائمة (أعمدة الروابط بتظهر لو مفيهاش روابط)"
+          "en": "Menu (the link columns show when none is picked or it has no links)",
+          "ar": "القائمة (أعمدة الروابط بتظهر لو مفيش قائمة أو مفيهاش روابط)"
         },
-        "default": "footer"
+        "default": ""
       },
       "about_text": {
         "type": "textarea",

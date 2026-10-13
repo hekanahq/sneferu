@@ -169,26 +169,29 @@ export interface SampleData {
 }
 
 const obj = (v: unknown): Record<string, unknown> | undefined => (v && typeof v === 'object' && !Array.isArray(v) ? (v as Record<string, unknown>) : undefined);
+const UNSAFE_KEYS = new Set(['__proto__', 'constructor', 'prototype']);
+/** Own entries without the keys that could reach a prototype. */
+const entries = (o: Record<string, unknown>) => Object.entries(o).filter(([k]) => !UNSAFE_KEYS.has(k));
 
 /** Validates the parsed JSON loosely: anything malformed is dropped, never thrown. */
 export function pickSampleData(raw: unknown, locale: 'ar' | 'en'): SampleData {
   const top = obj(raw) ?? {};
   const src = obj(top[locale]) ?? (('ar' in top || 'en' in top) ? {} : top);
   const out: SampleData = {};
-  const store = obj(src.store); if (store) out.store = store;
+  const store = obj(src.store); if (store) out.store = Object.fromEntries(entries(store));
   const cols = obj(src.collections);
   if (cols) {
     out.collections = {};
-    for (const [h, c] of Object.entries(cols)) {
+    for (const [h, c] of entries(cols)) {
       const co = obj(c); if (!co || !Array.isArray(co.products)) continue;
       out.collections[h] = { ...(typeof co.title === 'string' ? { title: co.title } : {}), products: co.products };
     }
   }
-  const prods = obj(src.products); if (prods) out.products = prods;
+  const prods = obj(src.products); if (prods) out.products = Object.fromEntries(entries(prods));
   const menus = obj(src.menus);
   if (menus) {
     out.menus = {};
-    for (const [h, m] of Object.entries(menus)) {
+    for (const [h, m] of entries(menus)) {
       const mo = obj(m); if (!mo || !Array.isArray(mo.items)) continue;
       out.menus[h] = { handle: h, title: typeof mo.title === 'string' ? mo.title : '', items: mo.items as { title: string; url: string }[] };
     }

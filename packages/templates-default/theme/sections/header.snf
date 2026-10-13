@@ -26,6 +26,13 @@
                 <div class="sf-subnav">
                   {% for sub in item.children %}
                     <a class="sf-subnav-link" href="{{ sub.url }}" aria-current="{{ sub.active }}">{{ sub.title }}</a>
+                    {% for leaf in sub.children %}
+                      <a
+                        class="sf-subnav-link sf-subnav-deep"
+                        href="{{ leaf.url }}"
+                        aria-current="{{ leaf.active }}"
+                      >{{ leaf.title }}</a>
+                    {% endfor %}
                   {% endfor %}
                 </div>
               {% endif %}
@@ -78,10 +85,10 @@
       "menu": {
         "type": "menu",
         "label": {
-          "en": "Menu (the links below show when it has none)",
-          "ar": "القائمة (الروابط اللي تحت بتظهر لو مفيهاش روابط)"
+          "en": "Menu (the links below show when none is picked or it has no links)",
+          "ar": "القائمة (الروابط اللي تحت بتظهر لو مفيش قائمة أو مفيهاش روابط)"
         },
-        "default": "main"
+        "default": ""
       },
       "logo": {
         "type": "image",

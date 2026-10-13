@@ -4,6 +4,7 @@
       "id": "footer",
       "type": "footer",
       "settings": {
+        "menu": "footer",
         "about_text": {
           "ar": "متجر بيبيع منتجات رقمية وبيوصلها على طول.",
           "en": "A store that sells digital products and delivers them right away."

@@ -70,7 +70,8 @@ argument, such as `menu(product.title)`, is SN1105.
 
 ## Dropdowns
 
-Menus nest up to three levels. Print `children` with a second loop:
+Menus nest up to three levels. Print `children` with a second loop (and a third
+for the last level; the default store's header and footer print all three):
 
 ```html
 {% for item in menu(section.settings.menu).items %}
@@ -90,8 +91,8 @@ Menus nest up to three levels. Print `children` with a second loop:
 `active` compares the link's path with the page's (`request.path`): the query
 string and the `#…` part are ignored, a trailing `/` does not matter, and the
 page's own language prefix is ignored on both sides, so `/en/products` and
-`/products` both match the English products page. Links to other sites are never
-active. `aria-current="{{ item.active }}"` writes `true` or `false`, both valid,
+`/products` both match the English products page. Links to other sites, and
+links with a `#…` part (`/#faq`, a part of a page), are never active. `aria-current="{{ item.active }}"` writes `true` or `false`, both valid,
 and gives you a CSS hook: `a[aria-current=true] { text-decoration: underline; }`.
 
 ## Keep the theme's own links as a fallback
@@ -107,9 +108,13 @@ when it has links, and the theme's links otherwise:
 </nav>
 ```
 
-The default store and the example themes do this: the default header shows the
-`main` menu, else its menu-link blocks; the default footer shows the `footer`
-menu, else its link columns.
+The default store and the example themes do this. In the default store the
+`menu` setting has no default (`""`); its starting header and footer trees
+(`groups/header.json`, `groups/footer.json`) pick `main` and `footer`. A new
+store shows its menus; a store that already saved its own header or footer
+keeps its menu-link blocks and link columns until the merchant picks a menu.
+The example themes default the setting to `main` / `footer` and fall back to
+their own links while the menu has none.
 
 Write `{% else %}` right before the first fallback tag and `{% endif %}` right
 after the last one when the page must look exactly as before: whitespace inside
@@ -141,5 +146,7 @@ Delivery). Replace them, or add others, in `.sneferu-dev/data.json`:
 
 `RenderContext.menus` is `Record<handle, { handle, title, items: [{ title, url, children? }] }>`
 with final URLs; the runtime computes `active` and `child_active` and applies the
-limits above. `pageDependencies(artifact, opts).menus` lists the handles a page
+limits above. Item URLs and the `request.path` you pass to `renderPage` must be
+in the same URL space: both with the locale and store path prefixes, or both
+without. `pageDependencies(artifact, opts).menus` lists the handles a page
 can ask for, so they are fetched before the page renders.
