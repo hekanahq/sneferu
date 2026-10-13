@@ -98,6 +98,26 @@ export const sampleProduct = (locale: 'ar' | 'en', i: number, responsive = false
   };
 };
 
+/** The sample menus (`menu('main')`, `menu('footer')`): store-relative paths, made into this page's links by the context's `url`. */
+const MENU_TEXT = {
+  ar: { main: 'القائمة الرئيسية', footer: 'روابط', home: 'الرئيسية', products: 'المنتجات', all: 'كل المنتجات', about: 'من نحن', search: 'بحث', delivery: 'التسليم' },
+  en: { main: 'Main menu', footer: 'Links', home: 'Home', products: 'Products', all: 'All products', about: 'About us', search: 'Search', delivery: 'Delivery' },
+} as const;
+export function sampleMenus(locale: 'ar' | 'en', link: (path: string) => string): NonNullable<RenderContext['menus']> {
+  const t = MENU_TEXT[locale];
+  const item = (title: string, path: string, children?: { title: string; url: string }[]) => ({ title, url: link(path), ...(children ? { children } : {}) });
+  return {
+    main: { handle: 'main', title: t.main, items: [
+      item(t.home, '/'),
+      item(t.products, '/products', (['new', 'gift-cards', 'subscriptions'] as const).map((h) => item(COLLECTION[h][locale], `/category/${h}`))),
+      item(t.about, '/pages/about'),
+    ] },
+    footer: { handle: 'footer', title: t.footer, items: [
+      item(t.all, '/products'), item(t.search, '/search'), item(t.about, '/pages/about'), item(t.delivery, '/pages/shipping'),
+    ] },
+  };
+}
+
 /** The collections `collections()` lists as the store's categories (featured is not one). */
 const CATEGORIES = ['new', 'gift-cards', 'subscriptions'] as const;
 
@@ -106,6 +126,9 @@ export const sampleProducts = (locale: 'ar' | 'en', responsive = false) => Array
 /** The sample srcset defaults off so the 0.2 golden fixture stays stable; `sneferu dev` turns it on. */
 export function sampleContext(locale: 'ar' | 'en', translations: Record<string, Record<string, string>>, defaultLocale: 'ar' | 'en', opts: { responsive?: boolean; devLinks?: boolean } = {}): RenderContext {
   const products = sampleProducts(locale, opts.responsive === true);
+  // what a host passes: the dev server has no store prefix, so the default rule (/en on English pages)
+  // `sneferu dev` (devLinks) also prefixes /ar when the theme's default language is English, so a click stays in the language
+  const url = opts.devLinks ? (p: string) => { const s = defaultUrl(p, 'ar'); return s.startsWith('/') && !/^\/(en|ar)([/?#]|$)/.test(s) ? devUrl(s, locale, defaultLocale) : s; } : (p: string) => defaultUrl(p, locale);
   return {
     locale, dir: locale === 'ar' ? 'rtl' : 'ltr', currency: 'EGP',
     store: { name: STORE[locale] },
@@ -116,11 +139,10 @@ export function sampleContext(locale: 'ar' | 'en', translations: Record<string, 
       image: products[MEMBERS[h][0]!]!.image, count: MEMBERS[h].length,
     })),
     products: Object.fromEntries(products.map((p) => [p.handle, p])),
+    menus: sampleMenus(locale, url),
     translations: translations[locale] ?? {}, fallbackTranslations: translations[defaultLocale] ?? {},
     assetUrl: (p) => `/__assets/${p}`,
-    // what a host passes: the dev server has no store prefix, so the default rule (/en on English pages)
-    // `sneferu dev` (devLinks) also prefixes /ar when the theme's default language is English, so a click stays in the language
-    url: opts.devLinks ? (p) => { const s = defaultUrl(p, 'ar'); return s.startsWith('/') && !/^\/(en|ar)([/?#]|$)/.test(s) ? devUrl(s, locale, defaultLocale) : s; } : (p) => defaultUrl(p, locale),
+    url,
     imageUrl: (ref, w) => { if (srcsetOf(ref)) return pickVariant(ref, w); const u = typeof ref === 'string' ? ref : String((ref as { url?: string })?.url ?? ''); return w ? `${u}${u.includes('?') ? '&' : '?'}w=${w}` : u; },
   };
 }
@@ -131,35 +153,49 @@ export function sampleContext(locale: 'ar' | 'en', translations: Record<string, 
  *
  *   { "store": { "name": "…" },
  *     "collections": { "courses": { "title": "…", "products": [ { "title", "url", "price", "compare_at", "image": { "url" } } ] } },
- *     "products": { "handle": { … } } }
+ *     "products": { "handle": { … } },
+ *     "menus": { "main": { "title": "…", "items": [ { "title", "url", "children": [ … ] } ] } } }
  *
  * Any of the three keys may instead be split by locale: `{ "ar": { … }, "en": { … } }`
- * at the top level picks the block for the page's locale. Collections and
- * products are added to (and override) the built-in sample catalogue.
+ * at the top level picks the block for the page's locale. Collections,
+ * products and menus are added to (and override) the built-in sample catalogue.
  */
 export interface SampleData {
   store?: Record<string, unknown>;
   collections?: Record<string, { title?: string; products: unknown[] }>;
   products?: Record<string, unknown>;
+  /** Menus by handle, `{ title, items: [{ title, url, children? }] }`; they replace the sample `main` / `footer`. */
+  menus?: Record<string, { handle: string; title: string; items: { title: string; url: string }[] }>;
 }
 
 const obj = (v: unknown): Record<string, unknown> | undefined => (v && typeof v === 'object' && !Array.isArray(v) ? (v as Record<string, unknown>) : undefined);
+const UNSAFE_KEYS = new Set(['__proto__', 'constructor', 'prototype']);
+/** Own entries without the keys that could reach a prototype. */
+const entries = (o: Record<string, unknown>) => Object.entries(o).filter(([k]) => !UNSAFE_KEYS.has(k));
 
 /** Validates the parsed JSON loosely: anything malformed is dropped, never thrown. */
 export function pickSampleData(raw: unknown, locale: 'ar' | 'en'): SampleData {
   const top = obj(raw) ?? {};
   const src = obj(top[locale]) ?? (('ar' in top || 'en' in top) ? {} : top);
   const out: SampleData = {};
-  const store = obj(src.store); if (store) out.store = store;
+  const store = obj(src.store); if (store) out.store = Object.fromEntries(entries(store));
   const cols = obj(src.collections);
   if (cols) {
     out.collections = {};
-    for (const [h, c] of Object.entries(cols)) {
+    for (const [h, c] of entries(cols)) {
       const co = obj(c); if (!co || !Array.isArray(co.products)) continue;
       out.collections[h] = { ...(typeof co.title === 'string' ? { title: co.title } : {}), products: co.products };
     }
   }
-  const prods = obj(src.products); if (prods) out.products = prods;
+  const prods = obj(src.products); if (prods) out.products = Object.fromEntries(entries(prods));
+  const menus = obj(src.menus);
+  if (menus) {
+    out.menus = {};
+    for (const [h, m] of entries(menus)) {
+      const mo = obj(m); if (!mo || !Array.isArray(mo.items)) continue;
+      out.menus[h] = { handle: h, title: typeof mo.title === 'string' ? mo.title : '', items: mo.items as { title: string; url: string }[] };
+    }
+  }
   return out;
 }
 
@@ -192,5 +228,6 @@ export function withSampleData(ctx: RenderContext, data: SampleData): RenderCont
     store: { ...ctx.store, ...(data.store ?? {}) },
     collections: { ...ctx.collections, ...(data.collections ?? {}) },
     products: { ...ctx.products, ...products },
+    menus: { ...(ctx.menus ?? {}), ...(data.menus ?? {}) },
   };
 }

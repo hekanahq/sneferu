@@ -20,7 +20,16 @@ What the theme uses: plan cards built from real products with `hk-price`, a
 `data-*` attribute set from an expression, `hk-product-card` with a Buy link in
 its `actions` part, `collection` settings, `hk-search-form`, `hk-icon`,
 `<details>` for the FAQ, localized settings and blocks seeded by the template.
-Version 1.2.0 is built on Sneferu 0.4.
+Version 1.3.0 is built on Sneferu 0.5.
+
+## Menus (1.3.0)
+
+The header and footer each have a `menu` setting (`main` and `footer` by
+default) and print the store's menu with `menu(section.settings.menu)`: the
+top-level links, each with `aria-current` set on the page it points to. A store
+without that menu (or with an empty one) sees exactly the links of 1.2.0. The
+settings are new, nothing was renamed or removed, so 1.2.0 → 1.3.0 needs no
+migration.
 
 ## Upgrading from 1.0
 
@@ -98,7 +107,7 @@ apps section); the merchant can pick other categories in the editor.
 {
   "id": "license",
   "name": "License",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "author": "Hekana",
   "description": "A dark theme for software licences, subscriptions and digital tools",
   "category": "digital",

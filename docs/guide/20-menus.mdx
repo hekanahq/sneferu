@@ -1,0 +1,152 @@
+# 20. Menus
+
+A store's navigation does not belong in the theme. The merchant builds menus in
+the dashboard (a `main` menu for the header, a `footer` menu, any others) and the
+theme prints them with the `menu()` lookup. Change a link in the dashboard and
+every theme shows it, without editing a section.
+
+## Read a menu
+
+```html title="sections/header.snf"
+<nav class="nav" aria-label="{{ t('menu') }}">
+  {% for item in menu('main').items %}
+    <a href="{{ item.url }}" aria-current="{{ item.active }}">{{ item.title }}</a>
+  {% endfor %}
+</nav>
+```
+
+`menu('main')` returns:
+
+| Field | Contains |
+| - | - |
+| `handle` | the handle you asked for: `main` |
+| `title` | the menu's title, as the merchant named it |
+| `items` | the top-level links, in the merchant's order |
+
+Each item has:
+
+| Field | Contains |
+| - | - |
+| `title` | the link text |
+| `url` | the link, ready for `href`: the language prefix (`/en`) and the store's own path are already in it. Anything unsafe is `#` |
+| `active` | `true` when the link points to the current page |
+| `child_active` | `true` when a link below it points to the current page |
+| `children` | the links below it, each with the same fields |
+
+`item.url` is final: print it as it is, not through `url()`.
+
+A store that has no menu with that handle gives `{ handle, title: '', items: [] }`,
+never an error, so `{% if menu('main').items %}` is false.
+
+## Let the merchant pick the menu
+
+A setting of type `menu` stores a menu handle; the builder shows a picker of the
+store's menus. Pass the setting to `menu()`:
+
+```html title="sections/header.snf"
+<nav class="nav">
+  {% for item in menu(section.settings.menu).items %}
+    <a href="{{ item.url }}">{{ item.title }}</a>
+  {% endfor %}
+</nav>
+<hk-schema>
+  {
+    "name": "Header",
+    "settings": {
+      "menu": {
+        "type": "menu",
+        "label": "Menu",
+        "default": "main"
+      }
+    }
+  }
+</hk-schema>
+```
+
+`menu()` takes a handle (`menu('footer')`) or a `menu` setting
+(`section.settings.*`, `block.settings.*`, `settings.*`), like `collection()`. A
+setting that does not exist or is not of type `menu` is SN2012; any other
+argument, such as `menu(product.title)`, is SN1105.
+
+## Dropdowns
+
+Menus nest up to three levels. Print `children` with a second loop (and a third
+for the last level; the default store's header and footer print all three):
+
+```html
+{% for item in menu(section.settings.menu).items %}
+  <div class="nav-item">
+    <a href="{{ item.url }}" aria-current="{{ item.active }}">{{ item.title }}</a>
+    {% if item.children %}
+      <div class="subnav">
+        {% for sub in item.children %}<a href="{{ sub.url }}" aria-current="{{ sub.active }}">{{ sub.title }}</a>{% endfor %}
+      </div>
+    {% endif %}
+  </div>
+{% endfor %}
+```
+
+## The current page
+
+`active` compares the link's path with the page's (`request.path`): the query
+string and the `#…` part are ignored, a trailing `/` does not matter, and the
+page's own language prefix is ignored on both sides, so `/en/products` and
+`/products` both match the English products page. Links to other sites, and
+links with a `#…` part (`/#faq`, a part of a page), are never active. `aria-current="{{ item.active }}"` writes `true` or `false`, both valid,
+and gives you a CSS hook: `a[aria-current=true] { text-decoration: underline; }`.
+
+## Keep the theme's own links as a fallback
+
+A store that has not built a menu yet should still see a header. Print the menu
+when it has links, and the theme's links otherwise:
+
+```html
+<nav class="nav">
+  {% if menu(section.settings.menu).items %}
+    {% for item in menu(section.settings.menu).items %}<a href="{{ item.url }}">{{ item.title }}</a>{% endfor %}
+  {% else %}<a href="{{ url('/products') }}">{{ t('all_products') }}</a>{% endif %}
+</nav>
+```
+
+The default store and the example themes do this. In the default store the
+`menu` setting has no default (`""`); its starting header and footer trees
+(`groups/header.json`, `groups/footer.json`) pick `main` and `footer`. A new
+store shows its menus; a store that already saved its own header or footer
+keeps its menu-link blocks and link columns until the merchant picks a menu.
+The example themes default the setting to `main` / `footer` and fall back to
+their own links while the menu has none.
+
+Write `{% else %}` right before the first fallback tag and `{% endif %}` right
+after the last one when the page must look exactly as before: whitespace inside
+an `{% if %}` branch is kept as one space.
+
+## Limits
+
+- 3 levels; deeper links are dropped.
+- 250 links per menu, counted in order; the rest are dropped.
+- Titles are cut to 200 characters.
+- A page preloads at most 8 menus (the handles in `menu('…')` and the values of
+  `menu` settings, defaults included).
+
+## Menus in `sneferu dev`
+
+The dev server has two sample menus: `main` (Home, Products with three
+categories below it, About us) and `footer` (All products, Search, About us,
+Delivery). Replace them, or add others, in `.sneferu-dev/data.json`:
+
+```json title=".sneferu-dev/data.json"
+{
+  "menus": {
+    "main": { "title": "Main menu", "items": [ { "title": "Courses", "url": "/category/courses", "children": [ { "title": "Design", "url": "/category/design" } ] } ] }
+  }
+}
+```
+
+## For hosts
+
+`RenderContext.menus` is `Record<handle, { handle, title, items: [{ title, url, children? }] }>`
+with final URLs; the runtime computes `active` and `child_active` and applies the
+limits above. Item URLs and the `request.path` you pass to `renderPage` must be
+in the same URL space: both with the locale and store path prefixes, or both
+without. `pageDependencies(artifact, opts).menus` lists the handles a page
+can ask for, so they are fetched before the page renders.

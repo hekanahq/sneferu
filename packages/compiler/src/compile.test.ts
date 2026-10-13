@@ -223,6 +223,16 @@ describe('compileTheme', () => {
     expect(codes('{{ collection(settings.home).title }}')).toEqual(['SN2012']);
     expect(codes('{{ collection(settings.home).title }}', { home: { type: 'collection', label: 'Home' } })).toEqual([]);
   });
+  it('checks menu(section.settings.x) against the schema: the setting must be of type menu (SN2012)', () => {
+    const files = (sec: string) => [...base().filter((x) => x.path !== 'sections/hero.sneferu'),
+      f('sections/hero.sneferu', `${sec}<hk-schema>{"name":"Hero","settings":{"title":{"type":"text","label":"T"},"menu":{"type":"menu","label":"Menu","default":"main"}}}</hk-schema>`)];
+    const codes = (sec: string) => compileTheme(files(sec), reg).diagnostics.filter((d) => d.severity === 'error').map((d) => d.code);
+    expect(codes("<nav>{% for i in menu(section.settings.menu).items %}<a href=\"{{ i.url }}\">{{ i.title }}</a>{% endfor %}</nav>")).toEqual([]);
+    expect(codes("<nav>{% for i in menu('footer').items %}{{ i.title }}{% endfor %}</nav>")).toEqual([]);
+    expect(codes('{{ menu(section.settings.title).title }}')).toEqual(['SN2012']);
+    expect(codes('{{ menu(section.settings.nope).title }}')).toEqual(['SN2012']);
+    expect(codes('{{ menu(product.title).title }}')).toEqual(['SN1105']);
+  });
   it('checks collection(settings.x) when theme.json has no settings key (SN2012)', () => {
     const { settings: _drop, ...noSettings } = manifest;
     const files = [...base().filter((x) => x.path !== 'sections/hero.sneferu' && x.path !== 'theme.json'),

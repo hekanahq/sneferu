@@ -20,7 +20,16 @@ What the theme uses: plain HTML for structure, `hk-product-card` for every
 product (with the "New" label in its `badge` part), `hk-button` for the band's
 button, `hk-icon`, shelf blocks that each read their own `collection` setting,
 localized settings, `data-*` attributes for colour, and one stylesheet.
-Version 1.2.0 is built on Sneferu 0.4.
+Version 1.3.0 is built on Sneferu 0.5.
+
+## Menus (1.3.0)
+
+The header and footer each have a `menu` setting (`main` and `footer` by
+default) and print the store's menu with `menu(section.settings.menu)`: the
+top-level links, each with `aria-current` set on the page it points to. A store
+without that menu (or with an empty one) sees exactly the links of 1.2.0. The
+settings are new, nothing was renamed or removed, so 1.2.0 → 1.3.0 needs no
+migration.
 
 ## Upgrading from 1.0
 
@@ -103,7 +112,7 @@ Prices are in piastres in the data and printed by `hk-price`, for example
 {
   "id": "bento",
   "name": "Bento",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "author": "Hekana",
   "description": "A soft pastel bento-grid theme for printables, templates and e-books",
   "category": "digital",

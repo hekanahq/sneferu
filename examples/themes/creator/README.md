@@ -20,7 +20,16 @@ What the theme uses: `hk-product-card` with its `badge` part (the badge and
 the kind label), a CSS scroll-snap row for the carousel (no script),
 `{% render %}` with arguments, `collection` settings, blocks seeded by the
 template, localized text settings, an `image` setting, `hk-icon` and
-`hk-button`. Version 1.2.0 is built on Sneferu 0.4.
+`hk-button`. Version 1.3.0 is built on Sneferu 0.5.
+
+## Menus (1.3.0)
+
+The header and footer each have a `menu` setting (`main` and `footer` by
+default) and print the store's menu with `menu(section.settings.menu)`: the
+top-level links, each with `aria-current` set on the page it points to. A store
+without that menu (or with an empty one) sees exactly the links of 1.2.0. The
+settings are new, nothing was renamed or removed, so 1.2.0 → 1.3.0 needs no
+migration.
 
 ## Upgrading from 1.0
 
@@ -100,7 +109,7 @@ the product is listed under.
 {
   "id": "creator",
   "name": "Creator",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "author": "Hekana",
   "description": "An editorial theme for one creator selling courses, e-books and templates",
   "category": "digital",

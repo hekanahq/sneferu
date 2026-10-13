@@ -175,7 +175,7 @@ has the details; it needs the CLI from Sneferu main after #16.)
 {
   "id": "bento",
   "name": "Bento",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "author": "Hekana",
   "description": "A soft pastel bento-grid theme for printables, templates and e-books",
   "category": "digital",
@@ -271,7 +271,10 @@ whole store.
       <details class="bt-menu">
         <summary class="bt-icon" aria-label="{{ t('menu') }}"><hk-icon name="menu" size="22" /></summary>
         <div class="bt-menu-panel">
-          <a href="{{ url('/search') }}">{{ t('search') }}</a>
+          {% for item in menu(section.settings.menu).items %}<a
+              href="{{ item.url }}"
+              aria-current="{{ item.active }}"
+            >{{ item.title }}</a>{% endfor %}<a href="{{ url('/search') }}">{{ t('search') }}</a>
           <a href="{{ url('/cart') }}" data-hk-open="cart-drawer">{{ t('cart') }}</a>
           <a href="{{ url('/wishlist') }}">{{ t('wishlist') }}</a>
           <hk-locale-switch />
@@ -290,6 +293,11 @@ whole store.
     "version": 1,
     "templates": ["header"],
     "settings": {
+      "menu": {
+        "type": "menu",
+        "label": "Menu",
+        "default": "main"
+      },
       "drawer_on_add": {
         "type": "boolean",
         "label": "Open the cart when an item is added",
@@ -308,6 +316,8 @@ whole store.
   on an Arabic page and `/en/cart` on an English one. The language switch is
   `<hk-locale-switch />`: it links to the same page in the other language.
 - The phone menu is `<details>`/`<summary>`: it opens without script.
+- The menu panel starts with the store's own menu, `menu(section.settings.menu)`
+  (the `main` menu unless the merchant picks another); see [Menus](20-menus.mdx).
 - Icons are `<hk-icon name="shopping-bag" />` from the bundled set. The filled
   avatar has no match in the set, so it stays an inline SVG in
   `snippets/glyph.snf`.

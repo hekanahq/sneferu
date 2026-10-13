@@ -5,7 +5,7 @@ import type { LangData } from './types';
 /** A coarse type for property completion: enough to know what follows a dot. */
 export type Ty =
   | 'store' | 'settings' | 'section' | 'block' | 'sectionSettings' | 'blockSettings'
-  | 'blocks' | 'forloop' | 'collection' | 'products' | 'product' | 'image' | 'string' | 'unknown';
+  | 'blocks' | 'forloop' | 'collection' | 'products' | 'product' | 'image' | 'menu' | 'menuItems' | 'menuItem' | 'string' | 'unknown';
 
 export interface Member { name: string; ty: Ty; doc?: string; field?: SchemaField }
 
@@ -38,7 +38,7 @@ function allSettings(theme: ThemeIndex | undefined, dir: 'sections' | 'blocks'):
 export function membersOf(ty: Ty, env: Env): Member[] {
   const kind = env.rel ? kindOf(env.rel) : undefined;
   const doc = (scope: string, prop: string) => env.data.scope.find((s) => s.name === scope)?.doc.includes(`${scope}.${prop}`) ? env.data.scope.find((s) => s.name === scope)!.doc : undefined;
-  const fieldMembers = (fs: SchemaField[]): Member[] => fs.map((f) => ({ name: f.key, ty: f.type === 'product' || f.type === 'collection' ? 'string' : 'unknown', field: f }));
+  const fieldMembers = (fs: SchemaField[]): Member[] => fs.map((f) => ({ name: f.key, ty: f.type === 'product' || f.type === 'collection' || f.type === 'menu' ? 'string' : 'unknown', field: f }));
   switch (ty) {
     case 'store': return [{ name: 'name', ty: 'string', doc: 'The store name.' }];
     case 'settings': return fieldMembers(env.theme?.manifest.settings ?? []);
@@ -60,12 +60,18 @@ export function membersOf(ty: Ty, env: Env): Member[] {
     case 'collection': return [{ name: 'title', ty: 'string', doc: 'The collection title.' }, { name: 'products', ty: 'products', doc: 'The products in the collection.' }];
     case 'product': return env.data.productFields.map((f) => ({ name: f.name, ty: f.name === 'image' ? 'image' : 'unknown', doc: f.doc }));
     case 'image': return [{ name: 'url', ty: 'string', doc: 'The image URL. Use `| img: 400` for a sized URL.' }];
-    case 'blocks': case 'products': case 'string': return [{ name: 'size', ty: 'unknown', doc: 'The number of items (or characters).' }];
+    case 'menu': return [{ name: 'handle', ty: 'string', doc: 'The menu handle.' }, { name: 'title', ty: 'string', doc: 'The menu title.' }, { name: 'items', ty: 'menuItems', doc: 'The top-level links (empty when the store has no such menu).' }];
+    case 'menuItem': return [
+      { name: 'title', ty: 'string', doc: 'The link text.' }, { name: 'url', ty: 'string', doc: 'The link, ready for href.' },
+      { name: 'active', ty: 'unknown', doc: 'True when the link points to the current page.' }, { name: 'child_active', ty: 'unknown', doc: 'True when a link below it points to the current page.' },
+      { name: 'children', ty: 'menuItems', doc: 'The links below it (menus nest 3 levels).' },
+    ];
+    case 'blocks': case 'products': case 'menuItems': case 'string': return [{ name: 'size', ty: 'unknown', doc: 'The number of items (or characters).' }];
     default: return [];
   }
 }
 
-const element = (ty: Ty): Ty => (ty === 'blocks' ? 'block' : ty === 'products' ? 'product' : 'unknown');
+const element = (ty: Ty): Ty => (ty === 'blocks' ? 'block' : ty === 'products' ? 'product' : ty === 'menuItems' ? 'menuItem' : 'unknown');
 
 /** The type of a path like `collection('x').products[0]`, following loop variables. */
 export function typeOf(path: string, env: Env, depth = 0): Ty {
@@ -74,7 +80,7 @@ export function typeOf(path: string, env: Env, depth = 0): Ty {
   const head = segs[0]!;
   let ty: Ty;
   const call = /^([a-z_]+)\(/.exec(head)?.[1];
-  if (call) ty = call === 'collection' ? 'collection' : call === 'product' ? 'product' : call === 't' ? 'string' : 'unknown';
+  if (call) ty = call === 'collection' ? 'collection' : call === 'product' ? 'product' : call === 'menu' ? 'menu' : call === 't' ? 'string' : 'unknown';
   else if (['store', 'settings', 'section', 'block', 'forloop'].includes(head)) ty = head as Ty;
   else if (head === 'locale' || head === 'dir') ty = 'string';
   else {

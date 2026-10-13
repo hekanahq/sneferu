@@ -21,6 +21,25 @@ const validLimit = (l: unknown): boolean => {
 const isObj = (x: unknown): x is Record<string, unknown> => typeof x === 'object' && x !== null && !Array.isArray(x);
 
 /**
+ * `section.settings.<name>`, `block.settings.<name>` or `settings.<name>`: the paths a
+ * merchant's choice can come from (collection() arguments and loop limits).
+ */
+export function isSettingPath(p: readonly unknown[]): boolean {
+  if ((p[0] === 'section' || p[0] === 'block') && p[1] === 'settings') return p.length === 3 && typeof p[2] === 'string';
+  return p[0] === 'settings' && p.length === 2 && typeof p[1] === 'string';
+}
+
+/** Lookups whose one argument is a handle: a string literal, or a plain setting path (never computed from page data). */
+const HANDLE_LOOKUPS = new Set(['collection', 'product', 'menu']);
+const validHandleArgs = (args: unknown): boolean => {
+  if (!Array.isArray(args) || args.length !== 1) return false;
+  const a = args[0];
+  if (!isObj(a)) return false;
+  if (a.k === 'lit') return typeof a.v === 'string';
+  return a.k === 'path' && a.from === undefined && Array.isArray(a.p) && isSettingPath(a.p);
+};
+
+/**
  * Re-checks an IR tree at load time. The compiler is not the only boundary:
  * an artifact read from storage is untrusted input until this passes.
  * Never throws for JSON-shaped input.
@@ -43,7 +62,10 @@ export function validateIR(nodes: unknown, knownTags: ReadonlySet<string>): Diag
     if (!isObj(e) || !EXPR_KINDS.has(String(e.k))) { out.push(err('SN9005', `invalid expression ${String(JSON.stringify(e) ?? e).slice(0, 60)}`)); return; }
     switch (e.k) {
       case 'path': if (e.from !== undefined) expr(e.from, d + 1); break;
-      case 'lookup': if (!LOOKUP_SET.has(String(e.fn))) out.push(err('SN9006', `unknown lookup ${String(e.fn)}`)); exprs(e.args, d + 1); break;
+      case 'lookup':
+        if (!LOOKUP_SET.has(String(e.fn))) out.push(err('SN9006', `unknown lookup ${String(e.fn)}`));
+        else if (HANDLE_LOOKUPS.has(String(e.fn)) && !validHandleArgs(e.args)) out.push(err('SN9017', `${String(e.fn)}() needs one handle: a string or a setting path`));
+        exprs(e.args, d + 1); break;
       case 'filter': if (!FILTER_SET.has(String(e.name))) out.push(err('SN9003', `unknown filter ${String(e.name)}`)); expr(e.input, d + 1); exprs(e.args, d + 1); break;
       case 'cmp': case 'and': case 'or': expr(e.a, d + 1); expr(e.b, d + 1); break;
       case 'not': expr(e.a, d + 1); break;

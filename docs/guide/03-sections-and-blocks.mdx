@@ -101,6 +101,7 @@ Only `type` and `label` are needed. One example of each type:
 | `icon` | icon name | `"icon": { "type": "icon", "label": "Icon", "default": "truck" }` |
 | `product` | product handle | `"product": { "type": "product", "label": "Product" }` |
 | `collection` | collection handle | `"collection": { "type": "collection", "label": "Collection", "default": "featured" }` |
+| `menu` | menu handle | `"menu": { "type": "menu", "label": "Menu", "default": "main" }`: read it with `menu(section.settings.menu)` (see [Menus](20-menus.mdx)) |
 | `spacing` | string | `"gap": { "type": "spacing", "label": "Spacing", "default": "md" }` |
 | `typography` | string | `"font": { "type": "typography", "label": "Typography", "default": "body" }` |
 
@@ -123,7 +124,7 @@ each declared setting is filled and coerced:
 | Situation | Result |
 | - | - |
 | No stored value | `default` (or nothing, if there is no default) |
-| `text`, `textarea`, `rich_text`, `image`, `video`, `link`, `icon`, `product`, `collection`, `spacing`, `typography` | must be a string, else `default`; cut to `maxLength` if set |
+| `text`, `textarea`, `rich_text`, `image`, `video`, `link`, `icon`, `product`, `collection`, `menu`, `spacing`, `typography` | must be a string, else `default`; cut to `maxLength` if set |
 | `number`, `range` | numbers and numeric strings are parsed and clamped to `min`/`max`; anything else gives `default` |
 | `boolean` | `true`, `"true"`, `"yes"`, `1` → `true`; `false`, `"false"`, `"no"`, `0` → `false`; else `default` |
 | `select` | must be one of `options`, else `default` |

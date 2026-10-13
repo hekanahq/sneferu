@@ -33,6 +33,8 @@ primary     = string | number | "true" | "false" | "nil"
             | lookup { tail }
             | ident { tail } ;
 lookup      = "collection(" ( string | setting ) ")"         (* setting: of type collection *)
+            | "product(" ( string | setting ) ")"            (* setting: of type product *)
+            | "menu(" ( string | setting ) ")"               (* setting: of type menu *)
             | "collections()"
             | "url(" expr ")"                                     (* any one expression *)
             | lookupname "(" [ literal { "," literal } ] ")" ;   (* literal arguments only *)
@@ -138,7 +140,7 @@ Apply with `|`, arguments after `:` (`{{ title | truncate: 40 }}`).
 
 ## Lookups
 
-Called like functions with literal arguments only, except `collection()` and `product()`, which also take a setting of their type, and `url()`, which takes any one expression.
+Called like functions with literal arguments only, except `collection()`, `product()` and `menu()`, which also take a setting of their type, and `url()`, which takes any one expression.
 
 | Lookup | Returns |
 | - | - |
@@ -146,6 +148,7 @@ Called like functions with literal arguments only, except `collection()` and `pr
 | `collection(section.settings.list)` | the collection picked in a `collection` setting (`section.settings.*`, `block.settings.*` or `settings.*`); an empty collection when nothing is picked. A missing or wrongly typed setting is SN2012 |
 | `collections()` | the store's categories, at most 50: `[{ handle, title, url, image, count }]` |
 | `product('handle')`, `product(section.settings.pick)` | the product (a handle, or a `product` setting; nothing when missing) |
+| `menu('main')`, `menu(section.settings.menu)` | the store's menu `{ handle, title, items }`, each item `{ title, url, active, child_active, children }` (3 levels, 250 links at most); `{ handle, title: '', items: [] }` when the store has no such menu. See [Menus](guide/20-menus.mdx) |
 | `t('key')` | the translation (same fallback as the `t` filter); the key if missing |
 | `settings('key')` | one theme setting |
 | `asset_url('hero.webp')` | URL of an image in `assets/` (the `assets/` prefix is optional; empty when unknown). See [Images and assets](guide/15-images-and-assets.mdx) |
@@ -256,7 +259,7 @@ Each field is `{ "type", "label", "default"?, "required"?, "min"?, "max"?, "step
 | `select` | one of `options` | default if not in `options` |
 | `color` | `#hex` or a `theme:<token>` | default if neither |
 | `image`, `video`, `link`, `icon` | string reference | string, else default |
-| `product`, `collection` | handle string | string, else default |
+| `product`, `collection`, `menu` | handle string | string, else default |
 | `spacing`, `typography` | string | string, else default |
 
 Coercion (clamping, defaults, select fallback, colour checks, `maxLength`) applies only to section and block settings declared in `<hk-schema>`: a bad stored value falls back to the default instead of breaking the page. Props on `hk-*` tags are not coerced by the schema; they receive the evaluated value as-is and each tag validates its own props (for example `hk-product-grid` accepts an array or `{products}`).

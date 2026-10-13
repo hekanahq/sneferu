@@ -98,6 +98,9 @@
 .bt-footer-name { margin: 0; font-weight: 700; }
 .bt-footer-note { margin: 0; flex: 1 1 360px; color: var(--hk-color-muted); }
 .bt-footer-row > a { min-height: 44px; display: inline-flex; align-items: center; }
+.bt-footer-links { display: flex; flex-wrap: wrap; gap: 0 16px; flex-basis: 100%; }
+.bt-footer-links a { min-height: 44px; display: inline-flex; align-items: center; color: inherit; }
+.bt-footer-links a[aria-current=true] { text-decoration: underline; }
 
 /* Phones: shelves stack, the band keeps the button */
 @media (max-width: 639px) {

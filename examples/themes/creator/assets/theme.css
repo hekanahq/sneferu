@@ -93,6 +93,9 @@
 .cr-footer-name { margin: 0; font-weight: 700; }
 .cr-footer-note { margin: 0; flex: 1 1 360px; font-size: 13px; color: var(--hk-color-muted); }
 .cr-footer-locale { font-size: 14px; min-height: 44px; display: inline-flex; align-items: center; }
+.cr-footer-links { display: flex; flex-wrap: wrap; gap: 0 16px; flex-basis: 100%; }
+.cr-footer-links a { min-height: 44px; display: inline-flex; align-items: center; color: inherit; }
+.cr-footer-links a[aria-current=true] { text-decoration: underline; }
 
 /* Phones */
 @media (max-width: 639px) {

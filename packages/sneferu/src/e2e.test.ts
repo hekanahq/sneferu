@@ -48,6 +48,55 @@ describe('starter theme end to end', () => {
     expect(r.html).toContain('EGP 520.00');
   });
 
+  it('prints the main and footer menus in the header and footer, else the group links', () => {
+    const ctx = sampleContext('en', artifact!.locales, 'en');
+    const r = renderPage(artifact!, { template: 'index', ctx, registry, request: { path: '/en/products' } });
+    expect(r.diagnostics).toEqual([]);
+    expect(r.html).toContain('<a class="sf-nav-link" href="/en/products" aria-current="true">Products</a>');
+    expect(r.html).toContain('<a class="sf-subnav-link" href="/en/category/gift-cards" aria-current="false">Gift cards</a>');
+    expect(r.html).toContain('<h3 class="sf-footer-title">Links</h3>');
+    expect(r.html).not.toContain('data-hk-block="nav-home"');
+    const bare = renderPage(artifact!, { template: 'index', ctx: { ...ctx, menus: {} }, registry, request: { path: '/en/products' } });
+    expect(bare.html).toContain('data-hk-block="nav-home"');
+    expect(bare.html).toContain('data-hk-block="col-shop"');
+    expect(bare.html).not.toContain('aria-current="true"');
+    expect(renderPage(artifact!, { template: 'index', ctx: { ...ctx, menus: undefined }, registry, request: { path: '/en/products' } }).html).toBe(bare.html);
+  });
+
+  it('a saved header or footer without a menu pick keeps its blocks, even when the store has menus', () => {
+    const ctx = sampleContext('en', artifact!.locales, 'en');
+    expect(ctx.menus!.main!.items.length).toBeGreaterThan(0);
+    const groups = {
+      header: [{ id: 'h', type: 'header', children: [{ id: 'mine', type: 'menu-link', props: { label: 'Mine', url: '/pages/mine' } }] }],
+      footer: [{ id: 'f', type: 'footer', children: [{ id: 'col', type: 'footer-column', props: { title: 'Col' }, children: [{ id: 'l', type: 'footer-link', props: { label: 'Saved', url: '/pages/saved' } }] }] }],
+    };
+    const r = renderPage(artifact!, { template: 'index', ctx, registry, groups, request: { path: '/en' } });
+    expect(r.diagnostics).toEqual([]);
+    expect(r.html).toContain('data-hk-block="mine"');
+    expect(r.html).toContain('>Saved</a>');
+    expect(r.html).not.toContain('aria-current=');
+    // once the merchant picks a menu, it shows
+    const picked = { header: [{ ...groups.header[0]!, props: { menu: 'main' } }], footer: [{ ...groups.footer[0]!, props: { menu: 'footer' } }] };
+    const p = renderPage(artifact!, { template: 'index', ctx, registry, groups: picked, request: { path: '/en' } });
+    expect(p.html).not.toContain('data-hk-block="mine"');
+    expect(p.html).toContain('aria-current="true">Home</a>');
+    expect(p.html).toContain('<h3 class="sf-footer-title">Links</h3>');
+  });
+
+  it('prints all three menu levels in the default header and footer', () => {
+    const third = { title: 'Level three', url: '/pages/three' };
+    const menus = {
+      main: { handle: 'main', title: 'M', items: [{ title: 'One', url: '/one', children: [{ title: 'Two', url: '/two', children: [third] }] }] },
+      footer: { handle: 'footer', title: 'F', items: [{ title: 'Col', url: '/col', children: [{ title: 'Two', url: '/two', children: [third] }] }] },
+    };
+    const r = renderPage(artifact!, { template: 'index', ctx: { ...sampleContext('en', artifact!.locales, 'en'), menus }, registry, request: { path: '/pages/three' } });
+    expect(r.diagnostics).toEqual([]);
+    expect(r.html).toContain('<a class="sf-subnav-link sf-subnav-deep" href="/pages/three" aria-current="true">Level three</a>');
+    expect(r.html).toContain('<a class="sf-footer-deep" href="/pages/three" aria-current="true">Level three</a>');
+    // every link has children: the menu's first column has no links (CSS hides it)
+    expect(r.html).toMatch(/<div class="sf-footer-col sf-footer-menu-col"><h3 class="sf-footer-title">F<\/h3><div class="sf-footer-links">\s*<\/div><\/div>/);
+  });
+
   it('renders Arabic, right to left, when asked', () => {
     const r = renderPage(artifact!, { template: 'index', ctx: sampleContext('ar', artifact!.locales, 'en'), registry });
     expect(r.diagnostics).toEqual([]);

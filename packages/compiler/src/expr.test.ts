@@ -64,6 +64,15 @@ describe('collection settings and collections()', () => {
     for (const bad of ['product(a.b.c)', 'product(x)', 'product(section.settings.a.b)', 'product(1)', "product('a', 'b')", 'product()', 'product(t(\'x\'))'])
       expect(parseExpr(bad).error, bad).toMatch(/takes a handle or a product setting/);
   });
+  it('menu() takes a handle or a menu setting, like collection()', () => {
+    expect(parseExpr("menu('main').items").expr).toEqual({ k: 'path', p: ['items'], from: { k: 'lookup', fn: 'menu', args: [{ k: 'lit', v: 'main' }] } });
+    expect(parseExpr('menu(section.settings.menu)').expr).toEqual({ k: 'lookup', fn: 'menu', args: [{ k: 'path', p: ['section', 'settings', 'menu'] }] });
+    expect(parseExpr('menu(settings.footer_menu).title').expr).toMatchObject({ k: 'path', p: ['title'] });
+    for (const bad of ['menu(product.title)', 'menu(x)', 'menu(section.settings.a.b)', 'menu(1)', "menu('a', 'b')", 'menu()', "menu(t('x'))"])
+      expect(parseExpr(bad).error, bad).toMatch(/takes a handle or a menu setting/);
+    // a path named menu is still a path
+    expect(parseExpr('menu.title').expr).toEqual({ k: 'path', p: ['menu', 'title'] });
+  });
   it('collections() takes no arguments', () => {
     expect(parseExpr("collections()").expr).toEqual({ k: 'lookup', fn: 'collections', args: [] });
     expect(parseExpr("collections()[0].title").expr).toEqual({ k: 'path', p: [0, 'title'], from: { k: 'lookup', fn: 'collections', args: [] } });

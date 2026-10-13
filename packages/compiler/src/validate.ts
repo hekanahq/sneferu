@@ -83,7 +83,7 @@ export function validateTemplate(
     if (!e || d > LIMITS.renderDepth) return;
     switch (e.k) {
       case 'lookup':
-        if ((e.fn === 'collection' || e.fn === 'product') && e.args[0]?.k === 'path') checkSetting(e.args[0].p, [e.fn], `${e.fn}(${e.args[0].p.join('.')})`, n);
+        if ((e.fn === 'collection' || e.fn === 'product' || e.fn === 'menu') && e.args[0]?.k === 'path') checkSetting(e.args[0].p, [e.fn], `${e.fn}(${e.args[0].p.join('.')})`, n);
         e.args.forEach((a) => exprs(a, n, d + 1)); break;
       case 'path':
         if (!e.from) pageObject(e.p[0], n);

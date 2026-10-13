@@ -1,10 +1,12 @@
 export type FieldType =
   | 'text' | 'textarea' | 'rich_text' | 'number' | 'range' | 'boolean' | 'select' | 'color'
   | 'image' | 'video' | 'link' | 'product' | 'collection' | 'spacing' | 'typography' | 'icon'
+  /** A menu handle (`main`, `footer`): what `menu(section.settings.menu)` reads. */
+  | 'menu'
   /** A value bound from the page (a product, `paginate`, `localization`), not something a merchant edits. */
   | 'data';
 
-export const FIELD_TYPES = ['text', 'textarea', 'rich_text', 'number', 'range', 'boolean', 'select', 'color', 'image', 'video', 'link', 'product', 'collection', 'spacing', 'typography', 'icon', 'data'] as const;
+export const FIELD_TYPES = ['text', 'textarea', 'rich_text', 'number', 'range', 'boolean', 'select', 'color', 'image', 'video', 'link', 'product', 'collection', 'spacing', 'typography', 'icon', 'menu', 'data'] as const;
 
 /**
  * What the builder's inspector needs to know per field type: the control to draw, the shape of the stored
@@ -27,6 +29,7 @@ export const FIELD_INSPECTORS: Readonly<Record<FieldType, { control: string; val
   spacing: { control: 'spacing', value: 'object', editable: true, localizable: false, responsive: true },
   typography: { control: 'typography', value: 'object', editable: true, localizable: false, responsive: true },
   icon: { control: 'icon-picker', value: 'string', editable: true, localizable: false, responsive: false },
+  menu: { control: 'menu-picker', value: 'string', editable: true, localizable: false, responsive: false },
   data: { control: 'none', value: 'object', editable: false, localizable: false, responsive: false },
 });
 

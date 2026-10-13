@@ -146,4 +146,18 @@ describe('element allow-list and raw html (C1, C3)', () => {
   it('knows the collections lookup', () => {
     expect(validateIR([{ k: 'text', e: { k: 'path', p: ['size'], from: { k: 'lookup', fn: 'collections', args: [] } } }], tags)).toEqual([]);
   });
+  it('rejects collection/product/menu lookups whose argument is not one handle or setting path (SN9017)', () => {
+    const look = (fn: string, args: unknown) => validateIR([{ k: 'text', e: { k: 'lookup', fn, args } }], tags).map((d) => d.code);
+    for (const fn of ['collection', 'product', 'menu']) {
+      expect(look(fn, [{ k: 'lit', v: 'main' }]), fn).toEqual([]);
+      expect(look(fn, [{ k: 'path', p: ['section', 'settings', 'menu'] }]), fn).toEqual([]);
+      expect(look(fn, [{ k: 'path', p: ['settings', 'x'] }]), fn).toEqual([]);
+      expect(look(fn, [{ k: 'path', p: ['block', 'settings', 'x'] }]), fn).toEqual([]);
+      for (const bad of [[], [{ k: 'lit', v: 'a' }, { k: 'lit', v: 'b' }], [{ k: 'lit', v: 3 }], [{ k: 'path', p: ['product', 'title'] }],
+        [{ k: 'path', p: ['section', 'settings', 'a', 'b'] }], [{ k: 'path', p: ['x'], from: { k: 'lit', v: 'a' } }],
+        [{ k: 'lookup', fn: 't', args: [{ k: 'lit', v: 'k' }] }], [{ k: 'filter', name: 'upcase', input: { k: 'lit', v: 'a' }, args: [] }], 'x'])
+        expect(look(fn, bad), `${fn} ${JSON.stringify(bad)}`).toContain('SN9017');
+    }
+    expect(look('t', [{ k: 'lit', v: 'a' }, { k: 'lit', v: 'b' }])).toEqual([]);
+  });
 });

@@ -23,8 +23,17 @@ What the theme uses: plain HTML for structure, `hk-section`, `hk-stack`,
 `hk-search-form`, a `{% for %}` loop over a collection the merchant picks, a
 scroll-snap carousel with anchor-link arrows, four block types (amount,
 platform, trust point, question) seeded by the template, and one stylesheet.
-There is no JavaScript. Version 1.2.0 is built on Sneferu 0.4; the 0.2
+There is no JavaScript. Version 1.3.0 is built on Sneferu 0.5; the 0.2
 workarounds it replaced are listed in `../../GAPS-gaming.md`.
+
+## Menus (1.3.0)
+
+The header and footer each have a `menu` setting (`main` and `footer` by
+default) and print the store's menu with `menu(section.settings.menu)`: the
+top-level links, each with `aria-current` set on the page it points to. A store
+without that menu (or with an empty one) sees exactly the links of 1.2.0. The
+settings are new, nothing was renamed or removed, so 1.2.0 → 1.3.0 needs no
+migration.
 
 ## Upgrading from 1.0
 
@@ -109,7 +118,7 @@ Delete the starter's sections and `blocks/`.
 {
   "id": "console",
   "name": "Console",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "author": "Hekana",
   "description": "A clean white gaming store for gift cards and top-ups: one royal-blue accent, large product cards, an amount selector and a platform row.",
   "category": "gaming",

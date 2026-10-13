@@ -3,7 +3,7 @@ import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { compileTheme, type ThemeFile } from '@hekana/sneferu-compiler';
-import { renderPage, type ArtifactLike } from '@hekana/sneferu-runtime';
+import { renderPage, type ArtifactLike, type RenderContext } from '@hekana/sneferu-runtime';
 import { createDefaultRegistry } from '@hekana/sneferu-components';
 import { formatDiagnostic } from '@hekana/sneferu-core';
 import { resolveDevRoute } from './dev-routes';
@@ -104,6 +104,22 @@ describe('the example themes get the default store for what they lack', () => {
         expect(after.html, `${name} ${locale}`).toBe(before.html);
         expect(after.css).toBe(before.css);
         expect(after.diagnostics).toEqual(before.diagnostics);
+      }
+    });
+    it(`${name}: 1.3.0 home is unchanged without menus and prints the store's menu when it has one`, () => {
+      expect(a.manifest).toMatchObject({ version: '1.3.0' });
+      for (const locale of a.manifest.locales) {
+        const base = withSampleData(sampleContext(locale, a.locales, a.manifest.defaultLocale as 'ar' | 'en', { responsive: true }), pickSampleData(sampleRaw, locale));
+        const render = (menus: RenderContext['menus']) => renderPage(a, { template: 'index', ctx: { ...base, menus }, registry, request: { path: '/' } });
+        const none = render(undefined);
+        expect(none.diagnostics).toEqual([]);
+        expect(render({}).html).toBe(none.html);
+        expect(render({ main: { handle: 'main', title: 'M', items: [] }, footer: { handle: 'footer', title: 'F', items: [] } }).html).toBe(none.html);
+        const withMenus = render({ main: { handle: 'main', title: 'M', items: [{ title: 'Main link', url: '/pages/m' }, { title: 'Home link', url: '/' }] }, footer: { handle: 'footer', title: 'F', items: [{ title: 'Footer link', url: '/pages/f' }] } });
+        expect(withMenus.diagnostics).toEqual([]);
+        expect(withMenus.html).toContain('<a href="/pages/m" aria-current="false">Main link</a>');
+        expect(withMenus.html).toContain('aria-current="true">Home link</a>');
+        expect(withMenus.html).toContain('<a href="/pages/f" aria-current="false">Footer link</a>');
       }
     });
     it(`${name}: every page type renders inside the theme layout with the default store's CSS`, () => {

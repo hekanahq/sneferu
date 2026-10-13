@@ -321,11 +321,14 @@ an ordinary section the merchant can edit once for the whole store.
       <details class="arc-menu">
         <summary aria-label="{{ t('menu') }}"><hk-icon name="menu" size="24" class="ic" /></summary>
         <nav class="arc-menu-panel">
-          <a href="{{ url('/') }}">{{ t('nav_home') }}</a>
-          <a href="{{ url('/products') }}">{{ t('nav_all') }}</a>
-          <a href="{{ url('/category/gift-cards') }}">{{ t('cat_gift_cards') }}</a>
-          <a href="{{ url('/category/game-currency') }}">{{ t('cat_currency') }}</a>
-          <a href="{{ url('/') }}#faq">{{ t('nav_faq') }}</a>
+          {% if menu(section.settings.menu).items %}{% for item in menu(section.settings.menu).items %}<a
+                href="{{ item.url }}"
+                aria-current="{{ item.active }}"
+              >{{ item.title }}</a>{% endfor %}{% else %}<a href="{{ url('/') }}">{{ t('nav_home') }}</a>
+            <a href="{{ url('/products') }}">{{ t('nav_all') }}</a>
+            <a href="{{ url('/category/gift-cards') }}">{{ t('cat_gift_cards') }}</a>
+            <a href="{{ url('/category/game-currency') }}">{{ t('cat_currency') }}</a>
+            <a href="{{ url('/') }}#faq">{{ t('nav_faq') }}</a>{% endif %}
         </nav>
       </details>
       <a class="arc-logo" href="{{ url('/') }}">{{ store.name }}</a>
@@ -348,6 +351,11 @@ an ordinary section the merchant can edit once for the whole store.
     "version": 1,
     "templates": ["header"],
     "settings": {
+      "menu": {
+        "type": "menu",
+        "label": "Menu",
+        "default": "main"
+      },
       "drawer_on_add": {
         "type": "boolean",
         "label": "Open the cart when an item is added",
@@ -368,7 +376,9 @@ an ordinary section the merchant can edit once for the whole store.
 1. The `<svg class="arc-defs">` in the layout declares one gradient,
    `arc-grad`, that every tile icon reuses through CSS.
 2. `<details>` and `<summary>` are the phone menu: it opens with no
-   JavaScript. CSS shows it only under 640 px.
+   JavaScript. CSS shows it only under 640 px. Its links are the store's menu
+   (`menu(section.settings.menu)`, the `main` menu by default) and the theme's
+   own links while the store has none; see [Menus](20-menus.mdx).
 3. `<hk-search-form>` is the search field: a real form that sends the shopper
    to the store's search page (`/en/search` on English pages). The theme only
    styles it: `.arc-search` draws the rounded field around the input and the

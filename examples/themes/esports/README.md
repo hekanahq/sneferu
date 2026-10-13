@@ -23,8 +23,17 @@ What the theme uses: plain HTML, `hk-section`, `hk-stack`, `hk-heading`,
 a ribbon in its `badge` part and a Buy link in its `actions` part), three block
 types (tab, step, question) seeded by the template, inline SVG for the mark and
 the art, CSS `clip-path` for the cuts, and one stylesheet. There is no
-JavaScript. Version 1.2.0 is built on Sneferu 0.4; the 0.2 workarounds it
+JavaScript. Version 1.3.0 is built on Sneferu 0.5; the 0.2 workarounds it
 replaced are listed in `../../GAPS-gaming.md`.
+
+## Menus (1.3.0)
+
+The header and footer each have a `menu` setting (`main` and `footer` by
+default) and print the store's menu with `menu(section.settings.menu)`: the
+top-level links, each with `aria-current` set on the page it points to. A store
+without that menu (or with an empty one) sees exactly the links of 1.2.0. The
+settings are new, nothing was renamed or removed, so 1.2.0 → 1.3.0 needs no
+migration.
 
 ## Upgrading from 1.0
 
@@ -107,7 +116,7 @@ Delete the starter's sections and `blocks/`.
 {
   "id": "esports",
   "name": "Esports",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "author": "Hekana",
   "description": "A bold gaming top-up store: black and deep green, a lime accent, diagonal cuts, a wide hero and top-up cards with ribbons.",
   "category": "gaming",

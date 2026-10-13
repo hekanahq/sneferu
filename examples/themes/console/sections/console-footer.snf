@@ -6,10 +6,13 @@
         <p>{{ t('footer_about') }}</p>
       </div>
       <nav class="cc-footer-links" aria-label="{{ t('footer_links') }}">
-        <a href="{{ url('/products') }}">{{ t('nav_all') }}</a>
-        <a href="{{ url('/category/gift-cards') }}">{{ t('cat_gift_cards') }}</a>
-        <a href="{{ url('/category/game-currency') }}">{{ t('cat_currency') }}</a>
-        <a href="{{ url('/') }}#faq">{{ t('nav_faq') }}</a>
+        {% if menu(section.settings.menu).items %}{% for item in menu(section.settings.menu).items %}<a
+              href="{{ item.url }}"
+              aria-current="{{ item.active }}"
+            >{{ item.title }}</a>{% endfor %}{% else %}<a href="{{ url('/products') }}">{{ t('nav_all') }}</a>
+          <a href="{{ url('/category/gift-cards') }}">{{ t('cat_gift_cards') }}</a>
+          <a href="{{ url('/category/game-currency') }}">{{ t('cat_currency') }}</a>
+          <a href="{{ url('/') }}#faq">{{ t('nav_faq') }}</a>{% endif %}
       </nav>
     </div>
     <p class="cc-copy">© {{ store.name }}</p>
@@ -19,6 +22,13 @@
   {
     "name": "Footer",
     "version": 1,
-    "templates": ["footer"]
+    "templates": ["footer"],
+    "settings": {
+      "menu": {
+        "type": "menu",
+        "label": "Footer menu",
+        "default": "footer"
+      }
+    }
   }
 </hk-schema>

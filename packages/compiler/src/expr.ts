@@ -1,4 +1,4 @@
-import { FILTERS, LOOKUPS, type Expr, type FilterName, type LookupName } from '@hekana/sneferu-core';
+import { FILTERS, LOOKUPS, isSettingPath, type Expr, type FilterName, type LookupName } from '@hekana/sneferu-core';
 
 type Tok = { k: 'id' | 'str' | 'num' | 'op' | 'punc'; v: string };
 const FILTER_SET = new Set<string>(FILTERS);
@@ -72,7 +72,7 @@ class P {
         if (!LOOKUP_SET.has(t.v)) throw new Error(`'${t.v}' is not callable`);
         this.eat(); this.eat('punc', '(');
         const args: Expr[] = [];
-        if (t.v === 'collection' || t.v === 'product') args.push(this.handleArg(t.v));
+        if (t.v === 'collection' || t.v === 'product' || t.v === 'menu') args.push(this.handleArg(t.v));
         else if (t.v === 'collections') { if (!this.is('punc', ')')) throw new Error('collections() takes no arguments'); }
         else if (t.v === 'url') {
           if (this.is('punc', ')')) throw new Error('url() takes one argument: a path or an expression');
@@ -92,8 +92,8 @@ class P {
     }
     throw new Error(`unexpected '${t.v}'`);
   }
-  /** The one argument of collection() and product(): a handle literal or a setting path of that type. */
-  handleArg(fn: 'collection' | 'product'): Expr {
+  /** The one argument of collection(), product() and menu(): a handle literal or a setting path of that type. */
+  handleArg(fn: 'collection' | 'product' | 'menu'): Expr {
     const bad = new Error(`${fn}() takes a handle or a ${fn} setting`);
     const a = this.peek();
     let arg: Expr;
@@ -119,14 +119,7 @@ class P {
   }
 }
 
-/**
- * `section.settings.<name>`, `block.settings.<name>` or `settings.<name>`: the paths a
- * merchant's choice can come from (collection() arguments and loop limits).
- */
-export function isSettingPath(p: readonly unknown[]): boolean {
-  if ((p[0] === 'section' || p[0] === 'block') && p[1] === 'settings') return p.length === 3 && typeof p[2] === 'string';
-  return p[0] === 'settings' && p.length === 2 && typeof p[1] === 'string';
-}
+export { isSettingPath } from '@hekana/sneferu-core';
 
 export function parseExpr(src: string): { expr?: Expr; error?: string } {
   const toks = tokenize(src);
