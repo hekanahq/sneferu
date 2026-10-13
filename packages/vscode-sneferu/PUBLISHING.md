@@ -41,8 +41,8 @@ xvfb-run -a node packages/vscode-sneferu/test/run-e2e.mjs        # in a real VS 
    ```bash
    cd packages/vscode-sneferu
    npx @vscode/vsce login hekana                     # paste the token once
-   npx @vscode/vsce publish --packagePath sneferu-0.2.0.vsix
-   # or, in CI: VSCE_PAT=… npx @vscode/vsce publish --packagePath sneferu-0.2.0.vsix
+   npx @vscode/vsce publish --packagePath sneferu-0.2.1.vsix
+   # or, in CI: VSCE_PAT=… npx @vscode/vsce publish --packagePath sneferu-0.2.1.vsix
    ```
 
 5. Optional: verify the publisher's domain (`hekana.com` or `hekana.dev`) in the
@@ -59,7 +59,7 @@ xvfb-run -a node packages/vscode-sneferu/test/run-e2e.mjs        # in a real VS 
 
    ```bash
    npx ovsx create-namespace hekana -p "$OVSX_PAT"
-   npx ovsx publish packages/vscode-sneferu/sneferu-0.2.0.vsix -p "$OVSX_PAT"
+   npx ovsx publish packages/vscode-sneferu/sneferu-0.2.1.vsix -p "$OVSX_PAT"
    ```
 
 5. Optional: claim the `hekana` namespace (verified owner) with an issue at
