@@ -5,15 +5,25 @@ templates and e-books as digital files, from a design mockup to a live store.
 It uses only the CLI and the parts of Sneferu described in the earlier
 chapters. The finished theme is live at
 [demo-bento.hekana.com](https://demo-bento.hekana.com) (Arabic) and
-[demo-bento.hekana.com/en](https://demo-bento.hekana.com/en) (English), and its
-files are in the SDK repository under `examples/themes/bento/`.
+[demo-bento.hekana.com/en](https://demo-bento.hekana.com/en) (English).
+
+This page shows the key part of each file. **Full theme on GitHub:**
+[examples/themes/bento](https://github.com/hekanahq/sneferu/tree/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/bento),
+with its own `README.md`. Every excerpt links to its whole file. To run it
+yourself:
+
+```bash
+git clone --depth 1 https://github.com/hekanahq/sneferu
+cd sneferu/examples/themes/bento
+npx sneferu dev
+```
 
 The mockup was generated as a design brief. Its Arabic is placeholder text, and
 its lavender and pink tiles become sky blue and peach.
 
 The home page template lists the sections and seeds their repeated items
 (tabs, shelves, list items, questions) as blocks, so a fresh install shows the
-whole page. The excerpts show the first block of each section.
+whole page. The excerpt shows the first section and its first block.
 
 <Example>
 
@@ -25,22 +35,20 @@ whole page. The excerpts show the first block of each section.
       {
         "type": "tabs",
         "blocks": [
-          {"type": "tab", "settings": {"label": {"ar": "الكل", "en": "All"}, "link": "#shop", "current": true}},
-          … 3 more
-        ]
-      },
-      {
-        "type": "bento",
-        "blocks": [
-          {"type": "shelf", "settings": {"list": "printables", "title": {"ar": "مطبوعات للبيت والمدرسة", "en": "Printables for home and school"}, "note": {"ar": "للأطفال", "en": "For kids"}, "link": "/category/printables", "count": 3, "head": "peach", "panel": "sky"}},
-          … 1 more
-        ]
-      },
-      { "type": "band" }
-    ]
-  }
-</hk-schema>
+          {
+            "type": "tab",
+            "settings": {
+              "label": {
+                "ar": "الكل",
+                "en": "All"
+              },
+              "link": "#shop",
+              "current": true
+            }
+          },
 ```
+
+[View full file on GitHub](https://github.com/hekanahq/sneferu/blob/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/bento/templates/index.snf#L1-L18)
 
 <Result url="demo-bento.hekana.com">
   <Shot tab="Mockup" src="../images/tutorial-bento-mockup.webp" alt="A pastel mockup: category tabs, two coloured header tiles, two panels with three illustrated covers each, and a teal band" caption="The mockup the theme reproduces." />
@@ -55,10 +63,10 @@ whole page. The excerpts show the first block of each section.
 Two more themes were built the same way and follow the same steps. Each home
 page is a template listing its sections, like Bento's above:
 
-| Theme | What it shows | Live |
-| - | - | - |
-| Creator | editorial covers in a scroll-snap row, a checklist, an author strip | [demo-creator.hekana.com](https://demo-creator.hekana.com) |
-| License | dark, plan cards built from products, app cards, a FAQ accordion | [demo-license.hekana.com](https://demo-license.hekana.com) |
+| Theme | What it shows | Live | Files |
+| - | - | - | - |
+| Creator | editorial covers in a scroll-snap row, a checklist, an author strip | [demo-creator.hekana.com](https://demo-creator.hekana.com) | [examples/themes/creator](https://github.com/hekanahq/sneferu/tree/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/creator) |
+| License | dark, plan cards built from products, app cards, a FAQ accordion | [demo-license.hekana.com](https://demo-license.hekana.com) | [examples/themes/license](https://github.com/hekanahq/sneferu/tree/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/license) |
 
 <Example>
 
@@ -67,45 +75,52 @@ page is a template listing its sections, like Bento's above:
 <hk-schema>
   {
     "sections": [
-      { "type": "covers" },
+      {
+        "type": "covers"
+      },
       {
         "type": "what-you-get",
         "blocks": [
-          {"type": "get-item", "settings": {"term": {"ar": "الملفات", "en": "Files"}, "text": {"ar": "رابط التحميل بيوصلك على الإيميل بعد الدفع أونلاين", "en": "Your download link is emailed after online payment"}}},
-          … 3 more
-        ]
-      },
-      { "type": "author" }
-    ]
-  }
-</hk-schema>
+          {
+            "type": "get-item",
+            "settings": {
+              "term": {
+                "ar": "الملفات",
+                "en": "Files"
+              },
+              "text": {
+                "ar": "رابط التحميل بيوصلك على الإيميل بعد الدفع أونلاين",
+                "en": "Your download link is emailed after online payment"
+              }
+            }
+          },
 ```
+
+[View full file on GitHub](https://github.com/hekanahq/sneferu/blob/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/creator/templates/index.snf#L1-L23)
 
 ```html title="examples/themes/license/templates/index.snf (excerpt)"
 <hk-sections />
 <hk-schema>
   {
     "sections": [
-      { "type": "plans-hero" },
+      {
+        "type": "plans-hero"
+      },
       {
         "type": "features",
         "blocks": [
-          {"type": "feature", "settings": {"text": {"ar": "مفتاح الترخيص على الإيميل بعد الدفع", "en": "Licence key by email after payment"}}},
-          … 7 more
-        ]
-      },
-      { "type": "apps" },
-      {
-        "type": "faq",
-        "blocks": [
-          {"type": "faq-item", "settings": {"question": {"ar": "المفتاح بيوصلني إزاي؟", "en": "How do I receive my key?"}, "answer": {"ar": "بعد ما الدفع أونلاين يتم، بيوصلك إيميل فيه مفتاح الترخيص ورابط التحميل.", "en": "Once your online payment goes through, you get an email with the licence key and the download link."}}},
-          … 3 more
-        ]
-      }
-    ]
-  }
-</hk-schema>
+          {
+            "type": "feature",
+            "settings": {
+              "text": {
+                "ar": "مفتاح الترخيص على الإيميل بعد الدفع",
+                "en": "Licence key by email after payment"
+              }
+            }
+          },
 ```
+
+[View full file on GitHub](https://github.com/hekanahq/sneferu/blob/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/license/templates/index.snf#L1-L19)
 
 <Result url="demo-creator / demo-license.hekana.com">
   <Shot tab="Creator" src="../images/tutorial-creator-ar.webp" alt="Creator: two large dark covers with orange badges, a checklist and an author strip on warm paper" caption="Creator, examples/themes/creator/." />
@@ -162,7 +177,10 @@ collection is `featured`. To preview with this store's own products, write
       "url": "/en/products/sunny-colouring-book",
       "price": 6900,
       "compare_at": null,
+      "image": {
 ```
+
+[View full file on GitHub](https://github.com/hekanahq/sneferu/blob/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/bento/.sneferu-dev/data.json#L132-L145)
 
 That is the start of the `"en"` block; an `"ar"` block before it has the same
 products with Arabic titles, so `?locale=ar` previews in Arabic. The folder starts with a dot, so it is never
@@ -171,16 +189,7 @@ has the details; it needs the CLI from Sneferu main after #16.)
 
 ## 3. Tokens
 
-```json title="examples/themes/bento/theme.json"
-{
-  "id": "bento",
-  "name": "Bento",
-  "version": "1.3.0",
-  "author": "Hekana",
-  "description": "A soft pastel bento-grid theme for printables, templates and e-books",
-  "category": "digital",
-  "engine": "hk2",
-  "engineCompatibility": "^2.0.0",
+```json title="examples/themes/bento/theme.json (excerpt)"
   "defaultLocale": "ar",
   "locales": ["ar", "en"],
   "settings": {},
@@ -204,9 +213,9 @@ has the details; it needs the CLI from Sneferu main after #16.)
       "heading": "Baloo Bhaijaan 2",
       "body": "Baloo Bhaijaan 2"
     }
-  }
-}
 ```
+
+[View full file on GitHub](https://github.com/hekanahq/sneferu/blob/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/bento/theme.json#L10-L32)
 
 - `defaultLocale: "ar"` makes `/` Arabic, right to left; `/en` is English.
 - Every colour the page uses is a token. The extra keys (`sage`, `peach`,
@@ -228,6 +237,8 @@ the files and sets the family on the theme root, so the stylesheet has no
 }
 ```
 
+[View full file on GitHub](https://github.com/hekanahq/sneferu/blob/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/bento/assets/theme.css#L2-L7)
+
 ## 4. Layout
 
 ```html title="examples/themes/bento/layout/theme.snf"
@@ -238,25 +249,15 @@ the files and sets the family on the theme root, so the stylesheet has no
 </div>
 ```
 
+[View full file on GitHub](https://github.com/hekanahq/sneferu/blob/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/bento/layout/theme.snf)
+
 The header and the footer are [section groups](18-section-groups.mdx):
 `groups/header.json` and `groups/footer.json` start them with the sections
 `bento-header` and `bento-footer`, and the merchant edits them once for the
-whole store.
+whole store. The end of the header row, with the cart, the search and the phone
+menu:
 
-```html title="examples/themes/bento/sections/bento-header.snf"
-<header class="bt-header">
-  <div class="bt-wrap bt-header-row">
-    <div class="bt-start">
-      <a
-        class="bt-icon bt-user"
-        href="{{ url('/account') }}"
-        aria-label="{{ t('account') }}"
-      >{% render 'glyph', name: 'user' %}</a>
-      <a class="bt-icon bt-hide-phone" href="{{ url('/wishlist') }}" aria-label="{{ t('wishlist') }}"><hk-icon
-          name="heart"
-        /></a>
-      <a class="bt-logo" href="{{ store.url }}">{{ store.name }}</a>
-    </div>
+```html title="examples/themes/bento/sections/bento-header.snf (excerpt)"
     <div class="bt-end">
       <a
         class="bt-icon bt-hide-phone"
@@ -280,33 +281,9 @@ whole store.
           <hk-locale-switch />
         </div>
       </details>
-    </div>
-  </div>
-  <hk-cart-drawer open-on-add="{{ section.settings.drawer_on_add }}">
-    <hk-cart-items />
-    <hk-cart-summary />
-  </hk-cart-drawer>
-</header>
-<hk-schema>
-  {
-    "name": "Header",
-    "version": 1,
-    "templates": ["header"],
-    "settings": {
-      "menu": {
-        "type": "menu",
-        "label": "Menu",
-        "default": "main"
-      },
-      "drawer_on_add": {
-        "type": "boolean",
-        "label": "Open the cart when an item is added",
-        "default": true
-      }
-    }
-  }
-</hk-schema>
 ```
+
+[View full file on GitHub](https://github.com/hekanahq/sneferu/blob/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/bento/sections/bento-header.snf#L14-L36)
 
 - The page goes where `<hk-slot name="content" />` is.
 - Cart links carry `data-hk-open="cart-drawer"`: with the controllers running
@@ -356,7 +333,9 @@ block has its own collection, words and colours.
 </hk-schema>
 ```
 
-```html title="examples/themes/bento/blocks/shelf.snf"
+[View full file on GitHub](https://github.com/hekanahq/sneferu/blob/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/bento/sections/bento.snf)
+
+```html title="examples/themes/bento/blocks/shelf.snf (excerpt)"
 <div class="bt-shelf" id="{{ block.settings.list }}">
   <a class="bt-head" data-tone="{{ block.settings.head }}" href="{{ url(block.settings.link) }}">
     <h2>{{ block.settings.title }}</h2>
@@ -382,75 +361,9 @@ block has its own collection, words and colours.
           </div>
         {% endfor %}
       </div>
-    {% else %}
-      <p class="bt-empty">{{ t('empty') }}</p>
-    {% endif %}
-    <a
-      class="bt-more"
-      href="{{ url(block.settings.link) }}"
-      aria-label="{{ t('see_all') }}: {{ block.settings.title }}"
-    ><hk-icon name="plus" size="18" stroke="2.5" /></a>
-  </div>
-</div>
-<hk-schema>
-  {
-    "name": "Shelf",
-    "version": 1,
-    "settings": {
-      "list": {
-        "type": "collection",
-        "label": "Collection",
-        "default": "printables"
-      },
-      "title": {
-        "type": "text",
-        "label": "Title",
-        "localized": true,
-        "default": {
-          "ar": "مطبوعات للبيت والمدرسة",
-          "en": "Printables for home and school"
-        },
-        "maxLength": 60
-      },
-      "note": {
-        "type": "text",
-        "label": "Third chip",
-        "localized": true,
-        "default": {
-          "ar": "للأطفال",
-          "en": "For kids"
-        },
-        "maxLength": 30
-      },
-      "link": {
-        "type": "link",
-        "label": "Link of the title and the + button",
-        "default": "/category/printables"
-      },
-      "count": {
-        "type": "range",
-        "label": "Covers",
-        "default": 3,
-        "min": 1,
-        "max": 6,
-        "step": 1
-      },
-      "head": {
-        "type": "select",
-        "label": "Title colour",
-        "options": ["peach", "sage", "sky", "warm"],
-        "default": "peach"
-      },
-      "panel": {
-        "type": "select",
-        "label": "Panel colour",
-        "options": ["peach", "sage", "sky", "warm"],
-        "default": "sky"
-      }
-    }
-  }
-</hk-schema>
 ```
+
+[View full file on GitHub](https://github.com/hekanahq/sneferu/blob/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/bento/blocks/shelf.snf#L1-L25)
 
 <Result url="demo-bento.hekana.com/en">
   <Shot src="../images/tutorial-bento-shelves.webp" alt="Two shelves side by side: a peach header tile over a sky-blue panel and a sage header tile over a sand panel, each with three covers" caption="The shelves in English, 1040 px of content." />
@@ -478,7 +391,7 @@ block has its own collection, words and colours.
 6. The shelf's `id` is the collection handle, so the tab links `#printables`
    and `#templates` scroll to the shelves.
 
-The grid and the covers:
+The grid and the covers, from the stylesheet:
 
 ```css title="examples/themes/bento/assets/theme.css (excerpt)"
 /* Bento shelves: a header tile over a panel, two side by side */
@@ -500,13 +413,16 @@ The grid and the covers:
 .bt-cover { position: relative; }
 .bt-card { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 2px; }
 .bt-card img { width: 100%; aspect-ratio: 5 / 6; object-fit: cover; border-radius: 16px; display: block; margin-bottom: 6px; }
+.bt-card .sn-title { font-size: 13px; font-weight: 600; line-height: 1.35; }
 ```
+
+[View full file on GitHub](https://github.com/hekanahq/sneferu/blob/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/bento/assets/theme.css#L48-L67)
 
 ## 7. The band
 
 <Example>
 
-```html title="examples/themes/bento/sections/band.snf"
+```html title="examples/themes/bento/sections/band.snf (excerpt)"
 <section class="bt-band-wrap">
   <div class="bt-wrap">
     <div class="bt-band">
@@ -518,11 +434,11 @@ The grid and the covers:
     </div>
   </div>
 </section>
-<hk-schema>
-  {
-    "name": "Call to action band",
-    "version": 1,
-    "settings": {
+```
+
+[View full file on GitHub](https://github.com/hekanahq/sneferu/blob/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/bento/sections/band.snf#L1-L11)
+
+```json title="examples/themes/bento/sections/band.snf (excerpt)"
       "heading": {
         "type": "text",
         "label": "Heading",
@@ -533,35 +449,9 @@ The grid and the covers:
         },
         "maxLength": 80
       },
-      "text": {
-        "type": "textarea",
-        "label": "Text",
-        "localized": true,
-        "default": {
-          "ar": "ادفع أونلاين ورابط التحميل يوصلك على الإيميل على طول.",
-          "en": "Pay online and the download link is emailed to you right away."
-        },
-        "maxLength": 200
-      },
-      "button": {
-        "type": "text",
-        "label": "Button",
-        "localized": true,
-        "default": {
-          "ar": "تصفّح كل المنتجات",
-          "en": "Browse all products"
-        },
-        "maxLength": 30
-      },
-      "link": {
-        "type": "link",
-        "label": "Button link",
-        "default": "/products"
-      }
-    }
-  }
-</hk-schema>
 ```
+
+[View full file on GitHub](https://github.com/hekanahq/sneferu/blob/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/bento/sections/band.snf#L17-L26)
 
 <Result url="demo-bento.hekana.com/en">
   <Shot src="../images/tutorial-bento-band.webp" alt="A teal band with a heading, one line of text and a dark pill button" caption="The band in English." />
@@ -569,8 +459,8 @@ The grid and the covers:
 
 </Example>
 
-The text settings are `"localized": true`, with a default in each language:
-`{ "ar": "…", "en": "Print it today" }`. The editor shows one field per
+The text settings are `"localized": true`, with a default in each language,
+like the `heading` above. The editor shows one field per
 language, and `{{ section.settings.heading }}` prints the one for the page.
 The button link is a `link` setting; `hk-button` keeps it in the page's
 language.
@@ -605,13 +495,16 @@ shelves and rearranges the header:
   .bt-card .sn-title { font-size: 12px; }
   .bt-band { border-radius: 28px; padding: 22px; justify-content: center; text-align: center; }
   .bt-band-button.sn-btn { width: 100%; }
+}
 ```
+
+[View full file on GitHub](https://github.com/hekanahq/sneferu/blob/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/bento/assets/theme.css#L106-L127)
 
 ## 9. Check, preview and push
 
 <Steps>
   1. `npx sneferu format` indents every file.
-  2. `npx sneferu validate` prints `✔ theme bento@1.1.0 is valid`.
+  2. `npx sneferu validate` prints `✔ theme bento@1.3.0 is valid`.
   3. `npx sneferu dev` and open `http://127.0.0.1:4100`, then
      `?locale=en`. Narrow the window below 640 px.
   4. Change `id` in `theme.json` to a slug of your own, then

@@ -108,16 +108,7 @@ Prices are in piastres in the data and printed by `hk-price`, for example
 
 ## 1. Manifest and tokens
 
-```json title="theme.json"
-{
-  "id": "bento",
-  "name": "Bento",
-  "version": "1.3.0",
-  "author": "Hekana",
-  "description": "A soft pastel bento-grid theme for printables, templates and e-books",
-  "category": "digital",
-  "engine": "hk2",
-  "engineCompatibility": "^2.0.0",
+```json title="theme.json (excerpt)"
   "defaultLocale": "ar",
   "locales": ["ar", "en"],
   "settings": {},
@@ -142,8 +133,9 @@ Prices are in piastres in the data and printed by `hk-price`, for example
       "body": "Baloo Bhaijaan 2"
     }
   }
-}
 ```
+
+[View the full file](theme.json#L10-L33)
 
 - `defaultLocale` is `ar` and `locales` lists both languages, so `/` renders
   Arabic (right to left) and `/en` English.
@@ -163,13 +155,15 @@ Prices are in piastres in the data and printed by `hk-price`, for example
 </div>
 ```
 
+[View the full file](layout/theme.snf)
+
 The header and the footer are [section groups](../../../docs/guide/18-section-groups.mdx): the layout places
 `<hk-section-group name="header" />` and `<hk-section-group name="footer" />`, `groups/header.json` and
 `groups/footer.json` start them with `bento-header` and `bento-footer`, and the merchant edits them once for the
 whole store. The header also holds the cart: the cart link carries `data-hk-open="cart-drawer"` and
 `<hk-cart-count />`, and `<hk-cart-drawer>` lists the lines (a plain link to the cart page without JavaScript).
 
-```html title="sections/bento-header.snf"
+```html title="sections/bento-header.snf (excerpt)"
 <header class="bt-header">
   <div class="bt-wrap bt-header-row">
     <div class="bt-start">
@@ -195,36 +189,9 @@ whole store. The header also holds the cart: the cart link carries `data-hk-open
         /></a>
       <a class="bt-pill" href="{{ url('/products') }}">{{ t('all_products') }}</a>
       <details class="bt-menu">
-        <summary class="bt-icon" aria-label="{{ t('menu') }}"><hk-icon name="menu" size="22" /></summary>
-        <div class="bt-menu-panel">
-          <a href="{{ url('/search') }}">{{ t('search') }}</a>
-          <a href="{{ url('/cart') }}" data-hk-open="cart-drawer">{{ t('cart') }}</a>
-          <a href="{{ url('/wishlist') }}">{{ t('wishlist') }}</a>
-          <hk-locale-switch />
-        </div>
-      </details>
-    </div>
-  </div>
-  <hk-cart-drawer open-on-add="{{ section.settings.drawer_on_add }}">
-    <hk-cart-items />
-    <hk-cart-summary />
-  </hk-cart-drawer>
-</header>
-<hk-schema>
-  {
-    "name": "Header",
-    "version": 1,
-    "templates": ["header"],
-    "settings": {
-      "drawer_on_add": {
-        "type": "boolean",
-        "label": "Open the cart when an item is added",
-        "default": true
-      }
-    }
-  }
-</hk-schema>
 ```
+
+[View the full file](sections/bento-header.snf#L1-L25)
 
 
 - `<hk-slot name="content" />` is where the template's sections go.
@@ -253,6 +220,8 @@ whole store. The header also holds the cart: the cart link carries `data-hk-open
 {% endif %}
 ```
 
+[View the full file](snippets/glyph.snf)
+
 ## 3. The template
 
 ```html title="templates/index.snf (excerpt)"
@@ -263,22 +232,20 @@ whole store. The header also holds the cart: the cart link carries `data-hk-open
       {
         "type": "tabs",
         "blocks": [
-          {"type": "tab", "settings": {"label": {"ar": "الكل", "en": "All"}, "link": "#shop", "current": true}},
-          … 3 more
-        ]
-      },
-      {
-        "type": "bento",
-        "blocks": [
-          {"type": "shelf", "settings": {"list": "printables", "title": {"ar": "مطبوعات للبيت والمدرسة", "en": "Printables for home and school"}, "note": {"ar": "للأطفال", "en": "For kids"}, "link": "/category/printables", "count": 3, "head": "peach", "panel": "sky"}},
-          … 1 more
-        ]
-      },
-      { "type": "band" }
-    ]
-  }
-</hk-schema>
+          {
+            "type": "tab",
+            "settings": {
+              "label": {
+                "ar": "الكل",
+                "en": "All"
+              },
+              "link": "#shop",
+              "current": true
+            }
+          },
 ```
+
+[View the full file](templates/index.snf#L1-L18)
 
 The home page is three sections, in this order, with their default blocks:
 four tabs and two shelves. The excerpt shows the first block of each; the file
@@ -308,7 +275,9 @@ more in the builder.
 </hk-schema>
 ```
 
-```html title="blocks/tab.snf"
+[View the full file](sections/tabs.snf)
+
+```html title="blocks/tab.snf (excerpt)"
 <a href="{{ url(block.settings.link) }}" aria-current="{{ block.settings.current }}">{{ block.settings.label }}</a>
 <hk-schema>
   {
@@ -330,15 +299,9 @@ more in the builder.
         "label": "Link (a page, or #<collection handle> for a shelf on this page)",
         "default": "#shop"
       },
-      "current": {
-        "type": "boolean",
-        "label": "Underlined as the current tab",
-        "default": false
-      }
-    }
-  }
-</hk-schema>
 ```
+
+[View the full file](blocks/tab.snf#L1-L21)
 
 A row of `tab` blocks: a localized label, a link and a `current` switch. The
 switch prints `aria-current="true"` or `"false"`, and the stylesheet gives the
@@ -372,11 +335,13 @@ own collection and pair of colours:
 </hk-schema>
 ```
 
+[View the full file](sections/bento.snf)
+
 `collection(block.settings.list)` returns the category the merchant picked for
 that shelf (`printables` and `templates` by default), or an empty list when none
 is picked.
 
-```html title="blocks/shelf.snf"
+```html title="blocks/shelf.snf (excerpt)"
 <div class="bt-shelf" id="{{ block.settings.list }}">
   <a class="bt-head" data-tone="{{ block.settings.head }}" href="{{ url(block.settings.link) }}">
     <h2>{{ block.settings.title }}</h2>
@@ -402,75 +367,9 @@ is picked.
           </div>
         {% endfor %}
       </div>
-    {% else %}
-      <p class="bt-empty">{{ t('empty') }}</p>
-    {% endif %}
-    <a
-      class="bt-more"
-      href="{{ url(block.settings.link) }}"
-      aria-label="{{ t('see_all') }}: {{ block.settings.title }}"
-    ><hk-icon name="plus" size="18" stroke="2.5" /></a>
-  </div>
-</div>
-<hk-schema>
-  {
-    "name": "Shelf",
-    "version": 1,
-    "settings": {
-      "list": {
-        "type": "collection",
-        "label": "Collection",
-        "default": "printables"
-      },
-      "title": {
-        "type": "text",
-        "label": "Title",
-        "localized": true,
-        "default": {
-          "ar": "مطبوعات للبيت والمدرسة",
-          "en": "Printables for home and school"
-        },
-        "maxLength": 60
-      },
-      "note": {
-        "type": "text",
-        "label": "Third chip",
-        "localized": true,
-        "default": {
-          "ar": "للأطفال",
-          "en": "For kids"
-        },
-        "maxLength": 30
-      },
-      "link": {
-        "type": "link",
-        "label": "Link of the title and the + button",
-        "default": "/category/printables"
-      },
-      "count": {
-        "type": "range",
-        "label": "Covers",
-        "default": 3,
-        "min": 1,
-        "max": 6,
-        "step": 1
-      },
-      "head": {
-        "type": "select",
-        "label": "Title colour",
-        "options": ["peach", "sage", "sky", "warm"],
-        "default": "peach"
-      },
-      "panel": {
-        "type": "select",
-        "label": "Panel colour",
-        "options": ["peach", "sage", "sky", "warm"],
-        "default": "sky"
-      }
-    }
-  }
-</hk-schema>
 ```
+
+[View the full file](blocks/shelf.snf#L1-L25)
 
 How it works:
 
@@ -519,18 +418,13 @@ The CSS for the grid, the tiles and the covers:
 .bt-card img { transition: transform .15s ease; }
 .bt-new {
   position: absolute; top: -8px; inset-inline-start: -6px; padding: 2px 10px; border-radius: 999px;
-  background: var(--hk-color-primary); color: #FFFFFF; font-size: 11px; font-weight: 600;
-}
-.bt-more {
-  position: absolute; bottom: 14px; inset-inline-end: 14px; width: 44px; height: 44px; border-radius: 50%;
-  display: grid; place-items: center; background: var(--hk-color-teal); color: #FFFFFF !important;
-}
-.bt-more:hover { filter: brightness(.95); }
 ```
+
+[View the full file](assets/theme.css#L48-L72)
 
 ## 6. The teal band
 
-```html title="sections/band.snf"
+```html title="sections/band.snf (excerpt)"
 <section class="bt-band-wrap">
   <div class="bt-wrap">
     <div class="bt-band">
@@ -542,50 +436,9 @@ The CSS for the grid, the tiles and the covers:
     </div>
   </div>
 </section>
-<hk-schema>
-  {
-    "name": "Call to action band",
-    "version": 1,
-    "settings": {
-      "heading": {
-        "type": "text",
-        "label": "Heading",
-        "localized": true,
-        "default": {
-          "ar": "اطبع النهارده",
-          "en": "Print it today"
-        },
-        "maxLength": 80
-      },
-      "text": {
-        "type": "textarea",
-        "label": "Text",
-        "localized": true,
-        "default": {
-          "ar": "ادفع أونلاين ورابط التحميل يوصلك على الإيميل على طول.",
-          "en": "Pay online and the download link is emailed to you right away."
-        },
-        "maxLength": 200
-      },
-      "button": {
-        "type": "text",
-        "label": "Button",
-        "localized": true,
-        "default": {
-          "ar": "تصفّح كل المنتجات",
-          "en": "Browse all products"
-        },
-        "maxLength": 30
-      },
-      "link": {
-        "type": "link",
-        "label": "Button link",
-        "default": "/products"
-      }
-    }
-  }
-</hk-schema>
 ```
+
+[View the full file](sections/band.snf#L1-L11)
 
 The text settings are `"localized": true`, with an Arabic and an English
 default, and the template prints `{{ section.settings.heading }}`: the value
@@ -600,6 +453,8 @@ style of its own, so the theme styles it through its class:
   display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding-inline: 34px; border-radius: 999px;
   background: var(--hk-color-primary); color: #FFFFFF; border: 0; font-size: 16px; font-weight: 600;
 ```
+
+[View the full file](assets/theme.css#L90-L92)
 
 ## 7. Phones
 
@@ -618,6 +473,8 @@ groups so `order` can put the menu first and the "All products" pill last:
   .bt-logo { margin: 0; }
   .bt-pill { margin-inline: auto 0; min-height: 44px; padding-inline: 18px; font-size: 13px; }
 ```
+
+[View the full file](assets/theme.css#L106-L114)
 
 ## 8. Words
 
@@ -641,6 +498,8 @@ All interface text is in the two locale files, with the same keys:
 }
 ```
 
+[View the full file](locales/en.json)
+
 The Arabic file has the same keys in Egyptian Arabic. Prices and dates are
 printed with Western digits in both languages.
 
@@ -655,6 +514,8 @@ printed with Western digits in both languages.
     "title": "مطبوعات",
     "products": [
 ```
+
+[View the full file](.sneferu-dev/data.json#L1-L9)
 
 That is the start of `.sneferu-dev/data.json`, the sample data `sneferu dev`
 uses for this theme (split by locale).

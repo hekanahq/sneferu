@@ -5,17 +5,26 @@ cards, in-game currency and top-up packs as codes, from a design mockup to a
 live store. It uses only the CLI and the parts of Sneferu described in the
 earlier chapters. The finished theme is live at
 [demo-arcade.hekana.com](https://demo-arcade.hekana.com) (Arabic) and
-[demo-arcade.hekana.com/en](https://demo-arcade.hekana.com/en) (English), and
-its files are in the SDK repository under `examples/themes/arcade/`, with a
-longer walkthrough in its `README.md`.
+[demo-arcade.hekana.com/en](https://demo-arcade.hekana.com/en) (English).
+
+This page shows the key part of each file. **Full theme on GitHub:**
+[examples/themes/arcade](https://github.com/hekanahq/sneferu/tree/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/arcade),
+with a longer walkthrough in its `README.md`. Every excerpt links to its whole
+file. To run it yourself:
+
+```bash
+git clone --depth 1 https://github.com/hekanahq/sneferu
+cd sneferu/examples/themes/arcade
+npx sneferu dev
+```
 
 The mockup was generated as a design brief. Its Arabic is placeholder text, its
 prices were in dollars, and its cyan-to-magenta glow becomes cyan-to-lime.
 
 The home page template lists its sections, and seeds the repeated items (tabs,
 amount chips, tiles, steps, questions) as blocks, so a fresh install shows the
-whole page and the merchant can add, remove and reorder each item. The excerpts
-below show the first block of each section.
+whole page and the merchant can add, remove and reorder each item. The excerpt
+shows the first section and its first block.
 
 <Example>
 
@@ -27,36 +36,19 @@ below show the first block of each section.
       {
         "type": "arcade-hero",
         "blocks": [
-          {"type": "tab", "settings": {"label": {"ar": "PC", "en": "PC"}, "link": "/products"}},
-          … 12 more
-        ]
-      },
-      {
-        "type": "arcade-categories",
-        "blocks": [
-          {"type": "tile", "settings": {"title": {"ar": "كروت الهدايا", "en": "Gift cards"}, "link": "/category/gift-cards", "icon": "credit-card"}},
-          … 5 more
-        ]
-      },
-      {
-        "type": "arcade-steps",
-        "blocks": [
-          {"type": "step", "settings": {"icon": "credit-card", "title": {"ar": "اختار وادفع أونلاين", "en": "Pick and pay online"}, "text": {"ar": "اختار الكارت والقيمة، وادفع أونلاين.", "en": "Choose the card and the amount, then pay online."}}},
-          … 2 more
-        ]
-      },
-      { "type": "arcade-products" },
-      {
-        "type": "arcade-faq",
-        "blocks": [
-          {"type": "faq-item", "settings": {"question": {"ar": "الكود بيوصل إمتى؟", "en": "When does the code arrive?"}, "answer": {"ar": "بعد ما الدفع الأونلاين يتأكد، الكود بيتبعت أوتوماتيك على الإيميل اللي كتبته في الطلب.", "en": "Once your online payment is confirmed, the code is sent automatically to the email on your order."}}},
-          … 4 more
-        ]
-      }
-    ]
-  }
-</hk-schema>
+          {
+            "type": "tab",
+            "settings": {
+              "label": {
+                "ar": "PC",
+                "en": "PC"
+              },
+              "link": "/products"
+            }
+          },
 ```
+
+[View full file on GitHub](https://github.com/hekanahq/sneferu/blob/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/arcade/templates/index.snf#L1-L17)
 
 <Result url="demo-arcade.hekana.com">
   <Shot tab="Mockup" src="../images/tutorial-arcade-mockup.webp" alt="A dark mockup: platform tabs, a title, a row of glowing amount chips, an instant delivery line and category tiles" caption="The mockup the theme reproduces." />
@@ -73,8 +65,8 @@ Two more gaming themes were built the same way:
 
 | Theme | What it shows | Live | Files |
 | - | - | - | - |
-| Console | white and royal blue, a product carousel, an amount selector, platform icons | [demo-console.hekana.com](https://demo-console.hekana.com) | `examples/themes/console/` |
-| Esports | black and deep green, a slanted hero with SVG art, top-up cards with ribbons | [demo-esports.hekana.com](https://demo-esports.hekana.com) | `examples/themes/esports/` |
+| Console | white and royal blue, a product carousel, an amount selector, platform icons | [demo-console.hekana.com](https://demo-console.hekana.com) | [examples/themes/console](https://github.com/hekanahq/sneferu/tree/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/console) |
+| Esports | black and deep green, a slanted hero with SVG art, top-up cards with ribbons | [demo-esports.hekana.com](https://demo-esports.hekana.com) | [examples/themes/esports](https://github.com/hekanahq/sneferu/tree/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/esports) |
 
 <Example>
 
@@ -83,72 +75,47 @@ Two more gaming themes were built the same way:
 <hk-schema>
   {
     "sections": [
-      { "type": "console-showcase" },
+      {
+        "type": "console-showcase"
+      },
       {
         "type": "console-amounts",
         "blocks": [
-          {"type": "amount", "settings": {"amount": 200, "highlight": false}},
-          … 2 more
-        ]
-      },
-      {
-        "type": "console-platforms",
-        "blocks": [
-          {"type": "platform", "settings": {"icon": "monitor", "label": {"ar": "كمبيوتر", "en": "PC"}, "link": "/category/gift-cards"}},
-          … 4 more
-        ]
-      },
-      {
-        "type": "console-trust",
-        "blocks": [
-          {"type": "trust", "settings": {"icon": "zap", "label": {"ar": "تسليم فوري للكود", "en": "Instant code delivery"}}},
-          … 2 more
-        ]
-      },
-      { "type": "console-products" },
-      {
-        "type": "console-faq",
-        "blocks": [
-          {"type": "faq-item", "settings": {"question": {"ar": "الكود بيوصل إمتى؟", "en": "When does the code arrive?"}, "answer": {"ar": "بعد ما الدفع الأونلاين يتأكد، الكود بيتبعت أوتوماتيك على الإيميل اللي كتبته في الطلب.", "en": "Once your online payment is confirmed, the code is sent automatically to the email on your order."}}},
-          … 3 more
-        ]
-      }
-    ]
-  }
-</hk-schema>
+          {
+            "type": "amount",
+            "settings": {
+              "amount": 200,
+              "highlight": false
+            }
+          },
 ```
+
+[View full file on GitHub](https://github.com/hekanahq/sneferu/blob/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/console/templates/index.snf#L1-L17)
 
 ```html title="examples/themes/esports/templates/index.snf (excerpt)"
 <hk-sections />
 <hk-schema>
   {
     "sections": [
-      { "type": "esports-hero" },
+      {
+        "type": "esports-hero"
+      },
       {
         "type": "esports-products",
         "blocks": [
-          {"type": "tab", "settings": {"label": {"ar": "الكل", "en": "All"}, "link": "/products"}},
-          … 2 more
-        ]
-      },
-      {
-        "type": "esports-steps",
-        "blocks": [
-          {"type": "step", "settings": {"icon": "credit-card", "title": {"ar": "اختار وادفع أونلاين", "en": "Pick and pay online"}, "text": {"ar": "اختار الكارت والقيمة، وادفع أونلاين.", "en": "Choose the card and the amount, then pay online."}}},
-          … 2 more
-        ]
-      },
-      {
-        "type": "esports-faq",
-        "blocks": [
-          {"type": "faq-item", "settings": {"question": {"ar": "الكود بيوصل إمتى؟", "en": "When does the code arrive?"}, "answer": {"ar": "بعد ما الدفع الأونلاين يتأكد، الكود بيتبعت أوتوماتيك على الإيميل اللي كتبته في الطلب.", "en": "Once your online payment is confirmed, the code is sent automatically to the email on your order."}}},
-          … 4 more
-        ]
-      }
-    ]
-  }
-</hk-schema>
+          {
+            "type": "tab",
+            "settings": {
+              "label": {
+                "ar": "الكل",
+                "en": "All"
+              },
+              "link": "/products"
+            }
+          },
 ```
+
+[View full file on GitHub](https://github.com/hekanahq/sneferu/blob/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/esports/templates/index.snf#L1-L20)
 
 <Result url="demo-console / demo-esports.hekana.com">
   <Shot tab="Console" src="../images/tutorial-console-ar-v2.webp" alt="Console: a white page with a grey logo pill, a search field, two large product cards, a blue amount selector and platform icons" caption="Console, examples/themes/console/." />
@@ -174,16 +141,7 @@ The store needs products and four categories with these handles:
 
 ## 2. Tokens
 
-```json title="examples/themes/arcade/theme.json"
-{
-  "id": "arcade",
-  "name": "Arcade",
-  "version": "1.1.0",
-  "author": "Hekana",
-  "description": "A dark gaming store for gift cards and top-ups: neon cyan and lime, amount chips, category tiles, redeem steps.",
-  "category": "gaming",
-  "engine": "hk2",
-  "engineCompatibility": "^2.0.0",
+```json title="examples/themes/arcade/theme.json (excerpt)"
   "defaultLocale": "ar",
   "locales": ["ar", "en"],
   "settings": {},
@@ -204,8 +162,9 @@ The store needs products and four categories with these handles:
       "body": "Rubik"
     }
   }
-}
 ```
+
+[View full file on GitHub](https://github.com/hekanahq/sneferu/blob/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/arcade/theme.json#L10-L29)
 
 1. `defaultLocale: "ar"` makes `/` Arabic, right to left; `/en` is English.
 2. `primary` is the cyan and `accent` the lime. Extra keys (`muted`,
@@ -213,7 +172,7 @@ The store needs products and four categories with these handles:
 3. `tokens.fonts` picks Rubik, a catalogue font with Arabic and Latin glyphs,
    for headings and body text. Hekana serves the font files and writes the
    `@font-face` rules; the theme ships no font files and no `font-family`.
-4. The stylesheet builds its one gradient from the two tokens:
+4. The stylesheet builds its one gradient from the two tokens. Its first rules:
 
 ```css title="examples/themes/arcade/assets/theme.css (excerpt)"
 /* Arcade: near-black ground, neon cyan + lime. Colours come from theme.json tokens. */
@@ -237,6 +196,8 @@ The store needs products and four categories with these handles:
 [data-hk-theme='arcade'] [data-hk-block] { display: contents; }
 ```
 
+[View full file on GitHub](https://github.com/hekanahq/sneferu/blob/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/arcade/assets/theme.css#L1-L19)
+
 `:where(…)` keeps the link and heading resets at zero specificity, so a single
 class such as `.arc-chip` can still set its own colour. `[data-hk-block] {
 display: contents; }` lets a block's wrapper `<div>` disappear from the layout,
@@ -247,15 +208,20 @@ so tabs, chips and tiles sit directly in their flex or grid row.
 Words the merchant may change are settings with `"localized": true` and a
 default in both languages, so the editor shows one field per language:
 
-```json title="examples/themes/arcade/sections/arcade-hero.snf (schema excerpt)"
-"title": {
-  "type": "text",
-  "label": "Title",
-  "localized": true,
-  "default": { "ar": "كروت الألعاب والشحن", "en": "Game cards and top-ups" },
-  "maxLength": 80
-}
+```json title="examples/themes/arcade/sections/arcade-hero.snf (excerpt)"
+      "title": {
+        "type": "text",
+        "label": "Title",
+        "localized": true,
+        "default": {
+          "ar": "كروت الألعاب والشحن",
+          "en": "Game cards and top-ups"
+        },
+        "maxLength": 80
+      },
 ```
+
+[View full file on GitHub](https://github.com/hekanahq/sneferu/blob/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/arcade/sections/arcade-hero.snf#L42-L51)
 
 `{{ section.settings.title }}` prints the value for the page's language. Words
 that belong to the interface (menu, cart, "View all", empty states) stay in
@@ -265,10 +231,18 @@ that belong to the interface (menu, cart, "View all", empty states) stay in
 {
   "menu": "Menu",
   "cart": "Cart",
+  "nav_home": "Home",
+  "nav_all": "All products",
+  "nav_faq": "Questions",
   "search_placeholder": "Search for a game or card",
-  "view_all": "View all"
-}
+  "platforms": "Platforms",
+  "cat_gift_cards": "Gift cards",
+  "cat_currency": "In-game currency",
+  "cat_topups": "Top-up packs",
+  "view_all": "View all",
 ```
+
+[View full file on GitHub](https://github.com/hekanahq/sneferu/blob/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/arcade/locales/en.json#L1-L12)
 
 Internal links go through `url()`: `href="{{ url('/products') }}"` is
 `/products` on an Arabic page and `/en/products` on an English one. A plain
@@ -295,6 +269,8 @@ an ordinary section the merchant can edit once for the whole store.
 <hk-section-group name="footer" />
 ```
 
+[View full file on GitHub](https://github.com/hekanahq/sneferu/blob/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/arcade/layout/theme.snf)
+
 `groups/header.json` says which section the header group starts with
 (`groups/footer.json` does the same for `arcade-footer`):
 
@@ -312,9 +288,11 @@ an ordinary section the merchant can edit once for the whole store.
 }
 ```
 
+[View full file on GitHub](https://github.com/hekanahq/sneferu/blob/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/arcade/groups/header.json)
+
 <Example>
 
-```html title="examples/themes/arcade/sections/arcade-header.snf"
+```html title="examples/themes/arcade/sections/arcade-header.snf (excerpt)"
 <header class="arc-header">
   <hk-container>
     <div class="arc-bar">
@@ -339,32 +317,20 @@ an ordinary section the merchant can edit once for the whole store.
           class="ic"
         /><hk-cart-count /></a>
     </div>
-  </hk-container>
-  <hk-cart-drawer open-on-add="{{ section.settings.drawer_on_add }}">
-    <hk-cart-items />
-    <hk-cart-summary />
-  </hk-cart-drawer>
-</header>
+```
+
+[View full file on GitHub](https://github.com/hekanahq/sneferu/blob/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/arcade/sections/arcade-header.snf#L1-L24)
+
+```html title="examples/themes/arcade/sections/arcade-header.snf (excerpt)"
 <hk-schema>
   {
     "name": "Header",
     "version": 1,
     "templates": ["header"],
     "settings": {
-      "menu": {
-        "type": "menu",
-        "label": "Menu",
-        "default": "main"
-      },
-      "drawer_on_add": {
-        "type": "boolean",
-        "label": "Open the cart when an item is added",
-        "default": true
-      }
-    }
-  }
-</hk-schema>
 ```
+
+[View full file on GitHub](https://github.com/hekanahq/sneferu/blob/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/arcade/sections/arcade-header.snf#L31-L36)
 
 <Result url="demo-arcade.hekana.com/en">
   <Shot src="../images/tutorial-arcade-header.webp" alt="A dark header: the store name in a cyan-to-lime gradient, a rounded search field and a cart icon" caption="The header in English, 1440 px wide." />
@@ -397,7 +363,7 @@ an ordinary section the merchant can edit once for the whole store.
 
 <Example>
 
-```html title="examples/themes/arcade/sections/arcade-hero.snf"
+```html title="examples/themes/arcade/sections/arcade-hero.snf (excerpt)"
 <hk-section padding-y="32" mobile-padding-y="16" class="arc-hero">
   <nav class="arc-tabs" aria-label="{{ t('platforms') }}">
     {% for block in section.blocks %}
@@ -419,69 +385,9 @@ an ordinary section the merchant can edit once for the whole store.
         {% if block.type == 'chip' %}<hk-block of="{{ block }}" />{% endif %}
       {% endfor %}
     </div>
-    <div class="arc-actions">
-      <hk-button
-        label="{{ section.settings.button }}"
-        href="{{ section.settings.button_link }}"
-        variant="outline"
-        size="sm"
-        class="arc-browse"
-      />
-      <span class="arc-instant">
-        <span class="arc-instant-icon"><hk-icon name="zap" class="ic" /></span>
-        {{ section.settings.note }}
-      </span>
-    </div>
-  </hk-stack>
-</hk-section>
-<hk-schema>
-  {
-    "name": "Arcade hero",
-    "version": 1,
-    "settings": {
-      "title": {
-        "type": "text",
-        "label": "Title",
-        "localized": true,
-        "default": {
-          "ar": "كروت الألعاب والشحن",
-          "en": "Game cards and top-ups"
-        },
-        "maxLength": 80
-      },
-      "button": {
-        "type": "text",
-        "label": "Button",
-        "localized": true,
-        "default": {
-          "ar": "تصفح الكروت",
-          "en": "Browse cards"
-        },
-        "maxLength": 30
-      },
-      "button_link": {
-        "type": "link",
-        "label": "Button link",
-        "default": "/category/gift-cards"
-      },
-      "note": {
-        "type": "text",
-        "label": "Note next to the button",
-        "localized": true,
-        "default": {
-          "ar": "تسليم فوري",
-          "en": "Instant delivery"
-        },
-        "maxLength": 40
-      }
-    },
-    "blocks": {
-      "allowed": ["tab", "chip"],
-      "max": 16
-    }
-  }
-</hk-schema>
 ```
+
+[View full file on GitHub](https://github.com/hekanahq/sneferu/blob/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/arcade/sections/arcade-hero.snf#L1-L21)
 
 ```html title="examples/themes/arcade/blocks/tab.snf"
 <a class="arc-tab" href="{{ url(block.settings.link) }}">{{ block.settings.label }}</a>
@@ -510,7 +416,9 @@ an ordinary section the merchant can edit once for the whole store.
 </hk-schema>
 ```
 
-```html title="examples/themes/arcade/blocks/chip.snf"
+[View full file on GitHub](https://github.com/hekanahq/sneferu/blob/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/arcade/blocks/tab.snf)
+
+```html title="examples/themes/arcade/blocks/chip.snf (excerpt)"
 {% if block.settings.amount %}
   <a class="arc-chip" href="{{ url('/search') }}">
     <span class="arc-chip-icon">{% render 'glyph', name: 'coin' %}</span>
@@ -518,22 +426,9 @@ an ordinary section the merchant can edit once for the whole store.
     <span class="arc-chip-short">{{ block.settings.amount }}</span>
   </a>
 {% endif %}
-<hk-schema>
-  {
-    "name": "Amount chip",
-    "version": 1,
-    "settings": {
-      "amount": {
-        "type": "number",
-        "label": "Amount (EGP)",
-        "default": 100,
-        "min": 0,
-        "max": 100000
-      }
-    }
-  }
-</hk-schema>
 ```
+
+[View full file on GitHub](https://github.com/hekanahq/sneferu/blob/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/arcade/blocks/chip.snf#L1-L7)
 
 <Result url="demo-arcade.hekana.com/en">
   <Shot src="../images/tutorial-arcade-hero.webp" alt="Platform tabs in a pill with a gradient border, the title Game cards and top-ups, eight cyan-to-lime chips from 100 to 2000 EGP, a Browse cards button and an Instant delivery line" caption="The hero in English." />
@@ -552,8 +447,8 @@ an ordinary section the merchant can edit once for the whole store.
 4. The amounts are whole pounds, so `money: 'whole', 'major'` reads the number
    as pounds and prints `EGP 100` / `100 ج.م`. On phones a second, plain
    number replaces it, so six chips fit in one row.
-5. The `hk-button` gets `class="arc-browse"`, and the stylesheet draws its
-   gradient border.
+5. Below the chips, an `hk-button` with `class="arc-browse"` links to the
+   gift cards, and the stylesheet draws its gradient border.
 
 ```css title="examples/themes/arcade/assets/theme.css (excerpt)"
 /* Hero: platform tabs, title, amount chips */
@@ -575,13 +470,16 @@ an ordinary section the merchant can edit once for the whole store.
 .arc-instant { display: inline-flex; align-items: center; gap: 10px; font-weight: 500; font-size: 17px; }
 .arc-instant-icon { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; border: 1.5px solid var(--arc-cyan); color: var(--arc-cyan); box-shadow: 0 0 12px rgba(34, 211, 238, 0.4); }
 .arc-instant-icon .ic { width: 18px; height: 18px; }
+
 ```
+
+[View full file on GitHub](https://github.com/hekanahq/sneferu/blob/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/arcade/assets/theme.css#L40-L59)
 
 ## 6. Category tiles
 
 <Example>
 
-```html title="examples/themes/arcade/sections/arcade-categories.snf"
+```html title="examples/themes/arcade/sections/arcade-categories.snf (excerpt)"
 <hk-section padding-y="24" mobile-padding-y="16" class="arc-cats">
   {% if section.settings.heading %}
     <hk-heading text="{{ section.settings.heading }}" level="h2" size="24" mobile-size="20" class="arc-h2" />
@@ -592,31 +490,11 @@ an ordinary section the merchant can edit once for the whole store.
     {% endfor %}
   </hk-grid>
 </hk-section>
-<hk-schema>
-  {
-    "name": "Category tiles",
-    "version": 1,
-    "settings": {
-      "heading": {
-        "type": "text",
-        "label": "Heading (optional)",
-        "localized": true,
-        "default": {
-          "ar": "",
-          "en": ""
-        },
-        "maxLength": 60
-      }
-    },
-    "blocks": {
-      "allowed": ["tile"],
-      "max": 12
-    }
-  }
-</hk-schema>
 ```
 
-```html title="examples/themes/arcade/blocks/tile.snf"
+[View full file on GitHub](https://github.com/hekanahq/sneferu/blob/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/arcade/sections/arcade-categories.snf#L1-L10)
+
+```html title="examples/themes/arcade/blocks/tile.snf (excerpt)"
 <a class="arc-tile" href="{{ url(block.settings.link) }}">
   <span class="arc-tile-icon">
     {% if block.settings.icon == 'gem' %}
@@ -627,49 +505,9 @@ an ordinary section the merchant can edit once for the whole store.
   </span>
   <span class="arc-tile-title">{{ block.settings.title }}</span>
 </a>
-<hk-schema>
-  {
-    "name": "Category tile",
-    "version": 1,
-    "settings": {
-      "title": {
-        "type": "text",
-        "label": "Title",
-        "localized": true,
-        "default": {
-          "ar": "كروت الهدايا",
-          "en": "Gift cards"
-        },
-        "maxLength": 32
-      },
-      "link": {
-        "type": "link",
-        "label": "Link",
-        "default": "/category/gift-cards"
-      },
-      "icon": {
-        "type": "select",
-        "label": "Icon",
-        "options": [
-          "credit-card",
-          "gem",
-          "zap",
-          "calendar",
-          "gamepad-2",
-          "smartphone",
-          "trophy",
-          "gift",
-          "monitor",
-          "headphones",
-          "key",
-          "sparkles"
-        ],
-        "default": "credit-card"
-      }
-    }
-  }
-</hk-schema>
 ```
+
+[View full file on GitHub](https://github.com/hekanahq/sneferu/blob/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/arcade/blocks/tile.snf#L1-L10)
 
 <Result url="demo-arcade.hekana.com/en">
   <Shot src="../images/tutorial-arcade-tiles.webp" alt="Six dark tiles in two rows of three, each with a cyan-to-lime outline icon and a label: Gift cards, In-game currency, Top-up packs, Subscriptions, Console cards, Mobile games" caption="Three a row on desktop; two a row on phones." />
@@ -692,7 +530,7 @@ an ordinary section the merchant can edit once for the whole store.
 
 <Example>
 
-```html title="examples/themes/arcade/sections/arcade-steps.snf"
+```html title="examples/themes/arcade/sections/arcade-steps.snf (excerpt)"
 <hk-section padding-y="48" mobile-padding-y="32" class="arc-steps">
   <hk-stack gap="24" align="center">
     <hk-heading
@@ -710,72 +548,20 @@ an ordinary section the merchant can edit once for the whole store.
     </div>
   </hk-stack>
 </hk-section>
-<hk-schema>
-  {
-    "name": "How to redeem",
-    "version": 1,
-    "settings": {
-      "heading": {
-        "type": "text",
-        "label": "Heading",
-        "localized": true,
-        "default": {
-          "ar": "إزاي تستلم الكود",
-          "en": "How you get your code"
-        },
-        "maxLength": 60
-      }
-    },
-    "blocks": {
-      "allowed": ["step"],
-      "max": 4
-    }
-  }
-</hk-schema>
 ```
 
-```html title="examples/themes/arcade/blocks/step.snf"
+[View full file on GitHub](https://github.com/hekanahq/sneferu/blob/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/arcade/sections/arcade-steps.snf#L1-L17)
+
+```html title="examples/themes/arcade/blocks/step.snf (excerpt)"
 <div class="arc-step">
   <span class="arc-step-icon"><hk-icon name="{{ block.settings.icon }}" class="ic" /></span>
   <span class="arc-step-n"></span>
   <strong class="arc-step-title">{{ block.settings.title }}</strong>
   <span class="arc-step-text">{{ block.settings.text }}</span>
 </div>
-<hk-schema>
-  {
-    "name": "Step",
-    "version": 1,
-    "settings": {
-      "icon": {
-        "type": "select",
-        "label": "Icon",
-        "options": ["credit-card", "wallet", "mail", "trophy", "zap", "key", "gamepad-2", "shield-check"],
-        "default": "credit-card"
-      },
-      "title": {
-        "type": "text",
-        "label": "Title",
-        "localized": true,
-        "default": {
-          "ar": "اختار وادفع أونلاين",
-          "en": "Pick and pay online"
-        },
-        "maxLength": 60
-      },
-      "text": {
-        "type": "text",
-        "label": "Text",
-        "localized": true,
-        "default": {
-          "ar": "اختار الكارت والقيمة، وادفع أونلاين.",
-          "en": "Choose the card and the amount, then pay online."
-        },
-        "maxLength": 140
-      }
-    }
-  }
-</hk-schema>
 ```
+
+[View full file on GitHub](https://github.com/hekanahq/sneferu/blob/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/arcade/blocks/step.snf#L1-L6)
 
 <Result url="demo-arcade.hekana.com/en">
   <Shot src="../images/tutorial-arcade-steps.webp" alt="Three numbered cards: Pick and pay online, The code arrives by email, Redeem it" caption="The three steps in English." />
@@ -793,7 +579,7 @@ after an online payment is confirmed, the code is sent by email automatically.
 
 <Example>
 
-```html title="examples/themes/arcade/sections/arcade-products.snf"
+```html title="examples/themes/arcade/sections/arcade-products.snf (excerpt)"
 <hk-section padding-y="40" mobile-padding-y="28" class="arc-products">
   <hk-stack gap="20">
     <div class="arc-row-head">
@@ -814,38 +600,19 @@ after an online payment is confirmed, the code is sent by email automatically.
     {% endif %}
   </hk-stack>
 </hk-section>
-<hk-schema>
-  {
-    "name": "Featured products",
-    "version": 1,
-    "settings": {
-      "heading": {
-        "type": "text",
-        "label": "Heading",
-        "localized": true,
-        "default": {
-          "ar": "كروت مختارة",
-          "en": "Featured cards"
-        },
-        "maxLength": 60
-      },
+```
+
+[View full file on GitHub](https://github.com/hekanahq/sneferu/blob/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/arcade/sections/arcade-products.snf#L1-L20)
+
+```json title="examples/themes/arcade/sections/arcade-products.snf (excerpt)"
       "list": {
         "type": "collection",
         "label": "Collection",
         "default": "featured"
       },
-      "count": {
-        "type": "range",
-        "label": "Products",
-        "default": 8,
-        "min": 2,
-        "max": 24,
-        "step": 1
-      }
-    }
-  }
-</hk-schema>
 ```
+
+[View full file on GitHub](https://github.com/hekanahq/sneferu/blob/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/arcade/sections/arcade-products.snf#L36-L40)
 
 <Result url="demo-arcade.hekana.com/en">
   <Shot src="../images/tutorial-arcade-products.webp" alt="A grid of dark product cards with gift card, gem and coin artwork, titles and lime prices in EGP, two crossed-out old prices" caption="hk-product-grid with the store products." />
@@ -861,7 +628,7 @@ styles `.arc-grid .sn-product-card`, `.sn-title` and `.sn-price`.
 
 <Example>
 
-```html title="examples/themes/arcade/sections/arcade-faq.snf"
+```html title="examples/themes/arcade/sections/arcade-faq.snf (excerpt)"
 <hk-section padding-y="48" mobile-padding-y="32" class="arc-faq">
   <div id="faq" class="arc-faq-wrap">
     <hk-heading text="{{ section.settings.heading }}" level="h2" size="28" mobile-size="20" class="arc-h2" />
@@ -870,66 +637,20 @@ styles `.arc-grid .sn-product-card`, `.sn-title` and `.sn-price`.
     {% endfor %}
   </div>
 </hk-section>
-<hk-schema>
-  {
-    "name": "FAQ",
-    "version": 1,
-    "settings": {
-      "heading": {
-        "type": "text",
-        "label": "Heading",
-        "localized": true,
-        "default": {
-          "ar": "أسئلة شائعة",
-          "en": "Questions"
-        },
-        "maxLength": 60
-      }
-    },
-    "blocks": {
-      "allowed": ["faq-item"],
-      "max": 12
-    }
-  }
-</hk-schema>
 ```
 
-```html title="examples/themes/arcade/blocks/faq-item.snf"
+[View full file on GitHub](https://github.com/hekanahq/sneferu/blob/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/arcade/sections/arcade-faq.snf#L1-L8)
+
+```html title="examples/themes/arcade/blocks/faq-item.snf (excerpt)"
 {% if block.settings.question %}
   <details class="arc-faq-item">
     <summary>{{ block.settings.question }}<hk-icon name="chevron-down" class="ic" /></summary>
     <p>{{ block.settings.answer }}</p>
   </details>
 {% endif %}
-<hk-schema>
-  {
-    "name": "Question",
-    "version": 1,
-    "settings": {
-      "question": {
-        "type": "text",
-        "label": "Question",
-        "localized": true,
-        "default": {
-          "ar": "الكود بيوصل إمتى؟",
-          "en": "When does the code arrive?"
-        },
-        "maxLength": 120
-      },
-      "answer": {
-        "type": "textarea",
-        "label": "Answer",
-        "localized": true,
-        "default": {
-          "ar": "بعد ما الدفع الأونلاين يتأكد، الكود بيتبعت أوتوماتيك على الإيميل اللي كتبته في الطلب.",
-          "en": "Once your online payment is confirmed, the code is sent automatically to the email on your order."
-        },
-        "maxLength": 600
-      }
-    }
-  }
-</hk-schema>
 ```
+
+[View full file on GitHub](https://github.com/hekanahq/sneferu/blob/ce6364dd2a5e12ee813061b5acd3981b285ecf47/examples/themes/arcade/blocks/faq-item.snf#L1-L6)
 
 <Result url="demo-arcade.hekana.com/en">
   <Shot src="../images/tutorial-arcade-faq.webp" alt="Five closed questions in dark rows, each with a cyan chevron" caption="The questions, closed." />
@@ -945,7 +666,7 @@ JavaScript. The questions are about codes and payment, not shipping.
 
 <Steps>
   1. `npx sneferu format` indents every file.
-  2. `npx sneferu validate` prints `✔ theme arcade@1.1.0 is valid`.
+  2. `npx sneferu validate` prints `✔ theme arcade@1.3.0 is valid`.
   3. In `dev`, check `?locale=en` and a window under 640 px.
   4. Change `id` in `theme.json` to a slug of your own, then
      `npx sneferu push . --package <your-slug> --dev-store`.

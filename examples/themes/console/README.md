@@ -114,16 +114,7 @@ Delete the starter's sections and `blocks/`.
 
 ## 2. Manifest and tokens
 
-```json title="theme.json"
-{
-  "id": "console",
-  "name": "Console",
-  "version": "1.3.0",
-  "author": "Hekana",
-  "description": "A clean white gaming store for gift cards and top-ups: one royal-blue accent, large product cards, an amount selector and a platform row.",
-  "category": "gaming",
-  "engine": "hk2",
-  "engineCompatibility": "^2.0.0",
+```json title="theme.json (excerpt)"
   "defaultLocale": "ar",
   "locales": ["ar", "en"],
   "settings": {},
@@ -144,8 +135,9 @@ Delete the starter's sections and `blocks/`.
       "body": "IBM Plex Sans Arabic"
     }
   }
-}
 ```
+
+[View the full file](theme.json#L10-L29)
 
 - `primary` and `accent` are both the blue: one accent colour is the whole
   look. `soft` is the pale grey of the FAQ rows and hover states.
@@ -181,6 +173,8 @@ gem, so the game-currency platform keeps one inline SVG:
 </svg>
 ```
 
+[View the full file](snippets/glyph.snf)
+
 ## 4. Layout: header and footer
 
 ```html title="layout/theme.snf"
@@ -189,23 +183,28 @@ gem, so the game-currency platform keeps one inline SVG:
 <hk-section-group name="footer" />
 ```
 
+[View the full file](layout/theme.snf)
+
 The header and the footer are [section groups](../../../docs/guide/18-section-groups.mdx): the layout places
 `<hk-section-group name="header" />` and `<hk-section-group name="footer" />`, `groups/header.json` and
 `groups/footer.json` start them with `console-header` and `console-footer`, and the merchant edits them once for the
 whole store. The header also holds the cart: the cart link carries `data-hk-open="cart-drawer"` and
 `<hk-cart-count />`, and `<hk-cart-drawer>` lists the lines (a plain link to the cart page without JavaScript).
 
-```html title="sections/console-header.snf"
+```html title="sections/console-header.snf (excerpt)"
 <header class="cc-header">
   <hk-container>
     <div class="cc-bar">
       <a class="cc-logo" href="{{ url('/') }}">{{ store.name }}</a>
       <nav class="cc-nav" aria-label="{{ t('nav_label') }}">
-        <a href="{{ url('/products') }}">{{ t('nav_all') }}</a>
-        <a href="{{ url('/category/gift-cards') }}">{{ t('cat_gift_cards') }}</a>
-        <a href="{{ url('/category/game-currency') }}">{{ t('cat_currency') }}</a>
-        <a href="{{ url('/category/subscriptions') }}">{{ t('cat_subscriptions') }}</a>
-        <a href="{{ url('/') }}#faq">{{ t('nav_faq') }}</a>
+        {% if menu(section.settings.menu).items %}{% for item in menu(section.settings.menu).items %}<a
+              href="{{ item.url }}"
+              aria-current="{{ item.active }}"
+            >{{ item.title }}</a>{% endfor %}{% else %}<a href="{{ url('/products') }}">{{ t('nav_all') }}</a>
+          <a href="{{ url('/category/gift-cards') }}">{{ t('cat_gift_cards') }}</a>
+          <a href="{{ url('/category/game-currency') }}">{{ t('cat_currency') }}</a>
+          <a href="{{ url('/category/subscriptions') }}">{{ t('cat_subscriptions') }}</a>
+          <a href="{{ url('/') }}#faq">{{ t('nav_faq') }}</a>{% endif %}
       </nav>
       <div class="cc-icons">
         <a class="cc-icon" href="{{ url('/account') }}" aria-label="{{ t('account') }}"><hk-icon
@@ -218,33 +217,12 @@ whole store. The header also holds the cart: the cart link carries `data-hk-open
             size="24"
             class="ic"
           /><hk-cart-count /></a>
-      </div>
-    </div>
-    <hk-search-form placeholder="{{ t('search_placeholder') }}" class="cc-search" />
-  </hk-container>
-  <hk-cart-drawer open-on-add="{{ section.settings.drawer_on_add }}">
-    <hk-cart-items />
-    <hk-cart-summary />
-  </hk-cart-drawer>
-</header>
-<hk-schema>
-  {
-    "name": "Header",
-    "version": 1,
-    "templates": ["header"],
-    "settings": {
-      "drawer_on_add": {
-        "type": "boolean",
-        "label": "Open the cart when an item is added",
-        "default": true
-      }
-    }
-  }
-</hk-schema>
 ```
 
+[View the full file](sections/console-header.snf#L1-L25)
 
-```css title="assets/theme.css (root and header)"
+
+```css title="assets/theme.css (excerpt)"
 /* Console: white ground, one royal-blue accent, soft shadows, lots of space. */
 [data-hk-theme='console'] {
   --cc-blue: var(--hk-color-accent);
@@ -271,6 +249,8 @@ whole store. The header also holds the cart: the cart link carries `data-hk-open
 .cc-search { flex-wrap: nowrap; align-items: center; gap: 12px; width: 100%; max-width: 480px; min-height: 52px; margin: 20px auto 0; padding-inline: 20px 6px; border-radius: 999px; border: 1px solid var(--hk-color-line); background: #fff; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04); color: var(--hk-color-muted); font-size: 15px; }
 ```
 
+[View the full file](assets/theme.css#L1-L24)
+
 - The header is a three-column grid: logo at the start, navigation in the
   middle, icons at the end. Grid follows `dir`, so it mirrors in English.
 - The logo is the store name in a grey pill, like the mockup's logo
@@ -283,7 +263,7 @@ whole store. The header also holds the cart: the cart link carries `data-hk-open
 
 ## 5. Product carousel
 
-```html title="sections/console-showcase.snf"
+```html title="sections/console-showcase.snf (excerpt)"
 <hk-section padding-y="32" mobile-padding-y="16" class="cc-showcase">
   {% if collection(section.settings.list).products %}
     <div class="cc-carousel">
@@ -309,67 +289,9 @@ whole store. The header also holds the cart: the cart link carries `data-hk-open
               {% else %}
                 <span class="cc-slide-fallback"><hk-icon name="gift" class="ic" /></span>
               {% endif %}
-              <span class="cc-platforms" aria-hidden="true">
-                <span><hk-icon name="gamepad-2" class="ic" /></span>
-                <span><hk-icon name="monitor" class="ic" /></span>
-                <span><hk-icon name="smartphone" class="ic" /></span>
-              </span>
-            </span>
-            <span class="cc-slide-body">
-              <strong class="cc-slide-title">{{ p.title }}</strong>
-              {% if p.digital_kind == 'code' %}
-                <span class="cc-slide-note">{{ section.settings.code_note }}</span>
-              {% elsif p.excerpt %}
-                <span class="cc-slide-note">{{ p.excerpt | truncate: 70 }}</span>
-              {% endif %}
-              <hk-price amount="{{ p.price }}" compare-at="{{ p.compare_at }}" class="cc-slide-price" />
-            </span>
-          </a>
-        {% endfor %}
-        <span id="cc-end" class="cc-anchor"></span>
-      </div>
-      <a class="cc-arrow cc-arrow-next" href="#cc-end" aria-label="{{ t('carousel_end') }}"><hk-icon
-          name="chevron-right"
-          size="24"
-          class="ic"
-        /></a>
-    </div>
-  {% else %}
-    <p class="cc-empty">{{ t('empty_products') }}</p>
-  {% endif %}
-</hk-section>
-<hk-schema>
-  {
-    "name": "Product showcase",
-    "version": 1,
-    "settings": {
-      "list": {
-        "type": "collection",
-        "label": "Collection",
-        "default": "featured"
-      },
-      "count": {
-        "type": "range",
-        "label": "Products",
-        "default": 6,
-        "min": 2,
-        "max": 12,
-        "step": 1
-      },
-      "code_note": {
-        "type": "text",
-        "label": "Note on products delivered as a code",
-        "localized": true,
-        "default": {
-          "ar": "الكود بيوصلك على الإيميل بعد الدفع الأونلاين.",
-          "en": "Your code arrives by email after online payment."
-        },
-        "maxLength": 80
-      }
-    }
-  }
-</hk-schema>
 ```
+
+[View the full file](sections/console-showcase.snf#L1-L25)
 
 - `{% for p in collection(section.settings.list).products limit: section.settings.count %}`
   draws one large card per product of the collection the merchant picks
@@ -383,7 +305,7 @@ whole store. The header also holds the cart: the cart link carries `data-hk-open
   are links to two empty anchors, `#cc-start` and `#cc-end`, placed at the two
   ends of the track; following one scrolls the track to that end.
 
-```css title="assets/theme.css (carousel)"
+```css title="assets/theme.css (excerpt)"
 /* Showcase carousel: scroll-snap, arrows jump to the start and the end of the track */
 .cc-carousel { position: relative; display: flex; align-items: center; gap: 24px; max-width: 1040px; margin-inline: auto; }
 .cc-track { flex: 1; display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; padding: 16px 16px 28px; scrollbar-width: none; scroll-padding-inline: 16px; margin-block: -12px; }
@@ -405,6 +327,8 @@ whole store. The header also holds the cart: the cart link carries `data-hk-open
 .cc-arrow { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; color: #94A3B8; }
 .cc-arrow:hover { color: var(--cc-blue); background: var(--hk-color-soft); }
 ```
+
+[View the full file](assets/theme.css#L31-L50)
 
 - In the card, the picture gets `order: 2`, so the text comes first: on the
   right in Arabic, on the left in English.
@@ -435,6 +359,8 @@ whole store. The header also holds the cart: the cart link carries `data-hk-open
 </hk-schema>
 ```
 
+[View the full file](sections/console-amounts.snf)
+
 ```html title="blocks/amount.snf"
 <a
   class="cc-seg-item"
@@ -463,12 +389,16 @@ whole store. The header also holds the cart: the cart link carries `data-hk-open
 </hk-schema>
 ```
 
-```css title="assets/theme.css (amount selector)"
+[View the full file](blocks/amount.snf)
+
+```css title="assets/theme.css (excerpt)"
 /* Amount selector */
 .cc-seg { display: grid; grid-template-columns: repeat(3, 1fr); width: 100%; max-width: 560px; margin-inline: auto; padding: 5px; border-radius: 999px; background: #fff; box-shadow: var(--cc-shadow); border: 1px solid #F1F5F9; }
 .cc-seg-item { display: inline-flex; align-items: baseline; white-space: nowrap; justify-content: center; gap: 4px; min-height: 64px; padding-top: 15px; border-radius: 999px; font-weight: 600; font-size: 22px; }
 .cc-seg-item:hover { color: var(--cc-blue); }
 ```
+
+[View the full file](assets/theme.css#L52-L55)
 
 The selector is three `amount` blocks in a pill. Each has an amount in pounds
 and a `highlight` switch, written to `data-active` for the CSS (a template
@@ -478,7 +408,7 @@ amounts are whole pounds, so `money: 'whole', 'major'` prints them: `EGP 500`,
 
 ## 7. Platforms and trust strip
 
-```html title="sections/console-platforms.snf"
+```html title="sections/console-platforms.snf (excerpt)"
 <hk-section padding-y="32" mobile-padding-y="24" class="cc-platforms-row">
   <hk-stack gap="24" align="center">
     <hk-heading
@@ -496,31 +426,11 @@ amounts are whole pounds, so `money: 'whole', 'major'` prints them: `EGP 500`,
     </div>
   </hk-stack>
 </hk-section>
-<hk-schema>
-  {
-    "name": "Platforms",
-    "version": 1,
-    "settings": {
-      "heading": {
-        "type": "text",
-        "label": "Heading",
-        "localized": true,
-        "default": {
-          "ar": "تسوق حسب المنصة",
-          "en": "Shop by platform"
-        },
-        "maxLength": 60
-      }
-    },
-    "blocks": {
-      "allowed": ["platform"],
-      "max": 8
-    }
-  }
-</hk-schema>
 ```
 
-```html title="blocks/platform.snf"
+[View the full file](sections/console-platforms.snf#L1-L17)
+
+```html title="blocks/platform.snf (excerpt)"
 <a class="cc-plat" href="{{ url(block.settings.link) }}">
   <span class="cc-plat-icon">
     {% if block.settings.icon == 'gem' %}
@@ -531,47 +441,9 @@ amounts are whole pounds, so `money: 'whole', 'major'` prints them: `EGP 500`,
   </span>
   <span class="cc-plat-label">{{ block.settings.label }}</span>
 </a>
-<hk-schema>
-  {
-    "name": "Platform",
-    "version": 1,
-    "settings": {
-      "icon": {
-        "type": "select",
-        "label": "Icon",
-        "options": [
-          "monitor",
-          "gamepad-2",
-          "smartphone",
-          "calendar",
-          "headphones",
-          "gift",
-          "credit-card",
-          "key",
-          "zap",
-          "gem"
-        ],
-        "default": "monitor"
-      },
-      "label": {
-        "type": "text",
-        "label": "Label",
-        "localized": true,
-        "default": {
-          "ar": "كمبيوتر",
-          "en": "PC"
-        },
-        "maxLength": 24
-      },
-      "link": {
-        "type": "link",
-        "label": "Link",
-        "default": "/category/gift-cards"
-      }
-    }
-  }
-</hk-schema>
 ```
+
+[View the full file](blocks/platform.snf#L1-L10)
 
 ```html title="sections/console-trust.snf"
 <hk-section padding-y="20" class="cc-trust">
@@ -594,7 +466,9 @@ amounts are whole pounds, so `money: 'whole', 'major'` prints them: `EGP 500`,
 </hk-schema>
 ```
 
-```html title="blocks/trust.snf"
+[View the full file](sections/console-trust.snf)
+
+```html title="blocks/trust.snf (excerpt)"
 <li class="cc-trust-item">
   <span class="cc-trust-icon"><hk-icon name="{{ block.settings.icon }}" class="ic" /></span>
   <span>{{ block.settings.label }}</span>
@@ -620,12 +494,11 @@ amounts are whole pounds, so `money: 'whole', 'major'` prints them: `EGP 500`,
         },
         "maxLength": 60
       }
-    }
-  }
-</hk-schema>
 ```
 
-```css title="assets/theme.css (platforms, trust strip)"
+[View the full file](blocks/trust.snf#L1-L25)
+
+```css title="assets/theme.css (excerpt)"
 /* Platforms */
 .cc-plats { display: flex; justify-content: center; gap: 64px; flex-wrap: wrap; }
 .cc-plat { display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 72px; }
@@ -641,6 +514,8 @@ amounts are whole pounds, so `money: 'whole', 'major'` prints them: `EGP 500`,
 .cc-trust-icon .ic { width: 20px; height: 20px; }
 ```
 
+[View the full file](assets/theme.css#L58-L70)
+
 Platforms and trust points are blocks: each has an icon (a `select` of icon
 names), a localized label and, for platforms, a link. The template seeds five
 platforms and three trust points. The mockup's row of console and payment logos
@@ -650,7 +525,7 @@ wrappers out of the flex rows.
 
 ## 8. Product grid and FAQ
 
-```html title="sections/console-products.snf"
+```html title="sections/console-products.snf (excerpt)"
 <hk-section padding-y="40" mobile-padding-y="28" class="cc-products">
   <hk-stack gap="20">
     <div class="cc-row-head">
@@ -671,40 +546,11 @@ wrappers out of the flex rows.
     {% endif %}
   </hk-stack>
 </hk-section>
-<hk-schema>
-  {
-    "name": "Product grid",
-    "version": 1,
-    "settings": {
-      "heading": {
-        "type": "text",
-        "label": "Heading",
-        "localized": true,
-        "default": {
-          "ar": "كل الكروت",
-          "en": "All cards"
-        },
-        "maxLength": 60
-      },
-      "list": {
-        "type": "collection",
-        "label": "Collection",
-        "default": "featured"
-      },
-      "count": {
-        "type": "range",
-        "label": "Products",
-        "default": 8,
-        "min": 2,
-        "max": 24,
-        "step": 1
-      }
-    }
-  }
-</hk-schema>
 ```
 
-```html title="sections/console-faq.snf"
+[View the full file](sections/console-products.snf#L1-L20)
+
+```html title="sections/console-faq.snf (excerpt)"
 <hk-section padding-y="48" mobile-padding-y="32" class="cc-faq">
   <div id="faq" class="cc-faq-wrap">
     <hk-heading text="{{ section.settings.heading }}" level="h2" size="24" mobile-size="20" class="cc-h2" />
@@ -713,68 +559,22 @@ wrappers out of the flex rows.
     {% endfor %}
   </div>
 </hk-section>
-<hk-schema>
-  {
-    "name": "FAQ",
-    "version": 1,
-    "settings": {
-      "heading": {
-        "type": "text",
-        "label": "Heading",
-        "localized": true,
-        "default": {
-          "ar": "أسئلة شائعة",
-          "en": "Questions"
-        },
-        "maxLength": 60
-      }
-    },
-    "blocks": {
-      "allowed": ["faq-item"],
-      "max": 12
-    }
-  }
-</hk-schema>
 ```
 
-```html title="blocks/faq-item.snf"
+[View the full file](sections/console-faq.snf#L1-L8)
+
+```html title="blocks/faq-item.snf (excerpt)"
 {% if block.settings.question %}
   <details class="cc-faq-item">
     <summary>{{ block.settings.question }}<hk-icon name="chevron-down" class="ic" /></summary>
     <p>{{ block.settings.answer }}</p>
   </details>
 {% endif %}
-<hk-schema>
-  {
-    "name": "Question",
-    "version": 1,
-    "settings": {
-      "question": {
-        "type": "text",
-        "label": "Question",
-        "localized": true,
-        "default": {
-          "ar": "الكود بيوصل إمتى؟",
-          "en": "When does the code arrive?"
-        },
-        "maxLength": 120
-      },
-      "answer": {
-        "type": "textarea",
-        "label": "Answer",
-        "localized": true,
-        "default": {
-          "ar": "بعد ما الدفع الأونلاين يتأكد، الكود بيتبعت أوتوماتيك على الإيميل اللي كتبته في الطلب.",
-          "en": "Once your online payment is confirmed, the code is sent automatically to the email on your order."
-        },
-        "maxLength": 600
-      }
-    }
-  }
-</hk-schema>
 ```
 
-```css title="assets/theme.css (grid, FAQ, footer)"
+[View the full file](blocks/faq-item.snf#L1-L6)
+
+```css title="assets/theme.css (excerpt)"
 /* Product grid */
 .cc-row-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
 .cc-more { display: inline-flex; align-items: center; min-height: 44px; font-size: 14px; font-weight: 600; color: var(--cc-blue); }
@@ -800,42 +600,9 @@ wrappers out of the flex rows.
 /* Footer */
 .cc-footer { margin-top: 32px; padding-block: 36px 24px; border-top: 1px solid var(--hk-color-line); }
 .cc-footer-row { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
-.cc-footer-brand { display: grid; gap: 10px; max-width: 420px; justify-items: start; }
-.cc-footer-brand p { font-size: 14px; color: var(--hk-color-muted); }
-.cc-footer-links { display: flex; flex-wrap: wrap; gap: 4px 24px; }
-.cc-footer-links a { display: inline-flex; align-items: center; min-height: 44px; font-size: 14px; color: #475569; }
-.cc-footer-links a:hover { color: var(--cc-blue); }
-.cc-copy { margin-top: 16px; font-size: 13px; color: var(--hk-color-muted); }
-
-@media (max-width: 1023px) {
-  .cc-nav { display: none; }
-  .cc-bar { grid-template-columns: 1fr auto; }
-}
-@media (max-width: 639px) {
-  .cc-header { padding-top: 8px; }
-  .cc-logo { padding-inline: 14px; font-size: 15px; }
-  .cc-search { margin-top: 12px; min-height: 46px; max-width: none; }
-  form.cc-search input { min-height: 44px; }
-  .cc-carousel { gap: 0; }
-  .cc-arrow { display: none; }
-  .cc-track { gap: 12px; padding-inline: 2px; }
-  .cc-slide { flex: 0 0 calc(50% - 6px); flex-direction: column; align-items: stretch; gap: 10px; padding: 12px; text-align: center; }
-  .cc-slide-art { order: 0; flex: none; }
-  .cc-slide-art img, .cc-slide-fallback { width: 88px; height: 88px; }
-  .cc-platforms { display: none; }
-  .cc-slide-title { font-size: 15px; }
-  .cc-slide { gap: 10px; }
-  .cc-slide-note { font-size: 11px; }
-  .cc-slide-price { font-size: 14px; margin-top: 2px; }
-  .cc-seg-item { min-height: 44px; padding-top: 9px; font-size: 16px; }
-  .cc-plat-icon { width: 48px; height: 48px; }
-  .cc-plats { width: 100%; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; }
-  .cc-plat { min-width: 0; text-align: center; }
-  .cc-plat-icon .ic { width: 32px; height: 32px; }
-  .cc-plat-label { font-size: 11px; line-height: 1.4; }
-  .sn-was { margin-inline-start: 0; font-size: 12px; }
-  .cc-trust-list { flex-direction: column; align-items: center; gap: 10px; }
 ```
+
+[View the full file](assets/theme.css#L72-L96)
 
 ## 9. Locale files
 
@@ -861,6 +628,8 @@ wrappers out of the flex rows.
 }
 ```
 
+[View the full file](locales/en.json)
+
 `locales/ar.json` has the same keys, with the words in Egyptian Arabic. The
 locale files hold interface words only; the copy a merchant may change
 (headings, platform names, trust points, questions) is in localized settings
@@ -873,42 +642,24 @@ and blocks with `{ "ar": …, "en": … }` defaults.
 <hk-schema>
   {
     "sections": [
-      { "type": "console-showcase" },
+      {
+        "type": "console-showcase"
+      },
       {
         "type": "console-amounts",
         "blocks": [
-          {"type": "amount", "settings": {"amount": 200, "highlight": false}},
-          … 2 more
-        ]
-      },
-      {
-        "type": "console-platforms",
-        "blocks": [
-          {"type": "platform", "settings": {"icon": "monitor", "label": {"ar": "كمبيوتر", "en": "PC"}, "link": "/category/gift-cards"}},
-          … 4 more
-        ]
-      },
-      {
-        "type": "console-trust",
-        "blocks": [
-          {"type": "trust", "settings": {"icon": "zap", "label": {"ar": "تسليم فوري للكود", "en": "Instant code delivery"}}},
-          … 2 more
-        ]
-      },
-      { "type": "console-products" },
-      {
-        "type": "console-faq",
-        "blocks": [
-          {"type": "faq-item", "settings": {"question": {"ar": "الكود بيوصل إمتى؟", "en": "When does the code arrive?"}, "answer": {"ar": "بعد ما الدفع الأونلاين يتأكد، الكود بيتبعت أوتوماتيك على الإيميل اللي كتبته في الطلب.", "en": "Once your online payment is confirmed, the code is sent automatically to the email on your order."}}},
-          … 3 more
-        ]
-      }
-    ]
-  }
-</hk-schema>
+          {
+            "type": "amount",
+            "settings": {
+              "amount": 200,
+              "highlight": false
+            }
+          },
 ```
 
-```css title="assets/theme.css (tablet and phone)"
+[View the full file](templates/index.snf#L1-L17)
+
+```css title="assets/theme.css (excerpt)"
 @media (max-width: 1023px) {
   .cc-nav { display: none; }
   .cc-bar { grid-template-columns: 1fr auto; }
@@ -934,10 +685,9 @@ and blocks with `{ "ar": …, "en": … }` defaults.
   .cc-plats { width: 100%; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; }
   .cc-plat { min-width: 0; text-align: center; }
   .cc-plat-icon .ic { width: 32px; height: 32px; }
-  .cc-plat-label { font-size: 11px; line-height: 1.4; }
-  .sn-was { margin-inline-start: 0; font-size: 12px; }
-  .cc-trust-list { flex-direction: column; align-items: center; gap: 10px; }
 ```
+
+[View the full file](assets/theme.css#L104-L128)
 
 On phones the arrows are hidden (the track is swiped), two cards sit side by
 side with the picture on top, and the five platforms share one row.
