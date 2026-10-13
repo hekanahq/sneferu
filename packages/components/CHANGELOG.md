@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.5.0
+
+### Minor Changes
+
+- `menu()` lookup and the `menu` setting type are understood by the component layer.
+- Updated dependencies
+  - @hekana/sneferu-core@0.5.0
+
 ## 0.4.2
 
 ### Patch Changes

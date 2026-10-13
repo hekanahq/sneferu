@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.5.0
+
+### Minor Changes
+
+- No functional changes; versions follow the fixed group.
+- Updated dependencies
+  - @hekana/sneferu-compiler@0.5.0
+
 ## 0.4.2
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.5.0
+
+### Minor Changes
+
+- `menu()` lookup renders menus from `RenderContext.menus`; `pageDependencies().menus` reports the menus a page uses; hash links are never active; `request.path` stays in the same URL space as menu links.
+- Host impact: provide `RenderContext.menus`, and apply migrations when a theme is updated (`applyMigrations`).
+- Updated dependencies
+  - @hekana/sneferu-core@0.5.0
+
 ## 0.4.2
 
 ### Patch Changes

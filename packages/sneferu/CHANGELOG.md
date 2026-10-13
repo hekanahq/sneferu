@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.5.0
+
+### Minor Changes
+
+- `menu()` lookups, the `menu` setting type and `pageDependencies().menus`; sample data includes menus for `dev`.
+- Theme migrations: `migrations/*.json` (SN3045, SN3046, SN3047) are built into the artifact (`artifact.migrations`).
+- Default store: header and footer menus, three levels, opt-in for saved trees; hash links never active. Example themes 1.3.0.
+- Host impact: `RenderContext.menus`; `request.path` is in the same URL space as menu links; apply migrations on theme update.
+- Updated dependencies
+  - @hekana/sneferu-core@0.5.0
+  - @hekana/sneferu-compiler@0.5.0
+  - @hekana/sneferu-runtime@0.5.0
+  - @hekana/sneferu-components@0.5.0
+  - @hekana/prettier-plugin-sneferu@0.5.0
+  - @hekana/sneferu-templates-default@0.5.0
+
 ## 0.4.2
 
 ### Patch Changes
