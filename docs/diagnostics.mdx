@@ -100,6 +100,9 @@ Every problem Sneferu reports has a stable code. The format is `file:line:col se
 | SN3042 | `blocks.allowed` names a block that is not in `blocks/` | Create the block or fix the name. |
 | SN3043 | A file in `sections/`, `blocks/` or `snippets/` is named `hk-…`; that prefix is reserved for the default store's own sections, blocks and snippets | Rename the file (and every reference to it) without the `hk-` prefix. |
 | SN3044 | One name in both forms in one folder, such as `sections/hero.snf` and `sections/hero.sneferu` | Keep one file; `.snf` is the current extension, `.sneferu` still works. |
+| SN3045 | A `migrations/*.json` file is malformed: not JSON, unknown keys, bad names, a rename to itself, two names renamed to one, or a name both renamed and removed | Use `{ "from", "to", "settings"?, "sections"?, "blocks"? }`, each with `rename` (old: new) and `remove` (list). |
+| SN3046 | A migration's versions are wrong: `from` is not older than `to`, `to` is newer than the theme's `version`, two files cover the same step, or the steps form a cycle | Fix the versions; each file carries one step, `from` < `to` <= the current version. |
+| SN3047 | A migration renames to a setting, section or block the current theme does not have, or removes one it still has | Rename only to names that exist now; remove only what is gone. |
 
 ## SN4xxx Rendering
 

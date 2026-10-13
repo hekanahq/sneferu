@@ -1,9 +1,10 @@
-import { IR_VERSION, ENGINE_VERSION, GROUP_NAMES, PAGE_TYPES, err, isGroupName, parseTemplateName, warn, hasErrors, normalizeFieldLabels, normalizeLabel, tokenSettings, validateIR, sectionAllowedOn, isTemplateFile, stripTemplateExtension, TEMPLATE_EXTENSION, type Diagnostic, type FieldSchema, type GroupName, type IRNode, type PageNode, type TagRegistry } from '@hekana/sneferu-core';
+import { IR_VERSION, ENGINE_VERSION, GROUP_NAMES, PAGE_TYPES, err, isGroupName, parseTemplateName, warn, hasErrors, normalizeFieldLabels, normalizeLabel, tokenSettings, validateIR, sectionAllowedOn, isTemplateFile, stripTemplateExtension, TEMPLATE_EXTENSION, type Diagnostic, type FieldSchema, type GroupName, type IRNode, type Migration, type PageNode, type TagRegistry } from '@hekana/sneferu-core';
 import { checkFiles, IMAGE_ASSET, type ThemeFile } from './files';
 import { validateManifest, type Manifest } from './manifest';
 import { parseTemplate } from './parser';
 import { validateTemplate } from './validate';
 import { lower } from './lower';
+import { checkMigrations, settingKeys } from './migrations';
 import { checkEntries, toNodes, MAX_GROUP_SECTIONS, MAX_TEMPLATE_SECTIONS, type DefaultEntry } from './entries';
 import { applyDefaults, collectLocaleKeys, collectTags, type FragmentSource } from './defaults';
 import { DEFAULT_THEME_FILES } from '@hekana/sneferu-templates-default';
@@ -31,6 +32,8 @@ export interface Artifact {
   /** Present when the SDK's built-in default store filled something in: which templates and groups, the `hk-` sections it added, and their CSS. */
   defaults?: { templates: string[]; groups: GroupName[]; sections: string[]; css: string };
   assets: { path: string; size: number; hash: string }[];
+  /** Valid `migrations/*.json` files, oldest first. Absent when the theme has none. */
+  migrations?: Migration[];
   hash: string;
 }
 
@@ -218,9 +221,19 @@ export function compileTheme(files: ThemeFile[], registry: TagRegistry, options:
   for (const [name, b] of Object.entries(sections)) for (const t of b.schema.blocks?.allowed ?? []) if (!Object.hasOwn(blocks, t)) diagnostics.push(err('SN3042', `section '${name}' allows block '${t}', which is not in blocks/`, { file: fileOf(`sections/${name}`) }));
   for (const [name, b] of Object.entries(blocks)) for (const t of b.schema.blocks?.allowed ?? []) if (!Object.hasOwn(blocks, t)) diagnostics.push(err('SN3042', `block '${name}' allows block '${t}', which is not in blocks/`, { file: fileOf(`blocks/${name}`) }));
 
+  // migrations: how a merchant's stored settings and pages carry over when the theme updates
+  const migrationFiles = [...text.keys()].filter((p) => p.startsWith('migrations/')).sort().map((path) => {
+    try { return { path, json: JSON.parse(text.get(path)!) as unknown }; } catch { diagnostics.push(err('SN3045', 'migration is not valid JSON', { file: path })); return { path, json: undefined }; }
+  }).filter((f) => f.json !== undefined);
+  const migrations = mv.manifest ? checkMigrations(migrationFiles, {
+    version: mv.manifest.version,
+    settings: new Set([...Object.keys(themeSettings), ...Object.values(sections).flatMap((x) => settingKeys(x.schema.settings)), ...Object.values(blocks).flatMap((x) => settingKeys(x.schema.settings))]),
+    sections: new Set(Object.keys(sections)), blocks: new Set(Object.keys(blocks)),
+  }, diagnostics) : [];
+
   if (hasErrors(diagnostics) || !mv.manifest) return { diagnostics };
   const manifest = { ...mv.manifest, settings: { ...tokenSettings(mv.manifest.tokens), ...mv.manifest.settings } };
-  let body: Omit<Artifact, 'hash'> = { schema: 'sneferu/artifact@1' as const, irVersion: IR_VERSION, engineVersion: ENGINE_VERSION, manifest, layout, templates, sections, blocks, snippets, templateSections, groups, locales, localeKeys: [], assets };
+  let body: Omit<Artifact, 'hash'> = { schema: 'sneferu/artifact@1' as const, irVersion: IR_VERSION, engineVersion: ENGINE_VERSION, manifest, layout, templates, sections, blocks, snippets, templateSections, groups, locales, localeKeys: [], assets, ...(migrations.length ? { migrations } : {}) };
   if (options.defaults !== false) {
     const frag = fragmentOf(registry, Array.isArray(options.defaults) ? options.defaults : DEFAULT_THEME_FILES);
     if (frag) body = applyDefaults(body, frag);

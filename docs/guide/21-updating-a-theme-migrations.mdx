@@ -1,0 +1,76 @@
+# 21. Updating a theme: migrations
+
+When you publish a new version, a merchant's stored settings and pages still use
+the names of the version they installed. A migration file tells Hekana how to carry
+them over: which settings, sections and blocks were renamed, and which are gone.
+Without one, a renamed setting falls back to its new default and the merchant's
+value is lost.
+
+## A migration file
+
+One file per step, in `migrations/`. The file name does not matter; the content
+declares the versions.
+
+```json title="migrations/1.0.0-1.1.0.json"
+{
+  "from": "1.0.0",
+  "to": "1.1.0",
+  "settings": { "rename": { "store_name": "shop_name" }, "remove": ["old_flag"] },
+  "sections": { "rename": { "hero_v1": "hero" }, "remove": ["countdown"] },
+  "blocks": { "rename": { "btn": "button" }, "remove": ["sparkle"] }
+}
+```
+
+All three groups are optional, and so are `rename` and `remove` inside each.
+
+- `settings` applies to the theme settings and to the settings of every section and block.
+- `sections` changes the `type` of a section; `blocks` the `type` of a block, at any depth.
+- A removed section or block is dropped with everything inside it. Removed settings are dropped.
+- Names that match nothing are left alone.
+
+## Rules the compiler checks
+
+| Rule | Code |
+| - | - |
+| Valid JSON, only the keys above, names of letters, digits, `-` and `_`, no rename to itself, no two names renamed to one, no name both renamed and removed | SN3045 |
+| `from` older than `to`; `to` no newer than `version` in `theme.json`; one file per step; no cycles | SN3046 |
+| A rename must end on a name the current theme has; a removed name must be gone from the current theme | SN3047 |
+
+Do not chain inside one file (`a` to `b`, `b` to `c`). Put each hop in its own version step;
+the steps run in order, so a merchant on 1.0.0 who updates to 1.2.0 goes through
+1.0.0 to 1.1.0 and then 1.1.0 to 1.2.0. A version that changes no names needs no file.
+
+The compiled artifact carries the valid files as `migrations`, oldest first.
+
+## For hosts: `applyMigrations`
+
+```ts
+import { applyMigrations } from '@hekana/sneferu-runtime';
+
+const { output, report } = applyMigrations(
+  { settings, pages, groups },     // what the merchant has stored
+  artifact.migrations ?? [],
+  installedVersion,
+  artifact.manifest.version,
+);
+```
+
+It is pure: the input is never changed and the output shares nothing with it.
+It walks at most 2,000 sections and blocks, 16 levels deep.
+
+The report:
+
+| Field | Meaning |
+| - | - |
+| `kept` | sections and blocks in the output |
+| `migrated` | `{ path, from, to }` for every renamed setting, section or block |
+| `dropped` | `{ path, what }` for everything removed. Show it to the merchant and ask for confirmation before publishing |
+| `missingPath` | the theme has migrations, the versions differ, and none of them falls between the two; the output is an unchanged copy. A theme with no migrations at all reports `false` |
+| `tooLarge` | the input is over the limits; nothing was migrated |
+
+If a merchant already has a value under the new name of a setting, that value wins and
+the old one appears in `dropped`.
+
+Migrations stored in an artifact are untrusted: malformed entries are skipped, never thrown on, and the runtime's artifact check reports them (SN9015).
+
+Running `applyMigrations` again on its own output changes nothing.

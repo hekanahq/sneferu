@@ -1,4 +1,4 @@
-import { err, type Diagnostic } from '@hekana/sneferu-core';
+import { err, checkMigrationsShape, type Diagnostic } from '@hekana/sneferu-core';
 
 const isObj = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v);
 
@@ -23,6 +23,7 @@ export function checkArtifactShape(a: unknown): Diagnostic[] {
     if (m.tokens !== undefined && !isObj(m.tokens)) bad('manifest.tokens', 'must be an object');
   }
   if (!Array.isArray(a.layout)) bad('layout', 'must be an array');
+  if (a.migrations !== undefined) out.push(...checkMigrationsShape(a.migrations));
   const trees = (key: string) => {
     const v = a[key];
     if (!isObj(v)) { bad(key, 'must be an object'); return; }
