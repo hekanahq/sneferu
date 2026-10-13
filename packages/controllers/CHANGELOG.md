@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.0
+
+### Minor Changes
+
+- No functional changes; versions follow the fixed group.
+
 ## 0.4.2
 
 ## 0.4.1

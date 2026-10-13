@@ -1,6 +1,6 @@
 {
   "name": "create-sneferu",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "description": "npm create sneferu my-theme: start a Hekana theme with Sneferu",
   "type": "module",
   "bin": {
@@ -10,7 +10,7 @@
     "bin"
   ],
   "dependencies": {
-    "@hekana/sneferu": "0.4.2"
+    "@hekana/sneferu": "0.5.0"
   },
   "engines": {
     "node": ">=20"

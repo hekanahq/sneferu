@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.5.0
+
+### Minor Changes
+
+- The default store header and footer render menus (three levels in the header), opt-in for saved trees.
+- Example themes 1.3.0 use menus in their headers and footers.
+
 ## 0.4.2
 
 ### Patch Changes

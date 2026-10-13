@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.5.0
+
+### Minor Changes
+
+- `menu()` lookup and the `menu` setting type compile and validate; `pageDependencies().menus` lists the menu handles a page needs.
+- SN9017: stored-IR argument validation for `collection`, `product` and `menu`.
+- Default store header and footer menus are opt-in for saved trees; hash links are never marked active.
+- Theme migrations: `migrations/*.json` is compiled and checked (SN3045, SN3046, SN3047); the artifact carries `migrations`, validated by `checkMigrationsShape`; `applyMigrations` is re-exported.
+- Updated dependencies
+  - @hekana/sneferu-core@0.5.0
+  - @hekana/sneferu-templates-default@0.5.0
+
 ## 0.4.2
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.5.0
+
+### Minor Changes
+
+- `menu()` lookup (added to `LOOKUPS`) and the `menu` setting field type.
+- SN9017: stored-IR argument validation for `collection`, `product` and `menu` lookups.
+- Theme migrations: `migrations/*.json` files are described by `checkMigrationsShape` and applied with the pure `applyMigrations` helper; `RenderContext` gains `menus`.
+
 ## 0.4.2
 
 ### Patch Changes
