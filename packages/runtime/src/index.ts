@@ -9,6 +9,7 @@ export { checkArtifactShape } from './shape';
 export { translate } from './translate';
 export { resolveUrl } from './url';
 export { defaultUrl } from '@hekana/sneferu-core';
+export { applyMigrations, compareSemver, MAX_MIGRATION_NODES, type Migration, type MigrationOps, type MigrationInput, type MigrationReport } from '@hekana/sneferu-core';
 export { themeTokenCss, onColor } from './tokens';
 export { themeFontCss } from './fonts';
 export { normalizeMenu, menuPathKey, MAX_MENU_DEPTH, MAX_MENU_ITEMS } from './menus';

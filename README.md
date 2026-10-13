@@ -43,6 +43,7 @@ Install: `npx sneferu <command>` (Node.js 20 or newer), or `npm i -g sneferu` fo
 18. [Header, footer and section groups](docs/guide/18-section-groups.mdx): shared groups placed in the layout and edited once for the whole store
 19. [Make everything editable](docs/guide/19-make-everything-editable.mdx): where every word, link, image and colour of a theme comes from
 20. [Menus](docs/guide/20-menus.mdx): `menu('main')` and the `menu` setting: the store's navigation in the header and footer, with the active link marked
+21. [Updating a theme: migrations](docs/guide/21-updating-a-theme-migrations.mdx): `migrations/*.json` renames and removals, and `applyMigrations` for hosts
 
 ## Reference
 
