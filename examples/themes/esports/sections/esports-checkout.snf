@@ -1,0 +1,322 @@
+<hk-section
+  class="es-co es-co-{{ section.settings.scheme }}"
+  padding-y="{{ section.settings.padding_y }}"
+  mobile-padding-y="24"
+>
+  <header class="es-pagehead es-co-head">
+    {% if section.settings.show_back %}
+      <a class="es-co-back" href="{{ url('/cart') }}">{{ section.settings.back_label }}</a>
+    {% endif %}
+    {% if section.settings.kicker %}
+      <p class="es-co-kicker">{{ section.settings.kicker }}</p>
+    {% endif %}
+    {% if section.settings.title %}
+      <hk-heading
+        text="{{ section.settings.title }}"
+        level="h1"
+        size="36"
+        tablet-size="32"
+        mobile-size="24"
+        class="es-pagehead-title"
+      />
+    {% endif %}
+    {% if section.settings.subtitle %}
+      <p class="es-pagehead-text">{{ section.settings.subtitle }}</p>
+    {% endif %}
+  </header>
+  {% if section.blocks %}
+    <ul class="es-co-notes">
+      {% for block in section.blocks %}
+        <li><hk-block of="{{ block }}" /></li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  <hk-checkout-layout
+    columns="{{ section.settings.columns }}"
+    summary="{{ section.settings.summary_position }}"
+    sticky="{{ section.settings.sticky_summary }}"
+    density="{{ section.settings.density }}"
+    card="{{ section.settings.card_style }}"
+  >
+    <hk-checkout-contact heading="{{ section.settings.contact_heading }}" />
+    <hk-checkout-shipping heading="{{ section.settings.shipping_heading }}" />
+    <hk-checkout-summary heading="{{ section.settings.summary_heading }}" />
+    <hk-checkout-payment
+      heading="{{ section.settings.payment_heading }}"
+      cta-label="{{ section.settings.cta_label }}"
+    />
+  </hk-checkout-layout>
+  <div class="es-co-foot">
+    {% if section.settings.secure_note %}
+      <p class="es-co-secure"><hk-icon name="lock" size="16" /><span>{{ section.settings.secure_note }}</span></p>
+    {% endif %}
+    {% if section.settings.guarantee %}
+      <p class="es-co-guarantee">{{ section.settings.guarantee }}</p>
+    {% endif %}
+    {% if section.settings.show_support %}
+      {% if section.settings.support_link %}
+        <a
+          class="es-co-support"
+          href="{{ url(section.settings.support_link) }}"
+        >{{ section.settings.support_label }}</a>
+      {% endif %}
+    {% endif %}
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Checkout",
+      "ar": "إتمام الشراء"
+    },
+    "version": 1,
+    "templates": ["checkout"],
+    "blocks": {
+      "allowed": ["checkout-note"],
+      "max": 6
+    },
+    "settings": {
+      "kicker": {
+        "type": "text",
+        "label": {
+          "en": "Small text above the heading",
+          "ar": "نص صغير فوق العنوان"
+        },
+        "default": {
+          "ar": "إتمام الطلب",
+          "en": "Secure checkout"
+        },
+        "localized": true,
+        "maxLength": 40
+      },
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "إتمام الطلب",
+          "en": "Checkout"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "subtitle": {
+        "type": "text",
+        "label": {
+          "en": "Text under the heading",
+          "ar": "نص تحت العنوان"
+        },
+        "default": {
+          "ar": "كمّل بياناتك وهنوصلك طلبك.",
+          "en": "Fill in your details and we will deliver your order."
+        },
+        "localized": true,
+        "maxLength": 140
+      },
+      "scheme": {
+        "type": "select",
+        "label": {
+          "en": "Colour scheme",
+          "ar": "نمط الألوان"
+        },
+        "options": ["dark", "forest", "ribbon"],
+        "default": "dark"
+      },
+      "columns": {
+        "type": "select",
+        "label": {
+          "en": "Layout",
+          "ar": "التخطيط"
+        },
+        "options": ["two", "stacked"],
+        "default": "two"
+      },
+      "summary_position": {
+        "type": "select",
+        "label": {
+          "en": "Order summary position",
+          "ar": "مكان ملخص الطلب"
+        },
+        "options": ["end", "start", "top"],
+        "default": "end"
+      },
+      "sticky_summary": {
+        "type": "boolean",
+        "label": {
+          "en": "Keep the summary in view while scrolling",
+          "ar": "تثبيت الملخص أثناء التمرير"
+        },
+        "default": true
+      },
+      "density": {
+        "type": "select",
+        "label": {
+          "en": "Spacing",
+          "ar": "المسافات"
+        },
+        "options": ["comfortable", "compact"],
+        "default": "comfortable"
+      },
+      "card_style": {
+        "type": "select",
+        "label": {
+          "en": "Card style",
+          "ar": "شكل البطاقات"
+        },
+        "options": ["outlined", "flat", "raised"],
+        "default": "outlined"
+      },
+      "contact_heading": {
+        "type": "text",
+        "label": {
+          "en": "Contact heading",
+          "ar": "عنوان بيانات التواصل"
+        },
+        "default": "",
+        "localized": true,
+        "maxLength": 60
+      },
+      "shipping_heading": {
+        "type": "text",
+        "label": {
+          "en": "Shipping heading",
+          "ar": "عنوان الشحن"
+        },
+        "default": "",
+        "localized": true,
+        "maxLength": 60
+      },
+      "summary_heading": {
+        "type": "text",
+        "label": {
+          "en": "Summary heading",
+          "ar": "عنوان ملخص الطلب"
+        },
+        "default": "",
+        "localized": true,
+        "maxLength": 60
+      },
+      "payment_heading": {
+        "type": "text",
+        "label": {
+          "en": "Payment heading",
+          "ar": "عنوان الدفع"
+        },
+        "default": "",
+        "localized": true,
+        "maxLength": 60
+      },
+      "cta_label": {
+        "type": "text",
+        "label": {
+          "en": "Confirm button text (cash on delivery only)",
+          "ar": "نص زر التأكيد (الدفع عند الاستلام فقط)"
+        },
+        "default": "",
+        "localized": true,
+        "maxLength": 40
+      },
+      "show_back": {
+        "type": "boolean",
+        "label": {
+          "en": "Show a link back to the cart",
+          "ar": "إظهار رابط الرجوع للسلة"
+        },
+        "default": true
+      },
+      "back_label": {
+        "type": "text",
+        "label": {
+          "en": "Back link text",
+          "ar": "نص رابط الرجوع"
+        },
+        "default": {
+          "ar": "الرجوع للسلة",
+          "en": "Back to cart"
+        },
+        "localized": true,
+        "maxLength": 30,
+        "visible_if": {
+          "setting": "show_back",
+          "equals": true
+        }
+      },
+      "secure_note": {
+        "type": "text",
+        "label": {
+          "en": "Secure payment note",
+          "ar": "ملاحظة الدفع الآمن"
+        },
+        "default": {
+          "ar": "بياناتك محمية، ومش بنشاركها مع حد.",
+          "en": "Your details are protected and never shared."
+        },
+        "localized": true,
+        "maxLength": 160
+      },
+      "guarantee": {
+        "type": "text",
+        "label": {
+          "en": "Guarantee text",
+          "ar": "نص الضمان"
+        },
+        "default": {
+          "ar": "لو فيه مشكلة في الطلب، كلمنا وهنحلها.",
+          "en": "If anything is wrong with your order, talk to us and we will sort it out."
+        },
+        "localized": true,
+        "maxLength": 160
+      },
+      "show_support": {
+        "type": "boolean",
+        "label": {
+          "en": "Show a support link",
+          "ar": "إظهار رابط الدعم"
+        },
+        "default": false
+      },
+      "support_label": {
+        "type": "text",
+        "label": {
+          "en": "Support link text",
+          "ar": "نص رابط الدعم"
+        },
+        "default": {
+          "ar": "محتاج مساعدة؟ كلمنا على واتساب",
+          "en": "Need help? Message us on WhatsApp"
+        },
+        "localized": true,
+        "maxLength": 60,
+        "visible_if": {
+          "setting": "show_support",
+          "equals": true
+        }
+      },
+      "support_link": {
+        "type": "link",
+        "label": {
+          "en": "Support link (for example https://wa.me/20100…)",
+          "ar": "رابط الدعم (مثلاً https://wa.me/20100…)"
+        },
+        "default": "",
+        "visible_if": {
+          "setting": "show_support",
+          "equals": true
+        }
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 160,
+        "step": 8,
+        "default": 40
+      }
+    }
+  }
+</hk-schema>

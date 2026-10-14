@@ -42,9 +42,9 @@ Put your own products in `.sneferu-dev/data.json` (never pushed) to preview real
 theme.json                 id, version 2.0.0, colour tokens, fonts, content width
 layout/theme.snf           skip link, announcement, header, <main>, footer
 groups/                    announcement.json, header.json, footer.json (first content)
-templates/                 index, product, product.digital, collection, search, cart, 404, page
+templates/                 index, product, product.digital, collection, search, cart, checkout, 404, page
 sections/                  esports-announcement, -header, -footer, -hero, -products, -steps, -faq,
-                           -product, -related, -collection, -search, -cart, -not-found, -page
+                           -product, -related, -collection, -search, -cart, -checkout, -not-found, -page
 blocks/                    menu-link, menu-sub-link, footer-column, footer-link, social-link,
                            contact-line, payment-method, tab, step, faq-item, product-* (9)
 snippets/                  topup-card, page-head, button, price, mark, hero-art

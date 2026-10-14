@@ -100,6 +100,13 @@ describe('dev server', () => {
     expect((await get(port, '/en/cart')).body).toContain('lang="en"');
     expect((await get(port, '/ar/cart')).body).toContain('lang="ar"');
     expect((await get(port, '/pages/about')).body).toContain('About us');
+    // the checkout: the theme's page with labelled stub boxes where the platform's checkout goes
+    const co = await get(port, '/checkout');
+    expect(co.status).toBe(200);
+    expect(co.body).toContain('class="sn-dev-co"');
+    expect(co.body).toContain('data-hk-group="header"');
+    expect(co.body).not.toContain('data-hk-checkout="payment"');
+    expect((await get(port, '/ar/checkout')).body).toContain('ملخص الطلب');
     expect((await get(port, '/')).body).not.toContain('__controllers.js'.concat('x'));
     s.close();
   });

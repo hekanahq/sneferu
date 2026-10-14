@@ -73,7 +73,7 @@ describe('section templates allow-list', () => {
     const { artifact } = c(base());
     expect(artifact!.sections.bar!.schema.templates).toEqual(['header', 'index']);
     expect(artifact!.sections.body!.schema.templates).toEqual(['product']);
-    for (const bad of ['"x"', '[]', '["checkout"]', '[1]', '["cart.big"]']) expect(errs([...without(base(), 'sections/bar.sneferu'), f('sections/bar.sneferu', sec(`,"templates":${bad}`))]), bad).toEqual(['SN3040']);
+    for (const bad of ['"x"', '[]', '[1]', '["cart.big"]', '["checkout.big"]']) expect(errs([...without(base(), 'sections/bar.sneferu'), f('sections/bar.sneferu', sec(`,"templates":${bad}`))]), bad).toEqual(['SN3040']);
     expect(errs([...without(base(), 'sections/bar.sneferu'), f('sections/bar.sneferu', sec(',"templates":["product.codes","footer"]'))])).toEqual([]);
   });
   it('rejects a template default on a section that is not allowed there (SN3041)', () => {

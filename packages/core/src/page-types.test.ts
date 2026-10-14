@@ -4,8 +4,8 @@ import { buildPaginate, clampPage } from './paginate';
 
 describe('template names', () => {
   it('accepts page types and alternates of product, collection and page only', () => {
-    for (const n of ['index', 'product', 'collection', 'search', 'cart', 'page', '404', 'product.codes', 'collection.sale-2', 'page.about']) expect(parseTemplateName(n), n).toBeDefined();
-    for (const n of ['cart.big', 'index.x', '404.x', 'search.y', 'checkout', 'Product', 'product.', 'product.A', 'product.x.y', '', 'constructor', '__proto__']) expect(parseTemplateName(n), n).toBeUndefined();
+    for (const n of ['index', 'product', 'collection', 'search', 'cart', 'checkout', 'page', '404', 'product.codes', 'collection.sale-2', 'page.about']) expect(parseTemplateName(n), n).toBeDefined();
+    for (const n of ['cart.big', 'index.x', '404.x', 'search.y', 'checkout.big', 'Product', 'product.', 'product.A', 'product.x.y', '', 'constructor', '__proto__']) expect(parseTemplateName(n), n).toBeUndefined();
     expect(parseTemplateName('product.codes')).toEqual({ type: 'product', alternate: 'codes' });
     expect(parseTemplateName(42)).toBeUndefined();
   });

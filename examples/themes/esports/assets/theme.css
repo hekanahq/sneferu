@@ -309,3 +309,25 @@ dialog.sn-cart-drawer { background: var(--hk-color-field); border: 1px solid var
   .es-actions .sn-locale-switch { display: none; }
 }
 .sn-add-to-cart .sn-atc-button { font-weight: 900; }
+
+/* checkout: the page around the platform's own checkout form */
+.es-co-head { display: grid; gap: 8px; margin-bottom: 20px; }
+.es-co-head > p, .es-co-head > h1 { margin: 0; }
+.es-co-back { display: inline-flex; align-items: center; justify-self: start; min-height: 44px; color: var(--hk-color-muted); text-decoration: none; font-size: 14px; }
+.es-co-back:hover { text-decoration: underline; }
+.es-co-sub { color: var(--hk-color-muted); }
+.es-co-notes { display: flex; flex-wrap: wrap; gap: 8px 12px; list-style: none; margin: 0 0 20px; padding: 0; }
+.es-co-note { display: inline-flex; align-items: center; gap: 8px; margin: 0; font-size: 14px; line-height: 1.6; }
+.es-co-foot { display: grid; gap: 6px; margin-top: 20px; font-size: 14px; color: var(--hk-color-muted); }
+.es-co-foot p { margin: 0; }
+.es-co-secure { display: inline-flex; align-items: center; gap: 8px; }
+.es-co-support { display: inline-flex; align-items: center; justify-self: start; min-height: 44px; color: inherit; text-decoration: underline; }
+.es-co-head { gap: 6px; margin-bottom: 20px; }
+.es-co-kicker { color: var(--hk-color-accent); font-weight: 900; font-size: 13px; text-transform: uppercase; letter-spacing: 0.14em; }
+[dir='rtl'] .es-co-kicker { letter-spacing: 0; }
+.es-co-note { padding: 8px 16px; background: var(--hk-color-field); border: 1px solid var(--es-line-strong); clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%); font-weight: 700; }
+[dir='rtl'] .es-co-note { clip-path: polygon(10px 0, 100% 0, 100% 100%, 0 100%, 0 10px); }
+.es-co-note .sn-icon, .es-co-secure .sn-icon { color: var(--hk-color-accent); }
+.es-co-forest .es-co-foot, .es-co-forest .es-co-notes { padding: 12px 16px; background: var(--hk-color-forest); border-radius: var(--es-r); }
+.es-co-ribbon .es-co-foot { padding: 12px 16px; border-inline-start: 6px solid var(--hk-color-ribbon); background: var(--hk-color-surface); }
+.es-co-ribbon .es-co-note .sn-icon { color: var(--hk-color-ribbon); }

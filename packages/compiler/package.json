@@ -1,6 +1,6 @@
 {
   "name": "@hekana/sneferu-compiler",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Sneferu compiler: templates to IR",
   "type": "module",
   "sideEffects": false,

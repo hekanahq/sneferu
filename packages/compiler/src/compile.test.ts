@@ -258,7 +258,9 @@ describe('compileTheme', () => {
   it('names templates after page types (SN3035)', () => {
     const codes = (names: string[]) => compileTheme([...base(), ...names.map((n) => f(`templates/${n}.sneferu`, '<hk-sections />'))], reg).diagnostics.filter((d) => d.severity === 'error').map((d) => d.code);
     expect(codes(['product', 'product.codes', 'collection', 'search', 'cart', 'page', '404'])).toEqual([]);
-    expect(codes(['checkout'])).toEqual(['SN3035']);
+    // checkout is a page type now; a bare one has no layout with a payment part (SN2032)
+    expect(codes(['checkout'])).toEqual(['SN2032']);
+    expect(codes(['checkout.big'])).toEqual(['SN3035']);
     expect(codes(['cart.big'])).toEqual(['SN3035']);
     expect(codes(['Product'])).toContain('SN3002');
   });

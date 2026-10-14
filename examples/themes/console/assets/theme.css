@@ -309,3 +309,25 @@
 .cc-empty { grid-template-columns: minmax(0, 1fr); }
 .cc-skip { inset-inline-start: 0; transform: translateY(-200%); }
 .cc-skip:focus { transform: none; }
+
+/* checkout: the page around the platform's own checkout form */
+.cc-co-head { display: grid; gap: 8px; margin-bottom: 20px; }
+.cc-co-head > p, .cc-co-head > h1 { margin: 0; }
+.cc-co-back { display: inline-flex; align-items: center; justify-self: start; min-height: 44px; color: var(--hk-color-muted); text-decoration: none; font-size: 14px; }
+.cc-co-back:hover { text-decoration: underline; }
+.cc-co-sub { color: var(--hk-color-muted); }
+.cc-co-notes { display: flex; flex-wrap: wrap; gap: 8px 12px; list-style: none; margin: 0 0 20px; padding: 0; }
+.cc-co-note { display: inline-flex; align-items: center; gap: 8px; margin: 0; font-size: 14px; line-height: 1.6; }
+.cc-co-foot { display: grid; gap: 6px; margin-top: 20px; font-size: 14px; color: var(--hk-color-muted); }
+.cc-co-foot p { margin: 0; }
+.cc-co-secure { display: inline-flex; align-items: center; gap: 8px; }
+.cc-co-support { display: inline-flex; align-items: center; justify-self: start; min-height: 44px; color: inherit; text-decoration: underline; }
+.cc-co-kicker { width: fit-content; padding: 4px 14px; border-radius: var(--cc-pill); background: var(--hk-color-glow); color: var(--cc-blue); font-size: 13px; font-weight: 700; }
+.cc-co-note { padding: 8px 16px; border-radius: var(--cc-pill); background: var(--hk-color-soft); box-shadow: var(--cc-shadow); }
+.cc-co-note .sn-icon { color: var(--cc-blue); }
+.cc-co-soft { padding-inline: 16px; border-radius: 28px; background: var(--hk-color-soft); }
+.cc-co-blue { padding-inline: 16px; border-radius: 28px; background: var(--hk-color-secondary); color: var(--hk-color-background); }
+.cc-co-blue .cc-co-sub, .cc-co-blue .cc-co-back, .cc-co-blue .cc-co-foot { color: color-mix(in srgb, var(--hk-color-background) 78%, transparent); }
+.cc-co-blue .cc-co-note { background: color-mix(in srgb, var(--hk-color-background) 12%, transparent); box-shadow: none; }
+.cc-co-blue .cc-co-note .sn-icon, .cc-co-blue .cc-co-kicker { color: var(--hk-color-background); }
+.cc-co-blue .cc-co-kicker { background: color-mix(in srgb, var(--hk-color-background) 16%, transparent); }

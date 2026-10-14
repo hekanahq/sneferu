@@ -1,4 +1,4 @@
-import { err, LIMITS, escapeAttr, escapeText, safeToken, safeUrl, svgCase, toStr, type Diagnostic, type IRNode, type IRValue, type TagRegistry } from '@hekana/sneferu-core';
+import { CHECKOUT_LAYOUT_TAG, err, LIMITS, escapeAttr, escapeText, safeToken, safeUrl, svgCase, toStr, type Diagnostic, type IRNode, type IRValue, type TagRegistry } from '@hekana/sneferu-core';
 import type { RenderContext, Scope } from './context';
 import { evaluate, truthy } from './evaluate';
 import { translate } from './translate';
@@ -30,6 +30,10 @@ export interface Env {
   blocks?: Record<string, { ir: IRNode[] }>;
   /** Renders a shared section group (<hk-section-group name="header" />). Set only for the layout; absent, the tag prints nothing and reports SN4013 once. */
   group?: (name: string) => string;
+  /** The privileged checkout tags (`hk-checkout-*`): whether this is the checkout page, and which of them it has already printed. Shared by reference. */
+  checkout?: { page: boolean; seen: Set<string> };
+  /** The tag whose children are being rendered; a checkout part prints only directly inside the checkout layout. */
+  parent?: string;
 }
 
 /** Own-property lookup: author/merchant strings must never reach Object.prototype. */
@@ -82,7 +86,7 @@ export function renderNodes(nodes: IRNode[], scope: Scope, env: Env): string {
         }).join('');
         if (!add(`<${svgCase(n.tag)}${attrs}>`)) break;
         if (n.void) break;
-        raw(renderNodes(n.children, scope, { ...env, depth: env.depth + 1 }));
+        raw(renderNodes(n.children, scope, { ...env, depth: env.depth + 1, parent: undefined }));
         const close = `</${svgCase(n.tag)}>`;
         env.budget.force(close.length); raw(close);
         break;
@@ -112,7 +116,7 @@ export function renderNodes(nodes: IRNode[], scope: Scope, env: Env): string {
         if (!body) { env.diagnostics.push(err('SN4004', `snippet '${n.snippet}' not found`)); break; }
         if (env.include >= env.budget.maxInclude) { reportOnce(env, 'SN4002', `include depth exceeded at '${n.snippet}'`); break; }
         const args = Object.fromEntries(Object.entries(n.args).map(([k, e]) => [k, evaluate(e, scope, env.ctx)]));
-        raw(renderNodes(body, { ...scope, ...args }, { ...env, include: env.include + 1 }));
+        raw(renderNodes(body, { ...scope, ...args }, { ...env, include: env.include + 1, parent: undefined }));
         break;
       }
       case 'comp': {
@@ -124,7 +128,7 @@ export function renderNodes(nodes: IRNode[], scope: Scope, env: Env): string {
           if (env.include >= env.budget.maxInclude) { reportOnce(env, 'SN4002', 'block include depth exceeded'); break; }
           const open = `<div data-hk-block="${escapeAttr(toStr(b.id))}">`;
           if (!add(open)) break;
-          raw(renderNodes(def.ir, { ...scope, block: b }, { ...env, depth: env.depth + 1, include: env.include + 1 }));
+          raw(renderNodes(def.ir, { ...scope, block: b }, { ...env, depth: env.depth + 1, include: env.include + 1, parent: undefined }));
           const close = '</div>';
           env.budget.force(close.length); raw(close);
           break;
@@ -139,6 +143,15 @@ export function renderNodes(nodes: IRNode[], scope: Scope, env: Env): string {
         }
         const tag = env.registry.get(n.tag);
         if (!tag) { env.diagnostics.push(err('SN4005', `component ${n.tag} not available`)); break; }
+        if (tag.editor.privileged) {
+          // the checkout tags are placeholders for the host's own checkout: they print only on the checkout page, once each,
+          // and a part only directly inside the layout. Anything else is skipped, never printed.
+          const seen = env.checkout;
+          if (!seen?.page) { reportOnce(env, 'SN4015', `${n.tag} renders only on the checkout page; skipped`); break; }
+          if (seen.seen.has(n.tag)) { reportOnce(env, 'SN4016', `${n.tag} appears more than once on the checkout page; the extra one is skipped`); break; }
+          if (n.tag !== CHECKOUT_LAYOUT_TAG && env.parent !== CHECKOUT_LAYOUT_TAG) { reportOnce(env, 'SN4017', `${n.tag} must sit directly inside ${CHECKOUT_LAYOUT_TAG}; skipped`); break; }
+          seen.seen.add(n.tag);
+        }
         const props: Record<string, unknown> = {};
         for (const [k, v] of Object.entries(n.props)) props[k] = resolveValue(v, scope, env);
         const id = `${env.ids.prefix ?? ''}c${++env.ids.n}`;
@@ -160,7 +173,7 @@ export function renderNodes(nodes: IRNode[], scope: Scope, env: Env): string {
             renderChildren: (part?: string) => {
               const kids = part === undefined ? n.children.filter((c) => !isPart(c))
                 : n.children.flatMap((c) => (isPart(c) && partName(c) === part ? c.children : []));
-              const r = renderNodes(kids, scope, { ...env, depth: env.depth + 1 });
+              const r = renderNodes(kids, scope, { ...env, depth: env.depth + 1, parent: n.tag });
               childLen += r.length;
               return r;
             },
