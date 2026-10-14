@@ -1,0 +1,74 @@
+{
+  "sections": [
+    {
+      "id": "header",
+      "type": "header",
+      "settings": {
+        "menu": "main-menu",
+        "show_search": true,
+        "show_account": true,
+        "show_language": true,
+        "show_cart": true,
+        "drawer_on_add": true
+      },
+      "blocks": [
+        {
+          "id": "nav-all",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "كل المنتجات",
+              "en": "All products"
+            },
+            "url": "/products"
+          }
+        },
+        {
+          "id": "nav-paint",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "دهانات",
+              "en": "Paint"
+            },
+            "url": "/category/paint"
+          }
+        },
+        {
+          "id": "nav-plumb",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "سباكة",
+              "en": "Plumbing"
+            },
+            "url": "/category/plumbing"
+          }
+        },
+        {
+          "id": "nav-light",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "إضاءة",
+              "en": "Lighting"
+            },
+            "url": "/category/lighting"
+          }
+        },
+        {
+          "id": "nav-about",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "عن عُدّة",
+              "en": "About Odda"
+            },
+            "url": "/pages/about"
+          }
+        }
+      ],
+      "block_order": ["nav-all", "nav-paint", "nav-plumb", "nav-light", "nav-about"]
+    }
+  ]
+}

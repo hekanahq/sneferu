@@ -1,0 +1,50 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="16">
+  <div class="od-panels">
+    {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Photo panels",
+      "ar": "لوحات الصور"
+    },
+    "version": 1,
+    "settings": {
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 160,
+        "step": 8,
+        "default": 24
+      }
+    },
+    "blocks": {
+      "allowed": ["panel"],
+      "max": 4
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "Three panels",
+          "ar": "ثلاث لوحات"
+        },
+        "blocks": [
+          {
+            "type": "panel"
+          },
+          {
+            "type": "panel"
+          },
+          {
+            "type": "panel"
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

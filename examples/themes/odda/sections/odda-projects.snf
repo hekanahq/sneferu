@@ -1,0 +1,93 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="32">
+  <div class="od-section-head">
+    {% if section.settings.title %}
+      <hk-heading text="{{ section.settings.title }}" level="h2" size="30" mobile-size="24" />
+    {% endif %}
+    {% if section.settings.link_label %}<a
+        class="od-view-all"
+        href="{{ url(section.settings.link) }}"
+      >{{ section.settings.link_label }}</a>{% endif %}
+  </div>
+  <div class="od-projects">
+    {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Project ideas",
+      "ar": "أفكار المشاريع"
+    },
+    "version": 1,
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "localized": true,
+        "default": {
+          "en": "Project ideas",
+          "ar": "أفكار لمشروعك الجاي"
+        },
+        "maxLength": 60
+      },
+      "link_label": {
+        "type": "text",
+        "label": {
+          "en": "Link text (empty hides it)",
+          "ar": "نص الرابط (فاضي يخفيه)"
+        },
+        "localized": true,
+        "default": {
+          "en": "",
+          "ar": ""
+        },
+        "maxLength": 30
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 160,
+        "step": 8,
+        "default": 48
+      }
+    },
+    "blocks": {
+      "allowed": ["project"],
+      "max": 6
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "Three projects",
+          "ar": "ثلاث مشاريع"
+        },
+        "blocks": [
+          {
+            "type": "project"
+          },
+          {
+            "type": "project"
+          },
+          {
+            "type": "project"
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

@@ -1,0 +1,38 @@
+<hk-section full-bleed="true" background="theme:soft" padding-y="28" mobile-padding-y="20" class="od-trust">
+  <ul class="od-trust-list">
+    {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+  </ul>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Trust strip",
+      "ar": "شريط الثقة"
+    },
+    "version": 1,
+    "settings": {},
+    "blocks": {
+      "allowed": ["trust"],
+      "max": 4
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "Three points",
+          "ar": "ثلاث نقاط"
+        },
+        "blocks": [
+          {
+            "type": "trust"
+          },
+          {
+            "type": "trust"
+          },
+          {
+            "type": "trust"
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

@@ -1,0 +1,48 @@
+<li class="od-trust-item">
+  <span class="od-trust-icon"><hk-icon name="{{ block.settings.icon }}" class="ic" /></span>
+  <span class="od-trust-label">{{ block.settings.label }}</span>
+</li>
+<hk-schema>
+  {
+    "name": {
+      "en": "Trust point",
+      "ar": "نقطة ثقة"
+    },
+    "version": 1,
+    "settings": {
+      "icon": {
+        "type": "select",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
+        "options": [
+          "banknote",
+          "truck",
+          "package",
+          "shield-check",
+          "clock",
+          "credit-card",
+          "help-circle",
+          "home",
+          "tag",
+          "key"
+        ],
+        "default": "truck"
+      },
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "localized": true,
+        "default": {
+          "en": "Cash on delivery",
+          "ar": "الدفع عند الاستلام"
+        },
+        "maxLength": 60
+      }
+    }
+  }
+</hk-schema>

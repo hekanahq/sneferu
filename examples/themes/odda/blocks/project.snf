@@ -1,0 +1,69 @@
+<a class="od-project" href="{{ url(block.settings.link) }}">
+  {% if block.settings.image %}
+    <hk-image
+      src="{{ block.settings.image }}"
+      alt="{{ block.settings.title }}"
+      aspect-ratio="4/5"
+      sizes="(min-width: 1024px) 33vw, 100vw"
+    />
+  {% else %}
+    <span class="od-panel-empty" aria-hidden="true"></span>
+  {% endif %}
+  <span class="od-project-caption">
+    <span class="od-project-title">{{ block.settings.title }}</span>
+    {% if block.settings.text %}<span class="od-project-text">{{ block.settings.text }}</span>{% endif %}
+  </span>
+</a>
+<hk-schema>
+  {
+    "name": {
+      "en": "Project card",
+      "ar": "بطاقة مشروع"
+    },
+    "version": 1,
+    "settings": {
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "Room photo",
+          "ar": "صورة الغرفة"
+        },
+        "default": ""
+      },
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Title",
+          "ar": "العنوان"
+        },
+        "localized": true,
+        "default": {
+          "en": "A fresh coat for the living room",
+          "ar": "دهان جديد لأوضة المعيشة"
+        },
+        "maxLength": 50
+      },
+      "text": {
+        "type": "text",
+        "label": {
+          "en": "Short line (optional)",
+          "ar": "سطر قصير (اختياري)"
+        },
+        "localized": true,
+        "default": {
+          "en": "",
+          "ar": ""
+        },
+        "maxLength": 80
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      }
+    }
+  }
+</hk-schema>
