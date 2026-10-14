@@ -10,7 +10,7 @@ import { loadTheme } from '../load';
 import { pickSampleData, sampleContext, withSampleData } from '../sample-data';
 import { devPage } from '../dev-page';
 import { controllersBundle, devHostScript } from '../dev-controllers';
-import { plainNotFound, resolveDevRoute, splitLocale } from '../dev-routes';
+import { RELATED_COLLECTION, plainNotFound, relatedProducts, resolveDevRoute, splitLocale } from '../dev-routes';
 
 const TYPES: Record<string, string> = { '.css': 'text/css', '.js': 'text/javascript', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.woff': 'font/woff' };
 
@@ -88,7 +88,7 @@ export async function startDev(dir: string, port: number, opts: { data?: string 
       const locale = pickLocale(explicit ?? cookie ?? null, artifact.manifest);
       const sample = readSampleData(dataPath);
       if (sample.error) { res.writeHead(500, { 'content-type': 'text/html; charset=utf-8' }).end(errorPage(`sample data: ${sample.error}`)); return; }
-      const ctx = withSampleData(sampleContext(locale, artifact.locales, artifact.manifest.defaultLocale, { responsive: true, devLinks: true }), pickSampleData(sample.raw, locale));
+      let ctx = withSampleData(sampleContext(locale, artifact.locales, artifact.manifest.defaultLocale, { responsive: true, devLinks: true }), pickSampleData(sample.raw, locale));
       let template = 'index';
       let status = 200;
       let scope: Record<string, unknown> = {};
@@ -99,6 +99,10 @@ export async function startDev(dir: string, port: number, opts: { data?: string 
         const route = resolveDevRoute({ path: split.path, query: url.searchParams, locale, defaultLocale: artifact.manifest.defaultLocale, products: ctx.products, collections: ctx.collections });
         if (plainNotFound(route, artifact.templates)) { res.writeHead(404, { 'content-type': 'text/plain; charset=utf-8' }).end('404 Not found'); return; }
         ({ template, status, scope, path } = route);
+        // like the host: on a product page `collection('related')` is the product's category minus itself
+        if (scope.product && !Object.hasOwn(ctx.collections, RELATED_COLLECTION)) {
+          ctx = { ...ctx, collections: { ...ctx.collections, [RELATED_COLLECTION]: { products: relatedProducts(scope.product, ctx.products) } } };
+        }
       }
       const other = locale === 'ar' ? 'en' : 'ar';
       const keep = new URLSearchParams(url.searchParams); keep.delete('locale');

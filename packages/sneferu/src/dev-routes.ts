@@ -111,3 +111,20 @@ export function resolveDevRoute(opts: {
 /** A miss on a theme without a `404` template (the default store normally fills it in) gets a plain text page. */
 export const plainNotFound = (route: DevRoute, templates: object): boolean =>
   route.status === 404 && route.template === '404' && !Object.hasOwn(templates, '404');
+
+/** The collection name a host fills with a product page's related products. */
+export const RELATED_COLLECTION = 'related';
+const RELATED_LIMIT = 8;
+
+/**
+ * The `related` collection of a product page, as the Hekana host builds it: the other
+ * products of the product's category, the product itself left out, at most 8.
+ * A product with no category has none.
+ */
+export function relatedProducts(product: unknown, products: Record<string, unknown>): unknown[] {
+  const handleOf = (p: unknown) => (p as { handle?: unknown } | null)?.handle;
+  const categoryOf = (p: unknown) => ((p as { category?: { handle?: unknown } | null } | null)?.category?.handle);
+  const cat = categoryOf(product);
+  if (typeof cat !== 'string' || cat === '') return [];
+  return Object.values(products).filter((p) => categoryOf(p) === cat && handleOf(p) !== handleOf(product)).slice(0, RELATED_LIMIT);
+}
