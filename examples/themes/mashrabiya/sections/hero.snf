@@ -81,8 +81,8 @@
           "ar": "النص"
         },
         "default": {
-          "ar": "فوانيس نحاس، كليم، وأشغال خشب مشغولة بإيد صنايعية. الدفع عند الاستلام وتوصيل لكل المحافظات.",
-          "en": "Brass lanterns, kilims and carved woodwork. Cash on delivery, delivered across Egypt."
+          "ar": "فوانيس نحاس، كليم، وقطع خشب محفورة. الدفع عند الاستلام وتوصيل لكل المحافظات.",
+          "en": "Brass lanterns, kilims and carved wood pieces. Cash on delivery, delivered across Egypt."
         },
         "localized": true,
         "maxLength": 200
@@ -135,7 +135,7 @@
           "en": "Image",
           "ar": "الصورة"
         },
-        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/mashrabiya/mashrabiya-hero.webp"
+        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/mashrabiya/hero2.webp"
       },
       "image_alt": {
         "type": "text",
@@ -144,8 +144,8 @@
           "ar": "وصف الصورة"
         },
         "default": {
-          "ar": "فانوس نحاس ووسادة كليم ودلة نحاس وقطعة خشب مشربية",
-          "en": "A brass lantern, a kilim cushion, a copper dallah and a mashrabiya wood panel"
+          "ar": "فانوس نحاس معلق ووسادة كليم على خلفية بنقشة مشربية",
+          "en": "A hanging brass lantern and a kilim cushion on a mashrabiya-pattern backdrop"
         },
         "localized": true,
         "maxLength": 120
