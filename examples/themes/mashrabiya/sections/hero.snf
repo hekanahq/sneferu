@@ -1,0 +1,182 @@
+<hk-section
+  full-bleed="true"
+  background="{{ section.settings.background }}"
+  padding-y="{{ section.settings.padding_y }}"
+  mobile-padding-y="32"
+  class="mb-hero"
+>
+  <div class="mb-hero-grid">
+    <div class="mb-hero-text">
+      {% if section.settings.eyebrow %}
+        <p class="mb-eyebrow">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+      {% if section.settings.title %}
+        <hk-heading
+          text="{{ section.settings.title }}"
+          level="h1"
+          size="46"
+          mobile-size="30"
+          color="{{ section.settings.text_color }}"
+        />
+      {% endif %}
+      {% if section.settings.subtitle %}
+        <hk-text text="{{ section.settings.subtitle }}" size="18" color="{{ section.settings.text_color }}" />
+      {% endif %}
+      <div class="mb-hero-actions">
+        {% render 'button', label: section.settings.button_label, href: section.settings.button_link, style: 'solid' %}
+        {% render 'button', label: section.settings.button2_label, href: section.settings.button2_link, style: 'outline' %}
+      </div>
+    </div>
+    {% if section.settings.image %}
+      <div class="mb-hero-media">
+        <hk-image
+          src="{{ section.settings.image }}"
+          alt="{{ section.settings.image_alt }}"
+          loading="eager"
+          aspect-ratio="4/3"
+          sizes="(min-width: 1024px) 50vw, 100vw"
+        />
+      </div>
+    {% endif %}
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Hero",
+      "ar": "البانر الرئيسي"
+    },
+    "version": 1,
+    "settings": {
+      "eyebrow": {
+        "type": "text",
+        "label": {
+          "en": "Small line above the heading",
+          "ar": "سطر صغير فوق العنوان"
+        },
+        "default": {
+          "ar": "تراث مصري بروح عصرية",
+          "en": "Egyptian heritage, made modern"
+        },
+        "localized": true,
+        "maxLength": 50
+      },
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "بيت بروح مصرية وتفاصيل من النحاس والخشب",
+          "en": "A home with Egyptian character, in brass and wood"
+        },
+        "localized": true,
+        "maxLength": 80
+      },
+      "subtitle": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "فوانيس نحاس، كليم، وأشغال خشب مشغولة بإيد صنايعية. الدفع عند الاستلام وتوصيل لكل المحافظات.",
+          "en": "Brass lanterns, kilims and carved woodwork. Cash on delivery, delivered across Egypt."
+        },
+        "localized": true,
+        "maxLength": 200
+      },
+      "button_label": {
+        "type": "text",
+        "label": {
+          "en": "First button",
+          "ar": "الزر الأول"
+        },
+        "default": {
+          "ar": "تسوق المجموعة",
+          "en": "Shop the collection"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "button_link": {
+        "type": "link",
+        "label": {
+          "en": "First button link",
+          "ar": "رابط الزر الأول"
+        },
+        "default": "/products"
+      },
+      "button2_label": {
+        "type": "text",
+        "label": {
+          "en": "Second button",
+          "ar": "الزر الثاني"
+        },
+        "default": {
+          "ar": "الفوانيس",
+          "en": "Lanterns"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "button2_link": {
+        "type": "link",
+        "label": {
+          "en": "Second button link",
+          "ar": "رابط الزر الثاني"
+        },
+        "default": "/category/lighting"
+      },
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "Image",
+          "ar": "الصورة"
+        },
+        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/mashrabiya/mashrabiya-hero.webp"
+      },
+      "image_alt": {
+        "type": "text",
+        "label": {
+          "en": "Image description",
+          "ar": "وصف الصورة"
+        },
+        "default": {
+          "ar": "فانوس نحاس ووسادة كليم ودلة نحاس وقطعة خشب مشربية",
+          "en": "A brass lantern, a kilim cushion, a copper dallah and a mashrabiya wood panel"
+        },
+        "localized": true,
+        "maxLength": 120
+      },
+      "background": {
+        "type": "color",
+        "label": {
+          "en": "Background",
+          "ar": "الخلفية"
+        },
+        "default": "theme:primary"
+      },
+      "text_color": {
+        "type": "color",
+        "label": {
+          "en": "Text colour",
+          "ar": "لون النص"
+        },
+        "default": "theme:background"
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 160,
+        "step": 8,
+        "default": 64
+      }
+    }
+  }
+</hk-schema>

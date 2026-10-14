@@ -1,0 +1,185 @@
+{
+  "sections": [
+    {
+      "id": "footer",
+      "type": "footer",
+      "settings": {
+        "menu": "",
+        "scheme": "primary",
+        "show_newsletter": true,
+        "about_text": {
+          "ar": "ديكور بيت بروح مصرية: نحاس وكليم وخشب مشغول. الدفع عند الاستلام وتوصيل لكل المحافظات.",
+          "en": "Home decor with Egyptian character: brass, kilim and carved wood. Cash on delivery, delivered across Egypt."
+        },
+        "copyright": {
+          "ar": "جميع الحقوق محفوظة",
+          "en": "All rights reserved"
+        },
+        "newsletter_title": {
+          "ar": "كلمنا على واتساب",
+          "en": "Talk to us on WhatsApp"
+        },
+        "newsletter_text": {
+          "ar": "اسأل عن قطعة أو مقاس أو لون قبل ما تطلب.",
+          "en": "Ask about a piece, a size or a colour before you order."
+        },
+        "newsletter_label": {
+          "ar": "تواصل معنا",
+          "en": "Contact us"
+        },
+        "newsletter_link": "/pages/contact",
+        "show_language": true
+      },
+      "blocks": [
+        {
+          "id": "col-shop",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "تسوق",
+              "en": "Shop"
+            }
+          },
+          "blocks": [
+            {
+              "id": "c1",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "كل المنتجات",
+                  "en": "All products"
+                },
+                "url": "/products"
+              }
+            },
+            {
+              "id": "c2",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "فوانيس وإضاءة",
+                  "en": "Lighting"
+                },
+                "url": "/category/lighting"
+              }
+            },
+            {
+              "id": "c3",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "كليم ووسائد",
+                  "en": "Textiles"
+                },
+                "url": "/category/textiles"
+              }
+            },
+            {
+              "id": "c4",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "بحث",
+                  "en": "Search"
+                },
+                "url": "/search"
+              }
+            }
+          ]
+        },
+        {
+          "id": "col-help",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "المتجر",
+              "en": "The store"
+            }
+          },
+          "blocks": [
+            {
+              "id": "h1",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "عن المتجر",
+                  "en": "About"
+                },
+                "url": "/pages/about"
+              }
+            },
+            {
+              "id": "h2",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "الشحن والدفع",
+                  "en": "Shipping and payment"
+                },
+                "url": "/pages/shipping"
+              }
+            },
+            {
+              "id": "h3",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "تواصل معنا",
+                  "en": "Contact"
+                },
+                "url": "/pages/contact"
+              }
+            }
+          ]
+        },
+        {
+          "id": "social-wa",
+          "type": "social-link",
+          "settings": {
+            "label": {
+              "ar": "واتساب",
+              "en": "WhatsApp"
+            },
+            "url": "/pages/contact",
+            "icon": "message-circle"
+          }
+        },
+        {
+          "id": "social-mail",
+          "type": "social-link",
+          "settings": {
+            "label": {
+              "ar": "الإيميل",
+              "en": "Email"
+            },
+            "url": "/pages/contact",
+            "icon": "mail"
+          }
+        },
+        {
+          "id": "contact-wa",
+          "type": "contact-line",
+          "settings": {
+            "icon": "message-circle",
+            "text": {
+              "ar": "تواصل معنا على واتساب",
+              "en": "Contact us on WhatsApp"
+            },
+            "url": "/pages/contact"
+          }
+        },
+        {
+          "id": "pay-cod",
+          "type": "payment-method",
+          "settings": {
+            "label": {
+              "ar": "الدفع عند الاستلام",
+              "en": "Cash on delivery"
+            },
+            "icon": "banknote"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+<a class="mb-tile-link" href="{{ url(block.settings.link) }}">
+  <span class="mb-tile-icon">
+    {% if block.settings.icon == 'lantern' or block.settings.icon == 'kilim' or block.settings.icon == 'vessel' or block.settings.icon == 'lattice' %}
+      {% render 'glyph', name: block.settings.icon %}
+    {% else %}
+      <hk-icon name="{{ block.settings.icon }}" class="ic" />
+    {% endif %}
+  </span>
+  <span class="mb-tile-label">{{ block.settings.label }}</span>
+  {% if block.settings.caption %}<span class="mb-tile-caption">{{ block.settings.caption }}</span>{% endif %}
+</a>
+<hk-schema>
+  {
+    "name": {
+      "en": "Category tile",
+      "ar": "مربع قسم"
+    },
+    "version": 1,
+    "settings": {
+      "icon": {
+        "type": "select",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
+        "options": ["lantern", "kilim", "vessel", "lattice", "home", "gift", "sparkles", "layers", "store", "package"],
+        "default": "lantern"
+      },
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Name",
+          "ar": "الاسم"
+        },
+        "localized": true,
+        "default": {
+          "ar": "فوانيس وإضاءة",
+          "en": "Lanterns and lighting"
+        },
+        "maxLength": 32
+      },
+      "caption": {
+        "type": "text",
+        "label": {
+          "en": "Short line",
+          "ar": "سطر قصير"
+        },
+        "localized": true,
+        "default": "",
+        "maxLength": 40
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      }
+    }
+  }
+</hk-schema>
