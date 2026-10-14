@@ -195,10 +195,12 @@ function render(artifact: ArtifactLike, opts: RenderOptions): RenderResult {
   const mf = isObj(artifact.manifest.money) ? artifact.manifest.money.format : undefined;
   const money = isMoneyFormat(mf) ? mf : isMoneyFormat(opts.ctx.money) ? opts.ctx.money : undefined;
   const ctx: RenderContext = { ...opts.ctx, locale, dir, settings, money, translations: withOverrides(artifact, opts.ctx, opts.locale_overrides, locale) };
-  const env: Env = { ctx, registry: opts.registry, snippets: artifact.snippets, slots: {}, budget: new Budget(opts.limits), css: [], cssOnce: new Set(), controllers: new Set(), diagnostics: [], ids: { n: 0 }, depth: 0, include: 0 };
+  const pageType = parseTemplateName(opts.template)?.type;
+  const env: Env = { checkout: { page: pageType === 'checkout', seen: new Set() }, ctx, registry: opts.registry, snippets: artifact.snippets, slots: {}, budget: new Budget(opts.limits), css: [], cssOnce: new Set(), controllers: new Set(), diagnostics: [], ids: { n: 0 }, depth: 0, include: 0 };
   const page = pageObjects(opts, artifact.manifest, locale);
   bindMenuRequest(ctx, page.request.path, locale);
-  const base: Scope = { ...(opts.scope ?? {}), store: ctx.store, locale, dir, ...page };
+  // the checkout page has no page data at all: no product, cart or order object reaches a theme there
+  const base: Scope = { ...(pageType === 'checkout' ? {} : opts.scope ?? {}), store: ctx.store, locale, dir, ...page };
 
   /** A default entry as a page node; its blocks (and theirs) keep ids `default-i-j-k`. The renderer reads two levels under a section. */
   const seed = (e: DefaultSection, id: string, depth = 0): PageNode => ({ id, type: e.type, props: e.settings, ...(depth < 2 && Array.isArray(e.blocks) ? { children: e.blocks.filter(isObj).map((b, j) => seed(b as DefaultSection, `${id}-${j}`, depth + 1)) } : {}) });
@@ -212,7 +214,7 @@ function render(artifact: ArtifactLike, opts: RenderOptions): RenderResult {
     (Array.isArray(list) ? list : []).filter((c): c is PageNode => isObj(c) && typeof c.type === 'string' && !c.hidden).slice(0, MAX_BLOCKS)
       .map((c) => ({ id: c.id, type: c.type, settings: settingsFor(own(artifact.blocks, c.type)?.schema.settings ?? {}, c.props, locale), blocks: depth < 2 ? toBlocks(c.children, depth + 1) : [] }));
 
-  const renderSection = (node: PageNode, idPrefix = ''): string => {
+  const renderSection = (node: PageNode, idPrefix = '', inGroup = false): string => {
     if (!isObj(node) || typeof node.type !== 'string') { env.diagnostics.push(err('SN4011', 'page section is malformed')); return '<!-- section unavailable -->'; }
     const def = own(artifact.sections, node.type);
     if (!def) { env.diagnostics.push(err('SN4011', `section '${node.type}' is not in this theme`)); return `<!-- section ${escapeAttr(toStr(node.id))} unavailable -->`; }
@@ -224,7 +226,8 @@ function render(artifact: ArtifactLike, opts: RenderOptions): RenderResult {
     // each section renders against what is left of the page budget, so one runaway
     // section degrades alone and the surrounding layout stays balanced
     const sub = env.budget.child();
-    const html = renderNodes(def.ir, scope, { ...env, budget: sub, slots: {}, depth: 0, ids: { n: 0, prefix: `${idPrefix}s-${sectionToken(node.id)}-` } });
+    // a shared group (header, footer) is never the checkout's own content: the checkout tags print nothing there
+    const html = renderNodes(def.ir, scope, { ...env, budget: sub, slots: {}, depth: 0, ids: { n: 0, prefix: `${idPrefix}s-${sectionToken(node.id)}-` }, ...(inGroup ? { checkout: { page: false, seen: new Set<string>() } } : {}) });
     if (sub.exceeded) { env.budget.absorbFailed(sub); return unavailable; }
     const out = `<div data-hk-section="${escapeAttr(toStr(node.id))}">${html}</div>`;
     env.budget.absorb(sub, out.length);
@@ -244,7 +247,7 @@ function render(artifact: ArtifactLike, opts: RenderOptions): RenderResult {
         env.diagnostics.push(err('SN4014', `section '${s.type}' is not allowed in the ${name} group; skipped`));
         return '';
       }
-      return renderSection(s, `g-${name}-`);
+      return renderSection(s, `g-${name}-`, true);
     }).join('');
     return inner === '' ? '' : `<div data-hk-group="${name}">${inner}</div>`;
   };

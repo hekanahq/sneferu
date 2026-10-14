@@ -3,7 +3,7 @@
  * stores their trees under. Templates are `templates/<type>.snf` (or `.sneferu`); `product`, `collection`
  * and `page` also take alternates (`product.codes`).
  */
-export const PAGE_TYPES = ['index', 'product', 'collection', 'search', 'cart', 'page', '404'] as const;
+export const PAGE_TYPES = ['index', 'product', 'collection', 'search', 'cart', 'checkout', 'page', '404'] as const;
 export type PageType = (typeof PAGE_TYPES)[number];
 /** Page types that accept alternate templates (`product.<alt>`). */
 export const ALTERNATE_PAGE_TYPES = ['product', 'collection', 'page'] as const;
@@ -11,7 +11,7 @@ export const ALTERNATE_PAGE_TYPES = ['product', 'collection', 'page'] as const;
 export const GROUP_NAMES = ['header', 'footer', 'announcement'] as const;
 export type GroupName = (typeof GROUP_NAMES)[number];
 
-export const TEMPLATE_NAME = /^(index|product|collection|search|cart|page|404)(\.[a-z0-9-]{1,30})?$/;
+export const TEMPLATE_NAME = /^(index|product|collection|search|cart|checkout|page|404)(\.[a-z0-9-]{1,30})?$/;
 
 export const isPageType = (v: unknown): v is PageType => typeof v === 'string' && (PAGE_TYPES as readonly string[]).includes(v);
 export const isGroupName = (v: unknown): v is GroupName => typeof v === 'string' && (GROUP_NAMES as readonly string[]).includes(v);
@@ -35,7 +35,7 @@ export const templateOfPageKey = (key: string): string => (key === '/' ? 'index'
 /** Names for the builder's page switcher and group editor. */
 export const PAGE_TYPE_LABELS: Readonly<Record<PageType, { ar: string; en: string }>> = Object.freeze({
   index: { ar: 'الرئيسية', en: 'Home' }, product: { ar: 'المنتج', en: 'Product' }, collection: { ar: 'القسم', en: 'Collection' },
-  search: { ar: 'البحث', en: 'Search' }, cart: { ar: 'السلة', en: 'Cart' }, page: { ar: 'صفحة', en: 'Page' }, '404': { ar: 'غير موجود', en: 'Not found' },
+  search: { ar: 'البحث', en: 'Search' }, cart: { ar: 'السلة', en: 'Cart' }, checkout: { ar: 'إتمام الشراء', en: 'Checkout' }, page: { ar: 'صفحة', en: 'Page' }, '404': { ar: 'غير موجود', en: 'Not found' },
 });
 export const GROUP_LABELS: Readonly<Record<GroupName, { ar: string; en: string }>> = Object.freeze({
   header: { ar: 'الهيدر', en: 'Header' }, footer: { ar: 'الفوتر', en: 'Footer' }, announcement: { ar: 'شريط الإعلان', en: 'Announcement bar' },
@@ -43,12 +43,14 @@ export const GROUP_LABELS: Readonly<Record<GroupName, { ar: string; en: string }
 
 /**
  * Whether a section may be added to a template or group: its schema's optional `templates` allow-list
- * (page types, group names or exact alternates such as `product.codes`); absent means everywhere.
+ * (page types, group names or exact alternates such as `product.codes`); absent means everywhere except the checkout
+ * page, which takes only sections that list it.
  * `where` is a template name (`product.codes`) or a group name (`header`).
  */
 export function sectionAllowedOn(schema: { templates?: readonly string[] } | undefined, where: string): boolean {
   const list = schema?.templates;
-  if (!Array.isArray(list)) return true;
+  // the checkout page takes only the sections that name it: a section written for another page never lands there
+  if (!Array.isArray(list)) return parseTemplateName(where)?.type !== 'checkout';
   const base = parseTemplateName(where)?.type ?? where;
   return list.includes(where) || list.includes(base);
 }

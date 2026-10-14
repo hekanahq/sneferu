@@ -7,6 +7,8 @@ import { lower } from './lower';
 import { checkMigrations, settingKeys } from './migrations';
 import { checkEntries, toNodes, MAX_GROUP_SECTIONS, MAX_TEMPLATE_SECTIONS, type DefaultEntry } from './entries';
 import { applyDefaults, collectLocaleKeys, collectTags, type FragmentSource } from './defaults';
+import { checkCheckout, privilegedTagsOf, type CheckoutFile } from './checkout';
+import type { AstNode } from './ast';
 import { DEFAULT_THEME_FILES } from '@hekana/sneferu-templates-default';
 export type { ThemeFile } from './files';
 
@@ -14,6 +16,11 @@ export interface SectionSchema {
   name: { ar: string; en: string }; version: number; settings: FieldSchema; blocks?: { allowed: string[]; max: number }; presets?: unknown[];
   /** Where the builder offers the section: page types (`product`), exact alternates (`product.codes`) or groups (`header`). Absent: everywhere. */
   templates?: string[];
+  /**
+   * Computed by the compiler (never read from `<hk-schema>`): the privileged `hk-checkout-*` tags the section holds.
+   * A builder shows such a section as the platform's own checkout, which can be moved around but not emptied.
+   */
+  privileged?: string[];
 }
 /** A default section of a template (the `<hk-schema>` `sections` list), with its blocks (and their sub-blocks). */
 export interface TemplateSectionEntry { type: string; settings: Record<string, unknown>; hidden?: boolean; blocks?: TemplateSectionEntry[] }
@@ -138,10 +145,12 @@ export function compileTheme(files: ThemeFile[], registry: TagRegistry, options:
   const snippetNames = new Set(byDir('snippets').map(nameOf));
   const knownTags = new Set([...registry.names(), 'hk-block', 'hk-part']);
 
+  const asts = new Map<string, AstNode[]>();
   const compileOne = (path: string, kind: 'layout' | 'template' | 'section' | 'block' | 'snippet') => {
     const templateName = kind === 'template' ? nameOf(path) : undefined;
     const parsed = parseTemplate(text.get(path)!, path);
     diagnostics.push(...parsed.diagnostics);
+    if (!hasErrors(parsed.diagnostics)) asts.set(path, parsed.nodes);
     const own = isObj(parsed.schema) && isObj(parsed.schema.settings) ? parsed.schema.settings : {};
     const checked = hasErrors(parsed.diagnostics) ? [] : validateTemplate(parsed.nodes, { file: path, registry, snippets: snippetNames, kind,
       ...(templateName !== undefined ? { templateName } : {}),
@@ -179,12 +188,27 @@ export function compileTheme(files: ThemeFile[], registry: TagRegistry, options:
   for (const p of byDir('templates')) {
     const c = compileOne(p, 'template');
     const name = nameOf(p);
-    if (!parseTemplateName(name)) diagnostics.push(err('SN3035', `'${p}' is not a page type: use index, product, collection, search, cart, page or 404 (product, collection and page also take an alternate: product.codes)`, { file: p }));
+    if (!parseTemplateName(name)) diagnostics.push(err('SN3035', `'${p}' is not a page type: use index, product, collection, search, cart, checkout, page or 404 (product, collection and page also take an alternate: product.codes)`, { file: p }));
     templates[name] = c.ir;
     const rawSections = isObj(c.schema) ? c.schema.sections : undefined;
     const declared = checkEntries(rawSections, entryCheck(p, `template ${name}`, name, 'template'), diagnostics);
     checkPlacement(declared, name, p, `template ${name}`);
     templateSections[name] = declared as Artifact['templateSections'][string];
+  }
+  // the checkout boundary: what the checkout page's files may hold, and the privileged tags
+  const fileCo = (path: string): CheckoutFile | undefined => (asts.has(path) ? { path, nodes: asts.get(path)! } : undefined);
+  const coSections: Parameters<typeof checkCheckout>[0]['sections'] = {};
+  for (const [name, b] of Object.entries(sections)) { const f = fileCo(fileOf(`sections/${name}`)); if (f) coSections[name] = { ...f, schema: b.schema }; }
+  const coBlocks: Parameters<typeof checkCheckout>[0]['blocks'] = {};
+  for (const [name, b] of Object.entries(blocks)) { const f = fileCo(fileOf(`blocks/${name}`)); if (f) coBlocks[name] = { ...f, schema: b.schema }; }
+  const coSnippets: Parameters<typeof checkCheckout>[0]['snippets'] = {};
+  for (const name of Object.keys(snippets)) { const f = fileCo(fileOf(`snippets/${name}`)); if (f) coSnippets[name] = f; }
+  const coTemplate = Object.hasOwn(templates, 'checkout') ? fileCo(fileOf('templates/checkout')) : undefined;
+  diagnostics.push(...checkCheckout({ ...(coTemplate ? { template: coTemplate } : {}), sections: coSections, blocks: coBlocks, snippets: coSnippets, defaultSections: (templateSections.checkout ?? []).map((e) => e.type) }));
+  for (const [name, b] of Object.entries(sections)) {
+    const nodes = asts.get(fileOf(`sections/${name}`));
+    const held = nodes ? privilegedTagsOf(nodes) : [];
+    if (held.length) b.schema.privileged = held;
   }
   if (!templates.index) diagnostics.push(err('SN3024', `${fileOf('templates/index')} is missing`));
 
