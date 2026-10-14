@@ -443,3 +443,24 @@
 }
 .tq-scheme-primary .tq-logo, .tq-scheme-primary .tq-logo-text { color: var(--tq-y); }
 .tq-section-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 8px 16px; }
+
+/* Fix round 1: dark cards, framed photo, 44px qty */
+.tq-card { background: var(--hk-color-secondary); border-color: var(--hk-color-steel); color: var(--hk-color-background); }
+.tq-card:hover { border-color: var(--tq-y); }
+.tq-card-plain { background: transparent; border-color: transparent; color: inherit; }
+.tq-card-link { padding: 12px 12px 0; }
+.tq-card-media { border: 0; border-radius: 3px; background: var(--hk-color-soft); }
+.tq-card-media .tq-badge { inset-block-start: 8px; inset-inline-start: 8px; }
+.tq-card-title { padding-inline: 0; color: var(--hk-color-background); }
+.tq-card .sn-price { padding-inline: 0; color: var(--tq-y); }
+.tq-card .sn-was { color: #A5ABB8; }
+.tq-card-buy { padding-inline: 12px; }
+.tq-card-buy .sn-qty { border-color: #4A5160; }
+.tq-card-buy .sn-qty-btn { min-width: 44px; color: var(--hk-color-background); }
+.tq-card-buy .sn-qty-input { width: 44px; color: var(--hk-color-background); }
+.tq-card-buy .sn-atc-button { flex: 1 1 88px; }
+@media (max-width: 639px) {
+  .tq-card-title, .tq-card .sn-price { padding-inline: 0; }
+  .tq-card-link { padding: 8px 8px 0; }
+  .tq-card-buy { padding-inline: 8px; }
+}

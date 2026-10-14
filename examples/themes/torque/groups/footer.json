@@ -146,13 +146,13 @@
           }
         },
         {
-          "id": "contact-hours",
+          "id": "contact-quote",
           "type": "contact-line",
           "settings": {
-            "icon": "clock",
+            "icon": "mail",
             "text": {
-              "en": "Saturday to Thursday, 10am to 6pm",
-              "ar": "من السبت للخميس، 10ص إلى 6م"
+              "ar": "ابعتلنا قايمة الأصناف والكميات",
+              "en": "Send us your list of items and quantities"
             },
             "url": ""
           }
