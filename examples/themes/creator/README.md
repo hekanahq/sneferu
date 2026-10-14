@@ -3,7 +3,7 @@
 Creator is a complete store for one person selling online courses, e-books and
 templates. Warm paper background, black type, one orange accent, pill buttons
 and 12 px cover images. It styles **every page type itself**: home, product (plus
-a sales-page alternate for digital products), collection, search, cart, checkout, 404 and
+a sales-page alternate for digital products), collection, search, cart, 404 and
 content page, together with an editable announcement bar, header and footer.
 
 The templates in the Sneferu SDK's default store are only a fallback for themes
@@ -64,7 +64,7 @@ creator/
     announcement-bar  creator-header  creator-footer       (the groups)
     covers  what-you-get  author  faq  related-products    (home and product)
     product-main  product-sales  collection-main
-    search-main  cart-main  checkout-main  not-found  page-main
+    search-main  cart-main  not-found  page-main
   blocks/
     menu-link  menu-sub-link  footer-column  footer-link
     social-link  contact-line  payment-method                (header and footer)

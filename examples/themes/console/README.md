@@ -8,7 +8,7 @@ trust strip, a FAQ and a "how you get your code" strip. It is right-to-left in
 Arabic and left-to-right in English from the same files.
 
 This theme writes **every page type itself**: home, product (plus a
-`product.digital` alternate for codes), collection, search, cart, checkout, 404 and content
+`product.digital` alternate for codes), collection, search, cart, 404 and content
 page, with an announcement bar, header and footer as editable sections. The SDK's
 default store is only a fallback for page types a theme leaves out; Console
 leaves none out.
@@ -32,9 +32,9 @@ Phone shots are in `docs/live-*-phone-en.webp`.
 theme.json                 id, version 2.0.0, tokens
 layout/theme.snf           announcement, header, <main>, footer
 groups/                    announcement.json, header.json, footer.json (the section groups)
-templates/                 index, product, product.digital, collection, search, cart, checkout, 404, page
+templates/                 index, product, product.digital, collection, search, cart, 404, page
 sections/                  announcement-bar, header, footer, product-main, related-products,
-                           collection-main, search-main, cart-main, checkout-main, not-found, page-main,
+                           collection-main, search-main, cart-main, not-found, page-main,
                            console-showcase, -amounts, -platforms, -trust, -products,
                            -steps, -faq, featured-products, hero
 blocks/                    menu-link, menu-sub-link, footer-column, footer-link, social-link,

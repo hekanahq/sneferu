@@ -52,18 +52,6 @@ Every problem Sneferu reports has a stable code. The format is `file:line:col se
 | SN2018 | `<hk-section-group>` outside `layout/theme.snf` | Place groups in the layout. |
 | SN2019 | The same group is placed twice in the layout | Place each group once. |
 | SN2020 | An attribute value contains a `{% %}` directive, such as `class="btn {% if x %}is-on{% endif %}"`. Directives work around elements, not inside an attribute, so it would otherwise render as stray class names | Print a value with `{{ }}`: `class="btn btn-{{ block.settings.style }}"` with a select setting. Or put the `{% if %}` around two versions of the element. |
-| SN2030 | A `hk-checkout-*` tag outside `templates/checkout.snf` and the sections that list `checkout` in `templates` (a layout, another template, a block, a snippet, any other section) | Use the checkout tags only on the checkout page. |
-| SN2031 | A checkout tag appears twice in one file, or the checkout template and its default sections place it more than once | Use each checkout tag once. |
-| SN2032 | The checkout page has no `<hk-checkout-layout>` holding `<hk-checkout-payment />` | Place the layout with the payment part in `templates/checkout.snf` or in a section it lists by default. |
-| SN2033 | `hk-checkout-contact`, `-shipping`, `-summary` or `-payment` is not a direct child of `<hk-checkout-layout>` | Move the part directly inside the layout. |
-| SN2034 | An `hk-*` tag on the checkout page that is not layout, typography, image or link | Use `hk-section`, `hk-container`, `hk-stack`, `hk-grid`, `hk-heading`, `hk-text`, `hk-rich-text`, `hk-image`, `hk-button`, `hk-card`, `hk-badge` or `hk-icon`. |
-| SN2035 | An expression on the checkout page reads data it does not have (`cart`, `product`, `order`, `customer`, `collection()`, `product()`, `collections()`) or uses the `money` filter | Read only `settings`, `section`, `block`, `store`, `request` and `localization`; Hekana prints every price. |
-| SN2036 | `<audio>`, `<video>` or `<track>` on the checkout page | Use an image instead. |
-| SN2037 | A section that lists `checkout` in `templates` has a `product` or `collection` setting | Remove the setting; the checkout page has no catalogue. |
-| SN2038 | A link on the checkout page (`href`, `xlink:href`) that leads off the store: only store paths, anchors, `mailto:`, `tel:` and https links to chat and social sites are kept | Link to a store page, or to the store's WhatsApp or social profile. The page prints `#` for any other link, even when it comes from a setting. |
-| SN2039 | An inline `style` attribute in a file of the checkout page | Use a class and the theme CSS. |
-| SN2040 | A plain element on the checkout page with `id`, `name` or a `data-hk-*` attribute | These name the platform's own elements; drop them (`hk-*` tags set their own). |
-| SN2041 | `<hk-checkout-layout>` inside a link, `<details>`, a list or any element other than page structure (`div`, `section`, `main`, `article`, `aside`, `header`, `footer`, `nav`, `hk-section`, `hk-container`, `hk-stack`, `hk-grid`, `hk-card`) | Put the layout directly in a section or container. |
 
 ## SN3xxx Package, manifest and compile
 
@@ -103,13 +91,13 @@ Every problem Sneferu reports has a stable code. The format is `file:line:col se
 | SN3032 | `tokens.fonts` is not an object, has a key other than `heading`, `body`, `mono`, or names a font that is not in the catalogue | Use one of the catalogue families exactly as written (see [Fonts](guide/05-styling-and-responsive.mdx#fonts)). |
 | SN3033 | `money` in `theme.json` is not `{ "format": "decimal" }` or `{ "format": "whole" }` | Use one of the two formats, or remove `money` for the default. |
 | SN3034 | Warning: an asset in `assets/` is not served on the store (only images are): a `.js`, a font or an `.ico` | Remove it, or use `tokens.fonts`, `hk-icon` or inline SVG instead (see [Images and assets](guide/15-images-and-assets.mdx)). |
-| SN3035 | A template is not named after a page type | Use `index`, `product`, `collection`, `search`, `cart`, `checkout`, `page` or `404`; only `product`, `collection` and `page` take an alternate (`product.codes`). |
+| SN3035 | A template is not named after a page type | Use `index`, `product`, `collection`, `search`, `cart`, `page` or `404`; only `product`, `collection` and `page` take an alternate (`product.codes`). |
 | SN3036 | A `groups/<name>.json` is not valid JSON, is not `{ "sections": [ … ] }`, or is over 64 KB | Fix the file. See [Section groups](guide/18-section-groups.mdx). |
 | SN3037 | A group file lists a section that does not exist | Create the section or fix the type. |
 | SN3038 | A group file entry is malformed: more than 12 sections, a bad or duplicate `id`, a bad `block_order` | Use ids of letters, digits, `-` and `_`; list only existing block ids in `block_order`. |
 | SN3039 | Warning: a group file for a group the layout never places | Add `<hk-section-group name="…" />` to the layout, or delete the file. |
 | SN3040 | A section's `templates` list is empty, too long or names something that is not a page type, an alternate or a group | Use page types, `product.<alt>` or `header`, `footer`, `announcement`. |
-| SN3041 | A default section sits where its `templates` list says it may not (in a template or a group), or a section without a `templates` list is a default of `checkout` | Add the template or group to the list, or use another section. |
+| SN3041 | A default section sits where its `templates` list says it may not (in a template or a group) | Add the template or group to the list, or use another section. |
 | SN3042 | `blocks.allowed` names a block that is not in `blocks/` | Create the block or fix the name. |
 | SN3043 | A file in `sections/`, `blocks/` or `snippets/` is named `hk-…`; that prefix is reserved for the default store's own sections, blocks and snippets | Rename the file (and every reference to it) without the `hk-` prefix. |
 | SN3044 | One name in both forms in one folder, such as `sections/hero.snf` and `sections/hero.sneferu` | Keep one file; `.snf` is the current extension, `.sneferu` still works. |
@@ -134,9 +122,6 @@ These are reported by the runtime while rendering a page. The page still renders
 | SN4012 | A block's type does not exist in the theme; the block is skipped | Add `blocks/<type>.snf` or remove the block. |
 | SN4013 | A `<hk-section-group>` was reached outside the layout; it renders nothing (reported once per page) | Place section groups in `layout/theme.snf` only. |
 | SN4014 | A section in a group (header, footer, announcement) has a `templates` list that does not name that group; the section is skipped | Add the group to the section's `templates`, or remove the section from the group. |
-| SN4015 | A checkout tag was reached on a page other than the checkout page; it renders nothing | Use the checkout tags on the checkout page only. |
-| SN4016 | A checkout tag appears more than once on the checkout page (for example the section was added twice); the extra one is skipped | Keep one copy of each checkout tag on the page. |
-| SN4017 | A checkout part is not directly inside `<hk-checkout-layout>`; it is skipped | Put the part directly inside the layout. |
 
 ## SN9xxx Artifact integrity
 

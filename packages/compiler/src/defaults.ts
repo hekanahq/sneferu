@@ -6,7 +6,7 @@ export interface FragmentSource { artifact: Artifact; css: string }
 
 type Body = Omit<Artifact, 'hash'>;
 /** The page types the default store fills in when a theme has no template for them. */
-export const DEFAULT_PAGE_TYPES = ['product', 'collection', 'search', 'cart', 'checkout', 'page', '404'] as const;
+export const DEFAULT_PAGE_TYPES = ['product', 'collection', 'search', 'cart', 'page', '404'] as const;
 /** What the SDK's sections, blocks and snippets are called in a theme that borrows them. */
 const PREFIX = 'hk-';
 const rn = (name: string) => `${PREFIX}${name}`;

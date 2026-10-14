@@ -300,23 +300,3 @@ a.bt-locale.sn-locale-switch, .bt-locale { padding-inline: 8px; font-size: 14px;
 .bt-tabs-row a[aria-current="true"] { border-bottom-color: var(--hk-color-accent); }
 .bt-tabs-row a:hover { color: var(--hk-color-accent); }
 @media (max-width: 639px) { .bt-tabs-row { justify-content: flex-start; gap: 20px; overflow-x: auto; scrollbar-width: none; } }
-
-/* checkout: the page around the platform's own checkout form */
-.bt-co-head { display: grid; gap: 8px; margin-bottom: 20px; }
-.bt-co-head > p, .bt-co-head > h1 { margin: 0; }
-.bt-co-back { display: inline-flex; align-items: center; justify-self: start; min-height: 44px; color: var(--hk-color-muted); text-decoration: none; font-size: 14px; }
-.bt-co-back:hover { text-decoration: underline; }
-.bt-co-sub { color: var(--hk-color-muted); }
-.bt-co-notes { display: flex; flex-wrap: wrap; gap: 8px 12px; list-style: none; margin: 0 0 20px; padding: 0; }
-.bt-co-note { display: inline-flex; align-items: center; gap: 8px; margin: 0; font-size: 14px; line-height: 1.6; }
-.bt-co-foot { display: grid; gap: 6px; margin-top: 20px; font-size: 14px; color: var(--hk-color-muted); }
-.bt-co-foot p { margin: 0; }
-.bt-co-secure { display: inline-flex; align-items: center; gap: 8px; }
-.bt-co-support { display: inline-flex; align-items: center; justify-self: start; min-height: 44px; color: inherit; text-decoration: underline; }
-.bt-co-head { display: grid; gap: 6px; margin-bottom: var(--bt-gap); }
-.bt-co-kicker { width: fit-content; padding: 2px 12px; border-radius: 999px; background: var(--hk-color-background); font-size: 13px; font-weight: 600; }
-.bt-co-notes { gap: var(--bt-gap); }
-.bt-co-note { padding: 10px 16px; border-radius: var(--bt-tile); background: var(--hk-color-sage); color: var(--hk-color-text); }
-.bt-co-notes li:nth-child(2) .bt-co-note { background: var(--hk-color-sky); }
-.bt-co-notes li:nth-child(3) .bt-co-note { background: var(--hk-color-warm); }
-.bt-co-foot { padding: 14px 20px; border-radius: var(--bt-tile); background: var(--hk-color-warm); color: var(--hk-color-text); }

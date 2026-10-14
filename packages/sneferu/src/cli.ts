@@ -9,7 +9,7 @@ import { runLogout } from './commands/logout';
 import { runWhoami } from './commands/whoami';
 import { runFormat } from './commands/format';
 
-const program = new Command().name('sneferu').description('Build Hekana themes with Sneferu').version('0.8.0');
+const program = new Command().name('sneferu').description('Build Hekana themes with Sneferu').version('0.7.0');
 program.command('init').argument('[dir]', 'folder to create', 'my-theme').option('--force', 'write into a non-empty folder')
   .option('--template <name>', 'what to scaffold: starter (default), arcade, console, esports, creator, license, bento', 'starter')
   .option('--list', 'list the templates and exit')

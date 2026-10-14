@@ -12,7 +12,6 @@ tokens and CSS) from the first day.
 | `templates/collection.snf` | A category, or all products | `collection`, `paginate` |
 | `templates/search.snf` | Search results | `search`, `paginate` |
 | `templates/cart.snf` | The cart | none (the cart is drawn in the browser, see [Cart and controllers](17-cart-and-controllers.mdx)) |
-| `templates/checkout.snf` | The checkout: Hekana's own checkout mounted where your `hk-checkout-*` tags sit (see [Design the checkout](23-design-the-checkout.mdx)) | none (no cart, product or price data at all) |
 | `templates/page.snf` | A merchant's content page | `page` |
 | `templates/404.snf` | Page not found | none |
 
@@ -20,11 +19,10 @@ tokens and CSS) from the first day.
 is a second product template a merchant can assign to some products. Any other
 template name is SN3035.
 
-Sections on the checkout page are placed strictly: a section is offered there, and
-accepted as a default (SN3041), only when its `templates` list names `checkout`.
-A section with no `templates` list is allowed on every other page, never on the checkout.
-
 Every template can also read `request`, `localization`, `store`, `locale` and `dir`.
+
+Checkout and payment pages are never theme-rendered. Themes style every other
+page; checkout is Hekana's own, so there is no checkout template.
 
 <Example>
 
@@ -154,7 +152,7 @@ that uses it has its products preloaded (`pageDependencies(...).products`).
 ## Try it
 
 `sneferu dev` serves every page type: `/products/<handle>`, `/products`,
-`/category/<handle>?page=2`, `/search?q=card`, `/cart`, `/checkout`, `/pages/about`, and a
+`/category/<handle>?page=2`, `/search?q=card`, `/cart`, `/pages/about`, and a
 404 for anything else. Add `/en` or `/ar` to switch language, or
 `?template=product.codes` to preview an alternate.
 The 404 page uses your `templates/404.snf`, or the default store's when you

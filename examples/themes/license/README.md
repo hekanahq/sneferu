@@ -3,7 +3,7 @@
 License is a full store theme for a shop that sells software licences,
 subscriptions and digital tools: deep navy, blue plan cards and one lime accent,
 set in Readex Pro. It draws **every page type itself**: home, product (plus a
-`product.digital` alternate), collection, search, cart, checkout, 404 and content pages,
+`product.digital` alternate), collection, search, cart, 404 and content pages,
 with its own announcement bar, header and footer. The SDK's default store is only
 a fallback for themes that skip a page; License overrides all of them.
 
@@ -44,11 +44,11 @@ Add `/en` or `?locale=en` for English.
 theme.json                 tokens, fonts, version 2.0.0
 layout/theme.snf           announcement, header, <main>, footer
 groups/                    announcement.json, header.json, footer.json (the default sections and blocks)
-templates/                 index, product, product.digital, collection, search, cart, checkout, 404, page
+templates/                 index, product, product.digital, collection, search, cart, 404, page
 sections/                  announcement-bar, license-header, license-footer,
                            plans-hero, features, apps, faq, steps,
                            product-main, related-products, collection-main,
-                           search-main, cart-main, checkout-main, not-found, page-main
+                           search-main, cart-main, not-found, page-main
 blocks/                    menu-link, menu-sub-link, footer-column, footer-link,
                            social-link, payment-method, contact-line,
                            feature, faq-item, step,

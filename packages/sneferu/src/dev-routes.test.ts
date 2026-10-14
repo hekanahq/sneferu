@@ -13,8 +13,6 @@ describe('dev routes', () => {
     expect(route('/products')).toMatchObject({ template: 'collection', scope: { collection: { handle: 'all', products_count: 12 }, paginate: { pages: 2 } } });
     expect(route('/category/gift-cards')).toMatchObject({ template: 'collection', scope: { collection: { handle: 'gift-cards', products_count: 6 } } });
     expect(route('/cart').template).toBe('cart');
-    expect(route('/checkout')).toMatchObject({ template: 'checkout', status: 200, scope: {} });
-    expect(route('/checkout/').template).toBe('checkout');
     expect(route('/pages/about')).toMatchObject({ template: 'page', scope: { page: { handle: 'about', title: 'About us' } } });
   });
   it('answers unknown paths and handles with the 404 template and status', () => {
