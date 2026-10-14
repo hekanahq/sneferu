@@ -1,0 +1,109 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "hero",
+        "settings": {
+          "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-fashion/pool-fashion-satin-dress-beige.webp"
+        }
+      },
+      {
+        "type": "lookbook",
+        "blocks": [
+          {
+            "type": "look",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-fashion/pool-fashion-abaya-black.webp",
+              "alt": {
+                "ar": "عباية سوداء بقصّة واسعة",
+                "en": "A black abaya with a wide cut"
+              },
+              "title": {
+                "ar": "العبايات",
+                "en": "Abayas"
+              },
+              "link": "/category/abayas"
+            }
+          },
+          {
+            "type": "look",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-fashion/pool-fashion-white-shirt.webp",
+              "alt": {
+                "ar": "قميص أبيض كلاسيك",
+                "en": "A classic white shirt"
+              },
+              "title": {
+                "ar": "القمصان",
+                "en": "Shirts"
+              },
+              "link": "/category/tops"
+            }
+          },
+          {
+            "type": "look",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-fashion/pool-fashion-leather-handbag-tan.webp",
+              "alt": {
+                "ar": "حقيبة يد جلد بلون الكاميل",
+                "en": "A camel leather handbag"
+              },
+              "title": {
+                "ar": "الحقائب",
+                "en": "Bags"
+              },
+              "link": "/category/bags"
+            }
+          }
+        ]
+      },
+      {
+        "type": "featured-products",
+        "settings": {
+          "title": {
+            "ar": "جديد الموسم",
+            "en": "New this season"
+          },
+          "limit": 4,
+          "columns": 4
+        }
+      },
+      {
+        "type": "trust-strip",
+        "blocks": [
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "truck",
+              "label": {
+                "ar": "توصيل لكل المحافظات",
+                "en": "Delivery across Egypt"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "banknote",
+              "label": {
+                "ar": "الدفع عند الاستلام",
+                "en": "Cash on delivery"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "package",
+              "label": {
+                "ar": "استبدال سهل",
+                "en": "Easy exchange"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>
