@@ -1,0 +1,44 @@
+<a
+  class="tk-day tk-day-{{ block.settings.selected }}"
+  href="{{ url(block.settings.link) }}"
+>{{ block.settings.label }}</a>
+<hk-schema>
+  {
+    "name": {
+      "en": "Menu tab",
+      "ar": "تبويب القائمة"
+    },
+    "version": 1,
+    "settings": {
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Label",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "طلبات اليوم",
+          "en": "Today's orders"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      },
+      "selected": {
+        "type": "boolean",
+        "label": {
+          "en": "Highlighted",
+          "ar": "مميز"
+        },
+        "default": false
+      }
+    }
+  }
+</hk-schema>

@@ -1,0 +1,134 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="32">
+  <div class="tk-section-head">
+    {% if section.settings.title %}
+      <hk-heading text="{{ section.settings.title }}" level="h2" size="32" mobile-size="24" />
+    {% endif %}
+    {% if section.settings.link_label %}<a
+        class="tk-view-all"
+        href="{{ url(section.settings.link) }}"
+      >{{ section.settings.link_label }}</a>{% endif %}
+  </div>
+  <div class="tk-grid tk-cols-{{ section.settings.columns }}">
+    {% for p in collection(section.settings.collection).products limit: section.settings.limit %}
+      {% render 'product-card', product: p, card_style: section.settings.card_style, image_ratio: section.settings.image_ratio, show_price: section.settings.show_price, show_badge: section.settings.show_badge, show_add: true %}
+    {% endfor %}
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Featured products",
+      "ar": "منتجات مختارة"
+    },
+    "version": 1,
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "منتجات مختارة",
+          "en": "Featured products"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "collection": {
+        "type": "collection",
+        "label": {
+          "en": "Collection",
+          "ar": "القسم"
+        },
+        "default": "featured"
+      },
+      "limit": {
+        "type": "range",
+        "label": {
+          "en": "Number of products",
+          "ar": "عدد المنتجات"
+        },
+        "min": 1,
+        "max": 24,
+        "default": 8
+      },
+      "columns": {
+        "type": "range",
+        "label": {
+          "en": "Columns",
+          "ar": "الأعمدة"
+        },
+        "min": 2,
+        "max": 5,
+        "default": 4
+      },
+      "card_style": {
+        "type": "select",
+        "label": {
+          "en": "Card style",
+          "ar": "شكل الكارت"
+        },
+        "options": ["plain", "bordered", "shadow"],
+        "default": "shadow"
+      },
+      "image_ratio": {
+        "type": "select",
+        "label": {
+          "en": "Image shape",
+          "ar": "شكل الصورة"
+        },
+        "options": ["1/1", "4/5", "3/4"],
+        "default": "1/1"
+      },
+      "show_price": {
+        "type": "boolean",
+        "label": {
+          "en": "Show price",
+          "ar": "إظهار السعر"
+        },
+        "default": true
+      },
+      "show_badge": {
+        "type": "boolean",
+        "label": {
+          "en": "Show sale and sold out badge",
+          "ar": "إظهار شارة الخصم ونفاد المخزون"
+        },
+        "default": true
+      },
+      "link_label": {
+        "type": "text",
+        "label": {
+          "en": "Link text (empty hides it)",
+          "ar": "نص الرابط (فاضي يخفيه)"
+        },
+        "default": {
+          "ar": "عرض الكل",
+          "en": "View all"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 160,
+        "step": 8,
+        "default": 56
+      }
+    }
+  }
+</hk-schema>
