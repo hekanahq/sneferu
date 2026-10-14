@@ -17,12 +17,13 @@ https://hekana.dev/reference/diagnostics.
 
 ## Commands
 
-Run them in this folder (Node.js 20 or newer). Use \`npx @hekana/sneferu <command>\`,
-or \`sneferu <command>\` after \`npm i -g @hekana/sneferu\`.
+Run them in this folder (Node.js 20 or newer). Use \`npx sneferu <command>\`,
+or \`sneferu <command>\` after \`npm i -g sneferu\` (\`sneferu\` is the short name of
+\`@hekana/sneferu\`; both install the same CLI).
 
 | Command | Use |
 | - | - |
-| \`dev\` | Preview at http://127.0.0.1:4100 with sample data. \`/en/...\` or \`?locale=en\` for English, \`/ar/...\` for Arabic. Pages: \`/\`, \`/products/<handle>\`, \`/products\`, \`/category/<handle>\`, \`/search?q=a\`, \`/cart\`, \`/pages/about\`, any other path for the 404. \`--data <file>\` (or \`.sneferu-dev/data.json\`) for your own sample products |
+| \`dev\` | Preview at http://127.0.0.1:4100 (\`--port <n>\` if 4100 is taken; check the page has \`data-hk-theme="<id>"\`) with sample data. \`/en/...\` or \`?locale=en\` for English, \`/ar/...\` for Arabic. Pages: \`/\`, \`/products/<handle>\`, \`/products\`, \`/category/<handle>\`, \`/search?q=a\`, \`/cart\`, \`/pages/about\`, any other path for the 404. \`--data <file>\` (or \`.sneferu-dev/data.json\`: \`store\`, \`collections\`, \`products\` by handle, \`menus\`) for your own sample data |
 | \`format\` | Format every \`.snf\`, \`theme.json\` and locale file. \`format --check\` only reports |
 | \`validate\` | Compile and print diagnostics as \`file:line:col severity CODE message\`. Exit 0 = valid |
 | \`build\` | Write \`dist/<id>-<version>.sneferu.json\`. You never upload it |
@@ -67,7 +68,8 @@ The compiler enforces most of these; \`validate\` names the rule you broke.
    fonts are tokens. Give every setting a label in both languages, a default and
    a limit (\`maxLength\`, \`min\`, \`max\`).
 4. **Both directions.** Write CSS with logical properties (\`margin-inline-start\`,
-   \`padding-inline\`, \`text-align: start\`); flip pointing icons with
+   \`padding-inline\`, \`text-align: start\`). \`hk-icon\` arrows and chevrons
+   mirror themselves on Arabic pages: flip only your own inline SVG arrows, with
    \`[dir="rtl"]\`. Every locale the theme lists has a locale file with the same keys.
 5. **Store links go through \`url()\`** (\`{{ url('/products') }}\`), so English pages
    stay English. Only \`https:\`, \`mailto:\`, \`tel:\` and relative URLs.
@@ -96,10 +98,12 @@ The compiler enforces most of these; \`validate\` names the rule you broke.
 - Every page type renders in \`dev\` in every listed locale, at a desktop width
   (1440 px) and a phone width (390 px), with no horizontal scroll.
 - An empty collection and a section with no blocks still look intentional.
+- No copy is left over from the template you started from: replace every
+  default text in settings, groups and locales with the store's own.
 
 ## Start from an example
 
-\`npx @hekana/sneferu init --list\` lists the templates; six complete example stores
+\`npx sneferu init --list\` lists the templates; six complete example stores
 are at https://github.com/hekanahq/sneferu/tree/main/examples/themes. Copy patterns
 from them before inventing new ones.
 `;

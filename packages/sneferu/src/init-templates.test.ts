@@ -57,7 +57,7 @@ describe('sneferu init --template', () => {
       const dir = join(base, 'shop');
       runInit(dir, { template });
       const agents = readFileSync(join(dir, 'AGENTS.md'), 'utf8');
-      expect(agents).toContain('npx @hekana/sneferu');
+      expect(agents).toContain('npx sneferu');
       expect(agents).toContain('https://hekana.dev/llms-full.txt');
       expect(readFileSync(join(dir, 'CLAUDE.md'), 'utf8')).toContain('@AGENTS.md');
       expect(loadTheme(dir).map((f) => f.path).filter((p) => /agents|claude/i.test(p))).toEqual([]);

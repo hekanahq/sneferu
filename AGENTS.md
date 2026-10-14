@@ -26,11 +26,12 @@ of the store through it. A theme cannot run JavaScript.
 
 1. **Start from a design.** A mockup image or a written brief. Follow the
    project's brand (its colours, type and tone); if there is none, ask.
-2. **Scaffold.** `npx @hekana/sneferu init <id>` (Node.js 20+). It writes a
+2. **Scaffold.** `npm create sneferu <id>` or `npx sneferu init <id>` (Node.js 20+;
+   `sneferu` is the short name of `@hekana/sneferu`). It writes a
    complete store: layout, header/footer/announcement groups, a template for
    every page type, sections, blocks, snippets, `ar` and `en` locales, tokens
    and an `AGENTS.md` for the folder. To start from a finished design instead,
-   `npx @hekana/sneferu init <id> --template <name>` (`init --list` shows
+   `npx sneferu init <id> --template <name>` (`init --list` shows
    `starter`, `arcade`, `console`, `esports`, `creator`, `license`, `bento`).
    The `id` is the folder name: lower-case letters, digits and `-`.
 3. **Build it out.** Edit `theme.json` (name, description, `defaultLocale`,
@@ -38,22 +39,26 @@ of the store through it. A theme cannot run JavaScript.
    in `sections/`, repeatable items in `blocks/`, partials in `snippets/`, the
    default sections of each page in `templates/<type>.snf`, the shared header
    and footer in `groups/*.json`, the stylesheet in `assets/*.css`, interface
-   words in `locales/<lang>.json`.
-4. **Preview.** `npx @hekana/sneferu dev` serves http://127.0.0.1:4100 with sample
+   words in `locales/<lang>.json`. Replace every default text the scaffold
+   came with (hero, footer, product notes, menus) with the store's own.
+4. **Preview.** `npx sneferu dev` serves http://127.0.0.1:4100 with sample
    data and reloads on save. Check `/`, `/products/<handle>`, `/products`,
    `/category/<handle>`, `/search?q=a`, `/cart`, `/pages/about` and a missing
    path (404), each in every locale (`/en/...`, `/ar/...`, or `?locale=`), at a
-   desktop width (1440 px) and a phone width (390 px). `--data <file>` or
-   `.sneferu-dev/data.json` replaces the sample products.
-5. **Format and check.** `npx @hekana/sneferu format`, then
-   `npx @hekana/sneferu validate` until it prints `✔ theme <id>@<version> is valid`.
+   desktop width (1440 px) and a phone width (390 px). If port 4100 is taken use
+   `--port <n>`, and confirm the page carries `data-hk-theme="<id>"` (another
+   theme may be answering). `--data <file>` or `.sneferu-dev/data.json` adds your
+   own `store`, `collections`, `products` (by handle; a product only has a page
+   when it is listed here) and `menus`.
+5. **Format and check.** `npx sneferu format`, then
+   `npx sneferu validate` until it prints `✔ theme <id>@<version> is valid`.
    Each problem is `file:line:col severity CODE message`; the code's fix is in
    the [diagnostics reference](https://hekana.dev/reference/diagnostics).
 6. **Compare with the design.** Screenshot the dev preview at both widths and
    both directions and compare it with the mockup, section by section.
 7. **Push, only when the user asks.** The user signs in once with
-   `npx @hekana/sneferu login` (a browser step). Then bump `version` in
-   `theme.json` and run `npx @hekana/sneferu push . --package <id> --dev-store`:
+   `npx sneferu login` (a browser step). Then bump `version` in
+   `theme.json` and run `npx sneferu push . --package <id> --dev-store`:
    it uploads the source, and publishes it on the developer's private dev
    store. Never print, log or commit a key (`HEKANA_TOKEN`, `hk_dev_…`).
 
@@ -90,7 +95,8 @@ The compiler enforces most of these, and `validate` names the one you broke.
 5. **Arabic and English, both directions.** Hekana stores are Arabic-first:
    list `ar` and `en` in `locales` with a file for each holding the same keys.
    Write CSS with logical properties (`margin-inline-start`, `padding-inline`,
-   `text-align: start`), flip pointing icons under `[dir="rtl"]`, give Arabic
+   `text-align: start`). `hk-icon` arrows and chevrons mirror themselves on
+   Arabic pages; flip only your own inline SVG arrows, under `[dir="rtl"]`. Give Arabic
    body text a line height of 1.6 or more and no letter-spacing. Wrap store
    links in `url()` so an English page stays English.
 6. **Money.** Prices are minor units (piastres). Print them with `| money` or
@@ -135,12 +141,15 @@ The compiler enforces most of these, and `validate` names the one you broke.
 | Arabic text in a template | Move it to a localized setting default or `locales/ar.json` |
 | `409 HK2_VERSION_EXISTS` on push | Versions are immutable; bump `version` in `theme.json` |
 | Product, cart or 404 page looks like a different store | That template is missing; add `templates/<type>.snf` and its sections |
+| An arrow points backwards on Arabic pages | `hk-icon` arrows already mirror; remove your own `scaleX(-1)` |
+| Blocks nested inside blocks in a template's default sections do not show on a new store | Known runtime gap: seed one level of blocks in templates (groups keep two); nested items appear once the merchant saves |
+| The docs mention something the CLI rejects | The docs on `main` can be ahead of npm; check `npx sneferu --version` and the CHANGELOG |
 | `.00` on every price | Set `"money": { "format": "whole" }` in `theme.json` |
 | Fonts look like the system font | Font files in `assets/` are not served; set `tokens.fonts` |
 
 ### Done means
 
-- `npx @hekana/sneferu validate` is clean and `npx @hekana/sneferu format --check` passes.
+- `npx sneferu validate` is clean and `npx sneferu format --check` passes.
 - Every page type renders in `dev` in every listed locale at 1440 px and 390 px,
   with no horizontal scroll, and matches the design.
 - Every visible word, link, image and colour can be changed by the merchant.

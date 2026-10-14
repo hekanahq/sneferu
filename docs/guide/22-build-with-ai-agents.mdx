@@ -10,6 +10,10 @@ from, so it follows the same workflow and rules as a person reading these docs.
 | `AGENTS.md` in the SDK repo | at the top of [github.com/hekanahq/sneferu](https://github.com/hekanahq/sneferu) | agents working in the SDK repo, or told to read it |
 | The docs as plain text | [hekana.dev/llms.txt](https://hekana.dev/llms.txt) (index) and [hekana.dev/llms-full.txt](https://hekana.dev/llms-full.txt) (every page) | any agent that can fetch a URL |
 
+The quickest start is `npm create sneferu my-theme` (the same as
+`npx sneferu init my-theme`): the new folder already has its `AGENTS.md`, so
+open your agent in it.
+
 `AGENTS.md` and `CLAUDE.md` at the top of a theme folder are not part of the
 theme: `validate`, `build` and `push` skip them, like `README.md`, so they never
 change the compiled theme.
@@ -36,10 +40,10 @@ A new theme from a mockup:
 
 ```text
 Create a Sneferu theme for a coffee shop from the attached mockup. Arabic and
-English, Arabic first. Start with `npx @hekana/sneferu init cafe-nile`, read the
+English, Arabic first. Start with `npx sneferu init cafe-nile`, read the
 AGENTS.md it writes, and follow it. Home page: hero, featured beans, subscription
 plans, footer. Every page type must match the design. Finish when
-`npx @hekana/sneferu validate` and `format --check` are clean, and show me
+`npx sneferu validate` and `format --check` are clean, and show me
 screenshots of the dev preview at 1440 and 390 px in both languages.
 ```
 
@@ -48,7 +52,7 @@ A theme from a written brief:
 ```text
 Build a Sneferu theme for a handmade jewellery store: warm neutrals, a rounded
 sans-serif, large product photos. Read https://hekana.dev/llms-full.txt first. Use the
-starter (`npx @hekana/sneferu init`), keep every text editable by the merchant,
+starter (`npx sneferu init`), keep every text editable by the merchant,
 and do not push anything.
 ```
 
@@ -64,16 +68,16 @@ template's default sections and run validate.
 Start from an example design:
 
 ```text
-Run `npx @hekana/sneferu init --list`, pick the template closest to a dark
+Run `npx sneferu init --list`, pick the template closest to a dark
 gaming top-up store, scaffold it as `game-vault`, then change the colours and
 fonts to the attached palette. Keep the page structure.
 ```
 
-Push to your dev store (after `npx @hekana/sneferu login` in your own terminal):
+Push to your dev store (after `npx sneferu login` in your own terminal):
 
 ```text
 Bump the version in theme.json and push this theme with
-`npx @hekana/sneferu push . --package <id> --dev-store`. Then open the dev store
+`npx sneferu push . --package <id> --dev-store`. Then open the dev store
 URL it prints and check the home, product and cart pages.
 ```
 
@@ -83,8 +87,8 @@ Before you push a theme an agent wrote, check:
 
 | Check | How |
 | - | - |
-| It compiles | `npx @hekana/sneferu validate` prints `✔ theme <id>@<version> is valid` |
-| It is formatted | `npx @hekana/sneferu format --check` |
+| It compiles | `npx sneferu validate` prints `✔ theme <id>@<version> is valid` |
+| It is formatted | `npx sneferu format --check` |
 | Every page type is designed | `templates/` has `index`, `product`, `collection`, `search`, `cart`, `page` and `404` |
 | Nothing is hard-coded | No visible words in the `.snf` markup outside settings, blocks and `t('…')` |
 | Both languages | `dev` at `/` and `/en`, at 1440 and 390 px; nothing overflows |

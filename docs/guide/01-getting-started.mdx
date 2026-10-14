@@ -126,7 +126,8 @@ part of the theme and are never pushed.
 | - | - |
 | `store` | merged over the sample store, e.g. `store.name` |
 | `collections` | added to the sample collections; a handle you list (even `featured`) replaces the sample one |
-| `products` | added to the `product('handle')` lookups |
+| `products` | added to the `product('handle')` lookups, keyed by handle; a product has a page at `/products/<handle>` only when it is listed here |
+| `menus` | menus by handle, `{ "handle", "title", "items": [{ "title", "url", "children"? }] }`; they replace the sample `main` and `footer` |
 
 For different text per language, split the file by locale:
 `{ "ar": { "store": … }, "en": { "store": … } }`. The file is read on every
