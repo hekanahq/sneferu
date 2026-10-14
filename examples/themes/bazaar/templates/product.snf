@@ -1,0 +1,105 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "product-main",
+        "blocks": [
+          {
+            "type": "product-title",
+            "settings": {}
+          },
+          {
+            "type": "product-price",
+            "settings": {}
+          },
+          {
+            "type": "product-excerpt",
+            "settings": {}
+          },
+          {
+            "type": "product-variants",
+            "settings": {}
+          },
+          {
+            "type": "product-buy",
+            "settings": {}
+          },
+          {
+            "type": "product-text",
+            "settings": {}
+          },
+          {
+            "type": "product-description",
+            "settings": {}
+          },
+          {
+            "type": "product-tags",
+            "settings": {}
+          }
+        ]
+      },
+      {
+        "type": "related-products",
+        "settings": {
+          "collection": "featured"
+        }
+      },
+      {
+        "type": "trust-strip",
+        "blocks": [
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "truck",
+              "label": {
+                "ar": "توصيل لكل المحافظات",
+                "en": "Delivery across Egypt"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "banknote",
+              "label": {
+                "ar": "الدفع عند الاستلام",
+                "en": "Cash on delivery"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "package",
+              "label": {
+                "ar": "استبدال سهل",
+                "en": "Easy exchange"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "message-circle",
+              "label": {
+                "ar": "تواصل على واتساب",
+                "en": "Chat on WhatsApp"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "shield-check",
+              "label": {
+                "ar": "تسوق بأمان",
+                "en": "Shop with confidence"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>
