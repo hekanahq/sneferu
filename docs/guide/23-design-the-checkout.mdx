@@ -91,7 +91,6 @@ The payment step runs in Hekana's own components.
 
 ## A complete section
 
-<Example>
 
 ```html title="sections/checkout-main.snf"
 <hk-section class="sf-checkout-section" padding-y="40" mobile-padding-y="24">
@@ -177,7 +176,6 @@ The payment step runs in Hekana's own components.
 </hk-schema>
 ```
 
-</Example>
 
 ```html title="templates/checkout.snf"
 <hk-sections />
@@ -198,7 +196,6 @@ Layout props take the same values from settings, so a theme can offer them to
 the merchant. For a dark store the colours come from the tokens; the checkout
 form follows them.
 
-<Example>
 
 ```html title="a dark compact layout"
 <hk-checkout-layout columns="two" summary="end" density="compact" card="flat" sticky="true">
@@ -213,11 +210,9 @@ form follows them.
 .sf-checkout-section { background: var(--hk-color-background); color: var(--hk-color-text); }
 ```
 
-</Example>
 
 ## Stacked, summary on top
 
-<Example>
 
 ```html title="a stacked layout"
 <hk-checkout-layout columns="stacked" summary="top" sticky="false" card="outlined">
@@ -228,7 +223,6 @@ form follows them.
 </hk-checkout-layout>
 ```
 
-</Example>
 
 Here the payment tag comes first, so payment is the first part of the form
 under the summary.
