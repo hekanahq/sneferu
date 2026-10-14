@@ -83,6 +83,8 @@ The compiler enforces most of these, and `validate` names the one you broke.
    `announcement`, `header` and `footer` groups in `layout/theme.snf`. A
    missing type falls back to the SDK's default store, which will not match
    your design.
+   Checkout and payment pages are never theme-rendered: themes style every
+   other page, and checkout is Hekana's own.
 4. **Everything merchant-editable.** Nothing visible is written into a
    template. Headings, paragraphs and button labels are `text`/`textarea`
    settings with `"localized": true` and `{ "ar": …, "en": … }` defaults; links
