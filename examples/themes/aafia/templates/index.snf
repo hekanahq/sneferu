@@ -1,0 +1,97 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "hero"
+      },
+      {
+        "type": "af-benefits",
+        "blocks": [
+          {
+            "type": "benefit",
+            "settings": {
+              "icon": "heart",
+              "label": {
+                "ar": "مكملات غذائية",
+                "en": "Supplements"
+              },
+              "link": "/category/supplements"
+            }
+          },
+          {
+            "type": "benefit",
+            "settings": {
+              "icon": "sparkles",
+              "label": {
+                "ar": "زيوت وبلسم",
+                "en": "Oils and balms"
+              },
+              "link": "/category/oils-balms"
+            }
+          },
+          {
+            "type": "benefit",
+            "settings": {
+              "icon": "gift",
+              "label": {
+                "ar": "عسل وأغذية طبيعية",
+                "en": "Honey and pantry"
+              },
+              "link": "/category/honey-pantry"
+            }
+          }
+        ]
+      },
+      {
+        "type": "featured-products",
+        "settings": {
+          "title": {
+            "ar": "المنتجات المختارة",
+            "en": "Selected for you"
+          },
+          "limit": 4,
+          "columns": 4
+        }
+      },
+      {
+        "type": "af-quiz"
+      },
+      {
+        "type": "af-trust",
+        "blocks": [
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "banknote",
+              "label": {
+                "ar": "الدفع عند الاستلام",
+                "en": "Cash on delivery"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "truck",
+              "label": {
+                "ar": "توصيل لكل المحافظات",
+                "en": "Delivery across Egypt"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "message-circle",
+              "label": {
+                "ar": "تواصل معنا على واتساب",
+                "en": "Chat with us on WhatsApp"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

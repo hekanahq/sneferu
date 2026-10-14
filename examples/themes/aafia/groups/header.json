@@ -1,0 +1,73 @@
+{
+  "sections": [
+    {
+      "id": "header",
+      "type": "header",
+      "settings": {
+        "menu": "main-menu",
+        "show_search": true,
+        "show_account": true,
+        "show_language": true,
+        "show_cart": true,
+        "drawer_on_add": true
+      },
+      "blocks": [
+        {
+          "id": "nav-all",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "كل المنتجات",
+              "en": "All products"
+            },
+            "url": "/products"
+          }
+        },
+        {
+          "id": "nav-sup",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "مكملات غذائية",
+              "en": "Supplements"
+            },
+            "url": "/category/supplements"
+          }
+        },
+        {
+          "id": "nav-oils",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "زيوت وبلسم",
+              "en": "Oils and balms"
+            },
+            "url": "/category/oils-balms"
+          }
+        },
+        {
+          "id": "nav-honey",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "عسل وأغذية طبيعية",
+              "en": "Honey and pantry"
+            },
+            "url": "/category/honey-pantry"
+          }
+        },
+        {
+          "id": "nav-about",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "من نحن",
+              "en": "About us"
+            },
+            "url": "/pages/about"
+          }
+        }
+      ]
+    }
+  ]
+}

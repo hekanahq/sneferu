@@ -1,0 +1,119 @@
+<hk-section full-bleed="true" padding-y="{{ section.settings.padding_y }}" mobile-padding-y="16">
+  <hk-container>
+    <div class="af-hero">
+      <div class="af-hero-media">
+        {% if section.settings.image %}
+          <hk-image
+            src="{{ section.settings.image }}"
+            alt="{{ section.settings.image_alt }}"
+            loading="eager"
+            aspect-ratio="21/9"
+            sizes="(min-width: 1120px) 1120px, 100vw"
+          />
+        {% endif %}
+      </div>
+      <div class="af-hero-panel">
+        {% if section.settings.title %}
+          <hk-heading text="{{ section.settings.title }}" level="h1" size="30" mobile-size="24" />
+        {% endif %}
+        {% if section.settings.subtitle %}
+          <p class="af-hero-sub">{{ section.settings.subtitle }}</p>
+        {% endif %}
+        {% if section.settings.button_label %}
+          <a class="af-pill" href="{{ url(section.settings.button_link) }}">{{ section.settings.button_label }}</a>
+        {% endif %}
+      </div>
+    </div>
+  </hk-container>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Hero banner",
+      "ar": "البانر الرئيسي"
+    },
+    "version": 1,
+    "templates": ["index"],
+    "settings": {
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "Banner image",
+          "ar": "صورة البانر"
+        },
+        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/aafia/hero.webp"
+      },
+      "image_alt": {
+        "type": "text",
+        "label": {
+          "en": "Image description",
+          "ar": "وصف الصورة"
+        },
+        "default": {
+          "en": "Natural oils, honey and supplements in glass jars on a warm surface",
+          "ar": "زيوت طبيعية وعسل ومكملات في برطمانات زجاجية على سطح خشبي دافئ"
+        },
+        "localized": true,
+        "maxLength": 120
+      },
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "en": "Everyday wellness, naturally",
+          "ar": "عافيتك اليومية، بشكل طبيعي"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "subtitle": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "en": "Supplements, oils and honey chosen for a simple daily routine.",
+          "ar": "مكملات وزيوت وعسل مختارة لروتين يومي بسيط."
+        },
+        "localized": true,
+        "maxLength": 120
+      },
+      "button_label": {
+        "type": "text",
+        "label": {
+          "en": "Button",
+          "ar": "الزر"
+        },
+        "default": {
+          "en": "Shop the range",
+          "ar": "تسوق المجموعة"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "button_link": {
+        "type": "link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/products"
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "default": 24,
+        "min": 0,
+        "max": 96,
+        "step": 8
+      }
+    }
+  }
+</hk-schema>
