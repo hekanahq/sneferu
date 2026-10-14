@@ -53,7 +53,7 @@ describe('sneferu format', () => {
     writeFileSync(join(dir, 'package.json'), '{"devDependencies":{"prettier":"^3"}}');
     const r = await runFormat(dir);
     expect(r.ok).toBe(true);
-    expect(readFileSync(join(dir, 'sections', 'hero.snf'), 'utf8')).toContain('<hk-heading\n          text="{{ section.settings.title }}"');
+    expect(readFileSync(join(dir, 'sections', 'hero.snf'), 'utf8')).toContain('<hk-heading\n        text="{{ section.settings.title | default: t(\'hero_title\') }}"');
     expect(runValidate(dir).ok).toBe(true);
   });
 });

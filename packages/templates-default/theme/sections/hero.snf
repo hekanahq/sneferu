@@ -6,18 +6,18 @@
   <div class="sf-hero sf-align-{{ section.settings.align }}">
     <div class="sf-hero-text">
       {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
-      {% if section.settings.title %}
-        <hk-heading
-          text="{{ section.settings.title }}"
-          level="h1"
-          size="52"
-          mobile-size="32"
-          color="{{ section.settings.text_color }}"
-        />
-      {% endif %}
-      {% if section.settings.subtitle %}
-        <hk-text text="{{ section.settings.subtitle }}" size="20" color="{{ section.settings.text_color }}" />
-      {% endif %}
+      <hk-heading
+        text="{{ section.settings.title | default: t('hero_title') }}"
+        level="h1"
+        size="52"
+        mobile-size="32"
+        color="{{ section.settings.text_color }}"
+      />
+      <hk-text
+        text="{{ section.settings.subtitle | default: t('hero_text') }}"
+        size="20"
+        color="{{ section.settings.text_color }}"
+      />
       {% render 'button', label: section.settings.button_label, href: section.settings.button_link, style: section.settings.button_style %}
     </div>
     {% if section.settings.image %}
@@ -51,10 +51,7 @@
           "en": "Heading",
           "ar": "العنوان"
         },
-        "default": {
-          "ar": "أهلا بيك في متجرنا",
-          "en": "Welcome to our store"
-        },
+        "default": "",
         "localized": true,
         "maxLength": 80
       },
