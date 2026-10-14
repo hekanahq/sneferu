@@ -10,12 +10,18 @@
 </hk-section>
 <hk-schema>
   {
-    "name": "Category tiles",
+    "name": {
+      "en": "Category tiles",
+      "ar": "مربعات الأقسام"
+    },
     "version": 1,
     "settings": {
       "heading": {
         "type": "text",
-        "label": "Heading (optional)",
+        "label": {
+          "en": "Heading (optional)",
+          "ar": "العنوان (اختياري)"
+        },
         "localized": true,
         "default": {
           "ar": "",

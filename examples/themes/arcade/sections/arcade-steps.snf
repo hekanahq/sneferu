@@ -17,12 +17,18 @@
 </hk-section>
 <hk-schema>
   {
-    "name": "How to redeem",
+    "name": {
+      "en": "How to redeem",
+      "ar": "إزاي تستلم الكود"
+    },
     "version": 1,
     "settings": {
       "heading": {
         "type": "text",
-        "label": "Heading",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
         "localized": true,
         "default": {
           "ar": "إزاي تستلم الكود",

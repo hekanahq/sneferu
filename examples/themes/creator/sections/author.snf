@@ -2,61 +2,88 @@
   <div class="cr-wrap">
     <div class="cr-author-row">
       <div class="cr-person">
-        {% if section.settings.photo %}
-          <img class="cr-avatar" src="{{ section.settings.photo }}" alt="" width="56" height="56" loading="lazy" />
-        {% endif %}
+        {% if section.settings.photo %}<img
+            class="cr-avatar"
+            src="{{ section.settings.photo }}"
+            alt=""
+            width="56"
+            height="56"
+            loading="lazy"
+          />{% endif %}
         <div>
           <p class="cr-name">{{ section.settings.name }}</p>
           <p class="cr-role">{{ section.settings.role }}</p>
         </div>
       </div>
-      <hk-button label="{{ section.settings.button }}" href="{{ section.settings.link }}" class="cr-cta" />
+      {% if section.settings.button %}<hk-button
+          label="{{ section.settings.button }}"
+          href="{{ section.settings.link }}"
+          class="cr-cta"
+        />{% endif %}
     </div>
   </div>
 </section>
 <hk-schema>
   {
-    "name": "Author",
+    "name": {
+      "en": "Author",
+      "ar": "صاحب المتجر"
+    },
     "version": 1,
     "settings": {
       "photo": {
         "type": "image",
-        "label": "Photo",
+        "label": {
+          "en": "Photo",
+          "ar": "الصورة"
+        },
         "default": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/author.webp"
       },
       "name": {
         "type": "text",
-        "label": "Name",
-        "localized": true,
+        "label": {
+          "en": "Name",
+          "ar": "الاسم"
+        },
         "default": {
           "ar": "منى سليم",
           "en": "Mona Selim"
         },
+        "localized": true,
         "maxLength": 60
       },
       "role": {
         "type": "text",
-        "label": "One line about you",
-        "localized": true,
+        "label": {
+          "en": "One line about you",
+          "ar": "سطر عنك"
+        },
         "default": {
           "ar": "مصممة واجهات ومدرّبة تصميم",
           "en": "Interface designer and design trainer"
         },
+        "localized": true,
         "maxLength": 100
       },
       "button": {
         "type": "text",
-        "label": "Button",
-        "localized": true,
+        "label": {
+          "en": "Button",
+          "ar": "الزر"
+        },
         "default": {
           "ar": "تصفّح كل المنتجات",
           "en": "Browse all products"
         },
+        "localized": true,
         "maxLength": 30
       },
       "link": {
         "type": "link",
-        "label": "Button link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
         "default": "/products"
       }
     }

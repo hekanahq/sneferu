@@ -1,0 +1,113 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="32">
+  <div class="cc-empty cc-not-found">
+    <span class="cc-tile" aria-hidden="true"><hk-icon name="gamepad-2" /></span>
+    {% if section.settings.image %}
+      <hk-image src="{{ section.settings.image }}" alt="" width="320" />
+    {% endif %}
+    {% if section.settings.title %}
+      <hk-heading text="{{ section.settings.title }}" level="h1" size="36" mobile-size="28" align="center" />
+    {% endif %}
+    {% if section.settings.text %}
+      <p>{{ section.settings.text }}</p>
+    {% endif %}
+    {% if section.settings.show_search %}
+      <div class="cc-search-page-form"><hk-search-form placeholder="{{ t('search_placeholder') }}" /></div>
+    {% endif %}
+    {% render 'button', label: section.settings.button_label, href: section.settings.button_link, style: section.settings.button_style %}
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Page not found",
+      "ar": "صفحة غير موجودة"
+    },
+    "version": 1,
+    "templates": ["404"],
+    "settings": {
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "Image",
+          "ar": "الصورة"
+        },
+        "default": ""
+      },
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "الصفحة دي مش موجودة",
+          "en": "This page does not exist"
+        },
+        "localized": true,
+        "maxLength": 80
+      },
+      "text": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "ممكن الرابط اتغير أو اتمسح. ابدأ من الرئيسية.",
+          "en": "The link may have changed or been removed. Start from the home page."
+        },
+        "localized": true,
+        "maxLength": 200
+      },
+      "show_search": {
+        "type": "boolean",
+        "label": {
+          "en": "Show the search box",
+          "ar": "إظهار خانة البحث"
+        },
+        "default": true
+      },
+      "button_label": {
+        "type": "text",
+        "label": {
+          "en": "Button",
+          "ar": "الزر"
+        },
+        "default": {
+          "ar": "ارجع للرئيسية",
+          "en": "Back to the home page"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "button_link": {
+        "type": "link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/"
+      },
+      "button_style": {
+        "type": "select",
+        "label": {
+          "en": "Button style",
+          "ar": "شكل الزر"
+        },
+        "options": ["solid", "outline", "ghost"],
+        "default": "solid"
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 160,
+        "step": 8,
+        "default": 64
+      }
+    }
+  }
+</hk-schema>

@@ -10,12 +10,18 @@
 </a>
 <hk-schema>
   {
-    "name": "Platform",
+    "name": {
+      "en": "Platform",
+      "ar": "منصة"
+    },
     "version": 1,
     "settings": {
       "icon": {
         "type": "select",
-        "label": "Icon",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
         "options": [
           "monitor",
           "gamepad-2",
@@ -32,7 +38,10 @@
       },
       "label": {
         "type": "text",
-        "label": "Label",
+        "label": {
+          "en": "Label",
+          "ar": "النص"
+        },
         "localized": true,
         "default": {
           "ar": "كمبيوتر",
@@ -42,7 +51,10 @@
       },
       "link": {
         "type": "link",
-        "label": "Link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
         "default": "/category/gift-cards"
       }
     }

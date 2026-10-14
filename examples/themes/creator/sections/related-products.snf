@@ -1,0 +1,89 @@
+{% if collection(section.settings.collection).products %}
+  <section class="cr-sec cr-related cr-pad-{{ section.settings.padding_y }}">
+    <div class="cr-wrap">
+      {% if section.settings.title %}
+        <h2 class="cr-h2">{{ section.settings.title }}</h2>
+      {% endif %}
+      <div class="cr-grid cr-cols-{{ section.settings.columns }}">
+        {% for p in collection(section.settings.collection).products limit: section.settings.limit %}
+          {% render 'cover', p: p, kind: p.category.title, badge: section.settings.badge, slot: 'item' %}
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+{% endif %}
+<hk-schema>
+  {
+    "name": {
+      "en": "More products",
+      "ar": "منتجات تانية"
+    },
+    "version": 1,
+    "templates": ["product", "product.digital", "404", "cart"],
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "كمّل مع منتجات تانية",
+          "en": "Keep going with more"
+        },
+        "localized": true,
+        "maxLength": 80
+      },
+      "collection": {
+        "type": "collection",
+        "label": {
+          "en": "Collection",
+          "ar": "القسم"
+        },
+        "default": "courses"
+      },
+      "badge": {
+        "type": "text",
+        "label": {
+          "en": "Badge on the cover",
+          "ar": "الشارة على الغلاف"
+        },
+        "default": {
+          "ar": "وصول فوري",
+          "en": "Instant access"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "columns": {
+        "type": "select",
+        "label": {
+          "en": "Columns",
+          "ar": "الأعمدة"
+        },
+        "options": ["2", "3"],
+        "default": "2"
+      },
+      "limit": {
+        "type": "range",
+        "label": {
+          "en": "Products",
+          "ar": "عدد المنتجات"
+        },
+        "min": 2,
+        "max": 6,
+        "step": 1,
+        "default": 2
+      },
+      "padding_y": {
+        "type": "select",
+        "label": {
+          "en": "Vertical spacing",
+          "ar": "المسافة الرأسية"
+        },
+        "options": ["compact", "normal", "roomy"],
+        "default": "normal"
+      }
+    }
+  }
+</hk-schema>

@@ -2,31 +2,35 @@
   <div class="cr-wrap">
     <h2 class="cr-h2">{{ section.settings.heading }}</h2>
     <div class="cr-list">
-      {% for block in section.blocks %}
-        <hk-block of="{{ block }}" />
-      {% endfor %}
+      {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
     </div>
   </div>
 </section>
 <hk-schema>
   {
-    "name": "What you get",
+    "name": {
+      "en": "What you get",
+      "ar": "هتاخد إيه"
+    },
     "version": 1,
+    "blocks": {
+      "allowed": ["get-item"],
+      "max": 8
+    },
     "settings": {
       "heading": {
         "type": "text",
-        "label": "Heading",
-        "localized": true,
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
         "default": {
           "ar": "هتاخد إيه مع كل منتج",
           "en": "What you get with every product"
         },
+        "localized": true,
         "maxLength": 80
       }
-    },
-    "blocks": {
-      "allowed": ["get-item"],
-      "max": 8
     }
   }
 </hk-schema>

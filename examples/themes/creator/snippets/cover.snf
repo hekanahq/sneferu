@@ -1,8 +1,8 @@
 <article class="cr-cover" id="{{ slot }}-{{ forloop.index }}">
   <hk-product-card product="{{ p }}" class="cr-card">
     <hk-part name="badge">
-      <span class="cr-flag">{{ section.settings.badge }}</span>
-      <span class="cr-kind">{{ kind }}</span>
+      {% if badge %}<span class="cr-flag">{{ badge }}</span>{% endif %}
+      {% if kind %}<span class="cr-kind">{{ kind }}</span>{% endif %}
     </hk-part>
   </hk-product-card>
 </article>

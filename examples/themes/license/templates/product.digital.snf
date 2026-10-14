@@ -1,0 +1,173 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "product-main",
+        "blocks": [
+          {
+            "type": "product-title"
+          },
+          {
+            "type": "product-price"
+          },
+          {
+            "type": "product-excerpt"
+          },
+          {
+            "type": "product-variants"
+          },
+          {
+            "type": "product-buy"
+          },
+          {
+            "type": "product-text"
+          },
+          {
+            "type": "feature",
+            "settings": {
+              "text": {
+                "ar": "مفتاح الترخيص على الإيميل بعد الدفع",
+                "en": "Licence key by email after payment"
+              }
+            }
+          },
+          {
+            "type": "feature",
+            "settings": {
+              "text": {
+                "ar": "رابط تحميل البرنامج مع المفتاح",
+                "en": "Download link sent with the key"
+              }
+            }
+          },
+          {
+            "type": "feature",
+            "settings": {
+              "text": {
+                "ar": "مساعدة في التفعيل لو احتجت",
+                "en": "Help with activation if you need it"
+              }
+            }
+          },
+          {
+            "type": "product-fact",
+            "settings": {
+              "label": {
+                "ar": "التسليم",
+                "en": "Delivery"
+              },
+              "value": {
+                "ar": "على الإيميل بعد الدفع",
+                "en": "By email after payment"
+              }
+            }
+          },
+          {
+            "type": "product-fact",
+            "settings": {
+              "label": {
+                "ar": "الدفع",
+                "en": "Payment"
+              },
+              "value": {
+                "ar": "أونلاين بالكارت",
+                "en": "Online by card"
+              }
+            }
+          },
+          {
+            "type": "product-description"
+          },
+          {
+            "type": "product-tags"
+          }
+        ]
+      },
+      {
+        "type": "steps",
+        "blocks": [
+          {
+            "type": "step",
+            "settings": {
+              "title": {
+                "ar": "ادفع أونلاين",
+                "en": "Pay online"
+              },
+              "text": {
+                "ar": "اختار الباقة وكمّل الدفع بالكارت.",
+                "en": "Pick a plan and pay by card."
+              }
+            }
+          },
+          {
+            "type": "step",
+            "settings": {
+              "title": {
+                "ar": "استلم المفتاح",
+                "en": "Get the key"
+              },
+              "text": {
+                "ar": "المفتاح ورابط التحميل بيوصلوا على الإيميل.",
+                "en": "The key and download link arrive by email."
+              }
+            }
+          },
+          {
+            "type": "step",
+            "settings": {
+              "title": {
+                "ar": "فعّل البرنامج",
+                "en": "Activate the app"
+              },
+              "text": {
+                "ar": "حمّل البرنامج وحط المفتاح، وتبدأ تستخدمه.",
+                "en": "Download the app, enter the key and start using it."
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "faq",
+        "settings": {
+          "heading": {
+            "ar": "قبل ما تشتري",
+            "en": "Before you buy"
+          }
+        },
+        "blocks": [
+          {
+            "type": "faq-item",
+            "settings": {
+              "question": {
+                "ar": "المفتاح بيوصلني إزاي؟",
+                "en": "How do I receive my key?"
+              },
+              "answer": {
+                "ar": "بعد ما الدفع أونلاين يتم، بيوصلك إيميل فيه مفتاح الترخيص ورابط التحميل.",
+                "en": "Once your online payment goes through, you get an email with the licence key and the download link."
+              }
+            }
+          },
+          {
+            "type": "faq-item",
+            "settings": {
+              "question": {
+                "ar": "الإيميل موصلش، أعمل إيه؟",
+                "en": "The email did not arrive. What now?"
+              },
+              "answer": {
+                "ar": "بص في الرسائل غير المرغوب فيها الأول، ولو مش لاقيه كلّمنا وابعت رقم الطلب.",
+                "en": "Check your spam folder first. If it is not there, contact us with your order number."
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "related-products"
+      }
+    ]
+  }
+</hk-schema>

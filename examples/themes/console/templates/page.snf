@@ -1,0 +1,45 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "page-main"
+      },
+      {
+        "type": "console-trust",
+        "blocks": [
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "zap",
+              "label": {
+                "ar": "تسليم فوري للكود",
+                "en": "Instant code delivery"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "lock",
+              "label": {
+                "ar": "دفع أونلاين آمن",
+                "en": "Secure online payment"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "banknote",
+              "label": {
+                "ar": "الأسعار بالجنيه المصري",
+                "en": "Prices in Egyptian pounds"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

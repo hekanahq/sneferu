@@ -5,14 +5,11 @@
       <a class="cc-more" href="{{ url('/products') }}">{{ t('view_all') }}</a>
     </div>
     {% if collection(section.settings.list).products %}
-      <hk-product-grid
-        products="{{ collection(section.settings.list).products }}"
-        limit="{{ section.settings.count }}"
-        columns="4"
-        tablet-columns="3"
-        mobile-columns="2"
-        class="cc-grid"
-      />
+      <div class="cc-grid cc-cols-{{ section.settings.columns }}">
+        {% for p in collection(section.settings.list).products limit: section.settings.count %}
+          {% render 'product-card', product: p, card_style: 'shadow', image_ratio: '1/1', show_price: true, show_badge: true %}
+        {% endfor %}
+      </div>
     {% else %}
       <p class="cc-empty">{{ t('empty_products') }}</p>
     {% endif %}
@@ -20,12 +17,18 @@
 </hk-section>
 <hk-schema>
   {
-    "name": "Product grid",
+    "name": {
+      "en": "Product grid",
+      "ar": "شبكة المنتجات"
+    },
     "version": 1,
     "settings": {
       "heading": {
         "type": "text",
-        "label": "Heading",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
         "localized": true,
         "default": {
           "ar": "كل الكروت",
@@ -35,12 +38,29 @@
       },
       "list": {
         "type": "collection",
-        "label": "Collection",
+        "label": {
+          "en": "Collection",
+          "ar": "القسم"
+        },
         "default": "featured"
+      },
+      "columns": {
+        "type": "range",
+        "label": {
+          "en": "Columns",
+          "ar": "الأعمدة"
+        },
+        "default": 4,
+        "min": 2,
+        "max": 5,
+        "step": 1
       },
       "count": {
         "type": "range",
-        "label": "Products",
+        "label": {
+          "en": "Products",
+          "ar": "عدد المنتجات"
+        },
         "default": 8,
         "min": 2,
         "max": 24,

@@ -1,0 +1,87 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "product-main",
+        "settings": {
+          "gallery_layout": "thumbs-below"
+        },
+        "blocks": [
+          {
+            "type": "product-category",
+            "settings": {
+              "label": {
+                "ar": "القسم",
+                "en": "Category"
+              }
+            }
+          },
+          {
+            "type": "product-title"
+          },
+          {
+            "type": "product-price"
+          },
+          {
+            "type": "product-excerpt"
+          },
+          {
+            "type": "product-variants"
+          },
+          {
+            "type": "product-buy"
+          },
+          {
+            "type": "product-text",
+            "settings": {
+              "text": {
+                "ar": "1. ادفع أونلاين واختار القيمة.",
+                "en": "1. Pay online and pick the amount."
+              },
+              "icon": "key",
+              "tone": "glow"
+            }
+          },
+          {
+            "type": "product-text",
+            "settings": {
+              "text": {
+                "ar": "2. الكود بيوصلك على الإيميل أوتوماتيك.",
+                "en": "2. The code reaches your email automatically."
+              },
+              "icon": "mail",
+              "tone": "muted"
+            }
+          },
+          {
+            "type": "product-text",
+            "settings": {
+              "text": {
+                "ar": "3. دخّل الكود في المنصة أو في اللعبة.",
+                "en": "3. Enter the code on the platform or in the game."
+              },
+              "icon": "gamepad-2",
+              "tone": "muted"
+            }
+          },
+          {
+            "type": "product-description",
+            "settings": {
+              "title": {
+                "ar": "إزاي تستخدم الكود",
+                "en": "How to use the code"
+              }
+            }
+          },
+          {
+            "type": "product-tags"
+          }
+        ]
+      },
+      {
+        "type": "related-products"
+      }
+    ]
+  }
+</hk-schema>

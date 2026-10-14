@@ -1,0 +1,135 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "product-main",
+        "blocks": [
+          {
+            "type": "product-category"
+          },
+          {
+            "type": "product-title"
+          },
+          {
+            "type": "product-price"
+          },
+          {
+            "type": "product-excerpt"
+          },
+          {
+            "type": "product-variants"
+          },
+          {
+            "type": "product-buy"
+          },
+          {
+            "type": "note",
+            "settings": {
+              "text": {
+                "ar": "رابط التحميل بيوصلك على الإيميل بعد الدفع أونلاين.",
+                "en": "Your download link is emailed after online payment."
+              },
+              "icon": "download"
+            }
+          },
+          {
+            "type": "block-title"
+          },
+          {
+            "type": "get-item",
+            "settings": {
+              "term": {
+                "ar": "الملفات",
+                "en": "Files"
+              },
+              "text": {
+                "ar": "رابط التحميل بيوصلك على الإيميل بعد الدفع أونلاين",
+                "en": "Your download link is emailed after online payment"
+              }
+            }
+          },
+          {
+            "type": "get-item",
+            "settings": {
+              "term": {
+                "ar": "الدروس",
+                "en": "Lessons"
+              },
+              "text": {
+                "ar": "فيديوهات مسجّلة تتفرج عليها في الوقت اللي يناسبك",
+                "en": "Recorded videos you watch when it suits you"
+              }
+            }
+          },
+          {
+            "type": "get-item",
+            "settings": {
+              "term": {
+                "ar": "التمارين",
+                "en": "Exercises"
+              },
+              "text": {
+                "ar": "ملفات عملية تطبّق عليها خطوة بخطوة",
+                "en": "Practice files you work through step by step"
+              }
+            }
+          },
+          {
+            "type": "product-description"
+          },
+          {
+            "type": "product-tags"
+          }
+        ]
+      },
+      {
+        "type": "faq",
+        "blocks": [
+          {
+            "type": "faq-item",
+            "settings": {
+              "question": {
+                "ar": "هستلم المنتج إزاي؟",
+                "en": "How do I get the product?"
+              },
+              "answer": {
+                "ar": "بعد الدفع أونلاين بيوصلك رابط التحميل على الإيميل اللي كتبته في الطلب.",
+                "en": "After you pay online, a download link is sent to the email you used for the order."
+              }
+            }
+          },
+          {
+            "type": "faq-item",
+            "settings": {
+              "question": {
+                "ar": "هقدر أشوف الكورس في أي وقت؟",
+                "en": "Can I watch the course any time?"
+              },
+              "answer": {
+                "ar": "أيوه، الدروس مسجّلة وتتفرج عليها في الوقت اللي يناسبك.",
+                "en": "Yes, the lessons are recorded and you watch them when it suits you."
+              }
+            }
+          },
+          {
+            "type": "faq-item",
+            "settings": {
+              "question": {
+                "ar": "هل ممكن أرجّع المنتج؟",
+                "en": "Can I return a product?"
+              },
+              "answer": {
+                "ar": "المنتجات الرقمية مش بتترجّع بعد التحميل، لكن لو في مشكلة في الملف كلمنا ونحلها معاك.",
+                "en": "Digital products are not returned after download, but if the file has a problem, write to us and we will sort it out."
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "related-products"
+      }
+    ]
+  }
+</hk-schema>

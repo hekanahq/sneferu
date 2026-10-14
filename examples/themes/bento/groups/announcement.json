@@ -1,0 +1,16 @@
+{
+  "sections": [
+    {
+      "id": "announcement",
+      "type": "announcement-bar",
+      "settings": {
+        "text": {
+          "ar": "الملفات بتوصلك على الإيميل بعد الدفع",
+          "en": "Files are emailed after you pay"
+        },
+        "link": "",
+        "scheme": "sage"
+      }
+    }
+  ]
+}

@@ -54,7 +54,9 @@ describe('the shipped themes and the guide are formatted', () => {
         const text = readFileSync(repo(`${dir}/${f}`), 'utf8');
         for (const m of text.matchAll(/```html title="([^"]+\.(?:snf|sneferu))"\n([\s\S]*?)```/g)) {
           expect(await fmt(m[2]!), `${f} ${m[1]}`).toBe(m[2]);
-          const file = m[1]!.startsWith('examples/') ? repo(m[1]!) : repo(`docs/examples/example-store/${m[1]}`);
+          // quotes of examples/themes/* are pinned to a commit and checked there by scripts/guide-excerpts.test.ts
+          if (m[1]!.startsWith('examples/')) continue;
+          const file = repo(`docs/examples/example-store/${m[1]}`);
           if (existsSync(file)) expect(m[2], `${f} ${m[1]}`).toBe(readFileSync(file, 'utf8'));
         }
       }

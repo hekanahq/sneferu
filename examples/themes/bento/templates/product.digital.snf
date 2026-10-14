@@ -1,0 +1,68 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "product-main",
+        "settings": {
+          "gallery_tone": "peach",
+          "info_tone": "sage"
+        },
+        "blocks": [
+          {
+            "type": "product-title"
+          },
+          {
+            "type": "product-price"
+          },
+          {
+            "type": "product-variants"
+          },
+          {
+            "type": "product-buy",
+            "settings": {
+              "show_quantity": false
+            }
+          },
+          {
+            "type": "product-text",
+            "settings": {
+              "text": {
+                "ar": "تحميل فوري: الرابط بيوصلك على الإيميل بعد الدفع.",
+                "en": "Instant download: the link is emailed after you pay."
+              },
+              "icon": "download",
+              "tone": "muted"
+            }
+          },
+          {
+            "type": "product-text",
+            "settings": {
+              "text": {
+                "ar": "ملف رقمي جاهز للطباعة، مفيش شحن.",
+                "en": "A digital file ready to print. Nothing is shipped."
+              },
+              "icon": "book-open",
+              "tone": "muted"
+            }
+          },
+          {
+            "type": "product-description"
+          },
+          {
+            "type": "product-category"
+          },
+          {
+            "type": "product-tags"
+          }
+        ]
+      },
+      {
+        "type": "related-products",
+        "settings": {
+          "collection": "printables"
+        }
+      }
+    ]
+  }
+</hk-schema>

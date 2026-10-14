@@ -1,0 +1,25 @@
+<h2 class="cr-h3">{{ block.settings.title }}</h2>
+<hk-schema>
+  {
+    "name": {
+      "en": "Heading",
+      "ar": "عنوان"
+    },
+    "version": 1,
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "اللي هتاخده",
+          "en": "What you get"
+        },
+        "localized": true,
+        "maxLength": 60
+      }
+    }
+  }
+</hk-schema>

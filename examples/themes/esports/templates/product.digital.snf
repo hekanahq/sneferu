@@ -1,0 +1,103 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "esports-product",
+        "blocks": [
+          {
+            "type": "product-category"
+          },
+          {
+            "type": "product-title"
+          },
+          {
+            "type": "product-price"
+          },
+          {
+            "type": "product-variants"
+          },
+          {
+            "type": "product-buy"
+          },
+          {
+            "type": "product-text",
+            "settings": {
+              "icon": "zap",
+              "text": {
+                "ar": "بعد الدفع الأونلاين الكود بيتبعت أوتوماتيك، من غير انتظار.",
+                "en": "With online payment the code is sent automatically, no waiting."
+              }
+            }
+          },
+          {
+            "type": "product-text",
+            "settings": {
+              "icon": "shield-check",
+              "text": {
+                "ar": "اتأكد إن منطقة حسابك هي نفسها منطقة الكارت قبل ما تشتري.",
+                "en": "Check that your account region matches the card region before you buy."
+              }
+            }
+          },
+          {
+            "type": "product-description"
+          },
+          {
+            "type": "product-tags"
+          }
+        ]
+      },
+      {
+        "type": "esports-steps",
+        "blocks": [
+          {
+            "type": "step",
+            "settings": {
+              "icon": "credit-card",
+              "title": {
+                "ar": "اختار وادفع أونلاين",
+                "en": "Pick and pay online"
+              },
+              "text": {
+                "ar": "اختار الكارت والقيمة، وادفع أونلاين.",
+                "en": "Choose the card and the amount, then pay online."
+              }
+            }
+          },
+          {
+            "type": "step",
+            "settings": {
+              "icon": "mail",
+              "title": {
+                "ar": "الكود يوصلك على الإيميل",
+                "en": "The code arrives by email"
+              },
+              "text": {
+                "ar": "أول ما الدفع يتأكد، الكود بيتبعتلك أوتوماتيك.",
+                "en": "Once payment is confirmed, the code is sent automatically."
+              }
+            }
+          },
+          {
+            "type": "step",
+            "settings": {
+              "icon": "gamepad-2",
+              "title": {
+                "ar": "اشحن حسابك",
+                "en": "Redeem it"
+              },
+              "text": {
+                "ar": "دخّل الكود في المنصة أو في اللعبة.",
+                "en": "Enter the code on the platform or in the game."
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "esports-related"
+      }
+    ]
+  }
+</hk-schema>

@@ -1,0 +1,60 @@
+<div class="bt-perk" data-tone="{{ block.settings.tone }}">
+  <hk-icon name="{{ block.settings.icon }}" size="26" />
+  <h3 class="bt-perk-title">{{ block.settings.title }}</h3>
+  <p class="bt-perk-text">{{ block.settings.text }}</p>
+</div>
+<hk-schema>
+  {
+    "name": {
+      "en": "Perk tile",
+      "ar": "لوحة ميزة"
+    },
+    "version": 1,
+    "settings": {
+      "icon": {
+        "type": "select",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
+        "options": ["download", "file-text", "book-open", "mail", "shield-check", "clock", "gift", "lock"],
+        "default": "download"
+      },
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Title",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "تحميل فوري",
+          "en": "Instant download"
+        },
+        "localized": true,
+        "maxLength": 40
+      },
+      "text": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "الرابط بيوصلك بعد الدفع على طول.",
+          "en": "The link reaches you right after you pay."
+        },
+        "localized": true,
+        "maxLength": 140
+      },
+      "tone": {
+        "type": "select",
+        "label": {
+          "en": "Tile colour",
+          "ar": "لون اللوحة"
+        },
+        "options": ["peach", "sage", "sky", "warm"],
+        "default": "sage"
+      }
+    }
+  }
+</hk-schema>

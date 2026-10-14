@@ -1,0 +1,49 @@
+<section class="ls-steps">
+  <div class="ls-wrap">
+    <div class="ls-head">
+      <h2 class="ls-h2">{{ section.settings.heading }}</h2>
+      <p class="ls-side">{{ section.settings.side }}</p>
+    </div>
+    <ol class="ls-steps-list">
+      {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+    </ol>
+  </div>
+</section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Steps",
+      "ar": "الخطوات"
+    },
+    "version": 1,
+    "blocks": {
+      "allowed": ["step"],
+      "max": 6
+    },
+    "settings": {
+      "heading": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "إزاي توصل لترخيصك",
+          "en": "How you get your licence"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "side": {
+        "type": "text",
+        "label": {
+          "en": "Side note",
+          "ar": "ملاحظة جانبية"
+        },
+        "default": "",
+        "localized": true,
+        "maxLength": 80
+      }
+    }
+  }
+</hk-schema>

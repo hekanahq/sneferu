@@ -1,9 +1,9 @@
 {
   "id": "license",
   "name": "License",
-  "version": "1.3.0",
+  "version": "2.0.0",
   "author": "Hekana",
-  "description": "A dark theme for software licences, subscriptions and digital tools",
+  "description": "A complete dark store for software licences, subscriptions and digital tools: deep navy, blue plan cards and one lime accent, with its own product, collection, cart, search, 404 and page designs.",
   "category": "digital",
   "engine": "hk2",
   "engineCompatibility": "^2.0.0",
@@ -20,12 +20,20 @@
       "muted": "#97A3B9",
       "tier": "#1D4A84",
       "tier-deep": "#15365F",
-      "line": "#26324B"
+      "line": "#26324B",
+      "on-accent": "#0A1122",
+      "on-primary": "#EEF2F8",
+      "surface": "#0F1830"
     },
-    "layout": { "contentWidth": "1040px" },
+    "layout": {
+      "contentWidth": "1120px"
+    },
     "fonts": {
       "heading": "Readex Pro",
       "body": "Readex Pro"
+    },
+    "radius": {
+      "md": "10px"
     }
   }
 }

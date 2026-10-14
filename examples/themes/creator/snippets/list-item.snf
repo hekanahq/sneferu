@@ -1,0 +1,5 @@
+<p class="cr-item">
+  <span class="cr-tick" aria-hidden="true"></span>
+  <strong>{{ term }}</strong>
+  {% if text %}<span class="cr-dash" aria-hidden="true">-</span><span class="cr-item-text">{{ text }}</span>{% endif %}
+</p>

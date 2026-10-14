@@ -1,0 +1,21 @@
+<h1 class="cr-title cr-title-{{ block.settings.size }}">{{ product.title }}</h1>
+<hk-schema>
+  {
+    "name": {
+      "en": "Title",
+      "ar": "العنوان"
+    },
+    "version": 1,
+    "settings": {
+      "size": {
+        "type": "select",
+        "label": {
+          "en": "Size",
+          "ar": "الحجم"
+        },
+        "options": ["m", "l", "xl"],
+        "default": "l"
+      }
+    }
+  }
+</hk-schema>

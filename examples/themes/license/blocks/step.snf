@@ -1,0 +1,41 @@
+<li class="ls-step">
+  <h3 class="ls-step-title">{{ block.settings.title }}</h3>
+  <p class="ls-step-text">{{ block.settings.text }}</p>
+</li>
+<hk-schema>
+  {
+    "name": {
+      "en": "Step",
+      "ar": "خطوة"
+    },
+    "version": 1,
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Title",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "ادفع أونلاين",
+          "en": "Pay online"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "text": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "اختار الباقة وكمّل الدفع بالكارت.",
+          "en": "Pick a plan and pay by card."
+        },
+        "localized": true,
+        "maxLength": 160
+      }
+    }
+  }
+</hk-schema>

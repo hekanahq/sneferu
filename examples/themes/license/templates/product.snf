@@ -1,0 +1,42 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "product-main",
+        "blocks": [
+          {
+            "type": "product-title"
+          },
+          {
+            "type": "product-price"
+          },
+          {
+            "type": "product-excerpt"
+          },
+          {
+            "type": "product-variants"
+          },
+          {
+            "type": "product-buy"
+          },
+          {
+            "type": "product-text"
+          },
+          {
+            "type": "product-description"
+          },
+          {
+            "type": "product-tags"
+          },
+          {
+            "type": "product-category"
+          }
+        ]
+      },
+      {
+        "type": "related-products"
+      }
+    ]
+  }
+</hk-schema>

@@ -1,0 +1,9 @@
+{
+  "sections": [
+    {
+      "id": "announcement",
+      "type": "arcade-announcement",
+      "settings": { "scheme": "dark" }
+    }
+  ]
+}

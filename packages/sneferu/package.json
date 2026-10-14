@@ -9,10 +9,11 @@
   },
   "files": [
     "dist",
+    "templates",
     "CHANGELOG.md"
   ],
   "scripts": {
-    "build": "tsup",
+    "build": "node ../../scripts/copy-templates.mjs && tsup",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

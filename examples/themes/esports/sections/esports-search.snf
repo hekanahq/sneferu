@@ -1,0 +1,153 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="24">
+  {% render 'page-head', title: section.settings.title, text: section.settings.prompt_text %}
+  {% if section.settings.show_form %}
+    <div class="es-search-page">
+      <hk-search-form placeholder="{{ t('search_placeholder') }}" class="es-search es-search-wide" />
+    </div>
+  {% endif %}
+  {% if search.terms %}
+    <p class="es-meta">
+      {{ t('results_for') }} “{{ search.terms }}” · {{ search.results_count }} {{ t('results_label') }}
+    </p>
+    {% if search.results %}
+      <div class="es-grid es-cols-{{ section.settings.columns }}">
+        {% for p in search.results limit: 48 %}
+          {% render 'topup-card', product: p, show_badge: section.settings.show_badge %}
+        {% endfor %}
+      </div>
+      <hk-pagination paginate="{{ paginate }}" />
+    {% else %}
+      <div class="es-empty-state">
+        <hk-icon name="search" size="40" class="ic" />
+        {% if section.settings.no_results_title %}
+          <h2>{{ section.settings.no_results_title }}</h2>
+        {% endif %}
+        {% if section.settings.no_results_text %}
+          <p>{{ section.settings.no_results_text }}</p>
+        {% endif %}
+        {% render 'button', label: section.settings.no_results_button_label, href: section.settings.no_results_button_link, style: 'solid' %}
+      </div>
+    {% endif %}
+  {% endif %}
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Search",
+      "ar": "صفحة البحث"
+    },
+    "version": 1,
+    "templates": ["search"],
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Title",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "ابحث",
+          "en": "Search"
+        },
+        "localized": true,
+        "maxLength": 40
+      },
+      "show_form": {
+        "type": "boolean",
+        "label": {
+          "en": "Show the search box",
+          "ar": "إظهار صندوق البحث"
+        },
+        "default": true
+      },
+      "prompt_text": {
+        "type": "text",
+        "label": {
+          "en": "Text under the title",
+          "ar": "النص تحت العنوان"
+        },
+        "default": {
+          "ar": "اكتب اسم اللعبة أو الباقة.",
+          "en": "Type a game or a pack name."
+        },
+        "localized": true,
+        "maxLength": 100
+      },
+      "columns": {
+        "type": "select",
+        "label": {
+          "en": "Columns on desktop",
+          "ar": "الأعمدة على الكمبيوتر"
+        },
+        "default": "4",
+        "options": ["3", "4", "5"]
+      },
+      "show_badge": {
+        "type": "boolean",
+        "label": {
+          "en": "Show the ribbon",
+          "ar": "إظهار الشريط"
+        },
+        "default": true
+      },
+      "no_results_title": {
+        "type": "text",
+        "label": {
+          "en": "No results title",
+          "ar": "عنوان مفيش نتايج"
+        },
+        "default": {
+          "ar": "مفيش نتايج",
+          "en": "No results"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "no_results_text": {
+        "type": "textarea",
+        "label": {
+          "en": "No results text",
+          "ar": "نص مفيش نتايج"
+        },
+        "default": {
+          "ar": "اتأكد من الكتابة أو اتفرج على كل المنتجات.",
+          "en": "Check the spelling or browse all products."
+        },
+        "localized": true,
+        "maxLength": 160
+      },
+      "no_results_button_label": {
+        "type": "text",
+        "label": {
+          "en": "No results button",
+          "ar": "زر مفيش نتايج"
+        },
+        "default": {
+          "ar": "كل المنتجات",
+          "en": "All products"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "no_results_button_link": {
+        "type": "link",
+        "label": {
+          "en": "No results button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/products"
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "default": 32,
+        "min": 0,
+        "max": 120,
+        "step": 4
+      }
+    }
+  }
+</hk-schema>

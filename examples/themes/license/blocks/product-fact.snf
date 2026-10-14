@@ -1,0 +1,42 @@
+<p class="ls-fact">
+  <span class="ls-fact-label">{{ block.settings.label }}</span><span
+    class="ls-fact-value"
+  >{{ block.settings.value }}</span>
+</p>
+<hk-schema>
+  {
+    "name": {
+      "en": "Fact row",
+      "ar": "صف معلومة"
+    },
+    "version": 1,
+    "settings": {
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Label",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "التسليم",
+          "en": "Delivery"
+        },
+        "localized": true,
+        "maxLength": 40
+      },
+      "value": {
+        "type": "text",
+        "label": {
+          "en": "Value",
+          "ar": "القيمة"
+        },
+        "default": {
+          "ar": "على الإيميل بعد الدفع",
+          "en": "By email after payment"
+        },
+        "localized": true,
+        "maxLength": 80
+      }
+    }
+  }
+</hk-schema>

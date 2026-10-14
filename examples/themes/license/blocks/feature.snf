@@ -3,17 +3,23 @@
 </p>
 <hk-schema>
   {
-    "name": "Feature",
+    "name": {
+      "en": "Feature",
+      "ar": "ميزة"
+    },
     "version": 1,
     "settings": {
       "text": {
         "type": "text",
-        "label": "Feature",
-        "localized": true,
+        "label": {
+          "en": "Feature",
+          "ar": "الميزة"
+        },
         "default": {
           "ar": "مفتاح الترخيص على الإيميل بعد الدفع",
           "en": "Licence key by email after payment"
         },
+        "localized": true,
         "maxLength": 80
       }
     }

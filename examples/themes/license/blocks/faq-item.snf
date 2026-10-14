@@ -7,27 +7,36 @@
 </details>
 <hk-schema>
   {
-    "name": "Question",
+    "name": {
+      "en": "Question",
+      "ar": "سؤال"
+    },
     "version": 1,
     "settings": {
       "question": {
         "type": "text",
-        "label": "Question",
-        "localized": true,
+        "label": {
+          "en": "Question",
+          "ar": "السؤال"
+        },
         "default": {
           "ar": "المفتاح بيوصلني إزاي؟",
           "en": "How do I receive my key?"
         },
+        "localized": true,
         "maxLength": 120
       },
       "answer": {
         "type": "textarea",
-        "label": "Answer",
-        "localized": true,
+        "label": {
+          "en": "Answer",
+          "ar": "الإجابة"
+        },
         "default": {
           "ar": "بعد ما الدفع أونلاين يتم، بيوصلك إيميل فيه مفتاح الترخيص ورابط التحميل.",
           "en": "Once your online payment goes through, you get an email with the licence key and the download link."
         },
+        "localized": true,
         "maxLength": 600
       }
     }

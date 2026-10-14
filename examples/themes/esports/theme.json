@@ -1,9 +1,9 @@
 {
   "id": "esports",
   "name": "Esports",
-  "version": "1.3.0",
+  "version": "2.0.0",
   "author": "Hekana",
-  "description": "A bold gaming top-up store: black and deep green, a lime accent, diagonal cuts, a wide hero and top-up cards with ribbons.",
+  "description": "A complete bold gaming top-up store: black and deep green, a lime accent, diagonal cuts, a wide hero, top-up cards with ribbons, and its own product, collection, search, cart, 404 and content pages.",
   "category": "gaming",
   "engine": "hk2",
   "engineCompatibility": "^2.0.0",
@@ -20,12 +20,23 @@
       "muted": "#93A39A",
       "surface": "#101713",
       "line": "#1D2A23",
-      "ribbon": "#F5B83D"
+      "ribbon": "#F5B83D",
+      "on-accent": "#0A120C",
+      "glow": "#2DD4A3",
+      "forest": "#135C3F",
+      "deep": "#0A100D",
+      "field": "#0D1411",
+      "void": "#030504"
     },
-    "layout": { "contentWidth": "1200px" },
+    "layout": {
+      "contentWidth": "1200px"
+    },
     "fonts": {
       "heading": "Cairo",
       "body": "Cairo"
+    },
+    "radius": {
+      "md": "10px"
     }
   }
 }

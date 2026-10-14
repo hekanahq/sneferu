@@ -5,57 +5,89 @@
       <p class="ls-side">{{ section.settings.side }}</p>
     </div>
     <div class="ls-apps-grid">
-      <a class="ls-all" href="{{ url('/products') }}">
-        <span>{{ t('all_apps') }}</span>
+      <a class="ls-all" href="{{ url(section.settings.all_link) }}">
+        <span>{{ section.settings.all_label }}</span>
         <hk-icon name="download" size="18" stroke="2.5" class="ls-icon" />
       </a>
       {% for p in collection(section.settings.list).products limit: section.settings.count %}
-        <hk-product-card product="{{ p }}" class="ls-app">
-          <hk-part name="actions">
-            <a class="ls-app-buy" href="{{ p.url }}" aria-hidden="true" tabindex="-1">{{ t('buy') }}</a>
-          </hk-part>
-        </hk-product-card>
+        {% render 'app-card', product: p %}
       {% endfor %}
     </div>
   </div>
 </section>
 <hk-schema>
   {
-    "name": "Apps",
+    "name": {
+      "en": "Apps",
+      "ar": "البرامج"
+    },
     "version": 1,
     "settings": {
       "heading": {
         "type": "text",
-        "label": "Heading",
-        "localized": true,
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
         "default": {
           "ar": "البرامج",
           "en": "Apps"
         },
+        "localized": true,
         "maxLength": 60
       },
       "side": {
         "type": "text",
-        "label": "Side note",
-        "localized": true,
+        "label": {
+          "en": "Side note",
+          "ar": "ملاحظة جانبية"
+        },
         "default": {
           "ar": "ترخيص لكل برنامج لوحده",
           "en": "A licence for each app on its own"
         },
+        "localized": true,
         "maxLength": 80
       },
       "list": {
         "type": "collection",
-        "label": "Collection",
+        "label": {
+          "en": "Collection",
+          "ar": "المجموعة"
+        },
         "default": "apps"
       },
       "count": {
         "type": "range",
-        "label": "Apps",
+        "label": {
+          "en": "Apps",
+          "ar": "عدد البرامج"
+        },
         "default": 3,
         "min": 1,
         "max": 9,
         "step": 1
+      },
+      "all_label": {
+        "type": "text",
+        "label": {
+          "en": "Large tile text",
+          "ar": "نص البلاطة الكبيرة"
+        },
+        "default": {
+          "ar": "كل البرامج",
+          "en": "All apps"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "all_link": {
+        "type": "link",
+        "label": {
+          "en": "Large tile link",
+          "ar": "رابط البلاطة الكبيرة"
+        },
+        "default": "/products"
       }
     }
   }

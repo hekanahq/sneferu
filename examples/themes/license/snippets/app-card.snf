@@ -1,0 +1,5 @@
+<hk-product-card product="{{ product }}" class="ls-app">
+  <hk-part name="actions">
+    <a class="ls-app-buy" href="{{ product.url }}" aria-hidden="true" tabindex="-1">{{ t('buy') }}</a>
+  </hk-part>
+</hk-product-card>

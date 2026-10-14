@@ -4,8 +4,106 @@
       "id": "header",
       "type": "arcade-header",
       "settings": {
+        "menu": "main",
+        "show_search": true,
+        "show_language": true,
+        "show_cart": true,
+        "scheme": "glass",
+        "sticky": true,
         "drawer_on_add": true
-      }
+      },
+      "blocks": [
+        {
+          "id": "nav-all",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "كل الكروت",
+              "en": "All cards"
+            },
+            "url": "/products"
+          }
+        },
+        {
+          "id": "nav-gift",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "كروت الهدايا",
+              "en": "Gift cards"
+            },
+            "url": "/category/gift-cards"
+          },
+          "blocks": [
+            {
+              "id": "nav-gift-0",
+              "type": "menu-sub-link",
+              "settings": {
+                "label": {
+                  "ar": "بلايستيشن",
+                  "en": "PlayStation"
+                },
+                "url": "/category/gift-cards"
+              }
+            },
+            {
+              "id": "nav-gift-1",
+              "type": "menu-sub-link",
+              "settings": {
+                "label": {
+                  "ar": "إكس بوكس",
+                  "en": "Xbox"
+                },
+                "url": "/category/gift-cards"
+              }
+            },
+            {
+              "id": "nav-gift-2",
+              "type": "menu-sub-link",
+              "settings": {
+                "label": {
+                  "ar": "ستيم",
+                  "en": "Steam"
+                },
+                "url": "/category/gift-cards"
+              }
+            }
+          ]
+        },
+        {
+          "id": "nav-currency",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "عملات الألعاب",
+              "en": "In-game currency"
+            },
+            "url": "/category/game-currency"
+          }
+        },
+        {
+          "id": "nav-topups",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "باقات الشحن",
+              "en": "Top-up packs"
+            },
+            "url": "/category/top-ups"
+          }
+        },
+        {
+          "id": "nav-faq",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "أسئلة",
+              "en": "Questions"
+            },
+            "url": "/pages/faq"
+          }
+        }
+      ]
     }
   ]
 }

@@ -4,8 +4,94 @@
       "id": "header",
       "type": "esports-header",
       "settings": {
+        "menu": "",
+        "show_search": true,
+        "show_language": true,
+        "show_account": true,
+        "show_cart": true,
         "drawer_on_add": true
-      }
+      },
+      "blocks": [
+        {
+          "id": "nav-all",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "كل المنتجات",
+              "en": "All products"
+            },
+            "url": "/products"
+          }
+        },
+        {
+          "id": "nav-currency",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "عملات الألعاب",
+              "en": "In-game currency"
+            },
+            "url": "/category/game-currency"
+          }
+        },
+        {
+          "id": "nav-cards",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "كروت الهدايا",
+              "en": "Gift cards"
+            },
+            "url": "/category/gift-cards"
+          },
+          "blocks": [
+            {
+              "id": "nav-cards-0",
+              "type": "menu-sub-link",
+              "settings": {
+                "label": {
+                  "ar": "بلايستيشن وإكس بوكس",
+                  "en": "PlayStation and Xbox"
+                },
+                "url": "/category/gift-cards"
+              }
+            },
+            {
+              "id": "nav-cards-1",
+              "type": "menu-sub-link",
+              "settings": {
+                "label": {
+                  "ar": "ستيم",
+                  "en": "Steam"
+                },
+                "url": "/category/gift-cards"
+              }
+            }
+          ]
+        },
+        {
+          "id": "nav-topups",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "باقات الشحن",
+              "en": "Top-up packs"
+            },
+            "url": "/category/top-ups"
+          }
+        },
+        {
+          "id": "nav-faq",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "أسئلة شائعة",
+              "en": "Questions"
+            },
+            "url": "/#faq"
+          }
+        }
+      ]
     }
   ]
 }

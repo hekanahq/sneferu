@@ -1,0 +1,205 @@
+<hk-section class="ls-sec" padding-y="{{ section.settings.padding_y }}" mobile-padding-y="24">
+  {% if section.settings.title %}
+    <h1 class="ls-title">{{ section.settings.title }}</h1>
+  {% endif %}
+  <div class="ls-cart ls-cart-{{ section.settings.summary_position }}">
+    <hk-cart-items checkout-label="{{ section.settings.checkout_label }}">
+      <hk-part name="empty">
+        {% render 'empty-state', image: section.settings.empty_image, title: section.settings.empty_title, text: section.settings.empty_text, label: section.settings.empty_button_label, href: section.settings.empty_button_link %}
+      </hk-part>
+    </hk-cart-items>
+    <aside class="ls-cart-aside">
+      <hk-cart-summary
+        subtotal-label="{{ section.settings.subtotal_label }}"
+        checkout-label="{{ section.settings.checkout_label }}"
+      />
+      {% if section.settings.delivery_note %}
+        <p class="ls-note ls-note-plain">
+          <hk-icon name="mail" size="18" /><span>{{ section.settings.delivery_note }}</span>
+        </p>
+      {% endif %}
+      {% if section.settings.note %}
+        <p class="ls-muted ls-cart-note">{{ section.settings.note }}</p>
+      {% endif %}
+      {% if section.settings.show_continue %}<a
+          class="ls-btn ls-btn-ghost"
+          href="{{ url(section.settings.continue_link) }}"
+        >{{ section.settings.continue_label }}</a>{% endif %}
+    </aside>
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Cart",
+      "ar": "صفحة السلة"
+    },
+    "version": 1,
+    "templates": ["cart"],
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Title",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "سلة المشتريات",
+          "en": "Your cart"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "summary_position": {
+        "type": "select",
+        "label": {
+          "en": "Summary position",
+          "ar": "مكان الملخص"
+        },
+        "options": ["side", "below"],
+        "default": "side"
+      },
+      "subtotal_label": {
+        "type": "text",
+        "label": {
+          "en": "Subtotal label (default when empty)",
+          "ar": "نص المجموع (الافتراضي لو فاضي)"
+        },
+        "default": "",
+        "localized": true,
+        "maxLength": 40
+      },
+      "checkout_label": {
+        "type": "text",
+        "label": {
+          "en": "Checkout button (default when empty)",
+          "ar": "نص زر الدفع (الافتراضي لو فاضي)"
+        },
+        "default": "",
+        "localized": true,
+        "maxLength": 40
+      },
+      "delivery_note": {
+        "type": "text",
+        "label": {
+          "en": "Delivery note",
+          "ar": "ملاحظة التسليم"
+        },
+        "default": {
+          "ar": "المفتاح ورابط التحميل بيوصلوا على الإيميل بعد الدفع.",
+          "en": "The key and download link are emailed after you pay."
+        },
+        "localized": true,
+        "maxLength": 140
+      },
+      "note": {
+        "type": "text",
+        "label": {
+          "en": "Small note",
+          "ar": "ملاحظة صغيرة"
+        },
+        "default": {
+          "ar": "الخصومات بتتحسب في الخطوة الجاية.",
+          "en": "Discounts are applied at checkout."
+        },
+        "localized": true,
+        "maxLength": 140
+      },
+      "show_continue": {
+        "type": "boolean",
+        "label": {
+          "en": "Show continue-shopping link",
+          "ar": "إظهار زر كمل تسوق"
+        },
+        "default": true
+      },
+      "continue_label": {
+        "type": "text",
+        "label": {
+          "en": "Continue-shopping text",
+          "ar": "نص كمل تسوق"
+        },
+        "default": {
+          "ar": "كمل تسوق",
+          "en": "Continue shopping"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "continue_link": {
+        "type": "link",
+        "label": {
+          "en": "Continue-shopping link",
+          "ar": "رابط كمل تسوق"
+        },
+        "default": "/products"
+      },
+      "empty_image": {
+        "type": "image",
+        "label": {
+          "en": "Empty-cart image",
+          "ar": "صورة السلة الفاضية"
+        },
+        "default": ""
+      },
+      "empty_title": {
+        "type": "text",
+        "label": {
+          "en": "Empty-cart title",
+          "ar": "عنوان السلة الفاضية"
+        },
+        "default": {
+          "ar": "سلتك فاضية",
+          "en": "Your cart is empty"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "empty_text": {
+        "type": "textarea",
+        "label": {
+          "en": "Empty-cart text",
+          "ar": "نص السلة الفاضية"
+        },
+        "default": {
+          "ar": "ضيف برامج وهتلاقيها هنا.",
+          "en": "Add apps and they will show up here."
+        },
+        "localized": true,
+        "maxLength": 160
+      },
+      "empty_button_label": {
+        "type": "text",
+        "label": {
+          "en": "Empty-cart button",
+          "ar": "زر السلة الفاضية"
+        },
+        "default": {
+          "ar": "شوف البرامج",
+          "en": "See the apps"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "empty_button_link": {
+        "type": "link",
+        "label": {
+          "en": "Empty-cart button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/products"
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding (px)",
+          "ar": "المسافة الرأسية (بكسل)"
+        },
+        "default": 32,
+        "min": 0,
+        "max": 120,
+        "step": 4
+      }
+    }
+  }
+</hk-schema>

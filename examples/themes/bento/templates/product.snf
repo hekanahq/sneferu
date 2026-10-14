@@ -1,0 +1,50 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "product-main",
+        "blocks": [
+          {
+            "type": "product-title"
+          },
+          {
+            "type": "product-price"
+          },
+          {
+            "type": "product-excerpt"
+          },
+          {
+            "type": "product-variants"
+          },
+          {
+            "type": "product-buy"
+          },
+          {
+            "type": "product-text",
+            "settings": {
+              "text": {
+                "ar": "رابط التحميل بيوصلك على الإيميل بعد الدفع.",
+                "en": "Your download link is emailed after you pay."
+              },
+              "icon": "mail",
+              "tone": "muted"
+            }
+          },
+          {
+            "type": "product-description"
+          },
+          {
+            "type": "product-tags"
+          }
+        ]
+      },
+      {
+        "type": "related-products",
+        "settings": {
+          "collection": "printables"
+        }
+      }
+    ]
+  }
+</hk-schema>

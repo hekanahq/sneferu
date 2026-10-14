@@ -1,0 +1,16 @@
+{
+  "sections": [
+    {
+      "id": "announcement",
+      "type": "announcement-bar",
+      "settings": {
+        "text": {
+          "ar": "الكود بيوصلك على الإيميل بعد الدفع الأونلاين",
+          "en": "Your code arrives by email after online payment"
+        },
+        "link": "/products",
+        "scheme": "accent"
+      }
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{% if section.settings.text %}
+  <div class="es-announcement es-scheme-{{ section.settings.scheme }}">
+    <hk-container>
+      <p class="es-announcement-text">
+        {% if section.settings.link %}
+          <a href="{{ url(section.settings.link) }}">{{ section.settings.text }}</a>
+        {% else %}
+          {{ section.settings.text }}
+        {% endif %}
+      </p>
+    </hk-container>
+  </div>
+{% endif %}
+<hk-schema>
+  {
+    "name": {
+      "en": "Announcement bar",
+      "ar": "شريط الإعلان"
+    },
+    "version": 1,
+    "templates": ["announcement"],
+    "settings": {
+      "text": {
+        "type": "text",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "الكود بيوصلك على الإيميل أول ما الدفع الأونلاين يتأكد",
+          "en": "Codes arrive by email right after online payment"
+        },
+        "localized": true,
+        "maxLength": 140
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      },
+      "scheme": {
+        "type": "select",
+        "label": {
+          "en": "Colour scheme",
+          "ar": "ألوان الشريط"
+        },
+        "default": "accent",
+        "options": ["accent", "forest", "dark"]
+      }
+    }
+  }
+</hk-schema>

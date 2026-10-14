@@ -11,12 +11,18 @@
 </section>
 <hk-schema>
   {
-    "name": "Call to action band",
+    "name": {
+      "en": "Call to action band",
+      "ar": "شريط الدعوة للشراء"
+    },
     "version": 1,
     "settings": {
       "heading": {
         "type": "text",
-        "label": "Heading",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
         "localized": true,
         "default": {
           "ar": "اطبع النهارده",
@@ -26,7 +32,10 @@
       },
       "text": {
         "type": "textarea",
-        "label": "Text",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
         "localized": true,
         "default": {
           "ar": "ادفع أونلاين ورابط التحميل يوصلك على الإيميل على طول.",
@@ -36,7 +45,10 @@
       },
       "button": {
         "type": "text",
-        "label": "Button",
+        "label": {
+          "en": "Button",
+          "ar": "الزر"
+        },
         "localized": true,
         "default": {
           "ar": "تصفّح كل المنتجات",
@@ -46,7 +58,10 @@
       },
       "link": {
         "type": "link",
-        "label": "Button link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
         "default": "/products"
       }
     }

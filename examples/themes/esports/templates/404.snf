@@ -1,0 +1,10 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "esports-not-found"
+      }
+    ]
+  }
+</hk-schema>

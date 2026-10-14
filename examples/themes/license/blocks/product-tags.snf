@@ -1,0 +1,27 @@
+{% if product.tags %}
+  <div class="ls-tags">
+    {% for tag in product.tags limit: block.settings.max %}<hk-badge text="{{ tag }}" tone="neutral" />{% endfor %}
+  </div>
+{% endif %}
+<hk-schema>
+  {
+    "name": {
+      "en": "Tags",
+      "ar": "الوسوم"
+    },
+    "version": 1,
+    "settings": {
+      "max": {
+        "type": "range",
+        "label": {
+          "en": "Most tags",
+          "ar": "أقصى عدد وسوم"
+        },
+        "default": 8,
+        "min": 1,
+        "max": 20,
+        "step": 1
+      }
+    }
+  }
+</hk-schema>

@@ -7,7 +7,10 @@
 </hk-section>
 <hk-schema>
   {
-    "name": "Amount selector",
+    "name": {
+      "en": "Amount selector",
+      "ar": "اختيار القيمة"
+    },
     "version": 1,
     "settings": {},
     "blocks": {

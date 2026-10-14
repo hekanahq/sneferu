@@ -1,0 +1,13 @@
+{% if product.excerpt %}
+  <p class="cr-lead">{{ product.excerpt }}</p>
+{% endif %}
+<hk-schema>
+  {
+    "name": {
+      "en": "Short description",
+      "ar": "وصف مختصر"
+    },
+    "version": 1,
+    "settings": {}
+  }
+</hk-schema>

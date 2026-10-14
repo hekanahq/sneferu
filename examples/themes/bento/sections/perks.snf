@@ -1,0 +1,36 @@
+<section class="bt-perks">
+  <div class="bt-wrap">
+    {% if section.settings.title %}
+      <h2 class="bt-perks-title">{{ section.settings.title }}</h2>
+    {% endif %}
+    <div class="bt-perks-grid">
+      {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+    </div>
+  </div>
+</section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Perks tiles",
+      "ar": "لوحات المميزات"
+    },
+    "version": 1,
+    "templates": ["index"],
+    "blocks": {
+      "allowed": ["perk"],
+      "max": 4
+    },
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading (optional)",
+          "ar": "العنوان (اختياري)"
+        },
+        "default": "",
+        "localized": true,
+        "maxLength": 60
+      }
+    }
+  }
+</hk-schema>

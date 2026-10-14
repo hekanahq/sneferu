@@ -8,21 +8,150 @@
     "title": "كورسات",
     "products": [
      {
+      "id": "web-page-design-course",
+      "handle": "web-page-design-course",
       "title": "كورس تصميم صفحات الويب",
       "url": "/products/web-page-design-course",
       "price": 79900,
       "compare_at": null,
+      "price_min": 79900,
+      "price_max": 119900,
       "image": {
        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course.webp"
+       }
+      ],
+      "available": true,
+      "description": "<p>كورس عملي بتتعلم فيه تصمم صفحات ويب من أول الشبكة والمسافات لحد ما تسلّم الملف للمطوّر.</p><p>كل درس فيه تمرين تطبقه على مشروع حقيقي، وبتخلّص الكورس ومعاك ملف مشروع كامل.</p>",
+      "excerpt": "كورس عملي بتتعلم فيه تصمم صفحات ويب من أول الشبكة والمسافات لحد ما تسلّم الملف للمطوّر.",
+      "kind": "digital",
+      "digital_kind": "download",
+      "tags": [
+       "course",
+       "video"
+      ],
+      "category": {
+       "handle": "courses",
+       "title": "كورسات",
+       "url": "/category/courses"
+      },
+      "options": [
+       {
+        "name": "الباقة",
+        "values": [
+         "أساسي",
+         "كامل"
+        ]
+       }
+      ],
+      "variants": [
+       {
+        "id": "web-page-design-course-v1",
+        "title": "أساسي",
+        "price": 79900,
+        "compare_at": null,
+        "available": true,
+        "options": [
+         "أساسي"
+        ],
+        "image": {
+         "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course.webp"
+        }
+       },
+       {
+        "id": "web-page-design-course-v2",
+        "title": "كامل",
+        "price": 119900,
+        "compare_at": null,
+        "available": true,
+        "options": [
+         "كامل"
+        ],
+        "image": {
+         "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course.webp"
+        }
+       }
+      ],
+      "has_variants": true,
+      "min_quantity": 1,
+      "quantity_step": 1,
+      "max_quantity": 1,
+      "selected_variant": {
+       "id": "web-page-design-course-v1",
+       "title": "أساسي",
+       "price": 79900,
+       "compare_at": null,
+       "available": true,
+       "options": [
+        "أساسي"
+       ],
+       "image": {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course.webp"
+       }
       }
      },
      {
+      "id": "sketching-for-designers",
+      "handle": "sketching-for-designers",
       "title": "كورس الاسكتش للمصممين",
       "url": "/products/sketching-for-designers",
       "price": 59900,
       "compare_at": null,
+      "price_min": 59900,
+      "price_max": 59900,
       "image": {
        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course-2.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course-2.webp"
+       }
+      ],
+      "available": true,
+      "description": "<p>تمارين رسم بسيطة تساعدك تفكّر بالقلم قبل ما تفتح البرنامج، وتوصّل فكرتك للعميل أسرع.</p>",
+      "excerpt": "تمارين رسم بسيطة تساعدك تفكّر بالقلم قبل ما تفتح البرنامج، وتوصّل فكرتك للعميل أسرع.",
+      "kind": "digital",
+      "digital_kind": "download",
+      "tags": [
+       "course",
+       "video"
+      ],
+      "category": {
+       "handle": "courses",
+       "title": "كورسات",
+       "url": "/category/courses"
+      },
+      "options": [],
+      "variants": [
+       {
+        "id": "sketching-for-designers-v1",
+        "title": "Default",
+        "price": 59900,
+        "compare_at": null,
+        "available": true,
+        "options": [],
+        "image": {
+         "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course-2.webp"
+        }
+       }
+      ],
+      "has_variants": false,
+      "min_quantity": 1,
+      "quantity_step": 1,
+      "max_quantity": 1,
+      "selected_variant": {
+       "id": "sketching-for-designers-v1",
+       "title": "Default",
+       "price": 59900,
+       "compare_at": null,
+       "available": true,
+       "options": [],
+       "image": {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course-2.webp"
+       }
       }
      }
     ]
@@ -31,21 +160,123 @@
     "title": "كتب إلكترونية",
     "products": [
      {
+      "id": "design-that-reads",
+      "handle": "design-that-reads",
       "title": "كتاب: تصميم يتقري بسهولة",
       "url": "/products/design-that-reads",
       "price": 14900,
       "compare_at": null,
+      "price_min": 14900,
+      "price_max": 14900,
       "image": {
        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook.webp"
+       }
+      ],
+      "available": true,
+      "description": "<p>كتاب قصير عن الخطوط والمسافات وإزاي تخلّي أي صفحة سهلة القراءة على الموبايل.</p>",
+      "excerpt": "كتاب قصير عن الخطوط والمسافات وإزاي تخلّي أي صفحة سهلة القراءة على الموبايل.",
+      "kind": "digital",
+      "digital_kind": "download",
+      "tags": [
+       "pdf"
+      ],
+      "category": {
+       "handle": "ebooks",
+       "title": "كتب إلكترونية",
+       "url": "/category/ebooks"
+      },
+      "options": [],
+      "variants": [
+       {
+        "id": "design-that-reads-v1",
+        "title": "Default",
+        "price": 14900,
+        "compare_at": null,
+        "available": true,
+        "options": [],
+        "image": {
+         "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook.webp"
+        }
+       }
+      ],
+      "has_variants": false,
+      "min_quantity": 1,
+      "quantity_step": 1,
+      "max_quantity": 1,
+      "selected_variant": {
+       "id": "design-that-reads-v1",
+       "title": "Default",
+       "price": 14900,
+       "compare_at": null,
+       "available": true,
+       "options": [],
+       "image": {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook.webp"
+       }
       }
      },
      {
+      "id": "pricing-design-work",
+      "handle": "pricing-design-work",
       "title": "كتاب: إزاي تسعّر شغلك كمصمم",
       "url": "/products/pricing-design-work",
       "price": 12900,
       "compare_at": null,
+      "price_min": 12900,
+      "price_max": 12900,
       "image": {
        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook-2.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook-2.webp"
+       }
+      ],
+      "available": true,
+      "description": "<p>إزاي تحسب سعر شغلك، وتتكلم عنه مع العميل، وتقول لا للمشاريع اللي مش مناسبة.</p>",
+      "excerpt": "إزاي تحسب سعر شغلك، وتتكلم عنه مع العميل، وتقول لا للمشاريع اللي مش مناسبة.",
+      "kind": "digital",
+      "digital_kind": "download",
+      "tags": [
+       "pdf"
+      ],
+      "category": {
+       "handle": "ebooks",
+       "title": "كتب إلكترونية",
+       "url": "/category/ebooks"
+      },
+      "options": [],
+      "variants": [
+       {
+        "id": "pricing-design-work-v1",
+        "title": "Default",
+        "price": 12900,
+        "compare_at": null,
+        "available": true,
+        "options": [],
+        "image": {
+         "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook-2.webp"
+        }
+       }
+      ],
+      "has_variants": false,
+      "min_quantity": 1,
+      "quantity_step": 1,
+      "max_quantity": 1,
+      "selected_variant": {
+       "id": "pricing-design-work-v1",
+       "title": "Default",
+       "price": 12900,
+       "compare_at": null,
+       "available": true,
+       "options": [],
+       "image": {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook-2.webp"
+       }
       }
      }
     ]
@@ -54,21 +285,123 @@
     "title": "قوالب",
     "products": [
      {
+      "id": "page-layout-templates",
+      "handle": "page-layout-templates",
       "title": "قوالب تخطيط صفحات قابلة للتعديل",
       "url": "/products/page-layout-templates",
       "price": 19900,
       "compare_at": null,
+      "price_min": 19900,
+      "price_max": 19900,
       "image": {
        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-templates.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-templates.webp"
+       }
+      ],
+      "available": true,
+      "description": "<p>مجموعة قوالب تخطيط جاهزة للتعديل: غيّر النص والصور وسلّم في نفس اليوم.</p>",
+      "excerpt": "مجموعة قوالب تخطيط جاهزة للتعديل: غيّر النص والصور وسلّم في نفس اليوم.",
+      "kind": "digital",
+      "digital_kind": "download",
+      "tags": [
+       "editable"
+      ],
+      "category": {
+       "handle": "templates",
+       "title": "قوالب",
+       "url": "/category/templates"
+      },
+      "options": [],
+      "variants": [
+       {
+        "id": "page-layout-templates-v1",
+        "title": "Default",
+        "price": 19900,
+        "compare_at": null,
+        "available": true,
+        "options": [],
+        "image": {
+         "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-templates.webp"
+        }
+       }
+      ],
+      "has_variants": false,
+      "min_quantity": 1,
+      "quantity_step": 1,
+      "max_quantity": 1,
+      "selected_variant": {
+       "id": "page-layout-templates-v1",
+       "title": "Default",
+       "price": 19900,
+       "compare_at": null,
+       "available": true,
+       "options": [],
+       "image": {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-templates.webp"
+       }
       }
      },
      {
+      "id": "photo-colour-presets",
+      "handle": "photo-colour-presets",
       "title": "فلاتر ألوان للصور",
       "url": "/products/photo-colour-presets",
       "price": 9900,
       "compare_at": null,
+      "price_min": 9900,
+      "price_max": 9900,
       "image": {
        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-presets.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-presets.webp"
+       }
+      ],
+      "available": true,
+      "description": "<p>فلاتر ألوان للصور بتدّي شغلك شكل واحد متناسق من أول صورة لآخر صورة.</p>",
+      "excerpt": "فلاتر ألوان للصور بتدّي شغلك شكل واحد متناسق من أول صورة لآخر صورة.",
+      "kind": "digital",
+      "digital_kind": "download",
+      "tags": [
+       "editable"
+      ],
+      "category": {
+       "handle": "templates",
+       "title": "قوالب",
+       "url": "/category/templates"
+      },
+      "options": [],
+      "variants": [
+       {
+        "id": "photo-colour-presets-v1",
+        "title": "Default",
+        "price": 9900,
+        "compare_at": null,
+        "available": true,
+        "options": [],
+        "image": {
+         "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-presets.webp"
+        }
+       }
+      ],
+      "has_variants": false,
+      "min_quantity": 1,
+      "quantity_step": 1,
+      "max_quantity": 1,
+      "selected_variant": {
+       "id": "photo-colour-presets-v1",
+       "title": "Default",
+       "price": 9900,
+       "compare_at": null,
+       "available": true,
+       "options": [],
+       "image": {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-presets.webp"
+       }
       }
      }
     ]
@@ -77,60 +410,782 @@
     "title": "مختارات",
     "products": [
      {
+      "id": "web-page-design-course",
+      "handle": "web-page-design-course",
       "title": "كورس تصميم صفحات الويب",
       "url": "/products/web-page-design-course",
       "price": 79900,
       "compare_at": null,
+      "price_min": 79900,
+      "price_max": 119900,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course.webp"
+       }
+      ],
+      "available": true,
+      "description": "<p>كورس عملي بتتعلم فيه تصمم صفحات ويب من أول الشبكة والمسافات لحد ما تسلّم الملف للمطوّر.</p><p>كل درس فيه تمرين تطبقه على مشروع حقيقي، وبتخلّص الكورس ومعاك ملف مشروع كامل.</p>",
+      "excerpt": "كورس عملي بتتعلم فيه تصمم صفحات ويب من أول الشبكة والمسافات لحد ما تسلّم الملف للمطوّر.",
+      "kind": "digital",
+      "digital_kind": "download",
+      "tags": [
+       "course",
+       "video"
+      ],
+      "category": {
+       "handle": "courses",
+       "title": "كورسات",
+       "url": "/category/courses"
+      },
+      "options": [
+       {
+        "name": "الباقة",
+        "values": [
+         "أساسي",
+         "كامل"
+        ]
+       }
+      ],
+      "variants": [
+       {
+        "id": "web-page-design-course-v1",
+        "title": "أساسي",
+        "price": 79900,
+        "compare_at": null,
+        "available": true,
+        "options": [
+         "أساسي"
+        ],
+        "image": {
+         "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course.webp"
+        }
+       },
+       {
+        "id": "web-page-design-course-v2",
+        "title": "كامل",
+        "price": 119900,
+        "compare_at": null,
+        "available": true,
+        "options": [
+         "كامل"
+        ],
+        "image": {
+         "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course.webp"
+        }
+       }
+      ],
+      "has_variants": true,
+      "min_quantity": 1,
+      "quantity_step": 1,
+      "max_quantity": 1,
+      "selected_variant": {
+       "id": "web-page-design-course-v1",
+       "title": "أساسي",
+       "price": 79900,
+       "compare_at": null,
+       "available": true,
+       "options": [
+        "أساسي"
+       ],
+       "image": {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course.webp"
+       }
+      }
+     },
+     {
+      "id": "sketching-for-designers",
+      "handle": "sketching-for-designers",
+      "title": "كورس الاسكتش للمصممين",
+      "url": "/products/sketching-for-designers",
+      "price": 59900,
+      "compare_at": null,
+      "price_min": 59900,
+      "price_max": 59900,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course-2.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course-2.webp"
+       }
+      ],
+      "available": true,
+      "description": "<p>تمارين رسم بسيطة تساعدك تفكّر بالقلم قبل ما تفتح البرنامج، وتوصّل فكرتك للعميل أسرع.</p>",
+      "excerpt": "تمارين رسم بسيطة تساعدك تفكّر بالقلم قبل ما تفتح البرنامج، وتوصّل فكرتك للعميل أسرع.",
+      "kind": "digital",
+      "digital_kind": "download",
+      "tags": [
+       "course",
+       "video"
+      ],
+      "category": {
+       "handle": "courses",
+       "title": "كورسات",
+       "url": "/category/courses"
+      },
+      "options": [],
+      "variants": [
+       {
+        "id": "sketching-for-designers-v1",
+        "title": "Default",
+        "price": 59900,
+        "compare_at": null,
+        "available": true,
+        "options": [],
+        "image": {
+         "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course-2.webp"
+        }
+       }
+      ],
+      "has_variants": false,
+      "min_quantity": 1,
+      "quantity_step": 1,
+      "max_quantity": 1,
+      "selected_variant": {
+       "id": "sketching-for-designers-v1",
+       "title": "Default",
+       "price": 59900,
+       "compare_at": null,
+       "available": true,
+       "options": [],
+       "image": {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course-2.webp"
+       }
+      }
+     },
+     {
+      "id": "design-that-reads",
+      "handle": "design-that-reads",
+      "title": "كتاب: تصميم يتقري بسهولة",
+      "url": "/products/design-that-reads",
+      "price": 14900,
+      "compare_at": null,
+      "price_min": 14900,
+      "price_max": 14900,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook.webp"
+       }
+      ],
+      "available": true,
+      "description": "<p>كتاب قصير عن الخطوط والمسافات وإزاي تخلّي أي صفحة سهلة القراءة على الموبايل.</p>",
+      "excerpt": "كتاب قصير عن الخطوط والمسافات وإزاي تخلّي أي صفحة سهلة القراءة على الموبايل.",
+      "kind": "digital",
+      "digital_kind": "download",
+      "tags": [
+       "pdf"
+      ],
+      "category": {
+       "handle": "ebooks",
+       "title": "كتب إلكترونية",
+       "url": "/category/ebooks"
+      },
+      "options": [],
+      "variants": [
+       {
+        "id": "design-that-reads-v1",
+        "title": "Default",
+        "price": 14900,
+        "compare_at": null,
+        "available": true,
+        "options": [],
+        "image": {
+         "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook.webp"
+        }
+       }
+      ],
+      "has_variants": false,
+      "min_quantity": 1,
+      "quantity_step": 1,
+      "max_quantity": 1,
+      "selected_variant": {
+       "id": "design-that-reads-v1",
+       "title": "Default",
+       "price": 14900,
+       "compare_at": null,
+       "available": true,
+       "options": [],
+       "image": {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook.webp"
+       }
+      }
+     },
+     {
+      "id": "pricing-design-work",
+      "handle": "pricing-design-work",
+      "title": "كتاب: إزاي تسعّر شغلك كمصمم",
+      "url": "/products/pricing-design-work",
+      "price": 12900,
+      "compare_at": null,
+      "price_min": 12900,
+      "price_max": 12900,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook-2.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook-2.webp"
+       }
+      ],
+      "available": true,
+      "description": "<p>إزاي تحسب سعر شغلك، وتتكلم عنه مع العميل، وتقول لا للمشاريع اللي مش مناسبة.</p>",
+      "excerpt": "إزاي تحسب سعر شغلك، وتتكلم عنه مع العميل، وتقول لا للمشاريع اللي مش مناسبة.",
+      "kind": "digital",
+      "digital_kind": "download",
+      "tags": [
+       "pdf"
+      ],
+      "category": {
+       "handle": "ebooks",
+       "title": "كتب إلكترونية",
+       "url": "/category/ebooks"
+      },
+      "options": [],
+      "variants": [
+       {
+        "id": "pricing-design-work-v1",
+        "title": "Default",
+        "price": 12900,
+        "compare_at": null,
+        "available": true,
+        "options": [],
+        "image": {
+         "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook-2.webp"
+        }
+       }
+      ],
+      "has_variants": false,
+      "min_quantity": 1,
+      "quantity_step": 1,
+      "max_quantity": 1,
+      "selected_variant": {
+       "id": "pricing-design-work-v1",
+       "title": "Default",
+       "price": 12900,
+       "compare_at": null,
+       "available": true,
+       "options": [],
+       "image": {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook-2.webp"
+       }
+      }
+     },
+     {
+      "id": "page-layout-templates",
+      "handle": "page-layout-templates",
+      "title": "قوالب تخطيط صفحات قابلة للتعديل",
+      "url": "/products/page-layout-templates",
+      "price": 19900,
+      "compare_at": null,
+      "price_min": 19900,
+      "price_max": 19900,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-templates.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-templates.webp"
+       }
+      ],
+      "available": true,
+      "description": "<p>مجموعة قوالب تخطيط جاهزة للتعديل: غيّر النص والصور وسلّم في نفس اليوم.</p>",
+      "excerpt": "مجموعة قوالب تخطيط جاهزة للتعديل: غيّر النص والصور وسلّم في نفس اليوم.",
+      "kind": "digital",
+      "digital_kind": "download",
+      "tags": [
+       "editable"
+      ],
+      "category": {
+       "handle": "templates",
+       "title": "قوالب",
+       "url": "/category/templates"
+      },
+      "options": [],
+      "variants": [
+       {
+        "id": "page-layout-templates-v1",
+        "title": "Default",
+        "price": 19900,
+        "compare_at": null,
+        "available": true,
+        "options": [],
+        "image": {
+         "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-templates.webp"
+        }
+       }
+      ],
+      "has_variants": false,
+      "min_quantity": 1,
+      "quantity_step": 1,
+      "max_quantity": 1,
+      "selected_variant": {
+       "id": "page-layout-templates-v1",
+       "title": "Default",
+       "price": 19900,
+       "compare_at": null,
+       "available": true,
+       "options": [],
+       "image": {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-templates.webp"
+       }
+      }
+     },
+     {
+      "id": "photo-colour-presets",
+      "handle": "photo-colour-presets",
+      "title": "فلاتر ألوان للصور",
+      "url": "/products/photo-colour-presets",
+      "price": 9900,
+      "compare_at": null,
+      "price_min": 9900,
+      "price_max": 9900,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-presets.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-presets.webp"
+       }
+      ],
+      "available": true,
+      "description": "<p>فلاتر ألوان للصور بتدّي شغلك شكل واحد متناسق من أول صورة لآخر صورة.</p>",
+      "excerpt": "فلاتر ألوان للصور بتدّي شغلك شكل واحد متناسق من أول صورة لآخر صورة.",
+      "kind": "digital",
+      "digital_kind": "download",
+      "tags": [
+       "editable"
+      ],
+      "category": {
+       "handle": "templates",
+       "title": "قوالب",
+       "url": "/category/templates"
+      },
+      "options": [],
+      "variants": [
+       {
+        "id": "photo-colour-presets-v1",
+        "title": "Default",
+        "price": 9900,
+        "compare_at": null,
+        "available": true,
+        "options": [],
+        "image": {
+         "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-presets.webp"
+        }
+       }
+      ],
+      "has_variants": false,
+      "min_quantity": 1,
+      "quantity_step": 1,
+      "max_quantity": 1,
+      "selected_variant": {
+       "id": "photo-colour-presets-v1",
+       "title": "Default",
+       "price": 9900,
+       "compare_at": null,
+       "available": true,
+       "options": [],
+       "image": {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-presets.webp"
+       }
+      }
+     }
+    ]
+   }
+  },
+  "products": {
+   "web-page-design-course": {
+    "id": "web-page-design-course",
+    "handle": "web-page-design-course",
+    "title": "كورس تصميم صفحات الويب",
+    "url": "/products/web-page-design-course",
+    "price": 79900,
+    "compare_at": null,
+    "price_min": 79900,
+    "price_max": 119900,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course.webp"
+     }
+    ],
+    "available": true,
+    "description": "<p>كورس عملي بتتعلم فيه تصمم صفحات ويب من أول الشبكة والمسافات لحد ما تسلّم الملف للمطوّر.</p><p>كل درس فيه تمرين تطبقه على مشروع حقيقي، وبتخلّص الكورس ومعاك ملف مشروع كامل.</p>",
+    "excerpt": "كورس عملي بتتعلم فيه تصمم صفحات ويب من أول الشبكة والمسافات لحد ما تسلّم الملف للمطوّر.",
+    "kind": "digital",
+    "digital_kind": "download",
+    "tags": [
+     "course",
+     "video"
+    ],
+    "category": {
+     "handle": "courses",
+     "title": "كورسات",
+     "url": "/category/courses"
+    },
+    "options": [
+     {
+      "name": "الباقة",
+      "values": [
+       "أساسي",
+       "كامل"
+      ]
+     }
+    ],
+    "variants": [
+     {
+      "id": "web-page-design-course-v1",
+      "title": "أساسي",
+      "price": 79900,
+      "compare_at": null,
+      "available": true,
+      "options": [
+       "أساسي"
+      ],
       "image": {
        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course.webp"
       }
      },
      {
-      "title": "كورس الاسكتش للمصممين",
-      "url": "/products/sketching-for-designers",
+      "id": "web-page-design-course-v2",
+      "title": "كامل",
+      "price": 119900,
+      "compare_at": null,
+      "available": true,
+      "options": [
+       "كامل"
+      ],
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course.webp"
+      }
+     }
+    ],
+    "has_variants": true,
+    "min_quantity": 1,
+    "quantity_step": 1,
+    "max_quantity": 1,
+    "selected_variant": {
+     "id": "web-page-design-course-v1",
+     "title": "أساسي",
+     "price": 79900,
+     "compare_at": null,
+     "available": true,
+     "options": [
+      "أساسي"
+     ],
+     "image": {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course.webp"
+     }
+    }
+   },
+   "sketching-for-designers": {
+    "id": "sketching-for-designers",
+    "handle": "sketching-for-designers",
+    "title": "كورس الاسكتش للمصممين",
+    "url": "/products/sketching-for-designers",
+    "price": 59900,
+    "compare_at": null,
+    "price_min": 59900,
+    "price_max": 59900,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course-2.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course-2.webp"
+     }
+    ],
+    "available": true,
+    "description": "<p>تمارين رسم بسيطة تساعدك تفكّر بالقلم قبل ما تفتح البرنامج، وتوصّل فكرتك للعميل أسرع.</p>",
+    "excerpt": "تمارين رسم بسيطة تساعدك تفكّر بالقلم قبل ما تفتح البرنامج، وتوصّل فكرتك للعميل أسرع.",
+    "kind": "digital",
+    "digital_kind": "download",
+    "tags": [
+     "course",
+     "video"
+    ],
+    "category": {
+     "handle": "courses",
+     "title": "كورسات",
+     "url": "/category/courses"
+    },
+    "options": [],
+    "variants": [
+     {
+      "id": "sketching-for-designers-v1",
+      "title": "Default",
       "price": 59900,
       "compare_at": null,
+      "available": true,
+      "options": [],
       "image": {
        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course-2.webp"
       }
-     },
+     }
+    ],
+    "has_variants": false,
+    "min_quantity": 1,
+    "quantity_step": 1,
+    "max_quantity": 1,
+    "selected_variant": {
+     "id": "sketching-for-designers-v1",
+     "title": "Default",
+     "price": 59900,
+     "compare_at": null,
+     "available": true,
+     "options": [],
+     "image": {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course-2.webp"
+     }
+    }
+   },
+   "design-that-reads": {
+    "id": "design-that-reads",
+    "handle": "design-that-reads",
+    "title": "كتاب: تصميم يتقري بسهولة",
+    "url": "/products/design-that-reads",
+    "price": 14900,
+    "compare_at": null,
+    "price_min": 14900,
+    "price_max": 14900,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook.webp"
+    },
+    "images": [
      {
-      "title": "كتاب: تصميم يتقري بسهولة",
-      "url": "/products/design-that-reads",
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook.webp"
+     }
+    ],
+    "available": true,
+    "description": "<p>كتاب قصير عن الخطوط والمسافات وإزاي تخلّي أي صفحة سهلة القراءة على الموبايل.</p>",
+    "excerpt": "كتاب قصير عن الخطوط والمسافات وإزاي تخلّي أي صفحة سهلة القراءة على الموبايل.",
+    "kind": "digital",
+    "digital_kind": "download",
+    "tags": [
+     "pdf"
+    ],
+    "category": {
+     "handle": "ebooks",
+     "title": "كتب إلكترونية",
+     "url": "/category/ebooks"
+    },
+    "options": [],
+    "variants": [
+     {
+      "id": "design-that-reads-v1",
+      "title": "Default",
       "price": 14900,
       "compare_at": null,
+      "available": true,
+      "options": [],
       "image": {
        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook.webp"
       }
-     },
+     }
+    ],
+    "has_variants": false,
+    "min_quantity": 1,
+    "quantity_step": 1,
+    "max_quantity": 1,
+    "selected_variant": {
+     "id": "design-that-reads-v1",
+     "title": "Default",
+     "price": 14900,
+     "compare_at": null,
+     "available": true,
+     "options": [],
+     "image": {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook.webp"
+     }
+    }
+   },
+   "pricing-design-work": {
+    "id": "pricing-design-work",
+    "handle": "pricing-design-work",
+    "title": "كتاب: إزاي تسعّر شغلك كمصمم",
+    "url": "/products/pricing-design-work",
+    "price": 12900,
+    "compare_at": null,
+    "price_min": 12900,
+    "price_max": 12900,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook-2.webp"
+    },
+    "images": [
      {
-      "title": "كتاب: إزاي تسعّر شغلك كمصمم",
-      "url": "/products/pricing-design-work",
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook-2.webp"
+     }
+    ],
+    "available": true,
+    "description": "<p>إزاي تحسب سعر شغلك، وتتكلم عنه مع العميل، وتقول لا للمشاريع اللي مش مناسبة.</p>",
+    "excerpt": "إزاي تحسب سعر شغلك، وتتكلم عنه مع العميل، وتقول لا للمشاريع اللي مش مناسبة.",
+    "kind": "digital",
+    "digital_kind": "download",
+    "tags": [
+     "pdf"
+    ],
+    "category": {
+     "handle": "ebooks",
+     "title": "كتب إلكترونية",
+     "url": "/category/ebooks"
+    },
+    "options": [],
+    "variants": [
+     {
+      "id": "pricing-design-work-v1",
+      "title": "Default",
       "price": 12900,
       "compare_at": null,
+      "available": true,
+      "options": [],
       "image": {
        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook-2.webp"
       }
-     },
+     }
+    ],
+    "has_variants": false,
+    "min_quantity": 1,
+    "quantity_step": 1,
+    "max_quantity": 1,
+    "selected_variant": {
+     "id": "pricing-design-work-v1",
+     "title": "Default",
+     "price": 12900,
+     "compare_at": null,
+     "available": true,
+     "options": [],
+     "image": {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook-2.webp"
+     }
+    }
+   },
+   "page-layout-templates": {
+    "id": "page-layout-templates",
+    "handle": "page-layout-templates",
+    "title": "قوالب تخطيط صفحات قابلة للتعديل",
+    "url": "/products/page-layout-templates",
+    "price": 19900,
+    "compare_at": null,
+    "price_min": 19900,
+    "price_max": 19900,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-templates.webp"
+    },
+    "images": [
      {
-      "title": "قوالب تخطيط صفحات قابلة للتعديل",
-      "url": "/products/page-layout-templates",
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-templates.webp"
+     }
+    ],
+    "available": true,
+    "description": "<p>مجموعة قوالب تخطيط جاهزة للتعديل: غيّر النص والصور وسلّم في نفس اليوم.</p>",
+    "excerpt": "مجموعة قوالب تخطيط جاهزة للتعديل: غيّر النص والصور وسلّم في نفس اليوم.",
+    "kind": "digital",
+    "digital_kind": "download",
+    "tags": [
+     "editable"
+    ],
+    "category": {
+     "handle": "templates",
+     "title": "قوالب",
+     "url": "/category/templates"
+    },
+    "options": [],
+    "variants": [
+     {
+      "id": "page-layout-templates-v1",
+      "title": "Default",
       "price": 19900,
       "compare_at": null,
+      "available": true,
+      "options": [],
       "image": {
        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-templates.webp"
       }
-     },
+     }
+    ],
+    "has_variants": false,
+    "min_quantity": 1,
+    "quantity_step": 1,
+    "max_quantity": 1,
+    "selected_variant": {
+     "id": "page-layout-templates-v1",
+     "title": "Default",
+     "price": 19900,
+     "compare_at": null,
+     "available": true,
+     "options": [],
+     "image": {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-templates.webp"
+     }
+    }
+   },
+   "photo-colour-presets": {
+    "id": "photo-colour-presets",
+    "handle": "photo-colour-presets",
+    "title": "فلاتر ألوان للصور",
+    "url": "/products/photo-colour-presets",
+    "price": 9900,
+    "compare_at": null,
+    "price_min": 9900,
+    "price_max": 9900,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-presets.webp"
+    },
+    "images": [
      {
-      "title": "فلاتر ألوان للصور",
-      "url": "/products/photo-colour-presets",
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-presets.webp"
+     }
+    ],
+    "available": true,
+    "description": "<p>فلاتر ألوان للصور بتدّي شغلك شكل واحد متناسق من أول صورة لآخر صورة.</p>",
+    "excerpt": "فلاتر ألوان للصور بتدّي شغلك شكل واحد متناسق من أول صورة لآخر صورة.",
+    "kind": "digital",
+    "digital_kind": "download",
+    "tags": [
+     "editable"
+    ],
+    "category": {
+     "handle": "templates",
+     "title": "قوالب",
+     "url": "/category/templates"
+    },
+    "options": [],
+    "variants": [
+     {
+      "id": "photo-colour-presets-v1",
+      "title": "Default",
       "price": 9900,
       "compare_at": null,
+      "available": true,
+      "options": [],
       "image": {
        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-presets.webp"
       }
      }
-    ]
+    ],
+    "has_variants": false,
+    "min_quantity": 1,
+    "quantity_step": 1,
+    "max_quantity": 1,
+    "selected_variant": {
+     "id": "photo-colour-presets-v1",
+     "title": "Default",
+     "price": 9900,
+     "compare_at": null,
+     "available": true,
+     "options": [],
+     "image": {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-presets.webp"
+     }
+    }
    }
   }
  },
@@ -143,21 +1198,150 @@
     "title": "Courses",
     "products": [
      {
+      "id": "web-page-design-course",
+      "handle": "web-page-design-course",
       "title": "Web page design course",
       "url": "/en/products/web-page-design-course",
       "price": 79900,
       "compare_at": null,
+      "price_min": 79900,
+      "price_max": 119900,
       "image": {
        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course.webp"
+       }
+      ],
+      "available": true,
+      "description": "<p>A hands-on course on designing web pages, from grids and spacing to handing the file to a developer.</p><p>Every lesson has an exercise on a real project, and you finish with a complete project file.</p>",
+      "excerpt": "A hands-on course on designing web pages, from grids and spacing to handing the file to a developer.",
+      "kind": "digital",
+      "digital_kind": "download",
+      "tags": [
+       "course",
+       "video"
+      ],
+      "category": {
+       "handle": "courses",
+       "title": "Courses",
+       "url": "/en/category/courses"
+      },
+      "options": [
+       {
+        "name": "Plan",
+        "values": [
+         "Basic",
+         "Full"
+        ]
+       }
+      ],
+      "variants": [
+       {
+        "id": "web-page-design-course-v1",
+        "title": "Basic",
+        "price": 79900,
+        "compare_at": null,
+        "available": true,
+        "options": [
+         "Basic"
+        ],
+        "image": {
+         "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course.webp"
+        }
+       },
+       {
+        "id": "web-page-design-course-v2",
+        "title": "Full",
+        "price": 119900,
+        "compare_at": null,
+        "available": true,
+        "options": [
+         "Full"
+        ],
+        "image": {
+         "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course.webp"
+        }
+       }
+      ],
+      "has_variants": true,
+      "min_quantity": 1,
+      "quantity_step": 1,
+      "max_quantity": 1,
+      "selected_variant": {
+       "id": "web-page-design-course-v1",
+       "title": "Basic",
+       "price": 79900,
+       "compare_at": null,
+       "available": true,
+       "options": [
+        "Basic"
+       ],
+       "image": {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course.webp"
+       }
       }
      },
      {
+      "id": "sketching-for-designers",
+      "handle": "sketching-for-designers",
       "title": "Sketching for designers",
       "url": "/en/products/sketching-for-designers",
       "price": 59900,
       "compare_at": null,
+      "price_min": 59900,
+      "price_max": 59900,
       "image": {
        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course-2.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course-2.webp"
+       }
+      ],
+      "available": true,
+      "description": "<p>Simple sketching exercises that help you think with a pen before you open the software.</p>",
+      "excerpt": "Simple sketching exercises that help you think with a pen before you open the software.",
+      "kind": "digital",
+      "digital_kind": "download",
+      "tags": [
+       "course",
+       "video"
+      ],
+      "category": {
+       "handle": "courses",
+       "title": "Courses",
+       "url": "/en/category/courses"
+      },
+      "options": [],
+      "variants": [
+       {
+        "id": "sketching-for-designers-v1",
+        "title": "Default",
+        "price": 59900,
+        "compare_at": null,
+        "available": true,
+        "options": [],
+        "image": {
+         "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course-2.webp"
+        }
+       }
+      ],
+      "has_variants": false,
+      "min_quantity": 1,
+      "quantity_step": 1,
+      "max_quantity": 1,
+      "selected_variant": {
+       "id": "sketching-for-designers-v1",
+       "title": "Default",
+       "price": 59900,
+       "compare_at": null,
+       "available": true,
+       "options": [],
+       "image": {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course-2.webp"
+       }
       }
      }
     ]
@@ -166,21 +1350,123 @@
     "title": "E-books",
     "products": [
      {
+      "id": "design-that-reads",
+      "handle": "design-that-reads",
       "title": "E-book: Design that reads well",
       "url": "/en/products/design-that-reads",
       "price": 14900,
       "compare_at": null,
+      "price_min": 14900,
+      "price_max": 14900,
       "image": {
        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook.webp"
+       }
+      ],
+      "available": true,
+      "description": "<p>A short book on type and spacing, and how to keep any page easy to read on a phone.</p>",
+      "excerpt": "A short book on type and spacing, and how to keep any page easy to read on a phone.",
+      "kind": "digital",
+      "digital_kind": "download",
+      "tags": [
+       "pdf"
+      ],
+      "category": {
+       "handle": "ebooks",
+       "title": "E-books",
+       "url": "/en/category/ebooks"
+      },
+      "options": [],
+      "variants": [
+       {
+        "id": "design-that-reads-v1",
+        "title": "Default",
+        "price": 14900,
+        "compare_at": null,
+        "available": true,
+        "options": [],
+        "image": {
+         "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook.webp"
+        }
+       }
+      ],
+      "has_variants": false,
+      "min_quantity": 1,
+      "quantity_step": 1,
+      "max_quantity": 1,
+      "selected_variant": {
+       "id": "design-that-reads-v1",
+       "title": "Default",
+       "price": 14900,
+       "compare_at": null,
+       "available": true,
+       "options": [],
+       "image": {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook.webp"
+       }
       }
      },
      {
+      "id": "pricing-design-work",
+      "handle": "pricing-design-work",
       "title": "E-book: Pricing your design work",
       "url": "/en/products/pricing-design-work",
       "price": 12900,
       "compare_at": null,
+      "price_min": 12900,
+      "price_max": 12900,
       "image": {
        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook-2.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook-2.webp"
+       }
+      ],
+      "available": true,
+      "description": "<p>How to price your work, talk about it with a client, and say no to the wrong projects.</p>",
+      "excerpt": "How to price your work, talk about it with a client, and say no to the wrong projects.",
+      "kind": "digital",
+      "digital_kind": "download",
+      "tags": [
+       "pdf"
+      ],
+      "category": {
+       "handle": "ebooks",
+       "title": "E-books",
+       "url": "/en/category/ebooks"
+      },
+      "options": [],
+      "variants": [
+       {
+        "id": "pricing-design-work-v1",
+        "title": "Default",
+        "price": 12900,
+        "compare_at": null,
+        "available": true,
+        "options": [],
+        "image": {
+         "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook-2.webp"
+        }
+       }
+      ],
+      "has_variants": false,
+      "min_quantity": 1,
+      "quantity_step": 1,
+      "max_quantity": 1,
+      "selected_variant": {
+       "id": "pricing-design-work-v1",
+       "title": "Default",
+       "price": 12900,
+       "compare_at": null,
+       "available": true,
+       "options": [],
+       "image": {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook-2.webp"
+       }
       }
      }
     ]
@@ -189,21 +1475,123 @@
     "title": "Templates",
     "products": [
      {
+      "id": "page-layout-templates",
+      "handle": "page-layout-templates",
       "title": "Editable page layout templates",
       "url": "/en/products/page-layout-templates",
       "price": 19900,
       "compare_at": null,
+      "price_min": 19900,
+      "price_max": 19900,
       "image": {
        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-templates.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-templates.webp"
+       }
+      ],
+      "available": true,
+      "description": "<p>A set of editable layout templates: change the text and images and deliver the same day.</p>",
+      "excerpt": "A set of editable layout templates: change the text and images and deliver the same day.",
+      "kind": "digital",
+      "digital_kind": "download",
+      "tags": [
+       "editable"
+      ],
+      "category": {
+       "handle": "templates",
+       "title": "Templates",
+       "url": "/en/category/templates"
+      },
+      "options": [],
+      "variants": [
+       {
+        "id": "page-layout-templates-v1",
+        "title": "Default",
+        "price": 19900,
+        "compare_at": null,
+        "available": true,
+        "options": [],
+        "image": {
+         "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-templates.webp"
+        }
+       }
+      ],
+      "has_variants": false,
+      "min_quantity": 1,
+      "quantity_step": 1,
+      "max_quantity": 1,
+      "selected_variant": {
+       "id": "page-layout-templates-v1",
+       "title": "Default",
+       "price": 19900,
+       "compare_at": null,
+       "available": true,
+       "options": [],
+       "image": {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-templates.webp"
+       }
       }
      },
      {
+      "id": "photo-colour-presets",
+      "handle": "photo-colour-presets",
       "title": "Photo colour presets",
       "url": "/en/products/photo-colour-presets",
       "price": 9900,
       "compare_at": null,
+      "price_min": 9900,
+      "price_max": 9900,
       "image": {
        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-presets.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-presets.webp"
+       }
+      ],
+      "available": true,
+      "description": "<p>Colour presets that give your work one consistent look from the first photo to the last.</p>",
+      "excerpt": "Colour presets that give your work one consistent look from the first photo to the last.",
+      "kind": "digital",
+      "digital_kind": "download",
+      "tags": [
+       "editable"
+      ],
+      "category": {
+       "handle": "templates",
+       "title": "Templates",
+       "url": "/en/category/templates"
+      },
+      "options": [],
+      "variants": [
+       {
+        "id": "photo-colour-presets-v1",
+        "title": "Default",
+        "price": 9900,
+        "compare_at": null,
+        "available": true,
+        "options": [],
+        "image": {
+         "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-presets.webp"
+        }
+       }
+      ],
+      "has_variants": false,
+      "min_quantity": 1,
+      "quantity_step": 1,
+      "max_quantity": 1,
+      "selected_variant": {
+       "id": "photo-colour-presets-v1",
+       "title": "Default",
+       "price": 9900,
+       "compare_at": null,
+       "available": true,
+       "options": [],
+       "image": {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-presets.webp"
+       }
       }
      }
     ]
@@ -212,60 +1600,782 @@
     "title": "Featured",
     "products": [
      {
+      "id": "web-page-design-course",
+      "handle": "web-page-design-course",
       "title": "Web page design course",
       "url": "/en/products/web-page-design-course",
       "price": 79900,
       "compare_at": null,
+      "price_min": 79900,
+      "price_max": 119900,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course.webp"
+       }
+      ],
+      "available": true,
+      "description": "<p>A hands-on course on designing web pages, from grids and spacing to handing the file to a developer.</p><p>Every lesson has an exercise on a real project, and you finish with a complete project file.</p>",
+      "excerpt": "A hands-on course on designing web pages, from grids and spacing to handing the file to a developer.",
+      "kind": "digital",
+      "digital_kind": "download",
+      "tags": [
+       "course",
+       "video"
+      ],
+      "category": {
+       "handle": "courses",
+       "title": "Courses",
+       "url": "/en/category/courses"
+      },
+      "options": [
+       {
+        "name": "Plan",
+        "values": [
+         "Basic",
+         "Full"
+        ]
+       }
+      ],
+      "variants": [
+       {
+        "id": "web-page-design-course-v1",
+        "title": "Basic",
+        "price": 79900,
+        "compare_at": null,
+        "available": true,
+        "options": [
+         "Basic"
+        ],
+        "image": {
+         "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course.webp"
+        }
+       },
+       {
+        "id": "web-page-design-course-v2",
+        "title": "Full",
+        "price": 119900,
+        "compare_at": null,
+        "available": true,
+        "options": [
+         "Full"
+        ],
+        "image": {
+         "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course.webp"
+        }
+       }
+      ],
+      "has_variants": true,
+      "min_quantity": 1,
+      "quantity_step": 1,
+      "max_quantity": 1,
+      "selected_variant": {
+       "id": "web-page-design-course-v1",
+       "title": "Basic",
+       "price": 79900,
+       "compare_at": null,
+       "available": true,
+       "options": [
+        "Basic"
+       ],
+       "image": {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course.webp"
+       }
+      }
+     },
+     {
+      "id": "sketching-for-designers",
+      "handle": "sketching-for-designers",
+      "title": "Sketching for designers",
+      "url": "/en/products/sketching-for-designers",
+      "price": 59900,
+      "compare_at": null,
+      "price_min": 59900,
+      "price_max": 59900,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course-2.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course-2.webp"
+       }
+      ],
+      "available": true,
+      "description": "<p>Simple sketching exercises that help you think with a pen before you open the software.</p>",
+      "excerpt": "Simple sketching exercises that help you think with a pen before you open the software.",
+      "kind": "digital",
+      "digital_kind": "download",
+      "tags": [
+       "course",
+       "video"
+      ],
+      "category": {
+       "handle": "courses",
+       "title": "Courses",
+       "url": "/en/category/courses"
+      },
+      "options": [],
+      "variants": [
+       {
+        "id": "sketching-for-designers-v1",
+        "title": "Default",
+        "price": 59900,
+        "compare_at": null,
+        "available": true,
+        "options": [],
+        "image": {
+         "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course-2.webp"
+        }
+       }
+      ],
+      "has_variants": false,
+      "min_quantity": 1,
+      "quantity_step": 1,
+      "max_quantity": 1,
+      "selected_variant": {
+       "id": "sketching-for-designers-v1",
+       "title": "Default",
+       "price": 59900,
+       "compare_at": null,
+       "available": true,
+       "options": [],
+       "image": {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course-2.webp"
+       }
+      }
+     },
+     {
+      "id": "design-that-reads",
+      "handle": "design-that-reads",
+      "title": "E-book: Design that reads well",
+      "url": "/en/products/design-that-reads",
+      "price": 14900,
+      "compare_at": null,
+      "price_min": 14900,
+      "price_max": 14900,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook.webp"
+       }
+      ],
+      "available": true,
+      "description": "<p>A short book on type and spacing, and how to keep any page easy to read on a phone.</p>",
+      "excerpt": "A short book on type and spacing, and how to keep any page easy to read on a phone.",
+      "kind": "digital",
+      "digital_kind": "download",
+      "tags": [
+       "pdf"
+      ],
+      "category": {
+       "handle": "ebooks",
+       "title": "E-books",
+       "url": "/en/category/ebooks"
+      },
+      "options": [],
+      "variants": [
+       {
+        "id": "design-that-reads-v1",
+        "title": "Default",
+        "price": 14900,
+        "compare_at": null,
+        "available": true,
+        "options": [],
+        "image": {
+         "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook.webp"
+        }
+       }
+      ],
+      "has_variants": false,
+      "min_quantity": 1,
+      "quantity_step": 1,
+      "max_quantity": 1,
+      "selected_variant": {
+       "id": "design-that-reads-v1",
+       "title": "Default",
+       "price": 14900,
+       "compare_at": null,
+       "available": true,
+       "options": [],
+       "image": {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook.webp"
+       }
+      }
+     },
+     {
+      "id": "pricing-design-work",
+      "handle": "pricing-design-work",
+      "title": "E-book: Pricing your design work",
+      "url": "/en/products/pricing-design-work",
+      "price": 12900,
+      "compare_at": null,
+      "price_min": 12900,
+      "price_max": 12900,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook-2.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook-2.webp"
+       }
+      ],
+      "available": true,
+      "description": "<p>How to price your work, talk about it with a client, and say no to the wrong projects.</p>",
+      "excerpt": "How to price your work, talk about it with a client, and say no to the wrong projects.",
+      "kind": "digital",
+      "digital_kind": "download",
+      "tags": [
+       "pdf"
+      ],
+      "category": {
+       "handle": "ebooks",
+       "title": "E-books",
+       "url": "/en/category/ebooks"
+      },
+      "options": [],
+      "variants": [
+       {
+        "id": "pricing-design-work-v1",
+        "title": "Default",
+        "price": 12900,
+        "compare_at": null,
+        "available": true,
+        "options": [],
+        "image": {
+         "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook-2.webp"
+        }
+       }
+      ],
+      "has_variants": false,
+      "min_quantity": 1,
+      "quantity_step": 1,
+      "max_quantity": 1,
+      "selected_variant": {
+       "id": "pricing-design-work-v1",
+       "title": "Default",
+       "price": 12900,
+       "compare_at": null,
+       "available": true,
+       "options": [],
+       "image": {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook-2.webp"
+       }
+      }
+     },
+     {
+      "id": "page-layout-templates",
+      "handle": "page-layout-templates",
+      "title": "Editable page layout templates",
+      "url": "/en/products/page-layout-templates",
+      "price": 19900,
+      "compare_at": null,
+      "price_min": 19900,
+      "price_max": 19900,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-templates.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-templates.webp"
+       }
+      ],
+      "available": true,
+      "description": "<p>A set of editable layout templates: change the text and images and deliver the same day.</p>",
+      "excerpt": "A set of editable layout templates: change the text and images and deliver the same day.",
+      "kind": "digital",
+      "digital_kind": "download",
+      "tags": [
+       "editable"
+      ],
+      "category": {
+       "handle": "templates",
+       "title": "Templates",
+       "url": "/en/category/templates"
+      },
+      "options": [],
+      "variants": [
+       {
+        "id": "page-layout-templates-v1",
+        "title": "Default",
+        "price": 19900,
+        "compare_at": null,
+        "available": true,
+        "options": [],
+        "image": {
+         "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-templates.webp"
+        }
+       }
+      ],
+      "has_variants": false,
+      "min_quantity": 1,
+      "quantity_step": 1,
+      "max_quantity": 1,
+      "selected_variant": {
+       "id": "page-layout-templates-v1",
+       "title": "Default",
+       "price": 19900,
+       "compare_at": null,
+       "available": true,
+       "options": [],
+       "image": {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-templates.webp"
+       }
+      }
+     },
+     {
+      "id": "photo-colour-presets",
+      "handle": "photo-colour-presets",
+      "title": "Photo colour presets",
+      "url": "/en/products/photo-colour-presets",
+      "price": 9900,
+      "compare_at": null,
+      "price_min": 9900,
+      "price_max": 9900,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-presets.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-presets.webp"
+       }
+      ],
+      "available": true,
+      "description": "<p>Colour presets that give your work one consistent look from the first photo to the last.</p>",
+      "excerpt": "Colour presets that give your work one consistent look from the first photo to the last.",
+      "kind": "digital",
+      "digital_kind": "download",
+      "tags": [
+       "editable"
+      ],
+      "category": {
+       "handle": "templates",
+       "title": "Templates",
+       "url": "/en/category/templates"
+      },
+      "options": [],
+      "variants": [
+       {
+        "id": "photo-colour-presets-v1",
+        "title": "Default",
+        "price": 9900,
+        "compare_at": null,
+        "available": true,
+        "options": [],
+        "image": {
+         "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-presets.webp"
+        }
+       }
+      ],
+      "has_variants": false,
+      "min_quantity": 1,
+      "quantity_step": 1,
+      "max_quantity": 1,
+      "selected_variant": {
+       "id": "photo-colour-presets-v1",
+       "title": "Default",
+       "price": 9900,
+       "compare_at": null,
+       "available": true,
+       "options": [],
+       "image": {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-presets.webp"
+       }
+      }
+     }
+    ]
+   }
+  },
+  "products": {
+   "web-page-design-course": {
+    "id": "web-page-design-course",
+    "handle": "web-page-design-course",
+    "title": "Web page design course",
+    "url": "/en/products/web-page-design-course",
+    "price": 79900,
+    "compare_at": null,
+    "price_min": 79900,
+    "price_max": 119900,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course.webp"
+     }
+    ],
+    "available": true,
+    "description": "<p>A hands-on course on designing web pages, from grids and spacing to handing the file to a developer.</p><p>Every lesson has an exercise on a real project, and you finish with a complete project file.</p>",
+    "excerpt": "A hands-on course on designing web pages, from grids and spacing to handing the file to a developer.",
+    "kind": "digital",
+    "digital_kind": "download",
+    "tags": [
+     "course",
+     "video"
+    ],
+    "category": {
+     "handle": "courses",
+     "title": "Courses",
+     "url": "/en/category/courses"
+    },
+    "options": [
+     {
+      "name": "Plan",
+      "values": [
+       "Basic",
+       "Full"
+      ]
+     }
+    ],
+    "variants": [
+     {
+      "id": "web-page-design-course-v1",
+      "title": "Basic",
+      "price": 79900,
+      "compare_at": null,
+      "available": true,
+      "options": [
+       "Basic"
+      ],
       "image": {
        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course.webp"
       }
      },
      {
-      "title": "Sketching for designers",
-      "url": "/en/products/sketching-for-designers",
+      "id": "web-page-design-course-v2",
+      "title": "Full",
+      "price": 119900,
+      "compare_at": null,
+      "available": true,
+      "options": [
+       "Full"
+      ],
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course.webp"
+      }
+     }
+    ],
+    "has_variants": true,
+    "min_quantity": 1,
+    "quantity_step": 1,
+    "max_quantity": 1,
+    "selected_variant": {
+     "id": "web-page-design-course-v1",
+     "title": "Basic",
+     "price": 79900,
+     "compare_at": null,
+     "available": true,
+     "options": [
+      "Basic"
+     ],
+     "image": {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course.webp"
+     }
+    }
+   },
+   "sketching-for-designers": {
+    "id": "sketching-for-designers",
+    "handle": "sketching-for-designers",
+    "title": "Sketching for designers",
+    "url": "/en/products/sketching-for-designers",
+    "price": 59900,
+    "compare_at": null,
+    "price_min": 59900,
+    "price_max": 59900,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course-2.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course-2.webp"
+     }
+    ],
+    "available": true,
+    "description": "<p>Simple sketching exercises that help you think with a pen before you open the software.</p>",
+    "excerpt": "Simple sketching exercises that help you think with a pen before you open the software.",
+    "kind": "digital",
+    "digital_kind": "download",
+    "tags": [
+     "course",
+     "video"
+    ],
+    "category": {
+     "handle": "courses",
+     "title": "Courses",
+     "url": "/en/category/courses"
+    },
+    "options": [],
+    "variants": [
+     {
+      "id": "sketching-for-designers-v1",
+      "title": "Default",
       "price": 59900,
       "compare_at": null,
+      "available": true,
+      "options": [],
       "image": {
        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course-2.webp"
       }
-     },
+     }
+    ],
+    "has_variants": false,
+    "min_quantity": 1,
+    "quantity_step": 1,
+    "max_quantity": 1,
+    "selected_variant": {
+     "id": "sketching-for-designers-v1",
+     "title": "Default",
+     "price": 59900,
+     "compare_at": null,
+     "available": true,
+     "options": [],
+     "image": {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-course-2.webp"
+     }
+    }
+   },
+   "design-that-reads": {
+    "id": "design-that-reads",
+    "handle": "design-that-reads",
+    "title": "E-book: Design that reads well",
+    "url": "/en/products/design-that-reads",
+    "price": 14900,
+    "compare_at": null,
+    "price_min": 14900,
+    "price_max": 14900,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook.webp"
+    },
+    "images": [
      {
-      "title": "E-book: Design that reads well",
-      "url": "/en/products/design-that-reads",
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook.webp"
+     }
+    ],
+    "available": true,
+    "description": "<p>A short book on type and spacing, and how to keep any page easy to read on a phone.</p>",
+    "excerpt": "A short book on type and spacing, and how to keep any page easy to read on a phone.",
+    "kind": "digital",
+    "digital_kind": "download",
+    "tags": [
+     "pdf"
+    ],
+    "category": {
+     "handle": "ebooks",
+     "title": "E-books",
+     "url": "/en/category/ebooks"
+    },
+    "options": [],
+    "variants": [
+     {
+      "id": "design-that-reads-v1",
+      "title": "Default",
       "price": 14900,
       "compare_at": null,
+      "available": true,
+      "options": [],
       "image": {
        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook.webp"
       }
-     },
+     }
+    ],
+    "has_variants": false,
+    "min_quantity": 1,
+    "quantity_step": 1,
+    "max_quantity": 1,
+    "selected_variant": {
+     "id": "design-that-reads-v1",
+     "title": "Default",
+     "price": 14900,
+     "compare_at": null,
+     "available": true,
+     "options": [],
+     "image": {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook.webp"
+     }
+    }
+   },
+   "pricing-design-work": {
+    "id": "pricing-design-work",
+    "handle": "pricing-design-work",
+    "title": "E-book: Pricing your design work",
+    "url": "/en/products/pricing-design-work",
+    "price": 12900,
+    "compare_at": null,
+    "price_min": 12900,
+    "price_max": 12900,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook-2.webp"
+    },
+    "images": [
      {
-      "title": "E-book: Pricing your design work",
-      "url": "/en/products/pricing-design-work",
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook-2.webp"
+     }
+    ],
+    "available": true,
+    "description": "<p>How to price your work, talk about it with a client, and say no to the wrong projects.</p>",
+    "excerpt": "How to price your work, talk about it with a client, and say no to the wrong projects.",
+    "kind": "digital",
+    "digital_kind": "download",
+    "tags": [
+     "pdf"
+    ],
+    "category": {
+     "handle": "ebooks",
+     "title": "E-books",
+     "url": "/en/category/ebooks"
+    },
+    "options": [],
+    "variants": [
+     {
+      "id": "pricing-design-work-v1",
+      "title": "Default",
       "price": 12900,
       "compare_at": null,
+      "available": true,
+      "options": [],
       "image": {
        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook-2.webp"
       }
-     },
+     }
+    ],
+    "has_variants": false,
+    "min_quantity": 1,
+    "quantity_step": 1,
+    "max_quantity": 1,
+    "selected_variant": {
+     "id": "pricing-design-work-v1",
+     "title": "Default",
+     "price": 12900,
+     "compare_at": null,
+     "available": true,
+     "options": [],
+     "image": {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-ebook-2.webp"
+     }
+    }
+   },
+   "page-layout-templates": {
+    "id": "page-layout-templates",
+    "handle": "page-layout-templates",
+    "title": "Editable page layout templates",
+    "url": "/en/products/page-layout-templates",
+    "price": 19900,
+    "compare_at": null,
+    "price_min": 19900,
+    "price_max": 19900,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-templates.webp"
+    },
+    "images": [
      {
-      "title": "Editable page layout templates",
-      "url": "/en/products/page-layout-templates",
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-templates.webp"
+     }
+    ],
+    "available": true,
+    "description": "<p>A set of editable layout templates: change the text and images and deliver the same day.</p>",
+    "excerpt": "A set of editable layout templates: change the text and images and deliver the same day.",
+    "kind": "digital",
+    "digital_kind": "download",
+    "tags": [
+     "editable"
+    ],
+    "category": {
+     "handle": "templates",
+     "title": "Templates",
+     "url": "/en/category/templates"
+    },
+    "options": [],
+    "variants": [
+     {
+      "id": "page-layout-templates-v1",
+      "title": "Default",
       "price": 19900,
       "compare_at": null,
+      "available": true,
+      "options": [],
       "image": {
        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-templates.webp"
       }
-     },
+     }
+    ],
+    "has_variants": false,
+    "min_quantity": 1,
+    "quantity_step": 1,
+    "max_quantity": 1,
+    "selected_variant": {
+     "id": "page-layout-templates-v1",
+     "title": "Default",
+     "price": 19900,
+     "compare_at": null,
+     "available": true,
+     "options": [],
+     "image": {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-templates.webp"
+     }
+    }
+   },
+   "photo-colour-presets": {
+    "id": "photo-colour-presets",
+    "handle": "photo-colour-presets",
+    "title": "Photo colour presets",
+    "url": "/en/products/photo-colour-presets",
+    "price": 9900,
+    "compare_at": null,
+    "price_min": 9900,
+    "price_max": 9900,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-presets.webp"
+    },
+    "images": [
      {
-      "title": "Photo colour presets",
-      "url": "/en/products/photo-colour-presets",
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-presets.webp"
+     }
+    ],
+    "available": true,
+    "description": "<p>Colour presets that give your work one consistent look from the first photo to the last.</p>",
+    "excerpt": "Colour presets that give your work one consistent look from the first photo to the last.",
+    "kind": "digital",
+    "digital_kind": "download",
+    "tags": [
+     "editable"
+    ],
+    "category": {
+     "handle": "templates",
+     "title": "Templates",
+     "url": "/en/category/templates"
+    },
+    "options": [],
+    "variants": [
+     {
+      "id": "photo-colour-presets-v1",
+      "title": "Default",
       "price": 9900,
       "compare_at": null,
+      "available": true,
+      "options": [],
       "image": {
        "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-presets.webp"
       }
      }
-    ]
+    ],
+    "has_variants": false,
+    "min_quantity": 1,
+    "quantity_step": 1,
+    "max_quantity": 1,
+    "selected_variant": {
+     "id": "photo-colour-presets-v1",
+     "title": "Default",
+     "price": 9900,
+     "compare_at": null,
+     "available": true,
+     "options": [],
+     "image": {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/digital-themes/v1/cover-presets.webp"
+     }
+    }
    }
   }
  }

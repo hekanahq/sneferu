@@ -4,18 +4,27 @@
 </li>
 <hk-schema>
   {
-    "name": "Trust point",
+    "name": {
+      "en": "Trust point",
+      "ar": "نقطة ثقة"
+    },
     "version": 1,
     "settings": {
       "icon": {
         "type": "select",
-        "label": "Icon",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
         "options": ["zap", "lock", "banknote", "shield-check", "mail", "clock", "credit-card", "help-circle"],
         "default": "zap"
       },
       "label": {
         "type": "text",
-        "label": "Text",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
         "localized": true,
         "default": {
           "ar": "تسليم فوري للكود",

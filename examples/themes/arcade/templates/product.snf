@@ -1,0 +1,76 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "product-main",
+        "settings": {
+          "gallery_layout": "thumbs-below"
+        },
+        "blocks": [
+          {
+            "type": "product-category",
+            "settings": {
+              "label": {
+                "ar": "القسم",
+                "en": "Category"
+              }
+            }
+          },
+          {
+            "type": "product-title"
+          },
+          {
+            "type": "product-price"
+          },
+          {
+            "type": "product-excerpt"
+          },
+          {
+            "type": "product-text",
+            "settings": {
+              "text": {
+                "ar": "تسليم فوري على الإيميل بعد الدفع الأونلاين.",
+                "en": "Instant delivery by email after online payment."
+              },
+              "icon": "zap",
+              "tone": "glow"
+            }
+          },
+          {
+            "type": "product-variants"
+          },
+          {
+            "type": "product-buy"
+          },
+          {
+            "type": "product-text",
+            "settings": {
+              "text": {
+                "ar": "اتأكد إن منطقة حسابك هي نفسها المكتوبة في وصف الكارت.",
+                "en": "Check that your account region matches the one in the description."
+              },
+              "icon": "globe",
+              "tone": "muted"
+            }
+          },
+          {
+            "type": "product-description",
+            "settings": {
+              "title": {
+                "ar": "تفاصيل",
+                "en": "Details"
+              }
+            }
+          },
+          {
+            "type": "product-tags"
+          }
+        ]
+      },
+      {
+        "type": "related-products"
+      }
+    ]
+  }
+</hk-schema>

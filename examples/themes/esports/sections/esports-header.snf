@@ -1,66 +1,189 @@
-<header class="es-header">
+<header class="es-header es-scheme-{{ section.settings.scheme }} es-sticky-{{ section.settings.sticky }}">
   <hk-container>
     <div class="es-bar">
-      <details class="es-menu">
-        <summary aria-label="{{ t('menu') }}"><hk-icon name="menu" size="22" class="ic" /></summary>
-        <nav class="es-menu-panel">
-          {% if menu(section.settings.menu).items %}{% for item in menu(section.settings.menu).items %}<a
-                href="{{ item.url }}"
-                aria-current="{{ item.active }}"
-              >{{ item.title }}</a>{% endfor %}{% else %}<a href="{{ url('/products') }}">{{ t('nav_all') }}</a>
-            <a href="{{ url('/category/game-currency') }}">{{ t('cat_currency') }}</a>
-            <a href="{{ url('/category/gift-cards') }}">{{ t('cat_gift_cards') }}</a>
-            <a href="{{ url('/category/top-ups') }}">{{ t('cat_topups') }}</a>
-            <a href="{{ url('/') }}#faq">{{ t('nav_faq') }}</a>{% endif %}
-        </nav>
-      </details>
       <a class="es-logo" href="{{ url('/') }}" aria-label="{{ store.name }}">
-        {% render 'mark' %}
-        <span>{{ store.name }}</span>
+        {% if section.settings.logo %}
+          <img
+            class="es-logo-img es-logo-h-{{ section.settings.logo_height }}"
+            src="{{ section.settings.logo }}"
+            alt="{{ store.name }}"
+            width="160"
+            height="{{ section.settings.logo_height }}"
+          >
+        {% else %}
+          {% render 'mark' %}
+        {% endif %}
+        {% if section.settings.logo_text %}
+          <span>{{ section.settings.logo_text }}</span>
+        {% elsif section.settings.logo == '' %}
+          <span>{{ store.name }}</span>
+        {% endif %}
       </a>
-      <hk-search-form placeholder="{{ t('search_placeholder') }}" class="es-search" />
+      {% if section.settings.show_search %}<hk-search-form
+          placeholder="{{ t('search_placeholder') }}"
+          class="es-search"
+        />{% endif %}
       <nav class="es-nav" aria-label="{{ t('nav_label') }}">
-        {% if menu(section.settings.menu).items %}{% for item in menu(section.settings.menu).items %}<a
-              href="{{ item.url }}"
-              aria-current="{{ item.active }}"
-            >{{ item.title }}</a>{% endfor %}{% else %}<a href="{{ url('/products') }}">{{ t('nav_all') }}</a>
-          <a class="is-hot" href="{{ url('/category/game-currency') }}">{{ t('cat_currency') }}</a>
-          <a href="{{ url('/category/gift-cards') }}">{{ t('cat_gift_cards') }}</a>
-          <a href="{{ url('/category/top-ups') }}">{{ t('cat_topups') }}</a>
-          <a href="{{ url('/') }}#faq">{{ t('nav_faq') }}</a>{% endif %}
+        {% if menu(section.settings.menu).items %}
+          {% for item in menu(section.settings.menu).items %}
+            <div class="es-nav-item">
+              <a class="es-nav-link" href="{{ item.url }}" aria-current="{{ item.active }}">{{ item.title }}</a>
+              {% if item.children %}
+                <div class="es-subnav">
+                  {% for sub in item.children %}
+                    <a class="es-subnav-link" href="{{ sub.url }}" aria-current="{{ sub.active }}">{{ sub.title }}</a>
+                    {% for leaf in sub.children %}
+                      <a
+                        class="es-subnav-link es-subnav-deep"
+                        href="{{ leaf.url }}"
+                        aria-current="{{ leaf.active }}"
+                      >{{ leaf.title }}</a>
+                    {% endfor %}
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        {% else %}{% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}{% endif %}
       </nav>
-      <a class="es-icon" href="{{ url('/account') }}" aria-label="{{ t('account') }}"><hk-icon
-          name="user"
-          size="22"
-          class="ic"
-        /></a>
-      <a class="es-icon" href="{{ url('/cart') }}" data-hk-open="cart-drawer" aria-label="{{ t('cart') }}"><hk-icon
-          name="shopping-cart"
-          size="22"
-          class="ic"
-        /><hk-cart-count /></a>
+      <div class="es-actions">
+        {% if section.settings.show_language %}<hk-locale-switch />{% endif %}
+        {% if section.settings.show_account %}
+          <a class="es-icon es-account" href="{{ url('/account') }}" aria-label="{{ t('account') }}"><hk-icon
+              name="user"
+              size="22"
+              class="ic"
+            /></a>
+        {% endif %}
+        {% if section.settings.show_cart %}
+          <a
+            class="es-icon es-cart-link"
+            href="{{ url('/cart') }}"
+            data-hk-open="cart-drawer"
+            aria-label="{{ t('cart') }}"
+          ><hk-icon name="shopping-cart" size="22" class="ic" /><hk-cart-count /></a>
+        {% endif %}
+      </div>
     </div>
   </hk-container>
-  <hk-cart-drawer open-on-add="{{ section.settings.drawer_on_add }}">
-    <hk-cart-items />
-    <hk-cart-summary />
-  </hk-cart-drawer>
+  {% if section.settings.show_cart %}
+    <hk-cart-drawer open-on-add="{{ section.settings.drawer_on_add }}">
+      <hk-cart-items />
+      <hk-cart-summary />
+    </hk-cart-drawer>
+  {% endif %}
 </header>
 <hk-schema>
   {
-    "name": "Header",
+    "name": {
+      "en": "Header",
+      "ar": "الهيدر"
+    },
     "version": 1,
     "templates": ["header"],
+    "blocks": {
+      "allowed": ["menu-link"],
+      "max": 8
+    },
     "settings": {
       "menu": {
         "type": "menu",
-        "label": "Menu",
+        "label": {
+          "en": "Menu (the links below show when none is picked or it has no links)",
+          "ar": "القائمة (الروابط اللي تحت بتظهر لو مفيش قائمة أو مفيهاش روابط)"
+        },
         "default": "main"
+      },
+      "logo": {
+        "type": "image",
+        "label": {
+          "en": "Logo image (the X mark shows when empty)",
+          "ar": "صورة الشعار (علامة X بتظهر لو فاضي)"
+        },
+        "default": ""
+      },
+      "logo_text": {
+        "type": "text",
+        "label": {
+          "en": "Logo text (store name when empty)",
+          "ar": "نص الشعار (اسم المتجر لو فاضي)"
+        },
+        "default": {
+          "ar": "",
+          "en": ""
+        },
+        "localized": true,
+        "maxLength": 40
+      },
+      "logo_height": {
+        "type": "select",
+        "label": {
+          "en": "Logo height (px)",
+          "ar": "ارتفاع الشعار (بكسل)"
+        },
+        "default": "40",
+        "options": ["24", "32", "40", "48", "64"]
+      },
+      "scheme": {
+        "type": "select",
+        "label": {
+          "en": "Colour scheme",
+          "ar": "ألوان الهيدر"
+        },
+        "default": "dark",
+        "options": ["dark", "forest", "accent"]
+      },
+      "sticky": {
+        "type": "boolean",
+        "label": {
+          "en": "Stick to the top",
+          "ar": "تثبيت في أعلى الصفحة"
+        },
+        "default": false
+      },
+      "show_search": {
+        "type": "boolean",
+        "label": {
+          "en": "Show search",
+          "ar": "إظهار البحث"
+        },
+        "default": true
+      },
+      "show_language": {
+        "type": "boolean",
+        "label": {
+          "en": "Show language switch",
+          "ar": "إظهار تبديل اللغة"
+        },
+        "default": true
+      },
+      "show_account": {
+        "type": "boolean",
+        "label": {
+          "en": "Show account link",
+          "ar": "إظهار رابط الحساب"
+        },
+        "default": true
+      },
+      "show_cart": {
+        "type": "boolean",
+        "label": {
+          "en": "Show cart",
+          "ar": "إظهار السلة"
+        },
+        "default": true
       },
       "drawer_on_add": {
         "type": "boolean",
-        "label": "Open the cart when an item is added",
-        "default": true
+        "label": {
+          "en": "Open the cart when an item is added",
+          "ar": "فتح السلة عند الإضافة"
+        },
+        "default": true,
+        "visible_if": {
+          "setting": "show_cart",
+          "equals": true
+        }
       }
     }
   }

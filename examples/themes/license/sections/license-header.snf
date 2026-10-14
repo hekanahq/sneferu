@@ -1,61 +1,193 @@
-<header class="ls-header">
+<header class="ls-header ls-scheme-{{ section.settings.scheme }} ls-sticky-{{ section.settings.sticky }}">
   <div class="ls-wrap ls-header-row">
     <details class="ls-menu">
       <summary class="ls-icon-link" aria-label="{{ t('menu') }}"><hk-icon name="menu" class="ls-icon" /></summary>
       <div class="ls-menu-panel">
-        {% if menu(section.settings.menu).items %}{% for item in menu(section.settings.menu).items %}<a
-              href="{{ item.url }}"
-              aria-current="{{ item.active }}"
-            >{{ item.title }}</a>{% endfor %}{% else %}<a href="{{ url('/') }}#plans">{{ t('nav_plans') }}</a>
-          <a href="{{ url('/') }}#apps">{{ t('nav_apps') }}</a>
-          <a href="{{ url('/') }}#faq">{{ t('nav_faq') }}</a>{% endif %}
-        <hk-locale-switch />
+        {% if section.settings.show_search %}<hk-search-form
+            placeholder="{{ t('search') }}"
+            class="ls-search ls-search-panel"
+          />{% endif %}
+        {% if menu(section.settings.menu).items %}
+          {% for item in menu(section.settings.menu).items %}
+            <a class="ls-panel-link" href="{{ item.url }}" aria-current="{{ item.active }}">{{ item.title }}</a>
+            {% for sub in item.children %}<a
+                class="ls-panel-link ls-panel-sub"
+                href="{{ sub.url }}"
+                aria-current="{{ sub.active }}"
+              >{{ sub.title }}</a>{% endfor %}
+          {% endfor %}
+        {% else %}
+          {% for b in section.blocks %}
+            <a class="ls-panel-link" href="{{ url(b.settings.url) }}">{{ b.settings.label }}</a>
+            {% for sub in b.blocks %}<a
+                class="ls-panel-link ls-panel-sub"
+                href="{{ url(sub.settings.url) }}"
+              >{{ sub.settings.label }}</a>{% endfor %}
+          {% endfor %}
+        {% endif %}
+        {% if section.settings.show_language %}<hk-locale-switch class="ls-locale" />{% endif %}
       </div>
     </details>
-    <a class="ls-logo" href="{{ store.url }}">{{ store.name }}</a>
+    <a class="ls-logo" href="{{ url('/') }}">
+      {% if section.settings.logo %}<img
+          class="ls-logo-img"
+          src="{{ section.settings.logo }}"
+          alt="{{ store.name }}"
+          width="160"
+          height="{{ section.settings.logo_height }}"
+        >{% endif %}
+      {% if section.settings.logo_text %}<span>{{ section.settings.logo_text }}</span>{% elsif section.settings.logo == '' %}<span>{{ store.name }}</span>{% endif %}
+    </a>
     <nav class="ls-nav" aria-label="{{ t('nav_label') }}">
-      {% if menu(section.settings.menu).items %}{% for item in menu(section.settings.menu).items %}<a
-            href="{{ item.url }}"
-            aria-current="{{ item.active }}"
-          >{{ item.title }}</a>{% endfor %}{% else %}<a href="{{ url('/') }}#plans">{{ t('nav_plans') }}</a>
-        <a href="{{ url('/') }}#features">{{ t('nav_features') }}</a>
-        <a href="{{ url('/') }}#apps">{{ t('nav_apps') }}</a>
-        <a href="{{ url('/') }}#faq">{{ t('nav_faq') }}</a>{% endif %}
+      {% if menu(section.settings.menu).items %}
+        {% for item in menu(section.settings.menu).items %}
+          <div class="ls-nav-item">
+            <a class="ls-nav-link" href="{{ item.url }}" aria-current="{{ item.active }}">{{ item.title }}</a>
+            {% if item.children %}
+              <div class="ls-subnav">
+                {% for sub in item.children %}
+                  <a class="ls-subnav-link" href="{{ sub.url }}" aria-current="{{ sub.active }}">{{ sub.title }}</a>
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+      {% else %}{% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}{% endif %}
     </nav>
     <div class="ls-tools">
-      <hk-search-form placeholder="{{ t('search') }}" class="ls-search" />
-      <a class="ls-icon-link" href="{{ url('/account') }}" aria-label="{{ t('account') }}"><hk-icon
-          name="user"
-          size="18"
-          class="ls-icon"
-        /></a>
-      <a class="ls-icon-link" href="{{ url('/cart') }}" data-hk-open="cart-drawer" aria-label="{{ t('cart') }}"><hk-icon
-          name="shopping-bag"
-          size="18"
-          class="ls-icon"
-        /><hk-cart-count /></a>
+      {% if section.settings.show_search %}<hk-search-form
+          placeholder="{{ t('search') }}"
+          class="ls-search ls-search-bar"
+        />{% endif %}
+      {% if section.settings.show_language %}<hk-locale-switch class="ls-locale ls-locale-bar" />{% endif %}
+      {% if section.settings.show_account %}<a
+          class="ls-icon-link"
+          href="{{ url('/account') }}"
+          aria-label="{{ t('account') }}"
+        ><hk-icon name="user" size="18" class="ls-icon" /></a>{% endif %}
+      {% if section.settings.show_cart %}<a
+          class="ls-icon-link"
+          href="{{ url('/cart') }}"
+          data-hk-open="cart-drawer"
+          aria-label="{{ t('cart') }}"
+        ><hk-icon name="shopping-bag" size="18" class="ls-icon" /><hk-cart-count /></a>{% endif %}
     </div>
   </div>
-  <hk-cart-drawer open-on-add="{{ section.settings.drawer_on_add }}">
-    <hk-cart-items />
-    <hk-cart-summary />
-  </hk-cart-drawer>
+  {% if section.settings.show_cart %}
+    <hk-cart-drawer open-on-add="{{ section.settings.drawer_on_add }}">
+      <hk-cart-items />
+      <hk-cart-summary />
+    </hk-cart-drawer>
+  {% endif %}
 </header>
 <hk-schema>
   {
-    "name": "Header",
+    "name": {
+      "en": "Header",
+      "ar": "الهيدر"
+    },
     "version": 1,
     "templates": ["header"],
+    "blocks": {
+      "allowed": ["menu-link"],
+      "max": 8
+    },
     "settings": {
       "menu": {
         "type": "menu",
-        "label": "Menu",
+        "label": {
+          "en": "Menu (the links below show when none is picked or it has no links)",
+          "ar": "القائمة (الروابط اللي تحت بتظهر لو مفيش قائمة أو مفيهاش روابط)"
+        },
         "default": "main"
+      },
+      "logo": {
+        "type": "image",
+        "label": {
+          "en": "Logo image",
+          "ar": "صورة الشعار"
+        },
+        "default": ""
+      },
+      "logo_text": {
+        "type": "text",
+        "label": {
+          "en": "Logo text (store name when empty)",
+          "ar": "نص الشعار (اسم المتجر لو فاضي)"
+        },
+        "default": "",
+        "localized": true,
+        "maxLength": 40
+      },
+      "logo_height": {
+        "type": "select",
+        "label": {
+          "en": "Logo height (px)",
+          "ar": "ارتفاع الشعار (بكسل)"
+        },
+        "options": ["24", "32", "40", "48"],
+        "default": "32"
+      },
+      "scheme": {
+        "type": "select",
+        "label": {
+          "en": "Colour scheme",
+          "ar": "ألوان الهيدر"
+        },
+        "options": ["navy", "blue"],
+        "default": "navy"
+      },
+      "sticky": {
+        "type": "boolean",
+        "label": {
+          "en": "Stick to the top",
+          "ar": "تثبيت في أعلى الصفحة"
+        },
+        "default": false
+      },
+      "show_search": {
+        "type": "boolean",
+        "label": {
+          "en": "Show search",
+          "ar": "إظهار البحث"
+        },
+        "default": true
+      },
+      "show_language": {
+        "type": "boolean",
+        "label": {
+          "en": "Show language switch",
+          "ar": "إظهار تبديل اللغة"
+        },
+        "default": true
+      },
+      "show_account": {
+        "type": "boolean",
+        "label": {
+          "en": "Show account link",
+          "ar": "إظهار رابط الحساب"
+        },
+        "default": true
+      },
+      "show_cart": {
+        "type": "boolean",
+        "label": {
+          "en": "Show cart",
+          "ar": "إظهار السلة"
+        },
+        "default": true
       },
       "drawer_on_add": {
         "type": "boolean",
-        "label": "Open the cart when an item is added",
-        "default": true
+        "label": {
+          "en": "Open the cart when an item is added",
+          "ar": "فتح السلة عند الإضافة"
+        },
+        "default": true,
+        "visible_if": {
+          "setting": "show_cart",
+          "equals": true
+        }
       }
     }
   }

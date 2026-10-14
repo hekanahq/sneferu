@@ -1,0 +1,64 @@
+<section class="cr-sec cr-pad-{{ section.settings.padding_y }}">
+  <div class="cr-wrap">
+    <article class="cr-page cr-page-{{ section.settings.width }}">
+      {% if section.settings.kicker %}
+        <p class="cr-eyebrow">{{ section.settings.kicker }}</p>
+      {% endif %}
+      {% if section.settings.show_title %}
+        <h1 class="cr-title cr-title-xl">{{ page.title }}</h1>
+      {% endif %}
+      <div class="cr-prose"><hk-rich-text html="{{ page.body_html }}" /></div>
+    </article>
+  </div>
+</section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Content page",
+      "ar": "صفحة محتوى"
+    },
+    "version": 1,
+    "templates": ["page"],
+    "settings": {
+      "kicker": {
+        "type": "text",
+        "label": {
+          "en": "Small line above the title",
+          "ar": "سطر صغير فوق العنوان"
+        },
+        "default": {
+          "ar": "",
+          "en": ""
+        },
+        "localized": true,
+        "maxLength": 40
+      },
+      "show_title": {
+        "type": "boolean",
+        "label": {
+          "en": "Show title",
+          "ar": "إظهار العنوان"
+        },
+        "default": true
+      },
+      "width": {
+        "type": "select",
+        "label": {
+          "en": "Width",
+          "ar": "العرض"
+        },
+        "options": ["narrow", "normal"],
+        "default": "narrow"
+      },
+      "padding_y": {
+        "type": "select",
+        "label": {
+          "en": "Vertical spacing",
+          "ar": "المسافة الرأسية"
+        },
+        "options": ["compact", "normal", "roomy"],
+        "default": "normal"
+      }
+    }
+  }
+</hk-schema>

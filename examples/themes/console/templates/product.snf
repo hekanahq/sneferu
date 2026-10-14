@@ -1,0 +1,77 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "product-main",
+        "blocks": [
+          {
+            "type": "product-title"
+          },
+          {
+            "type": "product-price"
+          },
+          {
+            "type": "product-excerpt"
+          },
+          {
+            "type": "product-variants"
+          },
+          {
+            "type": "product-buy"
+          },
+          {
+            "type": "product-text"
+          },
+          {
+            "type": "product-description"
+          },
+          {
+            "type": "product-tags"
+          }
+        ]
+      },
+      {
+        "type": "console-trust",
+        "blocks": [
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "zap",
+              "label": {
+                "ar": "تسليم فوري للكود",
+                "en": "Instant code delivery"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "lock",
+              "label": {
+                "ar": "دفع أونلاين آمن",
+                "en": "Secure online payment"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "banknote",
+              "label": {
+                "ar": "الأسعار بالجنيه المصري",
+                "en": "Prices in Egyptian pounds"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "related-products",
+        "settings": {
+          "collection": "featured"
+        }
+      }
+    ]
+  }
+</hk-schema>

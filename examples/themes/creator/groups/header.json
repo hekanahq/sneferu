@@ -4,8 +4,47 @@
       "id": "header",
       "type": "creator-header",
       "settings": {
+        "menu": "main",
+        "show_search": true,
+        "show_language": true,
+        "show_cart": true,
         "drawer_on_add": true
-      }
+      },
+      "blocks": [
+        {
+          "id": "nav-shop",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "المنتجات",
+              "en": "Products"
+            },
+            "url": "/#shop"
+          }
+        },
+        {
+          "id": "nav-what",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "هتاخد إيه",
+              "en": "What you get"
+            },
+            "url": "/#what"
+          }
+        },
+        {
+          "id": "nav-about",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "عنّي",
+              "en": "About me"
+            },
+            "url": "/#about"
+          }
+        }
+      ]
     }
   ]
 }

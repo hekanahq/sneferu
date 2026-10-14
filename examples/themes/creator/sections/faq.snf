@@ -1,0 +1,38 @@
+<section class="cr-faq">
+  <div class="cr-wrap cr-narrow">
+    {% if section.settings.heading %}
+      <h2 class="cr-h2">{{ section.settings.heading }}</h2>
+    {% endif %}
+    <div class="cr-faq-list">
+      {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+    </div>
+  </div>
+</section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Questions",
+      "ar": "أسئلة"
+    },
+    "version": 1,
+    "blocks": {
+      "allowed": ["faq-item"],
+      "max": 10
+    },
+    "settings": {
+      "heading": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "أسئلة بتتسأل كتير",
+          "en": "Common questions"
+        },
+        "localized": true,
+        "maxLength": 80
+      }
+    }
+  }
+</hk-schema>

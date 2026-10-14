@@ -10,12 +10,18 @@
 </a>
 <hk-schema>
   {
-    "name": "Category tile",
+    "name": {
+      "en": "Category tile",
+      "ar": "مربع قسم"
+    },
     "version": 1,
     "settings": {
       "title": {
         "type": "text",
-        "label": "Title",
+        "label": {
+          "en": "Title",
+          "ar": "العنوان"
+        },
         "localized": true,
         "default": {
           "ar": "كروت الهدايا",
@@ -25,12 +31,18 @@
       },
       "link": {
         "type": "link",
-        "label": "Link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
         "default": "/category/gift-cards"
       },
       "icon": {
         "type": "select",
-        "label": "Icon",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
         "options": [
           "credit-card",
           "gem",

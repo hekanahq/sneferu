@@ -1,0 +1,175 @@
+<hk-section class="ls-sec" padding-y="{{ section.settings.padding_y }}" mobile-padding-y="24">
+  <div class="ls-page-head">
+    {% if section.settings.show_title %}
+      <h1 class="ls-title">{{ collection.title }}</h1>
+    {% endif %}
+    {% if section.settings.show_count %}<span class="ls-count">{{ collection.products_count }} {{ t('products_label') }}</span>{% endif %}
+  </div>
+  {% if section.settings.show_description %}
+    {% if collection.description %}
+      <div class="ls-intro"><hk-rich-text html="{{ collection.description }}" /></div>
+    {% endif %}
+  {% endif %}
+  {% if section.settings.show_sort %}
+    {% if collection.sort_options %}
+      <div class="ls-toolbar">
+        <span class="ls-muted">{{ t('sort_by') }}</span>
+        {% for o in collection.sort_options %}<a
+            class="ls-chip"
+            href="{{ o.url }}"
+            aria-current="{{ o.active }}"
+          >{{ o.label }}</a>{% endfor %}
+      </div>
+    {% endif %}
+  {% endif %}
+  {% if section.settings.show_filters %}
+    {% if collection.filters %}
+      <details class="ls-filters">
+        <summary>{{ t('filters') }}</summary>
+        {% for f in collection.filters %}
+          <div class="ls-filter">
+            <h2 class="ls-filter-name">{{ f.name }}</h2>
+            {% for v in f.values %}<a class="ls-chip" href="{{ v.url }}" aria-current="{{ v.active }}">{{ v.label }}</a>{% endfor %}
+          </div>
+        {% endfor %}
+      </details>
+    {% endif %}
+  {% endif %}
+  {% if collection.products %}
+    <div class="ls-grid ls-cols-{{ section.settings.columns }}">
+      {% for p in collection.products limit: 48 %}{% render 'app-card', product: p %}{% endfor %}
+    </div>
+    <hk-pagination paginate="{{ paginate }}" />
+  {% else %}
+    {% render 'empty-state', image: section.settings.empty_image, title: section.settings.empty_title, text: section.settings.empty_text, label: section.settings.empty_button_label, href: section.settings.empty_button_link %}
+  {% endif %}
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Collection",
+      "ar": "صفحة القسم"
+    },
+    "version": 1,
+    "templates": ["collection"],
+    "settings": {
+      "show_title": {
+        "type": "boolean",
+        "label": {
+          "en": "Show title",
+          "ar": "إظهار العنوان"
+        },
+        "default": true
+      },
+      "show_count": {
+        "type": "boolean",
+        "label": {
+          "en": "Show product count",
+          "ar": "إظهار عدد المنتجات"
+        },
+        "default": true
+      },
+      "show_description": {
+        "type": "boolean",
+        "label": {
+          "en": "Show description",
+          "ar": "إظهار الوصف"
+        },
+        "default": true
+      },
+      "show_sort": {
+        "type": "boolean",
+        "label": {
+          "en": "Show sort options",
+          "ar": "إظهار الترتيب"
+        },
+        "default": true
+      },
+      "show_filters": {
+        "type": "boolean",
+        "label": {
+          "en": "Show filters",
+          "ar": "إظهار الفلاتر"
+        },
+        "default": true
+      },
+      "columns": {
+        "type": "range",
+        "label": {
+          "en": "Columns on desktop",
+          "ar": "الأعمدة على الكمبيوتر"
+        },
+        "default": 4,
+        "min": 2,
+        "max": 5,
+        "step": 1
+      },
+      "empty_image": {
+        "type": "image",
+        "label": {
+          "en": "Empty-state image",
+          "ar": "صورة عند عدم وجود منتجات"
+        },
+        "default": ""
+      },
+      "empty_title": {
+        "type": "text",
+        "label": {
+          "en": "Empty-state title",
+          "ar": "عنوان عند عدم وجود منتجات"
+        },
+        "default": {
+          "ar": "مفيش برامج هنا لسه",
+          "en": "No apps here yet"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "empty_text": {
+        "type": "textarea",
+        "label": {
+          "en": "Empty-state text",
+          "ar": "نص عند عدم وجود منتجات"
+        },
+        "default": {
+          "ar": "جرب قسم تاني أو ارجع لكل البرامج.",
+          "en": "Try another collection or go back to all apps."
+        },
+        "localized": true,
+        "maxLength": 160
+      },
+      "empty_button_label": {
+        "type": "text",
+        "label": {
+          "en": "Empty-state button",
+          "ar": "زر عند عدم وجود منتجات"
+        },
+        "default": {
+          "ar": "كل البرامج",
+          "en": "All apps"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "empty_button_link": {
+        "type": "link",
+        "label": {
+          "en": "Empty-state button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/products"
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding (px)",
+          "ar": "المسافة الرأسية (بكسل)"
+        },
+        "default": 32,
+        "min": 0,
+        "max": 120,
+        "step": 4
+      }
+    }
+  }
+</hk-schema>

@@ -11,9 +11,16 @@
       />
       <hk-text text="{{ section.settings.subtitle }}" size="20" mobile-size="14" class="es-hero-sub" />
       <hk-button label="{{ section.settings.button }}" href="{{ section.settings.button_link }}" class="es-cta" />
+      <div class="es-social-list es-hero-social">
+        {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+      </div>
     </div>
     <div class="es-hero-art">
-      {% render 'hero-art' %}
+      {% if section.settings.art_image %}
+        <hk-image src="{{ section.settings.art_image }}" alt="" class="es-art-image" />
+      {% else %}
+        {% render 'hero-art' %}
+      {% endif %}
     </div>
     {% if section.settings.show_offer %}
       <div class="es-offer">
@@ -26,52 +33,85 @@
 </hk-section>
 <hk-schema>
   {
-    "name": "Esports hero",
+    "name": {
+      "en": "Esports hero",
+      "ar": "هيرو الإسبورتس"
+    },
     "version": 1,
+    "blocks": {
+      "allowed": ["social-link"],
+      "max": 5
+    },
     "settings": {
       "title": {
         "type": "text",
-        "label": "Title",
-        "localized": true,
+        "label": {
+          "en": "Title",
+          "ar": "العنوان"
+        },
         "default": {
           "ar": "اشحن دلوقتي",
           "en": "Top up now"
         },
+        "localized": true,
         "maxLength": 40
       },
       "subtitle": {
         "type": "text",
-        "label": "Subtitle",
-        "localized": true,
+        "label": {
+          "en": "Subtitle",
+          "ar": "العنوان الفرعي"
+        },
         "default": {
           "ar": "خصومات على باقات مختارة من ألعابك",
           "en": "Discounts on selected packs for your games"
         },
+        "localized": true,
         "maxLength": 80
       },
       "button": {
         "type": "text",
-        "label": "Button",
-        "localized": true,
+        "label": {
+          "en": "Button",
+          "ar": "الزر"
+        },
         "default": {
           "ar": "اشحن دلوقتي",
           "en": "Top up now"
         },
+        "localized": true,
         "maxLength": 24
       },
       "button_link": {
         "type": "link",
-        "label": "Button link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
         "default": "/products"
+      },
+      "art_image": {
+        "type": "image",
+        "label": {
+          "en": "Hero picture (the drawn figures show when empty)",
+          "ar": "صورة الهيرو (الشخصيات المرسومة بتظهر لو فاضي)"
+        },
+        "default": ""
       },
       "show_offer": {
         "type": "boolean",
-        "label": "Show the offer box",
+        "label": {
+          "en": "Show the offer box",
+          "ar": "إظهار صندوق العرض"
+        },
         "default": true
       },
       "offer_percent": {
         "type": "number",
-        "label": "Offer percent",
+        "label": {
+          "en": "Offer percent",
+          "ar": "نسبة العرض"
+        },
         "default": 20,
         "min": 1,
         "max": 90

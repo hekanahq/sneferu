@@ -5,19 +5,28 @@
 >{{ block.settings.amount | money: 'whole', 'major' }}</a>
 <hk-schema>
   {
-    "name": "Amount",
+    "name": {
+      "en": "Amount",
+      "ar": "قيمة"
+    },
     "version": 1,
     "settings": {
       "amount": {
         "type": "number",
-        "label": "Amount (EGP)",
+        "label": {
+          "en": "Amount (EGP)",
+          "ar": "القيمة (جنيه)"
+        },
         "default": 500,
         "min": 1,
         "max": 100000
       },
       "highlight": {
         "type": "boolean",
-        "label": "Highlight",
+        "label": {
+          "en": "Highlight",
+          "ar": "تمييز"
+        },
         "default": false
       }
     }

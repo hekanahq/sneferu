@@ -4,8 +4,65 @@
       "id": "header",
       "type": "bento-header",
       "settings": {
-        "drawer_on_add": true
-      }
+        "menu": "main",
+        "drawer_on_add": true,
+        "show_search": true,
+        "show_account": true,
+        "show_wishlist": true,
+        "show_language": true,
+        "show_cart": true,
+        "cta_label": {
+          "ar": "كل المنتجات",
+          "en": "All products"
+        },
+        "cta_link": "/products"
+      },
+      "blocks": [
+        {
+          "id": "nav-all",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "الكل",
+              "en": "All"
+            },
+            "url": "/"
+          }
+        },
+        {
+          "id": "nav-printables",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "مطبوعات",
+              "en": "Printables"
+            },
+            "url": "/category/printables"
+          }
+        },
+        {
+          "id": "nav-templates",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "قوالب وكتب",
+              "en": "Templates and e-books"
+            },
+            "url": "/category/templates"
+          }
+        },
+        {
+          "id": "nav-products",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "كل المنتجات",
+              "en": "All products"
+            },
+            "url": "/products"
+          }
+        }
+      ]
     }
   ]
 }

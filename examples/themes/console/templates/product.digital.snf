@@ -1,0 +1,142 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "product-main",
+        "blocks": [
+          {
+            "type": "product-title"
+          },
+          {
+            "type": "product-category"
+          },
+          {
+            "type": "product-price"
+          },
+          {
+            "type": "product-excerpt"
+          },
+          {
+            "type": "product-variants"
+          },
+          {
+            "type": "product-buy"
+          },
+          {
+            "type": "product-text",
+            "settings": {
+              "icon": "mail",
+              "tone": "muted",
+              "text": {
+                "ar": "الكود بيوصلك على الإيميل بعد الدفع الأونلاين.",
+                "en": "The code arrives by email after online payment."
+              }
+            }
+          },
+          {
+            "type": "product-text",
+            "settings": {
+              "icon": "shield-check",
+              "tone": "plain",
+              "text": {
+                "ar": "اتأكد إن منطقة حسابك هي نفس منطقة الكارت قبل الشراء.",
+                "en": "Check that your account region matches the card region before you buy."
+              }
+            }
+          },
+          {
+            "type": "product-description"
+          },
+          {
+            "type": "product-tags"
+          }
+        ]
+      },
+      {
+        "type": "console-steps",
+        "blocks": [
+          {
+            "type": "step",
+            "settings": {
+              "icon": "shopping-cart",
+              "title": {
+                "ar": "اختار الكارت",
+                "en": "Pick a card"
+              },
+              "text": {
+                "ar": "حدد القيمة وضيفها للسلة.",
+                "en": "Choose the amount and add it to the cart."
+              }
+            }
+          },
+          {
+            "type": "step",
+            "settings": {
+              "icon": "lock",
+              "title": {
+                "ar": "ادفع أونلاين",
+                "en": "Pay online"
+              },
+              "text": {
+                "ar": "ادفع بكارت أو محفظة موبايل بشكل آمن.",
+                "en": "Pay by card or mobile wallet, securely."
+              }
+            }
+          },
+          {
+            "type": "step",
+            "settings": {
+              "icon": "mail",
+              "title": {
+                "ar": "استلم الكود",
+                "en": "Get the code"
+              },
+              "text": {
+                "ar": "الكود بيوصلك على الإيميل أوتوماتيك بعد تأكيد الدفع.",
+                "en": "The code is emailed to you automatically once payment is confirmed."
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "console-faq",
+        "blocks": [
+          {
+            "type": "faq-item",
+            "settings": {
+              "question": {
+                "ar": "الكود بيوصل إمتى؟",
+                "en": "When does the code arrive?"
+              },
+              "answer": {
+                "ar": "بعد ما الدفع الأونلاين يتأكد، الكود بيتبعت أوتوماتيك على الإيميل اللي كتبته في الطلب.",
+                "en": "Once your online payment is confirmed, the code is sent automatically to the email on your order."
+              }
+            }
+          },
+          {
+            "type": "faq-item",
+            "settings": {
+              "question": {
+                "ar": "الكود ما اشتغلش، أعمل إيه؟",
+                "en": "The code did not work. What now?"
+              },
+              "answer": {
+                "ar": "كلمنا ومعاك رقم الطلب، وهنراجع الكود معاك.",
+                "en": "Contact us with your order number and we will check the code with you."
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "related-products",
+        "settings": {
+          "collection": "featured"
+        }
+      }
+    ]
+  }
+</hk-schema>

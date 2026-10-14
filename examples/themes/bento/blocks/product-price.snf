@@ -1,0 +1,29 @@
+<div class="bt-price-row">
+  {% render 'price', product: product, bind: true %}
+  {% if block.settings.show_badge %}
+    {% if product.available %}
+      {% if product.compare_at > product.price %}<span class="bt-badge">{{ t('sale') }}</span>{% endif %}
+    {% else %}
+      <span class="bt-badge bt-badge-muted">{{ t('sold_out_badge') }}</span>
+    {% endif %}
+  {% endif %}
+</div>
+<hk-schema>
+  {
+    "name": {
+      "en": "Price",
+      "ar": "السعر"
+    },
+    "version": 1,
+    "settings": {
+      "show_badge": {
+        "type": "boolean",
+        "label": {
+          "en": "Show sale and sold out badge",
+          "ar": "إظهار شارة الخصم ونفاد المخزون"
+        },
+        "default": true
+      }
+    }
+  }
+</hk-schema>

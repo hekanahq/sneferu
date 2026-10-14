@@ -7,7 +7,10 @@
 </hk-section>
 <hk-schema>
   {
-    "name": "Trust strip",
+    "name": {
+      "en": "Trust strip",
+      "ar": "شريط الثقة"
+    },
     "version": 1,
     "settings": {},
     "blocks": {
