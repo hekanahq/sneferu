@@ -1,0 +1,101 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="24">
+  <div class="af-quiz">
+    <div class="af-quiz-text">
+      {% if section.settings.kicker %}<span class="af-quiz-kicker">{{ section.settings.kicker }}</span>{% endif %}
+      {% if section.settings.title %}
+        <h2 class="af-quiz-title">{{ section.settings.title }}</h2>
+      {% endif %}
+      {% if section.settings.text %}
+        <p>{{ section.settings.text }}</p>
+      {% endif %}
+    </div>
+    {% if section.settings.button_label %}
+      <a
+        class="af-pill af-pill-light"
+        href="{{ url(section.settings.button_link) }}"
+      >{{ section.settings.button_label }}</a>
+    {% endif %}
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Routine banner",
+      "ar": "بانر الروتين"
+    },
+    "version": 1,
+    "settings": {
+      "kicker": {
+        "type": "text",
+        "label": {
+          "en": "Small label",
+          "ar": "الشارة الصغيرة"
+        },
+        "default": {
+          "en": "Daily routine",
+          "ar": "روتين يومي"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "en": "Build a routine that fits your day",
+          "ar": "كوّن روتينك اللي يناسب يومك"
+        },
+        "localized": true,
+        "maxLength": 70
+      },
+      "text": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "en": "Browse by what you are looking for and pick what suits you.",
+          "ar": "اتصفح حسب اللي بتدور عليه واختار اللي يناسبك."
+        },
+        "localized": true,
+        "maxLength": 140
+      },
+      "button_label": {
+        "type": "text",
+        "label": {
+          "en": "Button",
+          "ar": "الزر"
+        },
+        "default": {
+          "en": "Browse the range",
+          "ar": "تصفح المنتجات"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "button_link": {
+        "type": "link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/products"
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "default": 32,
+        "min": 0,
+        "max": 120,
+        "step": 8
+      }
+    }
+  }
+</hk-schema>

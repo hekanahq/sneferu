@@ -1,0 +1,94 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "collection-main"
+      },
+      {
+        "type": "dawa-categories",
+        "blocks": [
+          {
+            "type": "category-tile",
+            "settings": {
+              "icon": "bottle",
+              "label": {
+                "ar": "فيتامينات ومكملات",
+                "en": "Vitamins"
+              },
+              "link": "/category/vitamins"
+            }
+          },
+          {
+            "type": "category-tile",
+            "settings": {
+              "icon": "drop",
+              "label": {
+                "ar": "العناية بالبشرة",
+                "en": "Skincare"
+              },
+              "link": "/category/skincare"
+            }
+          },
+          {
+            "type": "category-tile",
+            "settings": {
+              "icon": "baby",
+              "label": {
+                "ar": "العناية بالأطفال",
+                "en": "Baby care"
+              },
+              "link": "/category/baby"
+            }
+          },
+          {
+            "type": "category-tile",
+            "settings": {
+              "icon": "thermometer",
+              "label": {
+                "ar": "أجهزة وإسعافات",
+                "en": "Devices and first aid"
+              },
+              "link": "/category/devices"
+            }
+          }
+        ]
+      },
+      {
+        "type": "dawa-trust",
+        "blocks": [
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "message-circle",
+              "label": {
+                "ar": "تواصل معنا على واتساب",
+                "en": "Message us on WhatsApp"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "truck",
+              "label": {
+                "ar": "توصيل لكل المحافظات",
+                "en": "Delivery across Egypt"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "banknote",
+              "label": {
+                "ar": "الدفع عند الاستلام",
+                "en": "Cash on delivery"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

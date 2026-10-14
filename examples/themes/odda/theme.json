@@ -1,0 +1,42 @@
+{
+  "id": "odda",
+  "name": "Odda",
+  "version": "1.0.2",
+  "author": "Hekana",
+  "description": "A friendly home-improvement store: white ground, warm orange price tags, slate-blue accents, photo panels, big icon category tiles, project-idea cards with room photos and a how-to strip.",
+  "category": "hardware",
+  "engine": "hk2",
+  "engineCompatibility": "^2.0.0",
+  "defaultLocale": "ar",
+  "locales": ["ar", "en"],
+  "money": {
+    "format": "whole"
+  },
+  "settings": {},
+  "tokens": {
+    "colors": {
+      "primary": "#C2410C",
+      "secondary": "#3E5C76",
+      "accent": "#C2410C",
+      "background": "#FFFFFF",
+      "text": "#1F2933",
+      "muted": "#5B6672",
+      "line": "#E3E6EA",
+      "soft": "#F3F4F6",
+      "surface": "#FFFFFF",
+      "glow": "#FDF0E6",
+      "slate": "#3E5C76",
+      "paper": "#FFFFFF"
+    },
+    "layout": {
+      "contentWidth": "1200px"
+    },
+    "fonts": {
+      "heading": "Baloo Bhaijaan 2",
+      "body": "Cairo"
+    },
+    "radius": {
+      "md": "12px"
+    }
+  }
+}

@@ -1,0 +1,107 @@
+<a
+  class="as-tile as-tile-{{ block.settings.size }} as-ground-{{ block.settings.ground }}"
+  href="{{ url(block.settings.link) }}"
+>
+  <hk-image
+    src="{{ block.settings.image }}"
+    alt="{{ block.settings.alt }}"
+    aspect-ratio="{{ block.settings.ratio }}"
+    fit="cover"
+    sizes="(min-width: 1024px) 33vw, 100vw"
+  />
+  {% if block.settings.tag %}<span class="as-sticker">{{ block.settings.tag }}</span>{% endif %}
+  {% if block.settings.label %}<span class="as-tile-label">{{ block.settings.label }}</span>{% endif %}
+</a>
+<hk-schema>
+  {
+    "name": {
+      "en": "Tile",
+      "ar": "مربع"
+    },
+    "version": 1,
+    "settings": {
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "Image",
+          "ar": "الصورة"
+        },
+        "default": ""
+      },
+      "alt": {
+        "type": "text",
+        "label": {
+          "en": "Image description",
+          "ar": "وصف الصورة"
+        },
+        "localized": true,
+        "default": {
+          "ar": "منتج",
+          "en": "Product"
+        },
+        "maxLength": 80
+      },
+      "tag": {
+        "type": "text",
+        "label": {
+          "en": "Sticker",
+          "ar": "الستيكر"
+        },
+        "localized": true,
+        "default": {
+          "ar": "جديد",
+          "en": "NEW"
+        },
+        "maxLength": 12
+      },
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Label",
+          "ar": "النص"
+        },
+        "localized": true,
+        "default": {
+          "ar": "اسم القسم",
+          "en": "Collection name"
+        },
+        "maxLength": 40
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      },
+      "ground": {
+        "type": "select",
+        "label": {
+          "en": "Background",
+          "ar": "الخلفية"
+        },
+        "options": ["orange", "black", "light"],
+        "default": "orange"
+      },
+      "size": {
+        "type": "select",
+        "label": {
+          "en": "Width",
+          "ar": "العرض"
+        },
+        "options": ["small", "wide"],
+        "default": "small"
+      },
+      "ratio": {
+        "type": "select",
+        "label": {
+          "en": "Image shape",
+          "ar": "شكل الصورة"
+        },
+        "options": ["4/5", "1/1", "16/9"],
+        "default": "4/5"
+      }
+    }
+  }
+</hk-schema>

@@ -1,0 +1,91 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="24">
+  <div class="as-section-head">
+    <h2 class="as-h2">{{ section.settings.title }}</h2>
+    {% if section.settings.link_label %}<a
+        class="as-view-all"
+        href="{{ url(section.settings.link) }}"
+      >{{ section.settings.link_label }}</a>{% endif %}
+  </div>
+  <div class="as-rail" role="list">
+    {% for p in collection(section.settings.collection).products limit: section.settings.limit %}
+      <div class="as-rail-item" role="listitem">
+        {% render 'product-card', product: p, card_style: 'shadow', image_ratio: '4/5', show_price: true, show_badge: true %}
+      </div>
+    {% endfor %}
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "New-drop rail",
+      "ar": "شريط الدروب"
+    },
+    "version": 1,
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "localized": true,
+        "default": {
+          "ar": "آخر الدروب",
+          "en": "Latest drops"
+        },
+        "maxLength": 40
+      },
+      "collection": {
+        "type": "collection",
+        "label": {
+          "en": "Collection",
+          "ar": "القسم"
+        },
+        "default": "featured"
+      },
+      "limit": {
+        "type": "range",
+        "label": {
+          "en": "Products",
+          "ar": "عدد المنتجات"
+        },
+        "min": 2,
+        "max": 12,
+        "step": 1,
+        "default": 8
+      },
+      "link_label": {
+        "type": "text",
+        "label": {
+          "en": "Link label (empty hides it)",
+          "ar": "نص الرابط (فاضي يخفيه)"
+        },
+        "localized": true,
+        "default": {
+          "ar": "عرض الكل",
+          "en": "View all"
+        },
+        "maxLength": 24
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 120,
+        "step": 8,
+        "default": 32
+      }
+    }
+  }
+</hk-schema>

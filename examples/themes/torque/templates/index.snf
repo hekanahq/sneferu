@@ -1,0 +1,213 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "hero"
+      },
+      {
+        "type": "categories",
+        "blocks": [
+          {
+            "type": "category-tile",
+            "settings": {
+              "icon": "drill",
+              "label": {
+                "en": "Power tools",
+                "ar": "عدد كهربائية"
+              },
+              "link": "/category/power-tools"
+            }
+          },
+          {
+            "type": "category-tile",
+            "settings": {
+              "icon": "hammer",
+              "label": {
+                "en": "Hand tools",
+                "ar": "عدد يدوية"
+              },
+              "link": "/category/hand-tools"
+            }
+          },
+          {
+            "type": "category-tile",
+            "settings": {
+              "icon": "saw",
+              "label": {
+                "en": "Saws and cutting",
+                "ar": "مناشير وقطع"
+              },
+              "link": "/category/saws-cutting"
+            }
+          },
+          {
+            "type": "category-tile",
+            "settings": {
+              "icon": "ruler",
+              "label": {
+                "en": "Measuring",
+                "ar": "قياس وضبط"
+              },
+              "link": "/category/measuring"
+            }
+          },
+          {
+            "type": "category-tile",
+            "settings": {
+              "icon": "bolt",
+              "label": {
+                "en": "Fasteners",
+                "ar": "مسامير ومثبتات"
+              },
+              "link": "/category/fasteners"
+            }
+          },
+          {
+            "type": "category-tile",
+            "settings": {
+              "icon": "helmet",
+              "label": {
+                "en": "Safety gear",
+                "ar": "معدات سلامة"
+              },
+              "link": "/category/safety"
+            }
+          }
+        ]
+      },
+      {
+        "type": "featured-products",
+        "settings": {
+          "title": {
+            "en": "Featured tools",
+            "ar": "عدد مختارة"
+          },
+          "collection": "featured",
+          "limit": 4,
+          "columns": 4
+        }
+      },
+      {
+        "type": "trust-strip",
+        "blocks": [
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "banknote",
+              "label": {
+                "en": "Cash on delivery",
+                "ar": "الدفع عند الاستلام"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "truck",
+              "label": {
+                "en": "Delivery to every governorate",
+                "ar": "توصيل لكل المحافظات"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "file-text",
+              "label": {
+                "en": "Written specs on every product",
+                "ar": "مواصفات مكتوبة لكل منتج"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "package",
+              "label": {
+                "en": "Easy exchange",
+                "ar": "استبدال سهل"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "bulk-pricing",
+        "blocks": [
+          {
+            "type": "tier",
+            "settings": {
+              "label": {
+                "en": "Concrete screws, box of 100",
+                "ar": "مسامير خرسانة، علبة 100"
+              },
+              "qty": {
+                "en": "10 boxes or more",
+                "ar": "10 علب فأكثر"
+              },
+              "price": 165
+            }
+          },
+          {
+            "type": "tier",
+            "settings": {
+              "label": {
+                "en": "Cutting discs 115 mm, pack of 25",
+                "ar": "أقراص قطع 115 مم، عبوة 25"
+              },
+              "qty": {
+                "en": "5 packs or more",
+                "ar": "5 عبوات فأكثر"
+              },
+              "price": 340
+            }
+          },
+          {
+            "type": "tier",
+            "settings": {
+              "label": {
+                "en": "Work gloves, pair",
+                "ar": "جوانتي شغل، زوج"
+              },
+              "qty": {
+                "en": "12 pairs or more",
+                "ar": "12 زوج فأكثر"
+              },
+              "price": 58
+            }
+          },
+          {
+            "type": "tier",
+            "settings": {
+              "label": {
+                "en": "Safety helmet",
+                "ar": "خوذة سلامة"
+              },
+              "qty": {
+                "en": "10 or more",
+                "ar": "10 فأكثر"
+              },
+              "price": 95
+            }
+          },
+          {
+            "type": "tier",
+            "settings": {
+              "label": {
+                "en": "Spirit level 60 cm",
+                "ar": "ميزان مياه 60 سم"
+              },
+              "qty": {
+                "en": "6 or more",
+                "ar": "6 فأكثر"
+              },
+              "price": 210
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

@@ -1,0 +1,194 @@
+{
+  "sections": [
+    {
+      "id": "footer",
+      "type": "footer",
+      "settings": {
+        "menu": "",
+        "about_text": {
+          "ar": "صيدلية أونلاين: فيتامينات وعناية بالبشرة والأطفال وأجهزة منزلية بالجنيه المصري. الدفع عند الاستلام وتوصيل لكل المحافظات.",
+          "en": "An online pharmacy: vitamins, skin and baby care and home devices in Egyptian pounds. Cash on delivery and delivery across Egypt."
+        },
+        "copyright": {
+          "ar": "جميع الحقوق محفوظة",
+          "en": "All rights reserved"
+        },
+        "show_newsletter": true,
+        "newsletter_title": {
+          "ar": "عندك روشتة؟",
+          "en": "Have a prescription?"
+        },
+        "newsletter_text": {
+          "ar": "ابعتها على واتساب وهنرد عليك بالمتاح عندنا.",
+          "en": "Send it on WhatsApp and we reply with what we have in stock."
+        },
+        "newsletter_label": {
+          "ar": "ابعت على واتساب",
+          "en": "Send on WhatsApp"
+        },
+        "newsletter_link": "/pages/contact",
+        "show_language": true
+      },
+      "blocks": [
+        {
+          "id": "col-shop",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "تسوق",
+              "en": "Shop"
+            }
+          },
+          "blocks": [
+            {
+              "id": "c1",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "كل المنتجات",
+                  "en": "All products"
+                },
+                "url": "/products"
+              }
+            },
+            {
+              "id": "c2",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "فيتامينات ومكملات",
+                  "en": "Vitamins"
+                },
+                "url": "/category/vitamins"
+              }
+            },
+            {
+              "id": "c3",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "العناية بالبشرة",
+                  "en": "Skincare"
+                },
+                "url": "/category/skincare"
+              }
+            },
+            {
+              "id": "c4",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "العناية بالأطفال",
+                  "en": "Baby care"
+                },
+                "url": "/category/baby"
+              }
+            },
+            {
+              "id": "c5",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "أجهزة وإسعافات",
+                  "en": "Devices and first aid"
+                },
+                "url": "/category/devices"
+              }
+            }
+          ]
+        },
+        {
+          "id": "col-help",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "مساعدة",
+              "en": "Help"
+            }
+          },
+          "blocks": [
+            {
+              "id": "h1",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "التوصيل والدفع",
+                  "en": "Delivery and payment"
+                },
+                "url": "/pages/delivery"
+              }
+            },
+            {
+              "id": "h2",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "عنّا",
+                  "en": "About us"
+                },
+                "url": "/pages/about"
+              }
+            },
+            {
+              "id": "h3",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "تواصل معنا",
+                  "en": "Contact"
+                },
+                "url": "/pages/contact"
+              }
+            },
+            {
+              "id": "h4",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "بحث",
+                  "en": "Search"
+                },
+                "url": "/search"
+              }
+            }
+          ]
+        },
+        {
+          "id": "social-whatsapp",
+          "type": "social-link",
+          "settings": {
+            "label": {
+              "ar": "واتساب",
+              "en": "WhatsApp"
+            },
+            "url": "/pages/contact",
+            "icon": "message-circle"
+          }
+        },
+        {
+          "id": "social-mail",
+          "type": "social-link",
+          "settings": {
+            "label": {
+              "ar": "الإيميل",
+              "en": "Email"
+            },
+            "url": "/pages/contact",
+            "icon": "mail"
+          }
+        },
+        {
+          "id": "pay-cod",
+          "type": "payment-method",
+          "settings": {
+            "label": {
+              "ar": "الدفع عند الاستلام",
+              "en": "Cash on delivery"
+            },
+            "icon": "banknote"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+<li class="tq-tier">
+  <span class="tq-tier-name">{{ block.settings.label }}</span>
+  <span class="tq-tier-qty">{{ block.settings.qty }}</span>
+  <span class="tq-tier-price">{{ block.settings.price | money: 'whole', 'major' }}</span>
+</li>
+<hk-schema>
+  {
+    "name": {
+      "en": "Price tier",
+      "ar": "شريحة سعر"
+    },
+    "version": 1,
+    "settings": {
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Item",
+          "ar": "الصنف"
+        },
+        "localized": true,
+        "default": {
+          "en": "Concrete screws, box of 100",
+          "ar": "مسامير خرسانة، علبة 100"
+        },
+        "maxLength": 60
+      },
+      "qty": {
+        "type": "text",
+        "label": {
+          "en": "Quantity tier",
+          "ar": "شريحة الكمية"
+        },
+        "localized": true,
+        "default": {
+          "en": "10 boxes or more",
+          "ar": "10 علب فأكثر"
+        },
+        "maxLength": 40
+      },
+      "price": {
+        "type": "number",
+        "label": {
+          "en": "Price per unit (EGP)",
+          "ar": "سعر الوحدة (ج.م)"
+        },
+        "default": 120,
+        "min": 0,
+        "max": 100000
+      }
+    }
+  }
+</hk-schema>

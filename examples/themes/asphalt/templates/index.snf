@@ -1,0 +1,131 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "drop-hero"
+      },
+      {
+        "type": "drop-rail",
+        "settings": {
+          "collection": "featured"
+        }
+      },
+      {
+        "type": "drop-mosaic",
+        "settings": {
+          "title": {
+            "ar": "تسوق بالقسم",
+            "en": "Shop by category"
+          }
+        },
+        "blocks": [
+          {
+            "type": "tile",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-fashion/pool-fashion-grey-hoodie.webp",
+              "alt": {
+                "ar": "هودي رمادي",
+                "en": "Grey hoodie"
+              },
+              "tag": {
+                "ar": "جديد",
+                "en": "NEW"
+              },
+              "label": {
+                "ar": "هوديز",
+                "en": "Hoodies"
+              },
+              "link": "/category/hoodies",
+              "ground": "orange",
+              "size": "small",
+              "ratio": "4/5"
+            }
+          },
+          {
+            "type": "tile",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-fashion/pool-fashion-cargo-trousers-olive.webp",
+              "alt": {
+                "ar": "بنطلون كارجو",
+                "en": "Cargo trousers"
+              },
+              "tag": {
+                "ar": "جديد",
+                "en": "NEW"
+              },
+              "label": {
+                "ar": "بناطيل",
+                "en": "Pants"
+              },
+              "link": "/category/pants",
+              "ground": "orange",
+              "size": "small",
+              "ratio": "4/5"
+            }
+          },
+          {
+            "type": "tile",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-fashion/pool-fashion-white-sneakers.webp",
+              "alt": {
+                "ar": "سنيكرز أبيض",
+                "en": "White sneakers"
+              },
+              "tag": {
+                "ar": "دروب",
+                "en": "DROP"
+              },
+              "label": {
+                "ar": "سنيكرز",
+                "en": "Sneakers"
+              },
+              "link": "/category/sneakers",
+              "ground": "black",
+              "size": "wide",
+              "ratio": "16/9"
+            }
+          }
+        ]
+      },
+      {
+        "type": "trust-strip",
+        "blocks": [
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "banknote",
+              "label": {
+                "ar": "الدفع عند الاستلام",
+                "en": "Cash on delivery"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "truck",
+              "label": {
+                "ar": "توصيل لكل المحافظات",
+                "en": "Delivery across Egypt"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "package",
+              "label": {
+                "ar": "استبدال سهل",
+                "en": "Easy exchange"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "black-banner"
+      }
+    ]
+  }
+</hk-schema>

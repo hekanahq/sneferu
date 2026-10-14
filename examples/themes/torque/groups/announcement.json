@@ -1,0 +1,16 @@
+{
+  "sections": [
+    {
+      "id": "announcement",
+      "type": "announcement-bar",
+      "settings": {
+        "text": {
+          "en": "Cash on delivery, delivery to every governorate",
+          "ar": "الدفع عند الاستلام، توصيل لكل المحافظات"
+        },
+        "link": "/products",
+        "scheme": "accent"
+      }
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+<a class="af-benefit" href="{{ url(block.settings.link) }}">
+  <span class="af-benefit-icon"><hk-icon name="{{ block.settings.icon }}" size="36" stroke="1.5" /></span>
+  <span class="af-benefit-label">{{ block.settings.label }}</span>
+</a>
+<hk-schema>
+  {
+    "name": {
+      "en": "Category link",
+      "ar": "رابط قسم"
+    },
+    "version": 1,
+    "settings": {
+      "icon": {
+        "type": "select",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
+        "default": "package",
+        "options": ["package", "heart", "sparkles", "shield-check", "gift", "star", "flame", "globe", "book-open"]
+      },
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "en": "Supplements",
+          "ar": "مكملات"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      }
+    }
+  }
+</hk-schema>

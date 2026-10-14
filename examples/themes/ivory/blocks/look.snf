@@ -1,0 +1,59 @@
+<a class="iv-look" href="{{ url(block.settings.link) }}">
+  <div class="iv-look-media">
+    <hk-image src="{{ block.settings.image }}" alt="{{ block.settings.alt }}" sizes="(min-width: 1024px) 40vw, 50vw" />
+  </div>
+  {% if block.settings.title %}<span class="iv-look-title">{{ block.settings.title }}</span>{% endif %}
+</a>
+<hk-schema>
+  {
+    "name": {
+      "en": "Look",
+      "ar": "لوك"
+    },
+    "version": 1,
+    "settings": {
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "Image",
+          "ar": "الصورة"
+        },
+        "default": ""
+      },
+      "alt": {
+        "type": "text",
+        "label": {
+          "en": "Image description",
+          "ar": "وصف الصورة"
+        },
+        "localized": true,
+        "default": {
+          "en": "Look",
+          "ar": "صورة اللوك"
+        },
+        "maxLength": 100
+      },
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Caption (empty hides it)",
+          "ar": "التعليق (فاضي يخفيه)"
+        },
+        "localized": true,
+        "default": {
+          "en": "",
+          "ar": ""
+        },
+        "maxLength": 40
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      }
+    }
+  }
+</hk-schema>

@@ -1,0 +1,21 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "search-main"
+      },
+      {
+        "type": "featured-products",
+        "settings": {
+          "title": {
+            "en": "Popular tools",
+            "ar": "الأكثر طلبًا"
+          },
+          "limit": 4,
+          "columns": 4
+        }
+      }
+    ]
+  }
+</hk-schema>

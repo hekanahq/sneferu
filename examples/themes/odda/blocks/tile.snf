@@ -1,0 +1,45 @@
+<a class="od-tile-card" href="{{ url(block.settings.link) }}">
+  <span class="od-tile-icon">{% render 'glyph', name: block.settings.glyph %}</span>
+  <span class="od-tile-label">{{ block.settings.label }}</span>
+</a>
+<hk-schema>
+  {
+    "name": {
+      "en": "Category tile",
+      "ar": "مربع قسم"
+    },
+    "version": 1,
+    "settings": {
+      "glyph": {
+        "type": "select",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
+        "options": ["roller", "tap", "bulb", "hammer", "nut", "ruler", "house"],
+        "default": "roller"
+      },
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Label",
+          "ar": "النص"
+        },
+        "localized": true,
+        "default": {
+          "en": "Paint",
+          "ar": "دهانات"
+        },
+        "maxLength": 30
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      }
+    }
+  }
+</hk-schema>

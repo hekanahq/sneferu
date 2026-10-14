@@ -1,0 +1,154 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="24">
+  <div class="as-banner">
+    <div class="as-banner-text">
+      {% if section.settings.kicker %}
+        <p class="as-kicker">{{ section.settings.kicker }}</p>
+      {% endif %}
+      <h2 class="as-banner-title">{{ section.settings.title }}</h2>
+      {% if section.settings.text %}
+        <p>{{ section.settings.text }}</p>
+      {% endif %}
+      {% if section.settings.button_label %}
+        <a
+          class="as-cta"
+          href="{{ url(section.settings.button_link) }}"
+        ><span>{{ section.settings.button_label }}</span><hk-icon name="arrow-right" /></a>
+      {% endif %}
+    </div>
+    <div class="as-banner-art as-ground-{{ section.settings.ground }}">
+      <hk-image
+        src="{{ section.settings.image }}"
+        alt="{{ section.settings.alt }}"
+        aspect-ratio="1/1"
+        fit="cover"
+        sizes="(min-width: 1024px) 30vw, 100vw"
+      />
+      {% if section.settings.tag %}<span class="as-sticker">{{ section.settings.tag }}</span>{% endif %}
+    </div>
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Black banner",
+      "ar": "بانر أسود"
+    },
+    "version": 1,
+    "settings": {
+      "kicker": {
+        "type": "text",
+        "label": {
+          "en": "Small line",
+          "ar": "السطر الصغير"
+        },
+        "localized": true,
+        "default": {
+          "ar": "إكسسوارات",
+          "en": "Accessories"
+        },
+        "maxLength": 30
+      },
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "localized": true,
+        "default": {
+          "ar": "كاب يكمل اللوك",
+          "en": "A cap to finish the fit"
+        },
+        "maxLength": 50
+      },
+      "text": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "localized": true,
+        "default": {
+          "ar": "كابات بخامة تقيلة ومقاس بيتظبط.",
+          "en": "Heavy cotton caps with an adjustable fit."
+        },
+        "maxLength": 120
+      },
+      "button_label": {
+        "type": "text",
+        "label": {
+          "en": "Button label",
+          "ar": "نص الزر"
+        },
+        "localized": true,
+        "default": {
+          "ar": "شوف الكابات",
+          "en": "See the caps"
+        },
+        "maxLength": 24
+      },
+      "button_link": {
+        "type": "link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/category/caps"
+      },
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "Image",
+          "ar": "الصورة"
+        },
+        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-fashion/pool-fashion-black-cap.webp"
+      },
+      "alt": {
+        "type": "text",
+        "label": {
+          "en": "Image description",
+          "ar": "وصف الصورة"
+        },
+        "localized": true,
+        "default": {
+          "ar": "كاب أسود",
+          "en": "Black cap"
+        },
+        "maxLength": 80
+      },
+      "tag": {
+        "type": "text",
+        "label": {
+          "en": "Sticker",
+          "ar": "الستيكر"
+        },
+        "localized": true,
+        "default": {
+          "ar": "جديد",
+          "en": "NEW"
+        },
+        "maxLength": 12
+      },
+      "ground": {
+        "type": "select",
+        "label": {
+          "en": "Background",
+          "ar": "الخلفية"
+        },
+        "options": ["orange", "black", "light"],
+        "default": "orange"
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 120,
+        "step": 8,
+        "default": 32
+      }
+    }
+  }
+</hk-schema>

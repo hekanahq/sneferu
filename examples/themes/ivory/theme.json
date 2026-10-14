@@ -1,0 +1,38 @@
+{
+  "id": "ivory",
+  "name": "Ivory",
+  "version": "1.0.3",
+  "author": "Hekana",
+  "description": "An editorial womenswear store: warm ivory ground, near-black type, hairline dividers, a split campaign hero, an asymmetric lookbook and tall 3:4 product cards.",
+  "category": "fashion",
+  "engine": "hk2",
+  "engineCompatibility": "^2.0.0",
+  "defaultLocale": "ar",
+  "locales": ["ar", "en"],
+  "settings": {},
+  "money": { "format": "whole" },
+  "tokens": {
+    "colors": {
+      "primary": "#1B1814",
+      "secondary": "#3B342B",
+      "accent": "#7A5C32",
+      "background": "#F4EFE6",
+      "text": "#1B1814",
+      "muted": "#6B6358",
+      "line": "#D8D0C2",
+      "soft": "#EBE4D8",
+      "surface": "#FBF8F2",
+      "glow": "#EFE7DA"
+    },
+    "layout": {
+      "contentWidth": "1200px"
+    },
+    "fonts": {
+      "heading": "Almarai",
+      "body": "Almarai"
+    },
+    "radius": {
+      "md": "0px"
+    }
+  }
+}

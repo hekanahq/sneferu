@@ -1,0 +1,45 @@
+{
+  "id": "asphalt",
+  "name": "Asphalt",
+  "version": "1.1.1",
+  "author": "Hekana",
+  "description": "A bold streetwear store: off-white ground, big black blocks, one signal-orange accent, sticker tags, a new-drop rail and size chips on every card.",
+  "category": "fashion",
+  "money": {
+    "format": "whole"
+  },
+  "engine": "hk2",
+  "engineCompatibility": "^2.0.0",
+  "defaultLocale": "ar",
+  "locales": ["ar", "en"],
+  "settings": {},
+  "tokens": {
+    "colors": {
+      "primary": "#0B0B0B",
+      "secondary": "#0B0B0B",
+      "accent": "#FF5A1F",
+      "background": "#F4F1EA",
+      "text": "#0B0B0B",
+      "muted": "#585858",
+      "line": "#0B0B0B",
+      "soft": "#E9E4DA",
+      "surface": "#F4F1EA",
+      "glow": "#FFE3D6",
+      "fog": "#E4E0D6",
+      "ash": "#4A4A4A",
+      "warm": "#EFE9DD",
+      "lift": "#FF6C2A",
+      "white": "#FFFFFF"
+    },
+    "layout": {
+      "contentWidth": "1240px"
+    },
+    "fonts": {
+      "heading": "Noto Kufi Arabic",
+      "body": "Cairo"
+    },
+    "radius": {
+      "md": "0px"
+    }
+  }
+}

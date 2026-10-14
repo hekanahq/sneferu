@@ -1,0 +1,53 @@
+<a class="od-panel" href="{{ url(block.settings.link) }}">
+  {% if block.settings.image %}
+    <hk-image
+      src="{{ block.settings.image }}"
+      alt="{{ block.settings.label }}"
+      aspect-ratio="16/9"
+      sizes="(min-width: 1024px) 33vw, 100vw"
+    />
+  {% else %}
+    <span class="od-panel-empty" aria-hidden="true"></span>
+  {% endif %}
+  {% if block.settings.label %}<span class="od-panel-label">{{ block.settings.label }}</span>{% endif %}
+</a>
+<hk-schema>
+  {
+    "name": {
+      "en": "Photo panel",
+      "ar": "لوحة صورة"
+    },
+    "version": 1,
+    "settings": {
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "Image",
+          "ar": "الصورة"
+        },
+        "default": ""
+      },
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Label",
+          "ar": "النص"
+        },
+        "localized": true,
+        "default": {
+          "en": "Paint and finishes",
+          "ar": "دهانات وتشطيبات"
+        },
+        "maxLength": 40
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      }
+    }
+  }
+</hk-schema>

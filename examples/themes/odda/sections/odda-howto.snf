@@ -1,0 +1,86 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="32">
+  <div class="od-howto">
+    <div class="od-howto-head">
+      {% if section.settings.title %}
+        <hk-heading text="{{ section.settings.title }}" level="h2" size="28" mobile-size="22" />
+      {% endif %}
+      {% if section.settings.text %}
+        <p class="od-muted">{{ section.settings.text }}</p>
+      {% endif %}
+    </div>
+    <ol class="od-howto-list">
+      {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+    </ol>
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "How-to strip",
+      "ar": "شريط الإرشادات"
+    },
+    "version": 1,
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "localized": true,
+        "default": {
+          "en": "How to pick the right one",
+          "ar": "إزاي تختار صح"
+        },
+        "maxLength": 60
+      },
+      "text": {
+        "type": "textarea",
+        "label": {
+          "en": "Intro (optional)",
+          "ar": "مقدمة (اختيارية)"
+        },
+        "localized": true,
+        "default": {
+          "en": "Short guides before you buy.",
+          "ar": "إرشادات قصيرة قبل ما تشتري."
+        },
+        "maxLength": 120
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 160,
+        "step": 8,
+        "default": 48
+      }
+    },
+    "blocks": {
+      "allowed": ["howto-step"],
+      "max": 4
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "Three steps",
+          "ar": "ثلاث خطوات"
+        },
+        "blocks": [
+          {
+            "type": "howto-step"
+          },
+          {
+            "type": "howto-step"
+          },
+          {
+            "type": "howto-step"
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>
