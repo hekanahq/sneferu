@@ -62,6 +62,11 @@ describe('evaluate', () => {
     expect(tv('top:a', 'top')).toEqual([]);
     expect(tv(null, 'top')).toEqual([]);
     expect(tv(Array.from({ length: 30 }, (_, i) => `n:v${i}`), 'n')).toHaveLength(20);
+    // a value may carry its Arabic after a bar: this test context is Arabic
+    const pair = ['top:Bergamot|برغموت', 'top:Mint | نعناع', 'top:Rose|', 'top:|نعناع', 'top:Rose'];
+    expect(tv(pair, 'top')).toEqual(['برغموت', 'نعناع', 'Rose']);
+    const en = (input: unknown) => evaluate({ k: 'filter', name: 'tag_values', input: lit(input as never), args: [lit('top')] }, {}, ctx({ locale: 'en', dir: 'ltr' }));
+    expect(en(pair)).toEqual(['Bergamot', 'Mint', 'Rose']);
   });
   it('never throws', () => {
     const bad = ctx({ imageUrl: () => { throw new Error('x'); } });

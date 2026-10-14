@@ -15,10 +15,11 @@ const money = (input: unknown, args: unknown[], ctx: RenderContext) => {
 
 /**
  * `tags | tag_values: 'top'`: the values of the tags written `top:Bergamot`. The prefix match ignores case and
- * spaces, values are trimmed, empty and repeated ones dropped, at most 20 are returned. Anything that is not
- * an array of strings, or a prefix that is not a string, gives an empty list.
+ * spaces, values are trimmed, empty and repeated ones dropped, at most 20 are returned. A value may carry its
+ * Arabic after a bar, `top:Bergamot|برغموت`: Arabic pages get the part after the bar, other pages the part
+ * before it. Anything that is not an array of strings, or a prefix that is not a string, gives an empty list.
  */
-function tagValues(input: unknown, prefix: unknown): string[] {
+function tagValues(input: unknown, prefix: unknown, locale: string): string[] {
   if (!Array.isArray(input) || typeof prefix !== 'string') return [];
   const key = prefix.trim().toLowerCase();
   if (key === '') return [];
@@ -27,7 +28,8 @@ function tagValues(input: unknown, prefix: unknown): string[] {
     if (typeof tag !== 'string') continue;
     const at = tag.indexOf(':');
     if (at < 1 || tag.slice(0, at).trim().toLowerCase() !== key) continue;
-    const value = tag.slice(at + 1).trim();
+    const parts = tag.slice(at + 1).split('|').map((p) => p.trim());
+    const value = (locale === 'ar' ? parts[1] || parts[0] : parts[0]) ?? '';
     if (value !== '' && !out.includes(value)) out.push(value);
     if (out.length === 20) break;
   }
@@ -49,5 +51,5 @@ export const FILTER_IMPLS: Record<FilterName, (input: unknown, args: unknown[], 
   last: (i) => (Array.isArray(i) ? i[i.length - 1] : undefined),
   join: (i, a) => (i === null || i === undefined ? a.map(toStr).join('') : Array.isArray(i) ? i.map(toStr).join(toStr(a[0] ?? ', ')) : toStr(i)),
   json_attr: (i) => JSON.stringify(i ?? null),
-  tag_values: (i, a) => tagValues(i, a[0]),
+  tag_values: (i, a, c) => tagValues(i, a[0], c.locale),
 };

@@ -148,7 +148,7 @@ blocks. Use that for empty states:
 | `join` | `{{ tags \| join: ' · ' }}` → `a · b` (default separator `, `). On a missing value it prints its argument, so guard it: `{% if tags %}…{% endif %}` |
 | `escape` | converts to a string (output is escaped anyway) |
 | `json_attr` | value → JSON for a `data-*` attribute: `data-ids="{{ ids \| json_attr }}"` |
-| `tag_values` | tags → the values of the tags written `prefix:value`: `{% for n in product.tags \| tag_values: 'top' %}…{% endfor %}` lists `Bergamot` for the tag `top:Bergamot`. The prefix match ignores case; values are trimmed; empty and repeated ones are dropped; at most 20 |
+| `tag_values` | tags → the values of the tags written `prefix:value`: `{% for n in product.tags \| tag_values: 'top' %}…{% endfor %}` lists `Bergamot` for the tag `top:Bergamot`. The prefix match ignores case; values are trimmed; empty and repeated ones are dropped; at most 20. A value may carry its Arabic after a bar (`top:Bergamot\|برغموت`): Arabic pages show the part after the bar, English pages the part before it |
 
 Filters chain left to right: `{{ p.title | truncate: 30 | upcase }}`.
 
