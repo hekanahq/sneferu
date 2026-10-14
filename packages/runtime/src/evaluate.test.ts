@@ -48,6 +48,21 @@ describe('evaluate', () => {
     expect(evaluate({ k: 'filter', name: 'img', input: lit('u.png'), args: [lit(400)] }, {}, ctx())).toBe('https://img.test/u.png?w=400');
     expect(f('json_attr', 'x')).toBe('"x"');
   });
+  it('tag_values reads the values of prefixed tags', () => {
+    const tv = (input: unknown, ...args: unknown[]) =>
+      evaluate({ k: 'filter', name: 'tag_values', input: lit(input as never), args: args.map((a) => lit(a as never)) }, {}, ctx());
+    const tags = ['top:Bergamot', 'Top: Lemon ', 'heart:Jasmine', 'top:Bergamot', 'top:', 'topnote', ':x', 'base:Musk', 5];
+    expect(tv(tags, 'top')).toEqual(['Bergamot', 'Lemon']);
+    expect(tv(tags, ' HEART ')).toEqual(['Jasmine']);
+    expect(tv(tags, 'base')).toEqual(['Musk']);
+    expect(tv(tags, 'none')).toEqual([]);
+    expect(tv(tags, '')).toEqual([]);
+    expect(tv(tags)).toEqual([]);
+    expect(tv(tags, 5)).toEqual([]);
+    expect(tv('top:a', 'top')).toEqual([]);
+    expect(tv(null, 'top')).toEqual([]);
+    expect(tv(Array.from({ length: 30 }, (_, i) => `n:v${i}`), 'n')).toHaveLength(20);
+  });
   it('never throws', () => {
     const bad = ctx({ imageUrl: () => { throw new Error('x'); } });
     expect(evaluate({ k: 'filter', name: 'img', input: lit('u'), args: [] }, {}, bad)).toBeUndefined();

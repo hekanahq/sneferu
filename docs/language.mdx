@@ -137,6 +137,7 @@ Apply with `|`, arguments after `:` (`{{ title | truncate: 40 }}`).
 | `first` / `last` | array | none | `{{ items \| first }}` |
 | `join` | array | separator (default `, `) | `{{ tags \| join: ' / ' }}` gives `a / b` |
 | `json_attr` | any | none | JSON for a `data-*` attribute |
+| `tag_values` | array of tags | the prefix | `{{ product.tags \| tag_values: 'top' }}` gives `["Bergamot", "Lemon"]` for the tags `top:Bergamot` and `top:Lemon`. Prefix match ignores case, values are trimmed, empty and repeated ones dropped, at most 20 |
 
 ## Lookups
 
