@@ -142,7 +142,6 @@ The compiler enforces most of these, and `validate` names the one you broke.
 | `409 HK2_VERSION_EXISTS` on push | Versions are immutable; bump `version` in `theme.json` |
 | Product, cart or 404 page looks like a different store | That template is missing; add `templates/<type>.snf` and its sections |
 | An arrow points backwards on Arabic pages | `hk-icon` arrows already mirror; remove your own `scaleX(-1)` |
-| Blocks nested inside blocks in a template's default sections do not show on a new store | Known runtime gap: seed one level of blocks in templates (groups keep two); nested items appear once the merchant saves |
 | The docs mention something the CLI rejects | The docs on `main` can be ahead of npm; check `npx sneferu --version` and the CHANGELOG |
 | `.00` on every price | Set `"money": { "format": "whole" }` in `theme.json` |
 | Fonts look like the system font | Font files in `assets/` are not served; set `tokens.fonts` |

@@ -48,6 +48,10 @@ describe('pageDependencies', () => {
     ] });
     expect(hidden.collections).toEqual(['featured']);
   });
+  it('reads nested default blocks (block inside a block) from the template', () => {
+    const a = { ...artifact(), templateSections: { index: [{ type: 'faq', settings: {}, blocks: [{ type: 'shelf', settings: {}, blocks: [{ type: 'shelf', settings: { list: 'nested-one' } }] }] }] } };
+    expect(pageDependencies(a, { template: 'index' }).collections).toContain('nested-one');
+  });
   it('ignores empty or invalid handles and caps at 8', () => {
     const a = artifact();
     const r = pageDependencies(a, { template: 'index', settings: { home: 'A B' }, sections: [
