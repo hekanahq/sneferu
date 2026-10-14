@@ -1,0 +1,55 @@
+<hk-add-to-cart
+  product="{{ product }}"
+  label="{{ block.settings.label }}"
+  sold-out-label="{{ block.settings.sold_out_label }}"
+  quantity="{{ block.settings.show_quantity }}"
+  variant="{{ block.settings.button_style }}"
+/>
+<hk-schema>
+  {
+    "name": {
+      "en": "Buy buttons",
+      "ar": "زر الشراء"
+    },
+    "version": 1,
+    "settings": {
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Button label (default: Add to cart)",
+          "ar": "نص الزر (الافتراضي: أضف للسلة)"
+        },
+        "default": "",
+        "localized": true,
+        "maxLength": 30
+      },
+      "sold_out_label": {
+        "type": "text",
+        "label": {
+          "en": "Sold out label",
+          "ar": "نص نفاد المخزون"
+        },
+        "default": "",
+        "localized": true,
+        "maxLength": 30
+      },
+      "show_quantity": {
+        "type": "boolean",
+        "label": {
+          "en": "Show quantity",
+          "ar": "إظهار الكمية"
+        },
+        "default": true
+      },
+      "button_style": {
+        "type": "select",
+        "label": {
+          "en": "Button style",
+          "ar": "شكل الزر"
+        },
+        "options": ["solid", "outline"],
+        "default": "solid"
+      }
+    }
+  }
+</hk-schema>

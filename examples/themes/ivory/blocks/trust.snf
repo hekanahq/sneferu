@@ -1,0 +1,48 @@
+<li class="iv-trust-item">
+  <span class="iv-trust-icon"><hk-icon name="{{ block.settings.icon }}" class="ic" /></span>
+  <span>{{ block.settings.label }}</span>
+</li>
+<hk-schema>
+  {
+    "name": {
+      "en": "Trust point",
+      "ar": "نقطة ثقة"
+    },
+    "version": 1,
+    "settings": {
+      "icon": {
+        "type": "select",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
+        "options": [
+          "truck",
+          "banknote",
+          "package",
+          "shield-check",
+          "gift",
+          "mail",
+          "clock",
+          "credit-card",
+          "help-circle",
+          "sparkles"
+        ],
+        "default": "truck"
+      },
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "localized": true,
+        "default": {
+          "ar": "توصيل لكل المحافظات",
+          "en": "Delivery across Egypt"
+        },
+        "maxLength": 60
+      }
+    }
+  }
+</hk-schema>
