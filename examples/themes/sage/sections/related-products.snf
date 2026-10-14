@@ -5,9 +5,7 @@
         <h2 class="sg-h2">{{ section.settings.title }}</h2>
       {% endif %}
       <div class="sg-grid sg-cols-{{ section.settings.columns }}">
-        {% for p in collection(section.settings.collection).products limit: section.settings.limit %}
-          {% render 'card', p: p %}
-        {% endfor %}
+        {% for p in collection(section.settings.collection).products limit: section.settings.limit %}{% if p.handle != product.handle %}{% render 'card', p: p %}{% endif %}{% endfor %}
       </div>
     </div>
   </section>
@@ -54,13 +52,13 @@
       "limit": {
         "type": "range",
         "label": {
-          "en": "Products",
+          "en": "Products (the current one is skipped)",
           "ar": "عدد المنتجات"
         },
         "min": 2,
-        "max": 8,
+        "max": 9,
         "step": 1,
-        "default": 4
+        "default": 5
       },
       "padding_y": {
         "type": "select",

@@ -67,8 +67,8 @@
           "ar": "النص"
         },
         "default": {
-          "ar": "غسول وسيروم وكريم، تركيبات بسيطة ومكونات واضحة على كل عبوة.",
-          "en": "Cleanser, serum and cream. Simple formulas with the ingredients listed on every pack."
+          "ar": "غسول وسيروم وكريم بتركيبات بسيطة لروتين يومي سهل.",
+          "en": "Cleanser, serum and cream in simple formulas for an easy daily routine."
         },
         "localized": true,
         "maxLength": 160

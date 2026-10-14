@@ -28,8 +28,8 @@
           "ar": "العنوان (لقارئ الشاشة فقط)"
         },
         "default": {
-          "ar": "مكونات نستخدمها",
-          "en": "Ingredients we use"
+          "ar": "المكونات الأساسية في منتجاتنا",
+          "en": "Key ingredients in our products"
         },
         "localized": true,
         "maxLength": 50

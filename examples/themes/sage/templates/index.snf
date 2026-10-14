@@ -52,16 +52,6 @@
           {
             "type": "ingredient",
             "settings": {
-              "glyph": "leaf",
-              "label": {
-                "ar": "مستخلص الصبار",
-                "en": "Aloe extract"
-              }
-            }
-          },
-          {
-            "type": "ingredient",
-            "settings": {
               "glyph": "drop",
               "label": {
                 "ar": "حمض الهيالورونيك",
@@ -72,30 +62,10 @@
           {
             "type": "ingredient",
             "settings": {
-              "glyph": "drops",
-              "label": {
-                "ar": "جليسرين نباتي",
-                "en": "Plant glycerin"
-              }
-            }
-          },
-          {
-            "type": "ingredient",
-            "settings": {
               "glyph": "flask",
               "label": {
                 "ar": "نياسيناميد",
                 "en": "Niacinamide"
-              }
-            }
-          },
-          {
-            "type": "ingredient",
-            "settings": {
-              "glyph": "shield",
-              "label": {
-                "ar": "فيتامين إي",
-                "en": "Vitamin E"
               }
             }
           }
