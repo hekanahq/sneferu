@@ -251,7 +251,7 @@
 
 /* Volt overrides */
 [data-hk-theme='volt'] { --vt-photo: var(--hk-color-soft); --vt-shadow: 0 1px 2px color-mix(in srgb, var(--hk-color-text) 4%, transparent), 0 10px 30px color-mix(in srgb, var(--hk-color-text) 7%, transparent); }
-.vt-logo { background: var(--vt-blue); color: var(--hk-color-on-accent, #fff); }
+.vt-logo { background: var(--vt-blue); color: var(--hk-color-on-accent, var(--hk-color-background)); }
 .vt-header-bar { display: flex; flex-wrap: wrap; gap: 12px 28px; }
 .vt-header-actions { margin-inline-start: auto; }
 .vt-search-bar { flex: 1 1 240px; max-width: 340px; margin: 0; order: 0; }
@@ -266,7 +266,7 @@
 .vt-specs { display: flex; flex-wrap: wrap; gap: 6px; margin: 2px 0 0; padding: 0; list-style: none; }
 .vt-spec { padding: 2px 10px; border-radius: var(--vt-pill); background: var(--hk-color-soft); border: 1px solid var(--hk-color-line); font-size: 12px; font-weight: 500; color: var(--hk-color-text); }
 .vt-card .sn-price { font-size: 16px; padding-inline: 0; margin-top: 4px; }
-.vt-card-note { color: var(--vt-blue); font-size: 13px; font-weight: 600; padding-inline: 0; }
+.vt-card-note { color: var(--hk-color-muted); font-size: 13px; font-weight: 400; padding-inline: 0; }
 .vt-head { display: grid; gap: 10px; }
 .vt-dash { display: block; width: 28px; height: 3px; border-radius: 2px; background: var(--hk-color-secondary); }
 
@@ -318,3 +318,8 @@
 }
 .vt-search-bar, .vt-search-bar .sn-search { box-sizing: border-box; min-width: 0; max-width: 100%; }
 @media (max-width: 639px) { .vt-hero-copy { margin-top: 0; } .vt-cats-section { margin-top: -40px; } }
+
+.vt-hero-art { width: min(760px, 100%); }
+.vt-hero-glow { width: min(900px, 96%); height: 80%; top: 4%; }
+.vt-hero-title { font-weight: 800; letter-spacing: -0.01em; }
+@media (max-width: 639px) { .vt-hero-glow { width: 100%; } }
