@@ -31,6 +31,7 @@ such as `collection(product.title)`, is SN1105.
 | Lookup | Returns |
 | - | - |
 | `collection('featured')` | the collection: `.title`, `.products`. A missing collection is `{ products: [] }`, never an error |
+| `collection('related')` | on a product page, the other products of the current product's category (the product itself left out, at most 8); empty elsewhere. This is how a theme shows related products, since `collection(product.category.handle)` is SN1105 |
 | `collection(section.settings.list)` | the collection the merchant picked in a `collection` setting; an empty collection when none is picked |
 | `collections()` | the store's categories (at most 50), see [List the store's categories](#list-the-stores-categories) |
 | `product('handle')` | the product, or nothing |

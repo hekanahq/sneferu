@@ -146,6 +146,7 @@ Called like functions with literal arguments only, except `collection()`, `produ
 | Lookup | Returns |
 | - | - |
 | `collection('handle')` | the collection (use `.products`); an empty collection if missing |
+| `collection('related')` | on a **product page**, the host's related products: the other products of the current product's category, the product itself left out, at most 8 (empty when the product has no category). On any other page it is an empty collection. Use it for "you may also like"; `collection(product.category.handle)` is not allowed (SN1105) |
 | `collection(section.settings.list)` | the collection picked in a `collection` setting (`section.settings.*`, `block.settings.*` or `settings.*`); an empty collection when nothing is picked. A missing or wrongly typed setting is SN2012 |
 | `collections()` | the store's categories, at most 50: `[{ handle, title, url, image, count }]` |
 | `product('handle')`, `product(section.settings.pick)` | the product (a handle, or a `product` setting; nothing when missing) |

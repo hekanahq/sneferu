@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { resolveDevRoute, splitLocale, devUrl, plainNotFound } from './dev-routes';
+import { resolveDevRoute, splitLocale, devUrl, plainNotFound, relatedProducts } from './dev-routes';
 import { sampleContext } from './sample-data';
 
 const ctx = sampleContext('en', {}, 'en');
@@ -48,5 +48,21 @@ describe('dev routes', () => {
     expect(devUrl('/cart', 'ar', 'ar')).toBe('/cart');
     expect(devUrl('/cart', 'ar', 'en')).toBe('/ar/cart');
     expect(devUrl('/', 'en', 'en')).toBe('/en');
+  });
+});
+
+describe('related products', () => {
+  const ctx = sampleContext('en', { en: {} }, 'en');
+  it("are the product's category minus the product itself", () => {
+    const first = Object.values(ctx.products).find((p) => (p as { category: unknown }).category) as { handle: string; category: { handle: string } };
+    const rel = relatedProducts(first, ctx.products) as { handle: string; category: { handle: string } }[];
+    expect(rel.length).toBeGreaterThan(0);
+    expect(rel.length).toBeLessThanOrEqual(8);
+    expect(rel.every((p) => p.category.handle === first.category.handle && p.handle !== first.handle)).toBe(true);
+  });
+  it('are empty for a product with no category', () => {
+    const none = Object.values(ctx.products).find((p) => !(p as { category: unknown }).category);
+    expect(none).toBeDefined();
+    expect(relatedProducts(none, ctx.products)).toEqual([]);
   });
 });
