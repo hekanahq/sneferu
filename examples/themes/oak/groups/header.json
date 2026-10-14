@@ -62,8 +62,8 @@
           "type": "menu-link",
           "settings": {
             "label": {
-              "en": "Kitchen",
-              "ar": "المطبخ"
+              "en": "Kitchen and decor",
+              "ar": "المطبخ والديكور"
             },
             "url": "/category/kitchen"
           }

@@ -1,12 +1,14 @@
 <a class="oak-cat" href="{{ url(block.settings.link) }}">
-  <span class="oak-cat-media">
-    <hk-image
-      src="{{ block.settings.image }}"
-      alt="{{ block.settings.label }}"
-      aspect-ratio="1/1"
-      sizes="(min-width: 1024px) 25vw, 50vw"
-    />
-  </span>
+  {% if block.settings.image %}
+    <span class="oak-cat-media">
+      <hk-image
+        src="{{ block.settings.image }}"
+        alt="{{ block.settings.label }}"
+        aspect-ratio="1/1"
+        sizes="(min-width: 1024px) 25vw, 50vw"
+      />
+    </span>
+  {% endif %}
   <span class="oak-cat-label">{{ block.settings.label }}</span>
 </a>
 <hk-schema>
@@ -20,10 +22,10 @@
       "image": {
         "type": "image",
         "label": {
-          "en": "Photo",
-          "ar": "الصورة"
+          "en": "Photo (optional)",
+          "ar": "الصورة (اختيارية)"
         },
-        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-home/pool-home-linen-cushion-oat.webp"
+        "default": ""
       },
       "label": {
         "type": "text",
