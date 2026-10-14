@@ -1,0 +1,20 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "search-main"
+      },
+      {
+        "type": "volt-products",
+        "settings": {
+          "heading": {
+            "ar": "الأكثر طلبًا",
+            "en": "Popular devices"
+          },
+          "count": 4
+        }
+      }
+    ]
+  }
+</hk-schema>

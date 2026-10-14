@@ -1,0 +1,105 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "not-found"
+      },
+      {
+        "type": "volt-categories",
+        "blocks": [
+          {
+            "type": "category-tile",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/volt/volt-smartphone-black.webp",
+              "label": {
+                "ar": "موبايلات",
+                "en": "Phones"
+              },
+              "link": "/category/phones"
+            }
+          },
+          {
+            "type": "category-tile",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/volt/volt-laptop-silver.webp",
+              "label": {
+                "ar": "لابتوبات",
+                "en": "Laptops"
+              },
+              "link": "/category/laptops"
+            }
+          },
+          {
+            "type": "category-tile",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/volt/volt-headphones-black.webp",
+              "label": {
+                "ar": "سماعات",
+                "en": "Audio"
+              },
+              "link": "/category/audio"
+            }
+          },
+          {
+            "type": "category-tile",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/volt/volt-smartwatch-black.webp",
+              "label": {
+                "ar": "ساعات",
+                "en": "Watches"
+              },
+              "link": "/category/watches"
+            }
+          },
+          {
+            "type": "category-tile",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/volt/volt-power-bank-black.webp",
+              "label": {
+                "ar": "إكسسوارات",
+                "en": "Accessories"
+              },
+              "link": "/category/accessories"
+            }
+          }
+        ]
+      },
+      {
+        "type": "volt-trust",
+        "blocks": [
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "banknote",
+              "label": {
+                "ar": "الدفع عند الاستلام",
+                "en": "Cash on delivery"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "truck",
+              "label": {
+                "ar": "توصيل لكل المحافظات",
+                "en": "Delivery across Egypt"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "package",
+              "label": {
+                "ar": "استبدال سهل",
+                "en": "Easy exchange"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

@@ -1,0 +1,87 @@
+<hk-section padding-y="40" mobile-padding-y="28" class="vt-compare-section">
+  <hk-stack gap="20">
+    <div class="vt-head">
+      <span class="vt-dash" aria-hidden="true"></span>
+      <hk-heading text="{{ section.settings.heading }}" level="h2" size="26" mobile-size="20" class="vt-h2" />
+    </div>
+    {% if collection(section.settings.list).products %}
+      <div class="vt-compare">
+        {% for p in collection(section.settings.list).products limit: section.settings.count %}
+          <a class="vt-compare-item" href="{{ p.url }}">
+            <span class="vt-compare-media">
+              <hk-image
+                src="{{ p.image }}"
+                alt="{{ p.title }}"
+                aspect-ratio="4/5"
+                fit="cover"
+                sizes="(min-width: 1024px) 25vw, 33vw"
+              />
+            </span>
+            <strong class="vt-compare-title">{{ p.title }}</strong>
+            <hk-price amount="{{ p.price }}" compare-at="{{ p.compare_at }}" class="vt-compare-price" />
+            {% if p.options %}
+              <dl class="vt-compare-rows">
+                {% for option in p.options limit: 3 %}
+                  <div class="vt-compare-row">
+                    <dt>{{ option.name }}</dt>
+                    <dd>{{ option.values | join: ' / ' }}</dd>
+                  </div>
+                {% endfor %}
+              </dl>
+            {% endif %}
+            {% if p.tags %}
+              <ul class="vt-specs">
+                {% for tag in p.tags limit: 4 %}
+                  <li class="vt-spec">{{ tag }}</li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </a>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </hk-stack>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "ar": "مقارنة جنب بعض",
+      "en": "Compare row"
+    },
+    "version": 1,
+    "settings": {
+      "heading": {
+        "type": "text",
+        "label": {
+          "ar": "العنوان",
+          "en": "Heading"
+        },
+        "localized": true,
+        "default": {
+          "ar": "قارن قبل ما تختار",
+          "en": "Compare before you choose"
+        },
+        "maxLength": 60
+      },
+      "list": {
+        "type": "collection",
+        "label": {
+          "ar": "القسم",
+          "en": "Collection"
+        },
+        "default": "featured"
+      },
+      "count": {
+        "type": "range",
+        "label": {
+          "ar": "عدد المنتجات",
+          "en": "Products"
+        },
+        "default": 3,
+        "min": 2,
+        "max": 4,
+        "step": 1
+      }
+    }
+  }
+</hk-schema>

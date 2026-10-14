@@ -1,0 +1,38 @@
+<article class="vt-card vt-card-{{ card_style }}">
+  <a class="vt-card-link" href="{{ product.url }}">
+    <div class="vt-card-media">
+      <hk-image
+        src="{{ product.image }}"
+        alt="{{ product.title }}"
+        aspect-ratio="{{ image_ratio }}"
+        sizes="(min-width: 1024px) 25vw, 50vw"
+      />
+      {% if show_badge %}
+        {% if product.available %}
+          {% if product.compare_at > product.price %}
+            <span class="vt-badge">{{ t('sale') }}</span>
+          {% endif %}
+        {% else %}
+          <span class="vt-badge vt-badge-muted">{{ t('sold_out_badge') }}</span>
+        {% endif %}
+      {% endif %}
+    </div>
+    <h3 class="vt-card-title">{{ product.title }}</h3>
+    {% if product.tags %}
+      <ul class="vt-specs">
+        {% for tag in product.tags limit: 3 %}
+          <li class="vt-spec">{{ tag }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    {% if product.options %}
+      <ul class="vt-specs vt-specs-options">
+        {% for option in product.options limit: 2 %}{% for value in option.values limit: 2 %}
+            <li class="vt-spec">{{ value }}</li>
+          {% endfor %}{% endfor %}
+      </ul>
+    {% endif %}
+    {% if show_price %}{% render 'price', product: product, bind: false %}{% endif %}
+    {% if note %}<span class="vt-card-note">{{ note }}</span>{% endif %}
+  </a>
+</article>

@@ -1,0 +1,31 @@
+{
+  "id": "volt",
+  "name": "Volt",
+  "version": "1.0.3",
+  "author": "Hekana",
+  "description": "A clean premium electronics showcase: white and graphite with one electric-blue accent, a large product hero, category tiles, spec-chip product cards and a side-by-side compare row.",
+  "category": "electronics",
+  "engine": "hk2",
+  "engineCompatibility": "^2.0.0",
+  "defaultLocale": "ar",
+  "locales": ["ar", "en"],
+  "settings": {},
+  "money": { "format": "whole" },
+  "tokens": {
+    "colors": {
+      "primary": "#1D4FFF",
+      "secondary": "#1F2328",
+      "accent": "#1D4FFF",
+      "background": "#FFFFFF",
+      "text": "#14181D",
+      "muted": "#5B6470",
+      "line": "#E4E7EB",
+      "soft": "#F4F5F7",
+      "surface": "#FFFFFF",
+      "glow": "#E6ECFF"
+    },
+    "layout": { "contentWidth": "1160px" },
+    "fonts": { "heading": "IBM Plex Sans Arabic", "body": "IBM Plex Sans Arabic" },
+    "radius": { "md": "14px" }
+  }
+}
