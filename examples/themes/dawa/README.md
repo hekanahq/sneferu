@@ -37,7 +37,7 @@ blocks/                    category-tile, trust, menu-link, footer-*, social-lin
 snippets/                  product-card, price, button, glyph (inline pharmacy icons)
 locales/                   ar.json, en.json (same keys)
 assets/theme.css           the only stylesheet; every colour is a token
-assets/hero.webp           default hero, a shelf arrangement made from product photos
+assets/hero.webp           bundled copy of the default hero (a pharmacy counter photo)
 ```
 
 ## Excerpts
