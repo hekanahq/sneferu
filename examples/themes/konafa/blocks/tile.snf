@@ -1,0 +1,50 @@
+<a class="kn-occ" href="{{ url(block.settings.link) }}">
+  <span class="kn-occ-icon">
+    {% if block.settings.icon == 'crescent' %}{% render 'glyph', name: 'crescent' %}
+    {% elsif block.settings.icon == 'star8' %}{% render 'glyph', name: 'star8' %}
+    {% elsif block.settings.icon == 'box' %}{% render 'glyph', name: 'box' %}
+    {% else %}<hk-icon name="{{ block.settings.icon }}" size="40" stroke="1.4" />{% endif %}
+  </span>
+  <span class="kn-occ-label">{{ block.settings.label }}</span>
+</a>
+<hk-schema>
+  {
+    "name": {
+      "ar": "مربع مناسبة",
+      "en": "Occasion tile"
+    },
+    "version": 1,
+    "settings": {
+      "icon": {
+        "type": "select",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
+        "default": "crescent",
+        "options": ["crescent", "star8", "box", "heart", "gift", "star", "sparkles", "calendar"]
+      },
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "رمضان",
+          "en": "Ramadan"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      }
+    }
+  }
+</hk-schema>

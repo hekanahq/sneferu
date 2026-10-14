@@ -1,0 +1,129 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="24">
+  <div class="kn-gift">
+    {% if section.settings.image %}
+      <div class="kn-gift-media">
+        <hk-image
+          src="{{ section.settings.image }}"
+          alt="{{ section.settings.image_alt }}"
+          aspect-ratio="1/1"
+          sizes="(min-width: 760px) 320px, 100vw"
+        />
+      </div>
+    {% endif %}
+    <div class="kn-gift-text">
+      {% if section.settings.kicker %}<span class="kn-gift-kicker">{{ section.settings.kicker }}</span>{% endif %}
+      {% if section.settings.title %}
+        <h2 class="kn-gift-title">{{ section.settings.title }}</h2>
+      {% endif %}
+      {% if section.settings.text %}
+        <p>{{ section.settings.text }}</p>
+      {% endif %}
+      {% if section.settings.button_label %}
+        <a class="kn-pill" href="{{ url(section.settings.button_link) }}">{{ section.settings.button_label }}</a>
+      {% endif %}
+    </div>
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "ar": "بانر علب الهدايا",
+      "en": "Gift box banner"
+    },
+    "version": 1,
+    "settings": {
+      "image": {
+        "type": "image",
+        "label": {
+          "ar": "صورة العلبة",
+          "en": "Box image"
+        },
+        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-food/pool-food-sweets-gift-box.webp"
+      },
+      "image_alt": {
+        "type": "text",
+        "label": {
+          "ar": "وصف الصورة",
+          "en": "Image description"
+        },
+        "default": {
+          "ar": "علبة حلويات شرقية مشكلة مغلقة بشريطة",
+          "en": "A closed box of assorted oriental sweets tied with a ribbon"
+        },
+        "localized": true,
+        "maxLength": 120
+      },
+      "kicker": {
+        "type": "text",
+        "label": {
+          "en": "Small label",
+          "ar": "الشارة الصغيرة"
+        },
+        "default": {
+          "ar": "علب الهدايا",
+          "en": "Gift boxes"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "علبة حلويات تليق بمناسبتك",
+          "en": "A box of sweets for your occasion"
+        },
+        "localized": true,
+        "maxLength": 70
+      },
+      "text": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "اختار الأصناف اللي تحبها وجهّزها هدية للعيد أو الفرح.",
+          "en": "Pick the sweets you like and send them as a gift for Eid or a wedding."
+        },
+        "localized": true,
+        "maxLength": 140
+      },
+      "button_label": {
+        "type": "text",
+        "label": {
+          "en": "Button",
+          "ar": "الزر"
+        },
+        "default": {
+          "ar": "شوف العلب",
+          "en": "See the boxes"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "button_link": {
+        "type": "link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/category/gift-boxes"
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "default": 32,
+        "min": 0,
+        "max": 120,
+        "step": 8
+      }
+    }
+  }
+</hk-schema>

@@ -1,0 +1,50 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="0">
+  <div class="kn-tiles">
+    {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Occasion tiles",
+      "ar": "المناسبات"
+    },
+    "version": 1,
+    "blocks": {
+      "allowed": ["tile"],
+      "max": 6
+    },
+    "settings": {
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "default": 0,
+        "min": 0,
+        "max": 120,
+        "step": 8
+      }
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "Three occasions",
+          "ar": "ثلاث مناسبات"
+        },
+        "blocks": [
+          {
+            "type": "tile"
+          },
+          {
+            "type": "tile"
+          },
+          {
+            "type": "tile"
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>
