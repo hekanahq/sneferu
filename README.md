@@ -44,12 +44,15 @@ developer. Reserved slugs: `starter`, `hekana`, `default`, `admin`, `official`, 
 
 ## Example themes
 
-Six complete themes in [examples/themes](examples/themes), each with a README,
+Twelve complete themes in [examples/themes](examples/themes), each with a README,
 screenshots and a live demo store:
 [Arcade](examples/themes/arcade), [Console](examples/themes/console) and
 [Esports](examples/themes/esports) (gaming top-ups and gift cards);
 [Bento](examples/themes/bento), [Creator](examples/themes/creator) and
-[License](examples/themes/license) (digital products). The
+[License](examples/themes/license) (digital products);
+[Torque](examples/themes/torque) and [Odda](examples/themes/odda) (hardware),
+[Dawa](examples/themes/dawa) and [Aafia](examples/themes/aafia) (health),
+[Ivory](examples/themes/ivory) and [Asphalt](examples/themes/asphalt) (fashion). The
 [gaming](https://hekana.dev/guide/tutorial-gaming-store) and
 [digital store](https://hekana.dev/guide/tutorial-digital-store) tutorials walk
 through Arcade and Bento.

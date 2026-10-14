@@ -163,7 +163,10 @@ The [example themes](examples/themes) are complete stores with every page type,
 groups, locales and settings: [arcade](examples/themes/arcade),
 [console](examples/themes/console), [esports](examples/themes/esports) (gaming),
 [creator](examples/themes/creator), [license](examples/themes/license),
-[bento](examples/themes/bento) (digital products). The SDK's own default store
+[bento](examples/themes/bento) (digital products),
+[torque](examples/themes/torque), [odda](examples/themes/odda) (hardware),
+[dawa](examples/themes/dawa), [aafia](examples/themes/aafia) (health),
+[ivory](examples/themes/ivory), [asphalt](examples/themes/asphalt) (fashion). The SDK's own default store
 is [packages/templates-default/theme](packages/templates-default/theme).
 
 ## Work on this repo
