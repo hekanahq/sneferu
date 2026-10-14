@@ -3,25 +3,11 @@
     <hk-heading text="{{ section.settings.title }}" level="h2" size="28" mobile-size="22" />
   {% endif %}
   <div class="oak-grid oak-related oak-cols-{{ section.settings.columns }}">
-    {% if product.category.handle == 'living' %}
-      {% for p in collection('living').products limit: 5 %}
-        {% if p.handle != product.handle %}
-          {% render 'product-card', product: p, card_style: section.settings.card_style, image_ratio: section.settings.image_ratio, show_price: section.settings.show_price, show_badge: section.settings.show_badge %}
-        {% endif %}
-      {% endfor %}
-    {% elsif product.category.handle == 'kitchen' %}
-      {% for p in collection('kitchen').products limit: 5 %}
-        {% if p.handle != product.handle %}
-          {% render 'product-card', product: p, card_style: section.settings.card_style, image_ratio: section.settings.image_ratio, show_price: section.settings.show_price, show_badge: section.settings.show_badge %}
-        {% endif %}
-      {% endfor %}
-    {% else %}
-      {% for p in collection(section.settings.collection).products limit: 5 %}
-        {% if p.handle != product.handle %}
-          {% render 'product-card', product: p, card_style: section.settings.card_style, image_ratio: section.settings.image_ratio, show_price: section.settings.show_price, show_badge: section.settings.show_badge %}
-        {% endif %}
-      {% endfor %}
-    {% endif %}
+    {% for p in collection(section.settings.collection).products limit: 5 %}
+      {% if p.handle != product.handle %}
+        {% render 'product-card', product: p, card_style: section.settings.card_style, image_ratio: section.settings.image_ratio, show_price: section.settings.show_price, show_badge: section.settings.show_badge %}
+      {% endif %}
+    {% endfor %}
   </div>
 </hk-section>
 <hk-schema>
