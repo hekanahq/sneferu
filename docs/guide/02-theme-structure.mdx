@@ -29,7 +29,7 @@ part of the theme and is checked.
 | - | - | - |
 | `theme.json` | Identity, version, design tokens, theme-wide settings | See the field table below |
 | `layout/theme.snf` | Wraps every page: header, footer, and `<hk-slot name="content" />` where the page goes | Exactly this file name |
-| `templates/<name>.snf` | A page type. Usually `<hk-sections />` plus a `<hk-schema>` listing the default sections | `index` is required. Also `product`, `collection`, `search`, `cart`, `checkout`, `page`, `404` (and alternates such as `product.codes`); a page type you do not write comes from the SDK's default store. See [Page types](16-page-types.mdx) |
+| `templates/<name>.snf` | A page type. Usually `<hk-sections />` plus a `<hk-schema>` listing the default sections | `index` is required. Also `product`, `collection`, `search`, `cart`, `page`, `404` (and alternates such as `product.codes`); a page type you do not write comes from the SDK's default store. See [Page types](16-page-types.mdx) |
 | `groups/<name>.json` | The sections a store starts with in a shared group (`header`, `footer`, `announcement`) | See [Section groups](18-section-groups.mdx) |
 | `sections/<type>.snf` | A section type. File name = type (`sections/hero.snf` is type `hero`). Has a `<hk-schema>` with `name` and `settings` | Rendered inside `<div data-hk-section="<id>">` |
 | `blocks/<type>.snf` | An item a merchant can add inside a section (a quote, a slide, a feature) | Rendered inside `<div data-hk-block="<id>">` |

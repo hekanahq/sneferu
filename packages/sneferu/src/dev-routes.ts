@@ -99,7 +99,6 @@ export function resolveDevRoute(opts: {
     return { template: 'search', status: 200, scope: { search: { terms, results: slice(hits, paginate), results_count: hits.length }, paginate }, path };
   }
   if (/^\/cart\/?$/.test(path)) return { template: 'cart', status: 200, scope: {}, path };
-  if (/^\/checkout\/?$/.test(path)) return { template: 'checkout', status: 200, scope: {}, path };
   m = /^\/pages\/([^/]+)\/?$/.exec(path);
   if (m) {
     const h = handleOf(m[1]!);

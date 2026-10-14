@@ -139,14 +139,3 @@
 .sf-search-page-form .sn-search:focus-within,.sf-search-panel .sn-search:focus-within{border-color:var(--hk-color-accent)}
 .sf-search-page-form .sn-search-button,.sf-search-panel .sn-search-button{border:0;background:transparent;color:inherit}
 .sf-not-found .sf-search-page-form{width:min(520px,100%)}
-
-/* checkout: the page around the platform's own checkout form */
-.sf-checkout-head{display:grid;gap:var(--hk-space-1,4px);margin-bottom:var(--hk-space-3,16px)}
-.sf-checkout-head :where(p){margin:0}
-.sf-checkout-back{display:inline-flex;align-items:center;min-height:44px;color:inherit;opacity:.75;text-decoration:none}
-.sf-checkout-back:hover{opacity:1;text-decoration:underline}
-.sf-checkout-notes{display:flex;flex-wrap:wrap;gap:var(--hk-space-1,4px) var(--hk-space-3,16px);list-style:none;margin:0 0 var(--hk-space-3,16px);padding:0}
-.sf-checkout-note{display:inline-flex;align-items:center;gap:8px;margin:0;font-size:14px}
-.sf-checkout-foot{display:grid;gap:var(--hk-space-1,4px);margin-top:var(--hk-space-3,16px);font-size:14px}
-.sf-checkout-foot :where(p){margin:0}
-.sf-checkout-support{display:inline-flex;align-items:center;min-height:44px;color:inherit;text-decoration:underline}

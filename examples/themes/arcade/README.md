@@ -7,7 +7,7 @@ get your code" steps, glowing product cards and gradient buttons. It is
 right-to-left in Arabic and left-to-right in English from the same files.
 
 Since 2.0 it owns every page type: home, product (plus a `product.digital`
-alternate for instant-delivery codes), collection, search, cart, checkout, 404 and
+alternate for instant-delivery codes), collection, search, cart, 404 and
 content pages, with an editable announcement bar, header and footer. The
 Sneferu SDK default templates are only a fallback for page types a theme does
 not write; this theme overrides all of them.
@@ -29,13 +29,13 @@ renders are in `docs/live-*-phone-en.webp`.
 theme.json                 id, version 2.0.0, colour / font / radius / width tokens
 layout/theme.snf           skip link, announcement, header, <main>, footer
 groups/                    announcement.json, header.json, footer.json (default content)
-templates/                 index, product, product.digital, collection, search, cart, checkout, 404, page
+templates/                 index, product, product.digital, collection, search, cart, 404, page
 sections/
   arcade-announcement      one-line bar: text, link, colour scheme
   arcade-header            logo (image or text), menu, search, language, cart + drawer
   arcade-footer            newsletter box, about text, link columns, contact, social, payments
   arcade-hero, -categories, -steps, -products, -faq     the home page
-  product-main, related-products, collection-main, search-main, cart-main, checkout-main, not-found, page-main
+  product-main, related-products, collection-main, search-main, cart-main, not-found, page-main
 blocks/                    menu-link, menu-sub-link, footer-column, footer-link, social-link,
                            payment-method, contact-line, tab, chip, tile, step, faq-item,
                            product-title / -price / -excerpt / -variants / -buy / -text /

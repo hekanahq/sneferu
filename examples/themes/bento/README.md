@@ -1,6 +1,6 @@
 # Bento
 
-A complete soft pastel store for printables, templates and e-books. Rounded tiles in peach, sage and sky, a teal call-to-action band, a navy pill for the main action. Every page type of the store has its own design in this theme: home, product (plus a digital alternate), collection, search, cart, checkout, 404 and content pages. The SDK's default templates are only a fallback for page types a theme does not write; Bento overrides all of them.
+A complete soft pastel store for printables, templates and e-books. Rounded tiles in peach, sage and sky, a teal call-to-action band, a navy pill for the main action. Every page type of the store has its own design in this theme: home, product (plus a digital alternate), collection, search, cart, 404 and content pages. The SDK's default templates are only a fallback for page types a theme does not write; Bento overrides all of them.
 
 | Mockup | Built theme (home) |
 | - | - |
@@ -23,7 +23,7 @@ More renders: [product](docs/live-product-desktop-ar.webp), [cart](docs/live-car
 theme.json            id, version 2.0.0, tokens (colours, fonts, radius, content width)
 layout/theme.snf      announcement, header, <main>, footer groups
 groups/               announcement.json, header.json, footer.json
-templates/            index, product, product.digital, collection, search, cart, checkout, 404, page
+templates/            index, product, product.digital, collection, search, cart, 404, page
 sections/             bento-header, bento-footer, announcement-bar, bento, tabs, perks, band,
                       product-main, collection-main, related-products, search-main, cart-main,
                       not-found, page-main

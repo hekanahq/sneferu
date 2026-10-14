@@ -350,25 +350,3 @@ form.arc-search input, .arc-search input { min-height: 44px; min-width: 0; paddi
   .sn-cart-list .sn-cart-item { grid-template-columns: 60px minmax(0, 1fr) auto; column-gap: 12px; }
   .arc-newsletter { padding: 16px; }
 }
-
-/* checkout: the page around the platform's own checkout form */
-.arc-co-head { display: grid; gap: 8px; margin-bottom: 20px; }
-.arc-co-head > p, .arc-co-head > h1 { margin: 0; }
-.arc-co-back { display: inline-flex; align-items: center; justify-self: start; min-height: 44px; color: var(--hk-color-muted); text-decoration: none; font-size: 14px; }
-.arc-co-back:hover { text-decoration: underline; }
-.arc-co-sub { color: var(--hk-color-muted); }
-.arc-co-notes { display: flex; flex-wrap: wrap; gap: 8px 12px; list-style: none; margin: 0 0 20px; padding: 0; }
-.arc-co-note { display: inline-flex; align-items: center; gap: 8px; margin: 0; font-size: 14px; line-height: 1.6; }
-.arc-co-foot { display: grid; gap: 6px; margin-top: 20px; font-size: 14px; color: var(--hk-color-muted); }
-.arc-co-foot p { margin: 0; }
-.arc-co-secure { display: inline-flex; align-items: center; gap: 8px; }
-.arc-co-support { display: inline-flex; align-items: center; justify-self: start; min-height: 44px; color: inherit; text-decoration: underline; }
-.arc-co-kicker { color: var(--arc-lime); font-family: var(--hk-font-mono, 'JetBrains Mono', monospace); font-size: 13px; text-transform: uppercase; letter-spacing: 0.12em; }
-[dir='rtl'] .arc-co-kicker { letter-spacing: 0; }
-.arc-co-back:hover { color: var(--arc-cyan); }
-.arc-co-note { padding: 6px 14px; border-radius: 999px; background: var(--hk-color-surface-2); border: 1px solid var(--hk-color-line); }
-.arc-co-note .sn-icon { color: var(--arc-lime); }
-.arc-co-neon .arc-co-note { border-color: color-mix(in srgb, var(--arc-cyan) 55%, transparent); box-shadow: 0 0 14px -4px color-mix(in srgb, var(--arc-cyan) 60%, transparent); }
-.arc-co-neon .arc-co-head h1 { text-shadow: 0 0 22px color-mix(in srgb, var(--arc-cyan) 55%, transparent); }
-.arc-co-glass .arc-co-head, .arc-co-glass .arc-co-foot { padding: 18px 22px; border-radius: 16px; border: 1px solid var(--hk-color-line); background: color-mix(in srgb, var(--hk-color-surface) 70%, transparent); backdrop-filter: blur(8px); }
-.arc-co-secure .sn-icon { color: var(--arc-cyan); }

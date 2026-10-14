@@ -414,29 +414,3 @@
 .cr-searchbox + .cr-count { margin-block: 4px 24px; }
 @media (max-width: 639px) { .cr-dash { display: none; } .cr-item-text { flex-basis: 100%; padding-inline-start: 20px; } }
 .cr .sn-cart-list { border-top: 0; }
-
-/* checkout: the page around the platform's own checkout form */
-.cr-co-head { display: grid; gap: 8px; margin-bottom: 20px; }
-.cr-co-head > p, .cr-co-head > h1 { margin: 0; }
-.cr-co-back { display: inline-flex; align-items: center; justify-self: start; min-height: 44px; color: var(--hk-color-muted); text-decoration: none; font-size: 14px; }
-.cr-co-back:hover { text-decoration: underline; }
-.cr-co-sub { color: var(--hk-color-muted); }
-.cr-co-notes { display: flex; flex-wrap: wrap; gap: 8px 12px; list-style: none; margin: 0 0 20px; padding: 0; }
-.cr-co-note { display: inline-flex; align-items: center; gap: 8px; margin: 0; font-size: 14px; line-height: 1.6; }
-.cr-co-foot { display: grid; gap: 6px; margin-top: 20px; font-size: 14px; color: var(--hk-color-muted); }
-.cr-co-foot p { margin: 0; }
-.cr-co-secure { display: inline-flex; align-items: center; gap: 8px; }
-.cr-co-support { display: inline-flex; align-items: center; justify-self: start; min-height: 44px; color: inherit; text-decoration: underline; }
-.cr-co-head { gap: 0; }
-.cr-co-back { margin-bottom: 8px; }
-.cr-co-notes { padding-block: 12px; border-block: 1px solid var(--hk-color-line); }
-.cr-co-note { font-size: 14px; }
-.cr-co-note .sn-icon { color: var(--hk-color-accent); }
-.cr-co-foot { padding-top: 16px; border-top: 1px solid var(--hk-color-text); }
-.cr-co-ink { background: var(--hk-color-primary); color: var(--hk-color-on-primary); }
-.cr-co-ink .cr-pagehead { border-bottom-color: var(--hk-color-on-primary); }
-.cr-co-ink .cr-lead, .cr-co-ink .cr-co-back, .cr-co-ink .cr-co-foot { color: color-mix(in srgb, var(--hk-color-on-primary) 75%, transparent); }
-.cr-co-ink .cr-co-foot { border-top-color: var(--hk-color-on-primary); }
-.cr-co-ink .cr-co-notes { border-color: color-mix(in srgb, var(--hk-color-on-primary) 30%, transparent); }
-.cr-co-clay { background: var(--hk-color-surface); }
-.cr-co-clay .cr-co-notes { border-block-color: var(--hk-color-accent); }

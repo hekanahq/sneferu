@@ -76,13 +76,10 @@ The compiler enforces most of these, and `validate` names the one you broke.
 2. **No JavaScript, no form controls.** Behaviour comes from tags:
    `hk-search-form` (the only form), `hk-variant-picker`, `hk-add-to-cart`,
    `hk-cart-count`, `hk-cart-items`, `hk-cart-summary`, `hk-cart-drawer`,
-   `hk-product-gallery`, `hk-pagination`, `hk-locale-switch`; on the checkout
-   page only, `hk-checkout-layout` with `hk-checkout-contact`, `-shipping`,
-   `-summary` and `-payment`, which Hekana mounts its own checkout into (each
-   once; `-payment` required; see [Design the checkout](https://hekana.dev/guide/design-the-checkout)). Menus and
+   `hk-product-gallery`, `hk-pagination`, `hk-locale-switch`. Menus and
    questions open with `<details>`; carousels are CSS scroll-snap.
 3. **Every page type.** A shippable theme has `templates/index`, `product`,
-   `collection`, `search`, `cart`, `checkout`, `page` and `404`, and places the
+   `collection`, `search`, `cart`, `page` and `404`, and places the
    `announcement`, `header` and `footer` groups in `layout/theme.snf`. A
    missing type falls back to the SDK's default store, which will not match
    your design.
