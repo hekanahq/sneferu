@@ -68,7 +68,8 @@
     </div>
     <div class="sf-footer-bottom">
       <p class="sf-copyright">
-        © {{ store.name }}{% if section.settings.copyright %}. {{ section.settings.copyright }}{% endif %}
+        {% if store.name %}© {{ store.name }}{% if section.settings.copyright %}. {{ section.settings.copyright }}{% endif %}{% elsif section.settings.copyright %}©
+          {{ section.settings.copyright }}{% endif %}
       </p>
       <div class="sf-payments" aria-label="{{ t('payment_methods') }}">
         {% for block in section.blocks %}{% if block.type == 'payment-method' %}<hk-block of="{{ block }}" />{% endif %}{% endfor %}
