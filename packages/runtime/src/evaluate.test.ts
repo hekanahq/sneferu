@@ -48,6 +48,26 @@ describe('evaluate', () => {
     expect(evaluate({ k: 'filter', name: 'img', input: lit('u.png'), args: [lit(400)] }, {}, ctx())).toBe('https://img.test/u.png?w=400');
     expect(f('json_attr', 'x')).toBe('"x"');
   });
+  it('tag_values reads the values of prefixed tags', () => {
+    const tv = (input: unknown, ...args: unknown[]) =>
+      evaluate({ k: 'filter', name: 'tag_values', input: lit(input as never), args: args.map((a) => lit(a as never)) }, {}, ctx());
+    const tags = ['top:Bergamot', 'Top: Lemon ', 'heart:Jasmine', 'top:Bergamot', 'top:', 'topnote', ':x', 'base:Musk', 5];
+    expect(tv(tags, 'top')).toEqual(['Bergamot', 'Lemon']);
+    expect(tv(tags, ' HEART ')).toEqual(['Jasmine']);
+    expect(tv(tags, 'base')).toEqual(['Musk']);
+    expect(tv(tags, 'none')).toEqual([]);
+    expect(tv(tags, '')).toEqual([]);
+    expect(tv(tags)).toEqual([]);
+    expect(tv(tags, 5)).toEqual([]);
+    expect(tv('top:a', 'top')).toEqual([]);
+    expect(tv(null, 'top')).toEqual([]);
+    expect(tv(Array.from({ length: 30 }, (_, i) => `n:v${i}`), 'n')).toHaveLength(20);
+    // a value may carry its Arabic after a bar: this test context is Arabic
+    const pair = ['top:Bergamot|برغموت', 'top:Mint | نعناع', 'top:Rose|', 'top:|نعناع', 'top:Rose'];
+    expect(tv(pair, 'top')).toEqual(['برغموت', 'نعناع', 'Rose']);
+    const en = (input: unknown) => evaluate({ k: 'filter', name: 'tag_values', input: lit(input as never), args: [lit('top')] }, {}, ctx({ locale: 'en', dir: 'ltr' }));
+    expect(en(pair)).toEqual(['Bergamot', 'Mint', 'Rose']);
+  });
   it('never throws', () => {
     const bad = ctx({ imageUrl: () => { throw new Error('x'); } });
     expect(evaluate({ k: 'filter', name: 'img', input: lit('u'), args: [] }, {}, bad)).toBeUndefined();
