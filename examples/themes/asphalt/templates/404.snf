@@ -1,0 +1,20 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "not-found"
+      },
+      {
+        "type": "drop-rail",
+        "settings": {
+          "collection": "featured",
+          "title": {
+            "ar": "آخر الدروب",
+            "en": "Latest drops"
+          }
+        }
+      }
+    ]
+  }
+</hk-schema>

@@ -1,0 +1,32 @@
+<article class="as-card as-card-{{ card_style }}">
+  <a class="as-card-link" href="{{ product.url }}">
+    <div class="as-card-media">
+      <hk-image
+        src="{{ product.image }}"
+        alt="{{ product.title }}"
+        aspect-ratio="{{ image_ratio }}"
+        sizes="(min-width: 1024px) 25vw, 50vw"
+      />
+      {% if show_badge %}
+        {% if product.available %}
+          {% if product.compare_at > product.price %}
+            <span class="as-sticker as-sticker-drop">{{ t('tag_sale') }}</span>
+          {% else %}
+            <span class="as-sticker">{{ t('tag_new') }}</span>
+          {% endif %}
+        {% else %}
+          <span class="as-sticker as-sticker-muted">{{ t('sold_out_badge') }}</span>
+        {% endif %}
+      {% endif %}
+    </div>
+    <h3 class="as-card-title">{{ product.title }}</h3>
+    {% if show_price %}{% render 'price', product: product, bind: false %}{% endif %}
+    {% if product.options %}
+      <ul class="as-sizes">
+        {% for o in product.options limit: 1 %}{% for v in o.values limit: 6 %}
+            <li>{{ v }}</li>
+          {% endfor %}{% endfor %}
+      </ul>
+    {% endif %}
+  </a>
+</article>

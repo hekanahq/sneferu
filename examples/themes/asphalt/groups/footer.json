@@ -1,0 +1,162 @@
+{
+  "sections": [
+    {
+      "id": "footer",
+      "type": "footer",
+      "settings": {
+        "menu": "",
+        "scheme": "primary",
+        "about_text": {
+          "ar": "ملابس شارع بمقاس واسع: هوديز وسنيكرز وكابات بالجنيه المصري.",
+          "en": "Street wear in relaxed fits: hoodies, sneakers and caps in Egyptian pounds."
+        },
+        "copyright": {
+          "ar": "جميع الحقوق محفوظة",
+          "en": "All rights reserved"
+        },
+        "show_newsletter": true,
+        "newsletter_title": {
+          "ar": "الدروب الجديدة",
+          "en": "New drops"
+        },
+        "newsletter_text": {
+          "ar": "كلمنا على واتساب نبلغك لما ينزل جديد.",
+          "en": "Message us on WhatsApp and we will tell you when a new drop lands."
+        },
+        "newsletter_label": {
+          "ar": "كلمنا",
+          "en": "Message us"
+        },
+        "newsletter_link": "/pages/contact",
+        "show_language": true
+      },
+      "blocks": [
+        {
+          "id": "col-shop",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "تسوق",
+              "en": "Shop"
+            }
+          },
+          "blocks": [
+            {
+              "id": "col-shop-all",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "كل المنتجات",
+                  "en": "All products"
+                },
+                "url": "/products"
+              }
+            },
+            {
+              "id": "col-shop-hoodies",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "هوديز",
+                  "en": "Hoodies"
+                },
+                "url": "/category/hoodies"
+              }
+            },
+            {
+              "id": "col-shop-sneakers",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "سنيكرز",
+                  "en": "Sneakers"
+                },
+                "url": "/category/sneakers"
+              }
+            },
+            {
+              "id": "col-shop-search",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "بحث",
+                  "en": "Search"
+                },
+                "url": "/search"
+              }
+            }
+          ]
+        },
+        {
+          "id": "col-help",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "مساعدة",
+              "en": "Help"
+            }
+          },
+          "blocks": [
+            {
+              "id": "col-help-about",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "عن أسفلت",
+                  "en": "About"
+                },
+                "url": "/pages/about"
+              }
+            },
+            {
+              "id": "col-help-contact",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "تواصل معنا",
+                  "en": "Contact"
+                },
+                "url": "/pages/contact"
+              }
+            }
+          ]
+        },
+        {
+          "id": "social-whatsapp",
+          "type": "social-link",
+          "settings": {
+            "label": {
+              "ar": "واتساب",
+              "en": "WhatsApp"
+            },
+            "url": "/pages/contact",
+            "icon": "message-circle"
+          }
+        },
+        {
+          "id": "contact-wa",
+          "type": "contact-line",
+          "settings": {
+            "icon": "message-circle",
+            "text": {
+              "ar": "تواصل معنا على واتساب",
+              "en": "Message us on WhatsApp"
+            },
+            "url": ""
+          }
+        },
+        {
+          "id": "pay-cod",
+          "type": "payment-method",
+          "settings": {
+            "label": {
+              "ar": "الدفع عند الاستلام",
+              "en": "Cash on delivery"
+            },
+            "icon": "banknote"
+          }
+        }
+      ]
+    }
+  ]
+}

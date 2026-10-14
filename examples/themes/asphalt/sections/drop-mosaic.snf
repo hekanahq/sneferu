@@ -1,0 +1,66 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="24">
+  {% if section.settings.title %}
+    <h2 class="as-h2 as-mosaic-title">{{ section.settings.title }}</h2>
+  {% endif %}
+  <div class="as-mosaic">
+    {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Tile mosaic",
+      "ar": "شبكة المربعات"
+    },
+    "version": 1,
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading (empty hides it)",
+          "ar": "العنوان (فاضي يخفيه)"
+        },
+        "localized": true,
+        "default": {
+          "ar": "تسوق بالقسم",
+          "en": "Shop by category"
+        },
+        "maxLength": 40
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 120,
+        "step": 8,
+        "default": 32
+      }
+    },
+    "blocks": {
+      "allowed": ["tile"],
+      "max": 6
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "Three tiles",
+          "ar": "ثلاثة مربعات"
+        },
+        "blocks": [
+          {
+            "type": "tile"
+          },
+          {
+            "type": "tile"
+          },
+          {
+            "type": "tile"
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>
