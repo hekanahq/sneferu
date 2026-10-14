@@ -1,2 +1,2 @@
 { "$schema": "https://unpkg.com/@changesets/config@3.0.0/schema.json", "changelog": "@changesets/cli/changelog",
-  "commit": false, "fixed": [["@hekana/sneferu*"]], "access": "public", "baseBranch": "main", "updateInternalDependencies": "patch" }
+  "commit": false, "fixed": [["@hekana/sneferu*", "@hekana/prettier-plugin-sneferu"]], "access": "public", "baseBranch": "main", "updateInternalDependencies": "patch" }
