@@ -75,10 +75,10 @@
 .dw-search-page-form { max-width: 520px; margin: 20px auto; }
 
 /* Trust strip */
-.dw-trust-list { list-style: none; margin: 0 auto; padding: 0; display: flex; justify-content: center; gap: 16px 64px; flex-wrap: wrap; }
-.dw-trust-item { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; color: var(--hk-color-text); }
+.dw-trust-list { list-style: none; margin: 0 auto; padding: 0; display: flex; justify-content: center; gap: 20px 72px; flex-wrap: wrap; }
+.dw-trust-item { display: inline-flex; align-items: center; gap: 12px; font-size: 16px; font-weight: 600; color: var(--hk-color-text); }
 .dw-trust-icon { display: inline-flex; color: var(--hk-color-primary); }
-.dw-trust-icon .ic, .dw-trust-icon .sn-icon { width: 26px; height: 26px; }
+.dw-trust-icon .ic, .dw-trust-icon .sn-icon { width: 32px; height: 32px; }
 
 /* Hero: wide pharmacy photo with the prescription card overlapping its lower edge */
 .dw-sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
@@ -252,8 +252,8 @@
   .sn-was { margin-inline-start: 0; font-size: 12px; }
   .dw-trust-list { flex-direction: column; align-items: flex-start; gap: 14px; width: fit-content; }
   .dw-hero-media { border-radius: 20px; }
-  .dw-hero { margin-bottom: 56px; }
-  .dw-rx { width: min(260px, 78%); }
+  .dw-hero { margin-bottom: 0; }
+  .dw-rx { position: relative; inset-block-end: auto; width: min(300px, 88%); margin-top: -12px; padding: 14px 16px 16px; }
   .dw-tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
   .dw-tile-card { width: auto; }
   .dw-product-info { padding: 20px; }

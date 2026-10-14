@@ -11,10 +11,10 @@
           {
             "type": "trust",
             "settings": {
-              "icon": "pharmacist",
+              "icon": "message-circle",
               "label": {
-                "ar": "اسأل الصيدلي على واتساب",
-                "en": "Ask the pharmacist on WhatsApp"
+                "ar": "تواصل معنا على واتساب",
+                "en": "Message us on WhatsApp"
               }
             }
           },

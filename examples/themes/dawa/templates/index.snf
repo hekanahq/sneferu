@@ -5,7 +5,7 @@
       {
         "type": "dawa-hero",
         "settings": {
-          "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/dawa/hero.webp"
+          "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/dawa/hero2.webp"
         }
       },
       {
@@ -69,10 +69,10 @@
           {
             "type": "trust",
             "settings": {
-              "icon": "pharmacist",
+              "icon": "message-circle",
               "label": {
-                "ar": "اسأل الصيدلي على واتساب",
-                "en": "Ask the pharmacist on WhatsApp"
+                "ar": "تواصل معنا على واتساب",
+                "en": "Message us on WhatsApp"
               }
             }
           },

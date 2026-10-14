@@ -178,18 +178,6 @@
           }
         },
         {
-          "id": "contact-hours",
-          "type": "contact-line",
-          "settings": {
-            "icon": "clock",
-            "text": {
-              "ar": "من السبت للخميس، 9 ص إلى 9 م",
-              "en": "Saturday to Thursday, 9am to 9pm"
-            },
-            "url": ""
-          }
-        },
-        {
           "id": "pay-cod",
           "type": "payment-method",
           "settings": {

@@ -28,7 +28,7 @@
           "leaf",
           "cross"
         ],
-        "default": "pharmacist"
+        "default": "message-circle"
       },
       "label": {
         "type": "text",
@@ -38,8 +38,8 @@
         },
         "localized": true,
         "default": {
-          "ar": "اسأل الصيدلي",
-          "en": "Ask the pharmacist"
+          "ar": "تواصل معنا على واتساب",
+          "en": "Message us on WhatsApp"
         },
         "maxLength": 60
       }
