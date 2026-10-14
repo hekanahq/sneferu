@@ -13,4 +13,4 @@ export { applyMigrations, compareSemver, MAX_MIGRATION_NODES, type Migration, ty
 export { themeTokenCss, onColor } from './tokens';
 export { themeFontCss } from './fonts';
 export { normalizeMenu, menuPathKey, MAX_MENU_DEPTH, MAX_MENU_ITEMS } from './menus';
-export { splitCheckout, type CheckoutSplit } from './checkout';
+export { splitCheckout, restrictCheckoutLinks, type CheckoutSplit } from './checkout';

@@ -25,6 +25,12 @@ describe('sectionAllowedOn', () => {
   it('allows everywhere without a list, else page type, exact alternate or group', () => {
     expect(sectionAllowedOn({}, 'cart')).toBe(true);
     expect(sectionAllowedOn(undefined, 'header')).toBe(true);
+    // the checkout page takes only the sections that name it
+    expect(sectionAllowedOn({}, 'checkout')).toBe(false);
+    expect(sectionAllowedOn(undefined, 'checkout')).toBe(false);
+    expect(sectionAllowedOn({ templates: ['cart'] }, 'checkout')).toBe(false);
+    expect(sectionAllowedOn({ templates: ['checkout'] }, 'checkout')).toBe(true);
+    expect(sectionAllowedOn({ templates: ['checkout'] }, 'cart')).toBe(false);
     expect(sectionAllowedOn({ templates: ['product'] }, 'product.codes')).toBe(true);
     expect(sectionAllowedOn({ templates: ['product.codes'] }, 'product')).toBe(false);
     expect(sectionAllowedOn({ templates: ['header'] }, 'footer')).toBe(false);

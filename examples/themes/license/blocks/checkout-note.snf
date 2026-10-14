@@ -1,0 +1,49 @@
+<p class="ls-co-note">
+  <hk-icon name="{{ block.settings.icon }}" />
+  <span>{{ block.settings.text }}</span>
+</p>
+<hk-schema>
+  {
+    "name": {
+      "en": "Checkout note",
+      "ar": "ملاحظة في إتمام الشراء"
+    },
+    "version": 1,
+    "settings": {
+      "icon": {
+        "type": "select",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
+        "options": [
+          "shield-check",
+          "lock",
+          "truck",
+          "package",
+          "gift",
+          "message-circle",
+          "phone",
+          "clock",
+          "check",
+          "zap",
+          "key"
+        ],
+        "default": "shield-check"
+      },
+      "text": {
+        "type": "text",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "دفع آمن",
+          "en": "Secure payment"
+        },
+        "localized": true,
+        "maxLength": 60
+      }
+    }
+  }
+</hk-schema>

@@ -378,3 +378,23 @@ dialog.sn-cart-drawer .sn-cart-subtotal-value { color: var(--hk-color-accent); }
   .ls-footer-grid { grid-template-columns: 1fr; gap: 14px; }
   .ls-empty .ls-nf-code { font-size: 64px; }
 }
+
+/* checkout: the page around the platform's own checkout form */
+.ls-co-head { display: grid; gap: 8px; margin-bottom: 20px; }
+.ls-co-head > p, .ls-co-head > h1 { margin: 0; }
+.ls-co-back { display: inline-flex; align-items: center; justify-self: start; min-height: 44px; color: var(--hk-color-muted); text-decoration: none; font-size: 14px; }
+.ls-co-back:hover { text-decoration: underline; }
+.ls-co-sub { color: var(--hk-color-muted); }
+.ls-co-notes { display: flex; flex-wrap: wrap; gap: 8px 12px; list-style: none; margin: 0 0 20px; padding: 0; }
+.ls-co-note { display: inline-flex; align-items: center; gap: 8px; margin: 0; font-size: 14px; line-height: 1.6; }
+.ls-co-foot { display: grid; gap: 6px; margin-top: 20px; font-size: 14px; color: var(--hk-color-muted); }
+.ls-co-foot p { margin: 0; }
+.ls-co-secure { display: inline-flex; align-items: center; gap: 8px; }
+.ls-co-support { display: inline-flex; align-items: center; justify-self: start; min-height: 44px; color: inherit; text-decoration: underline; }
+.ls-co-kicker { width: fit-content; padding: 3px 12px; border-radius: 999px; background: color-mix(in srgb, var(--hk-color-accent) 16%, transparent); color: var(--hk-color-accent); font-size: 13px; font-weight: 600; }
+.ls-co-note { padding: 8px 14px; border-radius: 12px; background: var(--hk-color-surface); border: 1px solid var(--hk-color-line); }
+.ls-co-note .sn-icon, .ls-co-secure .sn-icon { color: var(--hk-color-accent); }
+.ls-co-blue .ls-co-head { padding: 20px 24px; border-radius: 16px; background: linear-gradient(180deg, var(--hk-color-tier), var(--hk-color-tier-deep)); }
+.ls-co-lime .ls-co-head { padding: 20px 24px; border-radius: 16px; background: var(--hk-color-accent); color: var(--hk-color-on-accent); }
+.ls-co-lime .ls-co-head .ls-co-sub, .ls-co-lime .ls-co-head .ls-co-back, .ls-co-lime .ls-co-head .ls-co-kicker { color: var(--hk-color-on-accent); }
+.ls-co-lime .ls-co-head .ls-co-kicker { background: color-mix(in srgb, var(--hk-color-on-accent) 12%, transparent); }

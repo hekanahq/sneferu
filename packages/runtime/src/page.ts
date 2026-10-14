@@ -6,6 +6,7 @@ import { checkArtifactShape } from './shape';
 import { themeTokenCss } from './tokens';
 import { themeFontCss } from './fonts';
 import { bindMenuRequest } from './menus';
+import { restrictCheckoutLinks } from './checkout';
 
 interface Schemaed { ir: IRNode[]; schema: { settings: FieldSchema } }
 interface DefaultSection { type: string; settings: Record<string, unknown>; hidden?: boolean; blocks?: DefaultSection[] }
@@ -254,7 +255,11 @@ function render(artifact: ArtifactLike, opts: RenderOptions): RenderResult {
 
   env.blocks = artifact.blocks;
 
-  const content = () => renderNodes(template, base, { ...env, slots: { sections: () => sections.filter((s) => !(isObj(s) && s.hidden)).map((s) => renderSection(s)).join('') } });
+  const content = () => {
+    const out = renderNodes(template, base, { ...env, slots: { sections: () => sections.filter((s) => !(isObj(s) && s.hidden)).map((s) => renderSection(s)).join('') } });
+    // the shopper is about to pay: the page's own content cannot lead off to another site (the header and footer are the store's navigation)
+    return pageType === 'checkout' ? restrictCheckoutLinks(out) : out;
+  };
   // only the layout places section groups; sections, templates and snippets rendered from here get no group renderer
   const inner = renderNodes(artifact.layout, base, { ...env, slots: { content }, group: renderGroup });
   const html = `<div data-hk-theme="${escapeAttr(artifact.manifest.id)}" dir="${escapeAttr(dir)}" lang="${escapeAttr(locale)}">${inner}</div>`;

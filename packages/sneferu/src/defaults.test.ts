@@ -98,7 +98,7 @@ describe('the footer copyright line', () => {
 
 describe('the example themes are complete stores of their own', () => {
   const names = ['arcade', 'bento', 'console', 'creator', 'esports', 'license'];
-  const own = ['index', 'product', 'product.digital', 'collection', 'search', 'cart', 'page', '404'];
+  const own = ['index', 'product', 'product.digital', 'collection', 'search', 'cart', 'checkout', 'page', '404'];
   for (const name of names) {
     const dir = join(root, 'examples/themes', name);
     const files = load(dir);
@@ -107,7 +107,7 @@ describe('the example themes are complete stores of their own', () => {
     const a = artifact as unknown as ArtifactLike & { locales: Record<string, Record<string, string>>; manifest: { defaultLocale?: string; locales: ('ar' | 'en')[] } };
     it(`${name}: validates clean and ships its own template for every page type`, () => {
       expect(diagnostics.filter((d) => d.severity === 'error').map(formatDiagnostic)).toEqual([]);
-      expect(a.manifest).toMatchObject({ version: '2.0.0' });
+      expect(a.manifest).toMatchObject({ version: '2.1.0' });
       for (const t of own) expect(readdirSync(join(dir, 'templates')), `${name} templates`).toContain(`${t}.snf`);
       // nothing is filled in from the SDK's default store: the theme overrides every page type and group
       expect(artifact!.defaults?.templates ?? []).toEqual([]);
@@ -116,7 +116,7 @@ describe('the example themes are complete stores of their own', () => {
     });
     it(`${name}: every page type renders through the theme with the shared header and footer`, () => {
       for (const locale of a.manifest.locales) {
-        for (const url of ['/', '/products/sample-1', '/products', '/category/new', '/search?q=card', '/cart', '/pages/about', '/nope']) {
+        for (const url of ['/', '/products/sample-1', '/products', '/category/new', '/search?q=card', '/cart', '/checkout', '/pages/about', '/nope']) {
           const r = page(a, url, locale, sampleRaw);
           expect(r.diagnostics.map(formatDiagnostic), `${name} ${locale} ${url}`).toEqual([]);
           expect(r.html).toContain(`data-hk-theme="${a.manifest.id}"`);

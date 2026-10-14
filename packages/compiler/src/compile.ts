@@ -204,7 +204,8 @@ export function compileTheme(files: ThemeFile[], registry: TagRegistry, options:
   const coSnippets: Parameters<typeof checkCheckout>[0]['snippets'] = {};
   for (const name of Object.keys(snippets)) { const f = fileCo(fileOf(`snippets/${name}`)); if (f) coSnippets[name] = f; }
   const coTemplate = Object.hasOwn(templates, 'checkout') ? fileCo(fileOf('templates/checkout')) : undefined;
-  diagnostics.push(...checkCheckout({ ...(coTemplate ? { template: coTemplate } : {}), sections: coSections, blocks: coBlocks, snippets: coSnippets, defaultSections: (templateSections.checkout ?? []).map((e) => e.type) }));
+  const coOthers = [fileOf('layout/theme'), ...Object.keys(templates).filter((n) => n !== 'checkout').map((n) => fileOf(`templates/${n}`))].map(fileCo).filter((f): f is CheckoutFile => f !== undefined);
+  diagnostics.push(...checkCheckout({ ...(coTemplate ? { template: coTemplate } : {}), sections: coSections, blocks: coBlocks, snippets: coSnippets, others: coOthers, defaultSections: (templateSections.checkout ?? []).map((e) => e.type) }));
   for (const [name, b] of Object.entries(sections)) {
     const nodes = asts.get(fileOf(`sections/${name}`));
     const held = nodes ? privilegedTagsOf(nodes) : [];

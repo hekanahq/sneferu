@@ -1,4 +1,4 @@
-import { CHECKOUT_CARD_STYLES, CHECKOUT_COLUMNS, CHECKOUT_CTA_MAX, CHECKOUT_DENSITIES, CHECKOUT_FLOW, CHECKOUT_HEADING_MAX, CHECKOUT_PARTS, CHECKOUT_SUMMARY_POSITIONS, type CheckoutFlowPart, type CheckoutPart, type CheckoutPresentation } from '@hekana/sneferu-core';
+import { isCheckoutLinkAllowed, CHECKOUT_CARD_STYLES, CHECKOUT_COLUMNS, CHECKOUT_CTA_MAX, CHECKOUT_DENSITIES, CHECKOUT_FLOW, CHECKOUT_HEADING_MAX, CHECKOUT_PARTS, CHECKOUT_SUMMARY_POSITIONS, type CheckoutFlowPart, type CheckoutPart, type CheckoutPresentation } from '@hekana/sneferu-core';
 
 /** The checkout page cut around the placeholder the host fills with its own checkout. */
 export interface CheckoutSplit {
@@ -67,4 +67,12 @@ export function splitCheckout(html: string): CheckoutSplit | null {
     after: html.slice(i),
     presentation: { columns, summary, sticky: sticky === 'true', density, card, order, headings, ...(cta ? { cta } : {}) },
   };
+}
+
+/**
+ * The checkout page's own content with every link that may not leave the store (see isCheckoutLinkAllowed) turned into `#`.
+ * The runtime prints attributes only as `href="…"` with the value escaped, so one pass over that shape covers them all.
+ */
+export function restrictCheckoutLinks(html: string): string {
+  return html.replace(/(\shref=")([^"]*)(")/g, (m, a: string, v: string, z: string) => (isCheckoutLinkAllowed(unescape(v)) ? m : `${a}#${z}`));
 }

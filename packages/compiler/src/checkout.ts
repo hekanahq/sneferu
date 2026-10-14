@@ -1,5 +1,5 @@
 import {
-  CHECKOUT_ALLOWED_TAGS, CHECKOUT_DATA_HEADS, CHECKOUT_DENIED_FILTERS, CHECKOUT_DENIED_LOOKUPS, CHECKOUT_LAYOUT_TAG, CHECKOUT_PART_TAGS, CHECKOUT_TAGS, err, isCheckoutTag, parseTemplateName,
+  CHECKOUT_ALLOWED_TAGS, CHECKOUT_DATA_HEADS, isCheckoutLinkAllowed, CHECKOUT_DENIED_FILTERS, CHECKOUT_DENIED_LOOKUPS, CHECKOUT_LAYOUT_TAG, CHECKOUT_PART_TAGS, CHECKOUT_TAGS, err, isCheckoutTag, parseTemplateName,
   type Diagnostic, type Expr,
 } from '@hekana/sneferu-core';
 import type { AstNode } from './ast';
@@ -14,6 +14,8 @@ export interface CheckoutInput {
   sections: Record<string, CheckoutFile & { schema: SectionSchema }>;
   blocks: Record<string, CheckoutFile & { schema: SectionSchema }>;
   snippets: Record<string, CheckoutFile>;
+  /** The layout and every template but `checkout`: files that may never hold a checkout tag. */
+  others: CheckoutFile[];
   /** The default sections of the checkout template (`<hk-schema>` `sections`), by type, in order; blocks of them are not needed. */
   defaultSections: string[];
 }
@@ -53,7 +55,7 @@ export function checkCheckout(input: CheckoutInput): Diagnostic[] {
   const pagePaths = new Set(pageFiles.map((f) => f.path));
 
   // 1) privileged tags anywhere else
-  const everywhere: CheckoutFile[] = [...Object.values(input.sections), ...Object.values(input.blocks), ...Object.values(input.snippets)];
+  const everywhere: CheckoutFile[] = [...Object.values(input.sections), ...Object.values(input.blocks), ...Object.values(input.snippets), ...input.others];
   const anyTag = (list: AstNode[], visit: (n: Extract<AstNode, { t: 'el' }>, parent: string | undefined) => void, parent?: string): void => {
     for (const n of list) {
       if (n.t === 'el') { visit(n, parent); anyTag(n.children, visit, n.tag); }
@@ -148,7 +150,12 @@ export function checkCheckout(input: CheckoutInput): Diagnostic[] {
             const ok = BUILTIN.has(n.tag) || CHECKOUT_ALLOWED_TAGS.includes(n.tag) || isCheckoutTag(n.tag);
             if (!ok) out.push(err('SN2024', `<${n.tag}> is not allowed on the checkout page: it takes layout, typography, image and link tags (${CHECKOUT_ALLOWED_TAGS.join(', ')}) and the checkout tags`, at(f, n)));
           } else if (MEDIA_DENIED.has(n.tag)) out.push(err('SN2026', `<${n.tag}> is not allowed on the checkout page`, at(f, n)));
-          for (const a of n.attrs) for (const p of a.parts) if (typeof p !== 'string') expr(p, { file: f.path, ...a.loc });
+          for (const a of n.attrs) {
+            for (const p of a.parts) if (typeof p !== 'string') expr(p, { file: f.path, ...a.loc });
+            if (a.name === 'href' && a.parts.length > 0 && a.parts.every((p) => typeof p === 'string') && !isCheckoutLinkAllowed((a.parts as string[]).join(''))) {
+              out.push(err('SN2028', `a link on the checkout page cannot lead off the store: use a store path, mailto:, tel: or a chat or social https link (the page never prints any other)`, { file: f.path, ...a.loc }));
+            }
+          }
           visit(n.children, n.tag);
         }
       }

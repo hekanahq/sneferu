@@ -36,7 +36,7 @@ or \`sneferu <command>\` after \`npm i -g sneferu\` (\`sneferu\` is the short na
 | - | - |
 | \`theme.json\` | id, name, version, locales, theme settings, \`tokens\` (colours, fonts, layout), \`money.format\` |
 | \`layout/theme.snf\` | The frame: \`<hk-section-group name="announcement\\|header\\|footer" />\` and \`<hk-slot name="content" />\` |
-| \`templates/<type>.snf\` | One per page type: \`index\`, \`product\`, \`collection\`, \`search\`, \`cart\`, \`page\`, \`404\` (alternates like \`product.digital.snf\`). Usually \`<hk-sections />\` plus an \`<hk-schema>\` listing the default sections |
+| \`templates/<type>.snf\` | One per page type: \`index\`, \`product\`, \`collection\`, \`search\`, \`cart\`, \`checkout\`, \`page\`, \`404\` (alternates like \`product.digital.snf\`). Usually \`<hk-sections />\` plus an \`<hk-schema>\` listing the default sections |
 | \`groups/<name>.json\` | The sections the header, footer and announcement bar start with |
 | \`sections/*.snf\` | Page parts the merchant adds, reorders and edits; each ends with an \`<hk-schema>\` |
 | \`blocks/*.snf\` | Repeatable items inside a section (a menu link, a slide, a question) |
@@ -59,8 +59,11 @@ The compiler enforces most of these; \`validate\` names the rule you broke.
 2. **No JavaScript and no form controls.** Behaviour comes from tags:
    \`hk-search-form\` (the only form), \`hk-variant-picker\`, \`hk-add-to-cart\`,
    \`hk-cart-count\`, \`hk-cart-items\`, \`hk-cart-summary\`, \`hk-cart-drawer\`,
-   \`hk-product-gallery\`. Open menus and questions with \`<details>\`, carousels
-   with CSS scroll-snap.
+   \`hk-product-gallery\`. On the checkout page only, \`hk-checkout-layout\` with
+   \`hk-checkout-contact\`, \`-shipping\`, \`-summary\` and \`-payment\` mark where
+   Hekana mounts its own checkout (each once, \`-payment\` required; the page
+   holds no forms, no cart or price data). Open menus and questions with
+   \`<details>\`, carousels with CSS scroll-snap.
 3. **Nothing visible is written into a template.** Headings and paragraphs are
    \`text\`/\`textarea\` settings with \`"localized": true\` and \`{ "ar": …, "en": … }\`
    defaults; links and images are \`link\`/\`image\` settings; repeated items are

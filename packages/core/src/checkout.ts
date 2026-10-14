@@ -63,3 +63,27 @@ export const CHECKOUT_DATA_HEADS: readonly string[] = Object.freeze(['settings',
 /** Lookups and filters that read catalogue data or print prices; the checkout page has none of either. */
 export const CHECKOUT_DENIED_LOOKUPS: readonly string[] = Object.freeze(['collection', 'product', 'collections']);
 export const CHECKOUT_DENIED_FILTERS: readonly string[] = Object.freeze(['money']);
+
+/**
+ * Where a link on the checkout page may lead. The shopper is about to type a phone number and pay: a theme must not be
+ * able to put a button there that leads off to another site. Store paths, anchors, `mailto:` and `tel:` are fine, and
+ * https links to the chat and social sites a store lists as its support and profile pages.
+ */
+export const CHECKOUT_LINK_HOSTS: readonly string[] = Object.freeze([
+  'wa.me', 'whatsapp.com', 'facebook.com', 'fb.com', 'fb.me', 'messenger.com', 'm.me', 'instagram.com', 'tiktok.com', 'x.com', 'twitter.com',
+  'youtube.com', 'youtu.be', 'linkedin.com', 't.me', 'telegram.me', 'snapchat.com', 'pinterest.com',
+]);
+export function isCheckoutLinkAllowed(raw: string): boolean {
+  const s = raw.trim();
+  if (s === '' || s === '#') return true;
+  if (s.startsWith('//') || s.includes('\\') || /[\u0000-\u001F\u007F]/.test(s)) return false;
+  if (/^(?:\/(?!\/)|#|\?)/.test(s)) return true;
+  const scheme = /^([a-zA-Z][a-zA-Z0-9+.-]*):/.exec(s);
+  if (!scheme) return true; // a relative path (`products/x`)
+  const name = scheme[1]!.toLowerCase();
+  if (name === 'mailto' || name === 'tel') return true;
+  if (name !== 'https') return false;
+  const host = /^https:\/\/([^/?#:@\\]+)(?::\d+)?(?:[/?#]|$)/i.exec(s)?.[1]?.toLowerCase();
+  if (!host) return false;
+  return CHECKOUT_LINK_HOSTS.some((h) => host === h || host.endsWith(`.${h}`));
+}

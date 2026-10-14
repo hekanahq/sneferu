@@ -69,7 +69,8 @@ A section may list where it makes sense:
 
 Entries are page types (`product`), exact alternates (`product.codes`) or
 groups (`header`). The builder offers the section only there; leave it out for
-"everywhere". A bad list is SN3040; a default section placed where its list
+"everywhere" (except the checkout page, which takes only sections that list
+`checkout`). A bad list is SN3040; a default section placed where its list
 forbids is SN3041. `blocks.allowed` must name blocks that exist (SN3042).
 When the page renders, a section in a group whose list does not name that
 group is skipped (SN4014), so a stored group cannot bring a section somewhere
