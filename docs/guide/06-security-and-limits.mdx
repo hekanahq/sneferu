@@ -37,6 +37,7 @@ GET form to the store's search page.
 | Forms and inputs | `hk-search-form` for a search box, `hk-button` for links that look like buttons, and the cart tags (`hk-variant-picker`, `hk-add-to-cart`, `hk-cart-items`, `hk-cart-summary`, `hk-cart-drawer`, see [Cart and controllers](17-cart-and-controllers.mdx)). Checkout is the store's own page |
 | Inline `<style>` or `<link rel="stylesheet">` | `assets/*.css` |
 | Dynamic `style="…{{ }}…"` (SN2009) | classes, `data-*` + CSS, tokens, tag props |
+| `{% if %}` inside an attribute value (SN2020) | `class="btn btn-{{ x }}"` with a select setting, or `{% if %}` around two versions of the element |
 | Embeds (`iframe`, `object`, `embed`) | none |
 | Reading arbitrary data | only the scope in [chapter 4](04-data-and-expressions.mdx) |
 
@@ -48,7 +49,7 @@ Rejected (SN2002):
 - `srcdoc`, `formaction`, `attributename`, `xml:base`;
 - any name outside `[a-z_:][a-z0-9_:.-]*`.
 
-Also rejected: `style` containing `{{ }}` (SN2009).
+Also rejected: `style` containing `{{ }}` (SN2009), and a `{% %}` directive inside any attribute value (SN2020).
 
 ## URLs
 

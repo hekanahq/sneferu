@@ -124,7 +124,7 @@ export function validateTemplate(
         for (const a of n.attrs) {
           a.parts.forEach((x) => typeof x !== 'string' && exprs(x, a));
           if (isForbiddenAttribute(a.name) || !ATTR_NAME.test(a.name)) out.push(err('SN2002', `attribute '${a.name}' is not allowed`, { file: opts.file, ...a.loc }));
-          if (a.parts.some((p) => typeof p === 'string' && /\{%|%\}/.test(p))) out.push(err('SN2020', `'${a.name}' contains a {% %} directive; {% if %}, {% for %} and {% render %} work around elements, not inside an attribute value. Print a value with {{ }} (class="btn btn-{{ block.settings.style }}" with a select setting), or put the {% if %} around two versions of the element`, { file: opts.file, ...a.loc }));
+          if (a.parts.some((p) => typeof p === 'string' && /\{%/.test(p))) out.push(err('SN2020', `'${a.name}' contains a {% %} directive; {% if %}, {% for %} and {% render %} work around elements, not inside an attribute value. Print a value with {{ }} (class="btn btn-{{ block.settings.style }}" with a select setting), or put the {% if %} around two versions of the element`, { file: opts.file, ...a.loc }));
           if (a.name === 'style' && a.parts.some((p) => typeof p !== 'string')) out.push(err('SN2009', 'style attributes cannot contain {{ }}; use classes, tokens or component props', { file: opts.file, ...a.loc }));
           if (isUrlAttribute(a.name) && a.parts.length > 0 && a.parts.every((p) => typeof p === 'string')) {
             const v = (a.parts as string[]).join('');

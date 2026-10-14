@@ -130,13 +130,13 @@ export function pageDependencies(artifact: ArtifactLike, opts: PageDependencyOpt
     fromSettings(rec(a.manifest).settings, rec(opts).settings, out);
 
     const saved = rec(opts).sections;
-    const seed = (r: Record<string, unknown>): unknown => ({ type: r.type, props: r.settings, children: arr(r.blocks).map((b) => seed(rec(b))) });
+    const seed = (r: Record<string, unknown>, depth = 0): unknown => ({ type: r.type, props: r.settings, children: depth < 2 ? arr(r.blocks).map((b) => seed(rec(b), depth + 1)) : [] });
     const used = Array.isArray(saved) ? saved : arr(own(rec(a.templateSections), template)).map((s) => {
       const r = rec(s);
       return seed(r);
     });
     const visit = (node: unknown, depth: number): void => {
-      if (out.done || depth > 3) return;
+      if (out.done || depth > 2) return;
       const n = rec(node);
       if (typeof n.type !== 'string' || n.hidden) return;
       const def = rec(own(depth === 0 ? sectionDefs : blockDefs, n.type));

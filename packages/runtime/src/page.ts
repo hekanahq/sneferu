@@ -201,7 +201,7 @@ function render(artifact: ArtifactLike, opts: RenderOptions): RenderResult {
   const base: Scope = { ...(opts.scope ?? {}), store: ctx.store, locale, dir, ...page };
 
   /** A default entry as a page node; its blocks (and theirs) keep ids `default-i-j-k`. The renderer reads two levels under a section. */
-  const seed = (e: DefaultSection, id: string): PageNode => ({ id, type: e.type, props: e.settings, ...(Array.isArray(e.blocks) ? { children: e.blocks.map((b, j) => seed(b, `${id}-${j}`)) } : {}) });
+  const seed = (e: DefaultSection, id: string, depth = 0): PageNode => ({ id, type: e.type, props: e.settings, ...(depth < 2 && Array.isArray(e.blocks) ? { children: e.blocks.filter(isObj).map((b, j) => seed(b as DefaultSection, `${id}-${j}`, depth + 1)) } : {}) });
   const sections: PageNode[] = Array.isArray(opts.sections) ? opts.sections : (own(artifact.templateSections, opts.template) ?? []).map((s, i) => seed(s, `default-${i}`));
 
   const defaultSections = new Set<string>(Array.isArray(artifact.defaults?.sections) ? artifact.defaults!.sections.filter((x): x is string => typeof x === 'string') : []);

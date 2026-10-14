@@ -68,6 +68,9 @@ describe('validateTemplate', () => {
       expect(e.message).toContain('{% if %}');
       expect(e.message).toMatch(/\{\{ .* \}\}/);
     });
+    it('does not mistake a lone %} for a directive', () => {
+      expect(run('<div data-x="{50%}" title="a%}b"></div>')).toEqual([]);
+    });
     it('leaves {{ }} output, and directives around whole elements, alone', () => {
       expect(run('<a class="plan-btn plan-btn-{{ block.settings.featured }}" href="/">x</a>')).toEqual([]);
       expect(run('{% if x %}<a class="plan-btn is-featured" href="/">x</a>{% else %}<a class="plan-btn" href="/">x</a>{% endif %}')).toEqual([]);
