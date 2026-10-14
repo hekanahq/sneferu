@@ -1,7 +1,7 @@
 {
   "id": "aafia",
   "name": "Aafia",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Hekana",
   "description": "A natural wellness store: warm beige ground, sage and forest green, a banner with a soft panel, benefit chips on product cards and a gradient routine banner, on every page.",
   "category": "health",
@@ -10,6 +10,9 @@
   "defaultLocale": "ar",
   "locales": ["ar", "en"],
   "settings": {},
+  "money": {
+    "format": "whole"
+  },
   "tokens": {
     "colors": {
       "primary": "#4F6B4B",

@@ -33,7 +33,7 @@
           {
             "type": "benefit",
             "settings": {
-              "icon": "gift",
+              "icon": "star",
               "label": {
                 "ar": "عسل وأغذية طبيعية",
                 "en": "Honey and pantry"
