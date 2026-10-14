@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.7.0
+
+### Minor Changes
+
+- 9e70ef1: New `tag_values` filter: `{{ product.tags | tag_values: 'top' }}` returns the values of the tags written `top:Bergamot`, so a template can build structured content (fragrance notes, materials) from plain product tags.
+
+### Patch Changes
+
+- e598653: A template's default sections now keep blocks nested inside blocks (for example the checklist lines of a plan), so they render on a new store and their collections and products are fetched.
+- Updated dependencies [72893bc]
+- Updated dependencies [9e70ef1]
+  - @hekana/sneferu-core@0.7.0
+
 ## 0.6.0
 
 ### Minor Changes

@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.7.0
+
+### Minor Changes
+
+- e598653: New error SN2020: a `{% if %}`, `{% for %}` or `{% render %}` inside an attribute value is refused. It used to pass `validate` and render as stray class names. The message says to print a value with `{{ }}` or to put the `{% if %}` around two versions of the element.
+
+### Patch Changes
+
+- Updated dependencies [72893bc]
+- Updated dependencies [e598653]
+- Updated dependencies [9e70ef1]
+  - @hekana/sneferu-core@0.7.0
+  - @hekana/sneferu-templates-default@0.7.0
+
 ## 0.6.0
 
 ### Minor Changes

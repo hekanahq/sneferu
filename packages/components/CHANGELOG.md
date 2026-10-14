@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.7.0
+
+### Patch Changes
+
+- Updated dependencies [72893bc]
+- Updated dependencies [9e70ef1]
+  - @hekana/sneferu-core@0.7.0
+
 ## 0.6.0
 
 ### Minor Changes

@@ -1,6 +1,6 @@
 {
   "name": "@hekana/sneferu-controllers",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Sneferu controllers: the vetted client runtime for variant picker, add to cart, cart drawer and cart rendering",
   "type": "module",
   "sideEffects": false,
