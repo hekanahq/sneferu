@@ -107,10 +107,11 @@ Only `type` and `label` are needed. One example of each type:
 
 Notes:
 
-- `product` and `collection` store a handle string. `product('…')` and
-  `collection('…')` take **literal** arguments only, so
-  `collection(section.settings.collection)` is a compile error (SN1105). Use a
-  fixed handle in the template (see the [cookbook's product grid](08-cookbook.mdx#product-grid)).
+- `product` and `collection` store a handle string. `product()` and
+  `collection()` take a literal handle or a setting of their own type:
+  `collection(section.settings.collection)` reads the collection the merchant
+  picked. Any other argument is SN1105 (see
+  [Data and expressions](04-data-and-expressions.mdx)).
 - `required`, `visible_if` (show this field only when another setting equals a
   value) and `responsive` are hints for the editor. Rendering does not enforce
   `required`; always set a sensible `default`.
@@ -290,7 +291,7 @@ six, and edits each one. Each quote is a block.
 <Result>
   <Shot tab="Three quotes" src="../images/testimonials@2x.webp" alt='A heading "What our customers say" and three bordered quote cards side by side' caption="With three quote blocks, 1080 px wide. Rendered by the Sneferu runtime with three blocks passed in." />
 
-  <Shot tab="No quotes" src="../images/testimonials-empty@2x.webp" alt='The same heading with the sentence "No quotes yet. Add one in the editor." under it' caption="With no blocks: this is also what sneferu dev shows, because default sections cannot carry blocks." />
+  <Shot tab="No quotes" src="../images/testimonials-empty@2x.webp" alt='The same heading with the sentence "No quotes yet. Add one in the editor." under it' caption="With no blocks. A template can seed default blocks (see Default blocks above), so a new store starts with three." />
 </Result>
 
 </Example>

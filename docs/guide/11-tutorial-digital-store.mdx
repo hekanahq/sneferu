@@ -504,7 +504,7 @@ shelves and rearranges the header:
 
 <Steps>
   1. `npx sneferu format` indents every file.
-  2. `npx sneferu validate` prints `✔ theme bento@1.3.0 is valid`.
+  2. `npx sneferu validate` prints `✔ theme bento@2.0.0 is valid`.
   3. `npx sneferu dev` and open `http://127.0.0.1:4100`, then
      `?locale=en`. Narrow the window below 640 px.
   4. Change `id` in `theme.json` to a slug of your own, then
@@ -513,18 +513,19 @@ shelves and rearranges the header:
      or pick other categories for the shelves in the editor.
 </Steps>
 
-Only the home page is rendered by the theme in this release; product, category
-and cart pages use the store's regular theme.
+Every page of the store goes through the theme: Bento 2.0 has its own product,
+collection, search, cart, content page and 404 templates, and a shared header,
+footer and announcement bar the merchant edits once (see
+[Page types](16-page-types.mdx) and [Section groups](18-section-groups.mdx)).
 
 ## What to know before you build your own
 
-The three digital themes were first built on Sneferu 0.2 and moved to 0.3. What
-is still missing:
+The three digital themes were first built on Sneferu 0.2; version 2.0 (Sneferu
+0.6) made them complete stores. What is still missing:
 
 | Limit | What the three themes do |
 | - | - |
-| no cart tag (no cart count, no add-to-cart) | the cart is an icon link to `/cart`; buy buttons link to the product page |
 | no carousel and no JavaScript | menus and questions use `<details>`; Creator's covers row is scroll-snap with anchor dots |
-| images in `assets/` are served from 0.3, but these themes bundle none | art comes from products, inline SVG, or an `image` setting with an `https://` default |
+| images in `assets/` are served, but these themes bundle none | art comes from products, inline SVG, or an `image` setting with an `https://` default |
 | `url()` cannot link to the other language | `<hk-locale-switch />` links to the same page in the other language (since Sneferu 0.4) |
 | `money` prints two decimals unless the theme sets `"money": { "format": "whole" }` | these themes keep two decimals (`EGP 69.00`) |

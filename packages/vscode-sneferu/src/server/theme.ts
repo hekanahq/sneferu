@@ -26,7 +26,7 @@ export function findThemeRoot(file: string, stopAt?: string): string | undefined
 
 const SKIP = new Set(['node_modules', 'dist']);
 const TOOLING = new Set(['package.json', 'package-lock.json', 'pnpm-lock.yaml', 'yarn.lock', 'bun.lockb']);
-const PROJECT_FILE = /^(readme|license|licence|changelog)(\.(md|txt))?$/i;
+const PROJECT_FILE = /^(readme|license|licence|changelog|agents|claude)(\.(md|txt))?$/i;
 
 /** Theme-relative paths of every file `sneferu` reads (the same rules as the CLI's loadTheme). */
 export function listThemeFiles(root: string): string[] {

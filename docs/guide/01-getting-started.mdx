@@ -137,7 +137,7 @@ error page naming the file.
 groups, a template for every page type (home, product, collection, search,
 cart, page, 404), the sections, blocks and snippets they use, tokens in
 `theme.json` and `assets/theme.css`. `npx sneferu init --template starter`
-is the same thing (`starter` is the only template for now). Everything in it
+is the same thing. Everything in it
 is editable by the merchant: see [Make everything editable](19-make-everything-editable.mdx).
 
 ## Check: `validate`
@@ -178,7 +178,7 @@ npx sneferu build --out out  # another output folder
 
 | Command | Arguments | Options |
 | - | - | - |
-| `init [dir]` | folder to create, default `my-theme` | `--force` write into a non-empty folder |
+| `init [dir]` | folder to create, default `my-theme` | `--force` write into a non-empty folder; `--template <name>` what to scaffold (default `starter`); `--list` list the templates. Also writes an `AGENTS.md` for AI coding agents (see [Build themes with AI agents](22-build-with-ai-agents.mdx)) |
 | `dev [dir]` | theme folder, default `.` | `--port <n>` default `4100`; `--data <file>` sample data JSON, default `.sneferu-dev/data.json` when it exists |
 | `validate [dir]` | theme folder, default `.` | |
 | `build [dir]` | theme folder, default `.` | `--out <dir>` default `dist` |

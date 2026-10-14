@@ -1,0 +1,98 @@
+# 22. Build themes with AI agents
+
+An AI coding agent (Claude Code, Codex, Cursor, Copilot and others) can build a
+Sneferu theme from a mockup or a brief. Sneferu gives it three things to work
+from, so it follows the same workflow and rules as a person reading these docs.
+
+| What | Where | Read by |
+| - | - | - |
+| `AGENTS.md` in every new theme | written by `sneferu init` next to `theme.json`, with a `CLAUDE.md` that points at it | any agent opened in the theme folder |
+| `AGENTS.md` in the SDK repo | [github.com/hekanahq/sneferu](https://github.com/hekanahq/sneferu/blob/main/AGENTS.md) | agents working in the SDK repo, or told to read it |
+| The docs as plain text | [hekana.dev/llms.txt](https://hekana.dev/llms.txt) (index) and [hekana.dev/llms-full.txt](https://hekana.dev/llms-full.txt) (every page) | any agent that can fetch a URL |
+
+`AGENTS.md` and `CLAUDE.md` at the top of a theme folder are not part of the
+theme: `validate`, `build` and `push` skip them, like `README.md`, so they never
+change the compiled theme.
+
+## What the agent is told
+
+The theme's `AGENTS.md` is short and imperative. It lists:
+
+1. **The commands**: `dev` to preview, `format`, `validate`, `build`, and
+   `push --dev-store` only when you ask for it.
+2. **The files**: what `theme.json`, the layout, templates, groups, sections,
+   blocks, snippets, locales and assets are for.
+3. **The rules** the compiler enforces (allowed markup, no JavaScript, no form
+   controls, safe links) and the ones it cannot (everything merchant-editable,
+   both text directions, accessible sizes and contrast).
+4. **What done means**: `validate` clean, `format --check` clean, every page
+   type checked in every locale at a desktop and a phone width.
+
+## Prompts to start from
+
+Copy one, change the details, and attach the mockup if you have one.
+
+A new theme from a mockup:
+
+```text
+Create a Sneferu theme for a coffee shop from the attached mockup. Arabic and
+English, Arabic first. Start with `npx @hekana/sneferu init cafe-nile`, read the
+AGENTS.md it writes, and follow it. Home page: hero, featured beans, subscription
+plans, footer. Every page type must match the design. Finish when
+`npx @hekana/sneferu validate` and `format --check` are clean, and show me
+screenshots of the dev preview at 1440 and 390 px in both languages.
+```
+
+A theme from a written brief:
+
+```text
+Build a Sneferu theme for a handmade jewellery store: warm neutrals, a rounded
+sans-serif, large product photos. Read https://hekana.dev/llms-full.txt first. Use the
+starter (`npx @hekana/sneferu init`), keep every text editable by the merchant,
+and do not push anything.
+```
+
+One new section in an existing theme:
+
+```text
+Add a "How it works" section to this Sneferu theme: a heading and three to five
+steps, each with an hk-icon, a title and a sentence. Steps are blocks. All text
+is localized settings with Arabic and English defaults. Add it to the home
+template's default sections and run validate.
+```
+
+Start from an example design:
+
+```text
+Run `npx @hekana/sneferu init --list`, pick the template closest to a dark
+gaming top-up store, scaffold it as `game-vault`, then change the colours and
+fonts to the attached palette. Keep the page structure.
+```
+
+Push to your dev store (after `npx @hekana/sneferu login` in your own terminal):
+
+```text
+Bump the version in theme.json and push this theme with
+`npx @hekana/sneferu push . --package <id> --dev-store`. Then open the dev store
+URL it prints and check the home, product and cart pages.
+```
+
+## Review what the agent made
+
+Before you push a theme an agent wrote, check:
+
+| Check | How |
+| - | - |
+| It compiles | `npx @hekana/sneferu validate` prints `✔ theme <id>@<version> is valid` |
+| It is formatted | `npx @hekana/sneferu format --check` |
+| Every page type is designed | `templates/` has `index`, `product`, `collection`, `search`, `cart`, `page` and `404` |
+| Nothing is hard-coded | No visible words in the `.snf` markup outside settings, blocks and `t('…')` |
+| Both languages | `dev` at `/` and `/en`, at 1440 and 390 px; nothing overflows |
+| Its own brand | Colours are `tokens.colors`, fonts are `tokens.fonts`, no other company's logo |
+
+## Keep it current
+
+`AGENTS.md` comes from the CLI version that ran `init`. After upgrading the
+CLI, compare yours with the one a fresh `init` writes, or point the agent at
+[hekana.dev/llms-full.txt](https://hekana.dev/llms-full.txt), which always
+follows the latest release.

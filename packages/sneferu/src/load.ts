@@ -5,8 +5,8 @@ import type { ThemeFile } from '@hekana/sneferu-compiler';
 const SKIP = new Set(['node_modules', 'dist']);
 /** Tooling next to a theme (npm, Prettier, editor and git files) is never part of it. */
 const TOOLING = new Set(['package.json', 'package-lock.json', 'pnpm-lock.yaml', 'yarn.lock', 'bun.lockb']);
-/** Project files at the top of a theme folder: notes, licence, changelog. Never part of the theme, never pushed. */
-const PROJECT_FILE = /^(readme|license|licence|changelog)(\.(md|txt))?$/i;
+/** Project files at the top of a theme folder: notes, licence, changelog, AI agent instructions. Never part of the theme, never pushed. */
+const PROJECT_FILE = /^(readme|license|licence|changelog|agents|claude)(\.(md|txt))?$/i;
 /** A top-level docs/ folder (tutorial text and screenshots) is never part of the theme either. */
 const PROJECT_DIR = new Set(['docs']);
 /** Reads a theme folder. `exclude` lists folders (e.g. the resolved --out) that are never read. */
