@@ -1,0 +1,107 @@
+<hk-section full-bleed="true" padding-y="0" mobile-padding-y="0">
+  <div class="oak-hero">
+    <hk-container>
+      <div class="oak-hero-head">
+        <div class="oak-hero-text">
+          {% if section.settings.title %}
+            <hk-heading text="{{ section.settings.title }}" level="h1" size="30" mobile-size="24" />
+          {% endif %}
+          {% if section.settings.subtitle %}
+            <p class="oak-hero-sub">{{ section.settings.subtitle }}</p>
+          {% endif %}
+        </div>
+        {% if section.settings.button_label %}
+          <a class="oak-pill" href="{{ url(section.settings.button_link) }}">{{ section.settings.button_label }}</a>
+        {% endif %}
+      </div>
+      <div class="oak-scene">
+        {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+      </div>
+    </hk-container>
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Room hero",
+      "ar": "واجهة الغرفة"
+    },
+    "version": 1,
+    "templates": ["index"],
+    "blocks": {
+      "allowed": ["scene-item"],
+      "max": 4
+    },
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "en": "A calm home in natural materials",
+          "ar": "بيت هادي بخامات طبيعية"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "subtitle": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "en": "Furniture, lighting and soft furnishings in oak, linen and ceramic.",
+          "ar": "أثاث وإضاءة ومفروشات من البلوط والكتان والسيراميك."
+        },
+        "localized": true,
+        "maxLength": 120
+      },
+      "button_label": {
+        "type": "text",
+        "label": {
+          "en": "Button",
+          "ar": "الزر"
+        },
+        "default": {
+          "en": "Shop the room",
+          "ar": "تسوق الغرفة"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "button_link": {
+        "type": "link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/products"
+      }
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "Four pieces",
+          "ar": "أربع قطع"
+        },
+        "blocks": [
+          {
+            "type": "scene-item"
+          },
+          {
+            "type": "scene-item"
+          },
+          {
+            "type": "scene-item"
+          },
+          {
+            "type": "scene-item"
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

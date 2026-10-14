@@ -1,0 +1,34 @@
+<hk-badge text="{{ block.settings.label }}" tone="{{ block.settings.tone }}" />
+<hk-schema>
+  {
+    "name": {
+      "en": "Chip",
+      "ar": "شارة"
+    },
+    "version": 1,
+    "settings": {
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Label",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "جديد",
+          "en": "New"
+        },
+        "localized": true,
+        "maxLength": 24
+      },
+      "tone": {
+        "type": "select",
+        "label": {
+          "en": "Look",
+          "ar": "الشكل"
+        },
+        "options": ["accent", "neutral", "success", "warning"],
+        "default": "accent"
+      }
+    }
+  }
+</hk-schema>

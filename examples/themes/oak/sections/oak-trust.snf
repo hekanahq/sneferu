@@ -1,0 +1,33 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="24" class="oak-trust">
+  <ul class="oak-trust-list">
+    {% for block in section.blocks %}
+      <hk-block of="{{ block }}" />
+    {% endfor %}
+  </ul>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Trust badges",
+      "ar": "شارات الثقة"
+    },
+    "version": 1,
+    "blocks": {
+      "allowed": ["trust"],
+      "max": 4
+    },
+    "settings": {
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "default": 32,
+        "min": 0,
+        "max": 120,
+        "step": 8
+      }
+    }
+  }
+</hk-schema>

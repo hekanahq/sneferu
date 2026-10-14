@@ -1,0 +1,59 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "not-found"
+      },
+      {
+        "type": "oak-categories",
+        "blocks": [
+          {
+            "type": "category-tile",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-home/pool-home-linen-cushion-oat.webp",
+              "label": {
+                "en": "Living room",
+                "ar": "غرفة المعيشة"
+              },
+              "link": "/category/living"
+            }
+          },
+          {
+            "type": "category-tile",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-home/pool-home-table-lamp-linen.webp",
+              "label": {
+                "en": "Lighting",
+                "ar": "الإضاءة"
+              },
+              "link": "/category/lighting"
+            }
+          },
+          {
+            "type": "category-tile",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-home/pool-home-knit-throw-cream.webp",
+              "label": {
+                "en": "Bedding and throws",
+                "ar": "المفروشات"
+              },
+              "link": "/category/textiles"
+            }
+          },
+          {
+            "type": "category-tile",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-home/pool-home-ceramic-bowl-matte.webp",
+              "label": {
+                "en": "Kitchen",
+                "ar": "المطبخ"
+              },
+              "link": "/category/kitchen"
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

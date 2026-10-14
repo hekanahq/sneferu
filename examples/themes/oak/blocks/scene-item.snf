@@ -1,0 +1,85 @@
+<div class="oak-scene-item oak-x-{{ block.settings.dot_x }} oak-y-{{ block.settings.dot_y }}">
+  <hk-image
+    src="{{ block.settings.image }}"
+    alt="{{ block.settings.alt }}"
+    aspect-ratio="1/1"
+    sizes="(min-width: 1024px) 25vw, 50vw"
+  />
+  {% if block.settings.link %}
+    <a class="oak-dot" href="{{ url(block.settings.link) }}" aria-label="{{ block.settings.dot_label }}">
+      <span class="oak-dot-ring" aria-hidden="true"></span>
+      <span class="oak-dot-label">{{ block.settings.dot_label }}</span>
+    </a>
+  {% endif %}
+</div>
+<hk-schema>
+  {
+    "name": {
+      "en": "Room piece",
+      "ar": "قطعة في الغرفة"
+    },
+    "version": 1,
+    "settings": {
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "Photo",
+          "ar": "الصورة"
+        },
+        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-home/pool-home-floor-lamp.webp"
+      },
+      "alt": {
+        "type": "text",
+        "label": {
+          "en": "Image description",
+          "ar": "وصف الصورة"
+        },
+        "default": {
+          "en": "Floor lamp with a linen shade",
+          "ar": "أباجورة أرضية بغطاء كتان"
+        },
+        "localized": true,
+        "maxLength": 100
+      },
+      "dot_label": {
+        "type": "text",
+        "label": {
+          "en": "Dot label",
+          "ar": "نص النقطة"
+        },
+        "default": {
+          "en": "Floor lamp",
+          "ar": "أباجورة أرضية"
+        },
+        "localized": true,
+        "maxLength": 40
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Dot link (empty hides the dot)",
+          "ar": "رابط النقطة (فاضي يخفيها)"
+        },
+        "default": "/products"
+      },
+      "dot_x": {
+        "type": "select",
+        "label": {
+          "en": "Dot position across (%)",
+          "ar": "موضع النقطة أفقيًا (%)"
+        },
+        "options": ["20", "35", "50", "65", "80"],
+        "default": "50"
+      },
+      "dot_y": {
+        "type": "select",
+        "label": {
+          "en": "Dot position down (%)",
+          "ar": "موضع النقطة رأسيًا (%)"
+        },
+        "options": ["20", "35", "50", "65", "80"],
+        "default": "35"
+      }
+    }
+  }
+</hk-schema>

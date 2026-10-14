@@ -1,0 +1,51 @@
+<a class="oak-cat" href="{{ url(block.settings.link) }}">
+  <span class="oak-cat-media">
+    <hk-image
+      src="{{ block.settings.image }}"
+      alt="{{ block.settings.label }}"
+      aspect-ratio="1/1"
+      sizes="(min-width: 1024px) 25vw, 50vw"
+    />
+  </span>
+  <span class="oak-cat-label">{{ block.settings.label }}</span>
+</a>
+<hk-schema>
+  {
+    "name": {
+      "en": "Category tile",
+      "ar": "مربع قسم"
+    },
+    "version": 1,
+    "settings": {
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "Photo",
+          "ar": "الصورة"
+        },
+        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-home/pool-home-linen-cushion-oat.webp"
+      },
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "en": "Living room",
+          "ar": "غرفة المعيشة"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      }
+    }
+  }
+</hk-schema>
