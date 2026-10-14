@@ -69,7 +69,7 @@ export function runInit(target: string, opts: { force?: boolean; template?: stri
   const dir = resolve(target);
   if (existsSync(dir) && readdirSync(dir).length > 0 && !opts.force) throw new Error(`${dir} is not empty (use --force to write anyway)`);
   // every scaffold gets the agent notes (AGENTS.md, CLAUDE.md); a template's own copy wins
-  const files = { 'AGENTS.md': THEME_AGENTS_MD, 'CLAUDE.md': THEME_CLAUDE_MD, ...filesOf(template as InitTemplate) };
+  const files: Readonly<Record<string, string>> = { 'AGENTS.md': THEME_AGENTS_MD, 'CLAUDE.md': THEME_CLAUDE_MD, ...filesOf(template as InitTemplate) };
   mkdirSync(dir, { recursive: true });
   for (const [path, text] of Object.entries(files)) {
     if (path === 'theme.json') continue;
