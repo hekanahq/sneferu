@@ -1,0 +1,62 @@
+<a class="dw-tile-card" href="{{ url(block.settings.link) }}">
+  <span class="dw-tile-icon">{% render 'glyph', name: block.settings.icon %}</span>
+  <span class="dw-tile-label">{{ block.settings.label }}</span>
+</a>
+<hk-schema>
+  {
+    "name": {
+      "en": "Category tile",
+      "ar": "تايل قسم"
+    },
+    "version": 1,
+    "settings": {
+      "icon": {
+        "type": "select",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
+        "options": [
+          "mortar",
+          "bottle",
+          "baby",
+          "drop",
+          "thermometer",
+          "pharmacist",
+          "cross",
+          "pill",
+          "leaf",
+          "heart-pulse",
+          "truck",
+          "package",
+          "shield-check",
+          "sparkles",
+          "heart",
+          "gift"
+        ],
+        "default": "bottle"
+      },
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Label",
+          "ar": "النص"
+        },
+        "localized": true,
+        "default": {
+          "ar": "فيتامينات",
+          "en": "Vitamins"
+        },
+        "maxLength": 24
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/category/vitamins"
+      }
+    }
+  }
+</hk-schema>

@@ -1,0 +1,69 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="20" class="dw-cats">
+  {% if section.settings.heading %}
+    <h2 class="dw-sr-only">{{ section.settings.heading }}</h2>
+  {% endif %}
+  <div class="dw-tiles">
+    {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Category tiles",
+      "ar": "تايلز الأقسام"
+    },
+    "version": 1,
+    "settings": {
+      "heading": {
+        "type": "text",
+        "label": {
+          "en": "Heading (read by screen readers)",
+          "ar": "العنوان (بيقراه قارئ الشاشة)"
+        },
+        "localized": true,
+        "default": {
+          "ar": "الأقسام",
+          "en": "Categories"
+        },
+        "maxLength": 40
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 96,
+        "step": 8,
+        "default": 40
+      }
+    },
+    "blocks": {
+      "allowed": ["category-tile"],
+      "max": 6
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "Four categories",
+          "ar": "أربعة أقسام"
+        },
+        "blocks": [
+          {
+            "type": "category-tile"
+          },
+          {
+            "type": "category-tile"
+          },
+          {
+            "type": "category-tile"
+          },
+          {
+            "type": "category-tile"
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

@@ -1,0 +1,24 @@
+<article class="dw-card dw-card-{{ card_style }}">
+  <a class="dw-card-link" href="{{ product.url }}">
+    <div class="dw-card-media">
+      <hk-image
+        src="{{ product.image }}"
+        alt="{{ product.title }}"
+        aspect-ratio="{{ image_ratio }}"
+        sizes="(min-width: 1024px) 25vw, 50vw"
+      />
+      {% if show_badge %}
+        {% if product.available %}
+          {% if product.compare_at > product.price %}
+            <span class="dw-badge">{{ t('sale') }}</span>
+          {% endif %}
+        {% else %}
+          <span class="dw-badge dw-badge-muted">{{ t('sold_out_badge') }}</span>
+        {% endif %}
+      {% endif %}
+    </div>
+    <h3 class="dw-card-title">{{ product.title }}</h3>
+    {% if show_price %}{% render 'price', product: product, bind: false %}{% endif %}
+    <span class="dw-card-cta">{{ t('card_cta') }}</span>
+  </a>
+</article>

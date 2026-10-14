@@ -1,0 +1,45 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "cart-main"
+      },
+      {
+        "type": "dawa-trust",
+        "blocks": [
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "message-circle",
+              "label": {
+                "ar": "تواصل معنا على واتساب",
+                "en": "Message us on WhatsApp"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "truck",
+              "label": {
+                "ar": "توصيل لكل المحافظات",
+                "en": "Delivery across Egypt"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "banknote",
+              "label": {
+                "ar": "الدفع عند الاستلام",
+                "en": "Cash on delivery"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

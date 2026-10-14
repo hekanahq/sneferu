@@ -1,0 +1,118 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="12" class="dw-hero-sec">
+  <h1 class="dw-sr-only">{{ section.settings.title | default: t('hero_title_sr') }}</h1>
+  <div class="dw-hero">
+    <div class="dw-hero-media">
+      <hk-image
+        src="{{ section.settings.image | default: asset_url('hero.webp') }}"
+        alt="{{ section.settings.image_alt }}"
+        loading="eager"
+        aspect-ratio="21/9"
+        sizes="(min-width: 1024px) 1120px, 100vw"
+      />
+    </div>
+    <a class="dw-rx" href="{{ url(section.settings.card_link) }}">
+      <span class="dw-rx-icon"><hk-icon name="{{ section.settings.card_icon }}" size="30" /></span>
+      <strong class="dw-rx-title">{{ section.settings.card_title }}</strong>
+      {% if section.settings.card_text %}<span class="dw-rx-text">{{ section.settings.card_text }}</span>{% endif %}
+    </a>
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Hero with prescription card",
+      "ar": "البانر مع كارت الروشتة"
+    },
+    "version": 1,
+    "templates": ["index"],
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Page heading (read by screen readers)",
+          "ar": "عنوان الصفحة (بيقراه قارئ الشاشة)"
+        },
+        "localized": true,
+        "default": {
+          "ar": "صيدلية دوا",
+          "en": "Dawa pharmacy"
+        },
+        "maxLength": 80
+      },
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "Image (default: the bundled pharmacy photo)",
+          "ar": "الصورة (الافتراضي: صورة الصيدلية المرفقة)"
+        },
+        "default": ""
+      },
+      "image_alt": {
+        "type": "text",
+        "label": {
+          "en": "Image description",
+          "ar": "وصف الصورة"
+        },
+        "localized": true,
+        "default": {
+          "ar": "كاونتر صيدلية مضاء ورفوف عليها علب",
+          "en": "A bright pharmacy counter with shelves of boxes"
+        },
+        "maxLength": 120
+      },
+      "card_title": {
+        "type": "text",
+        "label": {
+          "en": "Card heading",
+          "ar": "عنوان الكارت"
+        },
+        "localized": true,
+        "default": {
+          "ar": "ابعت الروشتة على واتساب",
+          "en": "Send your prescription on WhatsApp"
+        },
+        "maxLength": 50
+      },
+      "card_text": {
+        "type": "text",
+        "label": {
+          "en": "Card text",
+          "ar": "نص الكارت"
+        },
+        "localized": true,
+        "default": {
+          "ar": "هنرد عليك بالمتاح عندنا",
+          "en": "We reply with what we have in stock"
+        },
+        "maxLength": 80
+      },
+      "card_icon": {
+        "type": "icon",
+        "label": {
+          "en": "Card icon",
+          "ar": "أيقونة الكارت"
+        },
+        "default": "plus"
+      },
+      "card_link": {
+        "type": "link",
+        "label": {
+          "en": "Card link (WhatsApp or contact page)",
+          "ar": "رابط الكارت (واتساب أو صفحة التواصل)"
+        },
+        "default": "/pages/contact"
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 80,
+        "step": 8,
+        "default": 24
+      }
+    }
+  }
+</hk-schema>

@@ -1,0 +1,21 @@
+<hk-variant-picker product="{{ product }}" display="{{ block.settings.style }}" />
+<hk-schema>
+  {
+    "name": {
+      "en": "Variant picker",
+      "ar": "اختيار النوع"
+    },
+    "version": 1,
+    "settings": {
+      "style": {
+        "type": "select",
+        "label": {
+          "en": "Style",
+          "ar": "الشكل"
+        },
+        "options": ["buttons", "select"],
+        "default": "buttons"
+      }
+    }
+  }
+</hk-schema>
