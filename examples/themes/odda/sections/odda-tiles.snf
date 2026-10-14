@@ -1,6 +1,6 @@
 <hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="20">
   {% if section.settings.title %}
-    <hk-heading text="{{ section.settings.title }}" level="h2" size="26" mobile-size="22" align="center" />
+    <hk-heading text="{{ section.settings.title }}" level="h2" size="26" mobile-size="22" />
   {% endif %}
   <div class="od-tiles">
     {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}

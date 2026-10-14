@@ -46,7 +46,8 @@
           "title": {
             "ar": "تسوّق بالقسم",
             "en": "Shop by section"
-          }
+          },
+          "padding_y": 24
         },
         "blocks": [
           {
@@ -117,7 +118,8 @@
           "link_label": {
             "ar": "عرض الكل",
             "en": "View all"
-          }
+          },
+          "padding_y": 32
         }
       },
       {

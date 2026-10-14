@@ -143,30 +143,6 @@
           }
         },
         {
-          "id": "contact-reply",
-          "type": "contact-line",
-          "settings": {
-            "icon": "clock",
-            "text": {
-              "ar": "بنرد خلال يوم عمل",
-              "en": "We reply within a working day"
-            },
-            "url": ""
-          }
-        },
-        {
-          "id": "contact-hours",
-          "type": "contact-line",
-          "settings": {
-            "icon": "phone",
-            "text": {
-              "ar": "من السبت للخميس، 10ص إلى 6م",
-              "en": "Saturday to Thursday, 10am to 6pm"
-            },
-            "url": ""
-          }
-        },
-        {
           "id": "pay-cod",
           "type": "payment-method",
           "settings": {

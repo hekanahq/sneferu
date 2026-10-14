@@ -72,9 +72,9 @@
 /* Photo panels */
 .od-panels { display: grid; gap: 14px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .od-panel { position: relative; display: block; overflow: hidden; border-radius: 14px; background: var(--hk-color-soft); }
-.od-panel img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; transition: transform 0.25s; }
+.od-panel img { display: block; width: 100%; height: auto; aspect-ratio: 2 / 1; object-fit: cover; transition: transform 0.25s; }
 .od-panel:hover img { transform: scale(1.03); }
-.od-panel-empty { display: block; aspect-ratio: 3 / 2; background: linear-gradient(135deg, var(--hk-color-soft), var(--hk-color-glow)); }
+.od-panel-empty { display: block; aspect-ratio: 2 / 1; background: linear-gradient(135deg, var(--hk-color-soft), var(--hk-color-glow)); }
 .od-panel-label { position: absolute; inset-inline-start: 10px; inset-block-end: 10px; padding: 6px 14px; border-radius: 8px; background: var(--hk-color-surface); color: var(--hk-color-text); font-weight: 700; font-size: 14px; box-shadow: 0 2px 8px color-mix(in srgb, var(--hk-color-text) 14%, transparent); }
 
 /* Category tiles */
@@ -89,12 +89,12 @@
 .od-section-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
 .od-projects { display: grid; gap: 16px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .od-project { position: relative; display: block; overflow: hidden; border-radius: 16px; background: var(--hk-color-soft); }
-.od-project img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; transition: transform 0.25s; }
+.od-project img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; transition: transform 0.25s; }
 .od-project:hover img { transform: scale(1.03); }
-.od-project .od-panel-empty { aspect-ratio: 4 / 5; }
-.od-project-caption { position: absolute; inset-inline: 0; inset-block-end: 0; display: grid; gap: 2px; padding: 40px 16px 14px; background: linear-gradient(to top, color-mix(in srgb, #11181f 88%, transparent), transparent); color: #fff; }
-.od-project-title { font-weight: 700; font-size: 16px; line-height: 1.4; }
-.od-project-text { font-size: 13px; opacity: 0.9; }
+.od-project .od-panel-empty { aspect-ratio: 4 / 3; }
+.od-project-caption { position: absolute; inset-inline-start: 10px; inset-block-end: 10px; inset-inline-end: 10px; display: grid; gap: 2px; padding: 8px 12px; border-radius: 10px; background: var(--hk-color-surface); color: var(--hk-color-text); box-shadow: 0 2px 8px color-mix(in srgb, var(--hk-color-text) 14%, transparent); }
+.od-project-title { font-weight: 700; font-size: 15px; line-height: 1.4; }
+.od-project-text { font-size: 13px; color: var(--hk-color-muted); }
 
 /* How-to strip */
 .od-howto { display: grid; gap: 20px; padding: 28px; border-radius: 18px; background: var(--hk-color-glow); }
@@ -274,7 +274,7 @@
   .od-tile-icon .ic { width: 24px; height: 24px; }
   .od-tile-label { font-size: 11px; line-height: 1.3; }
   .od-projects { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
-  .od-project-caption { padding: 24px 8px 8px; }
+  .od-project-caption { inset-inline: 4px; inset-block-end: 4px; padding: 4px 6px; border-radius: 6px; }
   .od-project-title { font-size: 11px; }
   .od-project-text { display: none; }
   .od-trust-list { gap: 6px; }
