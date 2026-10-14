@@ -1,0 +1,61 @@
+<li class="od-howto-step">
+  <a href="{{ url(block.settings.link) }}">
+    <span class="od-howto-icon">{% render 'glyph', name: block.settings.glyph %}</span>
+    <span class="od-howto-title">{{ block.settings.title }}</span>
+    <span class="od-howto-text">{{ block.settings.text }}</span>
+  </a>
+</li>
+<hk-schema>
+  {
+    "name": {
+      "en": "How-to step",
+      "ar": "خطوة إرشادية"
+    },
+    "version": 1,
+    "settings": {
+      "glyph": {
+        "type": "select",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
+        "options": ["roller", "tap", "bulb", "hammer", "nut", "ruler", "house"],
+        "default": "ruler"
+      },
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Title",
+          "ar": "العنوان"
+        },
+        "localized": true,
+        "default": {
+          "en": "Measure the wall first",
+          "ar": "قيس الحيطة الأول"
+        },
+        "maxLength": 50
+      },
+      "text": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "localized": true,
+        "default": {
+          "en": "How much paint a room needs.",
+          "ar": "تحتاج كام لتر دهان للأوضة."
+        },
+        "maxLength": 120
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/pages/about"
+      }
+    }
+  }
+</hk-schema>

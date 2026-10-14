@@ -1,0 +1,248 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "odda-panels",
+        "blocks": [
+          {
+            "type": "panel",
+            "settings": {
+              "label": {
+                "ar": "دهانات وتشطيبات",
+                "en": "Paint and finishes"
+              },
+              "link": "/category/paint",
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-hardware/pool-hardware-paint-can-brush.webp"
+            }
+          },
+          {
+            "type": "panel",
+            "settings": {
+              "label": {
+                "ar": "سباكة وتركيبات",
+                "en": "Plumbing and fittings"
+              },
+              "link": "/category/plumbing",
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-hardware/pool-hardware-pvc-fittings.webp"
+            }
+          },
+          {
+            "type": "panel",
+            "settings": {
+              "label": {
+                "ar": "إضاءة للبيت",
+                "en": "Home lighting"
+              },
+              "link": "/category/lighting",
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-hardware/pool-hardware-cable-coil.webp"
+            }
+          }
+        ]
+      },
+      {
+        "type": "odda-tiles",
+        "settings": {
+          "title": {
+            "ar": "تسوّق بالقسم",
+            "en": "Shop by section"
+          }
+        },
+        "blocks": [
+          {
+            "type": "tile",
+            "settings": {
+              "glyph": "roller",
+              "label": {
+                "ar": "دهانات",
+                "en": "Paint"
+              },
+              "link": "/category/paint"
+            }
+          },
+          {
+            "type": "tile",
+            "settings": {
+              "glyph": "tap",
+              "label": {
+                "ar": "سباكة",
+                "en": "Plumbing"
+              },
+              "link": "/category/plumbing"
+            }
+          },
+          {
+            "type": "tile",
+            "settings": {
+              "glyph": "bulb",
+              "label": {
+                "ar": "إضاءة",
+                "en": "Lighting"
+              },
+              "link": "/category/lighting"
+            }
+          },
+          {
+            "type": "tile",
+            "settings": {
+              "glyph": "hammer",
+              "label": {
+                "ar": "عدد يدوية",
+                "en": "Hand tools"
+              },
+              "link": "/category/hand-tools"
+            }
+          },
+          {
+            "type": "tile",
+            "settings": {
+              "glyph": "nut",
+              "label": {
+                "ar": "مسامير وتثبيت",
+                "en": "Fixings"
+              },
+              "link": "/category/fixings"
+            }
+          }
+        ]
+      },
+      {
+        "type": "featured-products",
+        "settings": {
+          "collection": "featured",
+          "title": {
+            "ar": "الأكثر طلبًا",
+            "en": "Most wanted"
+          },
+          "link_label": {
+            "ar": "عرض الكل",
+            "en": "View all"
+          }
+        }
+      },
+      {
+        "type": "odda-projects",
+        "blocks": [
+          {
+            "type": "project",
+            "settings": {
+              "title": {
+                "ar": "دهان جديد لأوضة المعيشة",
+                "en": "A fresh coat for the living room"
+              },
+              "link": "/category/paint",
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-hardware/pool-hardware-paint-roller.webp"
+            }
+          },
+          {
+            "type": "project",
+            "settings": {
+              "title": {
+                "ar": "حمّام بتركيبات جديدة",
+                "en": "A bathroom with new fittings"
+              },
+              "link": "/category/plumbing",
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-hardware/pool-hardware-wrench-set.webp"
+            }
+          },
+          {
+            "type": "project",
+            "settings": {
+              "title": {
+                "ar": "إضاءة دافية للصالة",
+                "en": "Warm lighting for the hall"
+              },
+              "link": "/category/lighting",
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-hardware/pool-hardware-extension-reel.webp"
+            }
+          }
+        ]
+      },
+      {
+        "type": "odda-trust",
+        "blocks": [
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "banknote",
+              "label": {
+                "ar": "الدفع عند الاستلام",
+                "en": "Cash on delivery"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "truck",
+              "label": {
+                "ar": "توصيل لكل المحافظات",
+                "en": "Delivery across Egypt"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "package",
+              "label": {
+                "ar": "استبدال سهل",
+                "en": "Easy exchange"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "odda-howto",
+        "blocks": [
+          {
+            "type": "howto-step",
+            "settings": {
+              "glyph": "ruler",
+              "title": {
+                "ar": "قيس الحيطة الأول",
+                "en": "Measure the wall first"
+              },
+              "text": {
+                "ar": "تحتاج كام لتر دهان للأوضة.",
+                "en": "How much paint a room needs."
+              },
+              "link": "/pages/about"
+            }
+          },
+          {
+            "type": "howto-step",
+            "settings": {
+              "glyph": "tap",
+              "title": {
+                "ar": "اختار قطر الماسورة",
+                "en": "Pick the pipe size"
+              },
+              "text": {
+                "ar": "إزاي تعرف المقاس قبل ما تشتري.",
+                "en": "How to read the size before you buy."
+              },
+              "link": "/pages/about"
+            }
+          },
+          {
+            "type": "howto-step",
+            "settings": {
+              "glyph": "bulb",
+              "title": {
+                "ar": "اختار درجة الإضاءة",
+                "en": "Choose the light tone"
+              },
+              "text": {
+                "ar": "دافية للمعيشة وبيضاء للمطبخ.",
+                "en": "Warm for the lounge, white for the kitchen."
+              },
+              "link": "/pages/about"
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

@@ -1,0 +1,24 @@
+<article class="od-card od-card-{{ card_style }}">
+  <a class="od-card-link" href="{{ product.url }}">
+    <div class="od-card-media">
+      <hk-image
+        src="{{ product.image }}"
+        alt="{{ product.title }}"
+        aspect-ratio="{{ image_ratio }}"
+        fit="contain"
+        sizes="(min-width: 1024px) 25vw, 50vw"
+      />
+      {% if show_badge %}
+        {% if product.available %}
+          {% if product.compare_at > product.price %}
+            <span class="od-badge">{{ t('sale') }}</span>
+          {% endif %}
+        {% else %}
+          <span class="od-badge od-badge-muted">{{ t('sold_out_badge') }}</span>
+        {% endif %}
+      {% endif %}
+    </div>
+    <h3 class="od-card-title">{{ product.title }}</h3>
+    {% if show_price %}{% render 'price', product: product, bind: false %}{% endif %}
+  </a>
+</article>

@@ -1,0 +1,35 @@
+<svg
+  class="ic ic-{{ name }}"
+  viewBox="0 0 24 24"
+  width="24"
+  height="24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.7"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+>
+  {% if name == 'roller' %}<rect x="3" y="3" width="14" height="6" rx="1.5" /><path d="M17 6h3v5h-8v3" /><rect
+      x="10"
+      y="14"
+      width="4"
+      height="7"
+      rx="1"
+    />
+  {% elsif name == 'tap' %}<path d="M5 21v-8a4 4 0 0 1 4-4h6" /><path d="M15 5v4M11.5 5h7" /><path
+      d="M15 13v2M15 18v1"
+    />
+  {% elsif name == 'bulb' %}<path d="M9 18h6M10 21h4" /><path
+      d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"
+    />
+  {% elsif name == 'hammer' %}<path d="M15 4.5l4.5 4.5-2.5 2.5-4.5-4.5z" /><path
+      d="M13 7.5L4.8 15.7a2.1 2.1 0 0 0 3 3L16 10.5"
+    />
+  {% elsif name == 'nut' %}<path d="M12 3l7.8 4.5v9L12 21l-7.8-4.5v-9z" /><circle cx="12" cy="12" r="3" />
+  {% elsif name == 'ruler' %}<rect x="2.5" y="8" width="19" height="8" rx="1.5" /><path
+      d="M6.5 8v3M10.5 8v4M14.5 8v3M18.5 8v4"
+    />
+  {% elsif name == 'house' %}<path d="M3 11l9-8 9 8" /><path d="M5 10v10h14V10" /><path d="M10 20v-6h4v6" />
+  {% endif %}
+</svg>

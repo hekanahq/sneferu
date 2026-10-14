@@ -1,0 +1,111 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "collection-main"
+      },
+      {
+        "type": "odda-tiles",
+        "settings": {
+          "title": {
+            "ar": "تسوّق بالقسم",
+            "en": "Shop by section"
+          }
+        },
+        "blocks": [
+          {
+            "type": "tile",
+            "settings": {
+              "glyph": "roller",
+              "label": {
+                "ar": "دهانات",
+                "en": "Paint"
+              },
+              "link": "/category/paint"
+            }
+          },
+          {
+            "type": "tile",
+            "settings": {
+              "glyph": "tap",
+              "label": {
+                "ar": "سباكة",
+                "en": "Plumbing"
+              },
+              "link": "/category/plumbing"
+            }
+          },
+          {
+            "type": "tile",
+            "settings": {
+              "glyph": "bulb",
+              "label": {
+                "ar": "إضاءة",
+                "en": "Lighting"
+              },
+              "link": "/category/lighting"
+            }
+          },
+          {
+            "type": "tile",
+            "settings": {
+              "glyph": "hammer",
+              "label": {
+                "ar": "عدد يدوية",
+                "en": "Hand tools"
+              },
+              "link": "/category/hand-tools"
+            }
+          },
+          {
+            "type": "tile",
+            "settings": {
+              "glyph": "nut",
+              "label": {
+                "ar": "مسامير وتثبيت",
+                "en": "Fixings"
+              },
+              "link": "/category/fixings"
+            }
+          }
+        ]
+      },
+      {
+        "type": "odda-trust",
+        "blocks": [
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "banknote",
+              "label": {
+                "ar": "الدفع عند الاستلام",
+                "en": "Cash on delivery"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "truck",
+              "label": {
+                "ar": "توصيل لكل المحافظات",
+                "en": "Delivery across Egypt"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "package",
+              "label": {
+                "ar": "استبدال سهل",
+                "en": "Easy exchange"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

@@ -1,0 +1,183 @@
+{
+  "sections": [
+    {
+      "id": "footer",
+      "type": "footer",
+      "settings": {
+        "menu": "",
+        "about_text": {
+          "ar": "أدوات ودهانات وسباكة وإضاءة لتشطيب بيتك، بالجنيه المصري وتوصيل لكل المحافظات.",
+          "en": "Paint, plumbing, lighting and tools to finish your home, in Egyptian pounds with delivery across Egypt."
+        },
+        "copyright": {
+          "ar": "جميع الحقوق محفوظة",
+          "en": "All rights reserved"
+        },
+        "show_newsletter": false,
+        "show_language": true
+      },
+      "blocks": [
+        {
+          "id": "col-shop",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "تسوق",
+              "en": "Shop"
+            }
+          },
+          "blocks": [
+            {
+              "id": "col-shop-0",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "كل المنتجات",
+                  "en": "All products"
+                },
+                "url": "/products"
+              }
+            },
+            {
+              "id": "col-shop-1",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "دهانات",
+                  "en": "Paint"
+                },
+                "url": "/category/paint"
+              }
+            },
+            {
+              "id": "col-shop-2",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "سباكة",
+                  "en": "Plumbing"
+                },
+                "url": "/category/plumbing"
+              }
+            },
+            {
+              "id": "col-shop-3",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "إضاءة",
+                  "en": "Lighting"
+                },
+                "url": "/category/lighting"
+              }
+            }
+          ]
+        },
+        {
+          "id": "col-help",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "مساعدة",
+              "en": "Help"
+            }
+          },
+          "blocks": [
+            {
+              "id": "col-help-0",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "عن عُدّة",
+                  "en": "About Odda"
+                },
+                "url": "/pages/about"
+              }
+            },
+            {
+              "id": "col-help-1",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "تواصل معنا",
+                  "en": "Contact us"
+                },
+                "url": "/pages/contact"
+              }
+            },
+            {
+              "id": "col-help-2",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "بحث",
+                  "en": "Search"
+                },
+                "url": "/search"
+              }
+            }
+          ]
+        },
+        {
+          "id": "social-whatsapp",
+          "type": "social-link",
+          "settings": {
+            "label": {
+              "ar": "واتساب",
+              "en": "WhatsApp"
+            },
+            "url": "/pages/contact",
+            "icon": "message-circle"
+          }
+        },
+        {
+          "id": "social-mail",
+          "type": "social-link",
+          "settings": {
+            "label": {
+              "ar": "الإيميل",
+              "en": "Email"
+            },
+            "url": "/pages/contact",
+            "icon": "mail"
+          }
+        },
+        {
+          "id": "contact-reply",
+          "type": "contact-line",
+          "settings": {
+            "icon": "clock",
+            "text": {
+              "ar": "بنرد خلال يوم عمل",
+              "en": "We reply within a working day"
+            },
+            "url": ""
+          }
+        },
+        {
+          "id": "contact-hours",
+          "type": "contact-line",
+          "settings": {
+            "icon": "phone",
+            "text": {
+              "ar": "من السبت للخميس، 10ص إلى 6م",
+              "en": "Saturday to Thursday, 10am to 6pm"
+            },
+            "url": ""
+          }
+        },
+        {
+          "id": "pay-cod",
+          "type": "payment-method",
+          "settings": {
+            "label": {
+              "ar": "الدفع عند الاستلام",
+              "en": "Cash on delivery"
+            },
+            "icon": "banknote"
+          }
+        }
+      ]
+    }
+  ]
+}
