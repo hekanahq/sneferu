@@ -1,0 +1,191 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "hero"
+      },
+      {
+        "type": "tiles",
+        "blocks": [
+          {
+            "type": "tile",
+            "settings": {
+              "label": {
+                "ar": "روتين الصباح",
+                "en": "Morning routine"
+              },
+              "glyph": "sun",
+              "link": "/category/morning",
+              "tone": "1"
+            }
+          },
+          {
+            "type": "tile",
+            "settings": {
+              "label": {
+                "ar": "روتين المساء",
+                "en": "Evening routine"
+              },
+              "glyph": "moon",
+              "link": "/category/evening",
+              "tone": "2"
+            }
+          },
+          {
+            "type": "tile",
+            "settings": {
+              "label": {
+                "ar": "كل المنتجات",
+                "en": "All products"
+              },
+              "glyph": "leaf",
+              "link": "/products",
+              "tone": "3"
+            }
+          }
+        ]
+      },
+      {
+        "type": "ingredients",
+        "blocks": [
+          {
+            "type": "ingredient",
+            "settings": {
+              "glyph": "leaf",
+              "label": {
+                "ar": "مستخلص الصبار",
+                "en": "Aloe extract"
+              }
+            }
+          },
+          {
+            "type": "ingredient",
+            "settings": {
+              "glyph": "drop",
+              "label": {
+                "ar": "حمض الهيالورونيك",
+                "en": "Hyaluronic acid"
+              }
+            }
+          },
+          {
+            "type": "ingredient",
+            "settings": {
+              "glyph": "drops",
+              "label": {
+                "ar": "جليسرين نباتي",
+                "en": "Plant glycerin"
+              }
+            }
+          },
+          {
+            "type": "ingredient",
+            "settings": {
+              "glyph": "flask",
+              "label": {
+                "ar": "نياسيناميد",
+                "en": "Niacinamide"
+              }
+            }
+          },
+          {
+            "type": "ingredient",
+            "settings": {
+              "glyph": "shield",
+              "label": {
+                "ar": "فيتامين إي",
+                "en": "Vitamin E"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "shelf"
+      },
+      {
+        "type": "routine",
+        "blocks": [
+          {
+            "type": "step",
+            "settings": {
+              "title": {
+                "ar": "نظّف",
+                "en": "Cleanse"
+              },
+              "text": {
+                "ar": "غسول لطيف للصباح والمساء",
+                "en": "A gentle wash, morning and night"
+              },
+              "link": "/category/morning"
+            }
+          },
+          {
+            "type": "step",
+            "settings": {
+              "title": {
+                "ar": "غذّي",
+                "en": "Nourish"
+              },
+              "text": {
+                "ar": "سيروم بتركيبة خفيفة",
+                "en": "A light-textured serum"
+              },
+              "link": "/category/evening"
+            }
+          },
+          {
+            "type": "step",
+            "settings": {
+              "title": {
+                "ar": "رطّب",
+                "en": "Moisturise"
+              },
+              "text": {
+                "ar": "كريم يثبّت الروتين",
+                "en": "A cream to finish the routine"
+              },
+              "link": "/products"
+            }
+          }
+        ]
+      },
+      {
+        "type": "trust-strip",
+        "blocks": [
+          {
+            "type": "trust-item",
+            "settings": {
+              "icon": "truck",
+              "text": {
+                "ar": "توصيل لكل المحافظات",
+                "en": "Delivery across Egypt"
+              }
+            }
+          },
+          {
+            "type": "trust-item",
+            "settings": {
+              "icon": "banknote",
+              "text": {
+                "ar": "الدفع عند الاستلام",
+                "en": "Cash on delivery"
+              }
+            }
+          },
+          {
+            "type": "trust-item",
+            "settings": {
+              "icon": "message-circle",
+              "text": {
+                "ar": "تواصل معنا على واتساب",
+                "en": "Chat with us on WhatsApp"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

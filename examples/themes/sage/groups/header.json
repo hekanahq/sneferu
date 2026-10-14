@@ -1,0 +1,53 @@
+{
+  "sections": [
+    {
+      "id": "header",
+      "type": "sg-header",
+      "settings": {
+        "menu": "main",
+        "scheme": "paper",
+        "show_search": true,
+        "show_language": true,
+        "show_cart": true,
+        "drawer_on_add": true,
+        "sticky": false
+      },
+      "blocks": [
+        {
+          "id": "nav-morning",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "الصباح",
+              "en": "Morning"
+            },
+            "url": "/category/morning"
+          }
+        },
+        {
+          "id": "nav-evening",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "المساء",
+              "en": "Evening"
+            },
+            "url": "/category/evening"
+          }
+        },
+        {
+          "id": "nav-all",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "كل المنتجات",
+              "en": "All products"
+            },
+            "url": "/products"
+          }
+        }
+      ],
+      "block_order": ["nav-morning", "nav-evening", "nav-all"]
+    }
+  ]
+}

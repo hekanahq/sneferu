@@ -1,0 +1,52 @@
+<li class="sg-step">
+  <a class="sg-step-link" href="{{ url(block.settings.link) }}">
+    <span class="sg-step-no" aria-hidden="true"></span>
+    <span class="sg-step-title">{{ block.settings.title }}</span>
+    {% if block.settings.text %}<span class="sg-step-text">{{ block.settings.text }}</span>{% endif %}
+  </a>
+</li>
+<hk-schema>
+  {
+    "name": {
+      "en": "Routine step",
+      "ar": "خطوة"
+    },
+    "version": 1,
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Title",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "نظّف",
+          "en": "Cleanse"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "text": {
+        "type": "text",
+        "label": {
+          "en": "Short text",
+          "ar": "نص قصير"
+        },
+        "default": {
+          "ar": "غسول لطيف للصباح والمساء",
+          "en": "A gentle wash, morning and night"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      }
+    }
+  }
+</hk-schema>

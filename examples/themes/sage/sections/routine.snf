@@ -1,0 +1,67 @@
+<section class="sg-sec sg-routine sg-pad-{{ section.settings.padding_y }}">
+  <div class="sg-wrap">
+    {% if section.settings.title %}
+      <h2 class="sg-h2 sg-center">{{ section.settings.title }}</h2>
+    {% endif %}
+    <ol class="sg-steps">
+      {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+    </ol>
+  </div>
+</section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Routine steps",
+      "ar": "خطوات الروتين"
+    },
+    "version": 1,
+    "templates": ["index"],
+    "blocks": {
+      "allowed": ["step"],
+      "max": 5
+    },
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "روتين من ثلاث خطوات",
+          "en": "A three-step routine"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "padding_y": {
+        "type": "select",
+        "label": {
+          "en": "Vertical spacing",
+          "ar": "المسافة الرأسية"
+        },
+        "options": ["compact", "normal", "roomy"],
+        "default": "normal"
+      }
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "Three steps",
+          "ar": "ثلاث خطوات"
+        },
+        "blocks": [
+          {
+            "type": "step"
+          },
+          {
+            "type": "step"
+          },
+          {
+            "type": "step"
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

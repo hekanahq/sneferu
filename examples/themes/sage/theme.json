@@ -1,0 +1,46 @@
+{
+  "id": "sage",
+  "name": "Sage",
+  "version": "1.0.1",
+  "author": "Hekana",
+  "description": "A clean, clinical skincare store: white and mint ground, sage green tiles, a row of ingredient glyphs, a three-step routine and soft stone product tiles, with its own product, collection, cart, search, 404 and page designs.",
+  "category": "beauty",
+  "engine": "hk2",
+  "engineCompatibility": "^2.0.0",
+  "defaultLocale": "ar",
+  "locales": ["ar", "en"],
+  "settings": {},
+  "money": {
+    "format": "whole"
+  },
+  "tokens": {
+    "colors": {
+      "primary": "#4A6553",
+      "secondary": "#2F3E36",
+      "accent": "#4A6553",
+      "background": "#FFFFFF",
+      "text": "#26312B",
+      "muted": "#5C6860",
+      "surface": "#FFFFFF",
+      "line": "#DDE3DD",
+      "soft": "#F1F4F0",
+      "mint": "#F1F4F0",
+      "sage": "#A9B7AC",
+      "sage-mid": "#8FA596",
+      "sage-deep": "#5F7A69",
+      "stone": "#E4E1DA",
+      "on-primary": "#FFFFFF",
+      "on-accent": "#FFFFFF"
+    },
+    "layout": {
+      "contentWidth": "1080px"
+    },
+    "radius": {
+      "md": "18px"
+    },
+    "fonts": {
+      "heading": "IBM Plex Sans Arabic",
+      "body": "IBM Plex Sans Arabic"
+    }
+  }
+}

@@ -1,0 +1,129 @@
+<section class="sg-hero sg-pad-{{ section.settings.padding_y }}">
+  <div class="sg-wrap">
+    {% if section.settings.eyebrow %}
+      <p class="sg-eyebrow">{{ section.settings.eyebrow }}</p>
+    {% endif %}
+    <div class="sg-hero-head">
+      <h1 class="sg-hero-title">{{ section.settings.title }}</h1>
+      <span class="sg-rule" aria-hidden="true"></span>
+    </div>
+    {% if section.settings.text %}
+      <p class="sg-hero-text">{{ section.settings.text }}</p>
+    {% endif %}
+    <div class="sg-hero-actions">
+      {% if section.settings.button_label %}<hk-button
+          label="{{ section.settings.button_label }}"
+          href="{{ url(section.settings.button_link) }}"
+          class="sg-cta"
+        />{% endif %}
+      {% if section.settings.button2_label %}<hk-button
+          label="{{ section.settings.button2_label }}"
+          href="{{ url(section.settings.button2_link) }}"
+          variant="outline"
+          class="sg-cta"
+        />{% endif %}
+    </div>
+  </div>
+</section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Hero",
+      "ar": "الواجهة الرئيسية"
+    },
+    "version": 1,
+    "templates": ["index"],
+    "settings": {
+      "eyebrow": {
+        "type": "text",
+        "label": {
+          "en": "Small line above",
+          "ar": "سطر صغير فوق"
+        },
+        "default": {
+          "ar": "عناية يومية بالبشرة",
+          "en": "Everyday skincare"
+        },
+        "localized": true,
+        "maxLength": 50
+      },
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "منتجات",
+          "en": "Products"
+        },
+        "localized": true,
+        "maxLength": 40
+      },
+      "text": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "غسول وسيروم وكريم، تركيبات بسيطة ومكونات واضحة على كل عبوة.",
+          "en": "Cleanser, serum and cream. Simple formulas with the ingredients listed on every pack."
+        },
+        "localized": true,
+        "maxLength": 160
+      },
+      "button_label": {
+        "type": "text",
+        "label": {
+          "en": "Main button",
+          "ar": "الزر الأساسي"
+        },
+        "default": {
+          "ar": "تسوّق المنتجات",
+          "en": "Shop products"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "button_link": {
+        "type": "link",
+        "label": {
+          "en": "Main button link",
+          "ar": "رابط الزر الأساسي"
+        },
+        "default": "/products"
+      },
+      "button2_label": {
+        "type": "text",
+        "label": {
+          "en": "Second button",
+          "ar": "الزر التاني"
+        },
+        "default": {
+          "ar": "الروتين اليومي",
+          "en": "Daily routine"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "button2_link": {
+        "type": "link",
+        "label": {
+          "en": "Second button link",
+          "ar": "رابط الزر التاني"
+        },
+        "default": "/category/morning"
+      },
+      "padding_y": {
+        "type": "select",
+        "label": {
+          "en": "Vertical spacing",
+          "ar": "المسافة الرأسية"
+        },
+        "options": ["compact", "normal", "roomy"],
+        "default": "normal"
+      }
+    }
+  }
+</hk-schema>

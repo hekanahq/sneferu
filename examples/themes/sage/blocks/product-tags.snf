@@ -1,0 +1,27 @@
+{% if product.tags %}
+  <div class="sg-tags">
+    {% for tag in product.tags limit: block.settings.max %}<span class="sg-tag">{{ tag }}</span>{% endfor %}
+  </div>
+{% endif %}
+<hk-schema>
+  {
+    "name": {
+      "en": "Tags",
+      "ar": "الوسوم"
+    },
+    "version": 1,
+    "settings": {
+      "max": {
+        "type": "range",
+        "label": {
+          "en": "Most tags",
+          "ar": "أقصى عدد"
+        },
+        "min": 1,
+        "max": 12,
+        "step": 1,
+        "default": 6
+      }
+    }
+  }
+</hk-schema>

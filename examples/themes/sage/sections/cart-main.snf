@@ -1,0 +1,185 @@
+<section class="sg-sec sg-pad-{{ section.settings.padding_y }}">
+  <div class="sg-wrap">
+    <header class="sg-pagehead">
+      {% if section.settings.kicker %}
+        <p class="sg-eyebrow">{{ section.settings.kicker }}</p>
+      {% endif %}
+      {% if section.settings.title %}
+        <h1 class="sg-title sg-title-xl">{{ section.settings.title }}</h1>
+      {% endif %}
+    </header>
+    <div class="sg-cart-layout">
+      <hk-cart-items checkout-label="{{ section.settings.checkout_label }}">
+        <hk-part name="empty">
+          {% render 'empty', title: section.settings.empty_title, text: section.settings.empty_text, label: section.settings.empty_button_label, href: section.settings.empty_button_link %}
+        </hk-part>
+      </hk-cart-items>
+      <aside class="sg-cart-aside">
+        <hk-cart-summary
+          subtotal-label="{{ section.settings.subtotal_label }}"
+          checkout-label="{{ section.settings.checkout_label }}"
+        />
+        {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+        {% if section.settings.show_continue %}<a
+            class="sg-continue"
+            href="{{ url(section.settings.continue_link) }}"
+          >{{ section.settings.continue_label }}</a>{% endif %}
+      </aside>
+    </div>
+  </div>
+</section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Cart",
+      "ar": "السلة"
+    },
+    "version": 1,
+    "templates": ["cart"],
+    "blocks": {
+      "allowed": ["note"],
+      "max": 4
+    },
+    "settings": {
+      "kicker": {
+        "type": "text",
+        "label": {
+          "en": "Small line above the title",
+          "ar": "سطر صغير فوق العنوان"
+        },
+        "default": {
+          "ar": "طلبك",
+          "en": "Your order"
+        },
+        "localized": true,
+        "maxLength": 40
+      },
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "السلة",
+          "en": "Cart"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "subtotal_label": {
+        "type": "text",
+        "label": {
+          "en": "Subtotal label",
+          "ar": "نص المجموع"
+        },
+        "default": "",
+        "localized": true,
+        "maxLength": 30
+      },
+      "checkout_label": {
+        "type": "text",
+        "label": {
+          "en": "Checkout button",
+          "ar": "زر إتمام الشراء"
+        },
+        "default": "",
+        "localized": true,
+        "maxLength": 30
+      },
+      "show_continue": {
+        "type": "boolean",
+        "label": {
+          "en": "Show continue shopping",
+          "ar": "إظهار متابعة التسوق"
+        },
+        "default": true
+      },
+      "continue_label": {
+        "type": "text",
+        "label": {
+          "en": "Continue shopping text",
+          "ar": "نص متابعة التسوق"
+        },
+        "default": {
+          "ar": "كمّل التسوّق",
+          "en": "Keep shopping"
+        },
+        "localized": true,
+        "maxLength": 30,
+        "visible_if": {
+          "setting": "show_continue",
+          "equals": true
+        }
+      },
+      "continue_link": {
+        "type": "link",
+        "label": {
+          "en": "Continue shopping link",
+          "ar": "رابط متابعة التسوق"
+        },
+        "default": "/products",
+        "visible_if": {
+          "setting": "show_continue",
+          "equals": true
+        }
+      },
+      "empty_title": {
+        "type": "text",
+        "label": {
+          "en": "Empty cart title",
+          "ar": "عنوان السلة الفاضية"
+        },
+        "default": {
+          "ar": "السلة فاضية",
+          "en": "Your cart is empty"
+        },
+        "localized": true,
+        "maxLength": 80
+      },
+      "empty_text": {
+        "type": "textarea",
+        "label": {
+          "en": "Empty cart text",
+          "ar": "نص السلة الفاضية"
+        },
+        "default": {
+          "ar": "اختار منتجاتك وهتلاقيها هنا.",
+          "en": "Pick your products and they will show up here."
+        },
+        "localized": true,
+        "maxLength": 160
+      },
+      "empty_button_label": {
+        "type": "text",
+        "label": {
+          "en": "Empty cart button",
+          "ar": "زر السلة الفاضية"
+        },
+        "default": {
+          "ar": "تصفّح المنتجات",
+          "en": "Browse products"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "empty_button_link": {
+        "type": "link",
+        "label": {
+          "en": "Empty cart button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/products"
+      },
+      "padding_y": {
+        "type": "select",
+        "label": {
+          "en": "Vertical spacing",
+          "ar": "المسافة الرأسية"
+        },
+        "options": ["compact", "normal", "roomy"],
+        "default": "normal"
+      }
+    }
+  }
+</hk-schema>
