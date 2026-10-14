@@ -54,14 +54,17 @@ Details:
 
 | Rule | Code |
 | - | - |
-| The checkout tags go in `templates/checkout.snf` or a section that lists `checkout` only | SN2020 |
-| Each tag appears once on the page | SN2021 |
-| The page needs a layout holding `<hk-checkout-payment>` | SN2022 |
-| Parts are direct children of the layout | SN2023 |
-| Only layout, typography, image and link tags, plus the checkout tags | SN2024 |
-| No cart, product, order, customer or catalogue data, and no `money` filter | SN2025 |
-| No `audio`, `video` or `track` (forms, inputs, buttons and scripts are not on the element allow-list at all, SN2001) | SN2026 |
-| A checkout section has no `product` or `collection` setting | SN2027 |
+| The checkout tags go in `templates/checkout.snf` or a section that lists `checkout` only | SN2030 |
+| Each tag appears once on the page | SN2031 |
+| The page needs a layout holding `<hk-checkout-payment>` | SN2032 |
+| Parts are direct children of the layout | SN2033 |
+| Only layout, typography, image and link tags, plus the checkout tags | SN2034 |
+| No cart, product, order, customer or catalogue data, and no `money` filter | SN2035 |
+| No `audio`, `video` or `track` (forms, inputs, buttons and scripts are not on the element allow-list at all, SN2001) | SN2036 |
+| A checkout section has no `product` or `collection` setting | SN2037 |
+| Links stay in the store (or go to chat and social profiles) | SN2038 |
+| No inline `style`, no `id`, `name` or `data-hk-*` on plain elements | SN2039, SN2040 |
+| The layout sits in page structure only, never inside a link or `<details>` | SN2041 |
 
 The allowed `hk-*` tags on the page are `hk-section`, `hk-container`,
 `hk-stack`, `hk-grid`, `hk-heading`, `hk-text`, `hk-rich-text`, `hk-image`,
@@ -246,3 +249,7 @@ handles payments. It cannot be deleted, hidden or duplicated, but its settings
 (headings, layout, copy, colours) are edited like any section's, and other
 checkout sections can be added around it. The builder preview shows the same
 labelled boxes as `sneferu dev`.
+
+## What the checkout page strips
+
+The shopper is about to type a phone number and pay, so the rendered checkout page is filtered as a whole, header and footer included: any link that leaves the store is printed as `#` (store paths, anchors, `mailto:`, `tel:` and https links to chat and social sites stay), and inline `style` attributes are dropped. A section that does not list `checkout` in its `templates`, and a block the section does not allow, are skipped on this page. A page whose layout would sit inside a link, a `<details>` or any other element than page structure is refused, and the store shows Hekana's default checkout instead.

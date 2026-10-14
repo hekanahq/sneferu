@@ -6,7 +6,7 @@ const ed = (ar: string, en: string) => ({ label: L(ar, en), group: 'checkout', i
 // eslint-disable-next-line no-control-regex
 const CONTROL = /[\u0000-\u001f\u007f-\u009f\u2028\u2029]/g;
 /** Plain one-line text: controls and runs of white space collapsed, cut to `max`. */
-const line = (v: unknown, max: number): string => toStr(v).replace(CONTROL, ' ').replace(/\s+/g, ' ').trim().slice(0, max);
+const line = (v: unknown, max: number): string => toStr(v).replace(CONTROL, ' ').replace(/[<>"]/g, '').replace(/\s+/g, ' ').trim().slice(0, max);
 const pick = <T extends string>(v: unknown, options: readonly T[], d: T): T => (options as readonly string[]).includes(toStr(v)) ? (v as T) : d;
 
 /**

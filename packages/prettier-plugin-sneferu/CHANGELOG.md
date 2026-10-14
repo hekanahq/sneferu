@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.8.0
+
+### Patch Changes
+
+- Updated dependencies
+  - @hekana/sneferu-compiler@0.8.0
+
 ## 0.7.0
 
 - Version aligned with the rest of the Sneferu group (the plugin is now in the changesets fixed group). No code changes since 0.6.1.

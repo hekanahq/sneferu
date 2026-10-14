@@ -3,7 +3,7 @@ import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { compileTheme, type ThemeFile } from '@hekana/sneferu-compiler';
-import { renderPage, restrictCheckoutLinks, splitCheckout, type ArtifactLike } from '@hekana/sneferu-runtime';
+import { renderPage, restrictCheckoutLinks, restrictCheckoutPage, splitCheckout, type ArtifactLike } from '@hekana/sneferu-runtime';
 import { createDefaultRegistry } from '@hekana/sneferu-components';
 import { sampleContext } from './sample-data';
 
@@ -29,53 +29,64 @@ describe('the checkout boundary: compiler rules', () => {
     expect(codes({})).toEqual([]);
     expect(codes({ ...main(`<h1>Pay</h1>${FULL}`), 'templates/checkout.snf': '<hk-sections /><hk-schema>{"sections":[{"type":"checkout-main"}]}</hk-schema>' })).toEqual([]);
   });
-  it('SN2020: a checkout tag outside the checkout page', () => {
-    expect(codes({ 'templates/cart.snf': `${FULL}<hk-sections />` })).toContain('SN2020');
-    expect(codes({ 'sections/cart-main.snf': section(FULL, '["cart"]') })).toContain('SN2020');
-    expect(codes({ 'layout/theme.snf': `<hk-checkout-payment />${base.find((f) => f.path === 'layout/theme.snf')!.text}` })).toContain('SN2020');
-    expect(codes({ 'snippets/pay.snf': '<hk-checkout-payment />' })).toContain('SN2020');
+  it('SN2030: a checkout tag outside the checkout page', () => {
+    expect(codes({ 'templates/cart.snf': `${FULL}<hk-sections />` })).toContain('SN2030');
+    expect(codes({ 'sections/cart-main.snf': section(FULL, '["cart"]') })).toContain('SN2030');
+    expect(codes({ 'layout/theme.snf': `<hk-checkout-payment />${base.find((f) => f.path === 'layout/theme.snf')!.text}` })).toContain('SN2030');
+    expect(codes({ 'snippets/pay.snf': '<hk-checkout-payment />' })).toContain('SN2030');
     // a section written for no particular page may not hold them either
-    expect(codes({ 'sections/free.snf': section(FULL, '["checkout","cart"]').replace('"checkout","cart"', '"cart"') })).toContain('SN2020');
+    expect(codes({ 'sections/free.snf': section(FULL, '["checkout","cart"]').replace('"checkout","cart"', '"cart"') })).toContain('SN2030');
   });
-  it('SN2021: each tag once', () => {
-    expect(codes({ ...main('<hk-checkout-layout><hk-checkout-payment /><hk-checkout-payment /></hk-checkout-layout>') })).toContain('SN2021');
+  it('SN2031: each tag once', () => {
+    expect(codes({ ...main('<hk-checkout-layout><hk-checkout-payment /><hk-checkout-payment /></hk-checkout-layout>') })).toContain('SN2031');
     // the template and a default section both place the layout
-    expect(codes({ 'templates/checkout.snf': `${FULL}<hk-sections /><hk-schema>{"sections":[{"type":"checkout-main"}]}</hk-schema>` })).toContain('SN2021');
+    expect(codes({ 'templates/checkout.snf': `${FULL}<hk-sections /><hk-schema>{"sections":[{"type":"checkout-main"}]}</hk-schema>` })).toContain('SN2031');
   });
-  it('SN2022: the page needs a layout holding the payment part', () => {
-    expect(codes({ 'templates/checkout.snf': '<h1>Pay</h1><hk-sections /><hk-schema>{"sections":[]}</hk-schema>' })).toContain('SN2022');
-    expect(codes({ 'templates/checkout.snf': '<hk-checkout-layout><hk-checkout-contact /></hk-checkout-layout>' })).toContain('SN2022');
+  it('SN2032: the page needs a layout holding the payment part', () => {
+    expect(codes({ 'templates/checkout.snf': '<h1>Pay</h1><hk-sections /><hk-schema>{"sections":[]}</hk-schema>' })).toContain('SN2032');
+    expect(codes({ 'templates/checkout.snf': '<hk-checkout-layout><hk-checkout-contact /></hk-checkout-layout>' })).toContain('SN2032');
   });
-  it('SN2023: parts sit directly inside the layout', () => {
-    expect(codes({ ...main('<hk-checkout-payment /><hk-checkout-layout><hk-checkout-contact /></hk-checkout-layout>') })).toContain('SN2023');
+  it('SN2033: parts sit directly inside the layout', () => {
+    expect(codes({ ...main('<hk-checkout-payment /><hk-checkout-layout><hk-checkout-contact /></hk-checkout-layout>') })).toContain('SN2033');
     expect(codes({ ...main('<hk-checkout-layout><div><hk-checkout-payment /></div></hk-checkout-layout>') })).toContain('SN2006');
   });
-  it('SN2024: only layout, typography, image and link tags', () => {
+  it('SN2034: only layout, typography, image and link tags', () => {
     for (const tag of ['<hk-cart-summary />', '<hk-price />', '<hk-add-to-cart />', '<hk-product-grid />', '<hk-cart-items />', '<hk-search-form />', '<hk-locale-switch />']) {
-      expect(only({ ...main(`${tag}${FULL}`) }), tag).toContain('SN2024');
+      expect(only({ ...main(`${tag}${FULL}`) }), tag).toContain('SN2034');
     }
     expect(only({ ...main(`<hk-heading text="Pay" /><hk-text text="x" /><hk-image src="https://x.test/a.png" alt="" width="10" height="10" /><hk-icon name="lock" />${FULL}`) })).toEqual([]);
   });
-  it('SN2025: no cart, product, order or customer data, no prices', () => {
+  it('SN2035: no cart, product, order or customer data, no prices', () => {
     for (const expr of ['{{ cart.total }}', '{{ product.title }}', '{{ order.id }}', '{{ customer.name }}', '{{ section.settings.x | money }}', "{{ collection('x').title }}", '{{ paginate.page }}']) {
-      expect(only({ ...main(`<p>${expr}</p>${FULL}`) }), expr).toContain('SN2025');
+      expect(only({ ...main(`<p>${expr}</p>${FULL}`) }), expr).toContain('SN2035');
     }
     expect(only({ ...main(`<p>{{ store.name }} {{ settings.x }} {{ request.path }}</p>${FULL}`) })).toEqual([]);
     // blocks and snippets the page reaches are held to the same rules
-    expect(only({ ...main(`{% render 'peek' %}${FULL}`), 'snippets/peek.snf': '<p>{{ product.title }}</p>' })).toContain('SN2025');
+    expect(only({ ...main(`{% render 'peek' %}${FULL}`), 'snippets/peek.snf': '<p>{{ product.title }}</p>' })).toContain('SN2035');
     expect(only({ ...main(`{% render 'peek', thing: store.name %}${FULL}`), 'snippets/peek.snf': '<p>{{ thing }}</p>' })).toEqual([]);
   });
-  it('SN2026: no media players; the allow-list already refuses forms, inputs and scripts', () => {
-    expect(only({ ...main(`<video src="https://x.test/v.mp4"></video>${FULL}`) })).toContain('SN2026');
+  it('SN2036: no media players; the allow-list already refuses forms, inputs and scripts', () => {
+    expect(only({ ...main(`<video src="https://x.test/v.mp4"></video>${FULL}`) })).toContain('SN2036');
     for (const el of ['<form></form>', '<input>', '<script></script>', '<button>x</button>', '<iframe></iframe>']) expect(only({ ...main(`${el}${FULL}`) }), el).toContain('SN2001');
   });
-  it('SN2028: a static link cannot lead off the store', () => {
-    expect(only({ ...main(`<a href="https://evil.example/pay">Pay here</a>${FULL}`) })).toContain('SN2028');
-    expect(only({ ...main(`<hk-button label="Go" href="https://wa.me.evil.example/x" />${FULL}`) })).toContain('SN2028');
+  it('SN2038: a static link cannot lead off the store', () => {
+    expect(only({ ...main(`<a href="https://evil.example/pay">Pay here</a>${FULL}`) })).toContain('SN2038');
+    expect(only({ ...main(`<hk-button label="Go" href="https://wa.me.evil.example/x" />${FULL}`) })).toContain('SN2038');
     expect(only({ ...main(`<a href="https://wa.me/201000000000">Chat</a><a href="/cart">Cart</a><a href="mailto:a@b.co">Mail</a><a href="tel:+201000000000">Call</a><a href="#top">Top</a>${FULL}`) })).toEqual([]);
   });
-  it('SN2027: no catalogue pickers in a checkout section', () => {
-    expect(only({ ...main(FULL, '{"p":{"type":"product","label":"P"}}') })).toContain('SN2027');
+  it('SN2039 and SN2040: no inline style, no reserved or named elements; SN2038 covers xlink:href', () => {
+    expect(only({ ...main(`<a href="/cart" style="position:fixed;inset:0;opacity:0">x</a>${FULL}`) })).toContain('SN2039');
+    expect(only({ ...main(`<div data-hk-controller="cart-summary"></div>${FULL}`) })).toContain('SN2040');
+    expect(only({ ...main(`<div data-hk-checkout="layout"></div>${FULL}`) })).toContain('SN2040');
+    expect(only({ ...main(`<a id="x" name="y">x</a>${FULL}`) })).toContain('SN2040');
+    expect(only({ ...main(`<svg viewBox="0 0 10 10"><a xlink:href="https://evil.example"><text x="1" y="5">Pay</text></a></svg>${FULL}`) })).toContain('SN2038');
+  });
+  it('SN2041: the layout sits in page structure only', () => {
+    expect(only({ ...main(`<a href="/cart"><details><summary>x</summary>${FULL}</details></a>`) })).toContain('SN2041');
+    expect(only({ ...main(`<div><section><hk-card>${FULL}</hk-card></section></div>`) })).toEqual([]);
+  });
+  it('SN2037: no catalogue pickers in a checkout section', () => {
+    expect(only({ ...main(FULL, '{"p":{"type":"product","label":"P"}}') })).toContain('SN2037');
   });
   it('a section that does not list checkout cannot be a default of the checkout template (SN3041)', () => {
     expect(codes({ 'templates/checkout.snf': '<hk-sections /><hk-schema>{"sections":[{"type":"cart-main"},{"type":"checkout-main"}]}</hk-schema>' })).toContain('SN3041');
@@ -119,6 +130,22 @@ describe('the checkout boundary: runtime', () => {
     expect(ok.html).toContain('href="https://wa.me/201000000000"');
     expect(restrictCheckoutLinks('<a href="https://wa.me.evil.example/x">a</a><a href="//x.test">b</a><a href="javascript:alert(1)">c</a><a href="https://evil.example/?u=https://wa.me/x">d</a><a href="/products">e</a>')).toBe('<a href="#">a</a><a href="#">b</a><a href="#">c</a><a href="#">d</a><a href="/products">e</a>');
   });
+  it('splitCheckout refuses a layout mounted inside a link or a toggle', () => {
+    const ok = run('checkout').html;
+    expect(splitCheckout(ok.replace('<main id="main" class="sf-main">', '<main id="main" class="sf-main"><a href="/cart">'))).toBeNull();
+    expect(splitCheckout(ok.replace('<main id="main" class="sf-main">', '<main id="main" class="sf-main"><details><summary>s</summary>'))).toBeNull();
+    expect(splitCheckout(ok.replace('<main id="main" class="sf-main">', '<main id="main" class="sf-main"><div>'))).not.toBeNull();
+  });
+  it('the whole checkout page loses off-store links (header and footer too), inline styles and svg xlink links', () => {
+    expect(restrictCheckoutPage('<a href="https://evil.example">a</a><svg><a xlink:href="https://evil.example"/></svg><a HREF="https://evil.example">b</a><div style="position:fixed">c</div><a href="/ok">d</a>'))
+      .toBe('<a href="#">a</a><svg><a xlink:href="#"/></svg><a HREF="#">b</a><div>c</div><a href="/ok">d</a>');
+  });
+  it('a section not written for the checkout and a block its parent does not allow never print there', () => {
+    const r = run('checkout', [{ id: 'a', type: 'checkout-main' }, { id: 'b', type: 'hero' }, { id: 'c', type: 'checkout-main', children: [{ id: 'k', type: 'checkout-note' }, { id: 'z', type: 'menu-link' }] }]);
+    expect(r.diagnostics.map((d) => d.code)).toContain('SN4014');
+    expect(r.html).toContain('<!-- section b unavailable -->');
+    expect(r.html).not.toContain('data-hk-block="z"');
+  });
   it('splitCheckout is fail-closed on anything it does not recognise', () => {
     const ok = run('checkout').html;
     expect(splitCheckout(ok.replace('data-hk-checkout="payment"', 'data-hk-checkout="nope"'))).toBeNull();
@@ -134,7 +161,8 @@ describe('the checkout boundary: runtime', () => {
     const s = splitCheckout(r.html)!;
     expect(s.presentation.headings.contact).toBe('Who');
     expect(s.presentation.headings.payment!.length).toBeLessThanOrEqual(60);
-    expect(s.presentation.headings.payment).toContain('<b>"now"</b> &');
+    expect(s.presentation.headings.payment).toContain('bnow/b &');
+    expect(s.presentation.headings.payment).not.toMatch(/[<>"]/);
     expect(s.presentation.cta).toBe('Order now');
     expect(r.html).not.toContain('<b>"now"</b>');
   });

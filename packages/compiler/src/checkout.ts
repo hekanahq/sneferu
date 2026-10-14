@@ -22,6 +22,8 @@ export interface CheckoutInput {
 
 type At = { file: string; line: number; col: number };
 const BUILTIN = new Set(['hk-slot', 'hk-sections', 'hk-block', 'hk-part']);
+/** Elements and tags a layout may sit inside: page structure only, never a link, a toggle or a figure. */
+const LAYOUT_ANCESTORS = new Set(['div', 'section', 'main', 'article', 'aside', 'header', 'footer', 'nav', 'hk-section', 'hk-container', 'hk-stack', 'hk-grid', 'hk-card']);
 const MEDIA_DENIED = new Set(['audio', 'video', 'track']);
 const SETTING_DENIED = new Set(['product', 'collection']);
 const PAGE_DATA = new Set(['product', 'collection', 'search', 'paginate', 'page', 'cart', 'order', 'customer', 'checkout']);
@@ -66,8 +68,20 @@ export function checkCheckout(input: CheckoutInput): Diagnostic[] {
   const at = (f: CheckoutFile, n: { loc: { line: number; col: number } }): At => ({ file: f.path, line: n.loc.line, col: n.loc.col });
   for (const f of everywhere) {
     if (pagePaths.has(f.path)) continue;
-    anyTag(f.nodes, (n) => { if (isCheckoutTag(n.tag)) out.push(err('SN2020', `<${n.tag}> belongs on the checkout page only: use it in templates/checkout or in a section whose <hk-schema> templates lists "checkout"`, at(f, n))); });
+    anyTag(f.nodes, (n) => { if (isCheckoutTag(n.tag)) out.push(err('SN2030', `<${n.tag}> belongs on the checkout page only: use it in templates/checkout or in a section whose <hk-schema> templates lists "checkout"`, at(f, n))); });
   }
+
+  // the layout's ancestors inside each page file
+  const ancestry = (list: AstNode[], f: CheckoutFile, stack: string[]): void => {
+    for (const n of list) {
+      if (n.t === 'el') {
+        if (n.tag === CHECKOUT_LAYOUT_TAG) for (const a of stack) if (!LAYOUT_ANCESTORS.has(a)) out.push(err('SN2041', `<${CHECKOUT_LAYOUT_TAG}> cannot sit inside <${a}>: only page structure (div, section, main, article, aside, header, footer, nav, hk-section, hk-container, hk-stack, hk-grid, hk-card) may surround it`, at(f, n)));
+        ancestry(n.children, f, [...stack, n.tag]);
+      } else if (n.t === 'if') { n.branches.forEach((b) => ancestry(b.body, f, stack)); if (n.else) ancestry(n.else, f, stack); }
+      else if (n.t === 'for') ancestry(n.body, f, stack);
+    }
+  };
+  for (const f of pageFiles) ancestry(f.nodes, f, []);
 
   // 2) the page's own files: counts, placement
   const total = new Map<string, number>();
@@ -76,20 +90,20 @@ export function checkCheckout(input: CheckoutInput): Diagnostic[] {
     anyTag(f.nodes, (n, parent) => {
       if (!isCheckoutTag(n.tag)) return;
       here.set(n.tag, (here.get(n.tag) ?? 0) + 1);
-      if (here.get(n.tag)! > 1) out.push(err('SN2021', `<${n.tag}> appears twice in this file; each checkout tag is used once`, at(f, n)));
-      if (n.tag !== CHECKOUT_LAYOUT_TAG && parent !== CHECKOUT_LAYOUT_TAG) out.push(err('SN2023', `<${n.tag}> must be a direct child of <${CHECKOUT_LAYOUT_TAG}>`, at(f, n)));
+      if (here.get(n.tag)! > 1) out.push(err('SN2031', `<${n.tag}> appears twice in this file; each checkout tag is used once`, at(f, n)));
+      if (n.tag !== CHECKOUT_LAYOUT_TAG && parent !== CHECKOUT_LAYOUT_TAG) out.push(err('SN2033', `<${n.tag}> must be a direct child of <${CHECKOUT_LAYOUT_TAG}>`, at(f, n)));
     });
     // the default composition (the template and the sections it seeds) must not repeat a tag either
     const seededHere = f === input.template || checkoutSections.some(([name, s]) => s === f && input.defaultSections.includes(name));
     if (seededHere) for (const [t] of here) total.set(t, (total.get(t) ?? 0) + 1);
   }
-  for (const [t, n] of total) if (n > 1) out.push(err('SN2021', `<${t}> is placed ${n} times by the checkout template and its default sections; each checkout tag is used once`, { file: input.template?.path ?? pageFiles[0]!.path }));
+  for (const [t, n] of total) if (n > 1) out.push(err('SN2031', `<${t}> is placed ${n} times by the checkout template and its default sections; each checkout tag is used once`, { file: input.template?.path ?? pageFiles[0]!.path }));
   // payment (inside a layout) is required of the default composition: only when the theme brings its own checkout files
   if (input.template || checkoutSections.length > 0) {
     const composed = [...(input.template ? [input.template] : []), ...checkoutSections.filter(([name]) => input.defaultSections.includes(name)).map(([, s]) => s)];
     let layout = false; let payment = false;
     for (const f of composed) anyTag(f.nodes, (n) => { if (n.tag === CHECKOUT_LAYOUT_TAG) layout = true; if (n.tag === CHECKOUT_PART_TAGS.payment) payment = true; });
-    if (input.template && (!layout || !payment)) out.push(err('SN2022', `the checkout page needs <${CHECKOUT_LAYOUT_TAG}> holding <${CHECKOUT_PART_TAGS.payment} />: place them in templates/checkout or in a section it lists by default`, { file: input.template.path }));
+    if (input.template && (!layout || !payment)) out.push(err('SN2032', `the checkout page needs <${CHECKOUT_LAYOUT_TAG}> holding <${CHECKOUT_PART_TAGS.payment} />: place them in templates/checkout or in a section it lists by default`, { file: input.template.path }));
   }
 
   // 3) what the page's files, and what they reach, may contain
@@ -125,15 +139,15 @@ export function checkCheckout(input: CheckoutInput): Diagnostic[] {
       if (!e || d > 64) return;
       switch (e.k) {
         case 'path':
-          if (!e.from && typeof e.p[0] === 'string' && !isBound(e.p[0]) && !CHECKOUT_DATA_HEADS.includes(e.p[0])) out.push(err('SN2025', `'${e.p[0]}' is not available on the checkout page${hint(e.p[0])}`, where));
+          if (!e.from && typeof e.p[0] === 'string' && !isBound(e.p[0]) && !CHECKOUT_DATA_HEADS.includes(e.p[0])) out.push(err('SN2035', `'${e.p[0]}' is not available on the checkout page${hint(e.p[0])}`, where));
           expr(e.from, where, d + 1); break;
         case 'lookup':
-          if (CHECKOUT_DENIED_LOOKUPS.includes(e.fn)) out.push(err('SN2025', `${e.fn}() reads the catalogue, which the checkout page does not have`, where));
+          if (CHECKOUT_DENIED_LOOKUPS.includes(e.fn)) out.push(err('SN2035', `${e.fn}() reads the catalogue, which the checkout page does not have`, where));
           e.args.forEach((a) => expr(a, where, d + 1)); break;
         case 'cmp': case 'and': case 'or': expr(e.a, where, d + 1); expr(e.b, where, d + 1); break;
         case 'not': expr(e.a, where, d + 1); break;
         case 'filter':
-          if (CHECKOUT_DENIED_FILTERS.includes(e.name)) out.push(err('SN2025', `the '${e.name}' filter prints prices; the checkout page never shows a price or total of its own (the platform prints them)`, where));
+          if (CHECKOUT_DENIED_FILTERS.includes(e.name)) out.push(err('SN2035', `the '${e.name}' filter prints prices; the checkout page never shows a price or total of its own (the platform prints them)`, where));
           expr(e.input, where, d + 1); e.args.forEach((a) => expr(a, where, d + 1)); break;
         default: break;
       }
@@ -146,14 +160,16 @@ export function checkCheckout(input: CheckoutInput): Diagnostic[] {
         else if (n.t === 'render') Object.values(n.args).forEach((e) => expr(e, at(f, n)));
         else if (n.t === 'el') {
           if (n.tag.startsWith('hk-')) {
-            // a checkout tag outside the page's own files is reported by SN2020
+            // a checkout tag outside the page's own files is reported by SN2030
             const ok = BUILTIN.has(n.tag) || CHECKOUT_ALLOWED_TAGS.includes(n.tag) || isCheckoutTag(n.tag);
-            if (!ok) out.push(err('SN2024', `<${n.tag}> is not allowed on the checkout page: it takes layout, typography, image and link tags (${CHECKOUT_ALLOWED_TAGS.join(', ')}) and the checkout tags`, at(f, n)));
-          } else if (MEDIA_DENIED.has(n.tag)) out.push(err('SN2026', `<${n.tag}> is not allowed on the checkout page`, at(f, n)));
+            if (!ok) out.push(err('SN2034', `<${n.tag}> is not allowed on the checkout page: it takes layout, typography, image and link tags (${CHECKOUT_ALLOWED_TAGS.join(', ')}) and the checkout tags`, at(f, n)));
+          } else if (MEDIA_DENIED.has(n.tag)) out.push(err('SN2036', `<${n.tag}> is not allowed on the checkout page`, at(f, n)));
           for (const a of n.attrs) {
             for (const p of a.parts) if (typeof p !== 'string') expr(p, { file: f.path, ...a.loc });
-            if (a.name === 'href' && a.parts.length > 0 && a.parts.every((p) => typeof p === 'string') && !isCheckoutLinkAllowed((a.parts as string[]).join(''))) {
-              out.push(err('SN2028', `a link on the checkout page cannot lead off the store: use a store path, mailto:, tel: or a chat or social https link (the page never prints any other)`, { file: f.path, ...a.loc }));
+            if (a.name === 'style') out.push(err('SN2039', 'inline style is not allowed on the checkout page: use classes and the theme CSS', { file: f.path, ...a.loc }));
+            if (!n.tag.startsWith('hk-') && (a.name.startsWith('data-hk-') || a.name === 'id' || a.name === 'name')) out.push(err('SN2040', `attribute '${a.name}' is reserved on the checkout page (it names the platform's own elements)`, { file: f.path, ...a.loc }));
+            if ((a.name === 'href' || a.name.endsWith(':href')) && a.parts.length > 0 && a.parts.every((p) => typeof p === 'string') && !isCheckoutLinkAllowed((a.parts as string[]).join(''))) {
+              out.push(err('SN2038', `a link on the checkout page cannot lead off the store: use a store path, mailto:, tel: or a chat or social https link (the page never prints any other)`, { file: f.path, ...a.loc }));
             }
           }
           visit(n.children, n.tag);
@@ -169,7 +185,7 @@ export function checkCheckout(input: CheckoutInput): Diagnostic[] {
 
   // 4) pickers of catalogue items make no sense on the page
   for (const [name, s] of checkoutSections) {
-    for (const [k, f] of Object.entries(s.schema.settings)) if (SETTING_DENIED.has(f.type)) out.push(err('SN2027', `section '${name}' lists "checkout" in templates and has a ${f.type} setting '${k}'; the checkout page has no catalogue`, { file: s.path }));
+    for (const [k, f] of Object.entries(s.schema.settings)) if (SETTING_DENIED.has(f.type)) out.push(err('SN2037', `section '${name}' lists "checkout" in templates and has a ${f.type} setting '${k}'; the checkout page has no catalogue`, { file: s.path }));
   }
   return out;
 }

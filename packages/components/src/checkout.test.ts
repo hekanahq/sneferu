@@ -27,7 +27,7 @@ describe('the checkout tags', () => {
     expect(html('hk-checkout-contact', {})).toBe('<div data-hk-checkout="contact"></div>');
     expect(html('hk-checkout-summary', { heading: '  Your   order\n' })).toBe('<div data-hk-checkout="summary" data-hk-heading="Your order"></div>');
     expect(html('hk-checkout-shipping', { heading: 'x'.repeat(200) })).toBe(`<div data-hk-checkout="shipping" data-hk-heading="${'x'.repeat(60)}"></div>`);
-    expect(html('hk-checkout-contact', { heading: '"><img src=x onerror=alert(1)>' })).toBe('<div data-hk-checkout="contact" data-hk-heading="&quot;&gt;&lt;img src=x onerror=alert(1)&gt;"></div>');
+    expect(html('hk-checkout-contact', { heading: '"><img src=x onerror=alert(1)>' })).toBe('<div data-hk-checkout="contact" data-hk-heading="img src=x onerror=alert(1)"></div>');
   });
   it('only the payment part takes a button label', () => {
     expect(html('hk-checkout-payment', { heading: 'Pay', ctaLabel: 'Confirm order' })).toBe('<div data-hk-checkout="payment" data-hk-heading="Pay" data-hk-cta="Confirm order"></div>');

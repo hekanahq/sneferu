@@ -6,7 +6,7 @@ import { checkArtifactShape } from './shape';
 import { themeTokenCss } from './tokens';
 import { themeFontCss } from './fonts';
 import { bindMenuRequest } from './menus';
-import { restrictCheckoutLinks } from './checkout';
+import { restrictCheckoutPage } from './checkout';
 
 interface Schemaed { ir: IRNode[]; schema: { settings: FieldSchema } }
 interface DefaultSection { type: string; settings: Record<string, unknown>; hidden?: boolean; blocks?: DefaultSection[] }
@@ -211,16 +211,24 @@ function render(artifact: ArtifactLike, opts: RenderOptions): RenderResult {
   let usedDefaults = false;
   const MAX_BLOCKS = 100;
   /** Blocks of a section or block: hidden ones skipped, nested blocks (one more level) under `blocks`. */
-  const toBlocks = (list: unknown, depth: number): { id: unknown; type: string; settings: Record<string, unknown>; blocks: unknown[] }[] =>
-    (Array.isArray(list) ? list : []).filter((c): c is PageNode => isObj(c) && typeof c.type === 'string' && !c.hidden).slice(0, MAX_BLOCKS)
-      .map((c) => ({ id: c.id, type: c.type, settings: settingsFor(own(artifact.blocks, c.type)?.schema.settings ?? {}, c.props, locale), blocks: depth < 2 ? toBlocks(c.children, depth + 1) : [] }));
+  const toBlocks = (list: unknown, depth: number, allowed?: readonly string[]): { id: unknown; type: string; settings: Record<string, unknown>; blocks: unknown[] }[] =>
+    (Array.isArray(list) ? list : []).filter((c): c is PageNode => isObj(c) && typeof c.type === 'string' && !c.hidden && (allowed === undefined || allowed.includes(c.type))).slice(0, MAX_BLOCKS)
+      .map((c) => ({ id: c.id, type: c.type, settings: settingsFor(own(artifact.blocks, c.type)?.schema.settings ?? {}, c.props, locale), blocks: depth < 2 ? toBlocks(c.children, depth + 1, allowedOf(own(artifact.blocks, c.type))) : [] }));
 
+  /** On the checkout page a block must be one its parent's schema allows (the compiler only checked those); elsewhere any block of the theme renders, as before. */
+  const allowedOf = (parent: unknown): readonly string[] | undefined => {
+    if (pageType !== 'checkout') return undefined;
+    const list = (parent as { schema?: { blocks?: { allowed?: unknown } } } | undefined)?.schema?.blocks?.allowed;
+    return Array.isArray(list) ? list.filter((x): x is string => typeof x === 'string') : [];
+  };
   const renderSection = (node: PageNode, idPrefix = '', inGroup = false): string => {
     if (!isObj(node) || typeof node.type !== 'string') { env.diagnostics.push(err('SN4011', 'page section is malformed')); return '<!-- section unavailable -->'; }
     const def = own(artifact.sections, node.type);
+    // the checkout page takes only the sections written for it (a page tree is data: the compiler never saw this placement)
+    if (def && !inGroup && pageType === 'checkout' && !sectionAllowedOn(def.schema as { templates?: readonly string[] }, 'checkout')) { env.diagnostics.push(err('SN4014', `section '${node.type}' is not allowed on the checkout page; skipped`)); return `<!-- section ${escapeAttr(toStr(node.id))} unavailable -->`; }
     if (!def) { env.diagnostics.push(err('SN4011', `section '${node.type}' is not in this theme`)); return `<!-- section ${escapeAttr(toStr(node.id))} unavailable -->`; }
     if (defaultSections.has(node.type)) usedDefaults = true;
-    const blocks = toBlocks(node.children, 1);
+    const blocks = toBlocks(node.children, 1, allowedOf(def));
     const scope: Scope = { ...base, section: { id: node.id, type: node.type, settings: settingsFor(def.schema.settings, node.props, locale), blocks } };
     const unavailable = `<!-- section ${escapeAttr(toStr(node.id))} unavailable -->`;
     if (env.budget.exceeded) return unavailable;
@@ -255,13 +263,11 @@ function render(artifact: ArtifactLike, opts: RenderOptions): RenderResult {
 
   env.blocks = artifact.blocks;
 
-  const content = () => {
-    const out = renderNodes(template, base, { ...env, slots: { sections: () => sections.filter((s) => !(isObj(s) && s.hidden)).map((s) => renderSection(s)).join('') } });
-    // the shopper is about to pay: the page's own content cannot lead off to another site (the header and footer are the store's navigation)
-    return pageType === 'checkout' ? restrictCheckoutLinks(out) : out;
-  };
+  const content = () => renderNodes(template, base, { ...env, slots: { sections: () => sections.filter((s) => !(isObj(s) && s.hidden)).map((s) => renderSection(s)).join('') } });
   // only the layout places section groups; sections, templates and snippets rendered from here get no group renderer
-  const inner = renderNodes(artifact.layout, base, { ...env, slots: { content }, group: renderGroup });
+  const rendered = renderNodes(artifact.layout, base, { ...env, slots: { content }, group: renderGroup });
+  // the shopper is about to pay: nothing on this page (header and footer too) leads off the store or overlays it with inline styles
+  const inner = pageType === 'checkout' ? restrictCheckoutPage(rendered) : rendered;
   const html = `<div data-hk-theme="${escapeAttr(artifact.manifest.id)}" dir="${escapeAttr(dir)}" lang="${escapeAttr(locale)}">${inner}</div>`;
   const css = env.css.join('\n');
   const ownsPage = Array.isArray(artifact.defaults?.templates) && artifact.defaults!.templates.includes(opts.template);

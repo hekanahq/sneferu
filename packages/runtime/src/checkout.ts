@@ -59,6 +59,8 @@ export function splitCheckout(html: string): CheckoutSplit | null {
   if (!parts.includes('payment')) return null;
   // no placeholder anywhere else on the page
   if ([...html.matchAll(ANY)].length !== 1 + parts.length) return null;
+  // the host's checkout is mounted inside the wrapper: nothing open around it may be a link, a toggle, a button or a figure
+  if (openTags(html.slice(0, start)).some((t) => !CONTAINERS.has(t))) return null;
 
   const order: CheckoutFlowPart[] = [...parts.filter((p): p is CheckoutFlowPart => (CHECKOUT_FLOW as readonly string[]).includes(p)),
     ...CHECKOUT_FLOW.filter((p) => !parts.includes(p))];
@@ -74,5 +76,28 @@ export function splitCheckout(html: string): CheckoutSplit | null {
  * The runtime prints attributes only as `href="…"` with the value escaped, so one pass over that shape covers them all.
  */
 export function restrictCheckoutLinks(html: string): string {
-  return html.replace(/(\shref=")([^"]*)(")/g, (m, a: string, v: string, z: string) => (isCheckoutLinkAllowed(unescape(v)) ? m : `${a}#${z}`));
+  return html.replace(/(\s(?:[a-z][\w-]*:)?href\s*=\s*")([^"]*)(")/gi, (m, a: string, v: string, z: string) => (isCheckoutLinkAllowed(unescape(v)) ? m : `${a}#${z}`));
+}
+
+/**
+ * The whole checkout page, header and footer included: off-store links become `#` and inline `style` attributes are dropped
+ * (a fixed, transparent link laid over the pay button is the classic overlay; no Sneferu tag prints inline styles, so only
+ * hand-written markup loses anything). Theme CSS files are not touched here.
+ */
+export function restrictCheckoutPage(html: string): string {
+  return restrictCheckoutLinks(html).replace(/\sstyle\s*=\s*"[^"]*"/gi, '');
+}
+
+/** Containers a layout may sit inside: the theme's page structure, never something a click or a toggle can capture. */
+const CONTAINERS = new Set(['div', 'section', 'main', 'article', 'aside', 'header', 'footer', 'nav']);
+const VOID = new Set(['area', 'br', 'col', 'hr', 'img', 'input', 'source', 'track', 'wbr']);
+/** The tags still open at the end of `html` (a prefix of a page), innermost last. */
+function openTags(html: string): string[] {
+  const stack: string[] = [];
+  for (const m of html.matchAll(/<(\/?)([a-zA-Z][a-zA-Z0-9-]*)[^<>]*?(\/?)>/g)) {
+    const name = m[2]!.toLowerCase();
+    if (m[3] === '/' || VOID.has(name)) continue;
+    if (m[1] === '/') { const i = stack.lastIndexOf(name); if (i >= 0) stack.length = i; } else stack.push(name);
+  }
+  return stack;
 }
