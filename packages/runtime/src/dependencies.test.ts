@@ -48,6 +48,17 @@ describe('pageDependencies', () => {
     ] });
     expect(hidden.collections).toEqual(['featured']);
   });
+  it('reads nested default blocks (block inside a block) from the template', () => {
+    const a = { ...artifact(), templateSections: { index: [{ type: 'faq', settings: {}, blocks: [{ type: 'shelf', settings: {}, blocks: [{ type: 'shelf', settings: { list: 'nested-one' } }] }] }] } };
+    expect(pageDependencies(a, { template: 'index' }).collections).toContain('nested-one');
+  });
+  it('reads default blocks only as deep as the renderer does (two levels under a section)', () => {
+    const deep = { type: 'shelf', settings: { list: 'too-deep' } };
+    const a = { ...artifact(), templateSections: { index: [{ type: 'faq', settings: {}, blocks: [{ type: 'shelf', settings: {}, blocks: [{ type: 'shelf', settings: { list: 'level-two' }, blocks: [deep] }] }] }] } };
+    const c = pageDependencies(a, { template: 'index' }).collections;
+    expect(c).toContain('level-two');
+    expect(c).not.toContain('too-deep');
+  });
   it('ignores empty or invalid handles and caps at 8', () => {
     const a = artifact();
     const r = pageDependencies(a, { template: 'index', settings: { home: 'A B' }, sections: [

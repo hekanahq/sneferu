@@ -175,6 +175,9 @@ What CSS cannot do in a theme:
 - A `style="…"` attribute may be static on plain HTML elements, but never contain
   `{{ }}` (SN2009). `style` is not accepted on `hk-*` tags (SN2004): use props or
   a class.
+- `{% if %}` cannot sit inside an attribute value (SN2020). Switch a class with
+  `class="btn btn-{{ block.settings.style }}"` and a select setting, or wrap two
+  versions of the element in `{% if %}`.
 - In the dev preview the stylesheet is inlined in the page, so a relative `url()`
   inside CSS does not point at `assets/`. Use `asset_url()` in templates for
   images (`<img src="{{ asset_url('logo.svg') }}" alt="">`) and fonts that are

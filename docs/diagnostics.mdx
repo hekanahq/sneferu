@@ -51,6 +51,7 @@ Every problem Sneferu reports has a stable code. The format is `file:line:col se
 | SN2017 | `<hk-section-group>` has no fixed `name`, or the name is not `header`, `footer` or `announcement` | Write `name="header"` as plain text. |
 | SN2018 | `<hk-section-group>` outside `layout/theme.snf` | Place groups in the layout. |
 | SN2019 | The same group is placed twice in the layout | Place each group once. |
+| SN2020 | An attribute value contains a `{% %}` directive, such as `class="btn {% if x %}is-on{% endif %}"`. Directives work around elements, not inside an attribute, so it would otherwise render as stray class names | Print a value with `{{ }}`: `class="btn btn-{{ block.settings.style }}"` with a select setting. Or put the `{% if %}` around two versions of the element. |
 
 ## SN3xxx Package, manifest and compile
 

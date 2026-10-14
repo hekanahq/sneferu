@@ -175,6 +175,7 @@ Also rejected:
 
 - `style="..."` containing `{{ }}` (SN2009). Use classes, tokens or component props.
 - A static URL that is unsafe (SN2010).
+- A `{% if %}`, `{% for %}` or `{% render %}` inside any attribute value (SN2020). Directives wrap elements; inside an attribute use `{{ }}`, for example `class="plan-btn plan-btn-{{ block.settings.featured }}"`.
 
 URL attributes are `href`, every `*:href` (`xlink:href`, ...), `src`, `action`, `poster`, `srcset` and `formaction`. Their dynamic values are always passed through the safe-URL filter at render time, and static values must already be safe (SN2010). Styling lives in `assets/*.css` and in component props.
 

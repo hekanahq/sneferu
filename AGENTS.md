@@ -136,13 +136,13 @@ The compiler enforces most of these, and `validate` names the one you broke.
 | SN2004 unknown property | The prop is not on that tag. Check the tag reference; style with `class` and CSS instead |
 | SN2001 element not allowed | `button`, `input`, `form`, `script`, `style` are not allowed. Use `hk-button` (a link), `hk-search-form`, `hk-add-to-cart` |
 | SN2009 `{{ }}` in `style` | Use a class, a `data-*` attribute plus CSS, a tag prop or a token |
+| SN2020 `{% if %}` inside an attribute value | Directives wrap elements, not attribute values. Use `class="btn btn-{{ block.settings.style }}"` with a select setting, or put the `{% if %}` around two versions of the element |
 | A link on an English page goes to the Arabic page | Wrap it: `href="{{ url(section.settings.link) }}"` |
 | A rule on `.btn` is ignored | A broad reset outranks it; wrap the reset in `:where()` |
 | Arabic text in a template | Move it to a localized setting default or `locales/ar.json` |
 | `409 HK2_VERSION_EXISTS` on push | Versions are immutable; bump `version` in `theme.json` |
 | Product, cart or 404 page looks like a different store | That template is missing; add `templates/<type>.snf` and its sections |
 | An arrow points backwards on Arabic pages | `hk-icon` arrows already mirror; remove your own `scaleX(-1)` |
-| Blocks nested inside blocks in a template's default sections do not show on a new store | Known runtime gap: seed one level of blocks in templates (groups keep two); nested items appear once the merchant saves |
 | The docs mention something the CLI rejects | The docs on `main` can be ahead of npm; check `npx sneferu --version` and the CHANGELOG |
 | `.00` on every price | Set `"money": { "format": "whole" }` in `theme.json` |
 | Fonts look like the system font | Font files in `assets/` are not served; set `tokens.fonts` |

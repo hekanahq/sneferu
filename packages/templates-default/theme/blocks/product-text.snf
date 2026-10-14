@@ -1,9 +1,7 @@
-{% if block.settings.text %}
-  <p class="sf-note sf-note-{{ block.settings.tone }}">
-    {% if block.settings.icon != 'none' %}<hk-icon name="{{ block.settings.icon }}" />{% endif %}
-    <span>{{ block.settings.text }}</span>
-  </p>
-{% endif %}
+<p class="sf-note sf-note-{{ block.settings.tone }}">
+  {% if block.settings.icon != 'none' %}<hk-icon name="{{ block.settings.icon }}" />{% endif %}
+  <span>{{ block.settings.text | default: t('product_note') }}</span>
+</p>
 <hk-schema>
   {
     "name": {
@@ -18,10 +16,7 @@
           "en": "Text",
           "ar": "النص"
         },
-        "default": {
-          "ar": "الكود بيوصلك على الإيميل بعد الدفع.",
-          "en": "The code arrives by email after you pay."
-        },
+        "default": "",
         "localized": true,
         "maxLength": 200
       },

@@ -41,7 +41,7 @@ describe('starter theme end to end', () => {
     const r = renderPage(artifact!, { template: 'index', ctx: sampleContext('en', artifact!.locales, 'en'), registry });
     expect(r.diagnostics).toEqual([]);
     expect(r.html).toContain('dir="ltr" lang="en"');
-    expect(r.html).toContain('Welcome to our store');
+    expect(r.html).toContain('Everything you need, in one place');
     expect(r.html).toContain('Shop now');
     expect(r.html).toContain('PlayStation gift card');
     expect(r.html.match(/class="sf-card sf-card-plain"/g)).toHaveLength(6);

@@ -18,6 +18,23 @@ const raw = () => ({
 });
 
 describe('prepareArtifact (I9d)', () => {
+  it('validates nested default blocks as deep as the renderer reads them (two levels under a section)', () => {
+    const withBlocks = (blocks: unknown) => ({ ...raw(), templateSections: { index: [{ type: 's', settings: {}, blocks }] } });
+    const r = prepareArtifact(withBlocks([{ type: 'x', blocks: [null] }]), new TagRegistry());
+    expect(r).toMatchObject({ ok: false, diagnostics: [{ code: 'SN9015' }] });
+    expect(JSON.stringify(r)).toContain('templateSections.index[0].blocks[0].blocks');
+    expect(prepareArtifact(withBlocks([{ type: 'x', blocks: [{ type: 5 }] }]), new TagRegistry())).toMatchObject({ ok: false });
+    // a third block level is never read, so it is not validated either
+    expect(prepareArtifact(withBlocks([{ type: 'x', blocks: [{ type: 'y', blocks: [null] }] }]), new TagRegistry())).toMatchObject({ ok: true });
+  });
+  it('renderPage refuses a malformed nested default block with a shape error, never a TypeError', () => {
+    const a = { ...raw(), templateSections: { index: [{ type: 's', settings: {}, blocks: [null, { type: 'x', blocks: [null, 7, { type: 'y' }] }] }] } };
+    const r = renderPage(a as never, { template: 'index', ctx, registry: new TagRegistry() });
+    expect(r.html).toBe('');
+    const msg = r.diagnostics.map((d) => d.message).join('|');
+    expect(msg).toContain('templateSections.index[0].blocks');
+    expect(msg).not.toContain('Cannot read properties');
+  });
   beforeEach(() => vi.mocked(core.validateIR).mockClear());
 
   it('validates once; renderPage trusts the prepared copy for the same registry', () => {

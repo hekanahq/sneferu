@@ -48,6 +48,34 @@ describe('validateTemplate', () => {
       expect(run('<hk-card>{% if x %}<hk-part name="badge">x</hk-part>{% endif %}</hk-card>')).toEqual(['SN2006', 'SN2013']);
     });
   });
+  describe('{% %} directives inside an attribute value (SN2020)', () => {
+    it.each([
+      '<a class="plan-btn {% if block.settings.featured %}is-featured{% endif %}" href="/">x</a>',
+      '<div class="a {% if x %}b{% else %}c{% endif %}"></div>',
+      "<div class='a {% if x == \"y\" %}b{% endif %}'></div>",
+      '<hk-grid class="a {% for i in xs %}b{% endfor %}"></hk-grid>',
+      '<hk-grid columns="{% if x %}2{% endif %}"></hk-grid>',
+      '<a href="/p{% if x %}?a=1{% endif %}">x</a>',
+      '<div data-x="{% render \'price\' %}"></div>',
+    ])('refuses %s', (html) => {
+      expect(run(html)).toContain('SN2020');
+    });
+    it('names the attribute and says what to write instead', () => {
+      const d = validateTemplate(parseTemplate('<a class="plan-btn {% if block.settings.featured %}is-featured{% endif %}">x</a>', 'f').nodes, { file: 'f', registry, snippets: new Set(), kind: 'section' });
+      const e = d.find((x) => x.code === 'SN2020')!;
+      expect(e.severity).toBe('error');
+      expect(e.message).toContain("'class'");
+      expect(e.message).toContain('{% if %}');
+      expect(e.message).toMatch(/\{\{ .* \}\}/);
+    });
+    it('does not mistake a lone %} for a directive', () => {
+      expect(run('<div data-x="{50%}" title="a%}b"></div>')).toEqual([]);
+    });
+    it('leaves {{ }} output, and directives around whole elements, alone', () => {
+      expect(run('<a class="plan-btn plan-btn-{{ block.settings.featured }}" href="/">x</a>')).toEqual([]);
+      expect(run('{% if x %}<a class="plan-btn is-featured" href="/">x</a>{% else %}<a class="plan-btn" href="/">x</a>{% endif %}')).toEqual([]);
+    });
+  });
   it('accepts valid markup with responsive props', () => {
     expect(run('<hk-grid columns="4" tablet-columns="2" mobile-columns="1" gap="24" class="x" data-a="1"><p>x</p></hk-grid>')).toEqual([]);
   });

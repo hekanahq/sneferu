@@ -83,6 +83,23 @@ describe('renderPage', () => {
       expect(r.html).toContain('<!-- section s unavailable -->');
     }
   });
+  it('seeds nested blocks of default sections (two levels under a section)', () => {
+    const loop = (inner: IRNode[]): IRNode => ({ k: 'loop', as: 'block', src: { k: 'path', p: ['section', 'blocks'] }, limit: 20, body: inner });
+    const art: ArtifactLike = { ...artifact,
+      templateSections: { index: [{ type: 'plans', settings: {}, blocks: [{ type: 'plan', settings: { name: 'Pro' }, blocks: [{ type: 'line', settings: { text: 'one' } }, { type: 'line', settings: { text: 'two' } }] }] }] },
+      sections: { plans: { ir: [loop([{ k: 'comp', tag: 'hk-block', props: { of: { k: 'expr', e: { k: 'path', p: ['block'] } } }, children: [] }])], schema: { settings: {} } } },
+      blocks: {
+        plan: { ir: [{ k: 'html', s: '<ul>' }, { k: 'loop', as: 'l', src: { k: 'path', p: ['block', 'blocks'] }, limit: 20,
+          body: [{ k: 'comp', tag: 'hk-block', props: { of: { k: 'expr', e: { k: 'path', p: ['l'] } } }, children: [] }] }, { k: 'html', s: '</ul>' }],
+          schema: { settings: { name: { type: 'text', label: { ar: 'ا', en: 'N' }, default: '', maxLength: 20 } } } },
+        line: { ir: [{ k: 'html', s: '<li>' }, { k: 'text', e: { k: 'path', p: ['block', 'settings', 'text'] } }, { k: 'html', s: '</li>' }],
+          schema: { settings: { text: { type: 'text', label: { ar: 'ا', en: 'T' }, default: '', maxLength: 20 } } } },
+      } };
+    const r = renderPage(art, { template: 'index', ctx, registry: new TagRegistry() });
+    expect(r.diagnostics).toEqual([]);
+    expect(r.html).toContain('<li>one</li>');
+    expect(r.html).toContain('<li>two</li>');
+  });
   it('stops self-recursive blocks without throwing', () => {
     const rec: ArtifactLike = { ...artifact,
       sections: { hero: { ir: [{ k: 'loop', as: 'block', src: { k: 'path', p: ['section', 'blocks'] }, limit: 20,

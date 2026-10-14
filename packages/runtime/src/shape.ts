@@ -40,13 +40,21 @@ export function checkArtifactShape(a: unknown): Diagnostic[] {
     }
   };
   defs('sections'); defs('blocks');
+  /** Default blocks of a section: the renderer reads two levels (blocks, and the blocks inside them), so those are checked. */
+  const blocks = (list: unknown, where: string, depth: number): void => {
+    if (!Array.isArray(list)) { bad(where, 'must be an array of { type, settings? }'); return; }
+    list.forEach((b, n) => {
+      if (!isObj(b) || typeof b.type !== 'string' || (b.settings !== undefined && !isObj(b.settings))) bad(`${where}[${n}]`, 'must be { type, settings? }');
+      else if (depth < 2 && b.blocks !== undefined) blocks(b.blocks, `${where}[${n}].blocks`, depth + 1);
+    });
+  };
   const ts = a.templateSections;
   if (ts !== undefined) {
     if (!isObj(ts)) bad('templateSections', 'must be an object');
     else for (const [k, list] of Object.entries(ts)) {
       if (!Array.isArray(list)) { bad(`templateSections.${k}`, 'must be an array'); continue; }
       list.forEach((s, i) => { if (!isObj(s) || typeof s.type !== 'string' || (s.settings !== undefined && !isObj(s.settings))) bad(`templateSections.${k}[${i}]`, 'needs a string type and object settings');
-        else if (s.blocks !== undefined && (!Array.isArray(s.blocks) || s.blocks.some((b) => !isObj(b) || typeof b.type !== 'string' || (b.settings !== undefined && !isObj(b.settings))))) bad(`templateSections.${k}[${i}].blocks`, 'must be an array of { type, settings? }'); });
+        else if (s.blocks !== undefined) blocks(s.blocks, `templateSections.${k}[${i}].blocks`, 1); });
     }
   }
   const g = a.groups;
