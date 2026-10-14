@@ -1,0 +1,16 @@
+<hk-product-card product="{{ product }}" class="es-card">
+  <hk-part name="badge">
+    {% if show_badge %}
+      {% if product.available %}
+        <span
+          class="es-ribbon"
+        >{% if product.compare_at > product.price %}{{ t('ribbon_sale') }}{% else %}{{ t('ribbon_pick') }}{% endif %}</span>
+      {% else %}
+        <span class="es-ribbon es-ribbon-off">{{ t('sold_out_badge') }}</span>
+      {% endif %}
+    {% endif %}
+  </hk-part>
+  <hk-part name="actions">
+    <a class="es-buy" href="{{ product.url }}" aria-hidden="true" tabindex="-1">{{ t('buy') }}</a>
+  </hk-part>
+</hk-product-card>

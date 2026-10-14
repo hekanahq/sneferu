@@ -1,0 +1,57 @@
+<hk-section class="ls-sec" padding-y="{{ section.settings.padding_y }}" mobile-padding-y="24">
+  <div class="ls-page ls-width-{{ section.settings.width }} ls-align-{{ section.settings.align }}">
+    {% if section.settings.show_title %}
+      <h1 class="ls-title">{{ page.title }}</h1>
+    {% endif %}
+    <div class="ls-prose"><hk-rich-text html="{{ page.body_html }}" /></div>
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Content page",
+      "ar": "صفحة محتوى"
+    },
+    "version": 1,
+    "templates": ["page"],
+    "settings": {
+      "show_title": {
+        "type": "boolean",
+        "label": {
+          "en": "Show title",
+          "ar": "إظهار العنوان"
+        },
+        "default": true
+      },
+      "width": {
+        "type": "select",
+        "label": {
+          "en": "Width",
+          "ar": "العرض"
+        },
+        "options": ["narrow", "normal", "wide"],
+        "default": "narrow"
+      },
+      "align": {
+        "type": "select",
+        "label": {
+          "en": "Text alignment",
+          "ar": "محاذاة النص"
+        },
+        "options": ["start", "center"],
+        "default": "start"
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding (px)",
+          "ar": "المسافة الرأسية (بكسل)"
+        },
+        "default": 40,
+        "min": 0,
+        "max": 120,
+        "step": 4
+      }
+    }
+  }
+</hk-schema>

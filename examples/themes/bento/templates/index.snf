@@ -3,55 +3,6 @@
   {
     "sections": [
       {
-        "type": "tabs",
-        "blocks": [
-          {
-            "type": "tab",
-            "settings": {
-              "label": {
-                "ar": "الكل",
-                "en": "All"
-              },
-              "link": "#shop",
-              "current": true
-            }
-          },
-          {
-            "type": "tab",
-            "settings": {
-              "label": {
-                "ar": "مطبوعات",
-                "en": "Printables"
-              },
-              "link": "#printables",
-              "current": false
-            }
-          },
-          {
-            "type": "tab",
-            "settings": {
-              "label": {
-                "ar": "قوالب وكتب",
-                "en": "Templates and e-books"
-              },
-              "link": "#templates",
-              "current": false
-            }
-          },
-          {
-            "type": "tab",
-            "settings": {
-              "label": {
-                "ar": "كل المنتجات",
-                "en": "All products"
-              },
-              "link": "/products",
-              "current": false
-            }
-          }
-        ]
-      },
-      {
         "type": "bento",
         "blocks": [
           {
@@ -88,6 +39,62 @@
               "count": 3,
               "head": "sage",
               "panel": "warm"
+            }
+          }
+        ]
+      },
+      {
+        "type": "perks",
+        "settings": {
+          "title": {
+            "ar": "إزاي بتستلم ملفاتك",
+            "en": "How you get your files"
+          }
+        },
+        "blocks": [
+          {
+            "type": "perk",
+            "settings": {
+              "icon": "download",
+              "title": {
+                "ar": "تحميل فوري",
+                "en": "Instant download"
+              },
+              "text": {
+                "ar": "رابط التحميل بيوصلك على الإيميل بعد الدفع على طول.",
+                "en": "Your download link is emailed as soon as you pay."
+              },
+              "tone": "sage"
+            }
+          },
+          {
+            "type": "perk",
+            "settings": {
+              "icon": "file-text",
+              "title": {
+                "ar": "ملفات PDF جاهزة",
+                "en": "Ready-made PDFs"
+              },
+              "text": {
+                "ar": "افتح الملف على أي جهاز أو اطبعه في البيت.",
+                "en": "Open the file on any device or print it at home."
+              },
+              "tone": "peach"
+            }
+          },
+          {
+            "type": "perk",
+            "settings": {
+              "icon": "lock",
+              "title": {
+                "ar": "دفع أونلاين",
+                "en": "Online payment"
+              },
+              "text": {
+                "ar": "بتدفع بالكارت أو المحفظة، من غير دفع عند الاستلام.",
+                "en": "Pay by card or wallet. There is no cash on delivery."
+              },
+              "tone": "sky"
             }
           }
         ]

@@ -80,57 +80,42 @@ describe('the default store', () => {
   });
 });
 
-describe('the example themes get the default store for what they lack', () => {
+describe('the example themes are complete stores of their own', () => {
   const names = ['arcade', 'bento', 'console', 'creator', 'esports', 'license'];
+  const own = ['index', 'product', 'product.digital', 'collection', 'search', 'cart', 'page', '404'];
   for (const name of names) {
     const dir = join(root, 'examples/themes', name);
     const files = load(dir);
     const sampleRaw = (() => { try { return JSON.parse(readFileSync(join(dir, '.sneferu-dev/data.json'), 'utf8')); } catch { return undefined; } })();
     const { artifact, diagnostics } = compileTheme(files, registry);
-    const bare = compileTheme(files, registry, { defaults: false }).artifact!;
     const a = artifact as unknown as ArtifactLike & { locales: Record<string, Record<string, string>>; manifest: { defaultLocale?: string; locales: ('ar' | 'en')[] } };
-    it(`${name}: validates clean and gains the six page types`, () => {
+    it(`${name}: validates clean and ships its own template for every page type`, () => {
       expect(diagnostics.filter((d) => d.severity === 'error').map(formatDiagnostic)).toEqual([]);
-      expect(artifact!.defaults!.templates).toEqual(['product', 'collection', 'search', 'cart', 'page', '404']);
-      expect(artifact!.defaults!.groups).toEqual([]);
-      for (const t of ['product', 'collection', 'search', 'cart', 'page', '404']) expect(Object.keys(artifact!.templates)).toContain(t);
-      expect(Object.keys(artifact!.sections).filter((s) => s.startsWith('hk-')).length).toBeGreaterThan(5);
+      expect(a.manifest).toMatchObject({ version: '2.0.0' });
+      for (const t of own) expect(readdirSync(join(dir, 'templates')), `${name} templates`).toContain(`${t}.snf`);
+      // nothing is filled in from the SDK's default store: the theme overrides every page type and group
+      expect(artifact!.defaults?.templates ?? []).toEqual([]);
+      expect(artifact!.defaults?.groups ?? []).toEqual([]);
+      expect(Object.keys(artifact!.groups).sort()).toEqual(['announcement', 'footer', 'header']);
     });
-    it(`${name}: / renders exactly as before`, () => {
+    it(`${name}: every page type renders through the theme with the shared header and footer`, () => {
       for (const locale of a.manifest.locales) {
-        const ctx = (art: typeof a) => withSampleData(sampleContext(locale, art.locales, art.manifest.defaultLocale as 'ar' | 'en', { responsive: true }), pickSampleData(sampleRaw, locale));
-        const before = renderPage(bare as never, { template: 'index', ctx: ctx(bare as never), registry });
-        const after = renderPage(a, { template: 'index', ctx: ctx(a), registry });
-        expect(after.html, `${name} ${locale}`).toBe(before.html);
-        expect(after.css).toBe(before.css);
-        expect(after.diagnostics).toEqual(before.diagnostics);
-      }
-    });
-    it(`${name}: 1.3.0 home is unchanged without menus and prints the store's menu when it has one`, () => {
-      expect(a.manifest).toMatchObject({ version: '1.3.0' });
-      for (const locale of a.manifest.locales) {
-        const base = withSampleData(sampleContext(locale, a.locales, a.manifest.defaultLocale as 'ar' | 'en', { responsive: true }), pickSampleData(sampleRaw, locale));
-        const render = (menus: RenderContext['menus']) => renderPage(a, { template: 'index', ctx: { ...base, menus }, registry, request: { path: '/' } });
-        const none = render(undefined);
-        expect(none.diagnostics).toEqual([]);
-        expect(render({}).html).toBe(none.html);
-        expect(render({ main: { handle: 'main', title: 'M', items: [] }, footer: { handle: 'footer', title: 'F', items: [] } }).html).toBe(none.html);
-        const withMenus = render({ main: { handle: 'main', title: 'M', items: [{ title: 'Main link', url: '/pages/m' }, { title: 'Home link', url: '/' }] }, footer: { handle: 'footer', title: 'F', items: [{ title: 'Footer link', url: '/pages/f' }] } });
-        expect(withMenus.diagnostics).toEqual([]);
-        expect(withMenus.html).toContain('<a href="/pages/m" aria-current="false">Main link</a>');
-        expect(withMenus.html).toContain('aria-current="true">Home link</a>');
-        expect(withMenus.html).toContain('<a href="/pages/f" aria-current="false">Footer link</a>');
-      }
-    });
-    it(`${name}: every page type renders inside the theme layout with the default store's CSS`, () => {
-      for (const locale of a.manifest.locales) {
-        for (const url of ['/products/sample-1', '/category/new', '/search?q=card', '/cart', '/pages/about', '/nope']) {
+        for (const url of ['/', '/products/sample-1', '/products', '/category/new', '/search?q=card', '/cart', '/pages/about', '/nope']) {
           const r = page(a, url, locale, sampleRaw);
           expect(r.diagnostics.map(formatDiagnostic), `${name} ${locale} ${url}`).toEqual([]);
           expect(r.html).toContain(`data-hk-theme="${a.manifest.id}"`);
-          expect(r.css).toContain('.sf-main');
+          expect(r.html, `${name} ${locale} ${url} header`).toContain('<div data-hk-group="header">');
+          expect(r.html, `${name} ${locale} ${url} footer`).toContain('<div data-hk-group="footer">');
+          expect(r.html).toContain(locale === 'ar' ? 'dir="rtl"' : 'dir="ltr"');
+          expect(r.status, `${name} ${locale} ${url}`).toBe(url === '/nope' ? 404 : 200);
         }
       }
+    });
+    it(`${name}: the header carries the live cart count and the product page the buy controls`, () => {
+      const home = page(a, '/', 'en', sampleRaw);
+      expect(home.controllers).toContain('cart-count');
+      const product = page(a, '/products/sample-1', 'en', sampleRaw);
+      for (const c of ['add-to-cart', 'cart-count']) expect(product.controllers, `${name} ${c}`).toContain(c);
     });
   }
 });

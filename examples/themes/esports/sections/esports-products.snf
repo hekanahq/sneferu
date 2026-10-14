@@ -1,22 +1,22 @@
 <hk-section padding-y="24" mobile-padding-y="16" class="es-products">
+  {% if section.settings.title %}
+    <div class="es-section-head">
+      <hk-heading text="{{ section.settings.title }}" level="h2" size="28" mobile-size="20" class="es-h2" />
+      {% if section.settings.link_label %}<a
+          class="es-view-all"
+          href="{{ url(section.settings.link) }}"
+        >{{ section.settings.link_label }}</a>{% endif %}
+    </div>
+  {% endif %}
   <nav class="es-tabs" aria-label="{{ t('platforms') }}">
     {% for block in section.blocks %}
       <hk-block of="{{ block }}" />
     {% endfor %}
   </nav>
   {% if collection(section.settings.list).products %}
-    <div class="es-grid">
+    <div class="es-grid es-cols-{{ section.settings.columns }}">
       {% for p in collection(section.settings.list).products limit: section.settings.count %}
-        <hk-product-card product="{{ p }}" class="es-card">
-          <hk-part name="badge">
-            <span
-              class="es-ribbon"
-            >{% if p.compare_at > p.price %}{{ t('ribbon_sale') }}{% else %}{{ t('ribbon_pick') }}{% endif %}</span>
-          </hk-part>
-          <hk-part name="actions">
-            <a class="es-buy" href="{{ p.url }}" aria-hidden="true" tabindex="-1">{{ t('buy') }}</a>
-          </hk-part>
-        </hk-product-card>
+        {% render 'topup-card', product: p, show_badge: section.settings.show_badge %}
       {% endfor %}
     </div>
   {% else %}
@@ -25,26 +25,86 @@
 </hk-section>
 <hk-schema>
   {
-    "name": "Top-up cards",
+    "name": {
+      "en": "Top-up cards",
+      "ar": "كروت الشحن"
+    },
     "version": 1,
+    "blocks": {
+      "allowed": ["tab"],
+      "max": 6
+    },
     "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading (empty hides it)",
+          "ar": "العنوان (فاضي يخفيه)"
+        },
+        "default": {
+          "ar": "",
+          "en": ""
+        },
+        "localized": true,
+        "maxLength": 60
+      },
       "list": {
         "type": "collection",
-        "label": "Collection",
+        "label": {
+          "en": "Collection",
+          "ar": "المجموعة"
+        },
         "default": "featured"
       },
       "count": {
         "type": "range",
-        "label": "Products",
+        "label": {
+          "en": "Products",
+          "ar": "عدد المنتجات"
+        },
         "default": 10,
         "min": 2,
         "max": 20,
         "step": 1
+      },
+      "columns": {
+        "type": "select",
+        "label": {
+          "en": "Columns on desktop",
+          "ar": "الأعمدة على الكمبيوتر"
+        },
+        "default": "5",
+        "options": ["3", "4", "5"]
+      },
+      "show_badge": {
+        "type": "boolean",
+        "label": {
+          "en": "Show the ribbon",
+          "ar": "إظهار الشريط"
+        },
+        "default": true
+      },
+      "link_label": {
+        "type": "text",
+        "label": {
+          "en": "View all label",
+          "ar": "نص عرض الكل"
+        },
+        "default": {
+          "ar": "",
+          "en": ""
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "View all link",
+          "ar": "رابط عرض الكل"
+        },
+        "default": "/products"
       }
-    },
-    "blocks": {
-      "allowed": ["tab"],
-      "max": 6
     }
   }
 </hk-schema>

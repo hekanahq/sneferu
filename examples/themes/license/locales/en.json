@@ -1,14 +1,22 @@
 {
+  "skip_to_content": "Skip to content",
   "nav_label": "Main menu",
-  "nav_plans": "Plans",
-  "nav_features": "Features",
-  "nav_apps": "Apps",
-  "nav_faq": "FAQ",
   "menu": "Menu",
   "search": "Search for an app",
+  "search_placeholder": "Search for an app",
   "account": "My account",
   "cart": "Cart",
   "buy": "Buy",
-  "all_apps": "All apps",
-  "footer_note": "Digital products: the licence key and download link are emailed after online payment. Cash on delivery is not available."
+  "home": "Home",
+  "breadcrumb": "Breadcrumb",
+  "sale": "Sale",
+  "sold_out_badge": "Sold out",
+  "products_label": "apps",
+  "sort_by": "Sort by",
+  "filters": "Filters",
+  "results_for": "Results for",
+  "results_label": "results",
+  "newsletter_cta": "Subscribe",
+  "payment_methods": "Payment methods",
+  "product_info": "App details"
 }

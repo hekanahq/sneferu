@@ -1,0 +1,56 @@
+{% if section.settings.text %}
+  <div class="arc-announce arc-announce-{{ section.settings.scheme }}">
+    <hk-container>
+      <p class="arc-announce-text">
+        <span class="arc-announce-icon"><hk-icon name="zap" class="ic" /></span>
+        {% if section.settings.link %}
+          <a href="{{ url(section.settings.link) }}">{{ section.settings.text }}</a>
+        {% else %}
+          <span>{{ section.settings.text }}</span>
+        {% endif %}
+      </p>
+    </hk-container>
+  </div>
+{% endif %}
+<hk-schema>
+  {
+    "name": {
+      "en": "Announcement bar",
+      "ar": "شريط الإعلان"
+    },
+    "version": 1,
+    "templates": ["announcement"],
+    "settings": {
+      "text": {
+        "type": "text",
+        "label": {
+          "en": "Text (empty hides the bar)",
+          "ar": "النص (لو فاضي الشريط بيختفي)"
+        },
+        "default": {
+          "ar": "الكود بيوصلك على الإيميل أول ما الدفع الأونلاين يتأكد.",
+          "en": "Your code is emailed as soon as online payment is confirmed."
+        },
+        "localized": true,
+        "maxLength": 140
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": ""
+      },
+      "scheme": {
+        "type": "select",
+        "label": {
+          "en": "Colour scheme",
+          "ar": "ألوان الشريط"
+        },
+        "options": ["dark", "cyan", "lime"],
+        "default": "dark"
+      }
+    }
+  }
+</hk-schema>

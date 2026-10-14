@@ -8,12 +8,18 @@
 </hk-section>
 <hk-schema>
   {
-    "name": "FAQ",
+    "name": {
+      "en": "FAQ",
+      "ar": "أسئلة شائعة"
+    },
     "version": 1,
     "settings": {
       "heading": {
         "type": "text",
-        "label": "Heading",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
         "localized": true,
         "default": {
           "ar": "أسئلة شائعة",

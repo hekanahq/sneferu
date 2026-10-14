@@ -1,0 +1,130 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="32">
+  <div class="es-notfound">
+    <div class="es-notfound-art">
+      {% if section.settings.image %}
+        <hk-image src="{{ section.settings.image }}" alt="" width="320" />
+      {% else %}
+        {% render 'hero-art' %}
+      {% endif %}
+    </div>
+    <p class="es-notfound-code">{{ section.settings.code }}</p>
+    {% if section.settings.title %}
+      <hk-heading
+        text="{{ section.settings.title }}"
+        level="h1"
+        size="36"
+        mobile-size="26"
+        align="center"
+        class="es-h2"
+      />
+    {% endif %}
+    {% if section.settings.text %}
+      <p class="es-meta">{{ section.settings.text }}</p>
+    {% endif %}
+    {% if section.settings.show_search %}
+      <div class="es-search-page">
+        <hk-search-form placeholder="{{ t('search_placeholder') }}" class="es-search es-search-wide" />
+      </div>
+    {% endif %}
+    {% render 'button', label: section.settings.button_label, href: section.settings.button_link, style: 'solid' %}
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Page not found",
+      "ar": "الصفحة مش موجودة"
+    },
+    "version": 1,
+    "templates": ["404"],
+    "settings": {
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "Picture (the drawn figures show when empty)",
+          "ar": "صورة (الشخصيات المرسومة بتظهر لو فاضي)"
+        },
+        "default": ""
+      },
+      "code": {
+        "type": "text",
+        "label": {
+          "en": "Big code",
+          "ar": "الرقم الكبير"
+        },
+        "default": {
+          "ar": "404",
+          "en": "404"
+        },
+        "localized": true,
+        "maxLength": 8
+      },
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Title",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "المرحلة دي مش موجودة",
+          "en": "This level does not exist"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "text": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "الصفحة اتنقلت أو الرابط غلط.",
+          "en": "The page moved or the link is wrong."
+        },
+        "localized": true,
+        "maxLength": 160
+      },
+      "show_search": {
+        "type": "boolean",
+        "label": {
+          "en": "Show a search box",
+          "ar": "إظهار صندوق بحث"
+        },
+        "default": true
+      },
+      "button_label": {
+        "type": "text",
+        "label": {
+          "en": "Button",
+          "ar": "الزر"
+        },
+        "default": {
+          "ar": "ارجع للمتجر",
+          "en": "Back to the store"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "button_link": {
+        "type": "link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/"
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "default": 48,
+        "min": 0,
+        "max": 120,
+        "step": 4
+      }
+    }
+  }
+</hk-schema>

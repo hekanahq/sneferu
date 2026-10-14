@@ -2,7 +2,125 @@
   "sections": [
     {
       "id": "footer",
-      "type": "console-footer"
+      "type": "footer",
+      "settings": {
+        "menu": "footer",
+        "about_text": {
+          "ar": "كروت هدايا وشحن ألعاب بالجنيه المصري. الكود بيوصلك على الإيميل بعد الدفع الأونلاين.",
+          "en": "Gift cards and game top-ups in Egyptian pounds. Your code arrives by email after online payment."
+        },
+        "copyright": { "ar": "جميع الحقوق محفوظة", "en": "All rights reserved" },
+        "show_newsletter": true,
+        "newsletter_title": { "ar": "عروض الكروت على الإيميل", "en": "Card offers by email" },
+        "newsletter_text": {
+          "ar": "هنبعتلك الجديد والعروض من غير إزعاج.",
+          "en": "We send new cards and offers, nothing more."
+        },
+        "newsletter_label": { "ar": "اشترك", "en": "Subscribe" },
+        "newsletter_link": "/pages/contact",
+        "show_language": true
+      },
+      "blocks": [
+        {
+          "id": "col-shop",
+          "type": "footer-column",
+          "settings": { "title": { "ar": "تسوق", "en": "Shop" } },
+          "blocks": [
+            {
+              "id": "col-shop-all",
+              "type": "footer-link",
+              "settings": { "label": { "ar": "كل الكروت", "en": "All cards" }, "url": "/products" }
+            },
+            {
+              "id": "col-shop-gift",
+              "type": "footer-link",
+              "settings": { "label": { "ar": "كروت الهدايا", "en": "Gift cards" }, "url": "/category/gift-cards" }
+            },
+            {
+              "id": "col-shop-currency",
+              "type": "footer-link",
+              "settings": {
+                "label": { "ar": "عملات الألعاب", "en": "In-game currency" },
+                "url": "/category/game-currency"
+              }
+            },
+            {
+              "id": "col-shop-search",
+              "type": "footer-link",
+              "settings": { "label": { "ar": "بحث", "en": "Search" }, "url": "/search" }
+            }
+          ]
+        },
+        {
+          "id": "col-help",
+          "type": "footer-column",
+          "settings": { "title": { "ar": "مساعدة", "en": "Help" } },
+          "blocks": [
+            {
+              "id": "col-help-faq",
+              "type": "footer-link",
+              "settings": { "label": { "ar": "أسئلة شائعة", "en": "Questions" }, "url": "/pages/faq" }
+            },
+            {
+              "id": "col-help-delivery",
+              "type": "footer-link",
+              "settings": { "label": { "ar": "تسليم الكود", "en": "Code delivery" }, "url": "/pages/delivery" }
+            },
+            {
+              "id": "col-help-about",
+              "type": "footer-link",
+              "settings": { "label": { "ar": "عنّا", "en": "About us" }, "url": "/pages/about" }
+            }
+          ]
+        },
+        {
+          "id": "social-whatsapp",
+          "type": "social-link",
+          "settings": {
+            "label": { "ar": "واتساب", "en": "WhatsApp" },
+            "url": "/pages/contact",
+            "icon": "message-circle"
+          }
+        },
+        {
+          "id": "social-mail",
+          "type": "social-link",
+          "settings": { "label": { "ar": "الإيميل", "en": "Email" }, "url": "/pages/contact", "icon": "mail" }
+        },
+        {
+          "id": "contact-mail",
+          "type": "contact-line",
+          "settings": {
+            "icon": "mail",
+            "text": { "ar": "ردنا خلال يوم عمل", "en": "We reply within a working day" },
+            "url": ""
+          }
+        },
+        {
+          "id": "contact-hours",
+          "type": "contact-line",
+          "settings": {
+            "icon": "clock",
+            "text": { "ar": "من السبت للخميس، ١٠ص إلى ٦م", "en": "Saturday to Thursday, 10am to 6pm" },
+            "url": ""
+          }
+        },
+        {
+          "id": "pay-card",
+          "type": "payment-method",
+          "settings": { "label": { "ar": "كارت بنكي", "en": "Bank card" }, "icon": "credit-card" }
+        },
+        {
+          "id": "pay-wallet",
+          "type": "payment-method",
+          "settings": { "label": { "ar": "محفظة موبايل", "en": "Mobile wallet" }, "icon": "smartphone" }
+        },
+        {
+          "id": "pay-other",
+          "type": "payment-method",
+          "settings": { "label": { "ar": "دفع أونلاين آمن", "en": "Secure online payment" }, "icon": "wallet" }
+        }
+      ]
     }
   ]
 }

@@ -1,11 +1,13 @@
 <svg class="arc-defs" width="0" height="0" aria-hidden="true">
   <defs>
     <linearGradient id="arc-grad" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#22D3EE" />
-      <stop offset="1" stop-color="#A3E635" />
+      <stop class="arc-stop-a" offset="0" />
+      <stop class="arc-stop-b" offset="1" />
     </linearGradient>
   </defs>
 </svg>
+<a class="arc-skip" href="#main">{{ t('skip_to_content') }}</a>
+<hk-section-group name="announcement" />
 <hk-section-group name="header" />
-<main class="arc-main"><hk-slot name="content" /></main>
+<main id="main" class="arc-main"><hk-slot name="content" /></main>
 <hk-section-group name="footer" />

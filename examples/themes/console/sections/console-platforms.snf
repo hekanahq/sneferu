@@ -17,12 +17,18 @@
 </hk-section>
 <hk-schema>
   {
-    "name": "Platforms",
+    "name": {
+      "en": "Platforms",
+      "ar": "المنصات"
+    },
     "version": 1,
     "settings": {
       "heading": {
         "type": "text",
-        "label": "Heading",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
         "localized": true,
         "default": {
           "ar": "تسوق حسب المنصة",

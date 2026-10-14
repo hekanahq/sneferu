@@ -1,0 +1,90 @@
+{% if collection(section.settings.collection).products %}
+  <hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="24">
+    {% if section.settings.title %}
+      <hk-heading
+        text="{{ section.settings.title }}"
+        level="h2"
+        size="28"
+        mobile-size="22"
+        class="es-h2 es-related-title"
+      />
+    {% endif %}
+    <div class="es-grid es-cols-{{ section.settings.columns }}">
+      {% for p in collection(section.settings.collection).products limit: section.settings.limit %}
+        {% render 'topup-card', product: p, show_badge: section.settings.show_badge %}
+      {% endfor %}
+    </div>
+  </hk-section>
+{% endif %}
+<hk-schema>
+  {
+    "name": {
+      "en": "Related products",
+      "ar": "منتجات مشابهة"
+    },
+    "version": 1,
+    "templates": ["product"],
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "ممكن تحتاج كمان",
+          "en": "You may also want"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "collection": {
+        "type": "collection",
+        "label": {
+          "en": "Collection",
+          "ar": "المجموعة"
+        },
+        "default": "featured"
+      },
+      "limit": {
+        "type": "range",
+        "label": {
+          "en": "Products",
+          "ar": "عدد المنتجات"
+        },
+        "default": 5,
+        "min": 2,
+        "max": 12,
+        "step": 1
+      },
+      "columns": {
+        "type": "select",
+        "label": {
+          "en": "Columns on desktop",
+          "ar": "الأعمدة على الكمبيوتر"
+        },
+        "default": "5",
+        "options": ["3", "4", "5"]
+      },
+      "show_badge": {
+        "type": "boolean",
+        "label": {
+          "en": "Show the ribbon",
+          "ar": "إظهار الشريط"
+        },
+        "default": true
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "default": 32,
+        "min": 0,
+        "max": 120,
+        "step": 4
+      }
+    }
+  }
+</hk-schema>

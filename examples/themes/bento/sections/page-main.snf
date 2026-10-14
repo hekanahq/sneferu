@@ -1,0 +1,79 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="24">
+  <div class="bt-page bt-width-{{ section.settings.width }} bt-align-{{ section.settings.align }}">
+    {% if section.settings.show_title %}
+      <div class="bt-pagehead" data-tone="{{ section.settings.head_tone }}">
+        <hk-heading text="{{ page.title }}" level="h1" size="36" mobile-size="28" />
+      </div>
+    {% endif %}
+    <div class="bt-prose" data-tone="{{ section.settings.body_tone }}">
+      <hk-rich-text html="{{ page.body_html }}" />
+    </div>
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Page content",
+      "ar": "محتوى الصفحة"
+    },
+    "version": 1,
+    "templates": ["page"],
+    "settings": {
+      "show_title": {
+        "type": "boolean",
+        "label": {
+          "en": "Show title",
+          "ar": "إظهار العنوان"
+        },
+        "default": true
+      },
+      "head_tone": {
+        "type": "select",
+        "label": {
+          "en": "Title tile colour",
+          "ar": "لون لوحة العنوان"
+        },
+        "options": ["peach", "sage", "sky", "warm"],
+        "default": "sage"
+      },
+      "body_tone": {
+        "type": "select",
+        "label": {
+          "en": "Text panel colour",
+          "ar": "لون لوحة النص"
+        },
+        "options": ["peach", "sage", "sky", "warm"],
+        "default": "warm"
+      },
+      "width": {
+        "type": "select",
+        "label": {
+          "en": "Text width",
+          "ar": "عرض النص"
+        },
+        "options": ["narrow", "normal", "wide"],
+        "default": "narrow"
+      },
+      "align": {
+        "type": "select",
+        "label": {
+          "en": "Alignment",
+          "ar": "المحاذاة"
+        },
+        "options": ["start", "center"],
+        "default": "start"
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 160,
+        "step": 8,
+        "default": 48
+      }
+    }
+  }
+</hk-schema>

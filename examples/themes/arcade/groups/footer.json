@@ -2,7 +2,218 @@
   "sections": [
     {
       "id": "footer",
-      "type": "arcade-footer"
+      "type": "arcade-footer",
+      "settings": {
+        "menu": "footer",
+        "about_text": {
+          "ar": "كروت الألعاب وباقات الشحن بالجنيه المصري. الكود بيوصلك على الإيميل بعد الدفع الأونلاين.",
+          "en": "Gift cards and game top-ups in Egyptian pounds. Your code arrives by email after online payment."
+        },
+        "copyright": {
+          "ar": "جميع الحقوق محفوظة",
+          "en": "All rights reserved"
+        },
+        "show_newsletter": true,
+        "show_language": false,
+        "scheme": "dark",
+        "newsletter_title": {
+          "ar": "عروض الكروت على الإيميل",
+          "en": "Card offers by email"
+        },
+        "newsletter_text": {
+          "ar": "لما ينزل كارت جديد أو عرض، هنبعتلك.",
+          "en": "When a new card or offer drops, we will email you."
+        },
+        "newsletter_label": {
+          "ar": "اشترك",
+          "en": "Subscribe"
+        },
+        "newsletter_link": "/pages/newsletter"
+      },
+      "blocks": [
+        {
+          "id": "col-shop",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "تسوق",
+              "en": "Shop"
+            }
+          },
+          "blocks": [
+            {
+              "id": "shop-all",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "كل الكروت",
+                  "en": "All cards"
+                },
+                "url": "/products"
+              }
+            },
+            {
+              "id": "shop-gift",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "كروت الهدايا",
+                  "en": "Gift cards"
+                },
+                "url": "/category/gift-cards"
+              }
+            },
+            {
+              "id": "shop-cur",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "عملات الألعاب",
+                  "en": "In-game currency"
+                },
+                "url": "/category/game-currency"
+              }
+            },
+            {
+              "id": "shop-top",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "باقات الشحن",
+                  "en": "Top-up packs"
+                },
+                "url": "/category/top-ups"
+              }
+            }
+          ]
+        },
+        {
+          "id": "col-help",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "مساعدة",
+              "en": "Help"
+            }
+          },
+          "blocks": [
+            {
+              "id": "help-faq",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "أسئلة شائعة",
+                  "en": "Questions"
+                },
+                "url": "/pages/faq"
+              }
+            },
+            {
+              "id": "help-redeem",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "إزاي تستخدم الكود",
+                  "en": "How to redeem"
+                },
+                "url": "/pages/how-to-redeem"
+              }
+            },
+            {
+              "id": "help-refund",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "الاسترجاع",
+                  "en": "Refunds"
+                },
+                "url": "/pages/refunds"
+              }
+            },
+            {
+              "id": "help-cart",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "السلة",
+                  "en": "Cart"
+                },
+                "url": "/cart"
+              }
+            }
+          ]
+        },
+        {
+          "id": "contact-mail",
+          "type": "contact-line",
+          "settings": {
+            "icon": "mail",
+            "text": {
+              "ar": "support@example.com",
+              "en": "support@example.com"
+            },
+            "url": "mailto:support@example.com"
+          }
+        },
+        {
+          "id": "contact-wa",
+          "type": "contact-line",
+          "settings": {
+            "icon": "message-circle",
+            "text": {
+              "ar": "واتساب: 01000000000",
+              "en": "WhatsApp: 01000000000"
+            },
+            "url": ""
+          }
+        },
+        {
+          "id": "social-fb",
+          "type": "social-link",
+          "settings": {
+            "label": {
+              "ar": "فيسبوك",
+              "en": "Facebook"
+            },
+            "url": "",
+            "icon": "share-2"
+          }
+        },
+        {
+          "id": "social-dc",
+          "type": "social-link",
+          "settings": {
+            "label": {
+              "ar": "مجتمع اللاعبين",
+              "en": "Community"
+            },
+            "url": "",
+            "icon": "message-circle"
+          }
+        },
+        {
+          "id": "pay-card",
+          "type": "payment-method",
+          "settings": {
+            "label": {
+              "ar": "كارت بنكي",
+              "en": "Bank card"
+            },
+            "icon": "credit-card"
+          }
+        },
+        {
+          "id": "pay-wallet",
+          "type": "payment-method",
+          "settings": {
+            "label": {
+              "ar": "محفظة موبايل",
+              "en": "Mobile wallet"
+            },
+            "icon": "smartphone"
+          }
+        }
+      ]
     }
   ]
 }

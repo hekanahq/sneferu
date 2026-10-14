@@ -6,18 +6,27 @@
 </div>
 <hk-schema>
   {
-    "name": "Step",
+    "name": {
+      "en": "Step",
+      "ar": "خطوة"
+    },
     "version": 1,
     "settings": {
       "icon": {
         "type": "select",
-        "label": "Icon",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
         "options": ["credit-card", "wallet", "mail", "gamepad-2", "trophy", "zap", "key", "shield-check"],
         "default": "credit-card"
       },
       "title": {
         "type": "text",
-        "label": "Title",
+        "label": {
+          "en": "Title",
+          "ar": "العنوان"
+        },
         "localized": true,
         "default": {
           "ar": "اختار وادفع أونلاين",
@@ -27,7 +36,10 @@
       },
       "text": {
         "type": "text",
-        "label": "Text",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
         "localized": true,
         "default": {
           "ar": "اختار الكارت والقيمة، وادفع أونلاين.",

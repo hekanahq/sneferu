@@ -6,10 +6,12 @@
         <span>{{ section.settings.line2 }}</span>
       </h1>
       <p class="ls-lead">{{ section.settings.text }}</p>
-      <a class="ls-btn ls-btn-sm" href="#apps">
-        <span>{{ section.settings.button }}</span>
-        <hk-icon name="download" size="18" stroke="2.5" class="ls-icon" />
-      </a>
+      {% if section.settings.button %}
+        <a class="ls-btn" href="{{ url(section.settings.button_link) }}">
+          <span>{{ section.settings.button }}</span>
+          <hk-icon name="download" size="18" stroke="2.5" class="ls-icon" />
+        </a>
+      {% endif %}
     </div>
     <div class="ls-tiers">
       {% for p in collection(section.settings.plans).products limit: 3 %}
@@ -25,62 +27,91 @@
 </section>
 <hk-schema>
   {
-    "name": "Plans hero",
+    "name": {
+      "en": "Plans hero",
+      "ar": "الهيرو والباقات"
+    },
     "version": 1,
     "settings": {
       "line1": {
         "type": "text",
-        "label": "Heading, first line",
-        "localized": true,
+        "label": {
+          "en": "Heading, first line",
+          "ar": "العنوان، السطر الأول"
+        },
         "default": {
           "ar": "كل البرامج اللي بتحتاجها",
           "en": "Every app you need"
         },
+        "localized": true,
         "maxLength": 60
       },
       "line2": {
         "type": "text",
-        "label": "Heading, second line",
-        "localized": true,
+        "label": {
+          "en": "Heading, second line",
+          "ar": "العنوان، السطر التاني"
+        },
         "default": {
           "ar": "بترخيص واحد",
           "en": "on one licence"
         },
+        "localized": true,
         "maxLength": 60
       },
       "text": {
         "type": "textarea",
-        "label": "Text",
-        "localized": true,
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
         "default": {
           "ar": "اشترك في الباقة اللي تناسبك، ومفتاح الترخيص يوصلك على الإيميل بعد الدفع أونلاين.",
           "en": "Pick the plan that suits you. Your licence key is emailed after online payment."
         },
+        "localized": true,
         "maxLength": 200
       },
       "button": {
         "type": "text",
-        "label": "Button",
-        "localized": true,
+        "label": {
+          "en": "Button",
+          "ar": "الزر"
+        },
         "default": {
           "ar": "شوف البرامج",
           "en": "See the apps"
         },
+        "localized": true,
         "maxLength": 30
+      },
+      "button_link": {
+        "type": "link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
+        "default": "#apps"
       },
       "plans": {
         "type": "collection",
-        "label": "Plans (the first three; the second is highlighted)",
+        "label": {
+          "en": "Plans (the first three; the second is highlighted)",
+          "ar": "الباقات (أول تلاتة، والتانية مميزة)"
+        },
         "default": "bundles"
       },
       "tier_note": {
         "type": "text",
-        "label": "Line under each plan price",
-        "localized": true,
+        "label": {
+          "en": "Line under each plan price",
+          "ar": "السطر تحت سعر كل باقة"
+        },
         "default": {
           "ar": "كل البرامج في ترخيص واحد",
           "en": "All apps on one licence"
         },
+        "localized": true,
         "maxLength": 60
       }
     }

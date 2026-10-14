@@ -1,27 +1,218 @@
-<footer class="bt-footer">
-  <div class="bt-wrap bt-footer-row">
-    <p class="bt-footer-name">{{ store.name }}</p>
-    <p class="bt-footer-note">{{ t('footer_note') }}</p>
-    <hk-locale-switch class="bt-locale" />{% if menu(section.settings.menu).items %}
-      <nav class="bt-footer-links" aria-label="{{ t('menu') }}">
-        {% for item in menu(section.settings.menu).items %}<a
-            href="{{ item.url }}"
-            aria-current="{{ item.active }}"
-          >{{ item.title }}</a>{% endfor %}
-      </nav>
+<footer class="bt-footer bt-scheme-{{ section.settings.scheme }}">
+  <div class="bt-wrap">
+    {% if section.settings.show_newsletter %}
+      <div class="bt-newsletter">
+        <div>
+          {% if section.settings.newsletter_title %}
+            <h2 class="bt-footer-title">{{ section.settings.newsletter_title }}</h2>
+          {% endif %}
+          {% if section.settings.newsletter_text %}
+            <p>{{ section.settings.newsletter_text }}</p>
+          {% endif %}
+        </div>
+        {% if section.settings.newsletter_link %}
+          <a
+            class="bt-pill"
+            href="{{ url(section.settings.newsletter_link) }}"
+          >{{ section.settings.newsletter_label | default: t('newsletter_cta') }}</a>
+        {% endif %}
+      </div>
     {% endif %}
+    <div class="bt-footer-panel">
+      <div class="bt-footer-grid">
+        <div class="bt-footer-about">
+          <p class="bt-footer-brand">{{ store.name }}</p>
+          {% if section.settings.about_text %}
+            <p class="bt-footer-note">{{ section.settings.about_text }}</p>
+          {% endif %}
+          <div class="bt-social-list">
+            {% for block in section.blocks %}{% if block.type == 'social-link' %}<hk-block of="{{ block }}" />{% endif %}{% endfor %}
+          </div>
+        </div>
+        {% if menu(section.settings.menu).items %}
+          <div class="bt-footer-col bt-footer-menu-col">
+            {% if menu(section.settings.menu).title %}
+              <h3 class="bt-footer-title">{{ menu(section.settings.menu).title }}</h3>
+            {% endif %}
+            <div class="bt-footer-links">
+              {% for item in menu(section.settings.menu).items %}
+                {% if not item.children %}
+                  <a href="{{ item.url }}" aria-current="{{ item.active }}">{{ item.title }}</a>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+          {% for item in menu(section.settings.menu).items %}
+            {% if item.children %}
+              <div class="bt-footer-col">
+                <h3 class="bt-footer-title">{{ item.title }}</h3>
+                <div class="bt-footer-links">
+                  {% for sub in item.children %}
+                    <a href="{{ sub.url }}" aria-current="{{ sub.active }}">{{ sub.title }}</a>
+                    {% for leaf in sub.children %}
+                      <a
+                        class="bt-footer-deep"
+                        href="{{ leaf.url }}"
+                        aria-current="{{ leaf.active }}"
+                      >{{ leaf.title }}</a>
+                    {% endfor %}
+                  {% endfor %}
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+        {% for block in section.blocks %}{% if block.type == 'footer-column' %}<hk-block of="{{ block }}" />{% endif %}{% endfor %}
+        <div class="bt-footer-contact">
+          {% for block in section.blocks %}{% if block.type == 'contact-line' %}<hk-block of="{{ block }}" />{% endif %}{% endfor %}
+        </div>
+      </div>
+      <div class="bt-footer-bottom">
+        <p class="bt-copyright">
+          © {{ store.name }}{% if section.settings.copyright %}. {{ section.settings.copyright }}{% endif %}
+        </p>
+        <div class="bt-payments" aria-label="{{ t('payment_methods') }}">
+          {% for block in section.blocks %}{% if block.type == 'payment-method' %}<hk-block of="{{ block }}" />{% endif %}{% endfor %}
+        </div>
+        {% if section.settings.show_language %}<hk-locale-switch class="bt-locale" />{% endif %}
+      </div>
+    </div>
   </div>
 </footer>
 <hk-schema>
   {
-    "name": "Footer",
+    "name": {
+      "en": "Footer",
+      "ar": "الفوتر"
+    },
     "version": 1,
     "templates": ["footer"],
+    "blocks": {
+      "allowed": ["footer-column", "social-link", "contact-line", "payment-method"],
+      "max": 24
+    },
     "settings": {
       "menu": {
         "type": "menu",
-        "label": "Footer menu",
+        "label": {
+          "en": "Footer menu (columns come from its links with sub-links)",
+          "ar": "قائمة الفوتر (الأعمدة بتتعمل من الروابط اللي تحتها روابط)"
+        },
         "default": "footer"
+      },
+      "about_text": {
+        "type": "textarea",
+        "label": {
+          "en": "About text",
+          "ar": "نص تعريفي"
+        },
+        "default": {
+          "ar": "كل المنتجات ملفات رقمية: رابط التحميل بيوصلك على الإيميل بعد الدفع أونلاين. الدفع عند الاستلام غير متاح.",
+          "en": "Every product is a digital file: your download link is emailed after online payment. Cash on delivery is not available."
+        },
+        "localized": true,
+        "maxLength": 240
+      },
+      "scheme": {
+        "type": "select",
+        "label": {
+          "en": "Panel colour",
+          "ar": "لون اللوحة"
+        },
+        "options": ["peach", "sage", "sky", "warm"],
+        "default": "warm"
+      },
+      "show_newsletter": {
+        "type": "boolean",
+        "label": {
+          "en": "Show the newsletter tile",
+          "ar": "إظهار لوحة النشرة"
+        },
+        "default": false
+      },
+      "newsletter_title": {
+        "type": "text",
+        "label": {
+          "en": "Newsletter title",
+          "ar": "عنوان النشرة"
+        },
+        "default": {
+          "ar": "وصلك الجديد",
+          "en": "Get what is new"
+        },
+        "localized": true,
+        "maxLength": 60,
+        "visible_if": {
+          "setting": "show_newsletter",
+          "equals": true
+        }
+      },
+      "newsletter_text": {
+        "type": "textarea",
+        "label": {
+          "en": "Newsletter text",
+          "ar": "نص النشرة"
+        },
+        "default": {
+          "ar": "هنبعتلك الملفات الجديدة على الإيميل.",
+          "en": "We email you new files."
+        },
+        "localized": true,
+        "maxLength": 140,
+        "visible_if": {
+          "setting": "show_newsletter",
+          "equals": true
+        }
+      },
+      "newsletter_label": {
+        "type": "text",
+        "label": {
+          "en": "Newsletter button",
+          "ar": "زر النشرة"
+        },
+        "default": {
+          "ar": "اشترك",
+          "en": "Subscribe"
+        },
+        "localized": true,
+        "maxLength": 30,
+        "visible_if": {
+          "setting": "show_newsletter",
+          "equals": true
+        }
+      },
+      "newsletter_link": {
+        "type": "link",
+        "label": {
+          "en": "Newsletter link",
+          "ar": "رابط النشرة"
+        },
+        "default": "/pages/newsletter",
+        "visible_if": {
+          "setting": "show_newsletter",
+          "equals": true
+        }
+      },
+      "copyright": {
+        "type": "text",
+        "label": {
+          "en": "Copyright text (after the store name)",
+          "ar": "نص الحقوق (بعد اسم المتجر)"
+        },
+        "default": {
+          "ar": "كل الحقوق محفوظة",
+          "en": "All rights reserved"
+        },
+        "localized": true,
+        "maxLength": 80
+      },
+      "show_language": {
+        "type": "boolean",
+        "label": {
+          "en": "Show language switch",
+          "ar": "إظهار تبديل اللغة"
+        },
+        "default": true
       }
     }
   }

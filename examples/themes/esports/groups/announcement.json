@@ -1,0 +1,11 @@
+{
+  "sections": [
+    {
+      "id": "announcement",
+      "type": "esports-announcement",
+      "settings": {
+        "scheme": "accent"
+      }
+    }
+  ]
+}

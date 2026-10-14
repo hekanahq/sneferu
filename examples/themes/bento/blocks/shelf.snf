@@ -35,17 +35,26 @@
 </div>
 <hk-schema>
   {
-    "name": "Shelf",
+    "name": {
+      "en": "Shelf",
+      "ar": "رف"
+    },
     "version": 1,
     "settings": {
       "list": {
         "type": "collection",
-        "label": "Collection",
+        "label": {
+          "en": "Collection",
+          "ar": "القسم"
+        },
         "default": "printables"
       },
       "title": {
         "type": "text",
-        "label": "Title",
+        "label": {
+          "en": "Title",
+          "ar": "العنوان"
+        },
         "localized": true,
         "default": {
           "ar": "مطبوعات للبيت والمدرسة",
@@ -55,7 +64,10 @@
       },
       "note": {
         "type": "text",
-        "label": "Third chip",
+        "label": {
+          "en": "Third chip",
+          "ar": "الشارة التالتة"
+        },
         "localized": true,
         "default": {
           "ar": "للأطفال",
@@ -65,12 +77,18 @@
       },
       "link": {
         "type": "link",
-        "label": "Link of the title and the + button",
+        "label": {
+          "en": "Link of the title and the + button",
+          "ar": "رابط العنوان وزر +"
+        },
         "default": "/category/printables"
       },
       "count": {
         "type": "range",
-        "label": "Covers",
+        "label": {
+          "en": "Covers",
+          "ar": "عدد الأغلفة"
+        },
         "default": 3,
         "min": 1,
         "max": 6,
@@ -78,13 +96,19 @@
       },
       "head": {
         "type": "select",
-        "label": "Title colour",
+        "label": {
+          "en": "Title colour",
+          "ar": "لون العنوان"
+        },
         "options": ["peach", "sage", "sky", "warm"],
         "default": "peach"
       },
       "panel": {
         "type": "select",
-        "label": "Panel colour",
+        "label": {
+          "en": "Panel colour",
+          "ar": "لون اللوحة"
+        },
         "options": ["peach", "sage", "sky", "warm"],
         "default": "sky"
       }

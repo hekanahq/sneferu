@@ -1,0 +1,80 @@
+{% if collection(section.settings.collection).products %}
+  <hk-section class="ls-sec" padding-y="{{ section.settings.padding_y }}" mobile-padding-y="24">
+    <div class="ls-head">
+      {% if section.settings.title %}
+        <h2 class="ls-h2">{{ section.settings.title }}</h2>
+      {% endif %}
+    </div>
+    <div class="ls-grid ls-cols-{{ section.settings.columns }}">
+      {% for p in collection(section.settings.collection).products limit: section.settings.limit %}
+        {% render 'app-card', product: p %}
+      {% endfor %}
+    </div>
+  </hk-section>
+{% endif %}
+<hk-schema>
+  {
+    "name": {
+      "en": "Related apps",
+      "ar": "برامج مشابهة"
+    },
+    "version": 1,
+    "templates": ["product"],
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Title",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "برامج تانية ممكن تحتاجها",
+          "en": "Other apps you may need"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "collection": {
+        "type": "collection",
+        "label": {
+          "en": "Collection",
+          "ar": "المجموعة"
+        },
+        "default": "apps"
+      },
+      "limit": {
+        "type": "range",
+        "label": {
+          "en": "How many",
+          "ar": "العدد"
+        },
+        "default": 4,
+        "min": 1,
+        "max": 12,
+        "step": 1
+      },
+      "columns": {
+        "type": "range",
+        "label": {
+          "en": "Columns",
+          "ar": "الأعمدة"
+        },
+        "default": 4,
+        "min": 2,
+        "max": 5,
+        "step": 1
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding (px)",
+          "ar": "المسافة الرأسية (بكسل)"
+        },
+        "default": 32,
+        "min": 0,
+        "max": 120,
+        "step": 4
+      }
+    }
+  }
+</hk-schema>

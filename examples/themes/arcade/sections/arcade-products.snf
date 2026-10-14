@@ -14,18 +14,24 @@
         class="arc-grid"
       />
     {% else %}
-      <p class="arc-empty">{{ t('empty_products') }}</p>
+      <p class="arc-empty-note">{{ t('empty_products') }}</p>
     {% endif %}
   </hk-stack>
 </hk-section>
 <hk-schema>
   {
-    "name": "Featured products",
+    "name": {
+      "en": "Featured products",
+      "ar": "منتجات مختارة"
+    },
     "version": 1,
     "settings": {
       "heading": {
         "type": "text",
-        "label": "Heading",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
         "localized": true,
         "default": {
           "ar": "كروت مختارة",
@@ -35,12 +41,18 @@
       },
       "list": {
         "type": "collection",
-        "label": "Collection",
+        "label": {
+          "en": "Collection",
+          "ar": "المجموعة"
+        },
         "default": "featured"
       },
       "count": {
         "type": "range",
-        "label": "Products",
+        "label": {
+          "en": "Products",
+          "ar": "عدد المنتجات"
+        },
         "default": 8,
         "min": 2,
         "max": 24,

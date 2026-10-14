@@ -2,7 +2,184 @@
   "sections": [
     {
       "id": "footer",
-      "type": "esports-footer"
+      "type": "esports-footer",
+      "settings": {
+        "menu": "",
+        "scheme": "dark",
+        "show_newsletter": false
+      },
+      "blocks": [
+        {
+          "id": "col-shop",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "تسوق",
+              "en": "Shop"
+            }
+          },
+          "blocks": [
+            {
+              "id": "c1",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "كل المنتجات",
+                  "en": "All products"
+                },
+                "url": "/products"
+              }
+            },
+            {
+              "id": "c2",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "عملات الألعاب",
+                  "en": "In-game currency"
+                },
+                "url": "/category/game-currency"
+              }
+            },
+            {
+              "id": "c3",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "كروت الهدايا",
+                  "en": "Gift cards"
+                },
+                "url": "/category/gift-cards"
+              }
+            },
+            {
+              "id": "c4",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "باقات الشحن",
+                  "en": "Top-up packs"
+                },
+                "url": "/category/top-ups"
+              }
+            }
+          ]
+        },
+        {
+          "id": "col-help",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "مساعدة",
+              "en": "Help"
+            }
+          },
+          "blocks": [
+            {
+              "id": "h1",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "من نحن",
+                  "en": "About us"
+                },
+                "url": "/pages/about"
+              }
+            },
+            {
+              "id": "h2",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "التسليم",
+                  "en": "Delivery"
+                },
+                "url": "/pages/shipping"
+              }
+            },
+            {
+              "id": "h3",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "أسئلة شائعة",
+                  "en": "Questions"
+                },
+                "url": "/#faq"
+              }
+            },
+            {
+              "id": "h4",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "السلة",
+                  "en": "Cart"
+                },
+                "url": "/cart"
+              }
+            }
+          ]
+        },
+        {
+          "id": "soc-discord",
+          "type": "social-link",
+          "settings": {
+            "label": {
+              "ar": "ديسكورد",
+              "en": "Discord"
+            },
+            "url": "/",
+            "icon": "message-circle"
+          }
+        },
+        {
+          "id": "soc-youtube",
+          "type": "social-link",
+          "settings": {
+            "label": {
+              "ar": "يوتيوب",
+              "en": "YouTube channel"
+            },
+            "url": "/",
+            "icon": "play"
+          }
+        },
+        {
+          "id": "contact-mail",
+          "type": "contact-line",
+          "settings": {
+            "icon": "mail",
+            "text": {
+              "ar": "الدعم بالإيميل",
+              "en": "Support by email"
+            },
+            "url": ""
+          }
+        },
+        {
+          "id": "pay-card",
+          "type": "payment-method",
+          "settings": {
+            "label": {
+              "ar": "كارت بنكي",
+              "en": "Bank card"
+            },
+            "icon": "credit-card"
+          }
+        },
+        {
+          "id": "pay-wallet",
+          "type": "payment-method",
+          "settings": {
+            "label": {
+              "ar": "محفظة موبايل",
+              "en": "Mobile wallet"
+            },
+            "icon": "smartphone"
+          }
+        }
+      ]
     }
   ]
 }

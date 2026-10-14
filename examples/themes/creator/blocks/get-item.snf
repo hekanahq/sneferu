@@ -1,32 +1,36 @@
-<p class="cr-item">
-  <span class="cr-tick" aria-hidden="true"></span>
-  <strong>{{ block.settings.term }}</strong>
-  <span class="cr-dash" aria-hidden="true">-</span>
-  <span>{{ block.settings.text }}</span>
-</p>
+{% render 'list-item', term: block.settings.term, text: block.settings.text %}
 <hk-schema>
   {
-    "name": "What you get: item",
+    "name": {
+      "en": "What you get: item",
+      "ar": "هتاخد إيه: بند"
+    },
     "version": 1,
     "settings": {
       "term": {
         "type": "text",
-        "label": "Item",
-        "localized": true,
+        "label": {
+          "en": "Item",
+          "ar": "البند"
+        },
         "default": {
           "ar": "الدروس",
           "en": "Lessons"
         },
+        "localized": true,
         "maxLength": 40
       },
       "text": {
         "type": "text",
-        "label": "Detail",
-        "localized": true,
+        "label": {
+          "en": "Detail",
+          "ar": "التفصيل"
+        },
         "default": {
           "ar": "فيديوهات مسجّلة تتفرج عليها في الوقت اللي يناسبك",
           "en": "Recorded videos you watch when it suits you"
         },
+        "localized": true,
         "maxLength": 120
       }
     }

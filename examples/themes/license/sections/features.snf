@@ -5,41 +5,48 @@
       <p class="ls-side">{{ section.settings.side }}</p>
     </div>
     <div class="ls-feature-grid">
-      {% for block in section.blocks %}
-        <hk-block of="{{ block }}" />
-      {% endfor %}
+      {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
     </div>
   </div>
 </section>
 <hk-schema>
   {
-    "name": "Features",
+    "name": {
+      "en": "Features",
+      "ar": "المميزات"
+    },
     "version": 1,
+    "blocks": {
+      "allowed": ["feature"],
+      "max": 12
+    },
     "settings": {
       "heading": {
         "type": "text",
-        "label": "Heading",
-        "localized": true,
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
         "default": {
           "ar": "في كل ترخيص",
           "en": "In every licence"
         },
+        "localized": true,
         "maxLength": 60
       },
       "side": {
         "type": "text",
-        "label": "Side note",
-        "localized": true,
+        "label": {
+          "en": "Side note",
+          "ar": "ملاحظة جانبية"
+        },
         "default": {
           "ar": "من غير شحن ومن غير انتظار",
           "en": "Nothing to ship, nothing to wait for"
         },
+        "localized": true,
         "maxLength": 80
       }
-    },
-    "blocks": {
-      "allowed": ["feature"],
-      "max": 12
     }
   }
 </hk-schema>

@@ -30,6 +30,35 @@ the folder name (`my-theme`) and `name` to its title case (`My Theme`). It refus
   `sneferu` is a short name for the `@hekana/sneferu` package; both install the same tool.
 </Callout>
 
+## Start from a template
+
+`init` takes a template name. The default, `starter`, is the SDK's own complete
+store; the others are finished example themes, each with its own design on every
+page.
+
+```bash
+npx sneferu init my-shop --template arcade
+npx sneferu init --list
+```
+
+| Template | What you get |
+| - | - |
+| `starter` | A neutral complete store: header, footer, every page type, tokens to edit. The default |
+| `arcade` | Gaming: neon cyan and lime on near-black, for game gift cards and top-ups |
+| `console` | Gaming: clean and light, for console games and subscriptions |
+| `esports` | Gaming: bold and loud, for tournaments, teams and gear |
+| `creator` | Digital: minimal, for a creator selling files, courses and presets |
+| `license` | Digital: dark SaaS look, for software licenses and plans |
+| `bento` | Digital: soft bento tiles, for apps and templates |
+
+A template is a normal theme folder. It has a template for every page type
+(home, product, collection, search, cart, 404, content page), header, footer and
+announcement bar as section groups, theme settings, and Arabic and English
+locale files, so nothing falls back to the SDK's default store. `init` sets the
+theme `id` and `name` from the folder name and leaves everything else yours to
+change. `sneferu validate`, `format --check` and `build` pass on a fresh copy.
+A name that is not in the list prints the list and exits with an error.
+
 ## Preview: `dev`
 
 <Example>

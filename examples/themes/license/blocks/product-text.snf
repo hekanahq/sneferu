@@ -1,0 +1,48 @@
+{% if block.settings.text %}
+  <p class="ls-note ls-note-{{ block.settings.tone }}">
+    {% if block.settings.icon != 'none' %}<hk-icon name="{{ block.settings.icon }}" size="18" />{% endif %}
+    <span>{{ block.settings.text }}</span>
+  </p>
+{% endif %}
+<hk-schema>
+  {
+    "name": {
+      "en": "Note",
+      "ar": "ملاحظة"
+    },
+    "version": 1,
+    "settings": {
+      "text": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "المفتاح بيوصلك على الإيميل بعد الدفع.",
+          "en": "The key arrives by email after you pay."
+        },
+        "localized": true,
+        "maxLength": 200
+      },
+      "icon": {
+        "type": "select",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
+        "options": ["none", "package", "shield-check", "clock", "gift", "lock", "mail", "download"],
+        "default": "mail"
+      },
+      "tone": {
+        "type": "select",
+        "label": {
+          "en": "Look",
+          "ar": "الشكل"
+        },
+        "options": ["panel", "plain"],
+        "default": "panel"
+      }
+    }
+  }
+</hk-schema>

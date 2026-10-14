@@ -1,0 +1,32 @@
+{% if product.description %}
+  <div class="cr-description">
+    {% if block.settings.title %}
+      <h2 class="cr-h3">{{ block.settings.title }}</h2>
+    {% endif %}
+    <hk-rich-text html="{{ product.description }}" />
+  </div>
+{% endif %}
+<hk-schema>
+  {
+    "name": {
+      "en": "Description",
+      "ar": "الوصف"
+    },
+    "version": 1,
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "عن المنتج",
+          "en": "About this product"
+        },
+        "localized": true,
+        "maxLength": 60
+      }
+    }
+  }
+</hk-schema>

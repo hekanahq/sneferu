@@ -2,7 +2,171 @@
   "sections": [
     {
       "id": "footer",
-      "type": "bento-footer"
+      "type": "bento-footer",
+      "settings": {
+        "menu": "footer",
+        "scheme": "warm",
+        "show_newsletter": false,
+        "copyright": {
+          "ar": "كل الحقوق محفوظة",
+          "en": "All rights reserved"
+        },
+        "show_language": true,
+        "about_text": {
+          "ar": "كل المنتجات ملفات رقمية: رابط التحميل بيوصلك على الإيميل بعد الدفع أونلاين. الدفع عند الاستلام غير متاح.",
+          "en": "Every product is a digital file: your download link is emailed after online payment. Cash on delivery is not available."
+        }
+      },
+      "blocks": [
+        {
+          "id": "col-shop",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "تسوّق",
+              "en": "Shop"
+            }
+          },
+          "blocks": [
+            {
+              "id": "col-shop-1",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "مطبوعات",
+                  "en": "Printables"
+                },
+                "url": "/category/printables"
+              }
+            },
+            {
+              "id": "col-shop-2",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "قوالب وكتب",
+                  "en": "Templates and e-books"
+                },
+                "url": "/category/templates"
+              }
+            },
+            {
+              "id": "col-shop-3",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "كل المنتجات",
+                  "en": "All products"
+                },
+                "url": "/products"
+              }
+            }
+          ]
+        },
+        {
+          "id": "col-help",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "مساعدة",
+              "en": "Help"
+            }
+          },
+          "blocks": [
+            {
+              "id": "col-help-1",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "من نحن",
+                  "en": "About us"
+                },
+                "url": "/pages/about"
+              }
+            },
+            {
+              "id": "col-help-2",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "طريقة الاستلام",
+                  "en": "How you get your files"
+                },
+                "url": "/pages/delivery"
+              }
+            },
+            {
+              "id": "col-help-3",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "بحث",
+                  "en": "Search"
+                },
+                "url": "/search"
+              }
+            }
+          ]
+        },
+        {
+          "id": "contact-mail",
+          "type": "contact-line",
+          "settings": {
+            "icon": "mail",
+            "text": {
+              "ar": "اكتبلنا على الإيميل",
+              "en": "Write to us by email"
+            },
+            "url": ""
+          }
+        },
+        {
+          "id": "social-wa",
+          "type": "social-link",
+          "settings": {
+            "label": {
+              "ar": "واتساب",
+              "en": "WhatsApp"
+            },
+            "url": "",
+            "icon": "message-circle"
+          }
+        },
+        {
+          "id": "social-web",
+          "type": "social-link",
+          "settings": {
+            "label": {
+              "ar": "إنستجرام",
+              "en": "Instagram"
+            },
+            "url": "",
+            "icon": "share-2"
+          }
+        },
+        {
+          "id": "pay-card",
+          "type": "payment-method",
+          "settings": {
+            "label": {
+              "ar": "كارت بنكي",
+              "en": "Bank card"
+            },
+            "icon": "credit-card"
+          }
+        },
+        {
+          "id": "pay-wallet",
+          "type": "payment-method",
+          "settings": {
+            "label": {
+              "ar": "محفظة موبايل",
+              "en": "Mobile wallet"
+            },
+            "icon": "smartphone"
+          }
+        }
+      ]
     }
   ]
 }

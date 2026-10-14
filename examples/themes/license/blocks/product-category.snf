@@ -1,0 +1,30 @@
+{% if product.category %}
+  <p class="ls-category">
+    {% if block.settings.label %}<span class="ls-muted">{{ block.settings.label }}</span>{% endif %}
+    <a href="{{ product.category.url }}">{{ product.category.title }}</a>
+  </p>
+{% endif %}
+<hk-schema>
+  {
+    "name": {
+      "en": "Category",
+      "ar": "القسم"
+    },
+    "version": 1,
+    "settings": {
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Label",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "القسم:",
+          "en": "Category:"
+        },
+        "localized": true,
+        "maxLength": 30
+      }
+    }
+  }
+</hk-schema>

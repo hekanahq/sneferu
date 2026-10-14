@@ -1,42 +1,41 @@
 <svg class="es-art" viewBox="0 0 520 340" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
   <defs>
     <linearGradient id="es-rim" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#C6F25A" />
-      <stop offset="1" stop-color="#2DD4A3" />
+      <stop offset="0" class="es-stop-accent" />
+      <stop offset="1" class="es-stop-glow" />
     </linearGradient>
     <radialGradient id="es-glow" cx="0.5" cy="0.55" r="0.5">
-      <stop offset="0" stop-color="#1F7A55" stop-opacity="0.55" />
-      <stop offset="1" stop-color="#1F7A55" stop-opacity="0" />
+      <stop offset="0" class="es-stop-forest" stop-opacity="0.55" />
+      <stop offset="1" class="es-stop-forest" stop-opacity="0" />
     </radialGradient>
     <linearGradient id="es-body" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#1A2A22" />
-      <stop offset="1" stop-color="#0A110D" />
+      <stop offset="0" class="es-stop-surface" />
+      <stop offset="1" class="es-stop-deep" />
     </linearGradient>
   </defs>
   <ellipse cx="260" cy="200" rx="250" ry="160" fill="url(#es-glow)" />
-  <polygon points="40,340 92,250 104,340" fill="#C6F25A" opacity="0.9" />
-  <polygon points="446,340 498,214 512,214 462,340" fill="#C6F25A" opacity="0.85" />
-  <polygon points="380,120 404,40 418,40 394,120" fill="#C6F25A" opacity="0.7" />
+  <polygon points="40,340 92,250 104,340" class="es-fill-accent" opacity="0.9" />
+  <polygon points="446,340 498,214 512,214 462,340" class="es-fill-accent" opacity="0.85" />
+  <polygon points="380,120 404,40 418,40 394,120" class="es-fill-accent" opacity="0.7" />
   <g class="es-fig es-fig-left">
     <path d="M70 340 L84 238 Q96 196 132 186 Q168 196 180 238 L196 340 Z" fill="url(#es-body)" />
-    <path d="M100 236 Q104 200 132 194 Q160 200 164 236 Q148 250 132 252 Q116 250 100 236 Z" fill="#050806" />
+    <path d="M100 236 Q104 200 132 194 Q160 200 164 236 Q148 250 132 252 Q116 250 100 236 Z" class="es-fill-void" />
     <path d="M84 238 Q96 196 132 186" fill="none" stroke="url(#es-rim)" stroke-width="2" opacity="0.8" />
   </g>
   <g class="es-fig es-fig-right">
     <path d="M330 340 L346 252 Q358 214 392 206 Q426 214 438 252 L452 340 Z" fill="url(#es-body)" />
     <path
       d="M364 248 L378 224 L406 224 L420 248 L404 266 L380 266 Z"
-      fill="#0B1310"
-      stroke="#2DD4A3"
+      class="es-fill-deep es-stroke-glow"
       stroke-width="1.6"
     />
-    <path d="M378 244 h28" stroke="#C6F25A" stroke-width="3" stroke-linecap="round" />
-    <path d="M438 252 Q426 214 392 206" fill="none" stroke="#2DD4A3" stroke-width="2" opacity="0.9" />
+    <path d="M378 244 h28" class="es-stroke-accent" stroke-width="3" stroke-linecap="round" />
+    <path d="M438 252 Q426 214 392 206" fill="none" class="es-stroke-glow" stroke-width="2" opacity="0.9" />
   </g>
   <g class="es-fig es-fig-main">
     <path d="M150 340 L178 200 Q196 86 262 56 Q328 86 346 200 L374 340 Z" fill="url(#es-body)" />
-    <path d="M206 186 Q210 112 262 92 Q314 112 318 186 Q296 214 262 218 Q228 214 206 186 Z" fill="#030504" />
+    <path d="M206 186 Q210 112 262 92 Q314 112 318 186 Q296 214 262 218 Q228 214 206 186 Z" class="es-fill-void" />
     <path d="M178 200 Q196 86 262 56 Q328 86 346 200" fill="none" stroke="url(#es-rim)" stroke-width="2.4" />
-    <path d="M232 260 L262 300 L292 260" fill="none" stroke="#C6F25A" stroke-width="2" opacity="0.6" />
+    <path d="M232 260 L262 300 L292 260" fill="none" class="es-stroke-accent" stroke-width="2" opacity="0.6" />
   </g>
 </svg>

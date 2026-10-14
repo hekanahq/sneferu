@@ -1,0 +1,21 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "not-found"
+      },
+      {
+        "type": "related-products",
+        "settings": {
+          "title": {
+            "ar": "ابدأ من هنا",
+            "en": "Start here"
+          },
+          "collection": "courses",
+          "limit": 2
+        }
+      }
+    ]
+  }
+</hk-schema>

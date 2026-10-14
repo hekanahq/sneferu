@@ -7,7 +7,10 @@
 </nav>
 <hk-schema>
   {
-    "name": "Category tabs",
+    "name": {
+      "en": "Category tabs",
+      "ar": "تابات الأقسام"
+    },
     "version": 1,
     "settings": {},
     "blocks": {

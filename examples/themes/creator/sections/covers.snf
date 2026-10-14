@@ -3,95 +3,125 @@
     <h2 class="cr-hidden">{{ t('shop_heading') }}</h2>
     <div class="cr-track">
       {% for p in collection(section.settings.list_1).products limit: section.settings.count %}
-        {% render 'cover', p: p, kind: section.settings.kind_1, slot: 'course' %}
+        {% render 'cover', p: p, kind: section.settings.kind_1, badge: section.settings.badge, slot: 'course' %}
       {% endfor %}
       {% for p in collection(section.settings.list_2).products limit: section.settings.count %}
-        {% render 'cover', p: p, kind: section.settings.kind_2, slot: 'ebook' %}
+        {% render 'cover', p: p, kind: section.settings.kind_2, badge: section.settings.badge, slot: 'ebook' %}
       {% endfor %}
       {% for p in collection(section.settings.list_3).products limit: section.settings.count %}
-        {% render 'cover', p: p, kind: section.settings.kind_3, slot: 'template' %}
+        {% render 'cover', p: p, kind: section.settings.kind_3, badge: section.settings.badge, slot: 'template' %}
       {% endfor %}
     </div>
     <nav class="cr-dots" aria-label="{{ t('shop_heading') }}">
-      {% for p in collection(section.settings.list_1).products limit: section.settings.count %}
-        <a href="#course-{{ forloop.index }}" aria-label="{{ p.title }}"></a>
-      {% endfor %}
-      {% for p in collection(section.settings.list_2).products limit: section.settings.count %}
-        <a href="#ebook-{{ forloop.index }}" aria-label="{{ p.title }}"></a>
-      {% endfor %}
-      {% for p in collection(section.settings.list_3).products limit: section.settings.count %}
-        <a href="#template-{{ forloop.index }}" aria-label="{{ p.title }}"></a>
-      {% endfor %}
+      {% for p in collection(section.settings.list_1).products limit: section.settings.count %}<a
+          href="#course-{{ forloop.index }}"
+          aria-label="{{ p.title }}"
+        ></a>{% endfor %}
+      {% for p in collection(section.settings.list_2).products limit: section.settings.count %}<a
+          href="#ebook-{{ forloop.index }}"
+          aria-label="{{ p.title }}"
+        ></a>{% endfor %}
+      {% for p in collection(section.settings.list_3).products limit: section.settings.count %}<a
+          href="#template-{{ forloop.index }}"
+          aria-label="{{ p.title }}"
+        ></a>{% endfor %}
     </nav>
   </div>
 </section>
 <hk-schema>
   {
-    "name": "Covers",
+    "name": {
+      "en": "Covers",
+      "ar": "الأغلفة"
+    },
     "version": 1,
     "settings": {
       "badge": {
         "type": "text",
-        "label": "Badge on every cover",
-        "localized": true,
+        "label": {
+          "en": "Badge on every cover",
+          "ar": "الشارة على كل غلاف"
+        },
         "default": {
           "ar": "وصول فوري",
           "en": "Instant access"
         },
+        "localized": true,
         "maxLength": 30
       },
       "list_1": {
         "type": "collection",
-        "label": "First collection",
+        "label": {
+          "en": "First collection",
+          "ar": "القسم الأول"
+        },
         "default": "courses"
       },
       "kind_1": {
         "type": "text",
-        "label": "First collection: label on the cover",
-        "localized": true,
+        "label": {
+          "en": "First collection: label on the cover",
+          "ar": "القسم الأول: الكلمة على الغلاف"
+        },
         "default": {
           "ar": "كورس أونلاين",
           "en": "Online course"
         },
+        "localized": true,
         "maxLength": 30
       },
       "list_2": {
         "type": "collection",
-        "label": "Second collection",
+        "label": {
+          "en": "Second collection",
+          "ar": "القسم التاني"
+        },
         "default": "ebooks"
       },
       "kind_2": {
         "type": "text",
-        "label": "Second collection: label on the cover",
-        "localized": true,
+        "label": {
+          "en": "Second collection: label on the cover",
+          "ar": "القسم التاني: الكلمة على الغلاف"
+        },
         "default": {
           "ar": "كتاب إلكتروني",
           "en": "E-book"
         },
+        "localized": true,
         "maxLength": 30
       },
       "list_3": {
         "type": "collection",
-        "label": "Third collection",
+        "label": {
+          "en": "Third collection",
+          "ar": "القسم التالت"
+        },
         "default": "templates"
       },
       "kind_3": {
         "type": "text",
-        "label": "Third collection: label on the cover",
-        "localized": true,
+        "label": {
+          "en": "Third collection: label on the cover",
+          "ar": "القسم التالت: الكلمة على الغلاف"
+        },
         "default": {
           "ar": "قوالب",
           "en": "Templates"
         },
+        "localized": true,
         "maxLength": 30
       },
       "count": {
         "type": "range",
-        "label": "Products from each collection",
-        "default": 6,
+        "label": {
+          "en": "Products from each collection",
+          "ar": "عدد المنتجات من كل قسم"
+        },
         "min": 1,
         "max": 12,
-        "step": 1
+        "step": 1,
+        "default": 6
       }
     }
   }

@@ -1,12 +1,18 @@
 <a href="{{ url(block.settings.link) }}" aria-current="{{ block.settings.current }}">{{ block.settings.label }}</a>
 <hk-schema>
   {
-    "name": "Tab",
+    "name": {
+      "en": "Tab",
+      "ar": "تاب"
+    },
     "version": 1,
     "settings": {
       "label": {
         "type": "text",
-        "label": "Label",
+        "label": {
+          "en": "Label",
+          "ar": "النص"
+        },
         "localized": true,
         "default": {
           "ar": "الكل",
@@ -16,12 +22,18 @@
       },
       "link": {
         "type": "link",
-        "label": "Link (a page, or #<collection handle> for a shelf on this page)",
+        "label": {
+          "en": "Link (a page, or #<collection handle> for a shelf on this page)",
+          "ar": "الرابط (صفحة، أو #اسم-القسم لرف في الصفحة دي)"
+        },
         "default": "#shop"
       },
       "current": {
         "type": "boolean",
-        "label": "Underlined as the current tab",
+        "label": {
+          "en": "Underlined as the current tab",
+          "ar": "مسطّر كأنه التاب الحالي"
+        },
         "default": false
       }
     }

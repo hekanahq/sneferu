@@ -1,0 +1,16 @@
+{
+  "sections": [
+    {
+      "id": "announcement",
+      "type": "announcement-bar",
+      "settings": {
+        "text": {
+          "ar": "كل المنتجات رقمية: رابط التحميل بيوصلك على الإيميل بعد الدفع",
+          "en": "Every product is digital: your download link is emailed after payment"
+        },
+        "link": "",
+        "scheme": "ink"
+      }
+    }
+  ]
+}

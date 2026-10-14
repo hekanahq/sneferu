@@ -2,7 +2,143 @@
   "sections": [
     {
       "id": "footer",
-      "type": "license-footer"
+      "type": "license-footer",
+      "settings": {
+        "menu": "footer",
+        "scheme": "navy",
+        "show_language": true,
+        "show_newsletter": false,
+        "copyright": {
+          "ar": "جميع الحقوق محفوظة",
+          "en": "All rights reserved"
+        }
+      },
+      "blocks": [
+        {
+          "id": "col-shop",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "البرامج",
+              "en": "Apps"
+            }
+          },
+          "blocks": [
+            {
+              "id": "col-shop-all",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "كل البرامج",
+                  "en": "All apps"
+                },
+                "url": "/products"
+              }
+            },
+            {
+              "id": "col-shop-search",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "بحث",
+                  "en": "Search"
+                },
+                "url": "/search"
+              }
+            },
+            {
+              "id": "col-shop-cart",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "السلة",
+                  "en": "Cart"
+                },
+                "url": "/cart"
+              }
+            }
+          ]
+        },
+        {
+          "id": "col-help",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "مساعدة",
+              "en": "Help"
+            }
+          },
+          "blocks": [
+            {
+              "id": "col-help-about",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "من نحن",
+                  "en": "About us"
+                },
+                "url": "/pages/about"
+              }
+            },
+            {
+              "id": "col-help-contact",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "تواصل معانا",
+                  "en": "Contact us"
+                },
+                "url": "/pages/contact"
+              }
+            },
+            {
+              "id": "col-help-account",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "حسابي",
+                  "en": "My account"
+                },
+                "url": "/account"
+              }
+            }
+          ]
+        },
+        {
+          "id": "contact-help",
+          "type": "contact-line",
+          "settings": {
+            "icon": "message-circle",
+            "text": {
+              "ar": "كلمنا من صفحة التواصل",
+              "en": "Reach us from the contact page"
+            },
+            "url": "/pages/contact"
+          }
+        },
+        {
+          "id": "pay-card",
+          "type": "payment-method",
+          "settings": {
+            "label": {
+              "ar": "كارت بنكي",
+              "en": "Bank card"
+            },
+            "icon": "credit-card"
+          }
+        },
+        {
+          "id": "pay-wallet",
+          "type": "payment-method",
+          "settings": {
+            "label": {
+              "ar": "محفظة موبايل",
+              "en": "Mobile wallet"
+            },
+            "icon": "smartphone"
+          }
+        }
+      ]
     }
   ]
 }

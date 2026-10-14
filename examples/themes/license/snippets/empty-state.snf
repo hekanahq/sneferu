@@ -1,0 +1,12 @@
+<div class="ls-empty">
+  {% if image %}
+    <hk-image src="{{ image }}" alt="" width="200" />
+  {% endif %}
+  {% if title %}
+    <h2 class="ls-empty-title">{{ title }}</h2>
+  {% endif %}
+  {% if text %}
+    <p>{{ text }}</p>
+  {% endif %}
+  {% if label %}<a class="ls-btn" href="{{ url(href) }}">{{ label }}</a>{% endif %}
+</div>

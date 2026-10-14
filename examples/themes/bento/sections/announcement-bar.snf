@@ -1,0 +1,55 @@
+{% if section.settings.text %}
+  <div class="bt-announcement bt-scheme-{{ section.settings.scheme }}">
+    <div class="bt-wrap">
+      <p class="bt-announcement-text">
+        {% if section.settings.link %}
+          <a href="{{ url(section.settings.link) }}">{{ section.settings.text }}</a>
+        {% else %}
+          {{ section.settings.text }}
+        {% endif %}
+      </p>
+    </div>
+  </div>
+{% endif %}
+<hk-schema>
+  {
+    "name": {
+      "en": "Announcement bar",
+      "ar": "شريط الإعلان"
+    },
+    "version": 1,
+    "templates": ["announcement"],
+    "settings": {
+      "text": {
+        "type": "text",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "الملفات بتوصلك على الإيميل بعد الدفع",
+          "en": "Files are emailed after you pay"
+        },
+        "localized": true,
+        "maxLength": 140
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": ""
+      },
+      "scheme": {
+        "type": "select",
+        "label": {
+          "en": "Colour scheme",
+          "ar": "ألوان الشريط"
+        },
+        "options": ["sage", "peach", "primary"],
+        "default": "sage"
+      }
+    }
+  }
+</hk-schema>

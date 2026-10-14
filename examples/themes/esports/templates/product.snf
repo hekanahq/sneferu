@@ -1,0 +1,46 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "esports-product",
+        "blocks": [
+          {
+            "type": "product-title"
+          },
+          {
+            "type": "product-price"
+          },
+          {
+            "type": "product-excerpt"
+          },
+          {
+            "type": "product-variants"
+          },
+          {
+            "type": "product-buy"
+          },
+          {
+            "type": "product-text",
+            "settings": {
+              "icon": "mail",
+              "text": {
+                "ar": "الكود بيوصلك على الإيميل بعد الدفع.",
+                "en": "The code arrives by email after you pay."
+              }
+            }
+          },
+          {
+            "type": "product-description"
+          },
+          {
+            "type": "product-tags"
+          }
+        ]
+      },
+      {
+        "type": "esports-related"
+      }
+    ]
+  }
+</hk-schema>

@@ -7,7 +7,10 @@
 </section>
 <hk-schema>
   {
-    "name": "Bento shelves",
+    "name": {
+      "en": "Bento shelves",
+      "ar": "رفوف بينتو"
+    },
     "version": 1,
     "settings": {},
     "blocks": {

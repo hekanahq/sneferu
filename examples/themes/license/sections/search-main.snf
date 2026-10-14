@@ -1,0 +1,150 @@
+<hk-section class="ls-sec" padding-y="{{ section.settings.padding_y }}" mobile-padding-y="24">
+  {% if section.settings.title %}
+    <h1 class="ls-title">{{ section.settings.title }}</h1>
+  {% endif %}
+  {% if section.settings.show_form %}
+    <div class="ls-search-page">
+      <hk-search-form placeholder="{{ t('search_placeholder') }}" class="ls-search ls-search-big" />
+    </div>
+  {% endif %}
+  {% if search.terms %}
+    <p class="ls-muted ls-results">
+      {{ t('results_for') }} “{{ search.terms }}” · {{ search.results_count }} {{ t('results_label') }}
+    </p>
+    {% if search.results %}
+      <div class="ls-grid ls-cols-{{ section.settings.columns }}">
+        {% for p in search.results limit: 48 %}{% render 'app-card', product: p %}{% endfor %}
+      </div>
+      <hk-pagination paginate="{{ paginate }}" />
+    {% else %}
+      {% render 'empty-state', image: section.settings.no_results_image, title: section.settings.no_results_title, text: section.settings.no_results_text, label: section.settings.no_results_button_label, href: section.settings.no_results_button_link %}
+    {% endif %}
+  {% else %}
+    {% if section.settings.prompt_text %}
+      <p class="ls-muted">{{ section.settings.prompt_text }}</p>
+    {% endif %}
+  {% endif %}
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Search",
+      "ar": "صفحة البحث"
+    },
+    "version": 1,
+    "templates": ["search"],
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Title",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "البحث",
+          "en": "Search"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "show_form": {
+        "type": "boolean",
+        "label": {
+          "en": "Show search field",
+          "ar": "إظهار حقل البحث"
+        },
+        "default": true
+      },
+      "prompt_text": {
+        "type": "text",
+        "label": {
+          "en": "Text before searching",
+          "ar": "نص قبل البحث"
+        },
+        "default": {
+          "ar": "اكتب اسم البرنامج اللي بتدور عليه.",
+          "en": "Type the name of the app you are looking for."
+        },
+        "localized": true,
+        "maxLength": 120
+      },
+      "columns": {
+        "type": "range",
+        "label": {
+          "en": "Columns on desktop",
+          "ar": "الأعمدة على الكمبيوتر"
+        },
+        "default": 4,
+        "min": 2,
+        "max": 5,
+        "step": 1
+      },
+      "no_results_image": {
+        "type": "image",
+        "label": {
+          "en": "No-results image",
+          "ar": "صورة عند عدم وجود نتائج"
+        },
+        "default": ""
+      },
+      "no_results_title": {
+        "type": "text",
+        "label": {
+          "en": "No-results title",
+          "ar": "عنوان عند عدم وجود نتائج"
+        },
+        "default": {
+          "ar": "ملقيناش نتايج",
+          "en": "No results found"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "no_results_text": {
+        "type": "textarea",
+        "label": {
+          "en": "No-results text",
+          "ar": "نص عند عدم وجود نتائج"
+        },
+        "default": {
+          "ar": "جرب كلمة تانية أو شوف كل البرامج.",
+          "en": "Try another word or browse all apps."
+        },
+        "localized": true,
+        "maxLength": 160
+      },
+      "no_results_button_label": {
+        "type": "text",
+        "label": {
+          "en": "No-results button",
+          "ar": "زر عند عدم وجود نتائج"
+        },
+        "default": {
+          "ar": "كل البرامج",
+          "en": "All apps"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "no_results_button_link": {
+        "type": "link",
+        "label": {
+          "en": "No-results button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/products"
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding (px)",
+          "ar": "المسافة الرأسية (بكسل)"
+        },
+        "default": 32,
+        "min": 0,
+        "max": 120,
+        "step": 4
+      }
+    }
+  }
+</hk-schema>

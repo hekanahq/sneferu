@@ -2,7 +2,183 @@
   "sections": [
     {
       "id": "footer",
-      "type": "creator-footer"
+      "type": "creator-footer",
+      "settings": {
+        "menu": "footer",
+        "about_text": {
+          "ar": "كورسات وكتب وقوالب لمصممي الواجهات. كل المنتجات رقمية: رابط التحميل بيوصلك على الإيميل بعد الدفع أونلاين.",
+          "en": "Courses, e-books and templates for interface designers. Every product is digital: your download link is emailed after online payment."
+        },
+        "copyright": {
+          "ar": "جميع الحقوق محفوظة",
+          "en": "All rights reserved"
+        },
+        "scheme": "paper",
+        "show_language": true,
+        "show_newsletter": false
+      },
+      "blocks": [
+        {
+          "id": "col-shop",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "المنتجات",
+              "en": "Products"
+            }
+          },
+          "blocks": [
+            {
+              "id": "col-shop-courses",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "كورسات",
+                  "en": "Courses"
+                },
+                "url": "/category/courses"
+              }
+            },
+            {
+              "id": "col-shop-ebooks",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "كتب إلكترونية",
+                  "en": "E-books"
+                },
+                "url": "/category/ebooks"
+              }
+            },
+            {
+              "id": "col-shop-templates",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "قوالب",
+                  "en": "Templates"
+                },
+                "url": "/category/templates"
+              }
+            }
+          ]
+        },
+        {
+          "id": "col-help",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "مساعدة",
+              "en": "Help"
+            }
+          },
+          "blocks": [
+            {
+              "id": "col-help-search",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "بحث",
+                  "en": "Search"
+                },
+                "url": "/search"
+              }
+            },
+            {
+              "id": "col-help-cart",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "السلة",
+                  "en": "Cart"
+                },
+                "url": "/cart"
+              }
+            },
+            {
+              "id": "col-help-about",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "عن المتجر",
+                  "en": "About the store"
+                },
+                "url": "/pages/about"
+              }
+            }
+          ]
+        },
+        {
+          "id": "contact-mail",
+          "type": "contact-line",
+          "settings": {
+            "icon": "mail",
+            "text": {
+              "ar": "hello@example.com",
+              "en": "hello@example.com"
+            },
+            "url": ""
+          }
+        },
+        {
+          "id": "contact-wa",
+          "type": "contact-line",
+          "settings": {
+            "icon": "message-circle",
+            "text": {
+              "ar": "واتساب: 01000000000",
+              "en": "WhatsApp: 01000000000"
+            },
+            "url": ""
+          }
+        },
+        {
+          "id": "social-1",
+          "type": "social-link",
+          "settings": {
+            "label": {
+              "ar": "إنستجرام",
+              "en": "Instagram"
+            },
+            "url": "",
+            "icon": "share-2"
+          }
+        },
+        {
+          "id": "social-2",
+          "type": "social-link",
+          "settings": {
+            "label": {
+              "ar": "يوتيوب",
+              "en": "YouTube"
+            },
+            "url": "",
+            "icon": "play"
+          }
+        },
+        {
+          "id": "pay-card",
+          "type": "payment-method",
+          "settings": {
+            "label": {
+              "ar": "كارت بنكي",
+              "en": "Bank card"
+            },
+            "icon": "credit-card"
+          }
+        },
+        {
+          "id": "pay-wallet",
+          "type": "payment-method",
+          "settings": {
+            "label": {
+              "ar": "محفظة موبايل",
+              "en": "Mobile wallet"
+            },
+            "icon": "smartphone"
+          }
+        }
+      ]
     }
   ]
 }

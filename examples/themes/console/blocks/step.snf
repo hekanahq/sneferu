@@ -1,0 +1,51 @@
+<li class="cc-step">
+  <span class="cc-step-icon"><hk-icon name="{{ block.settings.icon }}" /></span>
+  <strong class="cc-step-title">{{ block.settings.title }}</strong>
+  <span class="cc-step-text">{{ block.settings.text }}</span>
+</li>
+<hk-schema>
+  {
+    "name": {
+      "en": "Step",
+      "ar": "خطوة"
+    },
+    "version": 1,
+    "settings": {
+      "icon": {
+        "type": "select",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
+        "options": ["shopping-cart", "lock", "mail", "key", "zap", "gift", "gamepad-2"],
+        "default": "shopping-cart"
+      },
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Title",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "اختار الكارت",
+          "en": "Pick a card"
+        },
+        "localized": true,
+        "maxLength": 40
+      },
+      "text": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "حدد القيمة المناسبة وضيفها للسلة.",
+          "en": "Choose the amount and add it to the cart."
+        },
+        "localized": true,
+        "maxLength": 140
+      }
+    }
+  }
+</hk-schema>

@@ -1,0 +1,56 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="24" class="cc-steps">
+  {% if section.settings.title %}
+    <hk-heading
+      text="{{ section.settings.title }}"
+      level="h2"
+      size="24"
+      mobile-size="20"
+      align="center"
+      class="cc-h2"
+    />
+  {% endif %}
+  <ol class="cc-steps-list">
+    {% for block in section.blocks %}
+      <hk-block of="{{ block }}" />
+    {% endfor %}
+  </ol>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "How it works",
+      "ar": "إزاي بتشتغل"
+    },
+    "version": 1,
+    "blocks": {
+      "allowed": ["step"],
+      "max": 5
+    },
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "إزاي بتاخد الكود",
+          "en": "How you get your code"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 160,
+        "step": 8,
+        "default": 40
+      }
+    }
+  }
+</hk-schema>

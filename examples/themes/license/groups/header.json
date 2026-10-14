@@ -4,8 +4,87 @@
       "id": "header",
       "type": "license-header",
       "settings": {
+        "menu": "main",
+        "logo_text": "",
+        "logo_height": "32",
+        "scheme": "navy",
+        "sticky": false,
+        "show_search": true,
+        "show_language": true,
+        "show_account": true,
+        "show_cart": true,
         "drawer_on_add": true
-      }
+      },
+      "blocks": [
+        {
+          "id": "nav-plans",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "الباقات",
+              "en": "Plans"
+            },
+            "url": "/#plans"
+          }
+        },
+        {
+          "id": "nav-apps",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "البرامج",
+              "en": "Apps"
+            },
+            "url": "/products"
+          },
+          "blocks": [
+            {
+              "id": "nav-apps-all",
+              "type": "menu-sub-link",
+              "settings": {
+                "label": {
+                  "ar": "كل البرامج",
+                  "en": "All apps"
+                },
+                "url": "/products"
+              }
+            },
+            {
+              "id": "nav-apps-search",
+              "type": "menu-sub-link",
+              "settings": {
+                "label": {
+                  "ar": "بحث",
+                  "en": "Search"
+                },
+                "url": "/search"
+              }
+            }
+          ]
+        },
+        {
+          "id": "nav-faq",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "الأسئلة",
+              "en": "Questions"
+            },
+            "url": "/#faq"
+          }
+        },
+        {
+          "id": "nav-contact",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "تواصل",
+              "en": "Contact"
+            },
+            "url": "/pages/contact"
+          }
+        }
+      ]
     }
   ]
 }

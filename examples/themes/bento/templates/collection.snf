@@ -1,0 +1,10 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "collection-main"
+      }
+    ]
+  }
+</hk-schema>

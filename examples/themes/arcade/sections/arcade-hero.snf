@@ -36,12 +36,18 @@
 </hk-section>
 <hk-schema>
   {
-    "name": "Arcade hero",
+    "name": {
+      "en": "Arcade hero",
+      "ar": "بداية الصفحة"
+    },
     "version": 1,
     "settings": {
       "title": {
         "type": "text",
-        "label": "Title",
+        "label": {
+          "en": "Title",
+          "ar": "العنوان"
+        },
         "localized": true,
         "default": {
           "ar": "كروت الألعاب والشحن",
@@ -51,7 +57,10 @@
       },
       "button": {
         "type": "text",
-        "label": "Button",
+        "label": {
+          "en": "Button",
+          "ar": "الزر"
+        },
         "localized": true,
         "default": {
           "ar": "تصفح الكروت",
@@ -61,12 +70,18 @@
       },
       "button_link": {
         "type": "link",
-        "label": "Button link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
         "default": "/category/gift-cards"
       },
       "note": {
         "type": "text",
-        "label": "Note next to the button",
+        "label": {
+          "en": "Note next to the button",
+          "ar": "ملاحظة جنب الزر"
+        },
         "localized": true,
         "default": {
           "ar": "تسليم فوري",

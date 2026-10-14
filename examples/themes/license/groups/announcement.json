@@ -1,0 +1,16 @@
+{
+  "sections": [
+    {
+      "id": "announcement",
+      "type": "announcement-bar",
+      "settings": {
+        "text": {
+          "ar": "الدفع أونلاين، والمفتاح يوصلك على الإيميل بعد الدفع",
+          "en": "Pay online and get your key by email after payment"
+        },
+        "link": "/products",
+        "scheme": "lime"
+      }
+    }
+  ]
+}

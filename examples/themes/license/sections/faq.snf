@@ -2,31 +2,35 @@
   <div class="ls-wrap">
     <h2 class="ls-h2">{{ section.settings.heading }}</h2>
     <div class="ls-faq-list">
-      {% for block in section.blocks %}
-        <hk-block of="{{ block }}" />
-      {% endfor %}
+      {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
     </div>
   </div>
 </section>
 <hk-schema>
   {
-    "name": "FAQ",
+    "name": {
+      "en": "FAQ",
+      "ar": "الأسئلة الشائعة"
+    },
     "version": 1,
+    "blocks": {
+      "allowed": ["faq-item"],
+      "max": 12
+    },
     "settings": {
       "heading": {
         "type": "text",
-        "label": "Heading",
-        "localized": true,
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
         "default": {
           "ar": "أسئلة بتتكرر",
           "en": "Common questions"
         },
+        "localized": true,
         "maxLength": 60
       }
-    },
-    "blocks": {
-      "allowed": ["faq-item"],
-      "max": 12
     }
   }
 </hk-schema>

@@ -1,0 +1,42 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "esports-collection",
+        "blocks": [
+          {
+            "type": "tab",
+            "settings": {
+              "label": {
+                "ar": "الكل",
+                "en": "All"
+              },
+              "link": "/products"
+            }
+          },
+          {
+            "type": "tab",
+            "settings": {
+              "label": {
+                "ar": "كونسول",
+                "en": "Console"
+              },
+              "link": "/category/gift-cards"
+            }
+          },
+          {
+            "type": "tab",
+            "settings": {
+              "label": {
+                "ar": "موبايل",
+                "en": "Mobile"
+              },
+              "link": "/category/top-ups"
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

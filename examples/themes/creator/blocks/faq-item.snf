@@ -1,0 +1,41 @@
+<details class="cr-faq-item">
+  <summary>{{ block.settings.question }}<hk-icon name="plus" size="18" /></summary>
+  <p>{{ block.settings.answer }}</p>
+</details>
+<hk-schema>
+  {
+    "name": {
+      "en": "Question",
+      "ar": "سؤال"
+    },
+    "version": 1,
+    "settings": {
+      "question": {
+        "type": "text",
+        "label": {
+          "en": "Question",
+          "ar": "السؤال"
+        },
+        "default": {
+          "ar": "هل ممكن أرجّع المنتج؟",
+          "en": "Can I return a product?"
+        },
+        "localized": true,
+        "maxLength": 120
+      },
+      "answer": {
+        "type": "textarea",
+        "label": {
+          "en": "Answer",
+          "ar": "الإجابة"
+        },
+        "default": {
+          "ar": "المنتجات الرقمية مش بتترجّع بعد التحميل، لكن لو في مشكلة في الملف كلمنا ونحلها معاك.",
+          "en": "Digital products are not returned after download, but if the file has a problem, write to us and we will sort it out."
+        },
+        "localized": true,
+        "maxLength": 400
+      }
+    }
+  }
+</hk-schema>

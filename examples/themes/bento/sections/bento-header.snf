@@ -1,61 +1,246 @@
-<header class="bt-header">
+<header class="bt-header bt-scheme-{{ section.settings.scheme }} bt-sticky-{{ section.settings.sticky }}">
   <div class="bt-wrap bt-header-row">
-    <div class="bt-start">
-      <a
-        class="bt-icon bt-user"
-        href="{{ url('/account') }}"
-        aria-label="{{ t('account') }}"
-      >{% render 'glyph', name: 'user' %}</a>
-      <a class="bt-icon bt-hide-phone" href="{{ url('/wishlist') }}" aria-label="{{ t('wishlist') }}"><hk-icon
-          name="heart"
-        /></a>
-      <a class="bt-logo" href="{{ store.url }}">{{ store.name }}</a>
-    </div>
-    <div class="bt-end">
-      <a
-        class="bt-icon bt-hide-phone"
-        href="{{ url('/cart') }}"
-        data-hk-open="cart-drawer"
-        aria-label="{{ t('cart') }}"
-      ><hk-icon name="shopping-bag" /><hk-cart-count /></a>
-      <a class="bt-icon bt-hide-phone" href="{{ url('/search') }}" aria-label="{{ t('search') }}"><hk-icon
-          name="search"
-        /></a>
-      <a class="bt-pill" href="{{ url('/products') }}">{{ t('all_products') }}</a>
-      <details class="bt-menu">
-        <summary class="bt-icon" aria-label="{{ t('menu') }}"><hk-icon name="menu" size="22" /></summary>
-        <div class="bt-menu-panel">
-          {% for item in menu(section.settings.menu).items %}<a
-              href="{{ item.url }}"
-              aria-current="{{ item.active }}"
-            >{{ item.title }}</a>{% endfor %}<a href="{{ url('/search') }}">{{ t('search') }}</a>
-          <a href="{{ url('/cart') }}" data-hk-open="cart-drawer">{{ t('cart') }}</a>
-          <a href="{{ url('/wishlist') }}">{{ t('wishlist') }}</a>
-          <hk-locale-switch />
-        </div>
-      </details>
+    <a class="bt-logo" href="{{ url('/') }}">
+      {% if section.settings.logo %}
+        <img
+          class="bt-logo-img bt-logo-h-{{ section.settings.logo_height }}"
+          src="{{ section.settings.logo }}"
+          alt="{{ store.name }}"
+          width="160"
+          height="{{ section.settings.logo_height }}"
+        >
+      {% elsif section.settings.logo_text %}
+        <span class="bt-logo-pill">{{ section.settings.logo_text }}</span>
+      {% else %}
+        <span class="bt-logo-pill">{{ store.name }}</span>
+      {% endif %}
+    </a>
+    <div class="bt-actions">
+      {% if section.settings.show_search %}
+        <details class="bt-search-toggle">
+          <summary class="bt-icon" aria-label="{{ t('search') }}"><hk-icon name="search" /></summary>
+          <div class="bt-search-panel"><hk-search-form placeholder="{{ t('search_placeholder') }}" /></div>
+        </details>
+      {% endif %}
+      {% if section.settings.show_account %}
+        <a
+          class="bt-icon bt-hide-phone"
+          href="{{ url(section.settings.account_link) }}"
+          aria-label="{{ t('account') }}"
+        >{% render 'glyph', name: 'user' %}</a>
+      {% endif %}
+      {% if section.settings.show_wishlist %}
+        <a
+          class="bt-icon bt-hide-phone"
+          href="{{ url(section.settings.wishlist_link) }}"
+          aria-label="{{ t('wishlist') }}"
+        ><hk-icon name="heart" /></a>
+      {% endif %}
+      {% if section.settings.show_language %}<hk-locale-switch class="bt-locale" />{% endif %}
+      {% if section.settings.show_cart %}
+        <a
+          class="bt-icon bt-cart-link"
+          href="{{ url('/cart') }}"
+          data-hk-open="cart-drawer"
+          aria-label="{{ t('cart') }}"
+        >
+          <hk-icon name="shopping-bag" />
+          <hk-cart-count />
+        </a>
+      {% endif %}
+      {% if section.settings.cta_label %}
+        <a
+          class="bt-pill bt-hide-phone"
+          href="{{ url(section.settings.cta_link) }}"
+        >{{ section.settings.cta_label }}</a>
+      {% endif %}
     </div>
   </div>
-  <hk-cart-drawer open-on-add="{{ section.settings.drawer_on_add }}">
-    <hk-cart-items />
-    <hk-cart-summary />
-  </hk-cart-drawer>
+  <nav class="bt-nav" aria-label="{{ t('menu') }}">
+    <div class="bt-wrap bt-nav-row">
+      {% if menu(section.settings.menu).items %}
+        {% for item in menu(section.settings.menu).items %}
+          <div class="bt-nav-item">
+            <a class="bt-nav-link" href="{{ item.url }}" aria-current="{{ item.active }}">{{ item.title }}</a>
+            {% if item.children %}
+              <div class="bt-subnav">
+                {% for sub in item.children %}
+                  <a class="bt-subnav-link" href="{{ sub.url }}" aria-current="{{ sub.active }}">{{ sub.title }}</a>
+                  {% for leaf in sub.children %}
+                    <a
+                      class="bt-subnav-link bt-subnav-deep"
+                      href="{{ leaf.url }}"
+                      aria-current="{{ leaf.active }}"
+                    >{{ leaf.title }}</a>
+                  {% endfor %}
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+      {% else %}{% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}{% endif %}
+    </div>
+  </nav>
+  {% if section.settings.show_cart %}
+    <hk-cart-drawer open-on-add="{{ section.settings.drawer_on_add }}">
+      <hk-cart-items />
+      <hk-cart-summary />
+    </hk-cart-drawer>
+  {% endif %}
 </header>
 <hk-schema>
   {
-    "name": "Header",
+    "name": {
+      "en": "Header",
+      "ar": "الهيدر"
+    },
     "version": 1,
     "templates": ["header"],
+    "blocks": {
+      "allowed": ["menu-link"],
+      "max": 8
+    },
     "settings": {
       "menu": {
         "type": "menu",
-        "label": "Menu",
+        "label": {
+          "en": "Menu (the links below show when none is picked or it has no links)",
+          "ar": "القائمة (الروابط اللي تحت بتظهر لو مفيش قائمة أو مفيهاش روابط)"
+        },
         "default": "main"
+      },
+      "logo": {
+        "type": "image",
+        "label": {
+          "en": "Logo image (a dark pill with the store name when empty)",
+          "ar": "صورة الشعار (لو فاضية بيظهر اسم المتجر في كبسولة غامقة)"
+        },
+        "default": ""
+      },
+      "logo_text": {
+        "type": "text",
+        "label": {
+          "en": "Logo text (store name when empty)",
+          "ar": "نص الشعار (اسم المتجر لو فاضي)"
+        },
+        "default": "",
+        "localized": true,
+        "maxLength": 40
+      },
+      "logo_height": {
+        "type": "select",
+        "label": {
+          "en": "Logo height (px)",
+          "ar": "ارتفاع الشعار (بكسل)"
+        },
+        "options": ["24", "32", "40", "48", "64"],
+        "default": "40"
+      },
+      "scheme": {
+        "type": "select",
+        "label": {
+          "en": "Colour scheme",
+          "ar": "ألوان الهيدر"
+        },
+        "options": ["light", "tint"],
+        "default": "light"
+      },
+      "sticky": {
+        "type": "boolean",
+        "label": {
+          "en": "Stick to the top",
+          "ar": "تثبيت في أعلى الصفحة"
+        },
+        "default": false
+      },
+      "show_search": {
+        "type": "boolean",
+        "label": {
+          "en": "Show search",
+          "ar": "إظهار البحث"
+        },
+        "default": true
+      },
+      "show_account": {
+        "type": "boolean",
+        "label": {
+          "en": "Show the account icon",
+          "ar": "إظهار أيقونة الحساب"
+        },
+        "default": true
+      },
+      "account_link": {
+        "type": "link",
+        "label": {
+          "en": "Account link",
+          "ar": "رابط الحساب"
+        },
+        "default": "/account"
+      },
+      "show_wishlist": {
+        "type": "boolean",
+        "label": {
+          "en": "Show the wishlist icon",
+          "ar": "إظهار أيقونة المفضلة"
+        },
+        "default": true
+      },
+      "wishlist_link": {
+        "type": "link",
+        "label": {
+          "en": "Wishlist link",
+          "ar": "رابط المفضلة"
+        },
+        "default": "/wishlist"
+      },
+      "show_language": {
+        "type": "boolean",
+        "label": {
+          "en": "Show language switch",
+          "ar": "إظهار تبديل اللغة"
+        },
+        "default": true
+      },
+      "show_cart": {
+        "type": "boolean",
+        "label": {
+          "en": "Show cart",
+          "ar": "إظهار السلة"
+        },
+        "default": true
       },
       "drawer_on_add": {
         "type": "boolean",
-        "label": "Open the cart when an item is added",
-        "default": true
+        "label": {
+          "en": "Open the cart when an item is added",
+          "ar": "فتح السلة عند الإضافة"
+        },
+        "default": true,
+        "visible_if": {
+          "setting": "show_cart",
+          "equals": true
+        }
+      },
+      "cta_label": {
+        "type": "text",
+        "label": {
+          "en": "Button text (leave empty to hide)",
+          "ar": "نص الزر (سيبه فاضي لإخفائه)"
+        },
+        "default": {
+          "ar": "كل المنتجات",
+          "en": "All products"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "cta_link": {
+        "type": "link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/products"
       }
     }
   }

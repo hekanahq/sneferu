@@ -1,0 +1,224 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="24">
+  {% render 'page-head', title: section.settings.title, text: section.settings.subtitle %}
+  <div class="es-cart es-cart-{{ section.settings.summary_position }}">
+    <hk-cart-items checkout-label="{{ section.settings.checkout_label }}">
+      <hk-part name="empty">
+        <div class="es-empty-state">
+          {% if section.settings.empty_image %}
+            <hk-image src="{{ section.settings.empty_image }}" alt="" width="200" />
+          {% else %}
+            <hk-icon name="shopping-cart" size="40" class="ic" />
+          {% endif %}
+          {% if section.settings.empty_title %}
+            <h2>{{ section.settings.empty_title }}</h2>
+          {% endif %}
+          {% if section.settings.empty_text %}
+            <p>{{ section.settings.empty_text }}</p>
+          {% endif %}
+          {% render 'button', label: section.settings.empty_button_label, href: section.settings.empty_button_link, style: 'solid' %}
+        </div>
+      </hk-part>
+    </hk-cart-items>
+    <aside class="es-cart-aside">
+      <hk-cart-summary
+        subtotal-label="{{ section.settings.subtotal_label }}"
+        checkout-label="{{ section.settings.checkout_label }}"
+      />
+      {% if section.settings.note %}
+        <p class="es-note-line"><hk-icon name="mail" size="18" class="ic" />{{ section.settings.note }}</p>
+      {% endif %}
+      {% if section.settings.show_continue %}
+        {% render 'button', label: section.settings.continue_label, href: section.settings.continue_link, style: 'outline' %}
+      {% endif %}
+    </aside>
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Cart",
+      "ar": "السلة"
+    },
+    "version": 1,
+    "templates": ["cart"],
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "سلة المشتريات",
+          "en": "Your cart"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "subtitle": {
+        "type": "text",
+        "label": {
+          "en": "Text under the heading",
+          "ar": "النص تحت العنوان"
+        },
+        "default": {
+          "ar": "",
+          "en": ""
+        },
+        "localized": true,
+        "maxLength": 100
+      },
+      "summary_position": {
+        "type": "select",
+        "label": {
+          "en": "Summary position",
+          "ar": "مكان الملخص"
+        },
+        "default": "side",
+        "options": ["side", "below"]
+      },
+      "subtotal_label": {
+        "type": "text",
+        "label": {
+          "en": "Subtotal label",
+          "ar": "نص المجموع"
+        },
+        "default": {
+          "ar": "",
+          "en": ""
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "checkout_label": {
+        "type": "text",
+        "label": {
+          "en": "Checkout button",
+          "ar": "زر إتمام الشراء"
+        },
+        "default": {
+          "ar": "",
+          "en": ""
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "note": {
+        "type": "textarea",
+        "label": {
+          "en": "Note under the summary",
+          "ar": "ملاحظة تحت الملخص"
+        },
+        "default": {
+          "ar": "الكود بيتبعتلك على الإيميل بعد الدفع الأونلاين.",
+          "en": "Your code is emailed after online payment."
+        },
+        "localized": true,
+        "maxLength": 160
+      },
+      "show_continue": {
+        "type": "boolean",
+        "label": {
+          "en": "Show a continue shopping button",
+          "ar": "إظهار زر كمّل تسوق"
+        },
+        "default": true
+      },
+      "continue_label": {
+        "type": "text",
+        "label": {
+          "en": "Continue button",
+          "ar": "زر كمّل تسوق"
+        },
+        "default": {
+          "ar": "كمّل تسوق",
+          "en": "Continue shopping"
+        },
+        "localized": true,
+        "maxLength": 30,
+        "visible_if": {
+          "setting": "show_continue",
+          "equals": true
+        }
+      },
+      "continue_link": {
+        "type": "link",
+        "label": {
+          "en": "Continue link",
+          "ar": "رابط كمّل تسوق"
+        },
+        "default": "/products",
+        "visible_if": {
+          "setting": "show_continue",
+          "equals": true
+        }
+      },
+      "empty_image": {
+        "type": "image",
+        "label": {
+          "en": "Empty cart picture",
+          "ar": "صورة السلة الفاضية"
+        },
+        "default": ""
+      },
+      "empty_title": {
+        "type": "text",
+        "label": {
+          "en": "Empty cart title",
+          "ar": "عنوان السلة الفاضية"
+        },
+        "default": {
+          "ar": "سلتك فاضية",
+          "en": "Your cart is empty"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "empty_text": {
+        "type": "textarea",
+        "label": {
+          "en": "Empty cart text",
+          "ar": "نص السلة الفاضية"
+        },
+        "default": {
+          "ar": "اختار كارت وهيظهر هنا.",
+          "en": "Pick a card and it will show up here."
+        },
+        "localized": true,
+        "maxLength": 160
+      },
+      "empty_button_label": {
+        "type": "text",
+        "label": {
+          "en": "Empty cart button",
+          "ar": "زر السلة الفاضية"
+        },
+        "default": {
+          "ar": "شوف الكروت",
+          "en": "Browse cards"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "empty_button_link": {
+        "type": "link",
+        "label": {
+          "en": "Empty cart button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/products"
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "default": 32,
+        "min": 0,
+        "max": 120,
+        "step": 4
+      }
+    }
+  }
+</hk-schema>

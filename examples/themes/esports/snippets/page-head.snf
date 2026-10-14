@@ -1,0 +1,6 @@
+<div class="es-pagehead">
+  <hk-heading text="{{ title }}" level="h1" size="36" tablet-size="32" mobile-size="24" class="es-pagehead-title" />
+  {% if text %}
+    <p class="es-pagehead-text">{{ text }}</p>
+  {% endif %}
+</div>

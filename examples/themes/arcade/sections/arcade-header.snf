@@ -1,48 +1,180 @@
-<header class="arc-header">
+<header class="arc-header arc-header-{{ section.settings.scheme }} arc-hdr-sticky-{{ section.settings.sticky }}">
   <hk-container>
     <div class="arc-bar">
       <details class="arc-menu">
         <summary aria-label="{{ t('menu') }}"><hk-icon name="menu" size="24" class="ic" /></summary>
-        <nav class="arc-menu-panel">
-          {% if menu(section.settings.menu).items %}{% for item in menu(section.settings.menu).items %}<a
-                href="{{ item.url }}"
-                aria-current="{{ item.active }}"
-              >{{ item.title }}</a>{% endfor %}{% else %}<a href="{{ url('/') }}">{{ t('nav_home') }}</a>
-            <a href="{{ url('/products') }}">{{ t('nav_all') }}</a>
-            <a href="{{ url('/category/gift-cards') }}">{{ t('cat_gift_cards') }}</a>
-            <a href="{{ url('/category/game-currency') }}">{{ t('cat_currency') }}</a>
-            <a href="{{ url('/') }}#faq">{{ t('nav_faq') }}</a>{% endif %}
+        <nav class="arc-menu-panel" aria-label="{{ t('menu') }}">
+          {% if menu(section.settings.menu).items %}
+            {% for item in menu(section.settings.menu).items %}
+              <a class="arc-nav-link" href="{{ item.url }}" aria-current="{{ item.active }}">{{ item.title }}</a>
+              {% for sub in item.children %}
+                <a
+                  class="arc-nav-link arc-nav-sub"
+                  href="{{ sub.url }}"
+                  aria-current="{{ sub.active }}"
+                >{{ sub.title }}</a>
+              {% endfor %}
+            {% endfor %}
+          {% else %}
+            {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+          {% endif %}
         </nav>
       </details>
-      <a class="arc-logo" href="{{ url('/') }}">{{ store.name }}</a>
-      <hk-search-form placeholder="{{ t('search_placeholder') }}" class="arc-search" />
-      <a class="arc-cart" href="{{ url('/cart') }}" data-hk-open="cart-drawer" aria-label="{{ t('cart') }}"><hk-icon
-          name="shopping-cart"
-          size="24"
-          class="ic"
-        /><hk-cart-count /></a>
+      <a class="arc-logo" href="{{ url('/') }}">
+        {% if section.settings.logo %}
+          <img
+            class="arc-logo-img arc-logo-h-{{ section.settings.logo_height }}"
+            src="{{ section.settings.logo }}"
+            alt="{{ store.name }}"
+            width="160"
+            height="{{ section.settings.logo_height }}"
+          >
+        {% endif %}
+        {% if section.settings.logo_text %}
+          <span class="arc-logo-text">{{ section.settings.logo_text }}</span>
+        {% elsif section.settings.logo == '' %}
+          <span class="arc-logo-text">{{ store.name }}</span>
+        {% endif %}
+      </a>
+      <nav class="arc-nav" aria-label="{{ t('menu') }}">
+        {% if menu(section.settings.menu).items %}
+          {% for item in menu(section.settings.menu).items %}
+            <div class="arc-nav-item">
+              <a class="arc-nav-link" href="{{ item.url }}" aria-current="{{ item.active }}">{{ item.title }}</a>
+              {% if item.children %}
+                <div class="arc-subnav">
+                  {% for sub in item.children %}
+                    <a class="arc-subnav-link" href="{{ sub.url }}" aria-current="{{ sub.active }}">{{ sub.title }}</a>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        {% else %}
+          {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+        {% endif %}
+      </nav>
+      {% if section.settings.show_search %}
+        <hk-search-form placeholder="{{ t('search_placeholder') }}" class="arc-search" />
+      {% endif %}
+      <div class="arc-tools">
+        {% if section.settings.show_language %}<hk-locale-switch />{% endif %}
+        {% if section.settings.show_cart %}
+          <a class="arc-cart" href="{{ url('/cart') }}" data-hk-open="cart-drawer" aria-label="{{ t('cart') }}">
+            <hk-icon name="shopping-cart" size="24" class="ic" />
+            <hk-cart-count />
+          </a>
+        {% endif %}
+      </div>
     </div>
   </hk-container>
-  <hk-cart-drawer open-on-add="{{ section.settings.drawer_on_add }}">
-    <hk-cart-items />
-    <hk-cart-summary />
-  </hk-cart-drawer>
+  {% if section.settings.show_cart %}
+    <hk-cart-drawer open-on-add="{{ section.settings.drawer_on_add }}">
+      <hk-cart-items />
+      <hk-cart-summary />
+    </hk-cart-drawer>
+  {% endif %}
 </header>
 <hk-schema>
   {
-    "name": "Header",
-    "version": 1,
+    "name": {
+      "en": "Header",
+      "ar": "الهيدر"
+    },
+    "version": 2,
     "templates": ["header"],
+    "blocks": {
+      "allowed": ["menu-link"],
+      "max": 8
+    },
     "settings": {
       "menu": {
         "type": "menu",
-        "label": "Menu",
+        "label": {
+          "en": "Menu (the links below show when none is picked or it has no links)",
+          "ar": "القائمة (الروابط اللي تحت بتظهر لو مفيش قائمة أو مفيهاش روابط)"
+        },
         "default": "main"
+      },
+      "logo": {
+        "type": "image",
+        "label": {
+          "en": "Logo image",
+          "ar": "صورة الشعار"
+        },
+        "default": ""
+      },
+      "logo_text": {
+        "type": "text",
+        "label": {
+          "en": "Logo text (store name when empty)",
+          "ar": "نص الشعار (اسم المتجر لو فاضي)"
+        },
+        "default": "",
+        "localized": true,
+        "maxLength": 40
+      },
+      "logo_height": {
+        "type": "select",
+        "label": {
+          "en": "Logo height (px)",
+          "ar": "ارتفاع الشعار (بكسل)"
+        },
+        "options": ["24", "32", "40", "48"],
+        "default": "32"
+      },
+      "scheme": {
+        "type": "select",
+        "label": {
+          "en": "Colour scheme",
+          "ar": "ألوان الهيدر"
+        },
+        "options": ["glass", "dark", "neon"],
+        "default": "glass"
+      },
+      "sticky": {
+        "type": "boolean",
+        "label": {
+          "en": "Stick to the top",
+          "ar": "تثبيت في أعلى الصفحة"
+        },
+        "default": true
+      },
+      "show_search": {
+        "type": "boolean",
+        "label": {
+          "en": "Show search",
+          "ar": "إظهار البحث"
+        },
+        "default": true
+      },
+      "show_language": {
+        "type": "boolean",
+        "label": {
+          "en": "Show language switch",
+          "ar": "إظهار تبديل اللغة"
+        },
+        "default": true
+      },
+      "show_cart": {
+        "type": "boolean",
+        "label": {
+          "en": "Show cart",
+          "ar": "إظهار السلة"
+        },
+        "default": true
       },
       "drawer_on_add": {
         "type": "boolean",
-        "label": "Open the cart when an item is added",
-        "default": true
+        "label": {
+          "en": "Open the cart when an item is added",
+          "ar": "فتح السلة عند الإضافة"
+        },
+        "default": true,
+        "visible_if": {
+          "setting": "show_cart",
+          "equals": true
+        }
       }
     }
   }

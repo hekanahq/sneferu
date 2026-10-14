@@ -18,5 +18,18 @@
   "ribbon_sale": "Sale",
   "ribbon_pick": "Pick",
   "buy": "Buy",
-  "search": "Search"
+  "search": "Search",
+  "skip_to_content": "Skip to content",
+  "home": "Home",
+  "breadcrumb": "Breadcrumb",
+  "sale": "Sale",
+  "sold_out_badge": "Sold out",
+  "products_label": "products",
+  "sort_by": "Sort by",
+  "filters": "Filters",
+  "results_for": "Results for",
+  "results_label": "results",
+  "newsletter_cta": "Subscribe",
+  "payment_methods": "Payment methods",
+  "product_info": "Product details"
 }

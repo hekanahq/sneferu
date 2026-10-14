@@ -1,0 +1,215 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="24">
+  {% if section.settings.title %}
+    <hk-heading text="{{ section.settings.title }}" level="h1" size="32" mobile-size="26" />
+  {% endif %}
+  <div class="cc-cart cc-cart-{{ section.settings.summary_position }}">
+    <hk-cart-items checkout-label="{{ section.settings.checkout_label }}">
+      <hk-part name="empty">
+        <div class="cc-empty">
+          <span class="cc-tile" aria-hidden="true"><hk-icon name="shopping-cart" /></span>
+          {% if section.settings.empty_image %}
+            <hk-image src="{{ section.settings.empty_image }}" alt="" width="240" />
+          {% endif %}
+          {% if section.settings.empty_title %}
+            <h2 class="cc-empty-title">{{ section.settings.empty_title }}</h2>
+          {% endif %}
+          {% if section.settings.empty_text %}
+            <p>{{ section.settings.empty_text }}</p>
+          {% endif %}
+          {% render 'button', label: section.settings.empty_button_label, href: section.settings.empty_button_link, style: section.settings.empty_button_style %}
+        </div>
+      </hk-part>
+    </hk-cart-items>
+    <aside class="cc-cart-aside">
+      <hk-cart-summary
+        subtotal-label="{{ section.settings.subtotal_label }}"
+        checkout-label="{{ section.settings.checkout_label }}"
+      />
+      {% if section.settings.note %}
+        <p class="cc-muted">{{ section.settings.note }}</p>
+      {% endif %}
+      {% if section.settings.show_continue %}
+        {% render 'button', label: section.settings.continue_label, href: section.settings.continue_link, style: 'ghost' %}
+      {% endif %}
+    </aside>
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Cart",
+      "ar": "السلة"
+    },
+    "version": 1,
+    "templates": ["cart"],
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "سلة المشتريات",
+          "en": "Your cart"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "summary_position": {
+        "type": "select",
+        "label": {
+          "en": "Summary position",
+          "ar": "مكان الملخص"
+        },
+        "options": ["side", "below"],
+        "default": "side"
+      },
+      "subtotal_label": {
+        "type": "text",
+        "label": {
+          "en": "Subtotal label",
+          "ar": "نص المجموع"
+        },
+        "default": "",
+        "localized": true,
+        "maxLength": 30
+      },
+      "checkout_label": {
+        "type": "text",
+        "label": {
+          "en": "Checkout button",
+          "ar": "زر إتمام الشراء"
+        },
+        "default": "",
+        "localized": true,
+        "maxLength": 30
+      },
+      "note": {
+        "type": "text",
+        "label": {
+          "en": "Note under the total",
+          "ar": "ملاحظة تحت المجموع"
+        },
+        "default": {
+          "ar": "الشحن والخصومات بتتحسب في الخطوة الجاية.",
+          "en": "Shipping and discounts are worked out at checkout."
+        },
+        "localized": true,
+        "maxLength": 140
+      },
+      "show_continue": {
+        "type": "boolean",
+        "label": {
+          "en": "Show continue shopping",
+          "ar": "إظهار متابعة التسوق"
+        },
+        "default": true
+      },
+      "continue_label": {
+        "type": "text",
+        "label": {
+          "en": "Continue shopping text",
+          "ar": "نص متابعة التسوق"
+        },
+        "default": {
+          "ar": "كمل تسوق",
+          "en": "Continue shopping"
+        },
+        "localized": true,
+        "maxLength": 30,
+        "visible_if": {
+          "setting": "show_continue",
+          "equals": true
+        }
+      },
+      "continue_link": {
+        "type": "link",
+        "label": {
+          "en": "Continue shopping link",
+          "ar": "رابط متابعة التسوق"
+        },
+        "default": "/products",
+        "visible_if": {
+          "setting": "show_continue",
+          "equals": true
+        }
+      },
+      "empty_image": {
+        "type": "image",
+        "label": {
+          "en": "Empty cart image",
+          "ar": "صورة السلة الفاضية"
+        },
+        "default": ""
+      },
+      "empty_title": {
+        "type": "text",
+        "label": {
+          "en": "Empty cart title",
+          "ar": "عنوان السلة الفاضية"
+        },
+        "default": {
+          "ar": "سلتك فاضية",
+          "en": "Your cart is empty"
+        },
+        "localized": true,
+        "maxLength": 80
+      },
+      "empty_text": {
+        "type": "textarea",
+        "label": {
+          "en": "Empty cart text",
+          "ar": "نص السلة الفاضية"
+        },
+        "default": {
+          "ar": "ضيف منتجات وهتلاقيها هنا.",
+          "en": "Add products and they will show up here."
+        },
+        "localized": true,
+        "maxLength": 200
+      },
+      "empty_button_label": {
+        "type": "text",
+        "label": {
+          "en": "Empty cart button",
+          "ar": "زر السلة الفاضية"
+        },
+        "default": {
+          "ar": "ابدأ التسوق",
+          "en": "Start shopping"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "empty_button_link": {
+        "type": "link",
+        "label": {
+          "en": "Empty cart button link",
+          "ar": "رابط زر السلة الفاضية"
+        },
+        "default": "/products"
+      },
+      "empty_button_style": {
+        "type": "select",
+        "label": {
+          "en": "Empty cart button style",
+          "ar": "شكل زر السلة الفاضية"
+        },
+        "options": ["solid", "outline", "ghost"],
+        "default": "solid"
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 160,
+        "step": 8,
+        "default": 40
+      }
+    }
+  }
+</hk-schema>

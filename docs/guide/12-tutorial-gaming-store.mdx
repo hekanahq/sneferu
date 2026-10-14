@@ -285,13 +285,15 @@ an ordinary section the merchant can edit once for the whole store.
 <svg class="arc-defs" width="0" height="0" aria-hidden="true">
   <defs>
     <linearGradient id="arc-grad" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#22D3EE" />
-      <stop offset="1" stop-color="#A3E635" />
+      <stop class="arc-stop-a" offset="0" />
+      <stop class="arc-stop-b" offset="1" />
     </linearGradient>
   </defs>
 </svg>
+<a class="arc-skip" href="#main">{{ t('skip_to_content') }}</a>
+<hk-section-group name="announcement" />
 <hk-section-group name="header" />
-<main class="arc-main"><hk-slot name="content" /></main>
+<main id="main" class="arc-main"><hk-slot name="content" /></main>
 <hk-section-group name="footer" />
 ```
 
@@ -315,51 +317,183 @@ an ordinary section the merchant can edit once for the whole store.
 <Example>
 
 ```html title="examples/themes/arcade/sections/arcade-header.snf"
-<header class="arc-header">
+<header class="arc-header arc-header-{{ section.settings.scheme }} arc-hdr-sticky-{{ section.settings.sticky }}">
   <hk-container>
     <div class="arc-bar">
       <details class="arc-menu">
         <summary aria-label="{{ t('menu') }}"><hk-icon name="menu" size="24" class="ic" /></summary>
-        <nav class="arc-menu-panel">
-          {% if menu(section.settings.menu).items %}{% for item in menu(section.settings.menu).items %}<a
-                href="{{ item.url }}"
-                aria-current="{{ item.active }}"
-              >{{ item.title }}</a>{% endfor %}{% else %}<a href="{{ url('/') }}">{{ t('nav_home') }}</a>
-            <a href="{{ url('/products') }}">{{ t('nav_all') }}</a>
-            <a href="{{ url('/category/gift-cards') }}">{{ t('cat_gift_cards') }}</a>
-            <a href="{{ url('/category/game-currency') }}">{{ t('cat_currency') }}</a>
-            <a href="{{ url('/') }}#faq">{{ t('nav_faq') }}</a>{% endif %}
+        <nav class="arc-menu-panel" aria-label="{{ t('menu') }}">
+          {% if menu(section.settings.menu).items %}
+            {% for item in menu(section.settings.menu).items %}
+              <a class="arc-nav-link" href="{{ item.url }}" aria-current="{{ item.active }}">{{ item.title }}</a>
+              {% for sub in item.children %}
+                <a
+                  class="arc-nav-link arc-nav-sub"
+                  href="{{ sub.url }}"
+                  aria-current="{{ sub.active }}"
+                >{{ sub.title }}</a>
+              {% endfor %}
+            {% endfor %}
+          {% else %}
+            {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+          {% endif %}
         </nav>
       </details>
-      <a class="arc-logo" href="{{ url('/') }}">{{ store.name }}</a>
-      <hk-search-form placeholder="{{ t('search_placeholder') }}" class="arc-search" />
-      <a class="arc-cart" href="{{ url('/cart') }}" data-hk-open="cart-drawer" aria-label="{{ t('cart') }}"><hk-icon
-          name="shopping-cart"
-          size="24"
-          class="ic"
-        /><hk-cart-count /></a>
+      <a class="arc-logo" href="{{ url('/') }}">
+        {% if section.settings.logo %}
+          <img
+            class="arc-logo-img arc-logo-h-{{ section.settings.logo_height }}"
+            src="{{ section.settings.logo }}"
+            alt="{{ store.name }}"
+            width="160"
+            height="{{ section.settings.logo_height }}"
+          >
+        {% endif %}
+        {% if section.settings.logo_text %}
+          <span class="arc-logo-text">{{ section.settings.logo_text }}</span>
+        {% elsif section.settings.logo == '' %}
+          <span class="arc-logo-text">{{ store.name }}</span>
+        {% endif %}
+      </a>
+      <nav class="arc-nav" aria-label="{{ t('menu') }}">
+        {% if menu(section.settings.menu).items %}
+          {% for item in menu(section.settings.menu).items %}
+            <div class="arc-nav-item">
+              <a class="arc-nav-link" href="{{ item.url }}" aria-current="{{ item.active }}">{{ item.title }}</a>
+              {% if item.children %}
+                <div class="arc-subnav">
+                  {% for sub in item.children %}
+                    <a class="arc-subnav-link" href="{{ sub.url }}" aria-current="{{ sub.active }}">{{ sub.title }}</a>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        {% else %}
+          {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+        {% endif %}
+      </nav>
+      {% if section.settings.show_search %}
+        <hk-search-form placeholder="{{ t('search_placeholder') }}" class="arc-search" />
+      {% endif %}
+      <div class="arc-tools">
+        {% if section.settings.show_language %}<hk-locale-switch />{% endif %}
+        {% if section.settings.show_cart %}
+          <a class="arc-cart" href="{{ url('/cart') }}" data-hk-open="cart-drawer" aria-label="{{ t('cart') }}">
+            <hk-icon name="shopping-cart" size="24" class="ic" />
+            <hk-cart-count />
+          </a>
+        {% endif %}
+      </div>
     </div>
   </hk-container>
-  <hk-cart-drawer open-on-add="{{ section.settings.drawer_on_add }}">
-    <hk-cart-items />
-    <hk-cart-summary />
-  </hk-cart-drawer>
+  {% if section.settings.show_cart %}
+    <hk-cart-drawer open-on-add="{{ section.settings.drawer_on_add }}">
+      <hk-cart-items />
+      <hk-cart-summary />
+    </hk-cart-drawer>
+  {% endif %}
 </header>
 <hk-schema>
   {
-    "name": "Header",
-    "version": 1,
+    "name": {
+      "en": "Header",
+      "ar": "الهيدر"
+    },
+    "version": 2,
     "templates": ["header"],
+    "blocks": {
+      "allowed": ["menu-link"],
+      "max": 8
+    },
     "settings": {
       "menu": {
         "type": "menu",
-        "label": "Menu",
+        "label": {
+          "en": "Menu (the links below show when none is picked or it has no links)",
+          "ar": "القائمة (الروابط اللي تحت بتظهر لو مفيش قائمة أو مفيهاش روابط)"
+        },
         "default": "main"
+      },
+      "logo": {
+        "type": "image",
+        "label": {
+          "en": "Logo image",
+          "ar": "صورة الشعار"
+        },
+        "default": ""
+      },
+      "logo_text": {
+        "type": "text",
+        "label": {
+          "en": "Logo text (store name when empty)",
+          "ar": "نص الشعار (اسم المتجر لو فاضي)"
+        },
+        "default": "",
+        "localized": true,
+        "maxLength": 40
+      },
+      "logo_height": {
+        "type": "select",
+        "label": {
+          "en": "Logo height (px)",
+          "ar": "ارتفاع الشعار (بكسل)"
+        },
+        "options": ["24", "32", "40", "48"],
+        "default": "32"
+      },
+      "scheme": {
+        "type": "select",
+        "label": {
+          "en": "Colour scheme",
+          "ar": "ألوان الهيدر"
+        },
+        "options": ["glass", "dark", "neon"],
+        "default": "glass"
+      },
+      "sticky": {
+        "type": "boolean",
+        "label": {
+          "en": "Stick to the top",
+          "ar": "تثبيت في أعلى الصفحة"
+        },
+        "default": true
+      },
+      "show_search": {
+        "type": "boolean",
+        "label": {
+          "en": "Show search",
+          "ar": "إظهار البحث"
+        },
+        "default": true
+      },
+      "show_language": {
+        "type": "boolean",
+        "label": {
+          "en": "Show language switch",
+          "ar": "إظهار تبديل اللغة"
+        },
+        "default": true
+      },
+      "show_cart": {
+        "type": "boolean",
+        "label": {
+          "en": "Show cart",
+          "ar": "إظهار السلة"
+        },
+        "default": true
       },
       "drawer_on_add": {
         "type": "boolean",
-        "label": "Open the cart when an item is added",
-        "default": true
+        "label": {
+          "en": "Open the cart when an item is added",
+          "ar": "فتح السلة عند الإضافة"
+        },
+        "default": true,
+        "visible_if": {
+          "setting": "show_cart",
+          "equals": true
+        }
       }
     }
   }
@@ -436,12 +570,18 @@ an ordinary section the merchant can edit once for the whole store.
 </hk-section>
 <hk-schema>
   {
-    "name": "Arcade hero",
+    "name": {
+      "en": "Arcade hero",
+      "ar": "بداية الصفحة"
+    },
     "version": 1,
     "settings": {
       "title": {
         "type": "text",
-        "label": "Title",
+        "label": {
+          "en": "Title",
+          "ar": "العنوان"
+        },
         "localized": true,
         "default": {
           "ar": "كروت الألعاب والشحن",
@@ -451,7 +591,10 @@ an ordinary section the merchant can edit once for the whole store.
       },
       "button": {
         "type": "text",
-        "label": "Button",
+        "label": {
+          "en": "Button",
+          "ar": "الزر"
+        },
         "localized": true,
         "default": {
           "ar": "تصفح الكروت",
@@ -461,12 +604,18 @@ an ordinary section the merchant can edit once for the whole store.
       },
       "button_link": {
         "type": "link",
-        "label": "Button link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
         "default": "/category/gift-cards"
       },
       "note": {
         "type": "text",
-        "label": "Note next to the button",
+        "label": {
+          "en": "Note next to the button",
+          "ar": "ملاحظة جنب الزر"
+        },
         "localized": true,
         "default": {
           "ar": "تسليم فوري",
@@ -487,12 +636,18 @@ an ordinary section the merchant can edit once for the whole store.
 <a class="arc-tab" href="{{ url(block.settings.link) }}">{{ block.settings.label }}</a>
 <hk-schema>
   {
-    "name": "Platform tab",
+    "name": {
+      "en": "Platform tab",
+      "ar": "تاب منصة"
+    },
     "version": 1,
     "settings": {
       "label": {
         "type": "text",
-        "label": "Label",
+        "label": {
+          "en": "Label",
+          "ar": "النص"
+        },
         "localized": true,
         "default": {
           "ar": "PC",
@@ -502,7 +657,10 @@ an ordinary section the merchant can edit once for the whole store.
       },
       "link": {
         "type": "link",
-        "label": "Link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
         "default": "/products"
       }
     }
@@ -520,12 +678,18 @@ an ordinary section the merchant can edit once for the whole store.
 {% endif %}
 <hk-schema>
   {
-    "name": "Amount chip",
+    "name": {
+      "en": "Amount chip",
+      "ar": "شريحة مبلغ"
+    },
     "version": 1,
     "settings": {
       "amount": {
         "type": "number",
-        "label": "Amount (EGP)",
+        "label": {
+          "en": "Amount (EGP)",
+          "ar": "المبلغ (ج.م)"
+        },
         "default": 100,
         "min": 0,
         "max": 100000
@@ -594,12 +758,18 @@ an ordinary section the merchant can edit once for the whole store.
 </hk-section>
 <hk-schema>
   {
-    "name": "Category tiles",
+    "name": {
+      "en": "Category tiles",
+      "ar": "مربعات الأقسام"
+    },
     "version": 1,
     "settings": {
       "heading": {
         "type": "text",
-        "label": "Heading (optional)",
+        "label": {
+          "en": "Heading (optional)",
+          "ar": "العنوان (اختياري)"
+        },
         "localized": true,
         "default": {
           "ar": "",
@@ -629,12 +799,18 @@ an ordinary section the merchant can edit once for the whole store.
 </a>
 <hk-schema>
   {
-    "name": "Category tile",
+    "name": {
+      "en": "Category tile",
+      "ar": "مربع قسم"
+    },
     "version": 1,
     "settings": {
       "title": {
         "type": "text",
-        "label": "Title",
+        "label": {
+          "en": "Title",
+          "ar": "العنوان"
+        },
         "localized": true,
         "default": {
           "ar": "كروت الهدايا",
@@ -644,12 +820,18 @@ an ordinary section the merchant can edit once for the whole store.
       },
       "link": {
         "type": "link",
-        "label": "Link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
         "default": "/category/gift-cards"
       },
       "icon": {
         "type": "select",
-        "label": "Icon",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
         "options": [
           "credit-card",
           "gem",
@@ -712,12 +894,18 @@ an ordinary section the merchant can edit once for the whole store.
 </hk-section>
 <hk-schema>
   {
-    "name": "How to redeem",
+    "name": {
+      "en": "How to redeem",
+      "ar": "إزاي تستلم الكود"
+    },
     "version": 1,
     "settings": {
       "heading": {
         "type": "text",
-        "label": "Heading",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
         "localized": true,
         "default": {
           "ar": "إزاي تستلم الكود",
@@ -743,18 +931,27 @@ an ordinary section the merchant can edit once for the whole store.
 </div>
 <hk-schema>
   {
-    "name": "Step",
+    "name": {
+      "en": "Step",
+      "ar": "خطوة"
+    },
     "version": 1,
     "settings": {
       "icon": {
         "type": "select",
-        "label": "Icon",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
         "options": ["credit-card", "wallet", "mail", "trophy", "zap", "key", "gamepad-2", "shield-check"],
         "default": "credit-card"
       },
       "title": {
         "type": "text",
-        "label": "Title",
+        "label": {
+          "en": "Title",
+          "ar": "العنوان"
+        },
         "localized": true,
         "default": {
           "ar": "اختار وادفع أونلاين",
@@ -764,7 +961,10 @@ an ordinary section the merchant can edit once for the whole store.
       },
       "text": {
         "type": "text",
-        "label": "Text",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
         "localized": true,
         "default": {
           "ar": "اختار الكارت والقيمة، وادفع أونلاين.",
@@ -810,18 +1010,24 @@ after an online payment is confirmed, the code is sent by email automatically.
         class="arc-grid"
       />
     {% else %}
-      <p class="arc-empty">{{ t('empty_products') }}</p>
+      <p class="arc-empty-note">{{ t('empty_products') }}</p>
     {% endif %}
   </hk-stack>
 </hk-section>
 <hk-schema>
   {
-    "name": "Featured products",
+    "name": {
+      "en": "Featured products",
+      "ar": "منتجات مختارة"
+    },
     "version": 1,
     "settings": {
       "heading": {
         "type": "text",
-        "label": "Heading",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
         "localized": true,
         "default": {
           "ar": "كروت مختارة",
@@ -831,12 +1037,18 @@ after an online payment is confirmed, the code is sent by email automatically.
       },
       "list": {
         "type": "collection",
-        "label": "Collection",
+        "label": {
+          "en": "Collection",
+          "ar": "المجموعة"
+        },
         "default": "featured"
       },
       "count": {
         "type": "range",
-        "label": "Products",
+        "label": {
+          "en": "Products",
+          "ar": "عدد المنتجات"
+        },
         "default": 8,
         "min": 2,
         "max": 24,
@@ -872,12 +1084,18 @@ styles `.arc-grid .sn-product-card`, `.sn-title` and `.sn-price`.
 </hk-section>
 <hk-schema>
   {
-    "name": "FAQ",
+    "name": {
+      "en": "FAQ",
+      "ar": "الأسئلة الشائعة"
+    },
     "version": 1,
     "settings": {
       "heading": {
         "type": "text",
-        "label": "Heading",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
         "localized": true,
         "default": {
           "ar": "أسئلة شائعة",
@@ -903,12 +1121,18 @@ styles `.arc-grid .sn-product-card`, `.sn-title` and `.sn-price`.
 {% endif %}
 <hk-schema>
   {
-    "name": "Question",
+    "name": {
+      "en": "Question",
+      "ar": "سؤال"
+    },
     "version": 1,
     "settings": {
       "question": {
         "type": "text",
-        "label": "Question",
+        "label": {
+          "en": "Question",
+          "ar": "سؤال"
+        },
         "localized": true,
         "default": {
           "ar": "الكود بيوصل إمتى؟",
@@ -918,7 +1142,10 @@ styles `.arc-grid .sn-product-card`, `.sn-title` and `.sn-price`.
       },
       "answer": {
         "type": "textarea",
-        "label": "Answer",
+        "label": {
+          "en": "Answer",
+          "ar": "الإجابة"
+        },
         "localized": true,
         "default": {
           "ar": "بعد ما الدفع الأونلاين يتأكد، الكود بيتبعت أوتوماتيك على الإيميل اللي كتبته في الطلب.",

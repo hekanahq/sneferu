@@ -21,7 +21,7 @@ export function readTheme(dir: string): ThemeFile[] {
   const walk = (d: string) => {
     for (const name of readdirSync(d)) {
       // what the CLI's loadTheme skips: dot entries, and README/LICENSE/CHANGELOG/docs at the top
-      if (name.startsWith('.') || (d === dir && /^(readme|license|licence|changelog)(\.(md|txt))?$|^docs$/i.test(name))) continue;
+      if (name.startsWith('.') || name === 'node_modules' || (d === dir && /^(readme|license|licence|changelog)(\.(md|txt))?$|^docs$|^dist$/i.test(name))) continue;
       const p = join(d, name);
       if (statSync(p).isDirectory()) walk(p);
       else out.push({ path: relative(dir, p), bytes: readFileSync(p) });
@@ -36,7 +36,7 @@ export async function formatTheme(files: ThemeFile[]): Promise<ThemeFile[]> {
   const dec = new TextDecoder();
   return Promise.all(files.map(async (f) => {
     const text = dec.decode(f.bytes);
-    if (f.path.endsWith('.sneferu')) return { path: f.path, bytes: Buffer.from(await fmt(text)) };
+    if (f.path.endsWith('.sneferu') || f.path.endsWith('.snf')) return { path: f.path, bytes: Buffer.from(await fmt(text)) };
     if (f.path.endsWith('.json')) return { path: f.path, bytes: Buffer.from(await prettier.format(text, { parser: 'json', printWidth: 120 })) };
     return f;
   }));

@@ -1,5 +1,5 @@
 import { describe, expect, it, beforeAll, afterAll } from 'vitest';
-import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { cpSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -91,7 +91,7 @@ describe('completion', () => {
   it("t('…') keys from the locales, snippet names for render", () => {
     expect(labels(envAt(STARTER, 'sections/hero.snf', "{{ t('§') }}"))).toEqual(['shop_now']);
     expect(labels(envAt(STARTER, 'sections/hero.snf', "{{ '§' | t }}"))).toEqual(['shop_now']);
-    expect(labels(envAt(ARCADE, 'blocks/chip.snf', "{% render '§' %}"))).toEqual(['glyph']);
+    expect(labels(envAt(ARCADE, 'blocks/chip.snf', "{% render '§' %}")).sort()).toEqual(readdirSync(join(ARCADE, 'snippets')).map((f) => f.replace(/\.snf$/, '')).sort());
   });
   it('directives after {%', () => {
     expect(labels(envAt(STARTER, 'sections/hero.snf', '{% §'))).toEqual(['if', 'elsif', 'else', 'endif', 'for', 'endfor', 'render']);

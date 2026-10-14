@@ -1,0 +1,171 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="24">
+  {% render 'page-head', title: collection.title %}
+  {% if collection.description %}
+    <div class="es-prose es-collection-desc"><hk-rich-text html="{{ collection.description }}" /></div>
+  {% endif %}
+  {% if section.settings.show_count %}
+    <p class="es-meta">{{ collection.products_count }} {{ t('products_label') }}</p>
+  {% endif %}
+  <nav class="es-tabs es-tabs-start" aria-label="{{ t('platforms') }}">
+    {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+  </nav>
+  {% if section.settings.show_sort %}
+    {% if collection.sort_options %}
+      <div class="es-toolbar">
+        <span class="es-meta">{{ t('sort_by') }}</span>
+        {% for o in collection.sort_options %}
+          <a class="es-chip" href="{{ o.url }}" aria-current="{{ o.active }}">{{ o.label }}</a>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endif %}
+  {% if section.settings.show_filters %}
+    {% if collection.filters %}
+      <details class="es-filters">
+        <summary><hk-icon name="sliders-horizontal" size="18" class="ic" />{{ t('filters') }}</summary>
+        {% for fl in collection.filters %}
+          <div class="es-filter">
+            <h2 class="es-filter-name">{{ fl.name }}</h2>
+            {% for v in fl.values %}
+              <a class="es-chip" href="{{ v.url }}" aria-current="{{ v.active }}">{{ v.label }}</a>
+            {% endfor %}
+          </div>
+        {% endfor %}
+      </details>
+    {% endif %}
+  {% endif %}
+  {% if collection.products %}
+    <div class="es-grid es-cols-{{ section.settings.columns }}">
+      {% for p in collection.products limit: 48 %}
+        {% render 'topup-card', product: p, show_badge: section.settings.show_badge %}
+      {% endfor %}
+    </div>
+    <hk-pagination paginate="{{ paginate }}" />
+  {% else %}
+    <div class="es-empty-state">
+      <hk-icon name="gamepad-2" size="40" class="ic" />
+      {% if section.settings.empty_title %}
+        <h2>{{ section.settings.empty_title }}</h2>
+      {% endif %}
+      {% if section.settings.empty_text %}
+        <p>{{ section.settings.empty_text }}</p>
+      {% endif %}
+      {% render 'button', label: section.settings.empty_button_label, href: section.settings.empty_button_link, style: 'solid' %}
+    </div>
+  {% endif %}
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Collection",
+      "ar": "صفحة القسم"
+    },
+    "version": 1,
+    "templates": ["collection"],
+    "blocks": {
+      "allowed": ["tab"],
+      "max": 8
+    },
+    "settings": {
+      "show_count": {
+        "type": "boolean",
+        "label": {
+          "en": "Show the product count",
+          "ar": "إظهار عدد المنتجات"
+        },
+        "default": true
+      },
+      "show_sort": {
+        "type": "boolean",
+        "label": {
+          "en": "Show sorting",
+          "ar": "إظهار الترتيب"
+        },
+        "default": true
+      },
+      "show_filters": {
+        "type": "boolean",
+        "label": {
+          "en": "Show filters",
+          "ar": "إظهار الفلاتر"
+        },
+        "default": true
+      },
+      "columns": {
+        "type": "select",
+        "label": {
+          "en": "Columns on desktop",
+          "ar": "الأعمدة على الكمبيوتر"
+        },
+        "default": "4",
+        "options": ["3", "4", "5"]
+      },
+      "show_badge": {
+        "type": "boolean",
+        "label": {
+          "en": "Show the ribbon",
+          "ar": "إظهار الشريط"
+        },
+        "default": true
+      },
+      "empty_title": {
+        "type": "text",
+        "label": {
+          "en": "Empty title",
+          "ar": "عنوان الصفحة الفاضية"
+        },
+        "default": {
+          "ar": "مفيش حاجة هنا لسه",
+          "en": "Nothing here yet"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "empty_text": {
+        "type": "textarea",
+        "label": {
+          "en": "Empty text",
+          "ar": "نص الصفحة الفاضية"
+        },
+        "default": {
+          "ar": "جرب قسم تاني أو دور على لعبتك.",
+          "en": "Try another category or search for your game."
+        },
+        "localized": true,
+        "maxLength": 160
+      },
+      "empty_button_label": {
+        "type": "text",
+        "label": {
+          "en": "Empty button",
+          "ar": "زر الصفحة الفاضية"
+        },
+        "default": {
+          "ar": "كل المنتجات",
+          "en": "All products"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "empty_button_link": {
+        "type": "link",
+        "label": {
+          "en": "Empty button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/products"
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "default": 32,
+        "min": 0,
+        "max": 120,
+        "step": 4
+      }
+    }
+  }
+</hk-schema>

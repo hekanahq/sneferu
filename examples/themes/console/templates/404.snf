@@ -1,0 +1,70 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "not-found"
+      },
+      {
+        "type": "console-platforms",
+        "blocks": [
+          {
+            "type": "platform",
+            "settings": {
+              "icon": "monitor",
+              "label": {
+                "ar": "كمبيوتر",
+                "en": "PC"
+              },
+              "link": "/category/gift-cards"
+            }
+          },
+          {
+            "type": "platform",
+            "settings": {
+              "icon": "gamepad-2",
+              "label": {
+                "ar": "كونسول",
+                "en": "Console"
+              },
+              "link": "/category/gift-cards"
+            }
+          },
+          {
+            "type": "platform",
+            "settings": {
+              "icon": "gem",
+              "label": {
+                "ar": "عملات الألعاب",
+                "en": "Game currency"
+              },
+              "link": "/category/game-currency"
+            }
+          },
+          {
+            "type": "platform",
+            "settings": {
+              "icon": "smartphone",
+              "label": {
+                "ar": "موبايل",
+                "en": "Mobile"
+              },
+              "link": "/category/top-ups"
+            }
+          },
+          {
+            "type": "platform",
+            "settings": {
+              "icon": "calendar",
+              "label": {
+                "ar": "اشتراكات",
+                "en": "Subscriptions"
+              },
+              "link": "/category/subscriptions"
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

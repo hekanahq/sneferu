@@ -3,7 +3,42 @@
   {
     "sections": [
       {
-        "type": "esports-hero"
+        "type": "esports-hero",
+        "blocks": [
+          {
+            "type": "social-link",
+            "settings": {
+              "label": {
+                "ar": "ديسكورد",
+                "en": "Discord"
+              },
+              "url": "/",
+              "icon": "message-circle"
+            }
+          },
+          {
+            "type": "social-link",
+            "settings": {
+              "label": {
+                "ar": "يوتيوب",
+                "en": "YouTube"
+              },
+              "url": "/",
+              "icon": "play"
+            }
+          },
+          {
+            "type": "social-link",
+            "settings": {
+              "label": {
+                "ar": "مشاركة",
+                "en": "Share"
+              },
+              "url": "/",
+              "icon": "share-2"
+            }
+          }
+        ]
       },
       {
         "type": "esports-products",

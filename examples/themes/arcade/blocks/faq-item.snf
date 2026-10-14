@@ -6,12 +6,18 @@
 {% endif %}
 <hk-schema>
   {
-    "name": "Question",
+    "name": {
+      "en": "Question",
+      "ar": "سؤال"
+    },
     "version": 1,
     "settings": {
       "question": {
         "type": "text",
-        "label": "Question",
+        "label": {
+          "en": "Question",
+          "ar": "سؤال"
+        },
         "localized": true,
         "default": {
           "ar": "الكود بيوصل إمتى؟",
@@ -21,7 +27,10 @@
       },
       "answer": {
         "type": "textarea",
-        "label": "Answer",
+        "label": {
+          "en": "Answer",
+          "ar": "الإجابة"
+        },
         "localized": true,
         "default": {
           "ar": "بعد ما الدفع الأونلاين يتأكد، الكود بيتبعت أوتوماتيك على الإيميل اللي كتبته في الطلب.",

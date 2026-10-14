@@ -1,9 +1,9 @@
 {
   "id": "console",
   "name": "Console",
-  "version": "1.3.0",
+  "version": "2.0.0",
   "author": "Hekana",
-  "description": "A clean white gaming store for gift cards and top-ups: one royal-blue accent, large product cards, an amount selector and a platform row.",
+  "description": "A clean white gaming store for gift cards and top-ups: one royal-blue accent, large shadowed cards, an amount selector and a platform row, on every page.",
   "category": "gaming",
   "engine": "hk2",
   "engineCompatibility": "^2.0.0",
@@ -19,12 +19,19 @@
       "text": "#0F172A",
       "muted": "#64748B",
       "line": "#E5E7EB",
-      "soft": "#F5F7FB"
+      "soft": "#F5F7FB",
+      "surface": "#FFFFFF",
+      "glow": "#E8EEFD"
     },
-    "layout": { "contentWidth": "1120px" },
+    "layout": {
+      "contentWidth": "1120px"
+    },
     "fonts": {
       "heading": "IBM Plex Sans Arabic",
       "body": "IBM Plex Sans Arabic"
+    },
+    "radius": {
+      "md": "16px"
     }
   }
 }

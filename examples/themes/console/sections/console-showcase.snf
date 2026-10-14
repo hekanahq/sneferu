@@ -54,17 +54,26 @@
 </hk-section>
 <hk-schema>
   {
-    "name": "Product showcase",
+    "name": {
+      "en": "Product showcase",
+      "ar": "عرض المنتجات"
+    },
     "version": 1,
     "settings": {
       "list": {
         "type": "collection",
-        "label": "Collection",
+        "label": {
+          "en": "Collection",
+          "ar": "القسم"
+        },
         "default": "featured"
       },
       "count": {
         "type": "range",
-        "label": "Products",
+        "label": {
+          "en": "Products",
+          "ar": "عدد المنتجات"
+        },
         "default": 6,
         "min": 2,
         "max": 12,
@@ -72,7 +81,10 @@
       },
       "code_note": {
         "type": "text",
-        "label": "Note on products delivered as a code",
+        "label": {
+          "en": "Note on products delivered as a code",
+          "ar": "ملاحظة على المنتجات اللي بتتسلم ككود"
+        },
         "localized": true,
         "default": {
           "ar": "الكود بيوصلك على الإيميل بعد الدفع الأونلاين.",

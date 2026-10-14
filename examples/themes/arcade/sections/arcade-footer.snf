@@ -1,34 +1,210 @@
-<footer class="arc-footer">
+<footer class="arc-footer arc-footer-{{ section.settings.scheme }}">
   <hk-container>
-    <div class="arc-footer-grid">
-      <div class="arc-footer-brand">
-        <span class="arc-logo">{{ store.name }}</span>
-        <p>{{ t('footer_about') }}</p>
+    {% if section.settings.show_newsletter %}
+      <div class="arc-newsletter">
+        <div>
+          {% if section.settings.newsletter_title %}
+            <h2 class="arc-footer-title">{{ section.settings.newsletter_title }}</h2>
+          {% endif %}
+          {% if section.settings.newsletter_text %}
+            <p>{{ section.settings.newsletter_text }}</p>
+          {% endif %}
+        </div>
+        {% if section.settings.newsletter_link %}
+          <hk-button
+            label="{{ section.settings.newsletter_label | default: t('newsletter_cta') }}"
+            href="{{ section.settings.newsletter_link }}"
+            variant="solid"
+          />
+        {% endif %}
       </div>
-      <nav class="arc-footer-links" aria-label="{{ t('footer_links') }}">
-        {% if menu(section.settings.menu).items %}{% for item in menu(section.settings.menu).items %}<a
-              href="{{ item.url }}"
-              aria-current="{{ item.active }}"
-            >{{ item.title }}</a>{% endfor %}{% else %}<a href="{{ url('/products') }}">{{ t('nav_all') }}</a>
-          <a href="{{ url('/category/gift-cards') }}">{{ t('cat_gift_cards') }}</a>
-          <a href="{{ url('/category/game-currency') }}">{{ t('cat_currency') }}</a>
-          <a href="{{ url('/category/top-ups') }}">{{ t('cat_topups') }}</a>
-          <a href="{{ url('/') }}#faq">{{ t('nav_faq') }}</a>{% endif %}
-      </nav>
+    {% endif %}
+    <div class="arc-footer-grid">
+      <div class="arc-footer-about">
+        <p class="arc-footer-brand"><span class="arc-logo-text">{{ store.name }}</span></p>
+        {% if section.settings.about_text %}
+          <p>{{ section.settings.about_text }}</p>
+        {% endif %}
+        <div class="arc-social-list">
+          {% for block in section.blocks %}{% if block.type == 'social-link' %}<hk-block of="{{ block }}" />{% endif %}{% endfor %}
+        </div>
+      </div>
+      {% if menu(section.settings.menu).items %}
+        <div class="arc-footer-col arc-footer-menu-col">
+          {% if menu(section.settings.menu).title %}
+            <h3 class="arc-footer-title">{{ menu(section.settings.menu).title }}</h3>
+          {% endif %}
+          <div class="arc-footer-links">
+            {% for item in menu(section.settings.menu).items %}
+              {% if not item.children %}
+                <a href="{{ item.url }}" aria-current="{{ item.active }}">{{ item.title }}</a>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+        {% for item in menu(section.settings.menu).items %}
+          {% if item.children %}
+            <div class="arc-footer-col">
+              <h3 class="arc-footer-title">{{ item.title }}</h3>
+              <div class="arc-footer-links">
+                {% for sub in item.children %}
+                  <a href="{{ sub.url }}" aria-current="{{ sub.active }}">{{ sub.title }}</a>
+                  {% for leaf in sub.children %}
+                    <a
+                      class="arc-footer-deep"
+                      href="{{ leaf.url }}"
+                      aria-current="{{ leaf.active }}"
+                    >{{ leaf.title }}</a>
+                  {% endfor %}
+                {% endfor %}
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% else %}{% for block in section.blocks %}{% if block.type == 'footer-column' %}<hk-block of="{{ block }}" />{% endif %}{% endfor %}{% endif %}
+      <div class="arc-footer-contact">
+        {% for block in section.blocks %}{% if block.type == 'contact-line' %}<hk-block of="{{ block }}" />{% endif %}{% endfor %}
+      </div>
     </div>
-    <p class="arc-copy">© {{ store.name }}</p>
+    <div class="arc-footer-bottom">
+      <p class="arc-copyright">
+        © {{ store.name }}{% if section.settings.copyright %}. {{ section.settings.copyright }}{% endif %}
+      </p>
+      <div class="arc-payments" aria-label="{{ t('payment_methods') }}">
+        {% for block in section.blocks %}{% if block.type == 'payment-method' %}<hk-block of="{{ block }}" />{% endif %}{% endfor %}
+      </div>
+      {% if section.settings.show_language %}<hk-locale-switch />{% endif %}
+    </div>
   </hk-container>
 </footer>
 <hk-schema>
   {
-    "name": "Footer",
+    "name": {
+      "en": "Footer",
+      "ar": "الفوتر"
+    },
     "version": 1,
     "templates": ["footer"],
+    "blocks": {
+      "allowed": ["footer-column", "social-link", "contact-line", "payment-method"],
+      "max": 24
+    },
     "settings": {
       "menu": {
         "type": "menu",
-        "label": "Footer menu",
+        "label": {
+          "en": "Menu (the link columns show when none is picked or it has no links)",
+          "ar": "القائمة (أعمدة الروابط بتظهر لو مفيش قائمة أو مفيهاش روابط)"
+        },
         "default": "footer"
+      },
+      "about_text": {
+        "type": "textarea",
+        "label": {
+          "en": "About text",
+          "ar": "نبذة عن المتجر"
+        },
+        "default": "",
+        "localized": true,
+        "maxLength": 300
+      },
+      "copyright": {
+        "type": "text",
+        "label": {
+          "en": "Copyright line (after the store name)",
+          "ar": "سطر الحقوق (بعد اسم المتجر)"
+        },
+        "default": {
+          "ar": "جميع الحقوق محفوظة",
+          "en": "All rights reserved"
+        },
+        "localized": true,
+        "maxLength": 100
+      },
+      "scheme": {
+        "type": "select",
+        "label": {
+          "en": "Colour scheme",
+          "ar": "ألوان الفوتر"
+        },
+        "options": ["dark", "surface", "neon"],
+        "default": "dark"
+      },
+      "show_language": {
+        "type": "boolean",
+        "label": {
+          "en": "Show language switch",
+          "ar": "إظهار تبديل اللغة"
+        },
+        "default": false
+      },
+      "show_newsletter": {
+        "type": "boolean",
+        "label": {
+          "en": "Show newsletter box",
+          "ar": "إظهار صندوق النشرة"
+        },
+        "default": true
+      },
+      "newsletter_title": {
+        "type": "text",
+        "label": {
+          "en": "Newsletter title",
+          "ar": "عنوان النشرة"
+        },
+        "default": {
+          "ar": "خليك على اطلاع",
+          "en": "Stay in the loop"
+        },
+        "localized": true,
+        "maxLength": 80,
+        "visible_if": {
+          "setting": "show_newsletter",
+          "equals": true
+        }
+      },
+      "newsletter_text": {
+        "type": "textarea",
+        "label": {
+          "en": "Newsletter text",
+          "ar": "نص النشرة"
+        },
+        "default": {
+          "ar": "عروض وجديد المتجر على الإيميل.",
+          "en": "Offers and news from the store, by email."
+        },
+        "localized": true,
+        "maxLength": 160,
+        "visible_if": {
+          "setting": "show_newsletter",
+          "equals": true
+        }
+      },
+      "newsletter_label": {
+        "type": "text",
+        "label": {
+          "en": "Newsletter button",
+          "ar": "زر النشرة"
+        },
+        "default": "",
+        "localized": true,
+        "maxLength": 30,
+        "visible_if": {
+          "setting": "show_newsletter",
+          "equals": true
+        }
+      },
+      "newsletter_link": {
+        "type": "link",
+        "label": {
+          "en": "Newsletter link",
+          "ar": "رابط الاشتراك"
+        },
+        "default": "",
+        "visible_if": {
+          "setting": "show_newsletter",
+          "equals": true
+        }
       }
     }
   }
