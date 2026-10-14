@@ -1,0 +1,38 @@
+{
+  "id": "torque",
+  "name": "Torque",
+  "version": "1.0.0",
+  "author": "Hekana",
+  "description": "A professional tools and hardware store: charcoal and safety yellow, flat square cards on dark photos, a category icon row, quantity and add buttons on every card, and a bulk price table.",
+  "category": "hardware",
+  "engine": "hk2",
+  "engineCompatibility": "^2.0.0",
+  "defaultLocale": "ar",
+  "locales": ["ar", "en"],
+  "settings": {},
+  "tokens": {
+    "colors": {
+      "primary": "#FFC20E",
+      "secondary": "#1B1F27",
+      "accent": "#FFC20E",
+      "background": "#FFFFFF",
+      "text": "#1B1F27",
+      "muted": "#5B6270",
+      "line": "#D9DCE1",
+      "soft": "#F2F3F5",
+      "surface": "#FFFFFF",
+      "glow": "#FFF3C4",
+      "steel": "#2A2F3A"
+    },
+    "layout": {
+      "contentWidth": "1200px"
+    },
+    "fonts": {
+      "heading": "Tajawal",
+      "body": "Tajawal"
+    },
+    "radius": {
+      "md": "4px"
+    }
+  }
+}

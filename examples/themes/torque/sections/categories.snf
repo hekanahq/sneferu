@@ -1,0 +1,83 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="28" class="tq-platforms-row">
+  <hk-container>
+    {% if section.settings.heading %}
+      <hk-heading
+        text="{{ section.settings.heading }}"
+        level="h2"
+        size="24"
+        mobile-size="20"
+        align="center"
+        class="tq-h2"
+      />
+    {% endif %}
+    <div class="tq-plats">
+      {% for block in section.blocks %}
+        <hk-block of="{{ block }}" />
+      {% endfor %}
+    </div>
+  </hk-container>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Category icons",
+      "ar": "أيقونات الأقسام"
+    },
+    "version": 1,
+    "settings": {
+      "heading": {
+        "type": "text",
+        "label": {
+          "en": "Heading (empty hides it)",
+          "ar": "العنوان (فاضي يخفيه)"
+        },
+        "localized": true,
+        "default": "",
+        "maxLength": 60
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 120,
+        "step": 8,
+        "default": 40
+      }
+    },
+    "blocks": {
+      "allowed": ["category-tile"],
+      "max": 8
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "Six categories",
+          "ar": "ستة أقسام"
+        },
+        "blocks": [
+          {
+            "type": "category-tile"
+          },
+          {
+            "type": "category-tile"
+          },
+          {
+            "type": "category-tile"
+          },
+          {
+            "type": "category-tile"
+          },
+          {
+            "type": "category-tile"
+          },
+          {
+            "type": "category-tile"
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>
