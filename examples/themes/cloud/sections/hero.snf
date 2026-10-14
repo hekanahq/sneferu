@@ -1,0 +1,88 @@
+<section class="cl-hero cl-scheme-{{ section.settings.scheme }}">
+  <hk-container>
+    <div class="cl-hero-inner">
+      {% if section.settings.title %}
+        <hk-heading text="{{ section.settings.title }}" level="h1" size="44" mobile-size="30" align="center" />
+      {% endif %}
+      {% if section.settings.text %}
+        <p class="cl-hero-text">{{ section.settings.text }}</p>
+      {% endif %}
+      <div class="cl-age-row">
+        {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+      </div>
+    </div>
+  </hk-container>
+  <div class="cl-wave cl-wave-light cl-hero-wave">
+    {% render 'wave' %}
+  </div>
+</section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Hero with age chips",
+      "ar": "الواجهة مع فئات العمر"
+    },
+    "version": 1,
+    "templates": ["index"],
+    "blocks": {
+      "allowed": ["age-chip"],
+      "max": 6
+    },
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "localized": true,
+        "default": {
+          "ar": "ألعاب وملابس للصغار",
+          "en": "Toys and clothes for little ones"
+        },
+        "maxLength": 80
+      },
+      "text": {
+        "type": "textarea",
+        "label": {
+          "en": "Text under the heading",
+          "ar": "النص تحت العنوان"
+        },
+        "localized": true,
+        "default": {
+          "ar": "اختار حسب عمر طفلك",
+          "en": "Shop by your child's age"
+        },
+        "maxLength": 140
+      },
+      "scheme": {
+        "type": "select",
+        "label": {
+          "en": "Colour scheme",
+          "ar": "ألوان الواجهة"
+        },
+        "options": ["butter", "sky", "mint"],
+        "default": "butter"
+      }
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "Three ages",
+          "ar": "ثلاث فئات"
+        },
+        "blocks": [
+          {
+            "type": "age-chip"
+          },
+          {
+            "type": "age-chip"
+          },
+          {
+            "type": "age-chip"
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

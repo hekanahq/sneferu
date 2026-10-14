@@ -1,0 +1,45 @@
+<a
+  class="cl-pill cl-pill-{{ block.settings.tone }}"
+  href="{{ url(block.settings.link) }}"
+>{{ block.settings.label }}</a>
+<hk-schema>
+  {
+    "name": {
+      "en": "Category chip",
+      "ar": "شريحة قسم"
+    },
+    "version": 1,
+    "settings": {
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "localized": true,
+        "default": {
+          "ar": "ألعاب خشبية",
+          "en": "Wooden toys"
+        },
+        "maxLength": 40
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      },
+      "tone": {
+        "type": "select",
+        "label": {
+          "en": "Colour",
+          "ar": "اللون"
+        },
+        "options": ["mint", "sky", "butter", "peach"],
+        "default": "mint"
+      }
+    }
+  }
+</hk-schema>

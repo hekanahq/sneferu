@@ -1,0 +1,100 @@
+{
+  "sections": [
+    {
+      "id": "footer",
+      "type": "footer",
+      "settings": {
+        "menu": "",
+        "scheme": "sky",
+        "about_text": {
+          "ar": "ألعاب خشبية وملابس ومستلزمات للصغار، بالجنيه المصري.",
+          "en": "Wooden toys, clothes and essentials for little ones, in Egyptian pounds."
+        },
+        "copyright": { "ar": "جميع الحقوق محفوظة", "en": "All rights reserved" },
+        "show_language": true
+      },
+      "blocks": [
+        {
+          "id": "col-age",
+          "type": "footer-column",
+          "settings": { "title": { "ar": "تسوق حسب العمر", "en": "Shop by age" } },
+          "blocks": [
+            {
+              "id": "col-age-1",
+              "type": "footer-link",
+              "settings": { "label": { "ar": "0-2 سنة", "en": "Ages 0-2" }, "url": "/search?q=0-2" }
+            },
+            {
+              "id": "col-age-2",
+              "type": "footer-link",
+              "settings": { "label": { "ar": "3-5 سنوات", "en": "Ages 3-5" }, "url": "/search?q=3-5" }
+            },
+            {
+              "id": "col-age-3",
+              "type": "footer-link",
+              "settings": { "label": { "ar": "6-9 سنوات", "en": "Ages 6-9" }, "url": "/search?q=6-9" }
+            }
+          ]
+        },
+        {
+          "id": "col-shop",
+          "type": "footer-column",
+          "settings": { "title": { "ar": "الأقسام", "en": "Shop" } },
+          "blocks": [
+            {
+              "id": "col-shop-all",
+              "type": "footer-link",
+              "settings": { "label": { "ar": "كل المنتجات", "en": "All products" }, "url": "/products" }
+            },
+            {
+              "id": "col-shop-toys",
+              "type": "footer-link",
+              "settings": { "label": { "ar": "ألعاب خشبية", "en": "Wooden toys" }, "url": "/category/wooden-toys" }
+            },
+            {
+              "id": "col-shop-clothes",
+              "type": "footer-link",
+              "settings": { "label": { "ar": "ملابس", "en": "Clothes" }, "url": "/category/clothes" }
+            },
+            {
+              "id": "col-shop-search",
+              "type": "footer-link",
+              "settings": { "label": { "ar": "بحث", "en": "Search" }, "url": "/search" }
+            }
+          ]
+        },
+        {
+          "id": "col-help",
+          "type": "footer-column",
+          "settings": { "title": { "ar": "مساعدة", "en": "Help" } },
+          "blocks": [
+            {
+              "id": "col-help-about",
+              "type": "footer-link",
+              "settings": { "label": { "ar": "عنّا", "en": "About us" }, "url": "/pages/about" }
+            },
+            {
+              "id": "col-help-contact",
+              "type": "footer-link",
+              "settings": { "label": { "ar": "تواصل معنا", "en": "Contact us" }, "url": "/pages/contact" }
+            }
+          ]
+        },
+        {
+          "id": "social-whatsapp",
+          "type": "social-link",
+          "settings": {
+            "label": { "ar": "واتساب", "en": "WhatsApp" },
+            "url": "/pages/contact",
+            "icon": "message-circle"
+          }
+        },
+        {
+          "id": "pay-cod",
+          "type": "payment-method",
+          "settings": { "label": { "ar": "الدفع عند الاستلام", "en": "Cash on delivery" }, "icon": "banknote" }
+        }
+      ]
+    }
+  ]
+}

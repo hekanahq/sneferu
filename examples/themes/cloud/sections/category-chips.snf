@@ -1,0 +1,50 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="8">
+  <div class="cl-pill-row">
+    {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Category chips",
+      "ar": "شرائح الأقسام"
+    },
+    "version": 1,
+    "blocks": {
+      "allowed": ["chip"],
+      "max": 8
+    },
+    "settings": {
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 120,
+        "step": 8,
+        "default": 8
+      }
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "Three chips",
+          "ar": "ثلاث شرائح"
+        },
+        "blocks": [
+          {
+            "type": "chip"
+          },
+          {
+            "type": "chip"
+          },
+          {
+            "type": "chip"
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

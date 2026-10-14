@@ -1,0 +1,109 @@
+<footer class="cl-footer">
+  <div class="cl-wave cl-wave-{{ section.settings.scheme }} cl-footer-wave">
+    {% render 'wave' %}
+  </div>
+  <div class="cl-footer-body cl-scheme-{{ section.settings.scheme }}">
+    <hk-container>
+      <div class="cl-footer-grid">
+        <div class="cl-footer-about">
+          <p class="cl-footer-brand">{{ store.name }}</p>
+          {% if section.settings.about_text %}
+            <p>{{ section.settings.about_text }}</p>
+          {% endif %}
+          <div class="cl-social-list">
+            {% for block in section.blocks %}{% if block.type == 'social-link' %}<hk-block of="{{ block }}" />{% endif %}{% endfor %}
+          </div>
+        </div>
+        {% if menu(section.settings.menu).items %}
+          <div class="cl-footer-col cl-footer-menu-col">
+            {% if menu(section.settings.menu).title %}
+              <h3 class="cl-footer-title">{{ menu(section.settings.menu).title }}</h3>
+            {% endif %}
+            <div class="cl-footer-links">
+              {% for item in menu(section.settings.menu).items %}
+                <a href="{{ item.url }}" aria-current="{{ item.active }}">{{ item.title }}</a>
+              {% endfor %}
+            </div>
+          </div>
+        {% else %}{% for block in section.blocks %}{% if block.type == 'footer-column' %}<hk-block of="{{ block }}" />{% endif %}{% endfor %}{% endif %}
+        <div class="cl-footer-contact">
+          {% for block in section.blocks %}{% if block.type == 'contact-line' %}<hk-block of="{{ block }}" />{% endif %}{% endfor %}
+        </div>
+      </div>
+      <div class="cl-footer-bottom">
+        <p class="cl-copyright">
+          {% if store.name %}© {{ store.name }}{% if section.settings.copyright %}. {{ section.settings.copyright }}{% endif %}{% elsif section.settings.copyright %}©
+            {{ section.settings.copyright }}{% endif %}
+        </p>
+        <div class="cl-payments" aria-label="{{ t('payment_methods') }}">
+          {% for block in section.blocks %}{% if block.type == 'payment-method' %}<hk-block of="{{ block }}" />{% endif %}{% endfor %}
+        </div>
+        {% if section.settings.show_language %}<hk-locale-switch />{% endif %}
+      </div>
+    </hk-container>
+  </div>
+</footer>
+<hk-schema>
+  {
+    "name": {
+      "en": "Footer",
+      "ar": "الفوتر"
+    },
+    "version": 1,
+    "templates": ["footer"],
+    "blocks": {
+      "allowed": ["footer-column", "social-link", "contact-line", "payment-method"],
+      "max": 24
+    },
+    "settings": {
+      "menu": {
+        "type": "menu",
+        "label": {
+          "en": "Menu (the link columns show when none is picked or it has no links)",
+          "ar": "القائمة (أعمدة الروابط بتظهر لو مفيش قائمة أو مفيهاش روابط)"
+        },
+        "default": ""
+      },
+      "about_text": {
+        "type": "textarea",
+        "label": {
+          "en": "About text",
+          "ar": "نبذة عن المتجر"
+        },
+        "default": "",
+        "localized": true,
+        "maxLength": 300
+      },
+      "copyright": {
+        "type": "text",
+        "label": {
+          "en": "Copyright line (after the store name)",
+          "ar": "سطر الحقوق (بعد اسم المتجر)"
+        },
+        "default": {
+          "ar": "جميع الحقوق محفوظة",
+          "en": "All rights reserved"
+        },
+        "localized": true,
+        "maxLength": 100
+      },
+      "scheme": {
+        "type": "select",
+        "label": {
+          "en": "Colour scheme",
+          "ar": "ألوان الفوتر"
+        },
+        "options": ["sky", "mint", "butter", "light"],
+        "default": "sky"
+      },
+      "show_language": {
+        "type": "boolean",
+        "label": {
+          "en": "Show language switch",
+          "ar": "إظهار تبديل اللغة"
+        },
+        "default": false
+      }
+    }
+  }
+</hk-schema>
