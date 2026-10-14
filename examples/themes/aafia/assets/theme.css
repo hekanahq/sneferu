@@ -273,7 +273,7 @@
 /* Hero: rounded banner, a soft panel pinned to the start corner */
 .af-hero { position: relative; overflow: hidden; border-radius: 22px; background: var(--hk-color-soft); }
 .af-hero-media img { display: block; width: 100%; height: auto; }
-.af-hero-panel { position: absolute; inset-block-end: 0; inset-inline-start: 0; display: grid; gap: 12px; justify-items: start; width: min(46%, 460px); padding: 28px 36px 28px 36px; border-start-end-radius: 56px; background: color-mix(in srgb, var(--hk-color-sage) 92%, white); color: var(--hk-color-secondary); }
+.af-hero-panel { position: absolute; inset-block-end: 0; inset-inline-start: 0; display: grid; gap: 12px; justify-items: start; width: min(46%, 460px); padding: 28px 36px 28px 36px; border-start-end-radius: 56px; background: color-mix(in srgb, var(--hk-color-sage) 92%, var(--hk-color-surface)); color: var(--hk-color-secondary); }
 .af-hero-panel h1 { font-weight: 700; line-height: 1.35; }
 .af-hero-sub { font-size: 15px; color: var(--hk-color-text); max-width: 34ch; }
 .af-pill { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding-inline: 24px; border-radius: 999px; background: var(--hk-color-surface); color: var(--hk-color-secondary); font-weight: 600; font-size: 14px; box-shadow: var(--af-shadow); }
@@ -314,7 +314,7 @@
 .af-quiz-kicker { width: fit-content; padding: 2px 12px; border-radius: 999px; background: color-mix(in srgb, var(--hk-color-surface) 70%, transparent); font-size: 13px; font-weight: 600; }
 .af-quiz-title { font-size: 26px; line-height: 1.4; font-weight: 700; }
 .af-quiz-text p { color: var(--hk-color-text); font-size: 15px; }
-.af-quiz .af-pill { background: var(--hk-color-secondary); color: #fff; }
+.af-quiz .af-pill { background: var(--hk-color-secondary); color: var(--hk-color-surface); }
 @media (max-width: 639px) { .af-quiz { padding: 24px 20px; } .af-quiz-title { font-size: 21px; } }
 
 /* Trust: three round badges */
