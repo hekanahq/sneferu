@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.6.0
+
+### Minor Changes
+
+- `sneferu init --template <name>` starts a project from a complete example store: arcade, console, esports, creator, license or bento (default: starter). `sneferu init --list` shows the catalogue. The templates are bundled in the package.
+- The six example themes are now complete stores (2.0.0): their own templates for every page type and editable announcement, header and footer groups.
+- Updated dependencies
+  - @hekana/sneferu-core@0.6.0
+  - @hekana/sneferu-compiler@0.6.0
+  - @hekana/sneferu-runtime@0.6.0
+  - @hekana/sneferu-components@0.6.0
+  - @hekana/sneferu-controllers@0.6.0
+  - @hekana/sneferu-templates-default@0.6.0
+  - @hekana/prettier-plugin-sneferu@0.6.0
+
 ## 0.5.1
 
 ### Patch Changes
