@@ -1,6 +1,6 @@
 {
   "name": "@hekana/sneferu-controllers",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Sneferu controllers: the vetted client runtime for variant picker, add to cart, cart drawer and cart rendering",
   "type": "module",
   "sideEffects": false,
@@ -30,10 +30,18 @@
   "devDependencies": {
     "happy-dom": "^20.0.0"
   },
-  "license": "SEE LICENSE IN LICENSE",
+  "license": "MIT",
   "publishConfig": {
     "access": "public"
   },
   "homepage": "https://hekana.dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hekanahq/sneferu.git",
+    "directory": "packages/controllers"
+  },
+  "bugs": {
+    "url": "https://github.com/hekanahq/sneferu/issues"
+  },
   "author": "Hekana"
 }

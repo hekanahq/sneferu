@@ -1,6 +1,6 @@
 {
   "name": "@hekana/sneferu-runtime",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Sneferu runtime: render IR to HTML",
   "type": "module",
   "sideEffects": false,
@@ -27,7 +27,7 @@
     "build": "tsup src/index.ts --format esm,cjs --dts --clean",
     "typecheck": "tsc --noEmit"
   },
-  "license": "SEE LICENSE IN LICENSE",
+  "license": "MIT",
   "dependencies": {
     "@hekana/sneferu-core": "workspace:^"
   },
@@ -35,5 +35,13 @@
     "access": "public"
   },
   "homepage": "https://hekana.dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hekanahq/sneferu.git",
+    "directory": "packages/runtime"
+  },
+  "bugs": {
+    "url": "https://github.com/hekanahq/sneferu/issues"
+  },
   "author": "Hekana"
 }

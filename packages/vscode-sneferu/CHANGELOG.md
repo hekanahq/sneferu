@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.1
+
+- Licensed under MIT; the repository and issue links point at the public repo, github.com/hekanahq/sneferu.
+
 ## 0.2.0
 
 - Theme files end in `.snf` now. `.sneferu` still works: the language, file icon, highlighting, completion, diagnostics, theme checks, formatting, the preview and go to definition handle both, and `render 'name'` or a section `type` opens whichever file the theme has.

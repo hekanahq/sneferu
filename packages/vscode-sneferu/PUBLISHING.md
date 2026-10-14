@@ -41,8 +41,8 @@ xvfb-run -a node packages/vscode-sneferu/test/run-e2e.mjs        # in a real VS 
    ```bash
    cd packages/vscode-sneferu
    npx @vscode/vsce login hekana                     # paste the token once
-   npx @vscode/vsce publish --packagePath sneferu-0.2.0.vsix
-   # or, in CI: VSCE_PAT=… npx @vscode/vsce publish --packagePath sneferu-0.2.0.vsix
+   npx @vscode/vsce publish --packagePath sneferu-0.2.1.vsix
+   # or, in CI: VSCE_PAT=… npx @vscode/vsce publish --packagePath sneferu-0.2.1.vsix
    ```
 
 5. Optional: verify the publisher's domain (`hekana.com` or `hekana.dev`) in the
@@ -59,7 +59,7 @@ xvfb-run -a node packages/vscode-sneferu/test/run-e2e.mjs        # in a real VS 
 
    ```bash
    npx ovsx create-namespace hekana -p "$OVSX_PAT"
-   npx ovsx publish packages/vscode-sneferu/sneferu-0.2.0.vsix -p "$OVSX_PAT"
+   npx ovsx publish packages/vscode-sneferu/sneferu-0.2.1.vsix -p "$OVSX_PAT"
    ```
 
 5. Optional: claim the `hekana` namespace (verified owner) with an issue at
@@ -68,16 +68,12 @@ xvfb-run -a node packages/vscode-sneferu/test/run-e2e.mjs        # in a real VS 
 
 ## Decide before the first listing
 
-- **Repository link.** `repository` in package.json points at the SDK repo,
-  which is private, so the listing's Repository link would 404 for the public.
-  Either make the repo public or remove the field and publish with
-  `--allow-missing-repository` (vsce refuses to package without it otherwise).
-  `bugs` has the same problem; `https://hekana.dev` could be used instead.
+- **Repository link.** `repository` and `bugs` point at the public SDK repo
+  (`github.com/hekanahq/sneferu`), so the listing's links work.
 - **README pictures** load from `https://hekana.dev/developers/examples/vscode-*.webp`,
   which exist once the hekana.dev docs with the "Editor setup: VS Code" page are
   deployed. Deploy those first.
-- **Licence.** `LICENSE` is the SDK's ("all rights reserved, governed by the
-  Hekana developer terms"). The Marketplace shows it as is.
+- **Licence.** `LICENSE` is MIT, the same as the rest of the SDK.
 
 ## Later releases
 

@@ -1,6 +1,6 @@
 {
   "name": "@hekana/sneferu-compiler",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Sneferu compiler: templates to IR",
   "type": "module",
   "sideEffects": false,
@@ -27,7 +27,7 @@
     "build": "tsup src/index.ts --format esm,cjs --dts --clean",
     "typecheck": "tsc --noEmit"
   },
-  "license": "SEE LICENSE IN LICENSE",
+  "license": "MIT",
   "dependencies": {
     "@hekana/sneferu-core": "workspace:^",
     "@hekana/sneferu-templates-default": "workspace:^"
@@ -36,5 +36,13 @@
     "access": "public"
   },
   "homepage": "https://hekana.dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hekanahq/sneferu.git",
+    "directory": "packages/compiler"
+  },
+  "bugs": {
+    "url": "https://github.com/hekanahq/sneferu/issues"
+  },
   "author": "Hekana"
 }

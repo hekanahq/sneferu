@@ -1,6 +1,6 @@
 {
   "name": "@hekana/prettier-plugin-sneferu",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Prettier plugin for Sneferu theme files (.snf, .sneferu)",
   "type": "module",
   "sideEffects": false,
@@ -34,7 +34,7 @@
     "hekana",
     "theme"
   ],
-  "license": "SEE LICENSE IN LICENSE",
+  "license": "MIT",
   "dependencies": {
     "@hekana/sneferu-compiler": "workspace:^"
   },
@@ -49,5 +49,13 @@
     "access": "public"
   },
   "homepage": "https://hekana.dev/guide/format-your-theme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hekanahq/sneferu.git",
+    "directory": "packages/prettier-plugin-sneferu"
+  },
+  "bugs": {
+    "url": "https://github.com/hekanahq/sneferu/issues"
+  },
   "author": "Hekana"
 }
