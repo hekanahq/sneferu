@@ -1,0 +1,66 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="24">
+  {% if section.settings.title %}
+    <h2 class="af-quiet-title">{{ section.settings.title }}</h2>
+  {% endif %}
+  <div class="af-benefits">
+    {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Category row",
+      "ar": "صف الأقسام"
+    },
+    "version": 1,
+    "blocks": {
+      "allowed": ["benefit"],
+      "max": 6
+    },
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading (empty hides it)",
+          "ar": "العنوان (فاضي يخفيه)"
+        },
+        "default": {
+          "en": "",
+          "ar": ""
+        },
+        "localized": true,
+        "maxLength": 50
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "default": 40,
+        "min": 0,
+        "max": 120,
+        "step": 8
+      }
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "Three categories",
+          "ar": "ثلاثة أقسام"
+        },
+        "blocks": [
+          {
+            "type": "benefit"
+          },
+          {
+            "type": "benefit"
+          },
+          {
+            "type": "benefit"
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

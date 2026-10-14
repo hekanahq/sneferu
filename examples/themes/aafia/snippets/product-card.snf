@@ -1,0 +1,27 @@
+<article class="af-card af-card-{{ card_style }}">
+  <a class="af-card-link" href="{{ product.url }}">
+    <div class="af-card-media">
+      <hk-image
+        src="{{ product.image }}"
+        alt="{{ product.title }}"
+        aspect-ratio="{{ image_ratio }}"
+        sizes="(min-width: 1024px) 25vw, 50vw"
+      />
+      {% if product.category.title %}<span class="af-chip-tag">{{ product.category.title }}</span>{% endif %}
+      {% if show_badge %}
+        {% if product.available %}
+          {% if product.compare_at > product.price %}
+            <span class="af-badge">{{ t('sale') }}</span>
+          {% endif %}
+        {% else %}
+          <span class="af-badge af-badge-muted">{{ t('sold_out_badge') }}</span>
+        {% endif %}
+      {% endif %}
+    </div>
+    <h3 class="af-card-title">{{ product.title }}</h3>
+    <div class="af-card-foot">
+      {% if show_price %}{% render 'price', product: product, bind: false %}{% endif %}
+      <span class="af-card-cta" aria-label="{{ t('view_product') }}"><hk-icon name="shopping-bag" size="20" /></span>
+    </div>
+  </a>
+</article>
