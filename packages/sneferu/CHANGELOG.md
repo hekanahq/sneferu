@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.7.0
+
+### Minor Changes
+
+- bd5c8d7: `sneferu init` writes an `AGENTS.md` (and a `CLAUDE.md` that imports it) into every new theme, so an AI coding agent opened in the folder knows the commands, the files and the rules. `validate`, `build`, `push`, `format` and the VS Code extension skip `AGENTS.md` and `CLAUDE.md` at the top of a theme, like `README.md`: the compiled theme is unchanged.
+
+### Patch Changes
+
+- e598653: Starter: the skip link is hidden with a clip pattern that works in both directions (it was parked 10,000 px off screen on Arabic pages), the header search panel stays inside a 390 px screen, and the hero and product note read as real copy from `locales/ar.json` and `locales/en.json`. The five example themes get the same skip link fix.
+- Updated dependencies [72893bc]
+- Updated dependencies [e598653]
+- Updated dependencies [e598653]
+- Updated dependencies [e598653]
+- Updated dependencies [9e70ef1]
+  - @hekana/sneferu-core@0.7.0
+  - @hekana/sneferu-runtime@0.7.0
+  - @hekana/sneferu-compiler@0.7.0
+  - @hekana/sneferu-templates-default@0.7.0
+  - @hekana/sneferu-components@0.7.0
+  - @hekana/prettier-plugin-sneferu@0.6.1
+  - @hekana/sneferu-controllers@0.7.0
+
 ## 0.6.0
 
 ### Minor Changes
