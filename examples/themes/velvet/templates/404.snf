@@ -1,0 +1,21 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "not-found"
+      },
+      {
+        "type": "featured-products",
+        "settings": {
+          "title": {
+            "ar": "أحدث القطع",
+            "en": "New pieces"
+          },
+          "limit": 4,
+          "columns": 4
+        }
+      }
+    ]
+  }
+</hk-schema>

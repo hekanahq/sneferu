@@ -1,0 +1,41 @@
+{
+  "id": "velvet",
+  "name": "Velvet",
+  "version": "1.0.1",
+  "author": "Hekana",
+  "description": "A dark jewelry store: forest-green and black grounds, thin gold hairlines, a wide hero, rounded cards with a gold karat chip and a boxed trust strip.",
+  "category": "jewelry",
+  "engine": "hk2",
+  "engineCompatibility": "^2.0.0",
+  "defaultLocale": "ar",
+  "locales": ["ar", "en"],
+  "settings": {},
+  "money": {
+    "format": "whole"
+  },
+  "tokens": {
+    "colors": {
+      "primary": "#D4B06A",
+      "secondary": "#0B1A15",
+      "accent": "#D4B06A",
+      "background": "#08130F",
+      "text": "#EDE6D6",
+      "muted": "#A8A493",
+      "line": "#4B4126",
+      "soft": "#112419",
+      "surface": "#0D1D16",
+      "glow": "#1B3327",
+      "gold-soft": "#F1DDB0"
+    },
+    "layout": {
+      "contentWidth": "1200px"
+    },
+    "fonts": {
+      "heading": "Almarai",
+      "body": "Almarai"
+    },
+    "radius": {
+      "md": "14px"
+    }
+  }
+}

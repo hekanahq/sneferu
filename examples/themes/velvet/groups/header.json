@@ -1,0 +1,77 @@
+{
+  "sections": [
+    {
+      "id": "header",
+      "type": "header",
+      "settings": {
+        "menu": "main-menu",
+        "scheme": "light",
+        "sticky": false,
+        "show_search": true,
+        "search_style": "bar",
+        "show_account": false,
+        "show_language": true,
+        "show_cart": true,
+        "drawer_on_add": true
+      },
+      "blocks": [
+        {
+          "id": "nav-all",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "كل القطع",
+              "en": "All pieces"
+            },
+            "url": "/products"
+          }
+        },
+        {
+          "id": "nav-neck",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "السلاسل",
+              "en": "Necklaces"
+            },
+            "url": "/category/necklaces"
+          }
+        },
+        {
+          "id": "nav-rings",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "الخواتم",
+              "en": "Rings"
+            },
+            "url": "/category/rings"
+          }
+        },
+        {
+          "id": "nav-brace",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "الأساور",
+              "en": "Bracelets"
+            },
+            "url": "/category/bracelets"
+          }
+        },
+        {
+          "id": "nav-ear",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "الأقراط",
+              "en": "Earrings"
+            },
+            "url": "/category/earrings"
+          }
+        }
+      ],
+      "block_order": ["nav-all", "nav-neck", "nav-rings", "nav-brace", "nav-ear"]
+    }
+  ]
+}
