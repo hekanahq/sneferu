@@ -171,8 +171,9 @@ All under `{HEKANA_API_URL}`, with a platform admin bearer token (developers use
 | Deactivate | `POST /admin/hk2/merchants/<merchantId>/deactivate` | the store goes back to its legacy theme |
 
 Install and publish need the store's `hk2Themes` flag on (set in the admin
-console). During phase 1b only the home page (`/`) is rendered by a Sneferu
-theme; other pages stay on the legacy theme.
+console). Every page type (home, product, collection, search, cart, content
+page, 404) is rendered by the Sneferu theme; a type the theme has no template
+for uses the SDK's default store.
 
 The merchant-side endpoints (`/hk2/install/<versionId>`, `/hk2/installation/draft`,
 `/hk2/installation/publish`, `/hk2/publications/<id>/rollback`,

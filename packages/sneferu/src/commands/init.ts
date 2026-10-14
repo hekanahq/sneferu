@@ -2,6 +2,7 @@ import { existsSync, readFileSync, readdirSync, statSync, writeFileSync, mkdirSy
 import { basename, dirname, join, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { DEFAULT_THEME_TEXTS } from '@hekana/sneferu-templates-default';
+import { THEME_AGENTS_MD, THEME_CLAUDE_MD } from '../theme-agents';
 
 /** The scaffolds `sneferu init --template <name>` knows. `starter` is the SDK's default store; the rest are the example themes. */
 export const INIT_TEMPLATES = ['starter', 'arcade', 'console', 'esports', 'creator', 'license', 'bento'] as const;
@@ -67,7 +68,8 @@ export function runInit(target: string, opts: { force?: boolean; template?: stri
   if (!(INIT_TEMPLATES as readonly string[]).includes(template)) throw new Error(`unknown template '${template.slice(0, 40)}'. Available templates:\n${formatTemplateList()}`);
   const dir = resolve(target);
   if (existsSync(dir) && readdirSync(dir).length > 0 && !opts.force) throw new Error(`${dir} is not empty (use --force to write anyway)`);
-  const files = filesOf(template as InitTemplate);
+  // every scaffold gets the agent notes (AGENTS.md, CLAUDE.md); a template's own copy wins
+  const files = { 'AGENTS.md': THEME_AGENTS_MD, 'CLAUDE.md': THEME_CLAUDE_MD, ...filesOf(template as InitTemplate) };
   mkdirSync(dir, { recursive: true });
   for (const [path, text] of Object.entries(files)) {
     if (path === 'theme.json') continue;

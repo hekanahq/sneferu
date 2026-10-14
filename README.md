@@ -61,6 +61,13 @@ completion, hover docs, live diagnostics, theme checks, formatting and a live
 preview. Install it from the .vsix linked in
 [Editor setup: VS Code](https://hekana.dev/guide/vscode).
 
+## Building themes with AI agents
+
+`sneferu init` writes an `AGENTS.md` (and a `CLAUDE.md` pointing at it) into every
+new theme: the commands, file layout and rules an AI coding agent needs. This
+repo's [AGENTS.md](AGENTS.md) has the full workflow. Prompts to start from:
+[Build themes with AI agents](https://hekana.dev/guide/ai-agents).
+
 ## Development
 
     pnpm install
@@ -90,6 +97,7 @@ preview. Install it from the .vsix linked in
 19. [Make everything editable](docs/guide/19-make-everything-editable.mdx): where every word, link, image and colour of a theme comes from
 20. [Menus](docs/guide/20-menus.mdx): `menu('main')` and the `menu` setting: the store's navigation in the header and footer, with the active link marked
 21. [Updating a theme: migrations](docs/guide/21-updating-a-theme-migrations.mdx): `migrations/*.json` renames and removals, and `applyMigrations` for hosts
+22. [Build themes with AI agents](docs/guide/22-build-with-ai-agents.mdx): the `AGENTS.md` that `init` writes, `llms.txt`, and prompts to start from
 
 ## Reference
 

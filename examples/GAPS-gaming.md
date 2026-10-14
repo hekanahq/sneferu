@@ -10,7 +10,7 @@ to 0.3 (version 1.1.0) and dropped the workarounds marked fixed.
 | - | - | - | - | - |
 | 1 | No icon tag (`hk-icon`) and no icon set | One `snippets/icon.sneferu` per theme: inline SVG on a 24 px grid, chosen with `{% if name == '…' %}` | No | Fixed in 0.3: `hk-icon` (71 Lucide icons). The themes use it; glyphs the set lacks (gem, coin, the Esports mark) stay inline SVG in `snippets/glyph.sneferu` / `mark.sneferu` |
 | 2 | No search input or search tag (form controls are not allowed) | The search box is a link styled as a field, pointing at `/search` | No, but the shopper needs one extra tap | Fixed in 0.3: `hk-search-form`, styled as the old field in Arcade, Console and Esports |
-| 3 | No cart tag (no cart count, no add-to-cart) | Cart is an icon link to `/cart`; "Buy" buttons link to the product page | No | Open (cart tags are planned for a later phase) |
+| 3 | No cart tag (no cart count, no add-to-cart) | Cart is an icon link to `/cart`; "Buy" buttons link to the product page | No | Fixed in 0.5: `hk-add-to-cart`, `hk-cart-count`, `hk-cart-items`, `hk-cart-summary`, `hk-cart-drawer`; the themes use them since 2.0.0 |
 | 4 | Template default sections cannot carry blocks | Repeated items (tabs, amount chips, category tiles, FAQ) are numbered settings or locale keys instead of blocks, so a fresh install is not empty | Design no; editing is clumsier than blocks | Fixed in 0.3: template default sections carry blocks. Tabs, chips, tiles, amounts, platforms, trust points, steps and FAQ are blocks seeded by the template |
 | 5 | Section settings are single-language: a `text` default is shown in both Arabic and English | Text settings default to `""` and render `{{ section.settings.title \| default: t('hero_title') }}`, so the copy lives in `locales/ar.json` and `locales/en.json`; a merchant value overrides both languages | No | Fixed in 0.3: `"localized": true` text settings with `{ ar, en }` defaults; the copy moved from the locale files into the settings |
 | 6 | No locale-aware URL helper: `href="/products"` on an English page goes to the Arabic page | Locale keys `url_prefix` (`""` / `"/en"`), `url_products`, `url_search`, `url_cart`, `url_home` | No | Fixed in 0.3: `url('/products')`; the `url_*` locale keys are gone |
@@ -34,7 +34,7 @@ to 0.3 (version 1.1.0) and dropped the workarounds marked fixed.
   with `@hekana/sneferu@0.2.0` from npm.
 - 0.3 fixed 1, 2, 4-10, 12 and 14-18, and most of 11. The themes (1.1.0) use
   the fixes: the workaround column above describes 1.0.1.
-- Still open: 3 (cart and add-to-cart tags), 13 (carousel, theme JS), the
+- 0.5 fixed 3 (cart tags). Still open: 13 (carousel, theme JS), the
   platform/region part of 11, and 19 (platform).
 - Colours: every hex and rgb value in the three themes and the product art
   was checked by hue; none falls in the purple to pink range (260-345°).
