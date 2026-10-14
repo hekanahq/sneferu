@@ -1,7 +1,7 @@
 {
   "id": "odda",
   "name": "Odda",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "Hekana",
   "description": "A friendly home-improvement store: white ground, warm orange price tags, slate-blue accents, photo panels, big icon category tiles, project-idea cards with room photos and a how-to strip.",
   "category": "hardware",
@@ -25,7 +25,8 @@
       "soft": "#F3F4F6",
       "surface": "#FFFFFF",
       "glow": "#FDF0E6",
-      "slate": "#3E5C76"
+      "slate": "#3E5C76",
+      "paper": "#FFFFFF"
     },
     "layout": {
       "contentWidth": "1200px"
