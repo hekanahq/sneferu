@@ -80,6 +80,22 @@ describe('the default store', () => {
   });
 });
 
+describe('the footer copyright line', () => {
+  const dirs = ['packages/templates-default/theme', ...['arcade', 'bento', 'console', 'creator', 'esports', 'license'].map((n) => `examples/themes/${n}`)];
+  for (const dir of dirs) {
+    it(`${dir}: no stray © when the store has no name, the name when it has one`, () => {
+      const files = load(join(root, dir));
+      const { artifact } = compileTheme(files, registry);
+      const a = artifact as unknown as ArtifactLike & { locales: Record<string, Record<string, string>>; manifest: { defaultLocale?: string; locales: ('ar' | 'en')[] } };
+      const base = withSampleData(sampleContext('en', a.locales, (a.manifest.defaultLocale ?? 'en') as 'ar' | 'en', { responsive: true }), pickSampleData(undefined, 'en'));
+      const render = (name: string) => renderPage(a, { template: 'index', ctx: { ...base, store: { ...base.store, name } }, registry, request: { path: '/' } }).html;
+      const footerOf = (html: string) => html.slice(html.indexOf('<div data-hk-group="footer">'));
+      expect(footerOf(render('')), 'empty name').not.toMatch(/©\s*(\.|<)/);
+      expect(footerOf(render('Acme Store')), 'with a name').toContain('© Acme Store');
+    });
+  }
+});
+
 describe('the example themes are complete stores of their own', () => {
   const names = ['arcade', 'bento', 'console', 'creator', 'esports', 'license'];
   const own = ['index', 'product', 'product.digital', 'collection', 'search', 'cart', 'page', '404'];
