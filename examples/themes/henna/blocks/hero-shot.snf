@@ -1,0 +1,63 @@
+<a class="hn-shot" href="{{ url(block.settings.link) }}">
+  {% if block.settings.image %}<img
+      src="{{ block.settings.image }}"
+      alt="{{ block.settings.alt }}"
+      width="400"
+      height="500"
+      loading="eager"
+    />{% endif %}
+  {% if block.settings.label %}<span class="hn-shot-label">{{ block.settings.label }}</span>{% endif %}
+</a>
+<hk-schema>
+  {
+    "name": {
+      "en": "Hero product",
+      "ar": "منتج في الواجهة"
+    },
+    "version": 1,
+    "settings": {
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "Photo",
+          "ar": "الصورة"
+        },
+        "default": ""
+      },
+      "alt": {
+        "type": "text",
+        "label": {
+          "en": "Photo description",
+          "ar": "وصف الصورة"
+        },
+        "default": {
+          "ar": "",
+          "en": ""
+        },
+        "localized": true,
+        "maxLength": 120
+      },
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Label",
+          "ar": "الاسم"
+        },
+        "default": {
+          "ar": "",
+          "en": ""
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      }
+    }
+  }
+</hk-schema>

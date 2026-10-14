@@ -1,0 +1,103 @@
+<section class="hn-sec hn-shelf hn-pad-{{ section.settings.padding_y }}" id="shop">
+  <div class="hn-wrap">
+    {% if section.settings.title %}
+      <h2 class="hn-h2 hn-center">{{ section.settings.title }}</h2>
+    {% endif %}
+    <div class="hn-grid hn-cols-{{ section.settings.columns }}">
+      {% for p in collection(section.settings.list).products limit: section.settings.count %}{% render 'card', p: p %}{% endfor %}
+    </div>
+    {% if section.settings.button_label %}
+      <div class="hn-center hn-more">
+        <hk-button
+          label="{{ section.settings.button_label }}"
+          href="{{ url(section.settings.button_link) }}"
+          variant="outline"
+          class="hn-cta"
+        />
+      </div>
+    {% endif %}
+  </div>
+</section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Product shelf",
+      "ar": "رف المنتجات"
+    },
+    "version": 1,
+    "templates": ["index"],
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "مختاراتنا",
+          "en": "Our picks"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "list": {
+        "type": "collection",
+        "label": {
+          "en": "Collection",
+          "ar": "القسم"
+        },
+        "default": "featured"
+      },
+      "count": {
+        "type": "range",
+        "label": {
+          "en": "Products",
+          "ar": "عدد المنتجات"
+        },
+        "min": 2,
+        "max": 12,
+        "step": 1,
+        "default": 8
+      },
+      "columns": {
+        "type": "select",
+        "label": {
+          "en": "Columns",
+          "ar": "الأعمدة"
+        },
+        "options": ["2", "3", "4"],
+        "default": "4"
+      },
+      "button_label": {
+        "type": "text",
+        "label": {
+          "en": "Button",
+          "ar": "الزر"
+        },
+        "default": {
+          "ar": "كل المنتجات",
+          "en": "All products"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "button_link": {
+        "type": "link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/products"
+      },
+      "padding_y": {
+        "type": "select",
+        "label": {
+          "en": "Vertical spacing",
+          "ar": "المسافة الرأسية"
+        },
+        "options": ["compact", "normal", "roomy"],
+        "default": "normal"
+      }
+    }
+  }
+</hk-schema>

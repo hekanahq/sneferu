@@ -1,0 +1,187 @@
+<section class="hn-hero hn-pad-{{ section.settings.padding_y }}">
+  {% if section.settings.image %}
+    <img
+      class="hn-hero-bg"
+      src="{{ section.settings.image }}"
+      alt="{{ section.settings.image_alt }}"
+      width="1600"
+      height="700"
+      loading="eager"
+    />
+  {% endif %}
+  <div class="hn-wrap hn-hero-row">
+    <div class="hn-hero-copy">
+      {% if section.settings.eyebrow %}
+        <p class="hn-hero-eyebrow">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+      <h1 class="hn-hero-title">{{ section.settings.title }}</h1>
+      {% if section.settings.text %}
+        <p class="hn-hero-text">{{ section.settings.text }}</p>
+      {% endif %}
+      <div class="hn-hero-actions">
+        {% if section.settings.button_label %}<hk-button
+            label="{{ section.settings.button_label }}"
+            href="{{ url(section.settings.button_link) }}"
+            class="hn-cta hn-cta-light"
+          />{% endif %}
+        {% if section.settings.button2_label %}<hk-button
+            label="{{ section.settings.button2_label }}"
+            href="{{ url(section.settings.button2_link) }}"
+            variant="outline"
+            class="hn-cta hn-cta-line"
+          />{% endif %}
+      </div>
+    </div>
+    {% if section.blocks %}
+      <div class="hn-hero-shots">
+        {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Hero",
+      "ar": "الواجهة الرئيسية"
+    },
+    "version": 1,
+    "templates": ["index"],
+    "blocks": {
+      "allowed": ["hero-shot"],
+      "max": 3
+    },
+    "settings": {
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "Photo behind the text (optional, replaces the product arches)",
+          "ar": "صورة خلف النص (اختياري، بتحل محل أقواس المنتجات)"
+        },
+        "default": ""
+      },
+      "image_alt": {
+        "type": "text",
+        "label": {
+          "en": "Photo description",
+          "ar": "وصف الصورة"
+        },
+        "default": {
+          "ar": "",
+          "en": ""
+        },
+        "localized": true,
+        "maxLength": 120
+      },
+      "eyebrow": {
+        "type": "text",
+        "label": {
+          "en": "Small line above",
+          "ar": "سطر صغير فوق"
+        },
+        "default": {
+          "ar": "مكياج وعناية بالشعر",
+          "en": "Makeup and hair care"
+        },
+        "localized": true,
+        "maxLength": 50
+      },
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "لمعة دافية تشبهك",
+          "en": "A warm glow that is yours"
+        },
+        "localized": true,
+        "maxLength": 70
+      },
+      "text": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "درجات مختارة للبشرة القمحية والخمرية، من الفاونديشن للروج.",
+          "en": "Shades chosen for wheat and deep skin tones, from foundation to lipstick."
+        },
+        "localized": true,
+        "maxLength": 160
+      },
+      "button_label": {
+        "type": "text",
+        "label": {
+          "en": "Main button",
+          "ar": "الزر الأساسي"
+        },
+        "default": {
+          "ar": "تسوّقي دلوقتي",
+          "en": "Shop now"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "button_link": {
+        "type": "link",
+        "label": {
+          "en": "Main button link",
+          "ar": "رابط الزر الأساسي"
+        },
+        "default": "/products"
+      },
+      "button2_label": {
+        "type": "text",
+        "label": {
+          "en": "Second button",
+          "ar": "الزر التاني"
+        },
+        "default": {
+          "ar": "اختاري درجتك",
+          "en": "Find your shade"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "button2_link": {
+        "type": "link",
+        "label": {
+          "en": "Second button link",
+          "ar": "رابط الزر التاني"
+        },
+        "default": "/category/face"
+      },
+      "padding_y": {
+        "type": "select",
+        "label": {
+          "en": "Vertical spacing",
+          "ar": "المسافة الرأسية"
+        },
+        "options": ["compact", "normal", "roomy"],
+        "default": "normal"
+      }
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "Hero with three products",
+          "ar": "واجهة بثلاث منتجات"
+        },
+        "blocks": [
+          {
+            "type": "hero-shot"
+          },
+          {
+            "type": "hero-shot"
+          },
+          {
+            "type": "hero-shot"
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

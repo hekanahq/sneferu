@@ -1,0 +1,35 @@
+<p class="hn-trust-item">
+  <hk-icon name="{{ block.settings.icon }}" size="22" /><span>{{ block.settings.text }}</span>
+</p>
+<hk-schema>
+  {
+    "name": {
+      "en": "Trust point",
+      "ar": "نقطة ثقة"
+    },
+    "version": 1,
+    "settings": {
+      "icon": {
+        "type": "icon",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
+        "default": "truck"
+      },
+      "text": {
+        "type": "text",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "توصيل لكل المحافظات",
+          "en": "Delivery across Egypt"
+        },
+        "localized": true,
+        "maxLength": 40
+      }
+    }
+  }
+</hk-schema>

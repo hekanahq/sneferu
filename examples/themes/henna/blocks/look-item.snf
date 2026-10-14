@@ -1,0 +1,63 @@
+<a class="hn-look" href="{{ url(block.settings.link) }}">
+  {% if block.settings.image %}<img
+      src="{{ block.settings.image }}"
+      alt="{{ block.settings.alt }}"
+      width="480"
+      height="480"
+      loading="lazy"
+    />{% endif %}
+  <span class="hn-look-label">{{ block.settings.label }}</span>
+</a>
+<hk-schema>
+  {
+    "name": {
+      "en": "Look",
+      "ar": "لوك"
+    },
+    "version": 1,
+    "settings": {
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "Photo",
+          "ar": "الصورة"
+        },
+        "default": ""
+      },
+      "alt": {
+        "type": "text",
+        "label": {
+          "en": "Photo description",
+          "ar": "وصف الصورة"
+        },
+        "default": {
+          "ar": "",
+          "en": ""
+        },
+        "localized": true,
+        "maxLength": 120
+      },
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Caption",
+          "ar": "التعليق"
+        },
+        "default": {
+          "ar": "لوك النهار",
+          "en": "Day look"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      }
+    }
+  }
+</hk-schema>
