@@ -1,0 +1,20 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "search-main"
+      },
+      {
+        "type": "dawa-products",
+        "settings": {
+          "heading": {
+            "ar": "الأكثر طلبًا",
+            "en": "Most ordered"
+          },
+          "count": 4
+        }
+      }
+    ]
+  }
+</hk-schema>

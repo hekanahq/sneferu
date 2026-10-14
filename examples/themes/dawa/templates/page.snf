@@ -1,0 +1,45 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "page-main"
+      },
+      {
+        "type": "dawa-trust",
+        "blocks": [
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "pharmacist",
+              "label": {
+                "ar": "اسأل الصيدلي على واتساب",
+                "en": "Ask the pharmacist on WhatsApp"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "truck",
+              "label": {
+                "ar": "توصيل لكل المحافظات",
+                "en": "Delivery across Egypt"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "banknote",
+              "label": {
+                "ar": "الدفع عند الاستلام",
+                "en": "Cash on delivery"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

@@ -1,0 +1,40 @@
+{
+  "id": "dawa",
+  "name": "Dawa",
+  "version": "1.0.2",
+  "author": "Hekana",
+  "description": "A clean white and teal online pharmacy: a pharmacy-counter hero with an editable WhatsApp prescription card, category tiles, a product row with soft grey photo tiles and a trust strip, on every page.",
+  "category": "health",
+  "engine": "hk2",
+  "engineCompatibility": "^2.0.0",
+  "defaultLocale": "ar",
+  "locales": ["ar", "en"],
+  "settings": {},
+  "tokens": {
+    "colors": {
+      "primary": "#0B7A6B",
+      "secondary": "#0A3D3A",
+      "accent": "#0B7A6B",
+      "background": "#FFFFFF",
+      "text": "#12302D",
+      "muted": "#587270",
+      "line": "#E1E9E8",
+      "soft": "#F3F6F6",
+      "surface": "#FFFFFF",
+      "glow": "#E3F3F0"
+    },
+    "layout": {
+      "contentWidth": "1120px"
+    },
+    "fonts": {
+      "heading": "Cairo",
+      "body": "Tajawal"
+    },
+    "radius": {
+      "md": "14px"
+    }
+  },
+  "money": {
+    "format": "whole"
+  }
+}

@@ -1,0 +1,82 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="28" class="dw-products">
+  <hk-stack gap="20">
+    <div class="dw-row-head">
+      <hk-heading text="{{ section.settings.heading }}" level="h2" size="24" mobile-size="20" class="dw-h2" />
+      <a class="dw-more" href="{{ url('/products') }}">{{ t('view_all') }}</a>
+    </div>
+    {% if collection(section.settings.list).products %}
+      <div class="dw-grid dw-cols-{{ section.settings.columns }}">
+        {% for p in collection(section.settings.list).products limit: section.settings.count %}
+          {% render 'product-card', product: p, card_style: 'plain', image_ratio: '1/1', show_price: true, show_badge: true %}
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="dw-empty">{{ t('empty_products') }}</p>
+    {% endif %}
+  </hk-stack>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Product grid",
+      "ar": "شبكة المنتجات"
+    },
+    "version": 1,
+    "settings": {
+      "heading": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "localized": true,
+        "default": {
+          "ar": "الأكثر طلبًا",
+          "en": "Most ordered"
+        },
+        "maxLength": 60
+      },
+      "list": {
+        "type": "collection",
+        "label": {
+          "en": "Collection",
+          "ar": "القسم"
+        },
+        "default": "featured"
+      },
+      "columns": {
+        "type": "range",
+        "label": {
+          "en": "Columns",
+          "ar": "الأعمدة"
+        },
+        "default": 4,
+        "min": 2,
+        "max": 5,
+        "step": 1
+      },
+      "count": {
+        "type": "range",
+        "label": {
+          "en": "Products",
+          "ar": "عدد المنتجات"
+        },
+        "default": 8,
+        "min": 2,
+        "max": 24,
+        "step": 1
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 96,
+        "step": 8,
+        "default": 32
+      }
+    }
+  }
+</hk-schema>

@@ -1,0 +1,48 @@
+<li class="dw-trust-item">
+  <span class="dw-trust-icon">{% render 'glyph', name: block.settings.icon %}</span>
+  <span>{{ block.settings.label }}</span>
+</li>
+<hk-schema>
+  {
+    "name": {
+      "en": "Trust point",
+      "ar": "نقطة ثقة"
+    },
+    "version": 1,
+    "settings": {
+      "icon": {
+        "type": "select",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
+        "options": [
+          "pharmacist",
+          "truck",
+          "banknote",
+          "shield-check",
+          "clock",
+          "lock",
+          "phone",
+          "message-circle",
+          "leaf",
+          "cross"
+        ],
+        "default": "pharmacist"
+      },
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "localized": true,
+        "default": {
+          "ar": "اسأل الصيدلي",
+          "en": "Ask the pharmacist"
+        },
+        "maxLength": 60
+      }
+    }
+  }
+</hk-schema>
