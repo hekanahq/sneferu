@@ -34,7 +34,7 @@
           "en": "Collection",
           "ar": "المجموعة"
         },
-        "default": "featured"
+        "default": "main-dishes"
       },
       "count": {
         "type": "range",

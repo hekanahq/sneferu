@@ -21,7 +21,7 @@
 .tk-scheme-primary a, .tk-scheme-accent a { color: inherit; }
 
 /* Buttons (hk-button, add to cart): pills */
-.sn-btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5em; min-height: 48px; padding: 10px var(--hk-space-4, 24px); border: 2px solid var(--hk-btn-border, var(--hk-color-accent)); border-radius: var(--tk-pill); background: var(--hk-btn-bg, var(--hk-color-accent)); color: var(--hk-btn-fg, var(--hk-color-on-primary, var(--hk-color-surface))); font-weight: 600; transition: box-shadow 0.15s, transform 0.15s; }
+.sn-btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5em; min-height: 48px; padding: 10px var(--hk-space-4, 24px); border: 2px solid var(--hk-btn-border, var(--hk-color-primary)); border-radius: var(--tk-pill); background: var(--hk-btn-bg, var(--hk-color-primary)); color: var(--hk-btn-fg, var(--hk-color-on-primary, var(--hk-color-surface))); font-weight: 600; transition: box-shadow 0.15s, transform 0.15s; }
 .sn-btn:hover { box-shadow: var(--tk-shadow-hover); transform: translateY(-1px); }
 .sn-btn:focus-visible, .tk-icon-button:focus-visible, .tk-chip:focus-visible, .tk-seg-item:focus-visible { outline: 2px solid var(--hk-color-primary); outline-offset: 3px; }
 .sn-btn-outline { background: transparent; color: var(--hk-color-primary); }
@@ -323,3 +323,9 @@
   .tk-card-add .sn-btn { padding-inline: 12px; white-space: nowrap; }
   .tk-card-add .sn-qty { display: none; }
 }
+
+.tk-card-add .sn-btn { min-height: 48px; min-width: 160px; padding-inline: 28px; font-size: 15px; }
+.tk-card-add .sn-btn-outline { background: transparent; }
+@media (max-width: 639px) { .tk-card-add .sn-btn { min-width: 0; padding-inline: 16px; font-size: 13px; } }
+.sn-btn:not(.sn-btn-outline):not(.sn-btn-ghost) { background: var(--hk-color-primary); border-color: var(--hk-color-primary); color: var(--hk-color-surface); }
+.tk-hero .sn-btn:not(.sn-btn-outline):not(.sn-btn-ghost) { background: var(--hk-color-surface); border-color: var(--hk-color-surface); color: var(--hk-color-tomato-deep); }

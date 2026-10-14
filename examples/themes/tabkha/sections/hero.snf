@@ -120,7 +120,7 @@
           "en": "Image",
           "ar": "الصورة"
         },
-        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-food/pool-food-koshari-bowl.webp"
+        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-food/pool-food-taameya-plate.webp"
       },
       "image_alt": {
         "type": "text",
@@ -129,8 +129,8 @@
           "ar": "وصف الصورة"
         },
         "default": {
-          "ar": "طبق كشري",
-          "en": "A bowl of koshari"
+          "ar": "طبق طعمية",
+          "en": "A plate of taameya"
         },
         "localized": true,
         "maxLength": 120
