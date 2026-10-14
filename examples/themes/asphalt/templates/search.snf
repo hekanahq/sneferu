@@ -1,0 +1,20 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "search-main"
+      },
+      {
+        "type": "drop-rail",
+        "settings": {
+          "collection": "featured",
+          "title": {
+            "ar": "الأكثر طلبًا",
+            "en": "Most wanted"
+          }
+        }
+      }
+    ]
+  }
+</hk-schema>

@@ -1,0 +1,225 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="16">
+  <div class="as-hero">
+    <div class="as-hero-block">
+      {% if section.settings.kicker %}
+        <p class="as-kicker">{{ section.settings.kicker }}</p>
+      {% endif %}
+      <h1 class="as-hero-title">{{ section.settings.title }}</h1>
+      {% if section.settings.text %}
+        <p class="as-hero-text">{{ section.settings.text }}</p>
+      {% endif %}
+      {% if section.settings.button_label %}
+        <a class="as-cta" href="{{ url(section.settings.button_link) }}">
+          <span>{{ section.settings.button_label }}</span>
+          <hk-icon name="arrow-right" />
+        </a>
+      {% endif %}
+    </div>
+    <a class="as-tile as-ground-{{ section.settings.ground_1 }}" href="{{ url(section.settings.link_1) }}">
+      <hk-image
+        src="{{ section.settings.image_1 }}"
+        alt="{{ section.settings.alt_1 }}"
+        loading="eager"
+        aspect-ratio="4/5"
+        fit="cover"
+        sizes="(min-width: 1024px) 30vw, 50vw"
+      />
+      {% if section.settings.tag_1 %}<span class="as-sticker">{{ section.settings.tag_1 }}</span>{% endif %}
+    </a>
+    <a class="as-tile as-ground-{{ section.settings.ground_2 }}" href="{{ url(section.settings.link_2) }}">
+      <hk-image
+        src="{{ section.settings.image_2 }}"
+        alt="{{ section.settings.alt_2 }}"
+        loading="eager"
+        aspect-ratio="4/5"
+        fit="cover"
+        sizes="(min-width: 1024px) 30vw, 50vw"
+      />
+      {% if section.settings.tag_2 %}<span class="as-sticker as-sticker-drop">{{ section.settings.tag_2 }}</span>{% endif %}
+    </a>
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Drop hero",
+      "ar": "بانر الدروب"
+    },
+    "version": 1,
+    "settings": {
+      "kicker": {
+        "type": "text",
+        "label": {
+          "en": "Small line above the heading",
+          "ar": "السطر الصغير فوق العنوان"
+        },
+        "localized": true,
+        "default": {
+          "ar": "دروب الموسم",
+          "en": "Season drop"
+        },
+        "maxLength": 30
+      },
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "localized": true,
+        "default": {
+          "ar": "ملابس الشارع بمقاس واسع",
+          "en": "Oversized street wear"
+        },
+        "maxLength": 50
+      },
+      "text": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "localized": true,
+        "default": {
+          "ar": "هوديز وسنيكرز وكابات بتنزل بكميات محدودة.",
+          "en": "Hoodies, sneakers and caps in limited runs."
+        },
+        "maxLength": 120
+      },
+      "button_label": {
+        "type": "text",
+        "label": {
+          "en": "Button label",
+          "ar": "نص الزر"
+        },
+        "localized": true,
+        "default": {
+          "ar": "تسوق الدروب",
+          "en": "Shop the drop"
+        },
+        "maxLength": 24
+      },
+      "button_link": {
+        "type": "link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/products"
+      },
+      "image_1": {
+        "type": "image",
+        "label": {
+          "en": "Tile 1 image",
+          "ar": "صورة المربع الأول"
+        },
+        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-fashion/pool-fashion-grey-hoodie.webp"
+      },
+      "alt_1": {
+        "type": "text",
+        "label": {
+          "en": "Tile 1 image description",
+          "ar": "وصف صورة المربع الأول"
+        },
+        "localized": true,
+        "default": {
+          "ar": "هودي رمادي واسع",
+          "en": "Grey oversized hoodie"
+        },
+        "maxLength": 80
+      },
+      "tag_1": {
+        "type": "text",
+        "label": {
+          "en": "Tile 1 sticker",
+          "ar": "ستيكر المربع الأول"
+        },
+        "localized": true,
+        "default": {
+          "ar": "جديد",
+          "en": "NEW"
+        },
+        "maxLength": 12
+      },
+      "link_1": {
+        "type": "link",
+        "label": {
+          "en": "Tile 1 link",
+          "ar": "رابط المربع الأول"
+        },
+        "default": "/category/hoodies"
+      },
+      "ground_1": {
+        "type": "select",
+        "label": {
+          "en": "Tile 1 background",
+          "ar": "خلفية المربع الأول"
+        },
+        "options": ["orange", "black", "light"],
+        "default": "orange"
+      },
+      "image_2": {
+        "type": "image",
+        "label": {
+          "en": "Tile 2 image",
+          "ar": "صورة المربع الثاني"
+        },
+        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-fashion/pool-fashion-cargo-trousers-olive.webp"
+      },
+      "alt_2": {
+        "type": "text",
+        "label": {
+          "en": "Tile 2 image description",
+          "ar": "وصف صورة المربع الثاني"
+        },
+        "localized": true,
+        "default": {
+          "ar": "بنطلون كارجو زيتي",
+          "en": "Olive cargo trousers"
+        },
+        "maxLength": 80
+      },
+      "tag_2": {
+        "type": "text",
+        "label": {
+          "en": "Tile 2 sticker",
+          "ar": "ستيكر المربع الثاني"
+        },
+        "localized": true,
+        "default": {
+          "ar": "دروب",
+          "en": "DROP"
+        },
+        "maxLength": 12
+      },
+      "link_2": {
+        "type": "link",
+        "label": {
+          "en": "Tile 2 link",
+          "ar": "رابط المربع الثاني"
+        },
+        "default": "/category/pants"
+      },
+      "ground_2": {
+        "type": "select",
+        "label": {
+          "en": "Tile 2 background",
+          "ar": "خلفية المربع الثاني"
+        },
+        "options": ["orange", "black", "light"],
+        "default": "orange"
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 120,
+        "step": 8,
+        "default": 32
+      }
+    }
+  }
+</hk-schema>
