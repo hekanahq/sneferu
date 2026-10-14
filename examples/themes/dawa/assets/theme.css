@@ -85,10 +85,10 @@
 .dw-hero { position: relative; max-width: 880px; margin-inline: auto; margin-bottom: 52px; }
 .dw-hero-media { overflow: hidden; border-radius: 28px; background: var(--hk-color-soft); }
 .dw-hero-media img { display: block; width: 100%; height: auto; }
-.dw-rx { position: absolute; inset-inline: 0; inset-block-end: -48px; margin-inline: auto; width: min(280px, 72%); display: grid; justify-items: center; gap: 4px; padding: 16px 20px 18px; border-radius: 14px; background: var(--hk-color-primary); color: var(--hk-color-on-primary, #fff); text-align: center; box-shadow: var(--dw-shadow-hover); transition: transform 0.15s; }
+.dw-rx { position: absolute; inset-inline: 0; inset-block-end: -48px; margin-inline: auto; width: min(280px, 72%); display: grid; justify-items: center; gap: 4px; padding: 16px 20px 18px; border-radius: 14px; background: var(--hk-color-primary); color: var(--hk-color-on-primary, var(--hk-color-white)); text-align: center; box-shadow: var(--dw-shadow-hover); transition: transform 0.15s; }
 .dw-rx:hover { transform: translateY(-2px); }
 .dw-rx:focus-visible { outline: 2px solid var(--hk-color-text); outline-offset: 3px; }
-.dw-rx-icon { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: #fff; color: var(--hk-color-primary); }
+.dw-rx-icon { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: var(--hk-color-white); color: var(--hk-color-primary); }
 .dw-rx-title { font-size: 17px; line-height: 1.4; }
 .dw-rx-text { font-size: 13px; opacity: 0.92; }
 
@@ -128,7 +128,7 @@
 .dw-card-note { display: inline-flex; align-items: center; gap: 4px; padding-inline: 2px; font-size: 12px; font-weight: 500; color: var(--dw-teal); }
 .dw-card-note .sn-icon { width: 14px; height: 14px; }
 .dw-card .sn-price { display: flex; flex-wrap: wrap; justify-content: center; align-items: baseline; gap: 0 6px; font-weight: 700; padding-inline: 2px; }
-.dw-card-cta { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; margin-top: 4px; padding-inline: 20px; border-radius: var(--dw-pill); background: var(--hk-color-primary); color: var(--hk-color-on-primary, #fff); font-size: 13px; font-weight: 700; }
+.dw-card-cta { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; margin-top: 4px; padding-inline: 20px; border-radius: var(--dw-pill); background: var(--hk-color-primary); color: var(--hk-color-on-primary, var(--hk-color-white)); font-size: 13px; font-weight: 700; }
 .dw-card:hover .dw-card-cta { box-shadow: var(--dw-shadow-hover); }
 .dw-empty { display: grid; justify-items: center; gap: 12px; padding-block: 48px; text-align: center; color: var(--hk-color-muted); }
 .dw-empty-title, .dw-empty h1 { color: var(--hk-color-text); }
