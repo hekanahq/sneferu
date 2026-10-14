@@ -12,9 +12,6 @@
             "type": "product-price"
           },
           {
-            "type": "product-excerpt"
-          },
-          {
             "type": "product-variants"
           },
           {
