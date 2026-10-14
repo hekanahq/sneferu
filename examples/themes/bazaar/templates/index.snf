@@ -126,8 +126,8 @@
         "type": "deals-grid",
         "settings": {
           "collection": "featured",
-          "limit": 10,
-          "columns": 5,
+          "limit": 8,
+          "columns": 4,
           "title": {
             "ar": "عروض مختارة",
             "en": "Selected deals"
@@ -137,13 +137,14 @@
       {
         "type": "deals-grid",
         "settings": {
-          "collection": "new",
-          "limit": 10,
-          "columns": 5,
+          "collection": "appliances",
+          "limit": 4,
+          "columns": 4,
           "title": {
-            "ar": "وصل حديثًا",
-            "en": "New arrivals"
-          }
+            "ar": "إضاءة وأدوات",
+            "en": "Lighting and tools"
+          },
+          "link": "/category/appliances"
         }
       },
       {

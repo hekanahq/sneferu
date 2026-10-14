@@ -277,7 +277,7 @@
 .bz-search-bar .sn-search { min-height: 48px; padding-inline: 18px 4px; border-radius: 999px; border: 1px solid var(--bz-yellow); background: var(--bz-deep); color: var(--hk-color-background); }
 .bz-search-bar input { color: var(--hk-color-background); }
 .bz-search-bar input::placeholder { color: color-mix(in srgb, var(--hk-color-background) 65%, transparent); }
-.bz-search-bar .sn-search-button { min-width: 44px; min-height: 40px; border-radius: 999px; background: var(--bz-yellow); color: var(--bz-navy); }
+.bz-search-bar .sn-search-button { min-width: 44px; min-height: 44px; border-radius: 999px; background: var(--bz-yellow); color: var(--bz-navy); }
 .bz-scheme-primary .bz-icon-button:hover { color: var(--bz-yellow); opacity: 1; }
 .bz-cart-link .sn-cart-count { background: var(--bz-yellow); color: var(--bz-navy); border-radius: 999px; }
 .bz-catnav { border-top: 1px solid color-mix(in srgb, var(--hk-color-background) 14%, transparent); background: var(--bz-deep); }
