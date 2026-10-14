@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.6.0
+
+### Minor Changes
+
+- Version bump to stay in step with `@hekana/sneferu` 0.6.0. No code changes.
+
 ## 0.5.1
 
 ### Patch Changes
