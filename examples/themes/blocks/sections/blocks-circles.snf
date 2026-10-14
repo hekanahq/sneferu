@@ -1,0 +1,45 @@
+<hk-section padding-y="32" mobile-padding-y="24" class="bk-circles-row">
+  <hk-stack gap="24" align="center">
+    <hk-heading
+      text="{{ section.settings.heading }}"
+      level="h2"
+      size="24"
+      mobile-size="20"
+      align="center"
+      class="bk-h2"
+    />
+    <div class="bk-circles">
+      {% for block in section.blocks %}
+        <hk-block of="{{ block }}" />
+      {% endfor %}
+    </div>
+  </hk-stack>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Category tiles",
+      "ar": "مربعات الأقسام"
+    },
+    "version": 1,
+    "settings": {
+      "heading": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "localized": true,
+        "default": {
+          "ar": "تسوق حسب القسم",
+          "en": "Shop by category"
+        },
+        "maxLength": 60
+      }
+    },
+    "blocks": {
+      "allowed": ["circle"],
+      "max": 6
+    }
+  }
+</hk-schema>

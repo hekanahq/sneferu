@@ -1,0 +1,98 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "collection-main"
+      },
+      {
+        "type": "blocks-circles",
+        "blocks": [
+          {
+            "type": "circle",
+            "settings": {
+              "tone": "blue",
+              "icon": "book-open",
+              "label": {
+                "ar": "مستلزمات المدرسة",
+                "en": "School"
+              },
+              "link": "/category/school"
+            }
+          },
+          {
+            "type": "circle",
+            "settings": {
+              "tone": "yellow",
+              "icon": "gift",
+              "label": {
+                "ar": "ألعاب",
+                "en": "Toys"
+              },
+              "link": "/category/toys"
+            }
+          },
+          {
+            "type": "circle",
+            "settings": {
+              "tone": "red",
+              "icon": "package",
+              "label": {
+                "ar": "عربيات",
+                "en": "Vehicles"
+              },
+              "link": "/category/vehicles"
+            }
+          },
+          {
+            "type": "circle",
+            "settings": {
+              "tone": "green",
+              "icon": "star",
+              "label": {
+                "ar": "ملابس وأحذية",
+                "en": "Clothes"
+              },
+              "link": "/category/wear"
+            }
+          }
+        ]
+      },
+      {
+        "type": "blocks-trust",
+        "blocks": [
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "banknote",
+              "label": {
+                "ar": "الدفع عند الاستلام",
+                "en": "Cash on delivery"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "truck",
+              "label": {
+                "ar": "توصيل لكل المحافظات",
+                "en": "Delivery across Egypt"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "package",
+              "label": {
+                "ar": "استبدال سهل",
+                "en": "Easy exchange"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

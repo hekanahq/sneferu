@@ -1,0 +1,172 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="0" class="bk-banner-wrap">
+  <div class="bk-banner bk-tone-{{ section.settings.tone }}">
+    <div class="bk-banner-text">
+      {% if section.settings.eyebrow %}<span class="bk-eyebrow">{{ section.settings.eyebrow }}</span>{% endif %}
+      {% if section.settings.title %}
+        <h1 class="bk-banner-title">{{ section.settings.title }}</h1>
+      {% endif %}
+      {% if section.settings.text %}
+        <p class="bk-banner-sub">{{ section.settings.text }}</p>
+      {% endif %}
+      {% render 'button', label: section.settings.button_label, href: section.settings.button_link, style: 'solid' %}
+    </div>
+    <div class="bk-banner-media">
+      {% if section.settings.image_side %}
+        <span class="bk-banner-tile bk-banner-tile-side">
+          <hk-image
+            src="{{ section.settings.image_side }}"
+            alt="{{ section.settings.image_side_alt }}"
+            aspect-ratio="1/1"
+            loading="eager"
+            sizes="(min-width: 1024px) 18vw, 30vw"
+          />
+        </span>
+      {% endif %}
+      {% if section.settings.image_main %}
+        <span class="bk-banner-tile bk-banner-tile-main">
+          <hk-image
+            src="{{ section.settings.image_main }}"
+            alt="{{ section.settings.image_main_alt }}"
+            aspect-ratio="1/1"
+            loading="eager"
+            sizes="(min-width: 1024px) 24vw, 44vw"
+          />
+        </span>
+      {% endif %}
+    </div>
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Banner",
+      "ar": "البانر الرئيسي"
+    },
+    "version": 1,
+    "templates": ["index"],
+    "settings": {
+      "eyebrow": {
+        "type": "text",
+        "label": {
+          "en": "Small line above the heading",
+          "ar": "سطر صغير فوق العنوان"
+        },
+        "default": {
+          "ar": "العودة للمدارس",
+          "en": "Back to school"
+        },
+        "localized": true,
+        "maxLength": 40
+      },
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "باقة المدرسة جاهزة",
+          "en": "The school bundle is ready"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "text": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "شنط وأدوات وزجاجات مياه للمدرسة، والدفع عند الاستلام.",
+          "en": "Backpacks, lunch boxes and bottles for school, with cash on delivery."
+        },
+        "localized": true,
+        "maxLength": 140
+      },
+      "button_label": {
+        "type": "text",
+        "label": {
+          "en": "Button",
+          "ar": "الزر"
+        },
+        "default": {
+          "ar": "تسوق الآن",
+          "en": "Shop now"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "button_link": {
+        "type": "link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/category/school"
+      },
+      "image_main": {
+        "type": "image",
+        "label": {
+          "en": "Main image",
+          "ar": "الصورة الرئيسية"
+        },
+        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-kids/pool-kids-backpack-blue.webp"
+      },
+      "image_main_alt": {
+        "type": "text",
+        "label": {
+          "en": "Main image description",
+          "ar": "وصف الصورة الرئيسية"
+        },
+        "default": {
+          "ar": "شنطة ظهر زرقاء",
+          "en": "A blue backpack"
+        },
+        "localized": true,
+        "maxLength": 120
+      },
+      "image_side": {
+        "type": "image",
+        "label": {
+          "en": "Second image",
+          "ar": "الصورة الثانية"
+        },
+        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-kids/pool-kids-toy-blocks-primary.webp"
+      },
+      "image_side_alt": {
+        "type": "text",
+        "label": {
+          "en": "Second image description",
+          "ar": "وصف الصورة الثانية"
+        },
+        "default": {
+          "ar": "مكعبات بناء ملونة",
+          "en": "Colourful building blocks"
+        },
+        "localized": true,
+        "maxLength": 120
+      },
+      "tone": {
+        "type": "select",
+        "label": {
+          "en": "Colour",
+          "ar": "اللون"
+        },
+        "options": ["red", "blue", "yellow"],
+        "default": "red"
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 120,
+        "step": 8,
+        "default": 24
+      }
+    }
+  }
+</hk-schema>

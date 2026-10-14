@@ -1,0 +1,23 @@
+<article class="bk-card bk-card-{{ card_style }}">
+  <a class="bk-card-link" href="{{ product.url }}">
+    <div class="bk-card-media">
+      <hk-image
+        src="{{ product.image }}"
+        alt="{{ product.title }}"
+        aspect-ratio="{{ image_ratio }}"
+        sizes="(min-width: 1024px) 25vw, 50vw"
+      />
+      {% if show_badge %}
+        {% if product.available %}
+          {% if product.compare_at > product.price %}
+            <span class="bk-badge">{{ t('sale') }}</span>
+          {% endif %}
+        {% else %}
+          <span class="bk-badge bk-badge-muted">{{ t('sold_out_badge') }}</span>
+        {% endif %}
+      {% endif %}
+    </div>
+    <h3 class="bk-card-title">{{ product.title }}</h3>
+    {% if show_price %}{% render 'price', product: product, bind: false %}{% endif %}
+  </a>
+</article>

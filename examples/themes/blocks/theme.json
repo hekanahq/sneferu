@@ -1,0 +1,43 @@
+{
+  "id": "blocks",
+  "name": "Blocks",
+  "version": "1.0.4",
+  "author": "Hekana",
+  "description": "A bold primary-colour store for kids' toys and school supplies: a red back-to-school banner, big blue, yellow, red and green category tiles, plain product cards and a blue footer, on every page.",
+  "category": "kids",
+  "engine": "hk2",
+  "engineCompatibility": "^2.0.0",
+  "defaultLocale": "ar",
+  "locales": ["ar", "en"],
+  "settings": {},
+  "money": { "format": "whole" },
+  "tokens": {
+    "colors": {
+      "primary": "#1530C0",
+      "secondary": "#D92D3A",
+      "accent": "#FFC400",
+      "background": "#FFFFFF",
+      "text": "#14183A",
+      "blue": "#1530C0",
+      "red": "#D92D3A",
+      "yellow": "#FFC400",
+      "green": "#0B7F46",
+      "ink": "#14183A",
+      "muted": "#5B6080",
+      "line": "#DDE0F0",
+      "soft": "#F4F5FB",
+      "surface": "#FFFFFF",
+      "white": "#FFFFFF"
+    },
+    "layout": {
+      "contentWidth": "1120px"
+    },
+    "fonts": {
+      "heading": "Baloo Bhaijaan 2",
+      "body": "Cairo"
+    },
+    "radius": {
+      "md": "20px"
+    }
+  }
+}

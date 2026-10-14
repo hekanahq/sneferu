@@ -1,0 +1,66 @@
+{
+  "sections": [
+    {
+      "id": "header",
+      "type": "header",
+      "settings": {
+        "menu": "main-menu",
+        "show_search": true,
+        "search_style": "icon",
+        "show_account": true,
+        "show_language": true,
+        "show_cart": true,
+        "drawer_on_add": true,
+        "scheme": "light",
+        "sticky": false
+      },
+      "blocks": [
+        {
+          "id": "nav-school",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "مستلزمات المدرسة",
+              "en": "School"
+            },
+            "url": "/category/school"
+          }
+        },
+        {
+          "id": "nav-toys",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "ألعاب",
+              "en": "Toys"
+            },
+            "url": "/category/toys"
+          }
+        },
+        {
+          "id": "nav-vehicles",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "عربيات",
+              "en": "Vehicles"
+            },
+            "url": "/category/vehicles"
+          }
+        },
+        {
+          "id": "nav-wear",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "ملابس وأحذية",
+              "en": "Clothes"
+            },
+            "url": "/category/wear"
+          }
+        }
+      ],
+      "block_order": ["nav-school", "nav-toys", "nav-vehicles", "nav-wear"]
+    }
+  ]
+}
