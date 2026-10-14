@@ -207,12 +207,7 @@
   font-size: 12px; font-weight: 600; line-height: 1; padding: 7px 12px; border-radius: 999px;
 }
 .hn-swatches { display: flex; flex-wrap: wrap; justify-content: center; gap: 7px; margin: 8px 0 0; padding: 0; }
-.hn-sw { width: 16px; height: 16px; border-radius: 50%; background: var(--hk-color-sand); box-shadow: 0 0 0 1px color-mix(in srgb, var(--hk-color-text) 18%, transparent); }
-.hn-sw:nth-child(2) { background: var(--hk-color-clay); }
-.hn-sw:nth-child(3) { background: var(--hk-color-tan); }
-.hn-sw:nth-child(4) { background: var(--hk-color-bronze); }
-.hn-sw:nth-child(5) { background: var(--hk-color-soft); }
-.hn-sw:nth-child(6) { background: var(--hk-color-text); }
+.hn-sw { width: 16px; height: 16px; border-radius: 50%; background: var(--hk-color-soft); box-shadow: 0 0 0 1px color-mix(in srgb, var(--hk-color-text) 18%, transparent); }
 
 /* grids of cards (home, collection, search, related) */
 .hn-grid { display: grid; gap: 32px 18px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -448,12 +443,7 @@
 }
 
 /* shade chips on the product page */
-.hn .sn-vp-value span::before { content: ''; width: 20px; height: 20px; margin-inline-end: 8px; border-radius: 50%; background: var(--hk-color-sand); box-shadow: 0 0 0 1px color-mix(in srgb, var(--hk-color-text) 22%, transparent); flex: none; }
-.hn .sn-vp-value:nth-child(2) span::before { background: var(--hk-color-clay); }
-.hn .sn-vp-value:nth-child(3) span::before { background: var(--hk-color-tan); }
-.hn .sn-vp-value:nth-child(4) span::before { background: var(--hk-color-bronze); }
-.hn .sn-vp-value:nth-child(5) span::before { background: var(--hk-color-secondary); }
-.hn .sn-vp-value:nth-child(n+6) span::before { background: var(--hk-color-text); }
+.hn .sn-vp-value span::before { content: ''; width: 20px; height: 20px; margin-inline-end: 8px; border-radius: 50%; background: var(--hk-color-soft); box-shadow: 0 0 0 1px color-mix(in srgb, var(--hk-color-text) 22%, transparent); flex: none; }
 .hn .sn-vp-value span { padding-inline: 16px 20px; }
 .hn .sn-vp-value input:checked + span::before { box-shadow: 0 0 0 2px var(--hk-color-on-primary); }
 .hn-hero.hn-pad-normal { padding-block: 96px; min-height: 480px; display: flex; align-items: center; }
@@ -462,3 +452,31 @@
 .hn-shot:nth-child(2) { aspect-ratio: 4 / 6.4; }
 .hn-hero-shots { max-width: 560px; }
 @media (max-width: 639px) { .hn-hero.hn-pad-normal { padding-block: 48px; min-height: 0; } }
+
+/* shade colours by name; any other value keeps the neutral chip */
+.hn .sn-vp-value:has(input[value="رملي"]) span::before { background: var(--hk-color-sand); }
+.hn-sw[data-shade="رملي"] { background: var(--hk-color-sand); }
+.hn .sn-vp-value:has(input[value="فاتح"]) span::before { background: var(--hk-color-sand); }
+.hn-sw[data-shade="فاتح"] { background: var(--hk-color-sand); }
+.hn .sn-vp-value:has(input[value="عسلي"]) span::before { background: color-mix(in srgb, var(--hk-color-clay) 70%, var(--hk-color-gold)); }
+.hn-sw[data-shade="عسلي"] { background: color-mix(in srgb, var(--hk-color-clay) 70%, var(--hk-color-gold)); }
+.hn .sn-vp-value:has(input[value="كراميل"]) span::before { background: var(--hk-color-tan); }
+.hn-sw[data-shade="كراميل"] { background: var(--hk-color-tan); }
+.hn .sn-vp-value:has(input[value="وسط"]) span::before { background: var(--hk-color-tan); }
+.hn-sw[data-shade="وسط"] { background: var(--hk-color-tan); }
+.hn .sn-vp-value:has(input[value="موكا"]) span::before { background: color-mix(in srgb, var(--hk-color-bronze) 70%, var(--hk-color-secondary)); }
+.hn-sw[data-shade="موكا"] { background: color-mix(in srgb, var(--hk-color-bronze) 70%, var(--hk-color-secondary)); }
+.hn .sn-vp-value:has(input[value="غامق"]) span::before { background: var(--hk-color-secondary); }
+.hn-sw[data-shade="غامق"] { background: var(--hk-color-secondary); }
+.hn .sn-vp-value:has(input[value="طيني"]) span::before { background: color-mix(in srgb, var(--hk-color-tan) 55%, var(--hk-color-bronze)); }
+.hn-sw[data-shade="طيني"] { background: color-mix(in srgb, var(--hk-color-tan) 55%, var(--hk-color-bronze)); }
+.hn .sn-vp-value:has(input[value="برونزي"]) span::before { background: var(--hk-color-bronze); }
+.hn-sw[data-shade="برونزي"] { background: var(--hk-color-bronze); }
+.hn .sn-vp-value:has(input[value="نيود"]) span::before { background: var(--hk-color-clay); }
+.hn-sw[data-shade="نيود"] { background: var(--hk-color-clay); }
+.hn .sn-vp-value:has(input[value="قرميدي"]) span::before { background: var(--hk-color-accent); }
+.hn-sw[data-shade="قرميدي"] { background: var(--hk-color-accent); }
+.hn .sn-vp-value:has(input[value="تيراكوتا"]) span::before { background: color-mix(in srgb, var(--hk-color-accent) 60%, var(--hk-color-clay)); }
+.hn-sw[data-shade="تيراكوتا"] { background: color-mix(in srgb, var(--hk-color-accent) 60%, var(--hk-color-clay)); }
+.hn .sn-vp-value:has(input[value="كاكاو"]) span::before { background: var(--hk-color-secondary); }
+.hn-sw[data-shade="كاكاو"] { background: var(--hk-color-secondary); }
