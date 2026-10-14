@@ -1,0 +1,81 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "not-found"
+      },
+      {
+        "type": "categories",
+        "blocks": [
+          {
+            "type": "category-tile",
+            "settings": {
+              "icon": "drill",
+              "label": {
+                "en": "Power tools",
+                "ar": "عدد كهربائية"
+              },
+              "link": "/category/power-tools"
+            }
+          },
+          {
+            "type": "category-tile",
+            "settings": {
+              "icon": "hammer",
+              "label": {
+                "en": "Hand tools",
+                "ar": "عدد يدوية"
+              },
+              "link": "/category/hand-tools"
+            }
+          },
+          {
+            "type": "category-tile",
+            "settings": {
+              "icon": "saw",
+              "label": {
+                "en": "Saws and cutting",
+                "ar": "مناشير وقطع"
+              },
+              "link": "/category/saws-cutting"
+            }
+          },
+          {
+            "type": "category-tile",
+            "settings": {
+              "icon": "ruler",
+              "label": {
+                "en": "Measuring",
+                "ar": "قياس وضبط"
+              },
+              "link": "/category/measuring"
+            }
+          },
+          {
+            "type": "category-tile",
+            "settings": {
+              "icon": "bolt",
+              "label": {
+                "en": "Fasteners",
+                "ar": "مسامير ومثبتات"
+              },
+              "link": "/category/fasteners"
+            }
+          },
+          {
+            "type": "category-tile",
+            "settings": {
+              "icon": "helmet",
+              "label": {
+                "en": "Safety gear",
+                "ar": "معدات سلامة"
+              },
+              "link": "/category/safety"
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

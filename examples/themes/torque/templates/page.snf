@@ -1,0 +1,55 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "page-main"
+      },
+      {
+        "type": "trust-strip",
+        "blocks": [
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "banknote",
+              "label": {
+                "en": "Cash on delivery",
+                "ar": "الدفع عند الاستلام"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "truck",
+              "label": {
+                "en": "Delivery to every governorate",
+                "ar": "توصيل لكل المحافظات"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "file-text",
+              "label": {
+                "en": "Written specs on every product",
+                "ar": "مواصفات مكتوبة لكل منتج"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "package",
+              "label": {
+                "en": "Easy exchange",
+                "ar": "استبدال سهل"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

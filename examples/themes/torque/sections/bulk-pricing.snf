@@ -1,0 +1,124 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="32" class="tq-bulk">
+  <hk-container>
+    <div class="tq-bulk-box">
+      <div class="tq-bulk-head">
+        <hk-heading text="{{ section.settings.title }}" level="h2" size="32" mobile-size="24" class="tq-h2" />
+        {% if section.settings.text %}
+          <hk-text text="{{ section.settings.text }}" size="16" class="tq-muted" />
+        {% endif %}
+      </div>
+      <ul class="tq-tiers">
+        {% for block in section.blocks %}
+          <hk-block of="{{ block }}" />
+        {% endfor %}
+      </ul>
+      {% if section.settings.button_label %}
+        <div class="tq-bulk-cta">
+          <hk-button
+            label="{{ section.settings.button_label }}"
+            href="{{ url(section.settings.button_link) }}"
+            variant="solid"
+          />
+        </div>
+      {% endif %}
+    </div>
+  </hk-container>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Bulk pricing",
+      "ar": "أسعار الجملة"
+    },
+    "version": 1,
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "localized": true,
+        "default": {
+          "en": "Bulk pricing",
+          "ar": "أسعار الكميات"
+        },
+        "maxLength": 60
+      },
+      "text": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "localized": true,
+        "default": {
+          "en": "Buying for a site or a workshop? These unit prices apply to the quantities shown.",
+          "ar": "بتشتري لموقع أو ورشة؟ الأسعار دي للكميات المكتوبة جنب كل صنف."
+        },
+        "maxLength": 160
+      },
+      "button_label": {
+        "type": "text",
+        "label": {
+          "en": "Button (empty hides it)",
+          "ar": "الزر (فاضي يخفيه)"
+        },
+        "localized": true,
+        "default": {
+          "en": "Ask for a quote",
+          "ar": "اطلب عرض سعر"
+        },
+        "maxLength": 30
+      },
+      "button_link": {
+        "type": "link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/pages/contact"
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 160,
+        "step": 8,
+        "default": 64
+      }
+    },
+    "blocks": {
+      "allowed": ["tier"],
+      "max": 8
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "Five tiers",
+          "ar": "خمس شرائح"
+        },
+        "blocks": [
+          {
+            "type": "tier"
+          },
+          {
+            "type": "tier"
+          },
+          {
+            "type": "tier"
+          },
+          {
+            "type": "tier"
+          },
+          {
+            "type": "tier"
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

@@ -1,0 +1,45 @@
+<a class="tq-plat" href="{{ url(block.settings.link) }}">
+  <span class="tq-plat-icon">{% render 'glyph', name: block.settings.icon %}</span>
+  <span class="tq-plat-label">{{ block.settings.label }}</span>
+</a>
+<hk-schema>
+  {
+    "name": {
+      "en": "Category tile",
+      "ar": "أيقونة قسم"
+    },
+    "version": 1,
+    "settings": {
+      "icon": {
+        "type": "select",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
+        "options": ["drill", "hammer", "wrench", "saw", "ruler", "bolt", "plug", "helmet", "box"],
+        "default": "drill"
+      },
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Label",
+          "ar": "النص"
+        },
+        "localized": true,
+        "default": {
+          "en": "Power tools",
+          "ar": "عدد كهربائية"
+        },
+        "maxLength": 40
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      }
+    }
+  }
+</hk-schema>

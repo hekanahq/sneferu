@@ -1,0 +1,163 @@
+{
+  "sections": [
+    {
+      "id": "footer",
+      "type": "footer",
+      "settings": {
+        "menu": "",
+        "about_text": {
+          "en": "Professional power tools, hand tools and safety gear with written specs and prices in Egyptian pounds.",
+          "ar": "عدد كهربائية ويدوية ومعدات سلامة بمواصفات مكتوبة وأسعار بالجنيه المصري."
+        },
+        "copyright": {
+          "ar": "جميع الحقوق محفوظة",
+          "en": "All rights reserved"
+        },
+        "show_newsletter": true,
+        "newsletter_title": {
+          "en": "Buying in quantity?",
+          "ar": "بتشتري بكميات؟"
+        },
+        "newsletter_text": {
+          "en": "Send us the list and we reply with a quote.",
+          "ar": "ابعتلنا القايمة وهنرد عليك بعرض سعر."
+        },
+        "newsletter_label": {
+          "en": "Contact us on WhatsApp",
+          "ar": "كلمنا على واتساب"
+        },
+        "newsletter_link": "/pages/contact",
+        "show_language": true,
+        "scheme": "primary"
+      },
+      "blocks": [
+        {
+          "id": "col-shop",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "en": "Shop",
+              "ar": "تسوق"
+            }
+          },
+          "blocks": [
+            {
+              "id": "c1",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "en": "All tools",
+                  "ar": "كل العدد"
+                },
+                "url": "/products"
+              }
+            },
+            {
+              "id": "c2",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "en": "Power tools",
+                  "ar": "عدد كهربائية"
+                },
+                "url": "/category/power-tools"
+              }
+            },
+            {
+              "id": "c3",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "en": "Hand tools",
+                  "ar": "عدد يدوية"
+                },
+                "url": "/category/hand-tools"
+              }
+            },
+            {
+              "id": "c4",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "en": "Search",
+                  "ar": "بحث"
+                },
+                "url": "/search"
+              }
+            }
+          ]
+        },
+        {
+          "id": "col-help",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "en": "Help",
+              "ar": "مساعدة"
+            }
+          },
+          "blocks": [
+            {
+              "id": "h1",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "en": "About us",
+                  "ar": "عنّا"
+                },
+                "url": "/pages/about"
+              }
+            },
+            {
+              "id": "h2",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "en": "Contact",
+                  "ar": "تواصل معانا"
+                },
+                "url": "/pages/contact"
+              }
+            }
+          ]
+        },
+        {
+          "id": "social-whatsapp",
+          "type": "social-link",
+          "settings": {
+            "label": {
+              "en": "WhatsApp",
+              "ar": "واتساب"
+            },
+            "url": "/pages/contact",
+            "icon": "message-circle"
+          }
+        },
+        {
+          "id": "social-mail",
+          "type": "social-link",
+          "settings": {
+            "label": {
+              "en": "Email",
+              "ar": "الإيميل"
+            },
+            "url": "/pages/contact",
+            "icon": "mail"
+          }
+        },
+        {
+          "id": "contact-quote",
+          "type": "contact-line",
+          "settings": {
+            "icon": "mail",
+            "text": {
+              "ar": "ابعتلنا قايمة الأصناف والكميات",
+              "en": "Send us your list of items and quantities"
+            },
+            "url": ""
+          }
+        }
+      ]
+    }
+  ]
+}

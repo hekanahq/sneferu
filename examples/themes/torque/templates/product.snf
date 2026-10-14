@@ -1,0 +1,117 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "product-main",
+        "blocks": [
+          {
+            "type": "product-title"
+          },
+          {
+            "type": "product-price"
+          },
+          {
+            "type": "product-excerpt"
+          },
+          {
+            "type": "product-variants"
+          },
+          {
+            "type": "product-buy"
+          },
+          {
+            "type": "product-text"
+          },
+          {
+            "type": "product-description"
+          },
+          {
+            "type": "product-tags"
+          }
+        ]
+      },
+      {
+        "type": "bulk-pricing",
+        "blocks": [
+          {
+            "type": "tier",
+            "settings": {
+              "label": {
+                "en": "Concrete screws, box of 100",
+                "ar": "مسامير خرسانة، علبة 100"
+              },
+              "qty": {
+                "en": "10 boxes or more",
+                "ar": "10 علب فأكثر"
+              },
+              "price": 165
+            }
+          },
+          {
+            "type": "tier",
+            "settings": {
+              "label": {
+                "en": "Cutting discs 115 mm, pack of 25",
+                "ar": "أقراص قطع 115 مم، عبوة 25"
+              },
+              "qty": {
+                "en": "5 packs or more",
+                "ar": "5 عبوات فأكثر"
+              },
+              "price": 340
+            }
+          },
+          {
+            "type": "tier",
+            "settings": {
+              "label": {
+                "en": "Work gloves, pair",
+                "ar": "جوانتي شغل، زوج"
+              },
+              "qty": {
+                "en": "12 pairs or more",
+                "ar": "12 زوج فأكثر"
+              },
+              "price": 58
+            }
+          },
+          {
+            "type": "tier",
+            "settings": {
+              "label": {
+                "en": "Safety helmet",
+                "ar": "خوذة سلامة"
+              },
+              "qty": {
+                "en": "10 or more",
+                "ar": "10 فأكثر"
+              },
+              "price": 95
+            }
+          },
+          {
+            "type": "tier",
+            "settings": {
+              "label": {
+                "en": "Spirit level 60 cm",
+                "ar": "ميزان مياه 60 سم"
+              },
+              "qty": {
+                "en": "6 or more",
+                "ar": "6 فأكثر"
+              },
+              "price": 210
+            }
+          }
+        ]
+      },
+      {
+        "type": "related-products",
+        "settings": {
+          "collection": "featured"
+        }
+      }
+    ]
+  }
+</hk-schema>

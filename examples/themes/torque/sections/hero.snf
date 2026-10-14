@@ -1,0 +1,196 @@
+<hk-section
+  background="{{ section.settings.background }}"
+  padding-y="{{ section.settings.padding_y }}"
+  mobile-padding-y="48"
+>
+  <div class="tq-hero tq-align-{{ section.settings.align }}">
+    <div class="tq-hero-text">
+      {% if section.settings.title %}
+        <hk-heading
+          text="{{ section.settings.title }}"
+          level="h1"
+          size="52"
+          mobile-size="32"
+          color="{{ section.settings.title_color }}"
+        />
+      {% endif %}
+      {% if section.settings.subtitle %}
+        <hk-text text="{{ section.settings.subtitle }}" size="20" color="{{ section.settings.text_color }}" />
+      {% endif %}
+      <div class="tq-hero-actions">
+        {% render 'button', label: section.settings.button_label, href: section.settings.button_link, style: section.settings.button_style %}
+        {% render 'button', label: section.settings.button2_label, href: section.settings.button2_link, style: section.settings.button2_style %}
+      </div>
+    </div>
+    {% if section.settings.image %}
+      <div class="tq-hero-media">
+        <hk-image
+          src="{{ section.settings.image }}"
+          alt="{{ section.settings.image_alt }}"
+          loading="eager"
+          aspect-ratio="4/5"
+          sizes="(min-width: 1024px) 40vw, 100vw"
+        />
+      </div>
+    {% endif %}
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Hero",
+      "ar": "البانر الرئيسي"
+    },
+    "version": 1,
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "عدّة الشغل كاملة",
+          "en": "The full workshop kit"
+        },
+        "localized": true,
+        "maxLength": 80
+      },
+      "subtitle": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "شنيور ومناشير وعدد يدوية ومعدات سلامة، بمواصفات مكتوبة واضحة وأسعار بالجنيه.",
+          "en": "Drills, saws, hand tools and safety gear, with clear written specs and prices in pounds."
+        },
+        "localized": true,
+        "maxLength": 200
+      },
+      "button_label": {
+        "type": "text",
+        "label": {
+          "en": "Button",
+          "ar": "الزر"
+        },
+        "default": {
+          "ar": "تسوق العدد",
+          "en": "Shop tools"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "button_link": {
+        "type": "link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/products"
+      },
+      "button_style": {
+        "type": "select",
+        "label": {
+          "en": "Button style",
+          "ar": "شكل الزر"
+        },
+        "options": ["solid", "outline", "ghost"],
+        "default": "solid"
+      },
+      "button2_label": {
+        "type": "text",
+        "label": {
+          "en": "Second button (empty hides it)",
+          "ar": "الزر الثاني (فاضي يخفيه)"
+        },
+        "default": {
+          "ar": "أسعار الجملة",
+          "en": "Bulk prices"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "button2_link": {
+        "type": "link",
+        "label": {
+          "en": "Second button link",
+          "ar": "رابط الزر الثاني"
+        },
+        "default": "/pages/contact"
+      },
+      "button2_style": {
+        "type": "select",
+        "label": {
+          "en": "Second button style",
+          "ar": "شكل الزر الثاني"
+        },
+        "options": ["solid", "outline", "ghost"],
+        "default": "outline"
+      },
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "Image",
+          "ar": "الصورة"
+        },
+        "default": ""
+      },
+      "image_alt": {
+        "type": "text",
+        "label": {
+          "en": "Image description",
+          "ar": "وصف الصورة"
+        },
+        "default": "",
+        "localized": true,
+        "maxLength": 120
+      },
+      "align": {
+        "type": "select",
+        "label": {
+          "en": "Text alignment",
+          "ar": "محاذاة النص"
+        },
+        "options": ["start", "center"],
+        "default": "center"
+      },
+      "background": {
+        "type": "color",
+        "label": {
+          "en": "Background",
+          "ar": "الخلفية"
+        },
+        "default": "theme:secondary"
+      },
+      "title_color": {
+        "type": "color",
+        "label": {
+          "en": "Heading colour",
+          "ar": "لون العنوان"
+        },
+        "default": "theme:accent"
+      },
+      "text_color": {
+        "type": "color",
+        "label": {
+          "en": "Text colour",
+          "ar": "لون النص"
+        },
+        "default": "theme:background"
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 200,
+        "step": 8,
+        "default": 88
+      }
+    }
+  }
+</hk-schema>

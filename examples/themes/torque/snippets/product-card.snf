@@ -1,0 +1,32 @@
+<article class="tq-card tq-card-{{ card_style }}">
+  <a class="tq-card-link" href="{{ product.url }}">
+    <div class="tq-card-media">
+      <hk-image
+        src="{{ product.image }}"
+        alt="{{ product.title }}"
+        aspect-ratio="{{ image_ratio }}"
+        sizes="(min-width: 1024px) 25vw, 50vw"
+      />
+      {% if show_badge %}
+        {% if product.available %}
+          {% if product.compare_at > product.price %}
+            <span class="tq-badge">{{ t('sale') }}</span>
+          {% endif %}
+        {% else %}
+          <span class="tq-badge tq-badge-muted">{{ t('sold_out_badge') }}</span>
+        {% endif %}
+      {% endif %}
+    </div>
+    <h3 class="tq-card-title">{{ product.title }}</h3>
+    {% if show_price %}{% render 'price', product: product, bind: false %}{% endif %}
+  </a>
+  {% if show_buy %}
+    <div class="tq-card-buy">
+      {% if product.has_variants %}
+        <hk-button label="{{ t('choose_options') }}" href="{{ product.url }}" variant="solid" size="sm" />
+      {% else %}
+        <hk-add-to-cart product="{{ product }}" />
+      {% endif %}
+    </div>
+  {% endif %}
+</article>

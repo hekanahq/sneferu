@@ -1,0 +1,75 @@
+{
+  "sections": [
+    {
+      "id": "header",
+      "type": "header",
+      "settings": {
+        "menu": "main-menu",
+        "show_search": true,
+        "search_style": "bar",
+        "show_account": true,
+        "show_language": true,
+        "show_cart": true,
+        "drawer_on_add": true,
+        "sticky": true
+      },
+      "blocks": [
+        {
+          "id": "nav-all",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "en": "All tools",
+              "ar": "كل العدد"
+            },
+            "url": "/products"
+          }
+        },
+        {
+          "id": "nav-power",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "en": "Power tools",
+              "ar": "عدد كهربائية"
+            },
+            "url": "/category/power-tools"
+          }
+        },
+        {
+          "id": "nav-hand",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "en": "Hand tools",
+              "ar": "عدد يدوية"
+            },
+            "url": "/category/hand-tools"
+          }
+        },
+        {
+          "id": "nav-safety",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "en": "Safety",
+              "ar": "سلامة"
+            },
+            "url": "/category/safety"
+          }
+        },
+        {
+          "id": "nav-contact",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "en": "Contact",
+              "ar": "تواصل"
+            },
+            "url": "/pages/contact"
+          }
+        }
+      ]
+    }
+  ]
+}
