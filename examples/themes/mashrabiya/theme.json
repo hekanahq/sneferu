@@ -1,0 +1,47 @@
+{
+  "id": "mashrabiya",
+  "name": "Mashrabiya",
+  "version": "1.0.5",
+  "author": "Hekana",
+  "description": "A home decor store in modern Egyptian heritage style: deep teal and brass, a lattice pattern on the hero, teal category tiles and sand product cards, on every page.",
+  "category": "home",
+  "engine": "hk2",
+  "engineCompatibility": "^2.0.0",
+  "defaultLocale": "ar",
+  "locales": ["ar", "en"],
+  "settings": {},
+  "money": {
+    "format": "whole"
+  },
+  "tokens": {
+    "colors": {
+      "primary": "#0B4656",
+      "secondary": "#06303C",
+      "accent": "#C79A3E",
+      "background": "#FBF8F1",
+      "text": "#1C2B30",
+      "muted": "#566468",
+      "line": "#E4D8C0",
+      "soft": "#F1E8D6",
+      "surface": "#FFFFFF",
+      "glow": "#F6EEDD",
+      "sand": "#E9DCC2",
+      "brass": "#C79A3E",
+      "brass-deep": "#7E5710",
+      "ink": "#06303C",
+      "teal-light": "#1B6B7F",
+      "paper": "#FBF8F1",
+      "brass-light": "#DDBB6C"
+    },
+    "layout": {
+      "contentWidth": "1160px"
+    },
+    "fonts": {
+      "heading": "Noto Kufi Arabic",
+      "body": "Cairo"
+    },
+    "radius": {
+      "md": "8px"
+    }
+  }
+}

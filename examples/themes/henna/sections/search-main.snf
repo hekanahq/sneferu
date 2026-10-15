@@ -1,0 +1,146 @@
+<section class="hn-sec hn-pad-{{ section.settings.padding_y }}">
+  <div class="hn-wrap">
+    <header class="hn-pagehead">
+      {% if section.settings.kicker %}
+        <p class="hn-eyebrow">{{ section.settings.kicker }}</p>
+      {% endif %}
+      {% if section.settings.title %}
+        <h1 class="hn-title hn-title-xl">{{ section.settings.title }}</h1>
+      {% endif %}
+    </header>
+    <div class="hn-searchbox"><hk-search-form placeholder="{{ t('search_placeholder') }}" /></div>
+    {% if search.terms %}
+      <p class="hn-count">
+        {{ t('results_for') }} “{{ search.terms }}” · {{ search.results_count }} {{ t('results_label') }}
+      </p>
+      {% if search.results %}
+        <div class="hn-grid hn-cols-{{ section.settings.columns }}">
+          {% for p in search.results limit: 48 %}{% render 'card', p: p %}{% endfor %}
+        </div>
+        <hk-pagination paginate="{{ paginate }}" />
+      {% else %}
+        {% render 'empty', title: section.settings.no_results_title, text: section.settings.no_results_text, label: section.settings.no_results_button_label, href: section.settings.no_results_button_link %}
+      {% endif %}
+    {% else %}
+      {% if section.settings.prompt_text %}
+        <p class="hn-lead">{{ section.settings.prompt_text }}</p>
+      {% endif %}
+    {% endif %}
+  </div>
+</section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Search",
+      "ar": "البحث"
+    },
+    "version": 1,
+    "templates": ["search"],
+    "settings": {
+      "kicker": {
+        "type": "text",
+        "label": {
+          "en": "Small line above the title",
+          "ar": "سطر صغير فوق العنوان"
+        },
+        "default": {
+          "ar": "البحث",
+          "en": "Search"
+        },
+        "localized": true,
+        "maxLength": 40
+      },
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "دوّري في المتجر",
+          "en": "Search the store"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "prompt_text": {
+        "type": "textarea",
+        "label": {
+          "en": "Text before searching",
+          "ar": "نص قبل البحث"
+        },
+        "default": {
+          "ar": "اكتبي اسم منتج أو درجة أو قسم.",
+          "en": "Type a product, a shade or a category."
+        },
+        "localized": true,
+        "maxLength": 160
+      },
+      "columns": {
+        "type": "select",
+        "label": {
+          "en": "Columns",
+          "ar": "الأعمدة"
+        },
+        "options": ["2", "3", "4"],
+        "default": "4"
+      },
+      "no_results_title": {
+        "type": "text",
+        "label": {
+          "en": "No results title",
+          "ar": "عنوان مفيش نتايج"
+        },
+        "default": {
+          "ar": "مفيش نتايج",
+          "en": "No results"
+        },
+        "localized": true,
+        "maxLength": 80
+      },
+      "no_results_text": {
+        "type": "textarea",
+        "label": {
+          "en": "No results text",
+          "ar": "نص مفيش نتايج"
+        },
+        "default": {
+          "ar": "جرّب كلمة تانية، أو تصفّح كل المنتجات.",
+          "en": "Try another word, or browse all products."
+        },
+        "localized": true,
+        "maxLength": 160
+      },
+      "no_results_button_label": {
+        "type": "text",
+        "label": {
+          "en": "No results button",
+          "ar": "زر مفيش نتايج"
+        },
+        "default": {
+          "ar": "كل المنتجات",
+          "en": "All products"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "no_results_button_link": {
+        "type": "link",
+        "label": {
+          "en": "No results button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/products"
+      },
+      "padding_y": {
+        "type": "select",
+        "label": {
+          "en": "Vertical spacing",
+          "ar": "المسافة الرأسية"
+        },
+        "options": ["compact", "normal", "roomy"],
+        "default": "normal"
+      }
+    }
+  }
+</hk-schema>

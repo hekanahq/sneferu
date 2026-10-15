@@ -1,0 +1,150 @@
+<section class="bz-hero bz-scheme-primary">
+  <div class="bz-hero-grid">
+    {% if section.blocks %}
+      <nav class="bz-side" aria-label="{{ section.settings.side_title }}">
+        {% if section.settings.side_title %}
+          <h2 class="bz-side-title">{{ section.settings.side_title }}</h2>
+        {% endif %}
+        <ul class="bz-side-list">
+          {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+        </ul>
+      </nav>
+    {% endif %}
+    <div class="bz-hero-main">
+      <div class="bz-offer">
+        {% if section.settings.kicker %}
+          <p class="bz-offer-kicker">{{ section.settings.kicker }}</p>
+        {% endif %}
+        {% if section.settings.title %}
+          <h1 class="bz-offer-title">{{ section.settings.title }}</h1>
+        {% endif %}
+        {% if section.settings.text %}
+          <p class="bz-offer-text">{{ section.settings.text }}</p>
+        {% endif %}
+        {% if section.settings.ends_date %}
+          <p class="bz-ends">
+            {% if section.settings.ends_label %}<span class="bz-ends-label">{{ section.settings.ends_label }}</span>{% endif %}
+            <strong class="bz-ends-date">{{ section.settings.ends_date }}</strong>
+          </p>
+        {% endif %}
+        {% render 'button', label: section.settings.button_label, href: section.settings.button_link, style: 'solid' %}
+      </div>
+      <div class="bz-hero-curve" aria-hidden="true"></div>
+    </div>
+  </div>
+</section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Deals hero",
+      "ar": "عروض الصفحة الرئيسية"
+    },
+    "version": 1,
+    "templates": ["index"],
+    "blocks": {
+      "allowed": ["side-link"],
+      "max": 8
+    },
+    "settings": {
+      "side_title": {
+        "type": "text",
+        "label": {
+          "en": "Category panel title",
+          "ar": "عنوان لوحة الأقسام"
+        },
+        "localized": true,
+        "default": {
+          "ar": "الأقسام",
+          "en": "Categories"
+        },
+        "maxLength": 30
+      },
+      "kicker": {
+        "type": "text",
+        "label": {
+          "en": "Small line above the offer",
+          "ar": "سطر صغير فوق العرض"
+        },
+        "localized": true,
+        "default": {
+          "ar": "عروض الأجهزة",
+          "en": "Device deals"
+        },
+        "maxLength": 40
+      },
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Offer heading",
+          "ar": "عنوان العرض"
+        },
+        "localized": true,
+        "default": {
+          "ar": "خصومات على الموبايلات والسماعات والشواحن",
+          "en": "Discounts on phones, headphones and chargers"
+        },
+        "maxLength": 80
+      },
+      "text": {
+        "type": "textarea",
+        "label": {
+          "en": "Offer text",
+          "ar": "نص العرض"
+        },
+        "localized": true,
+        "default": {
+          "ar": "أسعار مخفضة على أجهزة مختارة والدفع عند الاستلام.",
+          "en": "Reduced prices on selected devices, pay on delivery."
+        },
+        "maxLength": 140
+      },
+      "ends_label": {
+        "type": "text",
+        "label": {
+          "en": "Offer end label",
+          "ar": "عنوان تاريخ انتهاء العرض"
+        },
+        "localized": true,
+        "default": {
+          "ar": "العرض ينتهي",
+          "en": "Offer ends"
+        },
+        "maxLength": 30
+      },
+      "ends_date": {
+        "type": "text",
+        "label": {
+          "en": "Offer end date (leave empty to hide)",
+          "ar": "تاريخ انتهاء العرض (اتركه فاضي للإخفاء)"
+        },
+        "localized": true,
+        "default": {
+          "ar": "31 أكتوبر",
+          "en": "31 October"
+        },
+        "maxLength": 30
+      },
+      "button_label": {
+        "type": "text",
+        "label": {
+          "en": "Button label",
+          "ar": "نص الزر"
+        },
+        "localized": true,
+        "default": {
+          "ar": "شوف العروض",
+          "en": "See the deals"
+        },
+        "maxLength": 30
+      },
+      "button_link": {
+        "type": "link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/products"
+      }
+    }
+  }
+</hk-schema>

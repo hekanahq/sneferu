@@ -1,0 +1,71 @@
+<hk-section padding-y="40" mobile-padding-y="28" class="bk-products">
+  <hk-stack gap="20">
+    <div class="bk-row-head">
+      <hk-heading text="{{ section.settings.heading }}" level="h2" size="24" mobile-size="20" class="bk-h2" />
+      <a class="bk-more" href="{{ url('/products') }}">{{ t('view_all') }}</a>
+    </div>
+    {% if collection(section.settings.list).products %}
+      <div class="bk-grid bk-cols-{{ section.settings.columns }}">
+        {% for p in collection(section.settings.list).products limit: section.settings.count %}
+          {% render 'product-card', product: p, card_style: 'plain', image_ratio: '1/1', show_price: true, show_badge: true %}
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="bk-empty">{{ t('empty_products') }}</p>
+    {% endif %}
+  </hk-stack>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Product grid",
+      "ar": "شبكة المنتجات"
+    },
+    "version": 1,
+    "settings": {
+      "heading": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "localized": true,
+        "default": {
+          "ar": "الأكثر طلبًا",
+          "en": "Most wanted"
+        },
+        "maxLength": 60
+      },
+      "list": {
+        "type": "collection",
+        "label": {
+          "en": "Collection",
+          "ar": "القسم"
+        },
+        "default": "featured"
+      },
+      "columns": {
+        "type": "range",
+        "label": {
+          "en": "Columns",
+          "ar": "الأعمدة"
+        },
+        "default": 4,
+        "min": 2,
+        "max": 5,
+        "step": 1
+      },
+      "count": {
+        "type": "range",
+        "label": {
+          "en": "Products",
+          "ar": "عدد المنتجات"
+        },
+        "default": 8,
+        "min": 2,
+        "max": 24,
+        "step": 1
+      }
+    }
+  }
+</hk-schema>

@@ -1,0 +1,42 @@
+{
+  "id": "konafa",
+  "name": "Konafa",
+  "version": "1.0.4",
+  "author": "Hekana",
+  "description": "An oriental sweets and gift box store: deep emerald and gold on cream, a geometric Islamic border, occasion tiles, square product photos and a gift-box banner, on every page.",
+  "category": "food",
+  "engine": "hk2",
+  "engineCompatibility": "^2.0.0",
+  "defaultLocale": "ar",
+  "locales": ["ar", "en"],
+  "settings": {},
+  "money": {
+    "format": "whole"
+  },
+  "tokens": {
+    "colors": {
+      "primary": "#0B5A4B",
+      "secondary": "#073B32",
+      "accent": "#D4B06A",
+      "background": "#FBF8F0",
+      "text": "#1F2A26",
+      "muted": "#55605A",
+      "line": "#D8CDB0",
+      "soft": "#F2EAD6",
+      "surface": "#FFFFFF",
+      "gold": "#D4B06A",
+      "goldDeep": "#8A6A22",
+      "emerald": "#0B5A4B"
+    },
+    "layout": {
+      "contentWidth": "1120px"
+    },
+    "fonts": {
+      "heading": "Noto Kufi Arabic",
+      "body": "Tajawal"
+    },
+    "radius": {
+      "md": "2px"
+    }
+  }
+}

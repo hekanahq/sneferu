@@ -1,0 +1,13 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "not-found"
+      },
+      {
+        "type": "related-products"
+      }
+    ]
+  }
+</hk-schema>

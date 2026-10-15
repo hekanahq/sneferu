@@ -1,0 +1,9 @@
+<div class="hn-empty">
+  {% if title %}
+    <h2 class="hn-h2">{{ title }}</h2>
+  {% endif %}
+  {% if text %}
+    <p class="hn-lead">{{ text }}</p>
+  {% endif %}
+  {% if label %}<hk-button label="{{ label }}" href="{{ href }}" class="hn-cta" />{% endif %}
+</div>

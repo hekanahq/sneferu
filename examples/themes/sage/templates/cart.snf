@@ -1,0 +1,22 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "cart-main",
+        "blocks": [
+          {
+            "type": "note",
+            "settings": {
+              "text": {
+                "ar": "الدفع عند الاستلام وتوصيل لكل المحافظات.",
+                "en": "Cash on delivery and delivery across Egypt."
+              },
+              "icon": "truck"
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

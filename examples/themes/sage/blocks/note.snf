@@ -1,0 +1,51 @@
+{% if block.settings.text %}
+  <p class="sg-note">
+    {% if block.settings.icon != 'none' %}<hk-icon name="{{ block.settings.icon }}" size="20" />{% endif %}<span>{{ block.settings.text }}</span>
+  </p>
+{% endif %}
+<hk-schema>
+  {
+    "name": {
+      "en": "Note",
+      "ar": "ملاحظة"
+    },
+    "version": 1,
+    "settings": {
+      "text": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "الدفع عند الاستلام وتوصيل لكل المحافظات.",
+          "en": "Cash on delivery and delivery across Egypt."
+        },
+        "localized": true,
+        "maxLength": 200
+      },
+      "icon": {
+        "type": "select",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
+        "options": [
+          "none",
+          "truck",
+          "banknote",
+          "package",
+          "shield-check",
+          "sparkles",
+          "heart",
+          "gift",
+          "clock",
+          "mail",
+          "lock",
+          "file-text"
+        ],
+        "default": "truck"
+      }
+    }
+  }
+</hk-schema>

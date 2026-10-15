@@ -1,0 +1,38 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="20">
+  <div class="vl-chips">
+    {% for item in menu(section.settings.menu).items limit: 3 %}
+      <a class="vl-chip-link" href="{{ item.url }}"><span class="vl-chip-title">{{ item.title }}</span></a>
+    {% endfor %}
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Category links",
+      "ar": "روابط الأقسام"
+    },
+    "version": 1,
+    "templates": ["index"],
+    "settings": {
+      "menu": {
+        "type": "menu",
+        "label": {
+          "en": "Menu (first three links)",
+          "ar": "القائمة (أول ثلاثة روابط)"
+        },
+        "default": "main-menu"
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 160,
+        "step": 8,
+        "default": 24
+      }
+    }
+  }
+</hk-schema>

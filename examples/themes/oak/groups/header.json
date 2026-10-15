@@ -1,0 +1,74 @@
+{
+  "sections": [
+    {
+      "id": "header",
+      "type": "header",
+      "settings": {
+        "menu": "main-menu",
+        "show_search": true,
+        "show_account": true,
+        "show_language": true,
+        "show_cart": true,
+        "drawer_on_add": true,
+        "scheme": "light"
+      },
+      "blocks": [
+        {
+          "id": "nav-all",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "en": "All products",
+              "ar": "كل المنتجات"
+            },
+            "url": "/products"
+          }
+        },
+        {
+          "id": "nav-living",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "en": "Living room",
+              "ar": "غرفة المعيشة"
+            },
+            "url": "/category/living"
+          }
+        },
+        {
+          "id": "nav-lighting",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "en": "Lighting",
+              "ar": "الإضاءة"
+            },
+            "url": "/category/lighting"
+          }
+        },
+        {
+          "id": "nav-textiles",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "en": "Bedding and throws",
+              "ar": "المفروشات"
+            },
+            "url": "/category/textiles"
+          }
+        },
+        {
+          "id": "nav-kitchen",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "en": "Kitchen and decor",
+              "ar": "المطبخ والديكور"
+            },
+            "url": "/category/kitchen"
+          }
+        }
+      ]
+    }
+  ]
+}

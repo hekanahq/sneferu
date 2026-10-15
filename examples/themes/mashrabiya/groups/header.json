@@ -1,0 +1,75 @@
+{
+  "sections": [
+    {
+      "id": "header",
+      "type": "header",
+      "settings": {
+        "menu": "main",
+        "scheme": "primary",
+        "show_search": true,
+        "search_style": "icon",
+        "show_account": true,
+        "show_language": true,
+        "show_cart": true,
+        "drawer_on_add": true
+      },
+      "blocks": [
+        {
+          "id": "nav-all",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "كل المنتجات",
+              "en": "All products"
+            },
+            "url": "/products"
+          }
+        },
+        {
+          "id": "nav-light",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "فوانيس وإضاءة",
+              "en": "Lighting"
+            },
+            "url": "/category/lighting"
+          }
+        },
+        {
+          "id": "nav-text",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "كليم ووسائد",
+              "en": "Textiles"
+            },
+            "url": "/category/textiles"
+          }
+        },
+        {
+          "id": "nav-brass",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "نحاس وتقديم",
+              "en": "Brass and copper"
+            },
+            "url": "/category/brass-copper"
+          }
+        },
+        {
+          "id": "nav-about",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "عن المتجر",
+              "en": "About"
+            },
+            "url": "/pages/about"
+          }
+        }
+      ]
+    }
+  ]
+}

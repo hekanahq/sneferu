@@ -1,0 +1,30 @@
+<article class="bz-card bz-card-{{ card_style }}">
+  <a class="bz-card-link" href="{{ product.url }}">
+    <div class="bz-card-media">
+      <hk-image
+        src="{{ product.image }}"
+        alt="{{ product.title }}"
+        aspect-ratio="{{ image_ratio }}"
+        sizes="(min-width: 1024px) 20vw, 50vw"
+      />
+      {% if show_badge %}
+        {% if product.available %}
+          {% if product.compare_at > product.price %}
+            <span class="bz-badge">{{ t('sale') }}</span>
+          {% endif %}
+        {% else %}
+          <span class="bz-badge bz-badge-muted">{{ t('sold_out_badge') }}</span>
+        {% endif %}
+      {% endif %}
+    </div>
+    <h3 class="bz-card-title">{{ product.title }}</h3>
+    {% if product.options %}
+      <ul class="bz-specs">
+        {% for option in product.options limit: 1 %}{% for value in option.values limit: 3 %}
+            <li class="bz-spec">{{ value }}</li>
+          {% endfor %}{% endfor %}
+      </ul>
+    {% endif %}
+    {% if show_price %}{% render 'price', product: product, bind: false %}{% endif %}
+  </a>
+</article>

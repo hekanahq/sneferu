@@ -1,0 +1,22 @@
+{
+  "cart": "السلة",
+  "search_placeholder": "ابحث عن جهاز",
+  "view_all": "عرض الكل",
+  "empty_products": "مفيش منتجات هنا لسه.",
+  "account": "حسابي",
+  "search": "بحث",
+  "skip_to_content": "تخطي إلى المحتوى",
+  "menu": "القائمة",
+  "home": "الرئيسية",
+  "breadcrumb": "مسار الصفحة",
+  "sale": "خصم",
+  "sold_out_badge": "نفد المخزون",
+  "products_label": "منتج",
+  "sort_by": "ترتيب حسب",
+  "filters": "فلاتر",
+  "results_for": "نتائج البحث عن",
+  "results_label": "نتيجة",
+  "newsletter_cta": "اشترك",
+  "payment_methods": "طرق الدفع",
+  "product_info": "تفاصيل المنتج"
+}

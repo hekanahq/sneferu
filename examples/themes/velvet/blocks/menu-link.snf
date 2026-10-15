@@ -1,0 +1,46 @@
+<div class="vl-nav-item">
+  <a class="vl-nav-link" href="{{ url(block.settings.url) }}">{{ block.settings.label }}</a>
+  {% if block.blocks %}
+    <div class="vl-subnav">
+      {% for sub in block.blocks %}
+        <a class="vl-subnav-link" href="{{ url(sub.settings.url) }}">{{ sub.settings.label }}</a>
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>
+<hk-schema>
+  {
+    "name": {
+      "en": "Menu link",
+      "ar": "رابط في القائمة"
+    },
+    "version": 1,
+    "blocks": {
+      "allowed": ["menu-sub-link"],
+      "max": 8
+    },
+    "settings": {
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Label",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "رابط",
+          "en": "Link"
+        },
+        "localized": true,
+        "maxLength": 40
+      },
+      "url": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/"
+      }
+    }
+  }
+</hk-schema>

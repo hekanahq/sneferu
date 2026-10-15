@@ -1,0 +1,48 @@
+{% if section.settings.text %}
+  <div class="sg-ann sg-scheme-{{ section.settings.scheme }}">
+    <div class="sg-wrap">
+      <p class="sg-ann-text">
+        {% if section.settings.link %}<a href="{{ url(section.settings.link) }}">{{ section.settings.text }}</a>{% else %}{{ section.settings.text }}{% endif %}
+      </p>
+    </div>
+  </div>
+{% endif %}
+<hk-schema>
+  {
+    "name": {
+      "en": "Announcement bar",
+      "ar": "شريط الإعلان"
+    },
+    "version": 1,
+    "templates": ["announcement"],
+    "settings": {
+      "text": {
+        "type": "text",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": "",
+        "localized": true,
+        "maxLength": 140
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": ""
+      },
+      "scheme": {
+        "type": "select",
+        "label": {
+          "en": "Colour scheme",
+          "ar": "ألوان الشريط"
+        },
+        "options": ["accent", "ink", "sand", "paper"],
+        "default": "accent"
+      }
+    }
+  }
+</hk-schema>

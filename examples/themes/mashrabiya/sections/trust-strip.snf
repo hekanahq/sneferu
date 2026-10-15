@@ -1,0 +1,40 @@
+<hk-section padding-y="28" mobile-padding-y="24" class="mb-trust">
+  <ul class="mb-trust-list">
+    {% for block in section.blocks %}
+      <hk-block of="{{ block }}" />
+    {% endfor %}
+  </ul>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Trust strip",
+      "ar": "شريط الثقة"
+    },
+    "version": 1,
+    "settings": {},
+    "blocks": {
+      "allowed": ["trust"],
+      "max": 4
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "Three points",
+          "ar": "ثلاث نقاط"
+        },
+        "blocks": [
+          {
+            "type": "trust"
+          },
+          {
+            "type": "trust"
+          },
+          {
+            "type": "trust"
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

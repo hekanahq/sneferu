@@ -1,0 +1,40 @@
+{
+  "id": "bazaar",
+  "name": "Bazaar",
+  "version": "1.0.4",
+  "author": "Hekana",
+  "description": "A dense electronics deals marketplace: deep navy header and category panel, one bright yellow accent, an editable offer banner, square product cards with sale badges and a five-column grid.",
+  "category": "electronics",
+  "engine": "hk2",
+  "engineCompatibility": "^2.0.0",
+  "defaultLocale": "ar",
+  "locales": ["ar", "en"],
+  "settings": {},
+  "tokens": {
+    "colors": {
+      "primary": "#0F1F4D",
+      "secondary": "#0A1633",
+      "accent": "#FFC20E",
+      "background": "#FFFFFF",
+      "text": "#121A33",
+      "muted": "#55607A",
+      "line": "#DDE2EC",
+      "soft": "#F2F4F8",
+      "surface": "#FFFFFF",
+      "glow": "#FFF4CC"
+    },
+    "layout": {
+      "contentWidth": "1280px"
+    },
+    "fonts": {
+      "heading": "Cairo",
+      "body": "Tajawal"
+    },
+    "radius": {
+      "md": "6px"
+    }
+  },
+  "money": {
+    "format": "whole"
+  }
+}

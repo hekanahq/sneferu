@@ -1,0 +1,73 @@
+<section class="sg-sec sg-ingredients sg-pad-{{ section.settings.padding_y }}">
+  <div class="sg-wrap">
+    {% if section.settings.title %}
+      <h2 class="sg-visually">{{ section.settings.title }}</h2>
+    {% endif %}
+    <ul class="sg-ing-row">
+      {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+    </ul>
+  </div>
+</section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Ingredient row",
+      "ar": "صف المكونات"
+    },
+    "version": 1,
+    "templates": ["index"],
+    "blocks": {
+      "allowed": ["ingredient"],
+      "max": 6
+    },
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading (read by screen readers only)",
+          "ar": "العنوان (لقارئ الشاشة فقط)"
+        },
+        "default": {
+          "ar": "المكونات الأساسية في منتجاتنا",
+          "en": "Key ingredients in our products"
+        },
+        "localized": true,
+        "maxLength": 50
+      },
+      "padding_y": {
+        "type": "select",
+        "label": {
+          "en": "Vertical spacing",
+          "ar": "المسافة الرأسية"
+        },
+        "options": ["compact", "normal", "roomy"],
+        "default": "compact"
+      }
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "Five ingredients",
+          "ar": "خمسة مكونات"
+        },
+        "blocks": [
+          {
+            "type": "ingredient"
+          },
+          {
+            "type": "ingredient"
+          },
+          {
+            "type": "ingredient"
+          },
+          {
+            "type": "ingredient"
+          },
+          {
+            "type": "ingredient"
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

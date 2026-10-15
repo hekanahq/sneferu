@@ -1,0 +1,103 @@
+<section class="sg-sec sg-shelf sg-pad-{{ section.settings.padding_y }}" id="shop">
+  <div class="sg-wrap">
+    {% if section.settings.title %}
+      <h2 class="sg-h2 sg-center">{{ section.settings.title }}</h2>
+    {% endif %}
+    <div class="sg-grid sg-cols-{{ section.settings.columns }}">
+      {% for p in collection(section.settings.list).products limit: section.settings.count %}{% render 'card', p: p %}{% endfor %}
+    </div>
+    {% if section.settings.button_label %}
+      <div class="sg-center sg-more">
+        <hk-button
+          label="{{ section.settings.button_label }}"
+          href="{{ url(section.settings.button_link) }}"
+          variant="outline"
+          class="sg-cta"
+        />
+      </div>
+    {% endif %}
+  </div>
+</section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Product shelf",
+      "ar": "رف المنتجات"
+    },
+    "version": 1,
+    "templates": ["index"],
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "مختارات من المتجر",
+          "en": "Store picks"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "list": {
+        "type": "collection",
+        "label": {
+          "en": "Collection",
+          "ar": "القسم"
+        },
+        "default": "featured"
+      },
+      "count": {
+        "type": "range",
+        "label": {
+          "en": "Products",
+          "ar": "عدد المنتجات"
+        },
+        "min": 2,
+        "max": 12,
+        "step": 1,
+        "default": 6
+      },
+      "columns": {
+        "type": "select",
+        "label": {
+          "en": "Columns",
+          "ar": "الأعمدة"
+        },
+        "options": ["2", "3", "4"],
+        "default": "3"
+      },
+      "button_label": {
+        "type": "text",
+        "label": {
+          "en": "Button",
+          "ar": "الزر"
+        },
+        "default": {
+          "ar": "كل المنتجات",
+          "en": "All products"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "button_link": {
+        "type": "link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/products"
+      },
+      "padding_y": {
+        "type": "select",
+        "label": {
+          "en": "Vertical spacing",
+          "ar": "المسافة الرأسية"
+        },
+        "options": ["compact", "normal", "roomy"],
+        "default": "normal"
+      }
+    }
+  }
+</hk-schema>

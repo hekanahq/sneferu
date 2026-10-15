@@ -1,0 +1,59 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "not-found"
+      },
+      {
+        "type": "category-tiles",
+        "blocks": [
+          {
+            "type": "tile",
+            "settings": {
+              "label": {
+                "en": "Rings",
+                "ar": "الخواتم"
+              },
+              "link": "/category/rings",
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-jewelry/pool-jewelry-silver-solitaire-ring.webp"
+            }
+          },
+          {
+            "type": "tile",
+            "settings": {
+              "label": {
+                "en": "Earrings",
+                "ar": "الأقراط"
+              },
+              "link": "/category/earrings",
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-jewelry/pool-jewelry-silver-hoop-earrings.webp"
+            }
+          },
+          {
+            "type": "tile",
+            "settings": {
+              "label": {
+                "en": "Necklaces",
+                "ar": "السلاسل"
+              },
+              "link": "/category/necklaces",
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-jewelry/pool-jewelry-silver-pendant-necklace.webp"
+            }
+          },
+          {
+            "type": "tile",
+            "settings": {
+              "label": {
+                "en": "Bracelets",
+                "ar": "الأساور"
+              },
+              "link": "/category/bracelets",
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-jewelry/pool-jewelry-silver-cuff-bracelet.webp"
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

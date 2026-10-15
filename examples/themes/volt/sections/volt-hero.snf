@@ -1,0 +1,165 @@
+<hk-section padding-y="0" mobile-padding-y="0" class="vt-hero-section">
+  <div class="vt-hero-stage">
+    <span class="vt-hero-glow" aria-hidden="true"></span>
+    <div class="vt-hero-art">
+      {% if section.settings.image %}
+        <hk-image
+          src="{{ section.settings.image }}"
+          alt="{{ section.settings.image_alt }}"
+          aspect-ratio="16/9"
+          fit="cover"
+          loading="eager"
+          sizes="(min-width: 1024px) 900px, 100vw"
+        />
+      {% endif %}
+    </div>
+    <div class="vt-hero-copy">
+      {% if section.settings.eyebrow %}
+        <p class="vt-eyebrow">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+      <hk-heading
+        text="{{ section.settings.heading }}"
+        level="h1"
+        size="44"
+        mobile-size="28"
+        align="center"
+        class="vt-hero-title"
+      />
+      {% if section.settings.text %}
+        <hk-text
+          text="{{ section.settings.text }}"
+          size="17"
+          mobile-size="15"
+          align="center"
+          class="vt-muted vt-hero-text"
+        />
+      {% endif %}
+      <div class="vt-hero-actions">
+        {% if section.settings.button_label %}<hk-button
+            label="{{ section.settings.button_label }}"
+            href="{{ url(section.settings.button_link) }}"
+            size="lg"
+          />{% endif %}
+        {% if section.settings.button2_label %}<hk-button
+            label="{{ section.settings.button2_label }}"
+            href="{{ url(section.settings.button2_link) }}"
+            variant="outline"
+            size="lg"
+          />{% endif %}
+      </div>
+    </div>
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "ar": "البانر الرئيسي",
+      "en": "Hero"
+    },
+    "version": 1,
+    "settings": {
+      "image": {
+        "type": "image",
+        "label": {
+          "ar": "صورة المنتجات",
+          "en": "Product image"
+        },
+        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/volt/volt-hero.webp"
+      },
+      "image_alt": {
+        "type": "text",
+        "label": {
+          "ar": "وصف الصورة",
+          "en": "Image description"
+        },
+        "localized": true,
+        "default": {
+          "ar": "موبايل ولابتوب بتصميم نظيف",
+          "en": "A smartphone and a laptop"
+        },
+        "maxLength": 100
+      },
+      "eyebrow": {
+        "type": "text",
+        "label": {
+          "ar": "سطر صغير فوق العنوان",
+          "en": "Small line above the heading"
+        },
+        "localized": true,
+        "default": {
+          "ar": "",
+          "en": ""
+        },
+        "maxLength": 40
+      },
+      "heading": {
+        "type": "text",
+        "label": {
+          "ar": "العنوان",
+          "en": "Heading"
+        },
+        "localized": true,
+        "default": {
+          "ar": "أجهزة بتصميم هادي وأداء واضح",
+          "en": "Clean design, clear performance"
+        },
+        "maxLength": 80
+      },
+      "text": {
+        "type": "textarea",
+        "label": {
+          "ar": "النص",
+          "en": "Text"
+        },
+        "localized": true,
+        "default": {
+          "ar": "موبايلات ولابتوبات وسماعات وساعات، بالسعر بالجنيه والدفع عند الاستلام.",
+          "en": "Phones, laptops, audio and watches, priced in pounds, cash on delivery."
+        },
+        "maxLength": 160
+      },
+      "button_label": {
+        "type": "text",
+        "label": {
+          "ar": "الزر",
+          "en": "Button"
+        },
+        "localized": true,
+        "default": {
+          "ar": "تسوق الأجهزة",
+          "en": "Shop devices"
+        },
+        "maxLength": 24
+      },
+      "button_link": {
+        "type": "link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/products"
+      },
+      "button2_label": {
+        "type": "text",
+        "label": {
+          "ar": "الزر التاني (فاضي يخفيه)",
+          "en": "Second button (empty hides it)"
+        },
+        "localized": true,
+        "default": {
+          "ar": "قارن الأجهزة",
+          "en": "Compare devices"
+        },
+        "maxLength": 24
+      },
+      "button2_link": {
+        "type": "link",
+        "label": {
+          "ar": "رابط الزر التاني",
+          "en": "Second button link"
+        },
+        "default": "/category/phones"
+      }
+    }
+  }
+</hk-schema>

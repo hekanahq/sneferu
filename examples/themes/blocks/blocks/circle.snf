@@ -1,0 +1,67 @@
+<a class="bk-circle bk-tone-{{ block.settings.tone }}" href="{{ url(block.settings.link) }}">
+  <span class="bk-circle-icon"><hk-icon name="{{ block.settings.icon }}" size="28" /></span>
+  <span class="bk-circle-label">{{ block.settings.label }}</span>
+</a>
+<hk-schema>
+  {
+    "name": {
+      "en": "Category tile",
+      "ar": "مربع قسم"
+    },
+    "version": 1,
+    "settings": {
+      "icon": {
+        "type": "select",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
+        "options": [
+          "gift",
+          "package",
+          "book-open",
+          "graduation-cap",
+          "star",
+          "heart",
+          "smartphone",
+          "gamepad-2",
+          "sparkles",
+          "layers",
+          "shopping-bag",
+          "trophy"
+        ],
+        "default": "gift"
+      },
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Label",
+          "ar": "النص"
+        },
+        "localized": true,
+        "default": {
+          "ar": "ألعاب",
+          "en": "Toys"
+        },
+        "maxLength": 24
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      },
+      "tone": {
+        "type": "select",
+        "label": {
+          "en": "Colour",
+          "ar": "اللون"
+        },
+        "options": ["blue", "yellow", "red", "green"],
+        "default": "blue"
+      }
+    }
+  }
+</hk-schema>

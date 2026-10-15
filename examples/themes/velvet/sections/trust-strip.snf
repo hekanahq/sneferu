@@ -1,0 +1,21 @@
+<hk-section padding-y="20" class="vl-trust">
+  <ul class="vl-trust-list">
+    {% for block in section.blocks %}
+      <hk-block of="{{ block }}" />
+    {% endfor %}
+  </ul>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Trust strip",
+      "ar": "شريط الثقة"
+    },
+    "version": 1,
+    "blocks": {
+      "allowed": ["trust"],
+      "max": 4
+    },
+    "settings": {}
+  }
+</hk-schema>

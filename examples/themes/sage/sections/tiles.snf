@@ -1,0 +1,51 @@
+<section class="sg-sec sg-tiles-sec sg-pad-{{ section.settings.padding_y }}">
+  <div class="sg-wrap">
+    <div class="sg-tiles">
+      {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+    </div>
+  </div>
+</section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Category tiles",
+      "ar": "بلاطات الأقسام"
+    },
+    "version": 1,
+    "templates": ["index"],
+    "blocks": {
+      "allowed": ["tile"],
+      "max": 4
+    },
+    "settings": {
+      "padding_y": {
+        "type": "select",
+        "label": {
+          "en": "Vertical spacing",
+          "ar": "المسافة الرأسية"
+        },
+        "options": ["compact", "normal", "roomy"],
+        "default": "compact"
+      }
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "Three tiles",
+          "ar": "ثلاث بلاطات"
+        },
+        "blocks": [
+          {
+            "type": "tile"
+          },
+          {
+            "type": "tile"
+          },
+          {
+            "type": "tile"
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

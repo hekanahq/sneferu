@@ -1,0 +1,16 @@
+{
+  "sections": [
+    {
+      "id": "announcement",
+      "type": "announcement-bar",
+      "settings": {
+        "text": {
+          "ar": "الدفع عند الاستلام",
+          "en": "Cash on delivery"
+        },
+        "link": "/products",
+        "scheme": "accent"
+      }
+    }
+  ]
+}

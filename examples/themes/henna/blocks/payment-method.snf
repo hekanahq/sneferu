@@ -1,0 +1,34 @@
+<span class="hn-payment"><hk-icon name="{{ block.settings.icon }}" size="18" /><span>{{ block.settings.label }}</span></span>
+<hk-schema>
+  {
+    "name": {
+      "en": "Payment method",
+      "ar": "طريقة دفع"
+    },
+    "version": 1,
+    "settings": {
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Name",
+          "ar": "الاسم"
+        },
+        "default": {
+          "ar": "الدفع عند الاستلام",
+          "en": "Cash on delivery"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "icon": {
+        "type": "select",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
+        "options": ["credit-card", "banknote", "wallet", "smartphone"],
+        "default": "banknote"
+      }
+    }
+  }
+</hk-schema>

@@ -1,0 +1,38 @@
+<div class="hl-footer-col">
+  {% if block.settings.title %}
+    <h3 class="hl-footer-title">{{ block.settings.title }}</h3>
+  {% endif %}
+  <div class="hl-footer-links">
+    {% for link in block.blocks %}
+      <a href="{{ url(link.settings.url) }}">{{ link.settings.label }}</a>
+    {% endfor %}
+  </div>
+</div>
+<hk-schema>
+  {
+    "name": {
+      "en": "Link column",
+      "ar": "عمود روابط"
+    },
+    "version": 1,
+    "blocks": {
+      "allowed": ["footer-link"],
+      "max": 10
+    },
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Column title",
+          "ar": "عنوان العمود"
+        },
+        "default": {
+          "ar": "روابط",
+          "en": "Links"
+        },
+        "localized": true,
+        "maxLength": 40
+      }
+    }
+  }
+</hk-schema>

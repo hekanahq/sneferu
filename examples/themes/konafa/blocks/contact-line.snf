@@ -1,0 +1,46 @@
+<p class="kn-contact-line">
+  <hk-icon name="{{ block.settings.icon }}" />
+  {% if block.settings.url %}
+    <a href="{{ url(block.settings.url) }}">{{ block.settings.text }}</a>
+  {% else %}
+    <span>{{ block.settings.text }}</span>
+  {% endif %}
+</p>
+<hk-schema>
+  {
+    "name": {
+      "en": "Contact line",
+      "ar": "بيانات تواصل"
+    },
+    "version": 1,
+    "settings": {
+      "icon": {
+        "type": "select",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
+        "options": ["mail", "phone", "map-pin", "clock", "message-circle"],
+        "default": "mail"
+      },
+      "text": {
+        "type": "text",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": "",
+        "localized": true,
+        "maxLength": 80
+      },
+      "url": {
+        "type": "link",
+        "label": {
+          "en": "Link (optional, for example tel: or mailto:)",
+          "ar": "رابط (اختياري، مثل tel: أو mailto:)"
+        },
+        "default": ""
+      }
+    }
+  }
+</hk-schema>

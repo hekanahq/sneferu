@@ -1,0 +1,53 @@
+<a class="hl-cat" href="{{ url(block.settings.link) }}">
+  <span class="hl-cat-media">
+    {% if block.settings.image %}
+      <hk-image
+        src="{{ block.settings.image }}"
+        alt="{{ block.settings.label }}"
+        aspect-ratio="1/1"
+        sizes="(min-width: 1024px) 20vw, 30vw"
+      />
+    {% endif %}
+  </span>
+  <span class="hl-cat-label">{{ block.settings.label }}</span>
+</a>
+<hk-schema>
+  {
+    "name": {
+      "en": "Category tile",
+      "ar": "بلاطة قسم"
+    },
+    "version": 1,
+    "settings": {
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Label",
+          "ar": "الاسم"
+        },
+        "default": {
+          "en": "Rings",
+          "ar": "الخواتم"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      },
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "Image",
+          "ar": "الصورة"
+        },
+        "default": ""
+      }
+    }
+  }
+</hk-schema>

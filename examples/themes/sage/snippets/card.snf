@@ -1,0 +1,12 @@
+<article class="sg-cover">
+  <hk-product-card product="{{ p }}" class="sg-card">
+    <hk-part name="badge">
+      {% if p.compare_at > p.price %}<span class="sg-flag">{{ t('sale') }}</span>{% endif %}
+    </hk-part>
+  </hk-product-card>
+  {% for o in p.options limit: 1 %}
+    <p class="sg-sizes" role="list" aria-label="{{ o.name }}">
+      {% for v in o.values limit: 3 %}<span class="sg-size" role="listitem">{{ v }}</span>{% endfor %}
+    </p>
+  {% endfor %}
+</article>

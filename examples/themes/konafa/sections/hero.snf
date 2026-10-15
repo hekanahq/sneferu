@@ -1,0 +1,78 @@
+<hk-section full-bleed="true" padding-y="0" mobile-padding-y="0">
+  <div class="kn-hero">
+    <span class="kn-geo kn-geo-start" aria-hidden="true">{% render 'geo-v' %}</span>
+    <span class="kn-geo kn-geo-end" aria-hidden="true">{% render 'geo-v' %}</span>
+    <hk-container>
+      <div class="kn-hero-inner">
+        {% if section.settings.title %}
+          <hk-heading text="{{ section.settings.title }}" level="h1" size="34" mobile-size="24" align="center" />
+        {% endif %}
+        {% if section.settings.subtitle %}
+          <p class="kn-hero-sub">{{ section.settings.subtitle }}</p>
+        {% endif %}
+        {% if section.settings.button_label %}
+          <a class="kn-pill" href="{{ url(section.settings.button_link) }}">{{ section.settings.button_label }}</a>
+        {% endif %}
+      </div>
+    </hk-container>
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Hero banner",
+      "ar": "البانر الرئيسي"
+    },
+    "version": 1,
+    "templates": ["index"],
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "حلويات شرقية وعلب هدايا",
+          "en": "Oriental sweets and gift boxes"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "subtitle": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "كنافة وبسبوسة وبقلاوة ومعمول، تتجهز لمناسبتك.",
+          "en": "Kunafa, basbousa, baklava and maamoul, made up for your occasion."
+        },
+        "localized": true,
+        "maxLength": 120
+      },
+      "button_label": {
+        "type": "text",
+        "label": {
+          "en": "Button",
+          "ar": "الزر"
+        },
+        "default": {
+          "ar": "تسوق الحلويات",
+          "en": "Shop the sweets"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "button_link": {
+        "type": "link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/products"
+      }
+    }
+  }
+</hk-schema>

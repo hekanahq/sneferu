@@ -1,0 +1,89 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "hero"
+      },
+      {
+        "type": "kn-occasions",
+        "blocks": [
+          {
+            "type": "tile",
+            "settings": {
+              "icon": "crescent",
+              "label": {
+                "ar": "رمضان",
+                "en": "Ramadan"
+              },
+              "link": "/category/ramadan"
+            }
+          },
+          {
+            "type": "tile",
+            "settings": {
+              "icon": "star8",
+              "label": {
+                "ar": "العيد",
+                "en": "Eid"
+              },
+              "link": "/category/eid"
+            }
+          },
+          {
+            "type": "tile",
+            "settings": {
+              "icon": "heart",
+              "label": {
+                "ar": "الأفراح",
+                "en": "Weddings"
+              },
+              "link": "/category/weddings"
+            }
+          }
+        ]
+      },
+      {
+        "type": "featured-products"
+      },
+      {
+        "type": "kn-gift"
+      },
+      {
+        "type": "kn-trust",
+        "blocks": [
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "banknote",
+              "label": {
+                "ar": "الدفع عند الاستلام",
+                "en": "Cash on delivery"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "truck",
+              "label": {
+                "ar": "توصيل لكل المحافظات",
+                "en": "Delivery across Egypt"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "gift",
+              "label": {
+                "ar": "تغليف مناسب للهدايا",
+                "en": "Gift-ready packing"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

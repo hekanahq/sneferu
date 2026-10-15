@@ -1,0 +1,202 @@
+<header class="hl-header hl-scheme-{{ section.settings.scheme }} hl-sticky-{{ section.settings.sticky }}">
+  <hk-container>
+    <div class="hl-header-bar">
+      <a class="hl-logo" href="{{ url('/') }}">
+        {% if section.settings.logo %}
+          <img
+            class="hl-logo-img hl-logo-h-{{ section.settings.logo_height }}"
+            src="{{ section.settings.logo }}"
+            alt="{{ store.name }}"
+            width="160"
+            height="{{ section.settings.logo_height }}"
+          >
+        {% endif %}
+        {% if section.settings.logo_text %}
+          <span class="hl-logo-text">{{ section.settings.logo_text }}</span>
+        {% elsif section.settings.logo == '' %}
+          <span class="hl-logo-text">{{ store.name }}</span>
+        {% endif %}
+      </a>
+      {% if section.settings.show_search %}{% if section.settings.search_style == 'bar' %}
+          <div class="hl-search-bar"><hk-search-form placeholder="{{ t('search_placeholder') }}" /></div>
+        {% endif %}{% endif %}
+      <div class="hl-header-actions">
+        {% if section.settings.show_search %}{% if section.settings.search_style == 'icon' %}
+            <details class="hl-search-toggle">
+              <summary class="hl-icon-button" aria-label="{{ t('search') }}"><hk-icon name="search" /></summary>
+              <div class="hl-search-panel"><hk-search-form placeholder="{{ t('search_placeholder') }}" /></div>
+            </details>
+          {% endif %}{% endif %}
+        {% if section.settings.show_language %}<hk-locale-switch />{% endif %}
+        {% if section.settings.show_account %}
+          <a class="hl-icon-button" href="{{ url('/account') }}" aria-label="{{ t('account') }}"><hk-icon name="user" /></a>
+        {% endif %}
+        {% if section.settings.show_cart %}
+          <a
+            class="hl-icon-button hl-cart-link"
+            href="{{ url('/cart') }}"
+            data-hk-open="cart-drawer"
+            aria-label="{{ t('cart') }}"
+          >
+            <hk-icon name="shopping-cart" />
+            <hk-cart-count />
+          </a>
+        {% endif %}
+      </div>
+    </div>
+    <nav class="hl-nav" aria-label="{{ t('menu') }}">
+      {% if menu(section.settings.menu).items %}
+        {% for item in menu(section.settings.menu).items %}
+          <div class="hl-nav-item">
+            <a class="hl-nav-link" href="{{ item.url }}" aria-current="{{ item.active }}">{{ item.title }}</a>
+            {% if item.children %}
+              <div class="hl-subnav">
+                {% for sub in item.children %}
+                  <a class="hl-subnav-link" href="{{ sub.url }}" aria-current="{{ sub.active }}">{{ sub.title }}</a>
+                  {% for leaf in sub.children %}
+                    <a
+                      class="hl-subnav-link hl-subnav-deep"
+                      href="{{ leaf.url }}"
+                      aria-current="{{ leaf.active }}"
+                    >{{ leaf.title }}</a>
+                  {% endfor %}
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+      {% else %}{% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}{% endif %}
+    </nav>
+  </hk-container>
+  {% if section.settings.show_cart %}
+    <hk-cart-drawer open-on-add="{{ section.settings.drawer_on_add }}">
+      <hk-cart-items />
+      <hk-cart-summary />
+    </hk-cart-drawer>
+  {% endif %}
+</header>
+<hk-schema>
+  {
+    "name": {
+      "en": "Header",
+      "ar": "الهيدر"
+    },
+    "version": 1,
+    "templates": ["header"],
+    "blocks": {
+      "allowed": ["menu-link"],
+      "max": 8
+    },
+    "settings": {
+      "menu": {
+        "type": "menu",
+        "label": {
+          "en": "Menu (the links below show when none is picked or it has no links)",
+          "ar": "القائمة (الروابط اللي تحت بتظهر لو مفيش قائمة أو مفيهاش روابط)"
+        },
+        "default": ""
+      },
+      "logo": {
+        "type": "image",
+        "label": {
+          "en": "Logo image",
+          "ar": "صورة الشعار"
+        },
+        "default": ""
+      },
+      "logo_text": {
+        "type": "text",
+        "label": {
+          "en": "Logo text (store name when empty)",
+          "ar": "نص الشعار (اسم المتجر لو فاضي)"
+        },
+        "default": "",
+        "localized": true,
+        "maxLength": 40
+      },
+      "logo_height": {
+        "type": "select",
+        "label": {
+          "en": "Logo height (px)",
+          "ar": "ارتفاع الشعار (بكسل)"
+        },
+        "options": ["24", "32", "40", "48", "64"],
+        "default": "40"
+      },
+      "scheme": {
+        "type": "select",
+        "label": {
+          "en": "Colour scheme",
+          "ar": "ألوان الهيدر"
+        },
+        "options": ["light", "primary", "accent"],
+        "default": "light"
+      },
+      "sticky": {
+        "type": "boolean",
+        "label": {
+          "en": "Stick to the top",
+          "ar": "تثبيت في أعلى الصفحة"
+        },
+        "default": true
+      },
+      "show_search": {
+        "type": "boolean",
+        "label": {
+          "en": "Show search",
+          "ar": "إظهار البحث"
+        },
+        "default": true
+      },
+      "search_style": {
+        "type": "select",
+        "label": {
+          "en": "Search style",
+          "ar": "شكل البحث"
+        },
+        "options": ["bar", "icon"],
+        "default": "bar",
+        "visible_if": {
+          "setting": "show_search",
+          "equals": true
+        }
+      },
+      "show_account": {
+        "type": "boolean",
+        "label": {
+          "en": "Show account icon",
+          "ar": "إظهار أيقونة الحساب"
+        },
+        "default": true
+      },
+      "show_language": {
+        "type": "boolean",
+        "label": {
+          "en": "Show language switch",
+          "ar": "إظهار تبديل اللغة"
+        },
+        "default": true
+      },
+      "show_cart": {
+        "type": "boolean",
+        "label": {
+          "en": "Show cart",
+          "ar": "إظهار السلة"
+        },
+        "default": true
+      },
+      "drawer_on_add": {
+        "type": "boolean",
+        "label": {
+          "en": "Open the cart when an item is added",
+          "ar": "فتح السلة عند الإضافة"
+        },
+        "default": true,
+        "visible_if": {
+          "setting": "show_cart",
+          "equals": true
+        }
+      }
+    }
+  }
+</hk-schema>

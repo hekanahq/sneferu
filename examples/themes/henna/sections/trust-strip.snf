@@ -1,0 +1,39 @@
+<section class="hn-trust hn-pad-compact">
+  <div class="hn-wrap hn-trust-row">
+    {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+  </div>
+</section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Trust strip",
+      "ar": "شريط الثقة"
+    },
+    "version": 1,
+    "templates": ["index"],
+    "blocks": {
+      "allowed": ["trust-item"],
+      "max": 4
+    },
+    "settings": {},
+    "presets": [
+      {
+        "name": {
+          "en": "Three points",
+          "ar": "ثلاث نقاط"
+        },
+        "blocks": [
+          {
+            "type": "trust-item"
+          },
+          {
+            "type": "trust-item"
+          },
+          {
+            "type": "trust-item"
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

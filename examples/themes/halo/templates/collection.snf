@@ -1,0 +1,57 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "collection-main"
+      },
+      {
+        "type": "feature-strip",
+        "blocks": [
+          {
+            "type": "feature",
+            "settings": {
+              "icon": "banknote",
+              "label": {
+                "en": "Cash on delivery",
+                "ar": "الدفع عند الاستلام"
+              },
+              "text": {
+                "en": "",
+                "ar": ""
+              }
+            }
+          },
+          {
+            "type": "feature",
+            "settings": {
+              "icon": "truck",
+              "label": {
+                "en": "Delivery across Egypt",
+                "ar": "توصيل لكل المحافظات"
+              },
+              "text": {
+                "en": "",
+                "ar": ""
+              }
+            }
+          },
+          {
+            "type": "feature",
+            "settings": {
+              "icon": "package",
+              "label": {
+                "en": "Easy exchange",
+                "ar": "استبدال سهل"
+              },
+              "text": {
+                "en": "",
+                "ar": ""
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

@@ -1,0 +1,111 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="28">
+  <div class="tk-section-head">
+    {% if section.settings.title %}
+      <hk-heading text="{{ section.settings.title }}" level="h2" size="30" mobile-size="22" />
+    {% endif %}
+    {% if section.settings.link_label %}<a
+        class="tk-view-all"
+        href="{{ url(section.settings.link) }}"
+      >{{ section.settings.link_label }}</a>{% endif %}
+  </div>
+  {% if section.blocks %}
+    <div class="tk-days">
+      {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+    </div>
+  {% endif %}
+  <div class="tk-grid tk-menu-grid tk-cols-{{ section.settings.columns }}">
+    {% for p in collection(section.settings.collection).products limit: section.settings.limit %}
+      {% render 'product-card', product: p, card_style: 'plain', image_ratio: '1/1', show_price: true, show_badge: true, show_add: true %}
+    {% endfor %}
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Menu of the day",
+      "ar": "قائمة اليوم"
+    },
+    "version": 1,
+    "blocks": {
+      "allowed": ["day-tab"],
+      "max": 5
+    },
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "قائمة النهارده",
+          "en": "Today's menu"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "link_label": {
+        "type": "text",
+        "label": {
+          "en": "Link text",
+          "ar": "نص الرابط"
+        },
+        "default": {
+          "ar": "كل الأطباق",
+          "en": "All dishes"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      },
+      "collection": {
+        "type": "collection",
+        "label": {
+          "en": "Collection",
+          "ar": "المجموعة"
+        },
+        "default": "featured"
+      },
+      "limit": {
+        "type": "range",
+        "label": {
+          "en": "Dishes",
+          "ar": "عدد الأطباق"
+        },
+        "min": 3,
+        "max": 12,
+        "step": 1,
+        "default": 6
+      },
+      "columns": {
+        "type": "range",
+        "label": {
+          "en": "Columns",
+          "ar": "الأعمدة"
+        },
+        "min": 2,
+        "max": 4,
+        "step": 1,
+        "default": 3
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 160,
+        "step": 8,
+        "default": 56
+      }
+    }
+  }
+</hk-schema>

@@ -1,0 +1,21 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "search-main"
+      },
+      {
+        "type": "featured-products",
+        "settings": {
+          "title": {
+            "ar": "أطباق النهارده",
+            "en": "Today's dishes"
+          },
+          "limit": 3,
+          "columns": 3
+        }
+      }
+    ]
+  }
+</hk-schema>

@@ -1,0 +1,133 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "hero",
+        "blocks": [
+          {
+            "type": "age-chip",
+            "settings": {
+              "label": {
+                "ar": "0-2",
+                "en": "0-2"
+              },
+              "link": "/category/age-0-2"
+            }
+          },
+          {
+            "type": "age-chip",
+            "settings": {
+              "label": {
+                "ar": "3-5",
+                "en": "3-5"
+              },
+              "link": "/category/age-3-5"
+            }
+          },
+          {
+            "type": "age-chip",
+            "settings": {
+              "label": {
+                "ar": "6+",
+                "en": "6+"
+              },
+              "link": "/category/age-6-plus"
+            }
+          }
+        ]
+      },
+      {
+        "type": "category-chips",
+        "blocks": [
+          {
+            "type": "chip",
+            "settings": {
+              "label": {
+                "ar": "للرضّع",
+                "en": "Babies"
+              },
+              "link": "/category/age-0-2",
+              "tone": "mint"
+            }
+          },
+          {
+            "type": "chip",
+            "settings": {
+              "label": {
+                "ar": "للحضانة",
+                "en": "Nursery"
+              },
+              "link": "/category/age-3-5",
+              "tone": "sky"
+            }
+          },
+          {
+            "type": "chip",
+            "settings": {
+              "label": {
+                "ar": "للمدرسة",
+                "en": "School"
+              },
+              "link": "/category/age-6-plus",
+              "tone": "butter"
+            }
+          }
+        ]
+      },
+      {
+        "type": "featured-products",
+        "settings": {
+          "collection": "featured",
+          "limit": 6,
+          "columns": 3
+        }
+      },
+      {
+        "type": "trust-strip",
+        "blocks": [
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "banknote",
+              "label": {
+                "ar": "الدفع عند الاستلام",
+                "en": "Cash on delivery"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "truck",
+              "label": {
+                "ar": "توصيل لكل المحافظات",
+                "en": "Delivery across Egypt"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "package",
+              "label": {
+                "ar": "استبدال سهل",
+                "en": "Easy exchange"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "heart",
+              "label": {
+                "ar": "اختيارات مناسبة للصغار",
+                "en": "Picked for little ones"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

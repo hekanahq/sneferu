@@ -1,0 +1,67 @@
+<section class="hn-sec hn-looks hn-pad-{{ section.settings.padding_y }}">
+  <div class="hn-wrap">
+    {% if section.settings.title %}
+      <h2 class="hn-h2 hn-center">{{ section.settings.title }}</h2>
+    {% endif %}
+    <div class="hn-look-row">
+      {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+    </div>
+  </div>
+</section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Look ideas",
+      "ar": "أفكار لوكات"
+    },
+    "version": 1,
+    "templates": ["index"],
+    "blocks": {
+      "allowed": ["look-item"],
+      "max": 4
+    },
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "أفكار للوك النهاردة",
+          "en": "Look ideas for today"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "padding_y": {
+        "type": "select",
+        "label": {
+          "en": "Vertical spacing",
+          "ar": "المسافة الرأسية"
+        },
+        "options": ["compact", "normal", "roomy"],
+        "default": "normal"
+      }
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "Three looks",
+          "ar": "ثلاث لوكات"
+        },
+        "blocks": [
+          {
+            "type": "look-item"
+          },
+          {
+            "type": "look-item"
+          },
+          {
+            "type": "look-item"
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

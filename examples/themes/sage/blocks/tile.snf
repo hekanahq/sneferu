@@ -1,0 +1,54 @@
+<a class="sg-tile sg-tone-{{ block.settings.tone }}" href="{{ url(block.settings.link) }}">
+  {% render 'glyph', name: block.settings.glyph, size: 26 %}
+  <span>{{ block.settings.label }}</span>
+</a>
+<hk-schema>
+  {
+    "name": {
+      "en": "Category tile",
+      "ar": "بلاطة قسم"
+    },
+    "version": 1,
+    "settings": {
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Label",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "روتين الصباح",
+          "en": "Morning routine"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "glyph": {
+        "type": "select",
+        "label": {
+          "en": "Glyph",
+          "ar": "الرمز"
+        },
+        "options": ["leaf", "drop", "drops", "shield", "sun", "flask", "moon"],
+        "default": "leaf"
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      },
+      "tone": {
+        "type": "select",
+        "label": {
+          "en": "Shade of green",
+          "ar": "درجة الأخضر"
+        },
+        "options": ["1", "2", "3"],
+        "default": "1"
+      }
+    }
+  }
+</hk-schema>

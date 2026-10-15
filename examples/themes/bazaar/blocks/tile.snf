@@ -1,0 +1,46 @@
+<li class="bz-tile-item">
+  <a class="bz-tile-link" href="{{ url(block.settings.url) }}">
+    <span class="bz-tile-icon"><hk-icon name="{{ block.settings.icon }}" size="30" /></span>
+    <span class="bz-tile-label">{{ block.settings.label }}</span>
+  </a>
+</li>
+<hk-schema>
+  {
+    "name": {
+      "en": "Category tile",
+      "ar": "مربع قسم"
+    },
+    "version": 1,
+    "settings": {
+      "icon": {
+        "type": "icon",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
+        "default": "smartphone"
+      },
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Label",
+          "ar": "النص"
+        },
+        "localized": true,
+        "default": {
+          "ar": "قسم",
+          "en": "Category"
+        },
+        "maxLength": 30
+      },
+      "url": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      }
+    }
+  }
+</hk-schema>

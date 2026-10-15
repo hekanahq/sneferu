@@ -1,0 +1,87 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="28" class="mb-tiles-band">
+  {% if section.settings.heading %}
+    <div class="mb-center-head">
+      <hk-heading
+        text="{{ section.settings.heading }}"
+        level="h2"
+        size="28"
+        mobile-size="22"
+        align="center"
+        class="mb-h2"
+      />
+      {% render 'ornament' %}
+    </div>
+  {% endif %}
+  <div class="mb-tiles mb-tiles-{{ section.settings.columns }}">
+    {% for block in section.blocks %}
+      <hk-block of="{{ block }}" />
+    {% endfor %}
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Category tiles",
+      "ar": "مربعات الأقسام"
+    },
+    "version": 1,
+    "settings": {
+      "heading": {
+        "type": "text",
+        "label": {
+          "en": "Heading (optional)",
+          "ar": "العنوان (اختياري)"
+        },
+        "localized": true,
+        "default": "",
+        "maxLength": 60
+      },
+      "columns": {
+        "type": "select",
+        "label": {
+          "en": "Tiles per row",
+          "ar": "عدد المربعات في الصف"
+        },
+        "options": ["3", "4", "5"],
+        "default": "4"
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 120,
+        "step": 8,
+        "default": 40
+      }
+    },
+    "blocks": {
+      "allowed": ["category-tile"],
+      "max": 10
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "Four tiles",
+          "ar": "أربعة مربعات"
+        },
+        "blocks": [
+          {
+            "type": "category-tile"
+          },
+          {
+            "type": "category-tile"
+          },
+          {
+            "type": "category-tile"
+          },
+          {
+            "type": "category-tile"
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

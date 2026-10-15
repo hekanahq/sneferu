@@ -1,0 +1,124 @@
+<div class="hl-banner hl-align-{{ section.settings.align }}">
+  <hk-container>
+    <div class="hl-banner-grid">
+      <div class="hl-banner-text">
+        {% if section.settings.title %}
+          <hk-heading text="{{ section.settings.title }}" level="h1" size="54" mobile-size="32" />
+        {% endif %}
+        {% if section.settings.subtitle %}
+          <hk-text text="{{ section.settings.subtitle }}" size="18" mobile-size="16" />
+        {% endif %}
+        {% render 'button', label: section.settings.button_label, href: url(section.settings.button_link), style: section.settings.button_style %}
+      </div>
+      {% if section.settings.image %}
+        <div class="hl-banner-media">
+          <hk-image
+            src="{{ section.settings.image }}"
+            alt="{{ section.settings.image_alt }}"
+            loading="eager"
+            width="1400"
+            height="1000"
+            sizes="(min-width: 1024px) 560px, 100vw"
+          />
+        </div>
+      {% endif %}
+    </div>
+  </hk-container>
+</div>
+<hk-schema>
+  {
+    "name": {
+      "en": "Banner",
+      "ar": "البانر"
+    },
+    "version": 1,
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "en": "New collection",
+          "ar": "تشكيلة جديدة"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "subtitle": {
+        "type": "text",
+        "label": {
+          "en": "Subheading",
+          "ar": "نص فرعي"
+        },
+        "default": {
+          "en": "Plain silver pieces for every day",
+          "ar": "قطع فضية بسيطة للاستخدام اليومي"
+        },
+        "localized": true,
+        "maxLength": 100
+      },
+      "button_label": {
+        "type": "text",
+        "label": {
+          "en": "Button text",
+          "ar": "نص الزر"
+        },
+        "default": {
+          "en": "Shop now",
+          "ar": "تسوق الآن"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "button_link": {
+        "type": "link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/products"
+      },
+      "button_style": {
+        "type": "select",
+        "label": {
+          "en": "Button style",
+          "ar": "شكل الزر"
+        },
+        "default": "solid",
+        "options": ["solid", "outline", "ghost"]
+      },
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "Banner image",
+          "ar": "صورة البانر"
+        },
+        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/halo/halo-banner-v5.webp"
+      },
+      "image_alt": {
+        "type": "text",
+        "label": {
+          "en": "Image description",
+          "ar": "وصف الصورة"
+        },
+        "default": {
+          "en": "Silver chain necklace with a pearl drop on a soft stone background",
+          "ar": "سلسلة فضية بلؤلؤة على خلفية حجرية ناعمة"
+        },
+        "localized": true,
+        "maxLength": 120
+      },
+      "align": {
+        "type": "select",
+        "label": {
+          "en": "Text alignment",
+          "ar": "محاذاة النص"
+        },
+        "default": "start",
+        "options": ["start", "center"]
+      }
+    }
+  }
+</hk-schema>

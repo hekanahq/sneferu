@@ -1,0 +1,18 @@
+{
+  "sections": [
+    {
+      "id": "header",
+      "type": "header",
+      "settings": {
+        "menu": "",
+        "scheme": "butter",
+        "show_search": true,
+        "show_account": true,
+        "show_language": true,
+        "show_cart": true,
+        "drawer_on_add": true
+      },
+      "blocks": []
+    }
+  ]
+}

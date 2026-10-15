@@ -1,0 +1,52 @@
+<li class="hl-feature">
+  <span class="hl-feature-icon"><hk-icon name="{{ block.settings.icon }}" label="" /></span>
+  <span class="hl-feature-body">
+    <span class="hl-feature-label">{{ block.settings.label }}</span>
+    {% if block.settings.text %}<span class="hl-feature-text">{{ block.settings.text }}</span>{% endif %}
+  </span>
+</li>
+<hk-schema>
+  {
+    "name": {
+      "en": "Feature",
+      "ar": "ميزة"
+    },
+    "version": 1,
+    "settings": {
+      "icon": {
+        "type": "icon",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
+        "default": "check"
+      },
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Label",
+          "ar": "العنوان"
+        },
+        "default": {
+          "en": "Cash on delivery",
+          "ar": "الدفع عند الاستلام"
+        },
+        "localized": true,
+        "maxLength": 40
+      },
+      "text": {
+        "type": "text",
+        "label": {
+          "en": "Short text (optional)",
+          "ar": "نص قصير (اختياري)"
+        },
+        "default": {
+          "en": "",
+          "ar": ""
+        },
+        "localized": true,
+        "maxLength": 100
+      }
+    }
+  }
+</hk-schema>

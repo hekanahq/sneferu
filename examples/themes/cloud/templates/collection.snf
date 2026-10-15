@@ -1,0 +1,83 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "collection-main"
+      },
+      {
+        "type": "category-chips",
+        "blocks": [
+          {
+            "type": "chip",
+            "settings": {
+              "label": {
+                "ar": "للرضّع",
+                "en": "Babies"
+              },
+              "link": "/category/age-0-2",
+              "tone": "mint"
+            }
+          },
+          {
+            "type": "chip",
+            "settings": {
+              "label": {
+                "ar": "للحضانة",
+                "en": "Nursery"
+              },
+              "link": "/category/age-3-5",
+              "tone": "sky"
+            }
+          },
+          {
+            "type": "chip",
+            "settings": {
+              "label": {
+                "ar": "للمدرسة",
+                "en": "School"
+              },
+              "link": "/category/age-6-plus",
+              "tone": "butter"
+            }
+          }
+        ]
+      },
+      {
+        "type": "trust-strip",
+        "blocks": [
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "banknote",
+              "label": {
+                "ar": "الدفع عند الاستلام",
+                "en": "Cash on delivery"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "truck",
+              "label": {
+                "ar": "توصيل لكل المحافظات",
+                "en": "Delivery across Egypt"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "package",
+              "label": {
+                "ar": "استبدال سهل",
+                "en": "Easy exchange"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

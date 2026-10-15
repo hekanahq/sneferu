@@ -1,0 +1,52 @@
+<hk-section padding-y="0" class="tk-picks-wrap">
+  <ul class="tk-picks tk-picks-{{ section.settings.count }}">
+    {% for p in collection(section.settings.collection).products limit: section.settings.count %}
+      <li class="tk-pick">
+        <a class="tk-pick-link" href="{{ p.url }}">
+          <span class="tk-pick-media">
+            <hk-image
+              src="{{ p.image }}"
+              alt="{{ p.title }}"
+              aspect-ratio="1/1"
+              sizes="(min-width: 1024px) 200px, 30vw"
+              loading="eager"
+            />
+          </span>
+          <span class="tk-pick-title">{{ p.title }}</span>
+          <span class="tk-pick-price"><hk-price amount="{{ p.price }}" /></span>
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Picks row",
+      "ar": "صف الأطباق المختارة"
+    },
+    "version": 1,
+    "templates": ["index"],
+    "settings": {
+      "collection": {
+        "type": "collection",
+        "label": {
+          "en": "Collection",
+          "ar": "المجموعة"
+        },
+        "default": "main-dishes"
+      },
+      "count": {
+        "type": "range",
+        "label": {
+          "en": "Dishes",
+          "ar": "عدد الأطباق"
+        },
+        "min": 2,
+        "max": 4,
+        "step": 1,
+        "default": 3
+      }
+    }
+  }
+</hk-schema>

@@ -1,0 +1,147 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "hero",
+        "blocks": [
+          {
+            "type": "scene-item",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-home/pool-home-floor-lamp.webp",
+              "alt": {
+                "en": "Floor lamp",
+                "ar": "أباجورة أرضية"
+              },
+              "product": "floor-lamp",
+              "dot_x": "50",
+              "dot_y": "20"
+            }
+          },
+          {
+            "type": "scene-item",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-home/pool-home-oak-shelf.webp",
+              "alt": {
+                "en": "Oak shelf",
+                "ar": "رف من البلوط"
+              },
+              "product": "oak-shelf",
+              "dot_x": "50",
+              "dot_y": "35"
+            }
+          },
+          {
+            "type": "scene-item",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-home/pool-home-oak-stool.webp",
+              "alt": {
+                "en": "Oak stool",
+                "ar": "كرسي صغير من البلوط"
+              },
+              "product": "oak-stool",
+              "dot_x": "50",
+              "dot_y": "35"
+            }
+          },
+          {
+            "type": "scene-item",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-home/pool-home-ceramic-vase-white.webp",
+              "alt": {
+                "en": "Ceramic vase",
+                "ar": "فازة سيراميك"
+              },
+              "product": "ceramic-vase",
+              "dot_x": "50",
+              "dot_y": "35"
+            }
+          }
+        ]
+      },
+      {
+        "type": "oak-categories",
+        "blocks": [
+          {
+            "type": "category-tile",
+            "settings": {
+              "label": {
+                "en": "Living room",
+                "ar": "غرفة المعيشة"
+              },
+              "link": "/category/living"
+            }
+          },
+          {
+            "type": "category-tile",
+            "settings": {
+              "label": {
+                "en": "Lighting",
+                "ar": "الإضاءة"
+              },
+              "link": "/category/lighting"
+            }
+          },
+          {
+            "type": "category-tile",
+            "settings": {
+              "label": {
+                "en": "Bedding and throws",
+                "ar": "المفروشات"
+              },
+              "link": "/category/textiles"
+            }
+          },
+          {
+            "type": "category-tile",
+            "settings": {
+              "label": {
+                "en": "Kitchen and decor",
+                "ar": "المطبخ والديكور"
+              },
+              "link": "/category/kitchen"
+            }
+          }
+        ]
+      },
+      {
+        "type": "featured-products"
+      },
+      {
+        "type": "oak-trust",
+        "blocks": [
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "banknote",
+              "label": {
+                "en": "Cash on delivery",
+                "ar": "الدفع عند الاستلام"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "truck",
+              "label": {
+                "en": "Delivery across Egypt",
+                "ar": "توصيل لكل المحافظات"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "package",
+              "label": {
+                "en": "Easy exchange",
+                "ar": "استبدال سهل"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

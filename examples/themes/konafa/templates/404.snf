@@ -1,0 +1,48 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "not-found"
+      },
+      {
+        "type": "kn-occasions",
+        "blocks": [
+          {
+            "type": "tile",
+            "settings": {
+              "icon": "crescent",
+              "label": {
+                "ar": "رمضان",
+                "en": "Ramadan"
+              },
+              "link": "/category/ramadan"
+            }
+          },
+          {
+            "type": "tile",
+            "settings": {
+              "icon": "star8",
+              "label": {
+                "ar": "العيد",
+                "en": "Eid"
+              },
+              "link": "/category/eid"
+            }
+          },
+          {
+            "type": "tile",
+            "settings": {
+              "icon": "heart",
+              "label": {
+                "ar": "الأفراح",
+                "en": "Weddings"
+              },
+              "link": "/category/weddings"
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

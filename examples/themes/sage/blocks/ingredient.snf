@@ -1,0 +1,37 @@
+<li class="sg-ing">
+  <span class="sg-ing-dot">{% render 'glyph', name: block.settings.glyph, size: 24 %}</span>
+  <span class="sg-ing-label">{{ block.settings.label }}</span>
+</li>
+<hk-schema>
+  {
+    "name": {
+      "en": "Ingredient",
+      "ar": "مكوّن"
+    },
+    "version": 1,
+    "settings": {
+      "glyph": {
+        "type": "select",
+        "label": {
+          "en": "Glyph",
+          "ar": "الرمز"
+        },
+        "options": ["leaf", "drop", "drops", "shield", "sun", "flask", "moon"],
+        "default": "leaf"
+      },
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Name",
+          "ar": "الاسم"
+        },
+        "default": {
+          "ar": "مستخلص نباتي",
+          "en": "Plant extract"
+        },
+        "localized": true,
+        "maxLength": 24
+      }
+    }
+  }
+</hk-schema>

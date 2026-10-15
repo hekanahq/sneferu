@@ -1,0 +1,58 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="16">
+  <hk-container max-width="1280">
+    <ul class="bz-trust-list">
+      {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+    </ul>
+  </hk-container>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Trust strip",
+      "ar": "شريط الثقة"
+    },
+    "version": 1,
+    "blocks": {
+      "allowed": ["trust"],
+      "max": 6
+    },
+    "settings": {
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 120,
+        "step": 8,
+        "default": 24
+      }
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "Five points",
+          "ar": "خمس نقاط"
+        },
+        "blocks": [
+          {
+            "type": "trust"
+          },
+          {
+            "type": "trust"
+          },
+          {
+            "type": "trust"
+          },
+          {
+            "type": "trust"
+          },
+          {
+            "type": "trust"
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

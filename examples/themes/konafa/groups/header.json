@@ -1,0 +1,85 @@
+{
+  "sections": [
+    {
+      "id": "header",
+      "type": "header",
+      "settings": {
+        "menu": "main-menu",
+        "show_search": true,
+        "show_account": true,
+        "show_language": true,
+        "show_cart": true,
+        "drawer_on_add": true,
+        "scheme": "primary"
+      },
+      "blocks": [
+        {
+          "id": "nav-all",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "كل المنتجات",
+              "en": "All products"
+            },
+            "url": "/products"
+          }
+        },
+        {
+          "id": "nav-ram",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "رمضان",
+              "en": "Ramadan"
+            },
+            "url": "/category/ramadan"
+          }
+        },
+        {
+          "id": "nav-eid",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "العيد",
+              "en": "Eid"
+            },
+            "url": "/category/eid"
+          }
+        },
+        {
+          "id": "nav-wed",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "الأفراح",
+              "en": "Weddings"
+            },
+            "url": "/category/weddings"
+          }
+        },
+        {
+          "id": "nav-gift",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "علب الهدايا",
+              "en": "Gift boxes"
+            },
+            "url": "/category/gift-boxes"
+          }
+        },
+        {
+          "id": "nav-about",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "من نحن",
+              "en": "About us"
+            },
+            "url": "/pages/about"
+          }
+        }
+      ]
+    }
+  ]
+}

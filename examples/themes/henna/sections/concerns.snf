@@ -1,0 +1,70 @@
+<section class="hn-sec hn-concerns hn-pad-{{ section.settings.padding_y }}">
+  <div class="hn-wrap">
+    {% if section.settings.title %}
+      <h2 class="hn-h2 hn-center">{{ section.settings.title }}</h2>
+    {% endif %}
+    <div class="hn-tiles">
+      {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+    </div>
+  </div>
+</section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Shop by concern",
+      "ar": "تسوّقي حسب احتياجك"
+    },
+    "version": 1,
+    "templates": ["index"],
+    "blocks": {
+      "allowed": ["concern"],
+      "max": 6
+    },
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "تسوّقي حسب احتياجك",
+          "en": "Shop by what you need"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "padding_y": {
+        "type": "select",
+        "label": {
+          "en": "Vertical spacing",
+          "ar": "المسافة الرأسية"
+        },
+        "options": ["compact", "normal", "roomy"],
+        "default": "normal"
+      }
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "Four tiles",
+          "ar": "أربع بلاطات"
+        },
+        "blocks": [
+          {
+            "type": "concern"
+          },
+          {
+            "type": "concern"
+          },
+          {
+            "type": "concern"
+          },
+          {
+            "type": "concern"
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

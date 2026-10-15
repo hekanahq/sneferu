@@ -1,0 +1,75 @@
+{
+  "sections": [
+    {
+      "id": "header",
+      "type": "hn-header",
+      "settings": {
+        "menu": "main",
+        "scheme": "paper",
+        "show_search": true,
+        "show_language": true,
+        "show_cart": true,
+        "drawer_on_add": true,
+        "sticky": false
+      },
+      "blocks": [
+        {
+          "id": "nav-face",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "الوجه",
+              "en": "Face"
+            },
+            "url": "/category/face"
+          }
+        },
+        {
+          "id": "nav-lips",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "الشفايف",
+              "en": "Lips"
+            },
+            "url": "/category/lips"
+          }
+        },
+        {
+          "id": "nav-eyes",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "العيون",
+              "en": "Eyes"
+            },
+            "url": "/category/eyes"
+          }
+        },
+        {
+          "id": "nav-hair",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "الشعر",
+              "en": "Hair"
+            },
+            "url": "/category/hair"
+          }
+        },
+        {
+          "id": "nav-skin",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "العناية بالبشرة",
+              "en": "Skincare"
+            },
+            "url": "/category/skincare"
+          }
+        }
+      ],
+      "block_order": ["nav-face", "nav-lips", "nav-eyes", "nav-hair", "nav-skin"]
+    }
+  ]
+}
