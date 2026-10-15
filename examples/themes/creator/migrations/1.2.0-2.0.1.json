@@ -1,0 +1,28 @@
+{
+  "from": "1.2.0",
+  "to": "2.0.1",
+  "sections": {
+    "rename": {
+      "hk-cart-main": "cart-main",
+      "hk-collection-main": "collection-main",
+      "hk-not-found": "not-found",
+      "hk-page-main": "page-main",
+      "hk-product-main": "product-main",
+      "hk-related-products": "related-products",
+      "hk-search-main": "search-main"
+    }
+  },
+  "blocks": {
+    "rename": {
+      "hk-product-buy": "product-buy",
+      "hk-product-category": "product-category",
+      "hk-product-description": "product-description",
+      "hk-product-excerpt": "product-excerpt",
+      "hk-product-price": "product-price",
+      "hk-product-tags": "product-tags",
+      "hk-product-title": "product-title",
+      "hk-product-variants": "product-variants"
+    },
+    "remove": ["hk-product-text"]
+  }
+}
