@@ -1,7 +1,7 @@
 {
   "id": "cashmere",
   "name": "Cashmere",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "author": "Hekana",
   "description": "A quiet luxury leather goods store: cream and taupe ground, one cognac accent, hairline frames, wide whitespace, a two-column editorial product row and a craftsmanship section.",
   "category": "luxury",
@@ -28,7 +28,7 @@
       "contentWidth": "1080px"
     },
     "fonts": {
-      "heading": "Tajawal",
+      "heading": "Noto Naskh Arabic",
       "body": "Tajawal"
     },
     "radius": {
