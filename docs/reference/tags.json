@@ -1390,6 +1390,36 @@
           }
         }
       ]
+    },
+    {
+      "name": "hk-inline-checkout",
+      "category": "commerce",
+      "label": {
+        "en": "Order form"
+      },
+      "allowedChildren": [],
+      "responsive": [],
+      "props": [
+        {
+          "name": "product",
+          "attr": "product",
+          "type": "data",
+          "responsive": false,
+          "label": {
+            "en": "Product"
+          }
+        },
+        {
+          "name": "label",
+          "attr": "label",
+          "type": "text",
+          "default": "",
+          "responsive": false,
+          "label": {
+            "en": "Form name for screen readers"
+          }
+        }
+      ]
     }
   ]
 }

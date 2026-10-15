@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { resolveDevRoute, splitLocale, devUrl, plainNotFound, relatedProducts } from './dev-routes';
 import { sampleContext } from './sample-data';
+import { checkoutEmbedPlaceholder } from './dev-page';
 
 const ctx = sampleContext('en', {}, 'en');
 const route = (path: string, q = '', locale: 'ar' | 'en' = 'en', defaultLocale: 'ar' | 'en' = 'en') =>
@@ -64,5 +65,17 @@ describe('related products', () => {
     const none = Object.values(ctx.products).find((p) => !(p as { category: unknown }).category);
     expect(none).toBeDefined();
     expect(relatedProducts(none, ctx.products)).toEqual([]);
+  });
+});
+
+describe('sneferu dev: inline checkout placeholder', () => {
+  it('serves a still placeholder for the platform checkout, with no form controls', () => {
+    const ar = checkoutEmbedPlaceholder('ar');
+    const en = checkoutEmbedPlaceholder('en');
+    expect(ar).toContain('dir="rtl"');
+    expect(ar).toContain('نموذج الطلب من هكانة');
+    expect(en).toContain('Hekana order form');
+    expect(ar + en).not.toMatch(/<(input|select|textarea|button|form)\b/);
+    expect(en).toContain("parent.postMessage({type:'hk:checkout-height',height:document.documentElement.scrollHeight},location.origin)");
   });
 });

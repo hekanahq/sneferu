@@ -23,6 +23,7 @@ export const COMMERCE_STRINGS: S = {
   previous_page: { ar: 'الصفحة السابقة', en: 'Previous page' },
   next_page: { ar: 'الصفحة التالية', en: 'Next page' },
   page: { ar: 'صفحة', en: 'Page' },
+  order_form: { ar: 'نموذج الطلب', en: 'Order form' },
 };
 
 /** The page's text for `key`, else the built-in one (the key itself means "no translation"). */
