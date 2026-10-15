@@ -1,13 +1,19 @@
-{% if collection(section.settings.collection).products %}
+{% if collection('related').products or collection(section.settings.collection).products %}
   <section class="hn-sec hn-related hn-pad-{{ section.settings.padding_y }}">
     <div class="hn-wrap">
       {% if section.settings.title %}
         <h2 class="hn-h2">{{ section.settings.title }}</h2>
       {% endif %}
       <div class="hn-grid hn-cols-{{ section.settings.columns }}">
-        {% for p in collection(section.settings.collection).products limit: section.settings.limit %}
-          {% render 'card', p: p %}
-        {% endfor %}
+        {% if collection('related').products %}
+          {% for p in collection('related').products limit: section.settings.limit %}
+            {% render 'card', p: p %}
+          {% endfor %}
+        {% else %}
+          {% for p in collection(section.settings.collection).products limit: section.settings.limit %}
+            {% render 'card', p: p %}
+          {% endfor %}
+        {% endif %}
       </div>
     </div>
   </section>
