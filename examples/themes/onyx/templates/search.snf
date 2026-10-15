@@ -1,0 +1,29 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "search-main"
+      },
+      {
+        "type": "featured-products",
+        "settings": {
+          "title": {
+            "ar": "مختارات",
+            "en": "Selected pieces"
+          },
+          "collection": "featured",
+          "limit": 4,
+          "columns": 4,
+          "card_style": "plain",
+          "image_ratio": "1/1",
+          "link_label": {
+            "ar": "عرض الكل",
+            "en": "View all"
+          },
+          "link": "/products"
+        }
+      }
+    ]
+  }
+</hk-schema>

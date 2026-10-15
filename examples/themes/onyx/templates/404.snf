@@ -1,0 +1,35 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "not-found"
+      },
+      {
+        "type": "onyx-pills",
+        "blocks": [
+          {
+            "type": "pill",
+            "settings": {
+              "label": {
+                "ar": "عطور وساعات",
+                "en": "Fragrance and watches"
+              },
+              "link": "/category/fragrance-watches"
+            }
+          },
+          {
+            "type": "pill",
+            "settings": {
+              "label": {
+                "ar": "مجوهرات",
+                "en": "Jewellery"
+              },
+              "link": "/category/jewellery"
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

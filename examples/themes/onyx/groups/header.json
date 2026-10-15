@@ -1,0 +1,65 @@
+{
+  "sections": [
+    {
+      "id": "header",
+      "type": "header",
+      "settings": {
+        "menu": "main-menu",
+        "show_search": true,
+        "search_style": "icon",
+        "show_account": false,
+        "show_language": true,
+        "show_cart": true,
+        "drawer_on_add": true,
+        "scheme": "light"
+      },
+      "blocks": [
+        {
+          "id": "nav-0",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "عطور وساعات",
+              "en": "Fragrance and watches"
+            },
+            "url": "/category/fragrance-watches"
+          }
+        },
+        {
+          "id": "nav-1",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "مجوهرات",
+              "en": "Jewellery"
+            },
+            "url": "/category/jewellery"
+          }
+        },
+        {
+          "id": "nav-2",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "جلديات",
+              "en": "Leather"
+            },
+            "url": "/category/leather"
+          }
+        },
+        {
+          "id": "nav-3",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "إكسسوارات",
+              "en": "Accessories"
+            },
+            "url": "/category/accessories"
+          }
+        }
+      ],
+      "block_order": []
+    }
+  ]
+}

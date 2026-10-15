@@ -1,0 +1,139 @@
+<div class="on-hero-wrap">
+  <hk-container>
+    <div class="on-hero on-align-{{ section.settings.align }}">
+      <div class="on-hero-text">
+        {% if section.settings.eyebrow %}
+          <p class="on-hero-eyebrow">{{ section.settings.eyebrow }}</p>
+        {% endif %}
+        {% if section.settings.title %}
+          <h1 class="on-hero-title">{{ section.settings.title }}</h1>
+        {% endif %}
+        {% if section.settings.subtitle %}
+          <p class="on-hero-sub">{{ section.settings.subtitle }}</p>
+        {% endif %}
+        {% render 'button', label: section.settings.button_label, href: section.settings.button_link, style: section.settings.button_style %}
+      </div>
+      {% if section.settings.image %}
+        <div class="on-hero-media">
+          <hk-image
+            src="{{ section.settings.image }}"
+            alt="{{ section.settings.image_alt }}"
+            loading="eager"
+            aspect-ratio="1/1"
+            sizes="(min-width: 900px) 50vw, 100vw"
+          />
+        </div>
+      {% endif %}
+    </div>
+  </hk-container>
+</div>
+<hk-schema>
+  {
+    "name": {
+      "en": "Hero",
+      "ar": "البانر الرئيسي"
+    },
+    "version": 1,
+    "settings": {
+      "eyebrow": {
+        "type": "text",
+        "label": {
+          "en": "Small line above",
+          "ar": "سطر صغير فوق"
+        },
+        "default": {
+          "ar": "",
+          "en": ""
+        },
+        "localized": true,
+        "maxLength": 50
+      },
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "عطور وساعات",
+          "en": "Fragrance and watches"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "subtitle": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "قطع مختارة بعناية، بتشكيلة محدودة وتغليف هادئ.",
+          "en": "Pieces chosen with care, in a small range and quiet packaging."
+        },
+        "localized": true,
+        "maxLength": 160
+      },
+      "button_label": {
+        "type": "text",
+        "label": {
+          "en": "Button",
+          "ar": "الزر"
+        },
+        "default": {
+          "ar": "تسوق المجموعة",
+          "en": "Shop the collection"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "button_link": {
+        "type": "link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/products"
+      },
+      "button_style": {
+        "type": "select",
+        "label": {
+          "en": "Button style",
+          "ar": "شكل الزر"
+        },
+        "options": ["solid", "outline", "ghost"],
+        "default": "outline"
+      },
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "Image",
+          "ar": "الصورة"
+        },
+        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-jewelry/pool-jewelry-gold-pendant-necklace.webp"
+      },
+      "image_alt": {
+        "type": "text",
+        "label": {
+          "en": "Image description",
+          "ar": "وصف الصورة"
+        },
+        "default": {
+          "ar": "عقد ذهبي بتعليقة على خلفية داكنة",
+          "en": "Gold pendant necklace on a dark ground"
+        },
+        "localized": true,
+        "maxLength": 120
+      },
+      "align": {
+        "type": "select",
+        "label": {
+          "en": "Text alignment",
+          "ar": "محاذاة النص"
+        },
+        "options": ["start", "center"],
+        "default": "start"
+      }
+    }
+  }
+</hk-schema>

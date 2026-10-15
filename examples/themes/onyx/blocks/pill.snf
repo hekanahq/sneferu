@@ -1,0 +1,33 @@
+<a class="on-pill" href="{{ url(block.settings.link) }}">{{ block.settings.label }}</a>
+<hk-schema>
+  {
+    "name": {
+      "en": "Category pill",
+      "ar": "زر قسم"
+    },
+    "version": 1,
+    "settings": {
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Label",
+          "ar": "النص"
+        },
+        "localized": true,
+        "default": {
+          "ar": "عطور وساعات",
+          "en": "Fragrance and watches"
+        },
+        "maxLength": 28
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      }
+    }
+  }
+</hk-schema>
