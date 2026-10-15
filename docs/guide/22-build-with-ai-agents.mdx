@@ -10,6 +10,19 @@ from, so it follows the same workflow and rules as a person reading these docs.
 | `AGENTS.md` in the SDK repo | at the top of [github.com/hekanahq/sneferu](https://github.com/hekanahq/sneferu) | agents working in the SDK repo, or told to read it |
 | The docs as plain text | [hekana.dev/llms.txt](https://hekana.dev/llms.txt) (index) and [hekana.dev/llms-full.txt](https://hekana.dev/llms-full.txt) (every page) | any agent that can fetch a URL |
 
+## The agent kit
+
+[hekana.dev/sneferu-agent-kit.md](https://hekana.dev/sneferu-agent-kit.md) is
+one Markdown file with what Sneferu is, the workflow and rules from the SDK's
+`AGENTS.md`, the CLI commands, links to the references and a prompt to fill in.
+Paste it into any agent, or save it next to `theme.json`. On hekana.dev the
+**Copy instructions for your AI agent** button copies it, and every docs page
+has **Copy page**: the page as Markdown (also at the page's URL plus `.md`, for
+example [/guide/getting-started.md](https://hekana.dev/guide/getting-started.md)),
+or a new ChatGPT or Claude chat that reads it.
+
+## Start a theme
+
 The quickest start is `npm create sneferu my-theme` (the same as
 `npx sneferu init my-theme`): the new folder already has its `AGENTS.md`, so
 open your agent in it.
