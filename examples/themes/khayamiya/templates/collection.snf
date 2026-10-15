@@ -7,14 +7,12 @@
       },
       {
         "type": "category-tiles",
-        "settings": {
-          "columns": "4"
-        },
+        "settings": {},
         "blocks": [
           {
             "type": "category-tile",
             "settings": {
-              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-handmade/pool-handmade-kilim-folded.webp",
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-handmade/pool-handmade-khayamiya-cushion.webp",
               "label": {
                 "ar": "كليم وخيامية",
                 "en": "Kilim and khayamiya"
@@ -29,7 +27,7 @@
           {
             "type": "category-tile",
             "settings": {
-              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-handmade/pool-handmade-brass-lantern.webp",
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-home/pool-home-copper-dallah.webp",
               "label": {
                 "ar": "نحاس وفوانيس",
                 "en": "Brass and lanterns"
@@ -44,7 +42,7 @@
           {
             "type": "category-tile",
             "settings": {
-              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-handmade/pool-handmade-macrame-hanging.webp",
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-handmade/pool-handmade-woven-basket.webp",
               "label": {
                 "ar": "سلال ومعلقات",
                 "en": "Baskets and hangings"

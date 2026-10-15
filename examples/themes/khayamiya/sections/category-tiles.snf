@@ -1,21 +1,16 @@
-<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="28" class="kh-tiles-band">
-  {% if section.settings.heading %}
-    <div class="kh-center-head">
-      <hk-heading
-        text="{{ section.settings.heading }}"
-        level="h2"
-        size="28"
-        mobile-size="22"
-        align="center"
-        class="kh-h2"
-      />
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="28" class="kh-crafts-band">
+  <div class="kh-crafts">
+    <div class="kh-crafts-head">
+      {% if section.settings.heading %}
+        <hk-heading text="{{ section.settings.heading }}" level="h2" size="32" mobile-size="24" class="kh-h2" />
+      {% endif %}
       {% render 'ornament' %}
     </div>
-  {% endif %}
-  <div class="kh-tiles kh-tiles-{{ section.settings.columns }}">
-    {% for block in section.blocks %}
-      <hk-block of="{{ block }}" />
-    {% endfor %}
+    <div class="kh-rows">
+      {% for block in section.blocks %}
+        <hk-block of="{{ block }}" />
+      {% endfor %}
+    </div>
   </div>
 </hk-section>
 <hk-schema>
@@ -33,17 +28,11 @@
           "ar": "العنوان (اختياري)"
         },
         "localized": true,
-        "default": "",
-        "maxLength": 60
-      },
-      "columns": {
-        "type": "select",
-        "label": {
-          "en": "Tiles per row",
-          "ar": "عدد المربعات في الصف"
+        "default": {
+          "ar": "تسوق حسب الحرفة",
+          "en": "Shop by craft"
         },
-        "options": ["3", "4", "5"],
-        "default": "4"
+        "maxLength": 60
       },
       "padding_y": {
         "type": "range",

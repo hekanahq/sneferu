@@ -1,16 +1,14 @@
-<a class="kh-tile-link" href="{{ url(block.settings.link) }}">
-  <span class="kh-tile-photo">
+<a class="kh-row" href="{{ url(block.settings.link) }}">
+  <span class="kh-row-photo">
     {% if block.settings.image %}
-      <hk-image
-        src="{{ block.settings.image }}"
-        alt="{{ block.settings.label }}"
-        aspect-ratio="1/1"
-        sizes="(min-width: 1024px) 25vw, 50vw"
-      />
+      <hk-image src="{{ block.settings.image }}" alt="{{ block.settings.label }}" aspect-ratio="1/1" sizes="96px" />
     {% endif %}
   </span>
-  <span class="kh-tile-label">{{ block.settings.label }}</span>
-  {% if block.settings.caption %}<span class="kh-tile-caption">{{ block.settings.caption }}</span>{% endif %}
+  <span class="kh-row-text">
+    <span class="kh-row-label">{{ block.settings.label }}</span>
+    {% if block.settings.caption %}<span class="kh-row-caption">{{ block.settings.caption }}</span>{% endif %}
+  </span>
+  <hk-icon name="arrow-right" class="kh-row-arrow" />
 </a>
 <hk-schema>
   {

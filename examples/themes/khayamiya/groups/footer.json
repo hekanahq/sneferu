@@ -27,7 +27,7 @@
           "ar": "تواصل معنا",
           "en": "Contact us"
         },
-        "newsletter_link": "/pages/contact",
+        "newsletter_link": "/contact",
         "show_language": true,
         "show_band": true
       },
@@ -106,7 +106,7 @@
                   "ar": "عن المتجر",
                   "en": "About"
                 },
-                "url": "/pages/about"
+                "url": "/about"
               }
             },
             {
@@ -117,7 +117,7 @@
                   "ar": "الشحن والدفع",
                   "en": "Shipping and payment"
                 },
-                "url": "/pages/shipping"
+                "url": "/shipping"
               }
             },
             {
@@ -128,46 +128,10 @@
                   "ar": "تواصل معنا",
                   "en": "Contact"
                 },
-                "url": "/pages/contact"
+                "url": "/contact"
               }
             }
           ]
-        },
-        {
-          "id": "social-wa",
-          "type": "social-link",
-          "settings": {
-            "label": {
-              "ar": "واتساب",
-              "en": "WhatsApp"
-            },
-            "url": "/pages/contact",
-            "icon": "message-circle"
-          }
-        },
-        {
-          "id": "social-mail",
-          "type": "social-link",
-          "settings": {
-            "label": {
-              "ar": "الإيميل",
-              "en": "Email"
-            },
-            "url": "/pages/contact",
-            "icon": "mail"
-          }
-        },
-        {
-          "id": "contact-wa",
-          "type": "contact-line",
-          "settings": {
-            "icon": "message-circle",
-            "text": {
-              "ar": "تواصل معنا على واتساب",
-              "en": "Contact us on WhatsApp"
-            },
-            "url": "/pages/contact"
-          }
         },
         {
           "id": "pay-cod",

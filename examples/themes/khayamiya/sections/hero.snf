@@ -14,7 +14,7 @@
         <hk-heading
           text="{{ section.settings.title }}"
           level="h1"
-          size="44"
+          size="48"
           mobile-size="30"
           color="{{ section.settings.text_color }}"
         />
@@ -33,7 +33,7 @@
           src="{{ section.settings.image }}"
           alt="{{ section.settings.image_alt }}"
           loading="eager"
-          aspect-ratio="3/2"
+          aspect-ratio="4/5"
           sizes="(min-width: 1024px) 50vw, 100vw"
         />
       </div>
@@ -135,7 +135,7 @@
           "en": "Image",
           "ar": "الصورة"
         },
-        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/khayamiya/hero.webp"
+        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/khayamiya/hero3.webp"
       },
       "image_alt": {
         "type": "text",
@@ -144,8 +144,8 @@
           "ar": "وصف الصورة"
         },
         "default": {
-          "ar": "فانوس نحاس معلق ووسادة كليم وقطعة كليم مطوية",
-          "en": "A hanging brass lantern, a kilim cushion and a folded kilim piece"
+          "ar": "وسادة بنقشة خيامية بالأزرق والأحمر والأصفر",
+          "en": "A cushion with a khayamiya pattern in blue, red and yellow"
         },
         "localized": true,
         "maxLength": 120
