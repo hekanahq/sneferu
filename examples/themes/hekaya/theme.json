@@ -1,0 +1,44 @@
+{
+  "id": "hekaya",
+  "name": "Hekaya",
+  "version": "1.0.0",
+  "author": "Hekana",
+  "description": "A bookshop editorial store: paper cream ground, ink navy headings, brick red accents, a split reading-corner hero, a staff picks row of covers, a large quote, genre tiles and a grid of books.",
+  "category": "fashion",
+  "engine": "hk2",
+  "engineCompatibility": "^2.0.0",
+  "defaultLocale": "ar",
+  "locales": ["ar", "en"],
+  "settings": {},
+  "money": {
+    "format": "whole"
+  },
+  "tokens": {
+    "colors": {
+      "primary": "#16264A",
+      "secondary": "#24396B",
+      "accent": "#A52F33",
+      "background": "#F2EBDC",
+      "text": "#16264A",
+      "muted": "#5C564A",
+      "line": "#D8CCB5",
+      "soft": "#E8DDC8",
+      "surface": "#F9F4E9",
+      "glow": "#EDE3CF",
+      "mustard": "#C69A47",
+      "forest": "#25624A",
+      "brick-deep": "#842327",
+      "ink-deep": "#0F1B38"
+    },
+    "layout": {
+      "contentWidth": "1200px"
+    },
+    "fonts": {
+      "heading": "IBM Plex Sans Arabic",
+      "body": "Almarai"
+    },
+    "radius": {
+      "md": "2px"
+    }
+  }
+}

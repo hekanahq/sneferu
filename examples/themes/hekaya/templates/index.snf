@@ -1,0 +1,134 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "hero",
+        "settings": {
+          "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-stack-earth.webp"
+        }
+      },
+      {
+        "type": "featured-products",
+        "settings": {
+          "title": {
+            "ar": "اختيارات المكتبة",
+            "en": "Staff picks"
+          },
+          "limit": 5,
+          "columns": 5,
+          "image_ratio": "1/1",
+          "head_align": "start",
+          "padding_y": 48
+        }
+      },
+      {
+        "type": "quote"
+      },
+      {
+        "type": "genres",
+        "blocks": [
+          {
+            "type": "genre",
+            "settings": {
+              "title": {
+                "ar": "روايات",
+                "en": "Novels"
+              },
+              "icon": "book-open",
+              "tone": "navy",
+              "link": "/products"
+            }
+          },
+          {
+            "type": "genre",
+            "settings": {
+              "title": {
+                "ar": "فكر وثقافة",
+                "en": "Ideas and culture"
+              },
+              "icon": "file-text",
+              "tone": "outline",
+              "link": "/products"
+            }
+          },
+          {
+            "type": "genre",
+            "settings": {
+              "title": {
+                "ar": "كتب الأطفال",
+                "en": "Children's books"
+              },
+              "icon": "sparkles",
+              "tone": "navy",
+              "link": "/products"
+            }
+          },
+          {
+            "type": "genre",
+            "settings": {
+              "title": {
+                "ar": "قرطاسية",
+                "en": "Stationery"
+              },
+              "icon": "layers",
+              "tone": "outline",
+              "link": "/products"
+            }
+          }
+        ]
+      },
+      {
+        "type": "featured-products",
+        "settings": {
+          "title": {
+            "ar": "روايات",
+            "en": "Novels"
+          },
+          "collection": "novels",
+          "limit": 6,
+          "columns": 4,
+          "image_ratio": "1/1",
+          "show_atc": true,
+          "head_align": "start",
+          "padding_y": 48
+        }
+      },
+      {
+        "type": "trust-strip",
+        "blocks": [
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "truck",
+              "label": {
+                "ar": "توصيل لكل المحافظات",
+                "en": "Delivery across Egypt"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "banknote",
+              "label": {
+                "ar": "الدفع عند الاستلام",
+                "en": "Cash on delivery"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "package",
+              "label": {
+                "ar": "استبدال سهل",
+                "en": "Easy exchange"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

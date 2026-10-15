@@ -1,0 +1,2016 @@
+{
+ "ar": {
+  "store": {
+   "name": "حكاية"
+  },
+  "collections": {
+   "featured": {
+    "title": "Featured",
+    "products": [
+     {
+      "handle": "evening-tales",
+      "title": "حكايات المساء",
+      "url": "/products/evening-tales",
+      "price": 14500,
+      "compare_at": 16500,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-mustard.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "reading-notes",
+      "title": "ملاحظات قارئ",
+      "url": "/products/reading-notes",
+      "price": 15000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-green.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "first-words",
+      "title": "أول ألف كلمة",
+      "url": "/products/first-words",
+      "price": 9900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-terracotta.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "short-poems",
+      "title": "قصائد قصيرة",
+      "url": "/products/short-poems",
+      "price": 8000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-cream.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "leather-bookmark",
+      "title": "فاصل كتب جلد",
+      "url": "/products/leather-bookmark",
+      "price": 6500,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-leather-bookmark.webp"
+      },
+      "available": true,
+      "options": []
+     }
+    ]
+   },
+   "new": {
+    "title": "New",
+    "products": [
+     {
+      "handle": "evening-tales",
+      "title": "حكايات المساء",
+      "url": "/products/evening-tales",
+      "price": 14500,
+      "compare_at": 16500,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-mustard.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "last-ferry",
+      "title": "آخر عبّارة",
+      "url": "/products/last-ferry",
+      "price": 12000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-green.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "house-by-the-bridge",
+      "title": "البيت عند الجسر",
+      "url": "/products/house-by-the-bridge",
+      "price": 13500,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-terracotta.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "winter-letters",
+      "title": "رسائل الشتاء",
+      "url": "/products/winter-letters",
+      "price": 11000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-cream.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "city-trilogy",
+      "title": "ثلاثية المدينة",
+      "url": "/products/city-trilogy",
+      "price": 39000,
+      "compare_at": 45000,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-stack-earth.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "quiet-summer",
+      "title": "صيف هادئ",
+      "url": "/products/quiet-summer",
+      "price": 9500,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-open.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "paper-mornings",
+      "title": "صباحات من ورق",
+      "url": "/products/paper-mornings",
+      "price": 10500,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-cream.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "reading-notes",
+      "title": "ملاحظات قارئ",
+      "url": "/products/reading-notes",
+      "price": 15000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-green.webp"
+      },
+      "available": true,
+      "options": []
+     }
+    ]
+   },
+   "novels": {
+    "title": "روايات",
+    "products": [
+     {
+      "handle": "evening-tales",
+      "title": "حكايات المساء",
+      "url": "/products/evening-tales",
+      "price": 14500,
+      "compare_at": 16500,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-mustard.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "last-ferry",
+      "title": "آخر عبّارة",
+      "url": "/products/last-ferry",
+      "price": 12000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-green.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "house-by-the-bridge",
+      "title": "البيت عند الجسر",
+      "url": "/products/house-by-the-bridge",
+      "price": 13500,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-terracotta.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "winter-letters",
+      "title": "رسائل الشتاء",
+      "url": "/products/winter-letters",
+      "price": 11000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-cream.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "city-trilogy",
+      "title": "ثلاثية المدينة",
+      "url": "/products/city-trilogy",
+      "price": 39000,
+      "compare_at": 45000,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-stack-earth.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "quiet-summer",
+      "title": "صيف هادئ",
+      "url": "/products/quiet-summer",
+      "price": 9500,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-open.webp"
+      },
+      "available": true,
+      "options": []
+     }
+    ]
+   },
+   "culture": {
+    "title": "فكر وثقافة",
+    "products": [
+     {
+      "handle": "paper-mornings",
+      "title": "صباحات من ورق",
+      "url": "/products/paper-mornings",
+      "price": 10500,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-cream.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "reading-notes",
+      "title": "ملاحظات قارئ",
+      "url": "/products/reading-notes",
+      "price": 15000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-green.webp"
+      },
+      "available": true,
+      "options": []
+     }
+    ]
+   },
+   "kids": {
+    "title": "كتب الأطفال",
+    "products": [
+     {
+      "handle": "bedtime-story",
+      "title": "حكاية قبل النوم",
+      "url": "/products/bedtime-story",
+      "price": 8500,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-mustard.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "first-words",
+      "title": "أول ألف كلمة",
+      "url": "/products/first-words",
+      "price": 9900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-terracotta.webp"
+      },
+      "available": true,
+      "options": []
+     }
+    ]
+   },
+   "poetry": {
+    "title": "شعر",
+    "products": [
+     {
+      "handle": "short-poems",
+      "title": "قصائد قصيرة",
+      "url": "/products/short-poems",
+      "price": 8000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-cream.webp"
+      },
+      "available": true,
+      "options": []
+     }
+    ]
+   },
+   "stationery": {
+    "title": "قرطاسية",
+    "products": [
+     {
+      "handle": "leather-bookmark",
+      "title": "فاصل كتب جلد",
+      "url": "/products/leather-bookmark",
+      "price": 6500,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-leather-bookmark.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "reading-glasses",
+      "title": "نظارة قراءة",
+      "url": "/products/reading-glasses",
+      "price": 18000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-reading-glasses.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "blue-notebook",
+      "title": "دفتر ملاحظات أزرق",
+      "url": "/products/blue-notebook",
+      "price": 7500,
+      "compare_at": 9000,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-notebook-blue.webp"
+      },
+      "available": true,
+      "options": [
+       {
+        "name": "الحجم",
+        "values": [
+         "A5",
+         "A6"
+        ]
+       }
+      ]
+     },
+     {
+      "handle": "red-spiral-notebook",
+      "title": "دفتر سلك أحمر",
+      "url": "/products/red-spiral-notebook",
+      "price": 6000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-notebook-spiral-red.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "blue-pen",
+      "title": "قلم حبر أزرق",
+      "url": "/products/blue-pen",
+      "price": 3500,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-pen-blue.webp"
+      },
+      "available": true,
+      "options": [
+       {
+        "name": "لون الحبر",
+        "values": [
+         "أزرق",
+         "أسود"
+        ]
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "products": {
+   "evening-tales": {
+    "id": "evening-tales",
+    "handle": "evening-tales",
+    "url": "/products/evening-tales",
+    "title": "حكايات المساء",
+    "price": 14500,
+    "compare_at": 16500,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-mustard.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-mustard.webp"
+     }
+    ],
+    "description": "مجموعة قصص قصيرة للقراءة في آخر اليوم. إصدار بغلاف مقوّى.",
+    "options": [],
+    "has_variants": false,
+    "variants": [
+     {
+      "id": "evening-tales-d",
+      "title": "Default",
+      "price": 14500,
+      "available": true,
+      "options": []
+     }
+    ],
+    "category": {
+     "title": "روايات",
+     "url": "/category/novels"
+    }
+   },
+   "last-ferry": {
+    "id": "last-ferry",
+    "handle": "last-ferry",
+    "url": "/products/last-ferry",
+    "title": "آخر عبّارة",
+    "price": 12000,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-green.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-green.webp"
+     }
+    ],
+    "description": "رواية عن ليلة على ضفة النهر. إصدار بغلاف مقوّى.",
+    "options": [],
+    "has_variants": false,
+    "variants": [
+     {
+      "id": "last-ferry-d",
+      "title": "Default",
+      "price": 12000,
+      "available": true,
+      "options": []
+     }
+    ],
+    "category": {
+     "title": "روايات",
+     "url": "/category/novels"
+    }
+   },
+   "house-by-the-bridge": {
+    "id": "house-by-the-bridge",
+    "handle": "house-by-the-bridge",
+    "url": "/products/house-by-the-bridge",
+    "title": "البيت عند الجسر",
+    "price": 13500,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-terracotta.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-terracotta.webp"
+     }
+    ],
+    "description": "رواية عن عائلة وبيت قديم. إصدار بغلاف مقوّى.",
+    "options": [],
+    "has_variants": false,
+    "variants": [
+     {
+      "id": "house-by-the-bridge-d",
+      "title": "Default",
+      "price": 13500,
+      "available": true,
+      "options": []
+     }
+    ],
+    "category": {
+     "title": "روايات",
+     "url": "/category/novels"
+    }
+   },
+   "winter-letters": {
+    "id": "winter-letters",
+    "handle": "winter-letters",
+    "url": "/products/winter-letters",
+    "title": "رسائل الشتاء",
+    "price": 11000,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-cream.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-cream.webp"
+     }
+    ],
+    "description": "رواية تُروى في شكل رسائل. إصدار ورقي.",
+    "options": [],
+    "has_variants": false,
+    "variants": [
+     {
+      "id": "winter-letters-d",
+      "title": "Default",
+      "price": 11000,
+      "available": true,
+      "options": []
+     }
+    ],
+    "category": {
+     "title": "روايات",
+     "url": "/category/novels"
+    }
+   },
+   "city-trilogy": {
+    "id": "city-trilogy",
+    "handle": "city-trilogy",
+    "url": "/products/city-trilogy",
+    "title": "ثلاثية المدينة",
+    "price": 39000,
+    "compare_at": 45000,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-stack-earth.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-stack-earth.webp"
+     }
+    ],
+    "description": "ثلاثة كتب في علبة واحدة. إصدار بغلاف مقوّى.",
+    "options": [],
+    "has_variants": false,
+    "variants": [
+     {
+      "id": "city-trilogy-d",
+      "title": "Default",
+      "price": 39000,
+      "available": true,
+      "options": []
+     }
+    ],
+    "category": {
+     "title": "روايات",
+     "url": "/category/novels"
+    }
+   },
+   "quiet-summer": {
+    "id": "quiet-summer",
+    "handle": "quiet-summer",
+    "url": "/products/quiet-summer",
+    "title": "صيف هادئ",
+    "price": 9500,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-open.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-open.webp"
+     }
+    ],
+    "description": "رواية قصيرة للقراءة في إجازة. إصدار ورقي.",
+    "options": [],
+    "has_variants": false,
+    "variants": [
+     {
+      "id": "quiet-summer-d",
+      "title": "Default",
+      "price": 9500,
+      "available": true,
+      "options": []
+     }
+    ],
+    "category": {
+     "title": "روايات",
+     "url": "/category/novels"
+    }
+   },
+   "paper-mornings": {
+    "id": "paper-mornings",
+    "handle": "paper-mornings",
+    "url": "/products/paper-mornings",
+    "title": "صباحات من ورق",
+    "price": 10500,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-cream.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-cream.webp"
+     }
+    ],
+    "description": "مقالات قصيرة عن القراءة والكتب. إصدار ورقي.",
+    "options": [],
+    "has_variants": false,
+    "variants": [
+     {
+      "id": "paper-mornings-d",
+      "title": "Default",
+      "price": 10500,
+      "available": true,
+      "options": []
+     }
+    ],
+    "category": {
+     "title": "فكر وثقافة",
+     "url": "/category/culture"
+    }
+   },
+   "reading-notes": {
+    "id": "reading-notes",
+    "handle": "reading-notes",
+    "url": "/products/reading-notes",
+    "title": "ملاحظات قارئ",
+    "price": 15000,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-green.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-green.webp"
+     }
+    ],
+    "description": "مقالات وقراءات في الفكر والثقافة. إصدار بغلاف مقوّى.",
+    "options": [],
+    "has_variants": false,
+    "variants": [
+     {
+      "id": "reading-notes-d",
+      "title": "Default",
+      "price": 15000,
+      "available": true,
+      "options": []
+     }
+    ],
+    "category": {
+     "title": "فكر وثقافة",
+     "url": "/category/culture"
+    }
+   },
+   "bedtime-story": {
+    "id": "bedtime-story",
+    "handle": "bedtime-story",
+    "url": "/products/bedtime-story",
+    "title": "حكاية قبل النوم",
+    "price": 8500,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-mustard.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-mustard.webp"
+     }
+    ],
+    "description": "حكاية مصوّرة للقراءة بصوت عالٍ. إصدار بغلاف مقوّى.",
+    "options": [],
+    "has_variants": false,
+    "variants": [
+     {
+      "id": "bedtime-story-d",
+      "title": "Default",
+      "price": 8500,
+      "available": true,
+      "options": []
+     }
+    ],
+    "category": {
+     "title": "كتب الأطفال",
+     "url": "/category/kids"
+    }
+   },
+   "first-words": {
+    "id": "first-words",
+    "handle": "first-words",
+    "url": "/products/first-words",
+    "title": "أول ألف كلمة",
+    "price": 9900,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-terracotta.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-terracotta.webp"
+     }
+    ],
+    "description": "كتاب مصوّر لتعلّم الكلمات. إصدار بغلاف مقوّى.",
+    "options": [],
+    "has_variants": false,
+    "variants": [
+     {
+      "id": "first-words-d",
+      "title": "Default",
+      "price": 9900,
+      "available": true,
+      "options": []
+     }
+    ],
+    "category": {
+     "title": "كتب الأطفال",
+     "url": "/category/kids"
+    }
+   },
+   "short-poems": {
+    "id": "short-poems",
+    "handle": "short-poems",
+    "url": "/products/short-poems",
+    "title": "قصائد قصيرة",
+    "price": 8000,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-cream.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-cream.webp"
+     }
+    ],
+    "description": "مختارات من القصائد القصيرة. إصدار ورقي.",
+    "options": [],
+    "has_variants": false,
+    "variants": [
+     {
+      "id": "short-poems-d",
+      "title": "Default",
+      "price": 8000,
+      "available": true,
+      "options": []
+     }
+    ],
+    "category": {
+     "title": "شعر",
+     "url": "/category/poetry"
+    }
+   },
+   "leather-bookmark": {
+    "id": "leather-bookmark",
+    "handle": "leather-bookmark",
+    "url": "/products/leather-bookmark",
+    "title": "فاصل كتب جلد",
+    "price": 6500,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-leather-bookmark.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-leather-bookmark.webp"
+     }
+    ],
+    "description": "فاصل كتب من الجلد بلون بني.",
+    "options": [],
+    "has_variants": false,
+    "variants": [
+     {
+      "id": "leather-bookmark-d",
+      "title": "Default",
+      "price": 6500,
+      "available": true,
+      "options": []
+     }
+    ],
+    "category": {
+     "title": "قرطاسية",
+     "url": "/category/stationery"
+    }
+   },
+   "reading-glasses": {
+    "id": "reading-glasses",
+    "handle": "reading-glasses",
+    "url": "/products/reading-glasses",
+    "title": "نظارة قراءة",
+    "price": 18000,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-reading-glasses.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-reading-glasses.webp"
+     }
+    ],
+    "description": "نظارة قراءة بإطار خفيف.",
+    "options": [],
+    "has_variants": false,
+    "variants": [
+     {
+      "id": "reading-glasses-d",
+      "title": "Default",
+      "price": 18000,
+      "available": true,
+      "options": []
+     }
+    ],
+    "category": {
+     "title": "قرطاسية",
+     "url": "/category/stationery"
+    }
+   },
+   "blue-notebook": {
+    "id": "blue-notebook",
+    "handle": "blue-notebook",
+    "url": "/products/blue-notebook",
+    "title": "دفتر ملاحظات أزرق",
+    "price": 7500,
+    "compare_at": 9000,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-notebook-blue.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-notebook-blue.webp"
+     }
+    ],
+    "description": "دفتر ملاحظات بغلاف أزرق.",
+    "options": [
+     {
+      "name": "الحجم",
+      "values": [
+       "A5",
+       "A6"
+      ]
+     }
+    ],
+    "has_variants": true,
+    "variants": [
+     {
+      "id": "blue-notebook-A5",
+      "title": "A5",
+      "price": 7500,
+      "available": true,
+      "options": [
+       "A5"
+      ]
+     },
+     {
+      "id": "blue-notebook-A6",
+      "title": "A6",
+      "price": 7500,
+      "available": true,
+      "options": [
+       "A6"
+      ]
+     }
+    ],
+    "category": {
+     "title": "قرطاسية",
+     "url": "/category/stationery"
+    }
+   },
+   "red-spiral-notebook": {
+    "id": "red-spiral-notebook",
+    "handle": "red-spiral-notebook",
+    "url": "/products/red-spiral-notebook",
+    "title": "دفتر سلك أحمر",
+    "price": 6000,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-notebook-spiral-red.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-notebook-spiral-red.webp"
+     }
+    ],
+    "description": "دفتر بسلك معدني وغلاف أحمر.",
+    "options": [],
+    "has_variants": false,
+    "variants": [
+     {
+      "id": "red-spiral-notebook-d",
+      "title": "Default",
+      "price": 6000,
+      "available": true,
+      "options": []
+     }
+    ],
+    "category": {
+     "title": "قرطاسية",
+     "url": "/category/stationery"
+    }
+   },
+   "blue-pen": {
+    "id": "blue-pen",
+    "handle": "blue-pen",
+    "url": "/products/blue-pen",
+    "title": "قلم حبر أزرق",
+    "price": 3500,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-pen-blue.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-pen-blue.webp"
+     }
+    ],
+    "description": "قلم بحبر أزرق للكتابة اليومية.",
+    "options": [
+     {
+      "name": "لون الحبر",
+      "values": [
+       "أزرق",
+       "أسود"
+      ]
+     }
+    ],
+    "has_variants": true,
+    "variants": [
+     {
+      "id": "blue-pen-أزرق",
+      "title": "أزرق",
+      "price": 3500,
+      "available": true,
+      "options": [
+       "أزرق"
+      ]
+     },
+     {
+      "id": "blue-pen-أسود",
+      "title": "أسود",
+      "price": 3500,
+      "available": true,
+      "options": [
+       "أسود"
+      ]
+     }
+    ],
+    "category": {
+     "title": "قرطاسية",
+     "url": "/category/stationery"
+    }
+   }
+  },
+  "menus": {
+   "main-menu": {
+    "handle": "main-menu",
+    "title": "Main",
+    "items": [
+     {
+      "title": "روايات",
+      "url": "/category/novels",
+      "children": []
+     },
+     {
+      "title": "فكر وثقافة",
+      "url": "/category/culture",
+      "children": []
+     },
+     {
+      "title": "كتب الأطفال",
+      "url": "/category/kids",
+      "children": []
+     },
+     {
+      "title": "شعر",
+      "url": "/category/poetry",
+      "children": []
+     },
+     {
+      "title": "قرطاسية",
+      "url": "/category/stationery",
+      "children": []
+     }
+    ]
+   }
+  }
+ },
+ "en": {
+  "store": {
+   "name": "Hekaya"
+  },
+  "collections": {
+   "featured": {
+    "title": "Featured",
+    "products": [
+     {
+      "handle": "evening-tales",
+      "title": "Evening Tales",
+      "url": "/en/products/evening-tales",
+      "price": 14500,
+      "compare_at": 16500,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-mustard.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "reading-notes",
+      "title": "A Reader's Notes",
+      "url": "/en/products/reading-notes",
+      "price": 15000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-green.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "first-words",
+      "title": "First Thousand Words",
+      "url": "/en/products/first-words",
+      "price": 9900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-terracotta.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "short-poems",
+      "title": "Short Poems",
+      "url": "/en/products/short-poems",
+      "price": 8000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-cream.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "leather-bookmark",
+      "title": "Leather bookmark",
+      "url": "/en/products/leather-bookmark",
+      "price": 6500,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-leather-bookmark.webp"
+      },
+      "available": true,
+      "options": []
+     }
+    ]
+   },
+   "new": {
+    "title": "New",
+    "products": [
+     {
+      "handle": "evening-tales",
+      "title": "Evening Tales",
+      "url": "/en/products/evening-tales",
+      "price": 14500,
+      "compare_at": 16500,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-mustard.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "last-ferry",
+      "title": "The Last Ferry",
+      "url": "/en/products/last-ferry",
+      "price": 12000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-green.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "house-by-the-bridge",
+      "title": "The House by the Bridge",
+      "url": "/en/products/house-by-the-bridge",
+      "price": 13500,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-terracotta.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "winter-letters",
+      "title": "Winter Letters",
+      "url": "/en/products/winter-letters",
+      "price": 11000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-cream.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "city-trilogy",
+      "title": "The City Trilogy",
+      "url": "/en/products/city-trilogy",
+      "price": 39000,
+      "compare_at": 45000,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-stack-earth.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "quiet-summer",
+      "title": "A Quiet Summer",
+      "url": "/en/products/quiet-summer",
+      "price": 9500,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-open.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "paper-mornings",
+      "title": "Paper Mornings",
+      "url": "/en/products/paper-mornings",
+      "price": 10500,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-cream.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "reading-notes",
+      "title": "A Reader's Notes",
+      "url": "/en/products/reading-notes",
+      "price": 15000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-green.webp"
+      },
+      "available": true,
+      "options": []
+     }
+    ]
+   },
+   "novels": {
+    "title": "Novels",
+    "products": [
+     {
+      "handle": "evening-tales",
+      "title": "Evening Tales",
+      "url": "/en/products/evening-tales",
+      "price": 14500,
+      "compare_at": 16500,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-mustard.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "last-ferry",
+      "title": "The Last Ferry",
+      "url": "/en/products/last-ferry",
+      "price": 12000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-green.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "house-by-the-bridge",
+      "title": "The House by the Bridge",
+      "url": "/en/products/house-by-the-bridge",
+      "price": 13500,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-terracotta.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "winter-letters",
+      "title": "Winter Letters",
+      "url": "/en/products/winter-letters",
+      "price": 11000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-cream.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "city-trilogy",
+      "title": "The City Trilogy",
+      "url": "/en/products/city-trilogy",
+      "price": 39000,
+      "compare_at": 45000,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-stack-earth.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "quiet-summer",
+      "title": "A Quiet Summer",
+      "url": "/en/products/quiet-summer",
+      "price": 9500,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-open.webp"
+      },
+      "available": true,
+      "options": []
+     }
+    ]
+   },
+   "culture": {
+    "title": "Ideas and culture",
+    "products": [
+     {
+      "handle": "paper-mornings",
+      "title": "Paper Mornings",
+      "url": "/en/products/paper-mornings",
+      "price": 10500,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-cream.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "reading-notes",
+      "title": "A Reader's Notes",
+      "url": "/en/products/reading-notes",
+      "price": 15000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-green.webp"
+      },
+      "available": true,
+      "options": []
+     }
+    ]
+   },
+   "kids": {
+    "title": "Children's books",
+    "products": [
+     {
+      "handle": "bedtime-story",
+      "title": "A Bedtime Story",
+      "url": "/en/products/bedtime-story",
+      "price": 8500,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-mustard.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "first-words",
+      "title": "First Thousand Words",
+      "url": "/en/products/first-words",
+      "price": 9900,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-terracotta.webp"
+      },
+      "available": true,
+      "options": []
+     }
+    ]
+   },
+   "poetry": {
+    "title": "Poetry",
+    "products": [
+     {
+      "handle": "short-poems",
+      "title": "Short Poems",
+      "url": "/en/products/short-poems",
+      "price": 8000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-cream.webp"
+      },
+      "available": true,
+      "options": []
+     }
+    ]
+   },
+   "stationery": {
+    "title": "Stationery",
+    "products": [
+     {
+      "handle": "leather-bookmark",
+      "title": "Leather bookmark",
+      "url": "/en/products/leather-bookmark",
+      "price": 6500,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-leather-bookmark.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "reading-glasses",
+      "title": "Reading glasses",
+      "url": "/en/products/reading-glasses",
+      "price": 18000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-reading-glasses.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "blue-notebook",
+      "title": "Blue notebook",
+      "url": "/en/products/blue-notebook",
+      "price": 7500,
+      "compare_at": 9000,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-notebook-blue.webp"
+      },
+      "available": true,
+      "options": [
+       {
+        "name": "Size",
+        "values": [
+         "A5",
+         "A6"
+        ]
+       }
+      ]
+     },
+     {
+      "handle": "red-spiral-notebook",
+      "title": "Red spiral notebook",
+      "url": "/en/products/red-spiral-notebook",
+      "price": 6000,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-notebook-spiral-red.webp"
+      },
+      "available": true,
+      "options": []
+     },
+     {
+      "handle": "blue-pen",
+      "title": "Blue pen",
+      "url": "/en/products/blue-pen",
+      "price": 3500,
+      "compare_at": null,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-pen-blue.webp"
+      },
+      "available": true,
+      "options": [
+       {
+        "name": "Ink",
+        "values": [
+         "أزرق",
+         "أسود"
+        ]
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "products": {
+   "evening-tales": {
+    "id": "evening-tales",
+    "handle": "evening-tales",
+    "url": "/en/products/evening-tales",
+    "title": "Evening Tales",
+    "price": 14500,
+    "compare_at": 16500,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-mustard.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-mustard.webp"
+     }
+    ],
+    "description": "A collection of short stories to read at the end of the day. Hardcover edition.",
+    "options": [],
+    "has_variants": false,
+    "variants": [
+     {
+      "id": "evening-tales-d",
+      "title": "Default",
+      "price": 14500,
+      "available": true,
+      "options": []
+     }
+    ],
+    "category": {
+     "title": "Novels",
+     "url": "/en/category/novels"
+    }
+   },
+   "last-ferry": {
+    "id": "last-ferry",
+    "handle": "last-ferry",
+    "url": "/en/products/last-ferry",
+    "title": "The Last Ferry",
+    "price": 12000,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-green.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-green.webp"
+     }
+    ],
+    "description": "A novel set over one night on the riverbank. Hardcover edition.",
+    "options": [],
+    "has_variants": false,
+    "variants": [
+     {
+      "id": "last-ferry-d",
+      "title": "Default",
+      "price": 12000,
+      "available": true,
+      "options": []
+     }
+    ],
+    "category": {
+     "title": "Novels",
+     "url": "/en/category/novels"
+    }
+   },
+   "house-by-the-bridge": {
+    "id": "house-by-the-bridge",
+    "handle": "house-by-the-bridge",
+    "url": "/en/products/house-by-the-bridge",
+    "title": "The House by the Bridge",
+    "price": 13500,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-terracotta.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-terracotta.webp"
+     }
+    ],
+    "description": "A novel about a family and an old house. Hardcover edition.",
+    "options": [],
+    "has_variants": false,
+    "variants": [
+     {
+      "id": "house-by-the-bridge-d",
+      "title": "Default",
+      "price": 13500,
+      "available": true,
+      "options": []
+     }
+    ],
+    "category": {
+     "title": "Novels",
+     "url": "/en/category/novels"
+    }
+   },
+   "winter-letters": {
+    "id": "winter-letters",
+    "handle": "winter-letters",
+    "url": "/en/products/winter-letters",
+    "title": "Winter Letters",
+    "price": 11000,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-cream.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-cream.webp"
+     }
+    ],
+    "description": "A novel told in letters. Paperback edition.",
+    "options": [],
+    "has_variants": false,
+    "variants": [
+     {
+      "id": "winter-letters-d",
+      "title": "Default",
+      "price": 11000,
+      "available": true,
+      "options": []
+     }
+    ],
+    "category": {
+     "title": "Novels",
+     "url": "/en/category/novels"
+    }
+   },
+   "city-trilogy": {
+    "id": "city-trilogy",
+    "handle": "city-trilogy",
+    "url": "/en/products/city-trilogy",
+    "title": "The City Trilogy",
+    "price": 39000,
+    "compare_at": 45000,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-stack-earth.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-stack-earth.webp"
+     }
+    ],
+    "description": "Three books in one box. Hardcover edition.",
+    "options": [],
+    "has_variants": false,
+    "variants": [
+     {
+      "id": "city-trilogy-d",
+      "title": "Default",
+      "price": 39000,
+      "available": true,
+      "options": []
+     }
+    ],
+    "category": {
+     "title": "Novels",
+     "url": "/en/category/novels"
+    }
+   },
+   "quiet-summer": {
+    "id": "quiet-summer",
+    "handle": "quiet-summer",
+    "url": "/en/products/quiet-summer",
+    "title": "A Quiet Summer",
+    "price": 9500,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-open.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-open.webp"
+     }
+    ],
+    "description": "A short novel for a holiday read. Paperback edition.",
+    "options": [],
+    "has_variants": false,
+    "variants": [
+     {
+      "id": "quiet-summer-d",
+      "title": "Default",
+      "price": 9500,
+      "available": true,
+      "options": []
+     }
+    ],
+    "category": {
+     "title": "Novels",
+     "url": "/en/category/novels"
+    }
+   },
+   "paper-mornings": {
+    "id": "paper-mornings",
+    "handle": "paper-mornings",
+    "url": "/en/products/paper-mornings",
+    "title": "Paper Mornings",
+    "price": 10500,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-cream.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-cream.webp"
+     }
+    ],
+    "description": "Short essays on reading and books. Paperback edition.",
+    "options": [],
+    "has_variants": false,
+    "variants": [
+     {
+      "id": "paper-mornings-d",
+      "title": "Default",
+      "price": 10500,
+      "available": true,
+      "options": []
+     }
+    ],
+    "category": {
+     "title": "Ideas and culture",
+     "url": "/en/category/culture"
+    }
+   },
+   "reading-notes": {
+    "id": "reading-notes",
+    "handle": "reading-notes",
+    "url": "/en/products/reading-notes",
+    "title": "A Reader's Notes",
+    "price": 15000,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-green.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-green.webp"
+     }
+    ],
+    "description": "Essays and reading notes on ideas and culture. Hardcover edition.",
+    "options": [],
+    "has_variants": false,
+    "variants": [
+     {
+      "id": "reading-notes-d",
+      "title": "Default",
+      "price": 15000,
+      "available": true,
+      "options": []
+     }
+    ],
+    "category": {
+     "title": "Ideas and culture",
+     "url": "/en/category/culture"
+    }
+   },
+   "bedtime-story": {
+    "id": "bedtime-story",
+    "handle": "bedtime-story",
+    "url": "/en/products/bedtime-story",
+    "title": "A Bedtime Story",
+    "price": 8500,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-mustard.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-mustard.webp"
+     }
+    ],
+    "description": "A picture story for reading aloud. Hardcover edition.",
+    "options": [],
+    "has_variants": false,
+    "variants": [
+     {
+      "id": "bedtime-story-d",
+      "title": "Default",
+      "price": 8500,
+      "available": true,
+      "options": []
+     }
+    ],
+    "category": {
+     "title": "Children's books",
+     "url": "/en/category/kids"
+    }
+   },
+   "first-words": {
+    "id": "first-words",
+    "handle": "first-words",
+    "url": "/en/products/first-words",
+    "title": "First Thousand Words",
+    "price": 9900,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-terracotta.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-terracotta.webp"
+     }
+    ],
+    "description": "A picture book for learning words. Hardcover edition.",
+    "options": [],
+    "has_variants": false,
+    "variants": [
+     {
+      "id": "first-words-d",
+      "title": "Default",
+      "price": 9900,
+      "available": true,
+      "options": []
+     }
+    ],
+    "category": {
+     "title": "Children's books",
+     "url": "/en/category/kids"
+    }
+   },
+   "short-poems": {
+    "id": "short-poems",
+    "handle": "short-poems",
+    "url": "/en/products/short-poems",
+    "title": "Short Poems",
+    "price": 8000,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-cream.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-book-cream.webp"
+     }
+    ],
+    "description": "A selection of short poems. Paperback edition.",
+    "options": [],
+    "has_variants": false,
+    "variants": [
+     {
+      "id": "short-poems-d",
+      "title": "Default",
+      "price": 8000,
+      "available": true,
+      "options": []
+     }
+    ],
+    "category": {
+     "title": "Poetry",
+     "url": "/en/category/poetry"
+    }
+   },
+   "leather-bookmark": {
+    "id": "leather-bookmark",
+    "handle": "leather-bookmark",
+    "url": "/en/products/leather-bookmark",
+    "title": "Leather bookmark",
+    "price": 6500,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-leather-bookmark.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-leather-bookmark.webp"
+     }
+    ],
+    "description": "A brown leather bookmark.",
+    "options": [],
+    "has_variants": false,
+    "variants": [
+     {
+      "id": "leather-bookmark-d",
+      "title": "Default",
+      "price": 6500,
+      "available": true,
+      "options": []
+     }
+    ],
+    "category": {
+     "title": "Stationery",
+     "url": "/en/category/stationery"
+    }
+   },
+   "reading-glasses": {
+    "id": "reading-glasses",
+    "handle": "reading-glasses",
+    "url": "/en/products/reading-glasses",
+    "title": "Reading glasses",
+    "price": 18000,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-reading-glasses.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-reading-glasses.webp"
+     }
+    ],
+    "description": "Reading glasses with a light frame.",
+    "options": [],
+    "has_variants": false,
+    "variants": [
+     {
+      "id": "reading-glasses-d",
+      "title": "Default",
+      "price": 18000,
+      "available": true,
+      "options": []
+     }
+    ],
+    "category": {
+     "title": "Stationery",
+     "url": "/en/category/stationery"
+    }
+   },
+   "blue-notebook": {
+    "id": "blue-notebook",
+    "handle": "blue-notebook",
+    "url": "/en/products/blue-notebook",
+    "title": "Blue notebook",
+    "price": 7500,
+    "compare_at": 9000,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-notebook-blue.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-notebook-blue.webp"
+     }
+    ],
+    "description": "A notebook with a blue cover.",
+    "options": [
+     {
+      "name": "Size",
+      "values": [
+       "A5",
+       "A6"
+      ]
+     }
+    ],
+    "has_variants": true,
+    "variants": [
+     {
+      "id": "blue-notebook-A5",
+      "title": "A5",
+      "price": 7500,
+      "available": true,
+      "options": [
+       "A5"
+      ]
+     },
+     {
+      "id": "blue-notebook-A6",
+      "title": "A6",
+      "price": 7500,
+      "available": true,
+      "options": [
+       "A6"
+      ]
+     }
+    ],
+    "category": {
+     "title": "Stationery",
+     "url": "/en/category/stationery"
+    }
+   },
+   "red-spiral-notebook": {
+    "id": "red-spiral-notebook",
+    "handle": "red-spiral-notebook",
+    "url": "/en/products/red-spiral-notebook",
+    "title": "Red spiral notebook",
+    "price": 6000,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-notebook-spiral-red.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-notebook-spiral-red.webp"
+     }
+    ],
+    "description": "A spiral-bound notebook with a red cover.",
+    "options": [],
+    "has_variants": false,
+    "variants": [
+     {
+      "id": "red-spiral-notebook-d",
+      "title": "Default",
+      "price": 6000,
+      "available": true,
+      "options": []
+     }
+    ],
+    "category": {
+     "title": "Stationery",
+     "url": "/en/category/stationery"
+    }
+   },
+   "blue-pen": {
+    "id": "blue-pen",
+    "handle": "blue-pen",
+    "url": "/en/products/blue-pen",
+    "title": "Blue pen",
+    "price": 3500,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-pen-blue.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-books/pool-books-pen-blue.webp"
+     }
+    ],
+    "description": "A blue-ink pen for everyday writing.",
+    "options": [
+     {
+      "name": "Ink",
+      "values": [
+       "أزرق",
+       "أسود"
+      ]
+     }
+    ],
+    "has_variants": true,
+    "variants": [
+     {
+      "id": "blue-pen-أزرق",
+      "title": "أزرق",
+      "price": 3500,
+      "available": true,
+      "options": [
+       "أزرق"
+      ]
+     },
+     {
+      "id": "blue-pen-أسود",
+      "title": "أسود",
+      "price": 3500,
+      "available": true,
+      "options": [
+       "أسود"
+      ]
+     }
+    ],
+    "category": {
+     "title": "Stationery",
+     "url": "/en/category/stationery"
+    }
+   }
+  },
+  "menus": {
+   "main-menu": {
+    "handle": "main-menu",
+    "title": "Main",
+    "items": [
+     {
+      "title": "Novels",
+      "url": "/en/category/novels",
+      "children": []
+     },
+     {
+      "title": "Ideas and culture",
+      "url": "/en/category/culture",
+      "children": []
+     },
+     {
+      "title": "Children's books",
+      "url": "/en/category/kids",
+      "children": []
+     },
+     {
+      "title": "Poetry",
+      "url": "/en/category/poetry",
+      "children": []
+     },
+     {
+      "title": "Stationery",
+      "url": "/en/category/stationery",
+      "children": []
+     }
+    ]
+   }
+  }
+ }
+}

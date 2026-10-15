@@ -1,0 +1,173 @@
+{
+  "sections": [
+    {
+      "id": "footer",
+      "type": "footer",
+      "settings": {
+        "menu": "",
+        "about_text": {
+          "ar": "مكتبة مستقلة للروايات والفكر وكتب الأطفال والقرطاسية. نوصّل لكل المحافظات والدفع عند الاستلام.",
+          "en": "An independent bookshop for novels, ideas, children's books and stationery. We deliver across Egypt, with cash on delivery."
+        },
+        "copyright": {
+          "ar": "جميع الحقوق محفوظة",
+          "en": "All rights reserved"
+        },
+        "scheme": "light",
+        "show_newsletter": false,
+        "newsletter_title": {
+          "ar": "ابق على اطلاع",
+          "en": "Stay in touch"
+        },
+        "newsletter_text": {
+          "ar": "جديد الكتب على واتساب.",
+          "en": "New books on WhatsApp."
+        },
+        "newsletter_label": {
+          "ar": "تواصل معنا",
+          "en": "Message us"
+        },
+        "newsletter_link": "/contact",
+        "show_language": true
+      },
+      "blocks": [
+        {
+          "id": "col-shop",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "تصفح",
+              "en": "Browse"
+            }
+          },
+          "blocks": [
+            {
+              "id": "s1",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "كل الكتب",
+                  "en": "All books"
+                },
+                "url": "/products"
+              }
+            },
+            {
+              "id": "s2",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "روايات",
+                  "en": "Novels"
+                },
+                "url": "/category/novels"
+              }
+            },
+            {
+              "id": "s3",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "فكر وثقافة",
+                  "en": "Ideas and culture"
+                },
+                "url": "/category/culture"
+              }
+            },
+            {
+              "id": "s4",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "قرطاسية",
+                  "en": "Stationery"
+                },
+                "url": "/category/stationery"
+              }
+            }
+          ]
+        },
+        {
+          "id": "col-help",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "مساعدة",
+              "en": "Help"
+            }
+          },
+          "blocks": [
+            {
+              "id": "h1",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "الشحن والدفع",
+                  "en": "Delivery and payment"
+                },
+                "url": "/delivery"
+              }
+            },
+            {
+              "id": "h2",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "تواصل معنا",
+                  "en": "Contact us"
+                },
+                "url": "/contact"
+              }
+            },
+            {
+              "id": "h3",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "من نحن",
+                  "en": "About us"
+                },
+                "url": "/about"
+              }
+            }
+          ]
+        },
+        {
+          "id": "social-wa",
+          "type": "social-link",
+          "settings": {
+            "label": {
+              "ar": "واتساب",
+              "en": "WhatsApp"
+            },
+            "url": "/contact",
+            "icon": "message-circle"
+          }
+        },
+        {
+          "id": "social-mail",
+          "type": "social-link",
+          "settings": {
+            "label": {
+              "ar": "الإيميل",
+              "en": "Email"
+            },
+            "url": "/contact",
+            "icon": "mail"
+          }
+        },
+        {
+          "id": "pay-cod",
+          "type": "payment-method",
+          "settings": {
+            "label": {
+              "ar": "الدفع عند الاستلام",
+              "en": "Cash on delivery"
+            },
+            "icon": "banknote"
+          }
+        }
+      ]
+    }
+  ]
+}
