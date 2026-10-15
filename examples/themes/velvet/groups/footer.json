@@ -42,7 +42,7 @@
           },
           "blocks": [
             {
-              "id": "col-shop-0",
+              "id": "shop-0",
               "type": "footer-link",
               "settings": {
                 "label": {
@@ -50,39 +50,6 @@
                   "en": "All pieces"
                 },
                 "url": "/products"
-              }
-            },
-            {
-              "id": "col-shop-1",
-              "type": "footer-link",
-              "settings": {
-                "label": {
-                  "ar": "السلاسل",
-                  "en": "Necklaces"
-                },
-                "url": "/category/necklaces"
-              }
-            },
-            {
-              "id": "col-shop-2",
-              "type": "footer-link",
-              "settings": {
-                "label": {
-                  "ar": "الخواتم",
-                  "en": "Rings"
-                },
-                "url": "/category/rings"
-              }
-            },
-            {
-              "id": "col-shop-3",
-              "type": "footer-link",
-              "settings": {
-                "label": {
-                  "ar": "الأساور",
-                  "en": "Bracelets"
-                },
-                "url": "/category/bracelets"
               }
             }
           ]

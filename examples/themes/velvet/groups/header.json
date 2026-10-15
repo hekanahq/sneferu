@@ -25,53 +25,9 @@
             },
             "url": "/products"
           }
-        },
-        {
-          "id": "nav-neck",
-          "type": "menu-link",
-          "settings": {
-            "label": {
-              "ar": "السلاسل",
-              "en": "Necklaces"
-            },
-            "url": "/category/necklaces"
-          }
-        },
-        {
-          "id": "nav-rings",
-          "type": "menu-link",
-          "settings": {
-            "label": {
-              "ar": "الخواتم",
-              "en": "Rings"
-            },
-            "url": "/category/rings"
-          }
-        },
-        {
-          "id": "nav-brace",
-          "type": "menu-link",
-          "settings": {
-            "label": {
-              "ar": "الأساور",
-              "en": "Bracelets"
-            },
-            "url": "/category/bracelets"
-          }
-        },
-        {
-          "id": "nav-ear",
-          "type": "menu-link",
-          "settings": {
-            "label": {
-              "ar": "الأقراط",
-              "en": "Earrings"
-            },
-            "url": "/category/earrings"
-          }
         }
       ],
-      "block_order": ["nav-all", "nav-neck", "nav-rings", "nav-brace", "nav-ear"]
+      "block_order": ["nav-all"]
     }
   ]
 }

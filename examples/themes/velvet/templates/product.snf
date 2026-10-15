@@ -69,7 +69,7 @@
       {
         "type": "related-products",
         "settings": {
-          "collection": "featured",
+          "collection": "related",
           "title": {
             "ar": "قد يعجبك أيضًا",
             "en": "You may also like"

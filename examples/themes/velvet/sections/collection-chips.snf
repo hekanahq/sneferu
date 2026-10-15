@@ -1,6 +1,8 @@
 <hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="20">
   <div class="vl-chips">
-    {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+    {% for item in menu(section.settings.menu).items limit: 3 %}
+      <a class="vl-chip-link" href="{{ item.url }}"><span class="vl-chip-title">{{ item.title }}</span></a>
+    {% endfor %}
   </div>
 </hk-section>
 <hk-schema>
@@ -11,11 +13,15 @@
     },
     "version": 1,
     "templates": ["index"],
-    "blocks": {
-      "allowed": ["chip-link"],
-      "max": 4
-    },
     "settings": {
+      "menu": {
+        "type": "menu",
+        "label": {
+          "en": "Menu (first three links)",
+          "ar": "القائمة (أول ثلاثة روابط)"
+        },
+        "default": "main-menu"
+      },
       "padding_y": {
         "type": "range",
         "label": {

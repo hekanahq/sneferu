@@ -9,51 +9,7 @@
         }
       },
       {
-        "type": "collection-chips",
-        "blocks": [
-          {
-            "type": "chip-link",
-            "settings": {
-              "title": {
-                "ar": "السلاسل",
-                "en": "Necklaces"
-              },
-              "note": {
-                "ar": "قلائد وسلاسل",
-                "en": "Chains and pendants"
-              },
-              "link": "/category/necklaces"
-            }
-          },
-          {
-            "type": "chip-link",
-            "settings": {
-              "title": {
-                "ar": "الخواتم",
-                "en": "Rings"
-              },
-              "note": {
-                "ar": "خواتم بأحجار وسادة",
-                "en": "Stone and plain bands"
-              },
-              "link": "/category/rings"
-            }
-          },
-          {
-            "type": "chip-link",
-            "settings": {
-              "title": {
-                "ar": "الأساور",
-                "en": "Bracelets"
-              },
-              "note": {
-                "ar": "أساور وإسورة",
-                "en": "Bracelets and cuffs"
-              },
-              "link": "/category/bracelets"
-            }
-          }
-        ]
+        "type": "collection-chips"
       },
       {
         "type": "featured-products",
@@ -62,7 +18,7 @@
             "ar": "أحدث القطع",
             "en": "New pieces"
           },
-          "limit": 9,
+          "limit": 6,
           "columns": 3,
           "image_ratio": "1/1",
           "card_style": "bordered"
