@@ -1,7 +1,7 @@
 {
   "id": "loom",
   "name": "Loom",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Hekana",
   "description": "A handmade craft studio store: terracotta and linen with olive, a text-and-photo hero, filled category tiles, quiet product cards, a three-step strip with photos and a ruled trust strip, on every page.",
   "category": "handmade",
@@ -28,7 +28,12 @@
       "clayLight": "#C98A66",
       "linen": "#EAE2D4",
       "charcoal": "#3A312A",
-      "olive": "#5C6236"
+      "olive": "#5C6236",
+      "success": "#4F6B3A",
+      "warning": "#9A6A14",
+      "danger": "#9B3B2B",
+      "border": "#D9CFBE",
+      "onPrimary": "#FFFFFF"
     },
     "layout": {
       "contentWidth": "1100px"

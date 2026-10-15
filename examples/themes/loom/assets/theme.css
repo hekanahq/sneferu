@@ -378,3 +378,44 @@
   .loom-grid { gap: 20px 12px; }
 }
 .loom-main h2 + .loom-grid { margin-top: 16px; }
+
+/* Scale pass: closer to the mockup's weight */
+.loom-announcement { font-size: 14px; }
+.loom-announcement a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; }
+.loom-logo { min-width: 44px; }
+.loom-hero { padding-block: 40px 32px; }
+.loom-hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; }
+.loom-hero-text { gap: 24px; }
+.loom-hero-text h1 { font-size: 56px !important; line-height: 1.3; }
+.loom-hero-sub { font-size: 18px; }
+.loom-pill { min-height: 52px; padding-inline: 36px; font-size: 17px; }
+.loom-hero-media, .loom-hero-media img { max-height: 440px; height: 440px; }
+.loom-cat { min-height: 120px; }
+.loom-cat-label { font-size: 22px; }
+.loom-card-title { font-size: 17px; }
+.loom-card .sn-price { font-size: 17px; }
+.loom-steps { gap: 24px; }
+.loom-step-label { font-size: 18px; }
+.loom-trust { padding-block: 16px; }
+.loom-trust-list { gap: 16px 64px; }
+.loom-trust-label { font-size: 18px; }
+.loom-trust-icon .ic, .loom-trust-icon .sn-icon, .loom-trust-icon svg { width: 36px; height: 36px; }
+.loom-footer-about p:not(.loom-footer-brand), .loom-footer-links a, .loom-contact-line a, .loom-social, .loom-footer-bottom, .loom-payment { font-size: 15px; }
+.loom-footer-title { font-size: 17px; }
+.loom-footer-brand { font-size: 22px; }
+@media (max-width: 639px) {
+  .loom-hero { padding-block: 20px 20px; }
+  .loom-hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr); gap: 16px; }
+  .loom-hero-text { gap: 12px; }
+  .loom-hero-text h1 { font-size: 30px !important; }
+  .loom-hero-sub { font-size: 14px; }
+  .loom-pill { min-height: 44px; padding-inline: 20px; font-size: 15px; }
+  .loom-hero-media, .loom-hero-media img { max-height: 240px; height: 240px; }
+  .loom-cat { min-height: 76px; }
+  .loom-cat-label { font-size: 16px; }
+  .loom-step-label { font-size: 14px; }
+  .loom-trust-label { font-size: 16px; }
+  .loom-trust-icon .ic, .loom-trust-icon .sn-icon, .loom-trust-icon svg { width: 28px; height: 28px; }
+  .loom-trust-list { align-items: center; }
+}
+@media (min-width: 640px) and (max-width: 1023px) { .loom-hero-text h1 { font-size: 40px !important; } .loom-hero-grid { gap: 24px; } }
