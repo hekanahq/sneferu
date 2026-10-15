@@ -19,12 +19,12 @@
           "en": "Need a larger order?"
         },
         "newsletter_text": {
-          "ar": "كلمنا على واتساب وقولنا اللي محتاجه.",
-          "en": "Message us on WhatsApp and tell us what you need."
+          "ar": "اكتب لنا عن طلبك.",
+          "en": "Tell us about your order."
         },
         "newsletter_label": {
-          "en": "Contact us on WhatsApp",
-          "ar": "كلمنا على واتساب"
+          "en": "Contact us",
+          "ar": "تواصل معانا"
         },
         "newsletter_link": "/contact",
         "show_language": true,
@@ -129,7 +129,7 @@
               "en": "Call",
               "ar": "اتصال"
             },
-            "url": "/contact",
+            "url": "",
             "icon": "phone"
           }
         },
@@ -138,10 +138,10 @@
           "type": "social-link",
           "settings": {
             "label": {
-              "en": "WhatsApp",
-              "ar": "واتساب"
+              "en": "Message",
+              "ar": "رسالة"
             },
-            "url": "/contact",
+            "url": "",
             "icon": "message-circle"
           }
         },
@@ -149,12 +149,12 @@
           "id": "contact-quote",
           "type": "contact-line",
           "settings": {
-            "icon": "message-circle",
+            "icon": "mail",
             "text": {
-              "ar": "تواصل معنا على واتساب",
-              "en": "Contact us on WhatsApp"
+              "ar": "تواصل معانا",
+              "en": "Contact us"
             },
-            "url": ""
+            "url": "/contact"
           }
         },
         {
@@ -165,7 +165,7 @@
               "en": "Share",
               "ar": "مشاركة"
             },
-            "url": "/contact",
+            "url": "",
             "icon": "share-2"
           }
         }

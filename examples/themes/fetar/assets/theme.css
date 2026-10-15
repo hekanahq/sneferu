@@ -300,3 +300,4 @@
 @media (max-width: 639px) {
   .ft-hero-actions .sn-btn { padding-inline: 20px; white-space: nowrap; min-height: 44px; }
 }
+.ft-related-head { margin-bottom: 24px; }

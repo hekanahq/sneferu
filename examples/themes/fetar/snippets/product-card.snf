@@ -31,7 +31,7 @@
       {% else %}
         {% if product.available %}
           <div class="ft-quick-form">
-            <hk-add-to-cart product="{{ product }}" label="{{ t('add') }}" quantity="false" />
+            <hk-add-to-cart product="{{ product }}" label="{{ t('add') }}: {{ product.title }}" quantity="false" />
           </div>
         {% endif %}
       {% endif %}
