@@ -26,7 +26,7 @@ const PROD = { title: 'P "1"', url: '/p', price: 1000, compare_at: 1200, image: 
 describe('content and commerce tags', () => {
   it('registers the base set', () => {
     expect([...r.names()].sort()).toEqual(['hk-badge', 'hk-button', 'hk-card', 'hk-container', 'hk-grid', 'hk-heading', 'hk-icon', 'hk-image', 'hk-price', 'hk-product-card', 'hk-product-grid', 'hk-rich-text', 'hk-search-form', 'hk-section', 'hk-stack', 'hk-text',
-      'hk-add-to-cart', 'hk-cart-count', 'hk-cart-drawer', 'hk-cart-items', 'hk-cart-summary', 'hk-locale-switch', 'hk-pagination', 'hk-product-gallery', 'hk-section-group', 'hk-variant-picker'].sort());
+      'hk-add-to-cart', 'hk-cart-count', 'hk-cart-drawer', 'hk-cart-items', 'hk-cart-summary', 'hk-locale-switch', 'hk-pagination', 'hk-product-gallery', 'hk-section-group', 'hk-variant-picker', 'hk-inline-checkout'].sort());
   });
   it('heading/text escape and choose level', () => {
     expect(render('hk-heading', { text: '<b>كروت</b>', level: 'h1' }).html).toBe('<h1 class="sn-c1">&lt;b&gt;كروت&lt;/b&gt;</h1>');
@@ -54,7 +54,8 @@ describe('content and commerce tags', () => {
     const need: Record<string, Record<string, unknown>> = { 'hk-icon': { name: 'search' }, 'hk-image': { src: '/a.png' }, 'hk-product-card': { product: { title: 'P', url: '/p' } }, 'hk-rich-text': { html: '<p>x</p>' },
       'hk-product-gallery': { product: { id: 'p1', title: 'P', images: [{ url: '/a.png' }] } }, 'hk-pagination': { paginate: { pages: 2, prev_url: '', next_url: '/x?page=2', parts: [{ page: 1, url: '/x', current: true }, { page: 2, url: '/x?page=2', current: false }] } },
       'hk-locale-switch': { localization: { alternate_locale: 'en', alternate_url: '/en' } }, 'hk-add-to-cart': { product: { id: 'p1', title: 'P', url: '/p', variants: [] } },
-      'hk-variant-picker': { product: { id: 'p1', variants: [{ id: 'a', title: 'A', options: [] }, { id: 'b', title: 'B', options: [] }] } } };
+      'hk-variant-picker': { product: { id: 'p1', variants: [{ id: 'a', title: 'A', options: [] }, { id: 'b', title: 'B', options: [] }] }  },
+      'hk-inline-checkout': { product: { id: 'p1', handle: 'p' } } };
     for (const name of r.names()) {
       if (name === 'hk-section-group') continue; // prints nothing: the runtime fills it
       const { html } = render(name, { ...need[name], ...extra }, '<i></i>');

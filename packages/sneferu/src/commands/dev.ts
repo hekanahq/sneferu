@@ -8,7 +8,7 @@ import { renderPage } from '@hekana/sneferu-runtime';
 import { createDefaultRegistry } from '@hekana/sneferu-components';
 import { loadTheme } from '../load';
 import { pickSampleData, sampleContext, withSampleData } from '../sample-data';
-import { devPage } from '../dev-page';
+import { checkoutEmbedPlaceholder, devPage } from '../dev-page';
 import { controllersBundle, devHostScript } from '../dev-controllers';
 import { RELATED_COLLECTION, plainNotFound, relatedProducts, resolveDevRoute, splitLocale } from '../dev-routes';
 
@@ -79,6 +79,10 @@ export async function startDev(dir: string, port: number, opts: { data?: string 
         res.writeHead(200, { 'content-type': TYPES[extname(file).toLowerCase()] ?? 'application/octet-stream' }).end(readFileSync(file)); return;
       }
       if (rawPath === '/__controllers.js') { const js = controllersBundle(); if (!js) { res.writeHead(404).end(); return; } res.writeHead(200, { 'content-type': 'text/javascript' }).end(js); return; }
+      if (rawPath === '/checkout/embed' || rawPath === '/en/checkout/embed' || rawPath === '/ar/checkout/embed') {
+        const loc = rawPath.startsWith('/en/') ? 'en' : rawPath.startsWith('/ar/') ? 'ar' : (artifact?.manifest.defaultLocale ?? 'ar');
+        res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' }).end(checkoutEmbedPlaceholder(loc)); return;
+      }
       if (!artifact) { res.writeHead(500, { 'content-type': 'text/html; charset=utf-8' }).end(errorPage(problems)); return; }
       if (rawPath === '/favicon.ico') { res.writeHead(404).end(); return; }
       const split = splitLocale(url.pathname);

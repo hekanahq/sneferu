@@ -44,7 +44,23 @@ export function variantsOf(p: Record<string, unknown>): NormVariant[] {
   return out;
 }
 
-export interface NormOption { name: string; values: string[] }
+export interface NormSwatch { color: string | null; image: string | null }
+export interface NormOption { name: string; values: string[]; presentation: string; swatches: NormSwatch[] }
+
+const PRESENTATIONS = new Set(['buttons', 'color', 'image', 'dropdown', 'radio', 'text']);
+const HEX6 = /^#[0-9a-f]{6}$/i;
+
+/** One swatch per value, in value order: a #rrggbb colour and a safe image, each or both null. */
+function swatchesOf(o: Record<string, unknown>, values: string[]): NormSwatch[] {
+  const raw = Array.isArray(o.swatches) ? o.swatches.slice(0, MAX_VALUES) : [];
+  return values.map((value) => {
+    const s = raw.find((x) => isObj(x) && str(x.value, 80) === value);
+    if (!isObj(s)) return { color: null, image: null };
+    const color = typeof s.color === 'string' && HEX6.test(s.color) ? s.color.toLowerCase() : null;
+    const url = isObj(s.image) ? toStr(s.image.url) : typeof s.image === 'string' ? s.image : '';
+    return { color, image: safeImageSrc(url) ? url : null };
+  });
+}
 /**
  * The product's options when they are well formed and every variant picks one listed value per option;
  * null otherwise (malformed or missing `optionValues` on legacy data), and the picker falls back to a flat list of variants.
@@ -56,7 +72,12 @@ export function optionsOf(p: Record<string, unknown>, variants: NormVariant[]): 
     if (!isObj(o) || typeof o.name !== 'string' || o.name.trim() === '' || !Array.isArray(o.values) || o.values.length === 0 || o.values.length > MAX_VALUES) return null;
     const values = o.values.map((x) => (typeof x === 'string' || typeof x === 'number' ? str(x, 80) : ''));
     if (values.some((x) => x === '')) return null;
-    options.push({ name: str(o.name, 60), values });
+    options.push({
+      name: str(o.name, 60),
+      values,
+      presentation: typeof o.presentation === 'string' && PRESENTATIONS.has(o.presentation) ? o.presentation : 'buttons',
+      swatches: swatchesOf(o, values),
+    });
   }
   for (const v of variants) {
     if (v.options.length !== options.length) return null;

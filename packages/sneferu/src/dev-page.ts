@@ -35,3 +35,14 @@ export function devPage(artifact: { manifest: ManifestLike }, o: { body: string;
     + `<style>*{box-sizing:border-box}body{margin:0;font-family:system-ui,'Cairo',sans-serif}${themeTokenCss(artifact.manifest)}${styleSafe(themeFontCss(artifact.manifest, o.locale, ''))}</style>`
     + `<style>${styleSafe(o.css)}</style><style>${styleSafe(o.themeCss)}</style></head><body>${o.body}${o.hostScript ? `<script type="module">${o.hostScript.replace(/<\/script/gi, '<\\/script')}</script>` : ''}${reload}</body></html>`;
 }
+
+/**
+ * What `sneferu dev` shows inside <hk-inline-checkout>: the real form only exists on a Hekana
+ * store, so the theme author sees a grey box of the right size instead of a 404.
+ */
+export function checkoutEmbedPlaceholder(locale: 'ar' | 'en'): string {
+  const text = locale === 'ar' ? 'نموذج الطلب من هكانة يظهر هنا على المتجر' : 'Hekana order form appears here on the store';
+  return `<!doctype html><html lang="${locale}" dir="${locale === 'ar' ? 'rtl' : 'ltr'}"><meta charset="utf-8">`
+    + `<body style="margin:0;font:15px/1.5 system-ui,sans-serif"><div style="min-height:560px;display:grid;place-items:center;background:#f1f1f1;color:#555;border-radius:12px">${text}</div>`
+    + `<script>parent.postMessage({type:'hk:checkout-height',height:document.documentElement.scrollHeight},location.origin)</script></body></html>`;
+}
