@@ -1,0 +1,182 @@
+<hk-section
+  full-bleed="true"
+  background="{{ section.settings.background }}"
+  padding-y="{{ section.settings.padding_y }}"
+  mobile-padding-y="32"
+  class="kh-hero"
+>
+  <div class="kh-hero-grid">
+    <div class="kh-hero-text">
+      {% if section.settings.eyebrow %}
+        <p class="kh-eyebrow">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+      {% if section.settings.title %}
+        <hk-heading
+          text="{{ section.settings.title }}"
+          level="h1"
+          size="44"
+          mobile-size="30"
+          color="{{ section.settings.text_color }}"
+        />
+      {% endif %}
+      {% if section.settings.subtitle %}
+        <hk-text text="{{ section.settings.subtitle }}" size="18" color="{{ section.settings.text_color }}" />
+      {% endif %}
+      <div class="kh-hero-actions">
+        {% render 'button', label: section.settings.button_label, href: section.settings.button_link, style: 'solid' %}
+        {% render 'button', label: section.settings.button2_label, href: section.settings.button2_link, style: 'outline' %}
+      </div>
+    </div>
+    {% if section.settings.image %}
+      <div class="kh-hero-media">
+        <hk-image
+          src="{{ section.settings.image }}"
+          alt="{{ section.settings.image_alt }}"
+          loading="eager"
+          aspect-ratio="3/2"
+          sizes="(min-width: 1024px) 50vw, 100vw"
+        />
+      </div>
+    {% endif %}
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Hero",
+      "ar": "البانر الرئيسي"
+    },
+    "version": 1,
+    "settings": {
+      "eyebrow": {
+        "type": "text",
+        "label": {
+          "en": "Small line above the heading",
+          "ar": "سطر صغير فوق العنوان"
+        },
+        "default": {
+          "ar": "حرف وتراث مصري",
+          "en": "Egyptian heritage crafts"
+        },
+        "localized": true,
+        "maxLength": 50
+      },
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "نقوش الخيامية والنحاس والكليم في بيتك",
+          "en": "Khayamiya patterns, brass and kilim for your home"
+        },
+        "localized": true,
+        "maxLength": 80
+      },
+      "subtitle": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "صواني نحاس، وسائد كليم، سلال ومعلقات. الدفع عند الاستلام وتوصيل لكل المحافظات.",
+          "en": "Brass trays, kilim cushions, baskets and wall hangings. Cash on delivery, delivered across Egypt."
+        },
+        "localized": true,
+        "maxLength": 200
+      },
+      "button_label": {
+        "type": "text",
+        "label": {
+          "en": "First button",
+          "ar": "الزر الأول"
+        },
+        "default": {
+          "ar": "تسوق المنتجات",
+          "en": "Shop the pieces"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "button_link": {
+        "type": "link",
+        "label": {
+          "en": "First button link",
+          "ar": "رابط الزر الأول"
+        },
+        "default": "/products"
+      },
+      "button2_label": {
+        "type": "text",
+        "label": {
+          "en": "Second button",
+          "ar": "الزر الثاني"
+        },
+        "default": {
+          "ar": "النحاس",
+          "en": "Brass and copper"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "button2_link": {
+        "type": "link",
+        "label": {
+          "en": "Second button link",
+          "ar": "رابط الزر الثاني"
+        },
+        "default": "/category/brass"
+      },
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "Image",
+          "ar": "الصورة"
+        },
+        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/khayamiya/hero.webp"
+      },
+      "image_alt": {
+        "type": "text",
+        "label": {
+          "en": "Image description",
+          "ar": "وصف الصورة"
+        },
+        "default": {
+          "ar": "فانوس نحاس معلق ووسادة كليم وقطعة كليم مطوية",
+          "en": "A hanging brass lantern, a kilim cushion and a folded kilim piece"
+        },
+        "localized": true,
+        "maxLength": 120
+      },
+      "background": {
+        "type": "color",
+        "label": {
+          "en": "Background",
+          "ar": "الخلفية"
+        },
+        "default": "theme:background"
+      },
+      "text_color": {
+        "type": "color",
+        "label": {
+          "en": "Text colour",
+          "ar": "لون النص"
+        },
+        "default": "theme:text"
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 160,
+        "step": 8,
+        "default": 40
+      }
+    }
+  }
+</hk-schema>

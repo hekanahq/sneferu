@@ -1,0 +1,64 @@
+<a class="kh-tile-link" href="{{ url(block.settings.link) }}">
+  <span class="kh-tile-photo">
+    {% if block.settings.image %}
+      <hk-image
+        src="{{ block.settings.image }}"
+        alt="{{ block.settings.label }}"
+        aspect-ratio="1/1"
+        sizes="(min-width: 1024px) 25vw, 50vw"
+      />
+    {% endif %}
+  </span>
+  <span class="kh-tile-label">{{ block.settings.label }}</span>
+  {% if block.settings.caption %}<span class="kh-tile-caption">{{ block.settings.caption }}</span>{% endif %}
+</a>
+<hk-schema>
+  {
+    "name": {
+      "en": "Category tile",
+      "ar": "مربع قسم"
+    },
+    "version": 1,
+    "settings": {
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "Photo",
+          "ar": "الصورة"
+        },
+        "default": ""
+      },
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Name",
+          "ar": "الاسم"
+        },
+        "localized": true,
+        "default": {
+          "ar": "كليم وخيامية",
+          "en": "Kilim and khayamiya"
+        },
+        "maxLength": 32
+      },
+      "caption": {
+        "type": "text",
+        "label": {
+          "en": "Short line",
+          "ar": "سطر قصير"
+        },
+        "localized": true,
+        "default": "",
+        "maxLength": 60
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      }
+    }
+  }
+</hk-schema>

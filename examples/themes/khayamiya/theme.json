@@ -1,0 +1,48 @@
+{
+  "id": "khayamiya",
+  "name": "Khayamiya",
+  "version": "1.0.1",
+  "author": "Hekana",
+  "description": "A store for Egyptian heritage crafts: indigo and rust khayamiya diamond bands under the header and above the footer, a photo hero, photo category tiles with captions, joined bordered product cards and a three-icon strip.",
+  "category": "handmade",
+  "engine": "hk2",
+  "engineCompatibility": "^2.0.0",
+  "defaultLocale": "ar",
+  "locales": ["ar", "en"],
+  "settings": {},
+  "money": {
+    "format": "whole"
+  },
+  "tokens": {
+    "colors": {
+      "primary": "#1F2B6E",
+      "secondary": "#141C4F",
+      "accent": "#B0521E",
+      "background": "#FFFDF8",
+      "text": "#1D2033",
+      "muted": "#585C70",
+      "line": "#E3D9C4",
+      "soft": "#F6EFDF",
+      "surface": "#FFFFFF",
+      "glow": "#F6EFDF",
+      "sand": "#EBDDC2",
+      "brass": "#B8892F",
+      "brass-deep": "#7A5510",
+      "ink": "#141C4F",
+      "paper": "#FFFDF8",
+      "brass-light": "#D9B565",
+      "indigo": "#1F2B6E",
+      "rust": "#C0612B"
+    },
+    "layout": {
+      "contentWidth": "1180px"
+    },
+    "fonts": {
+      "heading": "Noto Kufi Arabic",
+      "body": "Cairo"
+    },
+    "radius": {
+      "md": "8px"
+    }
+  }
+}

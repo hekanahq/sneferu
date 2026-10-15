@@ -1,0 +1,113 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "collection-main"
+      },
+      {
+        "type": "category-tiles",
+        "settings": {
+          "columns": "4"
+        },
+        "blocks": [
+          {
+            "type": "category-tile",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-handmade/pool-handmade-kilim-folded.webp",
+              "label": {
+                "ar": "كليم وخيامية",
+                "en": "Kilim and khayamiya"
+              },
+              "caption": {
+                "ar": "وسائد وقطع بنقوش هندسية",
+                "en": "Cushions and pieces in geometric patterns"
+              },
+              "link": "/category/textiles"
+            }
+          },
+          {
+            "type": "category-tile",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-handmade/pool-handmade-brass-lantern.webp",
+              "label": {
+                "ar": "نحاس وفوانيس",
+                "en": "Brass and lanterns"
+              },
+              "caption": {
+                "ar": "صواني وأواني وإضاءة",
+                "en": "Trays, vessels and lighting"
+              },
+              "link": "/category/brass"
+            }
+          },
+          {
+            "type": "category-tile",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-handmade/pool-handmade-macrame-hanging.webp",
+              "label": {
+                "ar": "سلال ومعلقات",
+                "en": "Baskets and hangings"
+              },
+              "caption": {
+                "ar": "للتخزين وتزيين الحائط",
+                "en": "For storage and the wall"
+              },
+              "link": "/category/baskets"
+            }
+          },
+          {
+            "type": "category-tile",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-home/pool-home-inlaid-box.webp",
+              "label": {
+                "ar": "خشب وفخار",
+                "en": "Wood and clay"
+              },
+              "caption": {
+                "ar": "صناديق وأثاث وأوانٍ",
+                "en": "Boxes, small furniture and vessels"
+              },
+              "link": "/category/wood-clay"
+            }
+          }
+        ]
+      },
+      {
+        "type": "trust-strip",
+        "blocks": [
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "banknote",
+              "label": {
+                "ar": "الدفع عند الاستلام",
+                "en": "Cash on delivery"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "truck",
+              "label": {
+                "ar": "توصيل لكل المحافظات",
+                "en": "Delivery across Egypt"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "package",
+              "label": {
+                "ar": "استبدال سهل",
+                "en": "Easy exchange"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>
