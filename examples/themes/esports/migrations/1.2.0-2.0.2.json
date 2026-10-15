@@ -1,17 +1,15 @@
 {
   "from": "1.2.0",
-  "to": "2.0.1",
+  "to": "2.0.2",
   "sections": {
     "rename": {
-      "hk-cart-main": "cart-main",
-      "hk-collection-main": "collection-main",
-      "hk-not-found": "not-found",
-      "hk-page-main": "page-main",
-      "hk-product-main": "product-main",
-      "hk-related-products": "related-products",
-      "hk-search-main": "search-main",
-      "console-header": "header",
-      "console-footer": "footer"
+      "hk-cart-main": "esports-cart",
+      "hk-collection-main": "esports-collection",
+      "hk-not-found": "esports-not-found",
+      "hk-page-main": "esports-page",
+      "hk-product-main": "esports-product",
+      "hk-related-products": "esports-related",
+      "hk-search-main": "esports-search"
     }
   },
   "blocks": {

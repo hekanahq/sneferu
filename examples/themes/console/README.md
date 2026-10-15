@@ -29,7 +29,7 @@ Phone shots are in `docs/live-*-phone-en.webp`.
 ## What is in the folder
 
 ```
-theme.json                 id, version 2.0.1, tokens
+theme.json                 id, version 2.0.2, tokens
 layout/theme.snf           announcement, header, <main>, footer
 groups/                    announcement.json, header.json, footer.json (the section groups)
 templates/                 index, product, product.digital, collection, search, cart, 404, page
@@ -99,5 +99,5 @@ and related cards. Assign it to a product in the editor.
 The header and footer sections are now the SDK-standard `header` and `footer`
 (they replace `console-header` and `console-footer`); the home sections keep
 their ids and setting names, except that `console-products` no longer draws
-`hk-product-grid` and gained a `columns` setting. `migrations/1.2.0-2.0.1.json` renames `console-header` and `console-footer` to `header` and `footer`
+`hk-product-grid` and gained a `columns` setting. `migrations/1.2.0-2.0.2.json` renames `console-header` and `console-footer` to `header` and `footer`
 and the borrowed `hk-*` page sections and blocks to this theme's own.

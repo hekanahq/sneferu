@@ -1,6 +1,6 @@
 {
   "from": "1.2.0",
-  "to": "2.0.1",
+  "to": "2.0.2",
   "sections": {
     "rename": {
       "hk-cart-main": "cart-main",

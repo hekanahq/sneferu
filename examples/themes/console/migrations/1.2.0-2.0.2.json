@@ -1,6 +1,6 @@
 {
   "from": "1.2.0",
-  "to": "2.0.1",
+  "to": "2.0.2",
   "sections": {
     "rename": {
       "hk-cart-main": "cart-main",
@@ -9,7 +9,9 @@
       "hk-page-main": "page-main",
       "hk-product-main": "product-main",
       "hk-related-products": "related-products",
-      "hk-search-main": "search-main"
+      "hk-search-main": "search-main",
+      "console-header": "header",
+      "console-footer": "footer"
     }
   },
   "blocks": {

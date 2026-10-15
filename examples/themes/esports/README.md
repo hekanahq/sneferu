@@ -39,7 +39,7 @@ Put your own products in `.sneferu-dev/data.json` (never pushed) to preview real
 ## What is in the folder
 
 ```
-theme.json                 id, version 2.0.1, colour tokens, fonts, content width
+theme.json                 id, version 2.0.2, colour tokens, fonts, content width
 layout/theme.snf           skip link, announcement, header, <main>, footer
 groups/                    announcement.json, header.json, footer.json (first content)
 templates/                 index, product, product.digital, collection, search, cart, 404, page
@@ -78,6 +78,6 @@ docs/                      screenshots
 ## Updating from 1.x
 
 2.0.0 adds the pages, the announcement group and new settings. No home-page section
-or setting was renamed or removed, so the home needs no migration. `migrations/1.2.0-2.0.1.json` renames the borrowed `hk-*` page sections to the `esports-*` ones and the `hk-product-*` blocks to `product-*`. The
+or setting was renamed or removed, so the home needs no migration. `migrations/1.2.0-2.0.2.json` renames the borrowed `hk-*` page sections to the `esports-*` ones and the `hk-product-*` blocks to `product-*`. The
 header and footer gained settings (logo, colour scheme, account link, newsletter);
 the new groups start from this theme's defaults.

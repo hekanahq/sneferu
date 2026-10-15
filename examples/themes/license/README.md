@@ -41,7 +41,7 @@ Add `/en` or `?locale=en` for English.
 ## What is in the folder
 
 ```
-theme.json                 tokens, fonts, version 2.0.1
+theme.json                 tokens, fonts, version 2.0.2
 layout/theme.snf           announcement, header, <main>, footer
 groups/                    announcement.json, header.json, footer.json (the default sections and blocks)
 templates/                 index, product, product.digital, collection, search, cart, 404, page
@@ -99,6 +99,6 @@ quantity, gallery), `<details>` for the menu, the FAQ and filters.
 2.0.0 adds pages and settings; it renames nothing on the home page. The home sections
 (`plans-hero`, `features`, `apps`, `faq`) and their blocks keep their ids and setting
 names, and the header and footer keep `menu` and `drawer_on_add`, so the home needs no
-migration. `migrations/1.2.0-2.0.1.json` renames the borrowed `hk-*` page sections and blocks to this theme's own. New settings start from their defaults. The header and footer now also carry
+migration. `migrations/1.2.0-2.0.2.json` renames the borrowed `hk-*` page sections and blocks to this theme's own. New settings start from their defaults. The header and footer now also carry
 blocks (menu links, link columns, payment methods); stores that already customised the
 1.3 header or footer keep their saved values and see the new settings with defaults.
