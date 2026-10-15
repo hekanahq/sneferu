@@ -1,6 +1,6 @@
 {
   "from": "1.2.0",
-  "to": "2.0.1",
+  "to": "2.0.2",
   "sections": {
     "rename": {
       "hk-cart-main": "cart-main",
@@ -20,9 +20,9 @@
       "hk-product-excerpt": "product-excerpt",
       "hk-product-price": "product-price",
       "hk-product-tags": "product-tags",
-      "hk-product-text": "product-text",
       "hk-product-title": "product-title",
       "hk-product-variants": "product-variants"
-    }
+    },
+    "remove": ["hk-product-text"]
   }
 }

@@ -38,7 +38,7 @@ All three groups are optional, and so are `rename` and `remove` inside each.
 
 Do not chain inside one file (`a` to `b`, `b` to `c`). Put each hop in its own version step;
 the steps run in order, so a merchant on 1.0.0 who updates to 1.2.0 goes through
-1.0.0 to 1.1.0 and then 1.1.0 to 1.2.0. A version that changes no names needs no file.
+1.0.0 to 1.1.0 and then 1.1.0 to 1.2.0. A version that changes no names needs no file, with one exception: once a theme has migrations, a store whose installed version is older than the `from` of every file, or that no file spans, gets `missingPath` and the update is not applied. So when a release adds a migration, also ship an empty step (`{ "from": "2.0.0", "to": "2.0.2" }`) for each earlier version that is still installed.
 
 The compiled artifact carries the valid files as `migrations`, oldest first.
 
