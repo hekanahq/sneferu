@@ -1,0 +1,40 @@
+{
+  "id": "wekala",
+  "name": "Wekala",
+  "version": "1.0.0",
+  "author": "Hekana",
+  "description": "A department store: white and navy with one orange accent, a navy hero banner with a photo collage, photo category tiles, a deals row with sale badges and a grey trust band.",
+  "category": "general",
+  "engine": "hk2",
+  "engineCompatibility": "^2.0.0",
+  "defaultLocale": "ar",
+  "locales": ["ar", "en"],
+  "settings": {},
+  "tokens": {
+    "colors": {
+      "primary": "#0B2A5B",
+      "secondary": "#071D42",
+      "accent": "#C2410C",
+      "background": "#FFFFFF",
+      "text": "#14213D",
+      "muted": "#5B6478",
+      "line": "#DDE2EC",
+      "soft": "#F3F5F8",
+      "surface": "#FFFFFF",
+      "glow": "#FDEFE6"
+    },
+    "layout": {
+      "contentWidth": "1280px"
+    },
+    "fonts": {
+      "heading": "Cairo",
+      "body": "Almarai"
+    },
+    "radius": {
+      "md": "6px"
+    }
+  },
+  "money": {
+    "format": "whole"
+  }
+}

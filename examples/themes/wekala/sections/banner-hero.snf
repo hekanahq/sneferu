@@ -1,0 +1,188 @@
+<section class="wk-banner wk-scheme-primary">
+  <hk-container max-width="1280">
+    <div class="wk-banner-inner">
+      <div class="wk-offer">
+        {% if section.settings.kicker %}
+          <p class="wk-offer-kicker">{{ section.settings.kicker }}</p>
+        {% endif %}
+        {% if section.settings.title %}
+          <h1 class="wk-offer-title">{{ section.settings.title }}</h1>
+        {% endif %}
+        {% if section.settings.text %}
+          <p class="wk-offer-text">{{ section.settings.text }}</p>
+        {% endif %}
+        {% render 'button', label: section.settings.button_label, href: section.settings.button_link, style: 'solid' %}
+      </div>
+      <div class="wk-collage">
+        {% if section.settings.image_1 %}
+          <div class="wk-collage-item wk-collage-1">
+            <img
+              src="{{ section.settings.image_1 }}"
+              alt="{{ section.settings.alt_1 }}"
+              width="320"
+              height="270"
+              loading="eager"
+            >
+          </div>
+        {% endif %}
+        {% if section.settings.image_2 %}
+          <div class="wk-collage-item">
+            <img
+              src="{{ section.settings.image_2 }}"
+              alt="{{ section.settings.alt_2 }}"
+              width="220"
+              height="132"
+              loading="eager"
+            >
+          </div>
+        {% endif %}
+        {% if section.settings.image_3 %}
+          <div class="wk-collage-item">
+            <img
+              src="{{ section.settings.image_3 }}"
+              alt="{{ section.settings.alt_3 }}"
+              width="220"
+              height="132"
+              loading="lazy"
+            >
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </hk-container>
+</section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Banner",
+      "ar": "البانر الرئيسي"
+    },
+    "version": 1,
+    "templates": ["index"],
+    "settings": {
+      "kicker": {
+        "type": "text",
+        "label": {
+          "en": "Small line above the heading",
+          "ar": "سطر صغير فوق العنوان"
+        },
+        "localized": true,
+        "default": {
+          "ar": "عروض الموسم",
+          "en": "Season offers"
+        },
+        "maxLength": 40
+      },
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "localized": true,
+        "default": {
+          "ar": "كل احتياجاتك في مكان واحد",
+          "en": "Everything you need in one place"
+        },
+        "maxLength": 80
+      },
+      "text": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "localized": true,
+        "default": {
+          "ar": "أزياء وأجهزة ومستلزمات البيت والعناية، بأسعار مخفضة على أصناف مختارة والدفع عند الاستلام.",
+          "en": "Fashion, devices, home and personal care, with reduced prices on selected items and pay on delivery."
+        },
+        "maxLength": 160
+      },
+      "button_label": {
+        "type": "text",
+        "label": {
+          "en": "Button label",
+          "ar": "نص الزر"
+        },
+        "localized": true,
+        "default": {
+          "ar": "تسوق الآن",
+          "en": "Shop now"
+        },
+        "maxLength": 30
+      },
+      "button_link": {
+        "type": "link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/products"
+      },
+      "image_1": {
+        "type": "image",
+        "label": {
+          "en": "Photo 1",
+          "ar": "الصورة 1"
+        },
+        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-fashion/pool-fashion-leather-handbag-tan.webp"
+      },
+      "alt_1": {
+        "type": "text",
+        "label": {
+          "en": "Photo 1 description",
+          "ar": "وصف الصورة 1"
+        },
+        "localized": true,
+        "default": {
+          "ar": "شنطة جلد",
+          "en": "Leather handbag"
+        },
+        "maxLength": 80
+      },
+      "image_2": {
+        "type": "image",
+        "label": {
+          "en": "Photo 2",
+          "ar": "الصورة 2"
+        },
+        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-fashion/pool-fashion-white-sneakers.webp"
+      },
+      "alt_2": {
+        "type": "text",
+        "label": {
+          "en": "Photo 2 description",
+          "ar": "وصف الصورة 2"
+        },
+        "localized": true,
+        "default": {
+          "ar": "حذاء رياضي أبيض",
+          "en": "White sneakers"
+        },
+        "maxLength": 80
+      },
+      "image_3": {
+        "type": "image",
+        "label": {
+          "en": "Photo 3",
+          "ar": "الصورة 3"
+        },
+        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-luxury/pool-luxury-perfume-bottle.webp"
+      },
+      "alt_3": {
+        "type": "text",
+        "label": {
+          "en": "Photo 3 description",
+          "ar": "وصف الصورة 3"
+        },
+        "localized": true,
+        "default": {
+          "ar": "زجاجة عطر",
+          "en": "Perfume bottle"
+        },
+        "maxLength": 80
+      }
+    }
+  }
+</hk-schema>

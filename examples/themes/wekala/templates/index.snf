@@ -1,0 +1,132 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "banner-hero"
+      },
+      {
+        "type": "category-tiles",
+        "blocks": [
+          {
+            "type": "tile",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-fashion/pool-fashion-abaya-black.webp",
+              "label": {
+                "ar": "أزياء",
+                "en": "Fashion"
+              },
+              "url": "/category/fashion"
+            }
+          },
+          {
+            "type": "tile",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-home/pool-home-oak-side-table.webp",
+              "label": {
+                "ar": "المنزل",
+                "en": "Home"
+              },
+              "url": "/category/home"
+            }
+          },
+          {
+            "type": "tile",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-electronics/pool-electronics-laptop-silver.webp",
+              "label": {
+                "ar": "إلكترونيات",
+                "en": "Electronics"
+              },
+              "url": "/category/electronics"
+            }
+          },
+          {
+            "type": "tile",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-beauty/pool-beauty-eyeshadow-palette-bronze.webp",
+              "label": {
+                "ar": "العناية والجمال",
+                "en": "Beauty"
+              },
+              "url": "/category/beauty"
+            }
+          },
+          {
+            "type": "tile",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-kids/pool-kids-toy-blocks-primary.webp",
+              "label": {
+                "ar": "الأطفال",
+                "en": "Kids"
+              },
+              "url": "/category/kids"
+            }
+          },
+          {
+            "type": "tile",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-grocery/pool-grocery-bread-loaf.webp",
+              "label": {
+                "ar": "البقالة",
+                "en": "Grocery"
+              },
+              "url": "/category/grocery"
+            }
+          }
+        ]
+      },
+      {
+        "type": "deals-grid",
+        "settings": {
+          "collection": "featured",
+          "limit": 8,
+          "columns": 4,
+          "title": {
+            "ar": "مختارات لك",
+            "en": "Recommended for you"
+          },
+          "badge": {
+            "ar": "عروض",
+            "en": "Deals"
+          }
+        }
+      },
+      {
+        "type": "trust-strip",
+        "blocks": [
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "truck",
+              "label": {
+                "ar": "توصيل لكل المحافظات",
+                "en": "Delivery across Egypt"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "banknote",
+              "label": {
+                "ar": "الدفع عند الاستلام",
+                "en": "Cash on delivery"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "package",
+              "label": {
+                "ar": "استبدال سهل",
+                "en": "Easy exchange"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>
