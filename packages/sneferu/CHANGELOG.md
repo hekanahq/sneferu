@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.9.0
+
+0.8.0 was the reverted checkout-template release (#63, #67) and stays on npm under the `next` tag only; this release supersedes it.
+
+### Minor Changes
+
+- cee5d13: Checkout branding. `theme.json` takes an optional `checkout` block (colours, font, radius, button shape, logo, header and footer, a trust note) that brands Hekana's own checkout; there is no checkout template or tag. The compiler validates it, normalises colours, clamps the radius and drops what is invalid (warnings SN3049-SN3057); `settings.checkout` is reserved (SN3048). Core exports `CHECKOUT_SETTINGS`, `CHECKOUT_SETTING_IDS` and `checkoutDefaults(tokens)`. New guide page: Checkout branding. The unused `checkout` tag category is removed.
+
+### Patch Changes
+
+- fb1122f: Document `collection('related')` (the product page's related products: same category, the product itself left out, at most 8) and serve it from `sneferu dev` on product routes.
+- Updated dependencies [cee5d13]
+  - @hekana/sneferu-core@0.9.0
+  - @hekana/sneferu-compiler@0.9.0
+  - @hekana/sneferu-components@0.9.0
+  - @hekana/sneferu-runtime@0.9.0
+  - @hekana/prettier-plugin-sneferu@0.9.0
+  - @hekana/sneferu-controllers@0.9.0
+  - @hekana/sneferu-templates-default@0.9.0
+
 ## 0.7.0
 
 ### Minor Changes

@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.9.0
+
+0.8.0 was the reverted checkout-template release (#63, #67) and stays on npm under the `next` tag only; this release supersedes it.
+
+### Patch Changes
+
+- Updated dependencies [cee5d13]
+  - @hekana/sneferu-compiler@0.9.0
+
 ## 0.7.0
 
 - Version aligned with the rest of the Sneferu group (the plugin is now in the changesets fixed group). No code changes since 0.6.1.

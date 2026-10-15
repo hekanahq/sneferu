@@ -1,6 +1,6 @@
 {
   "name": "@hekana/sneferu-components",
-  "version": "0.7.0",
+  "version": "0.9.0",
   "description": "Sneferu built-in components",
   "type": "module",
   "sideEffects": false,

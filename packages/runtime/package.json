@@ -1,6 +1,6 @@
 {
   "name": "@hekana/sneferu-runtime",
-  "version": "0.7.0",
+  "version": "0.9.0",
   "description": "Sneferu runtime: render IR to HTML",
   "type": "module",
   "sideEffects": false,
