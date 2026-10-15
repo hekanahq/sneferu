@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.9.1
+
+### Patch Changes
+
+- 0926a44: `sneferu login` now sends you to hekana.dev/device to approve (the address comes from the API). The developer portal moved to hekana.dev: `login`, `logout` and `whoami` point at hekana.dev/account for keys and the dev store, and the docs (Get an API key, Push and publish, README) say so. Older CLIs keep working: the old partners.hekana.com/developers/device link redirects to hekana.dev/device with the code.
+  - @hekana/sneferu-compiler@0.9.1
+  - @hekana/sneferu-components@0.9.1
+  - @hekana/sneferu-controllers@0.9.1
+  - @hekana/sneferu-core@0.9.1
+  - @hekana/sneferu-runtime@0.9.1
+  - @hekana/sneferu-templates-default@0.9.1
+  - @hekana/prettier-plugin-sneferu@0.9.1
+
 ## 0.9.0
 
 0.8.0 was the reverted checkout-template release (#63, #67) and stays on npm under the `next` tag only; this release supersedes it.
