@@ -109,8 +109,11 @@ export const hkAddToCart: HkTag = {
     }
     // a list card for a product with variants and none picked: the host needs a variant id, so link to the product page
     if (prod.has_variants === true && !(typeof prod.selected_variant === 'object' && prod.selected_variant !== null)) {
+      const chooseText = label(c, p.chooseLabel, 'choose_options');
+      const title = text(prod.title, 120);
+      const chooseName = title ? ` aria-label="${escapeAttr(`${chooseText}: ${title}`)}"` : '';
       return `<div class="sn-${c.id} sn-add-to-cart${x.cls}"${x.attrs}>`
-        + (available ? `<a class="sn-btn sn-btn-${style} sn-atc-button" href="${escapeAttr(target)}">${escapeText(label(c, p.chooseLabel, 'choose_options'))}</a>`
+        + (available ? `<a class="sn-btn sn-btn-${style} sn-atc-button" href="${escapeAttr(target)}"${chooseName}>${escapeText(chooseText)}</a>`
           : `<button type="button" class="sn-btn sn-btn-${style} sn-atc-button" disabled>${escapeText(out)}</button>`)
         + '</div>';
     }
