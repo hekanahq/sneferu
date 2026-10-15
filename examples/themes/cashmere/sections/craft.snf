@@ -72,8 +72,8 @@
           "ar": "النص"
         },
         "default": {
-          "ar": "نختار الجلد بعناية ونراجع كل قطعة قبل أن تصل إليك: الحواف، الخياطة، والملمس.",
-          "en": "We choose the leather with care and check every piece before it reaches you: the edges, the stitching and the feel."
+          "ar": "تفاصيل القطعة كما هي: الحواف والخياطة والملمس.",
+          "en": "The details of the piece as they are: the edges, the stitching and the feel."
         },
         "localized": true,
         "maxLength": 300

@@ -103,8 +103,8 @@
             "type": "craft-point",
             "settings": {
               "text": {
-                "ar": "جلد طبيعي مختار بعناية",
-                "en": "Natural leather, chosen with care"
+                "ar": "حواف مشطوفة",
+                "en": "Finished edges"
               }
             }
           },
@@ -112,8 +112,8 @@
             "type": "craft-point",
             "settings": {
               "text": {
-                "ar": "خياطة متقنة على الحواف",
-                "en": "Neat stitching along the edges"
+                "ar": "خياطة ظاهرة",
+                "en": "Visible stitching"
               }
             }
           },
@@ -121,8 +121,8 @@
             "type": "craft-point",
             "settings": {
               "text": {
-                "ar": "معدن بلون هادئ بلا لمعة زائدة",
-                "en": "Quiet metal fittings, no loud shine"
+                "ar": "إكسسوار معدني بلون هادئ",
+                "en": "Metal fittings in a quiet tone"
               }
             }
           }

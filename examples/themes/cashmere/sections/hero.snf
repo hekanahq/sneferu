@@ -41,8 +41,8 @@
           "ar": "سطر صغير فوق العنوان"
         },
         "default": {
-          "ar": "جلود طبيعية",
-          "en": "Natural leather"
+          "ar": "جلديات",
+          "en": "Leather goods"
         },
         "localized": true,
         "maxLength": 40
@@ -67,8 +67,8 @@
           "ar": "النص"
         },
         "default": {
-          "ar": "قطع جلدية قليلة الزخرفة، مختارة بعناية لتبقى معاك سنين.",
-          "en": "Leather pieces with little ornament, chosen with care to stay with you for years."
+          "ar": "حقائب ومحافظ وأحزمة بخطوط بسيطة وألوان هادئة.",
+          "en": "Bags, wallets and belts in simple lines and quiet colours."
         },
         "localized": true,
         "maxLength": 200
