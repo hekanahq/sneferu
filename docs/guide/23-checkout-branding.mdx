@@ -1,0 +1,107 @@
+# 23. Checkout branding
+
+The checkout is Hekana's own code on every store: the contact details, the
+address, shipping, payment, the totals and the place-order button. A theme
+does not render it, and there is no checkout template and no checkout tag.
+What a theme and a merchant can do is **brand** it: a fixed set of settings
+(colours, a font, corner radius, button shape, the logo, the header and footer,
+a short trust note) that Hekana turns into CSS custom properties on its
+checkout. Nothing else from the theme reaches the checkout form.
+
+## The `checkout` block
+
+A theme sets its checkout branding in `theme.json`. Every key is optional:
+leave one out and its default comes from the theme's tokens.
+
+```json title="theme.json"
+{
+  "tokens": {
+    "colors": { "primary": "#0F766E", "secondary": "#334155", "accent": "#B45309", "background": "#FAFAF9", "text": "#1C1917" },
+    "fonts": { "body": "Tajawal" }
+  },
+  "checkout": {
+    "color_surface": "#FFFFFF",
+    "radius": 12,
+    "button_shape": "pill",
+    "chrome": "theme",
+    "trust_note": {
+      "ar": "الدفع عند الاستلام متاح لكل الطلبات.",
+      "en": "Cash on delivery is available on every order."
+    }
+  }
+}
+```
+
+## Settings
+
+| Key | Value | Default |
+| - | - | - |
+| `color_accent` | Links, focus rings and selected options. `#rgb` or `#rrggbb` | the `accent` token, else `primary` |
+| `color_button` | The place-order button | the `primary` token, else `accent` |
+| `color_button_text` | The button label | black or white, whichever reads better on the button |
+| `color_background` | The page | the `background` token, else white |
+| `color_surface` | Cards and fields | a `surface` token, else the background |
+| `color_border` | Borders and dividers | a `border` (or `line`) token, else a light grey (dark grey on a dark background) |
+| `color_text` | Text | the `text` token, else black or white for the background |
+| `font` | `"default"` (the theme's body font) or a family from the [font catalogue](05-styling-and-responsive.mdx#fonts) | the `body` font, else `"default"` |
+| `radius` | Corner radius of cards and fields in px, a whole number from 0 to 24 | `tokens.radius.md` (8 when unset), clamped to 0–24 |
+| `button_shape` | `square`, `rounded` (uses `radius`) or `pill` | `square` when the radius is 0, else `rounded` |
+| `logo` | `store` (the store's logo), `custom` (a logo the merchant uploads for the checkout) or `none` | `store` |
+| `chrome` | `theme`: the theme's header and footer groups around the checkout. `minimal`: a minimal Hekana checkout header | `theme` |
+| `trust_note` | `{ "ar": text, "en": text }`, plain text, at most 140 characters each | none |
+
+Colours are written as `#rgb` or `#rrggbb` and stored as lower-case
+`#rrggbb`. When a merchant changes the theme colours, fonts or radius in the
+theme panel, the defaults follow those values. `@hekana/sneferu-core` exports
+the same list as `CHECKOUT_SETTINGS` (labels in Arabic and English, options,
+limits) and the defaults as `checkoutDefaults(tokens)`.
+
+The custom logo image (`logo_image`) is the merchant's to upload; a theme
+cannot set it.
+
+## What the compiler checks
+
+`validate` and `build` keep what is valid, fix what can be fixed and drop the
+rest, each with a warning, so a theme still compiles. The compiled theme holds
+only the cleaned values.
+
+| Problem | Result | Code |
+| - | - | - |
+| `checkout` is not an object | the block is ignored | SN3049 |
+| A key that is not a checkout setting | dropped | SN3050 |
+| `logo_image` | dropped (merchant-only) | SN3051 |
+| A colour that is not `#rgb` or `#rrggbb` | dropped | SN3052 |
+| A font that is not `"default"` or in the catalogue | dropped | SN3053 |
+| `radius` outside 0–24 or not whole | clamped and rounded; not a number: dropped | SN3054 |
+| `button_shape`, `logo` or `chrome` not one of its values | dropped | SN3055 |
+| `trust_note` not `{ "ar", "en" }` of text | the bad part is dropped | SN3056 |
+| A trust note over 140 characters | cut to 140 | SN3057 |
+
+`checkout` is also a reserved theme setting id: a `settings.checkout` in
+`theme.json` is an error (SN3048), because the store keeps the merchant's
+checkout branding under that key.
+
+## Contrast is always readable
+
+Hekana checks the colours before it uses them. A button label or a text colour
+that fails WCAG AA (4.5:1 against the button, or against the background and
+the surface) is replaced by a readable black or white, and an accent that is
+too faint against the surface (under 3:1) takes the text colour. A brand
+colour can make the checkout look like the store; it can never make it hard to
+read.
+
+## The header and footer around the checkout
+
+With `chrome: "theme"` the checkout shows the theme's `header` and `footer`
+[section groups](18-section-groups.mdx) above and below the form, rendered
+without JavaScript. They are contained: nothing in them can cover, overlay or
+change the checkout form. With `chrome: "minimal"` the checkout shows Hekana's
+own minimal checkout header instead.
+
+## Merchants edit the same settings
+
+In the builder, the merchant's **Checkout** page has the same settings. The
+theme's `checkout` block is the starting point; whatever the merchant changes
+there wins, and a theme update never overwrites it. Each layer is checked on
+its own, in this order: the token defaults, the theme's block, the merchant's
+changes.

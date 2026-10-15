@@ -55,7 +55,7 @@ function tagSection(t: HkTag): string {
 
 export function renderTagDocs(registry: TagRegistry): string {
   const tags = [...registry.names()].map((n) => registry.get(n)!);
-  const order = ['layout', 'typography', 'media', 'ui', 'commerce', 'checkout', 'control'];
+  const order = ['layout', 'typography', 'media', 'ui', 'commerce', 'control'];
   const byCat = order.map((c) => [c, tags.filter((t) => t.category === c)] as const).filter(([, ts]) => ts.length);
   const out = [
     '# Tag reference',
@@ -109,7 +109,7 @@ export interface TagDoc {
   props: TagDocProp[];
 }
 
-const ORDER = ['layout', 'typography', 'media', 'ui', 'commerce', 'checkout', 'control'];
+const ORDER = ['layout', 'typography', 'media', 'ui', 'commerce', 'control'];
 
 function orderedTags(registry: TagRegistry): HkTag[] {
   const tags = [...registry.names()].map((n) => registry.get(n)!);

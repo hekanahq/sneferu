@@ -32,7 +32,7 @@ export interface TagRenderContext {
 export interface HkTag {
   name: `hk-${string}`;
   version: number;
-  category: 'layout' | 'typography' | 'media' | 'ui' | 'commerce' | 'checkout' | 'control';
+  category: 'layout' | 'typography' | 'media' | 'ui' | 'commerce' | 'control';
   props: FieldSchema;
   allowedParents: string[] | '*';
   allowedChildren: string[] | '*';
