@@ -1,0 +1,48 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="32">
+  <div class="sk-story-list">
+    {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Story blocks",
+      "ar": "قصص بصور"
+    },
+    "version": 1,
+    "templates": ["index"],
+    "settings": {
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 160,
+        "step": 8,
+        "default": 40
+      }
+    },
+    "blocks": {
+      "allowed": ["story"],
+      "max": 4
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "Two stories",
+          "ar": "قصتان"
+        },
+        "blocks": [
+          {
+            "type": "story"
+          },
+          {
+            "type": "story"
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

@@ -1,0 +1,63 @@
+{
+  "sections": [
+    {
+      "id": "header",
+      "type": "header",
+      "settings": {
+        "menu": "main-menu",
+        "show_search": true,
+        "search_style": "icon",
+        "show_account": false,
+        "show_language": true,
+        "show_cart": true,
+        "drawer_on_add": true
+      },
+      "blocks": [
+        {
+          "id": "nav-ceramics",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "سيراميك وفخار",
+              "en": "Ceramics"
+            },
+            "url": "/category/ceramics"
+          }
+        },
+        {
+          "id": "nav-textiles",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "كتان ونسيج",
+              "en": "Textiles"
+            },
+            "url": "/category/textiles"
+          }
+        },
+        {
+          "id": "nav-furniture",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "أثاث خشب",
+              "en": "Furniture"
+            },
+            "url": "/category/furniture"
+          }
+        },
+        {
+          "id": "nav-decor",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "ديكور",
+              "en": "Decor"
+            },
+            "url": "/category/decor"
+          }
+        }
+      ]
+    }
+  ]
+}

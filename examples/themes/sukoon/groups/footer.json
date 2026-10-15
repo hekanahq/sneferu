@@ -1,0 +1,136 @@
+{
+  "sections": [
+    {
+      "id": "footer",
+      "type": "footer",
+      "settings": {
+        "menu": "",
+        "about_text": {
+          "ar": "فخار وكتان وخشب بألوان هادئة لبيتك.",
+          "en": "Ceramics, linen and wood in quiet tones for your home."
+        },
+        "copyright": {
+          "ar": "جميع الحقوق محفوظة",
+          "en": "All rights reserved"
+        },
+        "scheme": "light",
+        "show_newsletter": false,
+        "show_language": true
+      },
+      "blocks": [
+        {
+          "id": "col-shop",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "تسوق",
+              "en": "Shop"
+            }
+          },
+          "blocks": [
+            {
+              "id": "f-cer",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "سيراميك وفخار",
+                  "en": "Ceramics"
+                },
+                "url": "/category/ceramics"
+              }
+            },
+            {
+              "id": "f-tex",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "كتان ونسيج",
+                  "en": "Textiles"
+                },
+                "url": "/category/textiles"
+              }
+            },
+            {
+              "id": "f-fur",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "أثاث خشب",
+                  "en": "Furniture"
+                },
+                "url": "/category/furniture"
+              }
+            },
+            {
+              "id": "f-dec",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "ديكور",
+                  "en": "Decor"
+                },
+                "url": "/category/decor"
+              }
+            }
+          ]
+        },
+        {
+          "id": "col-help",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "المتجر",
+              "en": "Store"
+            }
+          },
+          "blocks": [
+            {
+              "id": "f-about",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "عن سكون",
+                  "en": "About Sukoon"
+                },
+                "url": "/pages/about"
+              }
+            },
+            {
+              "id": "f-contact",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "تواصل معنا",
+                  "en": "Contact"
+                },
+                "url": "/pages/contact"
+              }
+            },
+            {
+              "id": "f-search",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "بحث",
+                  "en": "Search"
+                },
+                "url": "/search"
+              }
+            }
+          ]
+        },
+        {
+          "id": "pay-cod",
+          "type": "payment-method",
+          "settings": {
+            "label": {
+              "ar": "الدفع عند الاستلام",
+              "en": "Cash on delivery"
+            },
+            "icon": "banknote"
+          }
+        }
+      ]
+    }
+  ]
+}

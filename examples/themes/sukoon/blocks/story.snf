@@ -1,0 +1,111 @@
+<div class="sk-story sk-story-{{ block.settings.flip }}">
+  <div class="sk-story-media">
+    {% if block.settings.image %}
+      <hk-image
+        src="{{ block.settings.image }}"
+        alt="{{ block.settings.image_alt }}"
+        aspect-ratio="1/1"
+        sizes="(min-width: 800px) 420px, 100vw"
+      />
+    {% endif %}
+  </div>
+  <div class="sk-story-body">
+    {% if block.settings.title %}
+      <h2 class="sk-story-title">{{ block.settings.title }}</h2>
+    {% endif %}
+    {% if block.settings.text %}
+      <p class="sk-story-text">{{ block.settings.text }}</p>
+    {% endif %}
+    {% if block.settings.link_label %}
+      <a class="sk-story-link" href="{{ url(block.settings.link) }}">{{ block.settings.link_label }}</a>
+    {% endif %}
+  </div>
+</div>
+<hk-schema>
+  {
+    "name": {
+      "en": "Story",
+      "ar": "قصة"
+    },
+    "version": 1,
+    "settings": {
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "Photo",
+          "ar": "الصورة"
+        },
+        "default": ""
+      },
+      "image_alt": {
+        "type": "text",
+        "label": {
+          "en": "Photo description",
+          "ar": "وصف الصورة"
+        },
+        "localized": true,
+        "default": {
+          "ar": "",
+          "en": ""
+        },
+        "maxLength": 120
+      },
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "localized": true,
+        "default": {
+          "ar": "عنوان قصير",
+          "en": "A short heading"
+        },
+        "maxLength": 80
+      },
+      "text": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "localized": true,
+        "default": {
+          "ar": "",
+          "en": ""
+        },
+        "maxLength": 220
+      },
+      "link_label": {
+        "type": "text",
+        "label": {
+          "en": "Link text",
+          "ar": "نص الرابط"
+        },
+        "localized": true,
+        "default": {
+          "ar": "",
+          "en": ""
+        },
+        "maxLength": 30
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      },
+      "flip": {
+        "type": "select",
+        "label": {
+          "en": "Photo side",
+          "ar": "مكان الصورة"
+        },
+        "options": ["start", "end"],
+        "default": "start"
+      }
+    }
+  }
+</hk-schema>

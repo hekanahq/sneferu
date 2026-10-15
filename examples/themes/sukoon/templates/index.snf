@@ -1,0 +1,174 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "hero",
+        "settings": {
+          "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/sukoon/hero-vase.webp",
+          "image_alt": {
+            "ar": "مزهرية سيراميك أبيض مطفي",
+            "en": "A matte white ceramic vase"
+          }
+        }
+      },
+      {
+        "type": "sk-tiles",
+        "settings": {
+          "padding_y": 24
+        },
+        "blocks": [
+          {
+            "type": "tile",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/sukoon/cup.webp",
+              "label": {
+                "ar": "سيراميك وفخار",
+                "en": "Ceramics"
+              },
+              "link": "/category/ceramics"
+            }
+          },
+          {
+            "type": "tile",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/sukoon/macrame.webp",
+              "label": {
+                "ar": "كتان ونسيج",
+                "en": "Linen & textiles"
+              },
+              "link": "/category/textiles"
+            }
+          },
+          {
+            "type": "tile",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/sukoon/shelf.webp",
+              "label": {
+                "ar": "أثاث خشب",
+                "en": "Wood furniture"
+              },
+              "link": "/category/furniture"
+            }
+          },
+          {
+            "type": "tile",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/sukoon/basket.webp",
+              "label": {
+                "ar": "ديكور",
+                "en": "Decor"
+              },
+              "link": "/category/decor"
+            }
+          }
+        ]
+      },
+      {
+        "type": "featured-products",
+        "settings": {
+          "title": {
+            "ar": "مختارات هذا الموسم",
+            "en": "Seasonal picks"
+          },
+          "collection": "featured",
+          "limit": 4,
+          "columns": 4,
+          "link_label": {
+            "ar": "عرض الكل",
+            "en": "View all"
+          },
+          "link": "/products"
+        }
+      },
+      {
+        "type": "sk-story",
+        "blocks": [
+          {
+            "type": "story",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/sukoon/throw.webp",
+              "image_alt": {
+                "ar": "بطانية تريكو كريمي",
+                "en": "A cream knit throw"
+              },
+              "title": {
+                "ar": "طبقات ناعمة للأركان الهادئة",
+                "en": "Soft layers for quiet corners"
+              },
+              "text": {
+                "ar": "بطاطين ووسائد بخامات طبيعية وألوان قريبة من بعضها.",
+                "en": "Throws and cushions in natural fibres and close tones."
+              },
+              "link_label": {
+                "ar": "تصفح الكتان والنسيج",
+                "en": "Browse linen & textiles"
+              },
+              "link": "/category/textiles",
+              "flip": "start"
+            }
+          },
+          {
+            "type": "story",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/sukoon/terracotta-vase.webp",
+              "image_alt": {
+                "ar": "مزهرية تيراكوتا",
+                "en": "A terracotta vase"
+              },
+              "title": {
+                "ar": "طين وزجاج بلمسة بسيطة",
+                "en": "Clay and glaze, kept simple"
+              },
+              "text": {
+                "ar": "مزهريات وأوانٍ بألوان ترابية تكمل الطاولة والرف.",
+                "en": "Vases and bowls in earthy colours that finish a table or a shelf."
+              },
+              "link_label": {
+                "ar": "تصفح السيراميك",
+                "en": "Browse ceramics"
+              },
+              "link": "/category/ceramics",
+              "flip": "end"
+            }
+          }
+        ]
+      },
+      {
+        "type": "sk-trust",
+        "blocks": [
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "banknote",
+              "label": {
+                "ar": "الدفع عند الاستلام",
+                "en": "Cash on delivery"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "truck",
+              "label": {
+                "ar": "توصيل لكل المحافظات",
+                "en": "Delivery across Egypt"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "package",
+              "label": {
+                "ar": "استبدال سهل",
+                "en": "Easy exchange"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

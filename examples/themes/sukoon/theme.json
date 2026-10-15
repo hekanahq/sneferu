@@ -1,0 +1,32 @@
+{
+  "id": "sukoon",
+  "name": "Sukoon",
+  "version": "1.0.1",
+  "author": "Hekana",
+  "description": "A soft minimal home store: warm off-white and sand ground, muted olive accent, rounded photo tiles, a quiet hero, category tiles, a calm product row and story blocks that alternate photo and text.",
+  "category": "minimal",
+  "engine": "hk2",
+  "engineCompatibility": "^2.0.0",
+  "defaultLocale": "ar",
+  "locales": ["ar", "en"],
+  "settings": {},
+  "money": { "format": "whole" },
+  "tokens": {
+    "colors": {
+      "primary": "#566344",
+      "secondary": "#3A3A30",
+      "accent": "#566344",
+      "background": "#F7F3EC",
+      "text": "#2E2B25",
+      "muted": "#6B6457",
+      "line": "#E2D9C8",
+      "soft": "#EDE6D8",
+      "surface": "#FCFAF5",
+      "sage": "#E1E5D3",
+      "sand": "#E9DFCB"
+    },
+    "layout": { "contentWidth": "1140px" },
+    "fonts": { "heading": "Readex Pro", "body": "Almarai" },
+    "radius": { "md": "18px" }
+  }
+}

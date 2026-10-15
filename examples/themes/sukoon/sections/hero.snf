@@ -1,0 +1,160 @@
+<hk-section
+  background="{{ section.settings.background }}"
+  padding-y="{{ section.settings.padding_y }}"
+  mobile-padding-y="48"
+>
+  <div class="sk-hero sk-align-{{ section.settings.align }}">
+    <div class="sk-hero-text">
+      {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+      {% if section.settings.title %}
+        <hk-heading
+          text="{{ section.settings.title }}"
+          level="h1"
+          size="46"
+          mobile-size="32"
+          color="{{ section.settings.text_color }}"
+        />
+      {% endif %}
+      {% if section.settings.subtitle %}
+        <hk-text text="{{ section.settings.subtitle }}" size="18" color="{{ section.settings.text_color }}" />
+      {% endif %}
+      {% render 'button', label: section.settings.button_label, href: section.settings.button_link, style: section.settings.button_style %}
+    </div>
+    {% if section.settings.image %}
+      <div class="sk-hero-media">
+        <hk-image
+          src="{{ section.settings.image }}"
+          alt="{{ section.settings.image_alt }}"
+          loading="eager"
+          aspect-ratio="1/1"
+          sizes="(min-width: 900px) 460px, 100vw"
+        />
+      </div>
+    {% endif %}
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Hero",
+      "ar": "البانر الرئيسي"
+    },
+    "version": 1,
+    "blocks": {
+      "allowed": ["chip"],
+      "max": 4
+    },
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "قطع هادئة لبيت أهدأ",
+          "en": "Quiet pieces for a calmer home"
+        },
+        "localized": true,
+        "maxLength": 80
+      },
+      "subtitle": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "فخار وكتان وخشب بألوان دافئة وخطوط بسيطة.",
+          "en": "Ceramics, linen and wood in warm tones and simple lines."
+        },
+        "localized": true,
+        "maxLength": 200
+      },
+      "button_label": {
+        "type": "text",
+        "label": {
+          "en": "Button",
+          "ar": "الزر"
+        },
+        "default": {
+          "ar": "تسوّق المجموعة",
+          "en": "Shop the collection"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "button_link": {
+        "type": "link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/products"
+      },
+      "button_style": {
+        "type": "select",
+        "label": {
+          "en": "Button style",
+          "ar": "شكل الزر"
+        },
+        "options": ["solid", "outline", "ghost"],
+        "default": "solid"
+      },
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "Image",
+          "ar": "الصورة"
+        },
+        "default": ""
+      },
+      "image_alt": {
+        "type": "text",
+        "label": {
+          "en": "Image description",
+          "ar": "وصف الصورة"
+        },
+        "default": "",
+        "localized": true,
+        "maxLength": 120
+      },
+      "align": {
+        "type": "select",
+        "label": {
+          "en": "Text alignment",
+          "ar": "محاذاة النص"
+        },
+        "options": ["start", "center"],
+        "default": "start"
+      },
+      "background": {
+        "type": "color",
+        "label": {
+          "en": "Background",
+          "ar": "الخلفية"
+        },
+        "default": "theme:background"
+      },
+      "text_color": {
+        "type": "color",
+        "label": {
+          "en": "Text colour",
+          "ar": "لون النص"
+        },
+        "default": "theme:text"
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 200,
+        "step": 8,
+        "default": 56
+      }
+    }
+  }
+</hk-schema>
