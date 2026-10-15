@@ -1,0 +1,40 @@
+<article class="ft-card ft-card-{{ card_style }}">
+  <a class="ft-card-link" href="{{ product.url }}">
+    <div class="ft-card-media">
+      <hk-image
+        src="{{ product.image }}"
+        alt="{{ product.title }}"
+        aspect-ratio="{{ image_ratio }}"
+        fit="cover"
+        sizes="(min-width: 1024px) 25vw, 50vw"
+      />
+      {% if show_badge %}
+        {% if product.available %}
+          {% if product.compare_at > product.price %}
+            <span class="ft-badge">{{ t('sale') }}</span>
+          {% endif %}
+        {% else %}
+          <span class="ft-badge ft-badge-muted">{{ t('sold_out_badge') }}</span>
+        {% endif %}
+      {% endif %}
+    </div>
+    <h3 class="ft-card-title">{{ product.title }}</h3>
+    {% if show_price %}<span class="ft-card-price">{% render 'price', product: product, bind: false %}</span>{% endif %}
+  </a>
+  {% if show_buy %}
+    <div class="ft-card-buy">
+      {% if product.has_variants %}
+        <a class="ft-quick" href="{{ product.url }}" aria-label="{{ t('choose_options') }}"><hk-icon
+            name="plus"
+            size="22"
+          /></a>
+      {% else %}
+        {% if product.available %}
+          <div class="ft-quick-form">
+            <hk-add-to-cart product="{{ product }}" label="{{ t('add') }}" quantity="false" />
+          </div>
+        {% endif %}
+      {% endif %}
+    </div>
+  {% endif %}
+</article>

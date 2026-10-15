@@ -1,0 +1,133 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "hero"
+      },
+      {
+        "type": "category-pills",
+        "blocks": [
+          {
+            "type": "pill",
+            "settings": {
+              "label": {
+                "ar": "قهوة",
+                "en": "Coffee"
+              },
+              "link": "/category/coffee"
+            }
+          },
+          {
+            "type": "pill",
+            "settings": {
+              "label": {
+                "ar": "عصاير",
+                "en": "Juice"
+              },
+              "link": "/category/juice"
+            }
+          },
+          {
+            "type": "pill",
+            "settings": {
+              "label": {
+                "ar": "مخبوزات",
+                "en": "Bakery"
+              },
+              "link": "/category/bakery"
+            }
+          }
+        ]
+      },
+      {
+        "type": "category-cards",
+        "blocks": [
+          {
+            "type": "category-card",
+            "settings": {
+              "label": {
+                "ar": "مخبوزات",
+                "en": "Bakery"
+              },
+              "link": "/category/bakery",
+              "glyph": "croissant",
+              "tone": "green"
+            }
+          },
+          {
+            "type": "category-card",
+            "settings": {
+              "label": {
+                "ar": "عصاير",
+                "en": "Juice"
+              },
+              "link": "/category/juice",
+              "glyph": "glass",
+              "tone": "orange"
+            }
+          },
+          {
+            "type": "category-card",
+            "settings": {
+              "label": {
+                "ar": "قهوة",
+                "en": "Coffee"
+              },
+              "link": "/category/coffee",
+              "glyph": "cup",
+              "tone": "green"
+            }
+          }
+        ]
+      },
+      {
+        "type": "featured-products",
+        "settings": {
+          "title": {
+            "ar": "من القائمة",
+            "en": "From the menu"
+          },
+          "collection": "featured",
+          "limit": 8,
+          "columns": 4
+        }
+      },
+      {
+        "type": "trust-strip",
+        "blocks": [
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "banknote",
+              "label": {
+                "ar": "الدفع عند الاستلام",
+                "en": "Cash on delivery"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "truck",
+              "label": {
+                "ar": "توصيل لكل المحافظات",
+                "en": "Delivery to every governorate"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "package",
+              "label": {
+                "ar": "استبدال سهل",
+                "en": "Easy exchange"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

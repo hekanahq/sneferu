@@ -1,0 +1,21 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "not-found"
+      },
+      {
+        "type": "featured-products",
+        "settings": {
+          "title": {
+            "ar": "كمّل تسوّق",
+            "en": "Keep shopping"
+          },
+          "limit": 4,
+          "columns": 4
+        }
+      }
+    ]
+  }
+</hk-schema>

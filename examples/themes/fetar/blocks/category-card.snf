@@ -1,0 +1,54 @@
+<a class="ft-cat ft-cat-{{ block.settings.tone }}" href="{{ url(block.settings.link) }}">
+  <span class="ft-cat-label">{{ block.settings.label }}</span>
+  {% render 'glyph', name: block.settings.glyph %}
+</a>
+<hk-schema>
+  {
+    "name": {
+      "en": "Category card",
+      "ar": "كارت قسم"
+    },
+    "version": 1,
+    "settings": {
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "localized": true,
+        "default": {
+          "en": "Juice",
+          "ar": "عصاير"
+        },
+        "maxLength": 30
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      },
+      "glyph": {
+        "type": "select",
+        "label": {
+          "en": "Drawing",
+          "ar": "الرسمة"
+        },
+        "options": ["glass", "cup", "croissant", "plate"],
+        "default": "glass"
+      },
+      "tone": {
+        "type": "select",
+        "label": {
+          "en": "Colour",
+          "ar": "اللون"
+        },
+        "options": ["orange", "green"],
+        "default": "green"
+      }
+    }
+  }
+</hk-schema>

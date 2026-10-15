@@ -1,0 +1,54 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="12">
+  <hk-container>
+    <div class="ft-cat-grid">
+      {% for block in section.blocks %}
+        <hk-block of="{{ block }}" />
+      {% endfor %}
+    </div>
+  </hk-container>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Category cards",
+      "ar": "كروت الأقسام"
+    },
+    "version": 1,
+    "settings": {
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 120,
+        "step": 4,
+        "default": 12
+      }
+    },
+    "blocks": {
+      "allowed": ["category-card"],
+      "max": 6
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "Three cards",
+          "ar": "ثلاثة كروت"
+        },
+        "blocks": [
+          {
+            "type": "category-card"
+          },
+          {
+            "type": "category-card"
+          },
+          {
+            "type": "category-card"
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>
