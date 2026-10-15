@@ -15,6 +15,7 @@
       </div>
       {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
     </div>
+    <div class="tw-footer-lang"><hk-locale-switch /></div>
   </hk-container>
   <div class="tw-footer-bar">
     <hk-container>

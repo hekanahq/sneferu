@@ -20,9 +20,6 @@
               class="tw-badge tw-badge-inline"
             >{{ t('offer') }}</span>{% endif %}{% endif %}
       </div>
-      {% if product.excerpt %}
-        <p class="tw-muted">{{ product.excerpt }}</p>
-      {% endif %}
       <hk-variant-picker product="{{ product }}" />
       <hk-add-to-cart product="{{ product }}" label="{{ section.settings.buy_label }}" />
       {% if section.blocks %}

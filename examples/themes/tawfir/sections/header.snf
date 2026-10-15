@@ -3,7 +3,13 @@
     <div class="tw-header-bar">
       <a class="tw-logo" href="{{ url('/') }}">
         {% if section.settings.logo %}
-          <img class="tw-logo-img" src="{{ section.settings.logo }}" alt="{{ store.name }}" width="160" height="40">
+          <img
+            class="tw-logo-img tw-logo-h-{{ section.settings.logo_height }}"
+            src="{{ section.settings.logo }}"
+            alt="{{ store.name }}"
+            width="160"
+            height="{{ section.settings.logo_height }}"
+          >
         {% else %}
           <span class="tw-logo-mark" aria-hidden="true"><hk-icon name="shopping-bag" /></span>
           <span
@@ -61,6 +67,15 @@
           "ar": "صورة الشعار"
         },
         "default": ""
+      },
+      "logo_height": {
+        "type": "select",
+        "label": {
+          "en": "Logo height (px)",
+          "ar": "ارتفاع الشعار (بكسل)"
+        },
+        "options": ["24", "32", "40", "48", "64"],
+        "default": "40"
       },
       "logo_text": {
         "type": "text",

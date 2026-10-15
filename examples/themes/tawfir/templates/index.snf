@@ -146,24 +146,13 @@
         "type": "tw-shelf",
         "settings": {
           "title": {
-            "en": "Dairy and bakery",
-            "ar": "ألبان ومخبوزات"
+            "en": "Cleaning and care",
+            "ar": "منظفات وعناية"
           },
-          "collection": "dairy-bakery",
-          "link": "/category/dairy-bakery",
+          "collection": "household",
+          "link": "/category/household",
+          "limit": 5,
           "tone": "soft"
-        }
-      },
-      {
-        "type": "tw-shelf",
-        "settings": {
-          "title": {
-            "en": "Pantry",
-            "ar": "البقالة"
-          },
-          "collection": "pantry",
-          "link": "/category/pantry",
-          "tone": "white"
         }
       },
       {
