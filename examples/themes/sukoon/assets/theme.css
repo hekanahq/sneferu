@@ -296,7 +296,7 @@
 .sk-hero-text h1 { font-weight: 500; line-height: 1.25; }
 .sk-hero-text .sn-btn { margin-top: 8px; }
 .sk-hero-media img { display: block; width: 100%; height: auto; border-radius: 28px; background: var(--hk-color-sand); }
-@media (min-width: 900px) { .sk-hero { grid-template-columns: minmax(0, 1fr) minmax(0, 460px); gap: 56px; } .sk-hero-text { padding-inline-start: 24px; } }
+@media (min-width: 900px) { .sk-hero { grid-template-columns: minmax(0, 1fr) minmax(0, 560px); gap: 48px; } .sk-hero-text { padding-inline-start: 24px; } }
 .sk-hero-wrap > [data-hk-section] { border-radius: 0; }
 
 /* Category tiles */
@@ -322,9 +322,12 @@
 .sk-story-link { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; color: var(--hk-color-primary); font-weight: 500; text-decoration: underline; text-underline-offset: 4px; }
 @media (min-width: 800px) {
   .sk-story { grid-template-columns: minmax(0, 340px) minmax(0, 1fr); gap: 64px; justify-content: center; }
+  .sk-story-end { grid-template-columns: minmax(0, 1fr) minmax(0, 340px); }
   .sk-story-end .sk-story-media { order: 2; }
 }
 .sk-trust-band { border-block: 1px solid var(--hk-color-line); }
 .sk-trust-list { gap: 12px 56px; }
 .sk-trust-item { color: var(--hk-color-text); font-size: 15px; }
 .sk-trust-icon { padding: 10px; border-radius: 50%; background: var(--hk-color-sage); color: var(--hk-color-primary); }
+
+@media (min-width: 900px) { .sk-tiles-pull { position: relative; z-index: 2; margin-top: -84px; } }

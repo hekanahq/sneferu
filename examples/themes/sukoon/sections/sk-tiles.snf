@@ -4,7 +4,7 @@
       <hk-heading text="{{ section.settings.title }}" level="h2" size="28" mobile-size="22" />
     </div>
   {% endif %}
-  <div class="sk-tiles">
+  <div class="sk-tiles sk-tiles-pull">
     {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
   </div>
 </hk-section>
