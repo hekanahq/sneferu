@@ -1,7 +1,7 @@
 {
   "id": "bunn",
   "name": "Bunn",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "Hekana",
   "description": "A coffee store: espresso brown and copper on cream, a bean-photo hero with a copper banner, round category tiles, product cards with roast-level dots and a feature banner, on every page.",
   "category": "cafe",
@@ -36,7 +36,7 @@
       "contentWidth": "1120px"
     },
     "fonts": {
-      "heading": "Readex Pro",
+      "heading": "Noto Naskh Arabic",
       "body": "Tajawal"
     },
     "radius": {
