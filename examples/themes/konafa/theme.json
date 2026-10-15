@@ -1,7 +1,7 @@
 {
   "id": "konafa",
   "name": "Konafa",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "author": "Hekana",
   "description": "An oriental sweets and gift box store: deep emerald and gold on cream, a geometric Islamic border, occasion tiles, square product photos and a gift-box banner, on every page.",
   "category": "food",
@@ -32,7 +32,7 @@
       "contentWidth": "1120px"
     },
     "fonts": {
-      "heading": "Noto Kufi Arabic",
+      "heading": "El Messiri",
       "body": "Tajawal"
     },
     "radius": {
