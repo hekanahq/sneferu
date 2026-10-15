@@ -12,10 +12,10 @@
             "type": "chip",
             "settings": {
               "label": {
-                "ar": "ألعاب خشبية",
-                "en": "Wooden toys"
+                "ar": "للرضّع",
+                "en": "Babies"
               },
-              "link": "/category/wooden-toys",
+              "link": "/category/age-0-2",
               "tone": "mint"
             }
           },
@@ -23,10 +23,10 @@
             "type": "chip",
             "settings": {
               "label": {
-                "ar": "ملابس",
-                "en": "Clothes"
+                "ar": "للحضانة",
+                "en": "Nursery"
               },
-              "link": "/category/clothes",
+              "link": "/category/age-3-5",
               "tone": "sky"
             }
           },
@@ -34,10 +34,10 @@
             "type": "chip",
             "settings": {
               "label": {
-                "ar": "مستلزمات",
-                "en": "Essentials"
+                "ar": "للمدرسة",
+                "en": "School"
               },
-              "link": "/category/essentials",
+              "link": "/category/age-6-plus",
               "tone": "butter"
             }
           }

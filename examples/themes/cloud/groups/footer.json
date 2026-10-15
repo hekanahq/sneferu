@@ -22,17 +22,17 @@
             {
               "id": "col-age-1",
               "type": "footer-link",
-              "settings": { "label": { "ar": "0-2 سنة", "en": "Ages 0-2" }, "url": "/search?q=0-2" }
+              "settings": { "label": { "ar": "0-2 سنة", "en": "Ages 0-2" }, "url": "/category/age-0-2" }
             },
             {
               "id": "col-age-2",
               "type": "footer-link",
-              "settings": { "label": { "ar": "3-5 سنوات", "en": "Ages 3-5" }, "url": "/search?q=3-5" }
+              "settings": { "label": { "ar": "3-5 سنين", "en": "Ages 3-5" }, "url": "/category/age-3-5" }
             },
             {
               "id": "col-age-3",
               "type": "footer-link",
-              "settings": { "label": { "ar": "6-9 سنوات", "en": "Ages 6-9" }, "url": "/search?q=6-9" }
+              "settings": { "label": { "ar": "6+ سنين", "en": "Ages 6+" }, "url": "/category/age-6-plus" }
             }
           ]
         },
@@ -49,12 +49,12 @@
             {
               "id": "col-shop-toys",
               "type": "footer-link",
-              "settings": { "label": { "ar": "ألعاب خشبية", "en": "Wooden toys" }, "url": "/category/wooden-toys" }
+              "settings": { "label": { "ar": "للرضّع", "en": "Babies" }, "url": "/category/age-0-2" }
             },
             {
               "id": "col-shop-clothes",
               "type": "footer-link",
-              "settings": { "label": { "ar": "ملابس", "en": "Clothes" }, "url": "/category/clothes" }
+              "settings": { "label": { "ar": "للحضانة", "en": "Nursery" }, "url": "/category/age-3-5" }
             },
             {
               "id": "col-shop-search",

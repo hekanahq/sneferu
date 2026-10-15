@@ -2,7 +2,7 @@
   <hk-container>
     <div class="cl-hero-inner">
       {% if section.settings.title %}
-        <hk-heading text="{{ section.settings.title }}" level="h1" size="44" mobile-size="30" align="center" />
+        <hk-heading text="{{ section.settings.title }}" level="h1" size="56" mobile-size="34" align="center" />
       {% endif %}
       {% if section.settings.text %}
         <p class="cl-hero-text">{{ section.settings.text }}</p>

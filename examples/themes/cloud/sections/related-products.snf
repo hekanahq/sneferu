@@ -37,7 +37,7 @@
           "en": "Collection",
           "ar": "القسم"
         },
-        "default": "featured"
+        "default": "related"
       },
       "limit": {
         "type": "range",
