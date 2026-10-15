@@ -1,0 +1,69 @@
+<li class="gh-circle-item">
+  <a class="gh-circle" href="{{ url(block.settings.link) }}">
+    <span class="gh-circle-photo">
+      {% if block.settings.image %}
+        <hk-image
+          src="{{ block.settings.image }}"
+          alt="{{ block.settings.image_alt }}"
+          aspect-ratio="1/1"
+          fit="cover"
+          sizes="120px"
+        />
+      {% endif %}
+    </span>
+    <span class="gh-circle-label">{{ block.settings.label }}</span>
+  </a>
+</li>
+<hk-schema>
+  {
+    "name": {
+      "en": "Category circle",
+      "ar": "دايرة قسم"
+    },
+    "version": 1,
+    "settings": {
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "localized": true,
+        "default": {
+          "en": "Vegetables and fruit",
+          "ar": "خضار وفاكهة"
+        },
+        "maxLength": 30
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      },
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "Photo",
+          "ar": "الصورة"
+        },
+        "default": ""
+      },
+      "image_alt": {
+        "type": "text",
+        "label": {
+          "en": "Photo description",
+          "ar": "وصف الصورة"
+        },
+        "localized": true,
+        "default": {
+          "en": "",
+          "ar": ""
+        },
+        "maxLength": 120
+      }
+    }
+  }
+</hk-schema>

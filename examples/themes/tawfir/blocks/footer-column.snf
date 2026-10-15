@@ -1,0 +1,36 @@
+<div class="tw-fcol">
+  {% if block.settings.title %}
+    <h3 class="tw-fcol-title">{{ block.settings.title }}</h3>
+  {% endif %}
+  <div class="tw-fcol-links">
+    {% for link in block.blocks %}<hk-block of="{{ link }}" />{% endfor %}
+  </div>
+</div>
+<hk-schema>
+  {
+    "name": {
+      "en": "Link column",
+      "ar": "عمود روابط"
+    },
+    "version": 1,
+    "blocks": {
+      "allowed": ["footer-link"],
+      "max": 8
+    },
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Column title",
+          "ar": "عنوان العمود"
+        },
+        "default": {
+          "ar": "روابط",
+          "en": "Links"
+        },
+        "maxLength": 40,
+        "localized": true
+      }
+    }
+  }
+</hk-schema>

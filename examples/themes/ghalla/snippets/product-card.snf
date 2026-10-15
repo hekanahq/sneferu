@@ -1,0 +1,37 @@
+<article class="gh-card gh-card-{{ card_style }}">
+  <a class="gh-card-link" href="{{ product.url }}">
+    <div class="gh-card-media">
+      <hk-image
+        src="{{ product.image }}"
+        alt="{{ product.title }}"
+        aspect-ratio="{{ image_ratio }}"
+        fit="cover"
+        sizes="(min-width: 1024px) 25vw, 50vw"
+      />
+      {% if show_badge %}
+        {% if product.available %}
+          {% if product.compare_at > product.price %}
+            <span class="gh-badge">{{ t('sale') }}</span>
+          {% endif %}
+        {% else %}
+          <span class="gh-badge gh-badge-muted">{{ t('sold_out_badge') }}</span>
+        {% endif %}
+      {% endif %}
+    </div>
+    <h3 class="gh-card-title">{{ product.title }}</h3>
+    {% if show_price %}<span class="gh-card-price">{% render 'price', product: product, bind: false %}</span>{% endif %}
+  </a>
+  {% if show_buy %}
+    <div class="gh-card-buy">
+      {% if product.options %}
+        <span class="gh-weight">{{ product.options[0].values[0] }}</span>
+      {% else %}
+        <span class="gh-weight"></span>
+      {% endif %}
+      <a class="gh-quick" href="{{ product.url }}" aria-label="{{ t('view_product') }}"><hk-icon
+          name="plus"
+          size="22"
+        /></a>
+    </div>
+  {% endif %}
+</article>

@@ -1,0 +1,39 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="24" class="ik-trust">
+  <ul class="ik-trust-list">
+    {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+  </ul>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Info strip",
+      "ar": "شريط معلومات"
+    },
+    "version": 1,
+    "settings": {
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 160,
+        "step": 8,
+        "default": 32
+      }
+    },
+    "blocks": {
+      "allowed": ["trust"],
+      "max": 4
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "Three points",
+          "ar": "ثلاث نقاط"
+        }
+      }
+    ]
+  }
+</hk-schema>

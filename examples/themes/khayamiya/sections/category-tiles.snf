@@ -1,0 +1,76 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="28" class="kh-crafts-band">
+  <div class="kh-crafts">
+    <div class="kh-crafts-head">
+      {% if section.settings.heading %}
+        <hk-heading text="{{ section.settings.heading }}" level="h2" size="32" mobile-size="24" class="kh-h2" />
+      {% endif %}
+      {% render 'ornament' %}
+    </div>
+    <div class="kh-rows">
+      {% for block in section.blocks %}
+        <hk-block of="{{ block }}" />
+      {% endfor %}
+    </div>
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Category tiles",
+      "ar": "مربعات الأقسام"
+    },
+    "version": 1,
+    "settings": {
+      "heading": {
+        "type": "text",
+        "label": {
+          "en": "Heading (optional)",
+          "ar": "العنوان (اختياري)"
+        },
+        "localized": true,
+        "default": {
+          "ar": "تسوق حسب الحرفة",
+          "en": "Shop by craft"
+        },
+        "maxLength": 60
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 120,
+        "step": 8,
+        "default": 40
+      }
+    },
+    "blocks": {
+      "allowed": ["category-tile"],
+      "max": 10
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "Four tiles",
+          "ar": "أربعة مربعات"
+        },
+        "blocks": [
+          {
+            "type": "category-tile"
+          },
+          {
+            "type": "category-tile"
+          },
+          {
+            "type": "category-tile"
+          },
+          {
+            "type": "category-tile"
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

@@ -1,0 +1,64 @@
+<a class="tw-aisle" href="{{ url(block.settings.link) }}">
+  <span class="tw-aisle-label">{{ block.settings.label }}</span>
+  <span class="tw-aisle-icon">{% render 'icon', name: block.settings.icon %}</span>
+</a>
+<hk-schema>
+  {
+    "name": {
+      "en": "Aisle",
+      "ar": "قسم"
+    },
+    "version": 1,
+    "settings": {
+      "icon": {
+        "type": "select",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
+        "options": [
+          "percent",
+          "leaf",
+          "milk",
+          "jar",
+          "cup",
+          "spray",
+          "tag",
+          "truck",
+          "banknote",
+          "shield-check",
+          "package",
+          "store",
+          "heart",
+          "gift",
+          "star",
+          "home",
+          "zap",
+          "flame"
+        ],
+        "default": "tag"
+      },
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Label",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "قسم",
+          "en": "Aisle"
+        },
+        "maxLength": 30,
+        "localized": true
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      }
+    }
+  }
+</hk-schema>

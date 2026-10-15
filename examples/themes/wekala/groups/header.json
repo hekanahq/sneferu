@@ -1,0 +1,88 @@
+{
+  "sections": [
+    {
+      "id": "header",
+      "type": "header",
+      "settings": {
+        "menu": "",
+        "show_nav": true,
+        "show_search": true,
+        "show_account": true,
+        "show_language": true,
+        "show_cart": true,
+        "drawer_on_add": true,
+        "scheme": "light",
+        "logo_height": "32"
+      },
+      "blocks": [
+        {
+          "id": "nav-fashion",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "أزياء",
+              "en": "Fashion"
+            },
+            "url": "/category/fashion"
+          }
+        },
+        {
+          "id": "nav-home",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "المنزل",
+              "en": "Home"
+            },
+            "url": "/category/home"
+          }
+        },
+        {
+          "id": "nav-electronics",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "إلكترونيات",
+              "en": "Electronics"
+            },
+            "url": "/category/electronics"
+          }
+        },
+        {
+          "id": "nav-beauty",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "العناية والجمال",
+              "en": "Beauty"
+            },
+            "url": "/category/beauty"
+          }
+        },
+        {
+          "id": "nav-kids",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "الأطفال",
+              "en": "Kids"
+            },
+            "url": "/category/kids"
+          }
+        },
+        {
+          "id": "nav-grocery",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "البقالة",
+              "en": "Grocery"
+            },
+            "url": "/category/grocery"
+          }
+        }
+      ],
+      "block_order": ["nav-fashion", "nav-home", "nav-electronics", "nav-beauty", "nav-kids", "nav-grocery"]
+    }
+  ]
+}

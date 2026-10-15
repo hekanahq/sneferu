@@ -1,0 +1,163 @@
+{
+  "sections": [
+    {
+      "id": "footer",
+      "type": "footer",
+      "settings": {
+        "menu": "",
+        "about_text": {
+          "ar": "دفاتر وأقلام وأدوات مكتب ومدرسة بأسعار بالجنيه المصري.",
+          "en": "Notebooks, pens and school and desk supplies, priced in Egyptian pounds."
+        },
+        "copyright": {
+          "ar": "جميع الحقوق محفوظة",
+          "en": "All rights reserved"
+        },
+        "show_newsletter": true,
+        "newsletter_title": {
+          "ar": "محتاج طلبية كبيرة؟",
+          "en": "Need a larger order?"
+        },
+        "newsletter_text": {
+          "ar": "كلمنا على واتساب وقولنا اللي محتاجه.",
+          "en": "Message us on WhatsApp and tell us what you need."
+        },
+        "newsletter_label": {
+          "en": "Contact us on WhatsApp",
+          "ar": "كلمنا على واتساب"
+        },
+        "newsletter_link": "/contact",
+        "show_language": true,
+        "scheme": "primary"
+      },
+      "blocks": [
+        {
+          "id": "col-shop",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "en": "Shop",
+              "ar": "تسوق"
+            }
+          },
+          "blocks": [
+            {
+              "id": "c1",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "كل المنتجات",
+                  "en": "All products"
+                },
+                "url": "/products"
+              }
+            },
+            {
+              "id": "c2",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "دفاتر",
+                  "en": "Notebooks"
+                },
+                "url": "/category/notebooks"
+              }
+            },
+            {
+              "id": "c3",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "أقلام وحقائب",
+                  "en": "Pens and cases"
+                },
+                "url": "/category/pens-cases"
+              }
+            },
+            {
+              "id": "c4",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "بحث",
+                  "en": "Search"
+                },
+                "url": "/search"
+              }
+            }
+          ]
+        },
+        {
+          "id": "col-help",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "en": "Help",
+              "ar": "مساعدة"
+            }
+          },
+          "blocks": [
+            {
+              "id": "h1",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "en": "About us",
+                  "ar": "عنّا"
+                },
+                "url": "/about"
+              }
+            },
+            {
+              "id": "h2",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "en": "Contact",
+                  "ar": "تواصل معانا"
+                },
+                "url": "/contact"
+              }
+            }
+          ]
+        },
+        {
+          "id": "social-whatsapp",
+          "type": "social-link",
+          "settings": {
+            "label": {
+              "en": "WhatsApp",
+              "ar": "واتساب"
+            },
+            "url": "/contact",
+            "icon": "message-circle"
+          }
+        },
+        {
+          "id": "social-mail",
+          "type": "social-link",
+          "settings": {
+            "label": {
+              "en": "Email",
+              "ar": "الإيميل"
+            },
+            "url": "/contact",
+            "icon": "mail"
+          }
+        },
+        {
+          "id": "contact-quote",
+          "type": "contact-line",
+          "settings": {
+            "icon": "message-circle",
+            "text": {
+              "ar": "تواصل معنا على واتساب",
+              "en": "Contact us on WhatsApp"
+            },
+            "url": ""
+          }
+        }
+      ]
+    }
+  ]
+}

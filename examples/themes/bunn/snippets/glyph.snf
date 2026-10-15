@@ -1,0 +1,22 @@
+<svg
+  class="ic ic-{{ name }}"
+  viewBox="0 0 48 48"
+  width="30"
+  height="30"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.8"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+>
+  {% if name == 'bean' %}<ellipse cx="24" cy="24" rx="12" ry="17" transform="rotate(35 24 24)" /><path
+      d="M15 12c8 4 5 12 10 16s9 4 11 8"
+    />
+  {% elsif name == 'bag' %}<path d="M14 14h20l3 26H11z" /><path d="M17 14l2-6h10l2 6" /><circle cx="24" cy="27" r="4" />
+  {% elsif name == 'cup' %}<path d="M9 18h26v9a11 11 0 0 1-11 11h-4A11 11 0 0 1 9 27z" /><path
+      d="M35 21h3a5 5 0 0 1 0 10h-4"
+    /><path d="M16 9c-1 2 1 3 0 5M23 9c-1 2 1 3 0 5" />
+  {% elsif name == 'dripper' %}<path d="M10 9h28l-8 13H18z" /><path d="M24 22v4" /><path d="M14 40h20l-2-14H16z" />
+  {% endif %}
+</svg>

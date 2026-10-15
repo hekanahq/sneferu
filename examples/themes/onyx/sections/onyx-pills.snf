@@ -1,0 +1,70 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="28">
+  {% if section.settings.heading %}
+    <hk-heading
+      text="{{ section.settings.heading }}"
+      level="h2"
+      size="26"
+      mobile-size="22"
+      align="center"
+      class="on-pills-title"
+    />
+  {% endif %}
+  <div class="on-pills">
+    {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Category pills",
+      "ar": "أزرار الأقسام"
+    },
+    "version": 1,
+    "settings": {
+      "heading": {
+        "type": "text",
+        "label": {
+          "en": "Heading (empty hides it)",
+          "ar": "العنوان (فاضي يخفيه)"
+        },
+        "localized": true,
+        "default": {
+          "ar": "",
+          "en": ""
+        },
+        "maxLength": 60
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 160,
+        "step": 8,
+        "default": 56
+      }
+    },
+    "blocks": {
+      "allowed": ["pill"],
+      "max": 6
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "Two pills",
+          "ar": "زرّين"
+        },
+        "blocks": [
+          {
+            "type": "pill"
+          },
+          {
+            "type": "pill"
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

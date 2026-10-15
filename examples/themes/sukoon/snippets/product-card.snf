@@ -1,0 +1,23 @@
+<article class="sk-card sk-card-{{ card_style }}">
+  <a class="sk-card-link" href="{{ product.url }}">
+    <div class="sk-card-media">
+      <hk-image
+        src="{{ product.image }}"
+        alt="{{ product.title }}"
+        aspect-ratio="{{ image_ratio }}"
+        sizes="(min-width: 1024px) 25vw, 50vw"
+      />
+      {% if show_badge %}
+        {% if product.available %}
+          {% if product.compare_at > product.price %}
+            <span class="sk-badge">{{ t('sale') }}</span>
+          {% endif %}
+        {% else %}
+          <span class="sk-badge sk-badge-muted">{{ t('sold_out_badge') }}</span>
+        {% endif %}
+      {% endif %}
+    </div>
+    <h3 class="sk-card-title">{{ product.title }}</h3>
+    {% if show_price %}{% render 'price', product: product, bind: false %}{% endif %}
+  </a>
+</article>

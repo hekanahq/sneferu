@@ -1,0 +1,41 @@
+{
+  "id": "dukkan",
+  "name": "Dukkan",
+  "version": "1.0.4",
+  "author": "Hekana",
+  "description": "A social-seller shop on warm sand: a featured product with a large price, a photo strip, square product posts, outlined category tiles and an olive footer. Charcoal buttons, olive accents.",
+  "category": "general",
+  "engine": "hk2",
+  "engineCompatibility": "^2.0.0",
+  "defaultLocale": "ar",
+  "locales": ["ar", "en"],
+  "money": { "format": "whole" },
+  "settings": {},
+  "tokens": {
+    "colors": {
+      "primary": "#262A25",
+      "secondary": "#4A5236",
+      "accent": "#4A5236",
+      "background": "#E6C9A2",
+      "text": "#232622",
+      "muted": "#4A4536",
+      "line": "#262A25",
+      "soft": "#D9B98D",
+      "surface": "#F0DDBF",
+      "olive": "#4A5236",
+      "olive-deep": "#3D442C",
+      "charcoal": "#262A25",
+      "sand-light": "#F3E7D0"
+    },
+    "layout": {
+      "contentWidth": "960px"
+    },
+    "fonts": {
+      "heading": "Readex Pro",
+      "body": "Cairo"
+    },
+    "radius": {
+      "md": "18px"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "cart": "Cart",
+  "search_placeholder": "Search for a product",
+  "view_all": "View all",
+  "empty_products": "No products here yet.",
+  "account": "My account",
+  "search": "Search",
+  "skip_to_content": "Skip to content",
+  "menu": "Menu",
+  "home": "Home",
+  "breadcrumb": "Breadcrumb",
+  "sale": "Sale",
+  "sold_out_badge": "Sold out",
+  "products_label": "products",
+  "sort_by": "Sort by",
+  "filters": "Filters",
+  "results_for": "Results for",
+  "results_label": "results",
+  "newsletter_cta": "Subscribe",
+  "payment_methods": "Payment methods",
+  "product_info": "Product details"
+}

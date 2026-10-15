@@ -1,0 +1,147 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "hero"
+      },
+      {
+        "type": "loom-categories",
+        "blocks": [
+          {
+            "type": "category-tile",
+            "settings": {
+              "tone": "filled",
+              "label": {
+                "en": "Pottery and ceramics",
+                "ar": "الفخار والسيراميك"
+              },
+              "link": "/category/pottery"
+            }
+          },
+          {
+            "type": "category-tile",
+            "settings": {
+              "tone": "plain",
+              "label": {
+                "en": "Weaving and macrame",
+                "ar": "النسيج والمكرمية"
+              },
+              "link": "/category/weaving"
+            }
+          },
+          {
+            "type": "category-tile",
+            "settings": {
+              "tone": "plain",
+              "label": {
+                "en": "Baskets and decor",
+                "ar": "السلال والديكور"
+              },
+              "link": "/category/baskets"
+            }
+          },
+          {
+            "type": "category-tile",
+            "settings": {
+              "tone": "plain",
+              "label": {
+                "en": "Accessories",
+                "ar": "إكسسوارات وأدوات"
+              },
+              "link": "/category/accessories"
+            }
+          }
+        ]
+      },
+      {
+        "type": "featured-products"
+      },
+      {
+        "type": "loom-steps",
+        "blocks": [
+          {
+            "type": "step",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-home/pool-home-knit-throw-cream.webp",
+              "alt": {
+                "en": "Folded knit throw",
+                "ar": "بطانية تريكو مطوية"
+              },
+              "label": {
+                "en": "Pick your piece",
+                "ar": "اختار قطعتك"
+              },
+              "link": "/products"
+            }
+          },
+          {
+            "type": "step",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-handmade/pool-handmade-kilim-folded.webp",
+              "alt": {
+                "en": "Folded kilim textile",
+                "ar": "قطعة كليم مطوية"
+              },
+              "label": {
+                "en": "Order and pay on delivery",
+                "ar": "اطلب وادفع عند الاستلام"
+              },
+              "link": "/products"
+            }
+          },
+          {
+            "type": "step",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-home/pool-home-ceramic-vase-white.webp",
+              "alt": {
+                "en": "White ceramic vase",
+                "ar": "فازة سيراميك بيضاء"
+              },
+              "label": {
+                "en": "Receive it at your door",
+                "ar": "استلمها لحد بابك"
+              },
+              "link": "/products"
+            }
+          }
+        ]
+      },
+      {
+        "type": "loom-trust",
+        "blocks": [
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "banknote",
+              "label": {
+                "en": "Cash on delivery",
+                "ar": "الدفع عند الاستلام"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "truck",
+              "label": {
+                "en": "Delivery across Egypt",
+                "ar": "توصيل لكل المحافظات"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "package",
+              "label": {
+                "en": "Easy exchange",
+                "ar": "استبدال سهل"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

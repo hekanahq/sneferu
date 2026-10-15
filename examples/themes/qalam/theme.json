@@ -1,0 +1,32 @@
+{
+  "id": "qalam",
+  "name": "Qalam",
+  "version": "1.0.2",
+  "author": "Hekana",
+  "description": "A stationery and school supplies store, bold and young: sunny yellow and black, rounded yellow product cards with a black price pill, a split hero, a feature banner and a trust strip.",
+  "category": "books",
+  "engine": "hk2",
+  "engineCompatibility": "^2.0.0",
+  "defaultLocale": "ar",
+  "locales": ["ar", "en"],
+  "settings": {},
+  "tokens": {
+    "colors": {
+      "primary": "#FFBE3B",
+      "secondary": "#111111",
+      "accent": "#00A3AB",
+      "background": "#FFFFFF",
+      "text": "#111111",
+      "muted": "#555555",
+      "line": "#E4E0D6",
+      "soft": "#F6F3EA",
+      "surface": "#FFFFFF",
+      "sun-soft": "#FFD36E",
+      "teal-ink": "#006D73"
+    },
+    "layout": { "contentWidth": "1200px" },
+    "fonts": { "heading": "Baloo Bhaijaan 2", "body": "Cairo" },
+    "radius": { "md": "18px" }
+  },
+  "money": { "format": "whole" }
+}

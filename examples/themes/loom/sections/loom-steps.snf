@@ -1,0 +1,67 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="24">
+  {% if section.settings.title %}
+    <hk-heading text="{{ section.settings.title }}" level="h2" size="26" mobile-size="22" align="center" />
+  {% endif %}
+  <ol class="loom-steps">
+    {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+  </ol>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Steps with photos",
+      "ar": "خطوات بالصور"
+    },
+    "version": 1,
+    "templates": ["index"],
+    "blocks": {
+      "allowed": ["step"],
+      "max": 4
+    },
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading (empty hides it)",
+          "ar": "العنوان (فاضي يخفيه)"
+        },
+        "default": {
+          "en": "From the studio to your door",
+          "ar": "من الاستوديو لحد بابك"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "default": 40,
+        "min": 0,
+        "max": 120,
+        "step": 8
+      }
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "Three steps",
+          "ar": "ثلاث خطوات"
+        },
+        "blocks": [
+          {
+            "type": "step"
+          },
+          {
+            "type": "step"
+          },
+          {
+            "type": "step"
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

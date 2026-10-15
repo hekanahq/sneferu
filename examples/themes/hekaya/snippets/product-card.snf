@@ -1,0 +1,26 @@
+<article class="hy-card hy-card-{{ card_style }}">
+  <a class="hy-card-link" href="{{ product.url }}">
+    <div class="hy-card-media">
+      <hk-image
+        src="{{ product.image }}"
+        alt="{{ product.title }}"
+        aspect-ratio="{{ image_ratio }}"
+        sizes="(min-width: 1024px) 25vw, 50vw"
+      />
+      {% if show_badge %}
+        {% if product.available %}
+          {% if product.compare_at > product.price %}
+            <span class="hy-badge">{{ t('sale') }}</span>
+          {% endif %}
+        {% else %}
+          <span class="hy-badge hy-badge-muted">{{ t('sold_out_badge') }}</span>
+        {% endif %}
+      {% endif %}
+    </div>
+    <h3 class="hy-card-title">{{ product.title }}</h3>
+    {% if show_price %}{% render 'price', product: product, bind: false %}{% endif %}
+  </a>
+  {% if show_atc %}
+    <div class="hy-card-cta"><a class="hy-card-view" href="{{ product.url }}">{{ t('view_book') }}</a></div>
+  {% endif %}
+</article>

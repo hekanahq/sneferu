@@ -1,0 +1,152 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "hero"
+      },
+      {
+        "type": "category-circles",
+        "blocks": [
+          {
+            "type": "category-circle",
+            "settings": {
+              "label": {
+                "ar": "خضار وفاكهة",
+                "en": "Vegetables and fruit"
+              },
+              "link": "/category/produce",
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/ghalla/tomatoes.webp",
+              "image_alt": {
+                "ar": "طماطم حمراء",
+                "en": "Red tomatoes"
+              }
+            }
+          },
+          {
+            "type": "category-circle",
+            "settings": {
+              "label": {
+                "ar": "مخبوزات",
+                "en": "Bakery"
+              },
+              "link": "/category/bakery",
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/ghalla/bread.webp",
+              "image_alt": {
+                "ar": "رغيف خبز",
+                "en": "A loaf of bread"
+              }
+            }
+          },
+          {
+            "type": "category-circle",
+            "settings": {
+              "label": {
+                "ar": "ألبان وبيض",
+                "en": "Dairy and eggs"
+              },
+              "link": "/category/dairy",
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/ghalla/oliveoil.webp",
+              "image_alt": {
+                "ar": "قطعة جبن",
+                "en": "A wedge of cheese"
+              }
+            }
+          },
+          {
+            "type": "category-circle",
+            "settings": {
+              "label": {
+                "ar": "المؤن",
+                "en": "Pantry"
+              },
+              "link": "/category/pantry",
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/ghalla/rice.webp",
+              "image_alt": {
+                "ar": "كيس أرز",
+                "en": "A bag of rice"
+              }
+            }
+          },
+          {
+            "type": "category-circle",
+            "settings": {
+              "label": {
+                "ar": "تمور ومكسرات",
+                "en": "Dates and nuts"
+              },
+              "link": "/category/dates",
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/ghalla/datesnuts.webp",
+              "image_alt": {
+                "ar": "علبة تمر ومكسرات",
+                "en": "A box of dates and nuts"
+              }
+            }
+          },
+          {
+            "type": "category-circle",
+            "settings": {
+              "label": {
+                "ar": "مشروبات",
+                "en": "Drinks"
+              },
+              "link": "/category/drinks",
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/ghalla/juice.webp",
+              "image_alt": {
+                "ar": "كوب عصير برتقال",
+                "en": "A glass of orange juice"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "featured-products",
+        "settings": {
+          "title": {
+            "ar": "منتجات مختارة",
+            "en": "Featured products"
+          },
+          "collection": "featured",
+          "limit": 8,
+          "columns": 4
+        }
+      },
+      {
+        "type": "trust-strip",
+        "blocks": [
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "banknote",
+              "label": {
+                "ar": "الدفع عند الاستلام",
+                "en": "Cash on delivery"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "truck",
+              "label": {
+                "ar": "توصيل لكل المحافظات",
+                "en": "Delivery to every governorate"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "help-circle",
+              "label": {
+                "ar": "استبدال سهل",
+                "en": "Easy exchange"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

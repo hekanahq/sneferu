@@ -1,0 +1,33 @@
+{
+  "id": "fetar",
+  "name": "Fetar",
+  "version": "1.0.2",
+  "author": "Hekana",
+  "description": "A breakfast, bakery and juice bar store: bright white with citrus orange and leaf green, a split hero with an overhead photo, category pills and colour cards, menu cards with a round quick add, and a trust strip.",
+  "category": "cafe",
+  "engine": "hk2",
+  "engineCompatibility": "^2.0.0",
+  "defaultLocale": "ar",
+  "locales": ["ar", "en"],
+  "settings": {},
+  "tokens": {
+    "colors": {
+      "primary": "#C2410C",
+      "secondary": "#1F2A1A",
+      "accent": "#4D7C0F",
+      "background": "#FFFFFF",
+      "text": "#1E1E1E",
+      "muted": "#5C5C5C",
+      "line": "#E6E4DE",
+      "soft": "#F6F5F1",
+      "surface": "#FFFFFF",
+      "citrus": "#F97316",
+      "orange-ink": "#EA580C",
+      "leaf-soft": "#9DBF74"
+    },
+    "layout": { "contentWidth": "1200px" },
+    "fonts": { "heading": "Readex Pro", "body": "Cairo" },
+    "radius": { "md": "20px" }
+  },
+  "money": { "format": "whole" }
+}

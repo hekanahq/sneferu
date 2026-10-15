@@ -1,0 +1,54 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="12">
+  <hk-container>
+    <ul class="ft-pills">
+      {% for block in section.blocks %}
+        <hk-block of="{{ block }}" />
+      {% endfor %}
+    </ul>
+  </hk-container>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Category pills",
+      "ar": "تابات الأقسام"
+    },
+    "version": 1,
+    "settings": {
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 120,
+        "step": 4,
+        "default": 8
+      }
+    },
+    "blocks": {
+      "allowed": ["pill"],
+      "max": 8
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "Three pills",
+          "ar": "ثلاث تابات"
+        },
+        "blocks": [
+          {
+            "type": "pill"
+          },
+          {
+            "type": "pill"
+          },
+          {
+            "type": "pill"
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

@@ -173,7 +173,13 @@ groups, locales and settings: [arcade](examples/themes/arcade),
 [konafa](examples/themes/konafa), [tabkha](examples/themes/tabkha) (food),
 [oak](examples/themes/oak), [mashrabiya](examples/themes/mashrabiya) (home),
 [cloud](examples/themes/cloud), [blocks](examples/themes/blocks) (kids),
-[velvet](examples/themes/velvet), [halo](examples/themes/halo) (jewelry). The SDK's own default store
+[velvet](examples/themes/velvet), [halo](examples/themes/halo) (jewelry),
+[onyx](examples/themes/onyx), [cashmere](examples/themes/cashmere) (luxury),
+[pulse](examples/themes/pulse), [stride](examples/themes/stride) (sports),
+[hekaya](examples/themes/hekaya), [qalam](examples/themes/qalam) (books, stationery),
+[bunn](examples/themes/bunn), [fetar](examples/themes/fetar), [ghalla](examples/themes/ghalla), [tawfir](examples/themes/tawfir) (food and grocery),
+[loom](examples/themes/loom), [khayamiya](examples/themes/khayamiya) (crafts),
+[wekala](examples/themes/wekala), [dukkan](examples/themes/dukkan), [ink](examples/themes/ink), [sukoon](examples/themes/sukoon) (general). The SDK's own default store
 is [packages/templates-default/theme](packages/templates-default/theme).
 
 ## Work on this repo

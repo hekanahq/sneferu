@@ -1,0 +1,168 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="20">
+  <hk-container>
+    <div class="ql-hero">
+      <div class="ql-hero-photo">
+        {% if section.settings.image %}
+          <hk-image
+            src="{{ section.settings.image }}"
+            alt="{{ section.settings.image_alt }}"
+            loading="eager"
+            aspect-ratio="4/5"
+            fit="cover"
+            sizes="(min-width: 1024px) 40vw, 100vw"
+          />
+        {% endif %}
+      </div>
+      <div class="ql-hero-panel">
+        <div class="ql-hero-text">
+          {% if section.settings.title %}
+            <hk-heading text="{{ section.settings.title }}" level="h1" size="36" mobile-size="26" />
+          {% endif %}
+          {% if section.settings.subtitle %}
+            <hk-text text="{{ section.settings.subtitle }}" size="17" />
+          {% endif %}
+          <div class="ql-hero-actions">
+            {% render 'button', label: section.settings.button_label, href: section.settings.button_link, style: 'solid' %}
+            {% if section.settings.badge %}<span class="ql-pill">{{ section.settings.badge }}</span>{% endif %}
+          </div>
+        </div>
+        {% if section.settings.image2 %}
+          <div class="ql-hero-float">
+            <hk-image
+              src="{{ section.settings.image2 }}"
+              alt="{{ section.settings.image2_alt }}"
+              loading="eager"
+              aspect-ratio="1/1"
+              fit="contain"
+              sizes="200px"
+            />
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </hk-container>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Hero",
+      "ar": "البانر الرئيسي"
+    },
+    "version": 1,
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "كل أدوات المدرسة والمكتب في مكان واحد",
+          "en": "School and desk supplies, all in one place"
+        },
+        "localized": true,
+        "maxLength": 80
+      },
+      "subtitle": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "دفاتر وأقلام وحقائب أقلام وأدوات مكتب بألوان جريئة، بالأسعار بالجنيه.",
+          "en": "Notebooks, pens, pencil cases and desk tools in bold colours, priced in pounds."
+        },
+        "localized": true,
+        "maxLength": 160
+      },
+      "button_label": {
+        "type": "text",
+        "label": {
+          "en": "Button",
+          "ar": "الزر"
+        },
+        "default": {
+          "ar": "تسوّق دلوقتي",
+          "en": "Shop now"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "button_link": {
+        "type": "link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/products"
+      },
+      "badge": {
+        "type": "text",
+        "label": {
+          "en": "Price tag text (empty hides it)",
+          "ar": "نص شارة السعر (فاضي يخفيها)"
+        },
+        "default": {
+          "ar": "دفاتر وأقلام",
+          "en": "Notebooks and pens"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "Main photo",
+          "ar": "الصورة الرئيسية"
+        },
+        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-open.webp"
+      },
+      "image_alt": {
+        "type": "text",
+        "label": {
+          "en": "Main photo description",
+          "ar": "وصف الصورة الرئيسية"
+        },
+        "default": {
+          "ar": "كتاب مفتوح",
+          "en": "An open book"
+        },
+        "localized": true,
+        "maxLength": 120
+      },
+      "image2": {
+        "type": "image",
+        "label": {
+          "en": "Second photo (on the yellow side)",
+          "ar": "الصورة الثانية (على الجانب الأصفر)"
+        },
+        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/notebook-red.webp"
+      },
+      "image2_alt": {
+        "type": "text",
+        "label": {
+          "en": "Second photo description",
+          "ar": "وصف الصورة الثانية"
+        },
+        "default": {
+          "ar": "دفتر سلك أحمر",
+          "en": "A red spiral notebook"
+        },
+        "localized": true,
+        "maxLength": 120
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 120,
+        "step": 8,
+        "default": 32
+      }
+    }
+  }
+</hk-schema>

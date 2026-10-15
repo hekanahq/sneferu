@@ -1,0 +1,162 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="24">
+  {% for p in collection(section.settings.collection).products limit: 1 %}
+    <div class="dk-feature">
+      <a class="dk-feature-media" href="{{ p.url }}">
+        <hk-image
+          src="{{ p.image }}"
+          alt="{{ p.title }}"
+          aspect-ratio="1/1"
+          loading="eager"
+          sizes="(min-width: 1024px) 520px, 100vw"
+        />
+        {% if section.settings.badge %}<span class="dk-feature-badge">{{ section.settings.badge }}</span>{% endif %}
+      </a>
+      <div class="dk-feature-info">
+        {% if section.settings.eyebrow %}
+          <p class="dk-eyebrow">{{ section.settings.eyebrow }}</p>
+        {% endif %}
+        <h1 class="dk-feature-title">{{ p.title }}</h1>
+        <p class="dk-feature-price"><hk-price amount="{{ p.price }}" compare-at="{{ p.compare_at }}" /></p>
+        {% if p.excerpt %}
+          <p class="dk-feature-text">{{ p.excerpt | truncate: 140 }}</p>
+        {% endif %}
+        <div class="dk-strip" aria-label="{{ t('feed_strip') }}">
+          {% if section.settings.mark_link %}
+            <a
+              class="dk-strip-cell dk-strip-mark"
+              href="{{ url(section.settings.mark_link) }}"
+              aria-label="{{ store.name }}"
+            ><hk-icon name="store" size="32" /></a>
+          {% else %}
+            <span class="dk-strip-cell dk-strip-mark" aria-hidden="true"><hk-icon name="store" size="32" /></span>
+          {% endif %}
+          {% for q in collection(section.settings.collection).products limit: section.settings.strip_count %}
+            {% if forloop.index > 1 %}
+              <a class="dk-strip-cell" href="{{ q.url }}">
+                <hk-image src="{{ q.image }}" alt="{{ q.title }}" aspect-ratio="1/1" sizes="120px" />
+              </a>
+            {% endif %}
+          {% endfor %}
+        </div>
+        <div class="dk-feature-actions">
+          <a class="dk-pill dk-pill-solid" href="{{ p.url }}">{{ section.settings.order_label }}</a>
+          {% if section.settings.second_label %}
+            <a
+              class="dk-pill dk-pill-outline"
+              href="{{ url(section.settings.second_link) }}"
+            >{{ section.settings.second_label }}</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Featured product",
+      "ar": "المنتج المميز"
+    },
+    "version": 1,
+    "templates": ["index"],
+    "settings": {
+      "collection": {
+        "type": "collection",
+        "label": {
+          "en": "Collection (its first product is featured, the next ones fill the photo strip)",
+          "ar": "القسم (أول منتج فيه هو المميز والباقي في شريط الصور)"
+        },
+        "default": "new-in"
+      },
+      "eyebrow": {
+        "type": "text",
+        "label": {
+          "en": "Small label above the title",
+          "ar": "نص صغير فوق العنوان"
+        },
+        "default": {
+          "ar": "منتج مميز",
+          "en": "Featured"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "badge": {
+        "type": "text",
+        "label": {
+          "en": "Badge on the photo (empty hides it)",
+          "ar": "شارة على الصورة (فاضي يخفيها)"
+        },
+        "default": {
+          "ar": "جديد",
+          "en": "New"
+        },
+        "localized": true,
+        "maxLength": 16
+      },
+      "strip_count": {
+        "type": "range",
+        "label": {
+          "en": "Products read for the photo strip (the first is the featured one)",
+          "ar": "عدد المنتجات في شريط الصور (الأول هو المميز)"
+        },
+        "min": 1,
+        "max": 6,
+        "default": 5
+      },
+      "mark_link": {
+        "type": "link",
+        "label": {
+          "en": "Shop mark link in the strip (your Instagram page, for example; plain tile when empty)",
+          "ar": "رابط رمز المتجر في الشريط (صفحة إنستجرام مثلًا؛ بيفضل مربع عادي لو فاضي)"
+        },
+        "default": ""
+      },
+      "order_label": {
+        "type": "text",
+        "label": {
+          "en": "Main button text",
+          "ar": "نص الزر الأساسي"
+        },
+        "default": {
+          "ar": "اطلب الآن",
+          "en": "Order now"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "second_label": {
+        "type": "text",
+        "label": {
+          "en": "Second button text (empty hides it)",
+          "ar": "نص الزر التاني (فاضي يخفيه)"
+        },
+        "default": {
+          "ar": "كل المنتجات",
+          "en": "All products"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "second_link": {
+        "type": "link",
+        "label": {
+          "en": "Second button link",
+          "ar": "رابط الزر التاني"
+        },
+        "default": "/products"
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 160,
+        "step": 8,
+        "default": 48
+      }
+    }
+  }
+</hk-schema>

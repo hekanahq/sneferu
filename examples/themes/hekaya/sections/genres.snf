@@ -1,0 +1,50 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="32">
+  {% if section.settings.title %}
+    <div class="hy-section-head hy-head-start">
+      <hk-heading text="{{ section.settings.title }}" level="h2" size="32" mobile-size="24" />
+    </div>
+  {% endif %}
+  <div class="hy-genres">
+    {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Genre tiles",
+      "ar": "تصنيفات الكتب"
+    },
+    "version": 1,
+    "templates": ["index"],
+    "blocks": {
+      "allowed": ["genre"],
+      "max": 6
+    },
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading (empty hides it)",
+          "ar": "العنوان (فاضي يخفيه)"
+        },
+        "localized": true,
+        "default": {
+          "en": "Browse by genre",
+          "ar": "تصفح حسب النوع"
+        },
+        "maxLength": 60
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 160,
+        "step": 8,
+        "default": 40
+      }
+    }
+  }
+</hk-schema>

@@ -1,0 +1,74 @@
+{
+  "sections": [
+    {
+      "id": "header",
+      "type": "header",
+      "settings": {
+        "menu": "main-menu",
+        "show_search": true,
+        "show_account": true,
+        "show_language": true,
+        "show_cart": true,
+        "drawer_on_add": true,
+        "scheme": "light"
+      },
+      "blocks": [
+        {
+          "id": "nav-all",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "كل المنتجات",
+              "en": "All products"
+            },
+            "url": "/products"
+          }
+        },
+        {
+          "id": "nav-beans",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "حبوب القهوة",
+              "en": "Coffee beans"
+            },
+            "url": "/category/beans"
+          }
+        },
+        {
+          "id": "nav-brew",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "أدوات التحضير",
+              "en": "Brewing gear"
+            },
+            "url": "/category/brewing"
+          }
+        },
+        {
+          "id": "nav-cups",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "الأكواب",
+              "en": "Cups"
+            },
+            "url": "/category/cups"
+          }
+        },
+        {
+          "id": "nav-pastry",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "مخبوزات وحلويات",
+              "en": "Pastries"
+            },
+            "url": "/category/pastries"
+          }
+        }
+      ]
+    }
+  ]
+}

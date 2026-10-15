@@ -1,0 +1,49 @@
+{
+  "id": "loom",
+  "name": "Loom",
+  "version": "1.0.2",
+  "author": "Hekana",
+  "description": "A handmade craft studio store: terracotta and linen with olive, a text-and-photo hero, filled category tiles, quiet product cards, a three-step strip with photos and a ruled trust strip, on every page.",
+  "category": "handmade",
+  "engine": "hk2",
+  "engineCompatibility": "^2.0.0",
+  "defaultLocale": "ar",
+  "locales": ["ar", "en"],
+  "settings": {},
+  "money": {
+    "format": "whole"
+  },
+  "tokens": {
+    "colors": {
+      "primary": "#A24F2C",
+      "secondary": "#5C6236",
+      "accent": "#E8DFD0",
+      "background": "#FDFBF7",
+      "text": "#2D2823",
+      "muted": "#675E53",
+      "line": "#E6DDCE",
+      "soft": "#F2EBDF",
+      "surface": "#FFFFFF",
+      "clay": "#A24F2C",
+      "clayLight": "#C98A66",
+      "linen": "#EAE2D4",
+      "charcoal": "#3A312A",
+      "olive": "#5C6236",
+      "success": "#4F6B3A",
+      "warning": "#9A6A14",
+      "danger": "#9B3B2B",
+      "border": "#D9CFBE",
+      "onPrimary": "#FFFFFF"
+    },
+    "layout": {
+      "contentWidth": "1100px"
+    },
+    "fonts": {
+      "heading": "El Messiri",
+      "body": "Tajawal"
+    },
+    "radius": {
+      "md": "10px"
+    }
+  }
+}

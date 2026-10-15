@@ -1,0 +1,33 @@
+<li class="ft-pill-item"><a class="ft-pill" href="{{ url(block.settings.link) }}">{{ block.settings.label }}</a></li>
+<hk-schema>
+  {
+    "name": {
+      "en": "Category pill",
+      "ar": "تاب قسم"
+    },
+    "version": 1,
+    "settings": {
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "localized": true,
+        "default": {
+          "en": "Coffee",
+          "ar": "قهوة"
+        },
+        "maxLength": 30
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      }
+    }
+  }
+</hk-schema>

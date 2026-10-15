@@ -1,0 +1,53 @@
+<a class="sk-cat" href="{{ url(block.settings.link) }}">
+  {% if block.settings.image %}
+    <div class="sk-cat-media">
+      <hk-image
+        src="{{ block.settings.image }}"
+        alt="{{ block.settings.label }}"
+        aspect-ratio="1/1"
+        sizes="(min-width: 900px) 25vw, 50vw"
+      />
+    </div>
+  {% endif %}
+  <span class="sk-cat-label">{{ block.settings.label }}</span>
+</a>
+<hk-schema>
+  {
+    "name": {
+      "en": "Category tile",
+      "ar": "بطاقة قسم"
+    },
+    "version": 1,
+    "settings": {
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "Photo",
+          "ar": "الصورة"
+        },
+        "default": ""
+      },
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Name",
+          "ar": "الاسم"
+        },
+        "localized": true,
+        "default": {
+          "ar": "قسم",
+          "en": "Category"
+        },
+        "maxLength": 40
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      }
+    }
+  }
+</hk-schema>

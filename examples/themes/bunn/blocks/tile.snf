@@ -1,0 +1,51 @@
+<a class="bn-occ" href="{{ url(block.settings.link) }}">
+  <span class="bn-occ-icon">
+    {% if block.settings.icon == 'bean' %}{% render 'glyph', name: 'bean' %}
+    {% elsif block.settings.icon == 'bag' %}{% render 'glyph', name: 'bag' %}
+    {% elsif block.settings.icon == 'cup' %}{% render 'glyph', name: 'cup' %}
+    {% elsif block.settings.icon == 'dripper' %}{% render 'glyph', name: 'dripper' %}
+    {% else %}<hk-icon name="{{ block.settings.icon }}" size="30" stroke="1.5" />{% endif %}
+  </span>
+  <span class="bn-occ-label">{{ block.settings.label }}</span>
+</a>
+<hk-schema>
+  {
+    "name": {
+      "en": "Category tile",
+      "ar": "أيقونة قسم"
+    },
+    "version": 1,
+    "settings": {
+      "icon": {
+        "type": "select",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
+        "default": "bean",
+        "options": ["bean", "dripper", "cup", "bag", "package", "gift", "star", "sparkles"]
+      },
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "حبوب القهوة",
+          "en": "Coffee beans"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      }
+    }
+  }
+</hk-schema>

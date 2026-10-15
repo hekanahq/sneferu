@@ -1,0 +1,135 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="12">
+  <hk-container>
+    <div class="ft-hero">
+      <div class="ft-hero-text">
+        {% if section.settings.title %}
+          <h1 class="ft-hero-title">{{ section.settings.title }}</h1>
+        {% endif %}
+        {% if section.settings.tagline %}
+          <p class="ft-hero-tagline">{{ section.settings.tagline }}</p>
+        {% endif %}
+        {% if section.settings.subtitle %}
+          <p class="ft-hero-sub">{{ section.settings.subtitle }}</p>
+        {% endif %}
+        <div class="ft-hero-actions">
+          {% render 'button', label: section.settings.button_label, href: section.settings.button_link, style: 'solid' %}
+        </div>
+      </div>
+      <div class="ft-hero-photo">
+        {% if section.settings.image %}
+          <hk-image
+            src="{{ section.settings.image }}"
+            alt="{{ section.settings.image_alt }}"
+            loading="eager"
+            aspect-ratio="1/1"
+            fit="cover"
+            sizes="(min-width: 1024px) 40vw, 50vw"
+          />
+        {% endif %}
+      </div>
+    </div>
+  </hk-container>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Hero",
+      "ar": "البانر الرئيسي"
+    },
+    "version": 1,
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "فطار",
+          "en": "Fetar"
+        },
+        "localized": true,
+        "maxLength": 40
+      },
+      "tagline": {
+        "type": "text",
+        "label": {
+          "en": "Tagline",
+          "ar": "السطر الثاني"
+        },
+        "default": {
+          "ar": "فطار وعصاير ومخبوزات",
+          "en": "Breakfast, juice and bakery"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "subtitle": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "أطباق الفطار والعصاير والمعجنات، بالأسعار بالجنيه.",
+          "en": "Breakfast plates, juice and pastries, priced in pounds."
+        },
+        "localized": true,
+        "maxLength": 140
+      },
+      "button_label": {
+        "type": "text",
+        "label": {
+          "en": "Button",
+          "ar": "الزر"
+        },
+        "default": {
+          "ar": "اطلب دلوقتي",
+          "en": "Order now"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "button_link": {
+        "type": "link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/products"
+      },
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "Photo",
+          "ar": "الصورة"
+        },
+        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/fetar/croissant.webp"
+      },
+      "image_alt": {
+        "type": "text",
+        "label": {
+          "en": "Photo description",
+          "ar": "وصف الصورة"
+        },
+        "default": {
+          "ar": "كرواسون على طبق",
+          "en": "A croissant on a plate"
+        },
+        "localized": true,
+        "maxLength": 120
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 120,
+        "step": 8,
+        "default": 24
+      }
+    }
+  }
+</hk-schema>

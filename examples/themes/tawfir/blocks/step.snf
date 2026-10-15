@@ -1,0 +1,86 @@
+<a class="tw-step tw-step-{{ block.settings.tone }}" href="{{ url(block.settings.link) }}">
+  <span class="tw-step-icon">{% render 'icon', name: block.settings.icon %}</span>
+  <span class="tw-step-text"><strong>{{ block.settings.title }}</strong><small>{{ block.settings.text }}</small></span>
+</a>
+<hk-schema>
+  {
+    "name": {
+      "en": "Offer step",
+      "ar": "خطوة العروض"
+    },
+    "version": 1,
+    "settings": {
+      "tone": {
+        "type": "select",
+        "label": {
+          "en": "Colour",
+          "ar": "اللون"
+        },
+        "options": ["red", "yellow"],
+        "default": "red"
+      },
+      "icon": {
+        "type": "select",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
+        "options": [
+          "percent",
+          "leaf",
+          "milk",
+          "jar",
+          "cup",
+          "spray",
+          "tag",
+          "truck",
+          "banknote",
+          "shield-check",
+          "package",
+          "store",
+          "heart",
+          "gift",
+          "star",
+          "home",
+          "zap",
+          "flame"
+        ],
+        "default": "tag"
+      },
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Title",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "عروض",
+          "en": "Offers"
+        },
+        "maxLength": 30,
+        "localized": true
+      },
+      "text": {
+        "type": "text",
+        "label": {
+          "en": "Small line",
+          "ar": "السطر الصغير"
+        },
+        "default": {
+          "ar": "منتجات مختارة",
+          "en": "Selected items"
+        },
+        "maxLength": 40,
+        "localized": true
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      }
+    }
+  }
+</hk-schema>

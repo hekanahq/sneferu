@@ -1,0 +1,30 @@
+<article class="wk-card wk-card-{{ card_style }}">
+  <a class="wk-card-link" href="{{ product.url }}">
+    <div class="wk-card-media">
+      <hk-image
+        src="{{ product.image }}"
+        alt="{{ product.title }}"
+        aspect-ratio="{{ image_ratio }}"
+        sizes="(min-width: 1024px) 20vw, 50vw"
+      />
+      {% if show_badge %}
+        {% if product.available %}
+          {% if product.compare_at > product.price %}
+            <span class="wk-badge">{{ t('sale') }}</span>
+          {% endif %}
+        {% else %}
+          <span class="wk-badge wk-badge-muted">{{ t('sold_out_badge') }}</span>
+        {% endif %}
+      {% endif %}
+    </div>
+    <h3 class="wk-card-title">{{ product.title }}</h3>
+    {% if product.options %}
+      <ul class="wk-specs">
+        {% for option in product.options limit: 1 %}{% for value in option.values limit: 3 %}
+            <li class="wk-spec">{{ value }}</li>
+          {% endfor %}{% endfor %}
+      </ul>
+    {% endif %}
+    {% if show_price %}{% render 'price', product: product, bind: false %}{% endif %}
+  </a>
+</article>

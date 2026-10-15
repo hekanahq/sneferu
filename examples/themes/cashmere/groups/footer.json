@@ -1,0 +1,130 @@
+{
+  "sections": [
+    {
+      "id": "footer",
+      "type": "footer",
+      "settings": {
+        "menu": "",
+        "about_text": {
+          "ar": "حقائب ومحافظ وإكسسوارات جلدية بخطوط هادئة. الدفع عند الاستلام والتوصيل لكل المحافظات.",
+          "en": "Leather bags, wallets and accessories in quiet lines. Cash on delivery and delivery across Egypt."
+        },
+        "copyright": {
+          "ar": "جميع الحقوق محفوظة",
+          "en": "All rights reserved"
+        },
+        "show_newsletter": false,
+        "show_language": true,
+        "scheme": "light"
+      },
+      "blocks": [
+        {
+          "id": "col-shop",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "تسوق",
+              "en": "Shop"
+            }
+          },
+          "blocks": [
+            {
+              "id": "l1",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "كل المنتجات",
+                  "en": "All products"
+                },
+                "url": "/products"
+              }
+            },
+            {
+              "id": "l2",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "جلديات",
+                  "en": "Leather goods"
+                },
+                "url": "/category/leather"
+              }
+            },
+            {
+              "id": "l4",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "بحث",
+                  "en": "Search"
+                },
+                "url": "/search"
+              }
+            }
+          ],
+          "block_order": ["l1", "l2", "l4"]
+        },
+        {
+          "id": "col-help",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "المتجر",
+              "en": "The store"
+            }
+          },
+          "blocks": [
+            {
+              "id": "h1",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "عنّا",
+                  "en": "About us"
+                },
+                "url": "/about"
+              }
+            },
+            {
+              "id": "h2",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "التوصيل والاستبدال",
+                  "en": "Delivery and exchange"
+                },
+                "url": "/delivery"
+              }
+            }
+          ],
+          "block_order": ["h1", "h2"]
+        },
+        {
+          "id": "social-wa",
+          "type": "social-link",
+          "settings": {
+            "label": {
+              "ar": "واتساب",
+              "en": "WhatsApp"
+            },
+            "url": "/about",
+            "icon": "message-circle"
+          }
+        },
+        {
+          "id": "contact-wa",
+          "type": "contact-line",
+          "settings": {
+            "icon": "message-circle",
+            "text": {
+              "ar": "تواصل معنا على واتساب",
+              "en": "Contact us on WhatsApp"
+            },
+            "url": ""
+          }
+        }
+      ],
+      "block_order": ["col-shop", "col-help", "social-wa", "contact-wa"]
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "id": "ivory",
   "name": "Ivory",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "author": "Hekana",
   "description": "An editorial womenswear store: warm ivory ground, near-black type, hairline dividers, a split campaign hero, an asymmetric lookbook and tall 3:4 product cards.",
   "category": "fashion",
@@ -28,7 +28,7 @@
       "contentWidth": "1200px"
     },
     "fonts": {
-      "heading": "Almarai",
+      "heading": "Amiri",
       "body": "Almarai"
     },
     "radius": {

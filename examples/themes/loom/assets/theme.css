@@ -1,0 +1,421 @@
+/* Loom: craft studio. Terracotta and linen with olive, warm humanist type. Colours come from the theme tokens. */
+[data-hk-theme='loom'] {
+  --loom-wood: var(--hk-color-primary);
+  --loom-light: var(--hk-color-clayLight);
+  --loom-cream: var(--hk-color-background);
+  --loom-shadow: 0 1px 2px color-mix(in srgb, var(--hk-color-text) 5%, transparent), 0 8px 28px color-mix(in srgb, var(--hk-color-text) 8%, transparent);
+  --loom-shadow-hover: 0 2px 4px color-mix(in srgb, var(--hk-color-text) 6%, transparent), 0 14px 36px color-mix(in srgb, var(--hk-color-text) 12%, transparent);
+  --loom-pill: 8px;
+  line-height: 1.6;
+}
+:where([data-hk-theme='loom'] a) { color: inherit; text-decoration: none; }
+:where([data-hk-theme='loom'] h1, [data-hk-theme='loom'] h2, [data-hk-theme='loom'] h3, [data-hk-theme='loom'] p) { margin: 0; }
+.ic { width: 24px; height: 24px; flex: none; }
+[data-hk-theme='loom'] [data-hk-block] { display: contents; }
+.loom-h2 { font-weight: 700; }
+.loom-muted { color: var(--hk-color-muted); }
+.loom-main { min-height: 60vh; }
+.loom-skip { position: absolute; top: 0; z-index: 100; padding: 12px 16px; background: var(--hk-color-text); color: var(--hk-color-background); }
+.loom-skip:focus { inset-inline-start: 0; }
+
+/* Schemes */
+.loom-scheme-light { background: var(--hk-color-background); color: var(--hk-color-text); }
+.loom-scheme-primary { background: var(--hk-color-secondary); color: var(--hk-color-background); }
+.loom-scheme-accent { background: var(--hk-color-accent); color: var(--hk-color-text); }
+.loom-scheme-primary a, .loom-scheme-accent a { color: inherit; }
+
+/* Buttons (hk-button, add to cart): pills */
+.sn-btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5em; min-height: 48px; padding: 10px var(--hk-space-4, 24px); border: 2px solid var(--hk-btn-border, var(--hk-color-accent)); border-radius: var(--loom-pill); background: var(--hk-btn-bg, var(--hk-color-accent)); color: var(--hk-btn-fg, var(--hk-color-on-accent, var(--hk-color-background))); font-weight: 600; transition: box-shadow 0.15s, transform 0.15s; }
+.sn-btn:hover { box-shadow: var(--loom-shadow-hover); transform: translateY(-1px); }
+.sn-btn:focus-visible, .loom-icon-button:focus-visible, .loom-chip:focus-visible { outline: 2px solid var(--loom-wood); outline-offset: 3px; }
+.sn-btn-outline { background: transparent; color: var(--loom-wood); }
+.sn-btn-ghost { background: transparent; border-color: transparent; color: var(--loom-wood); }
+.sn-badge, .loom-badge { display: inline-block; padding: 3px 12px; border-radius: var(--loom-pill); background: var(--loom-wood); color: var(--hk-color-on-accent, var(--hk-color-background)); font-size: 12px; font-weight: 700; }
+.loom-badge-muted { background: var(--hk-color-soft); color: var(--hk-color-text); }
+.sn-was { color: var(--hk-color-muted); font-weight: 400; margin-inline-start: 6px; font-size: 13px; }
+
+/* Announcement */
+.loom-announcement { padding-block: 8px; text-align: center; font-size: 14px; font-weight: 500; }
+.loom-announcement a { text-decoration: underline; }
+
+/* Header: logo pill, centred menu, icons, a search pill underneath */
+.loom-header { padding-block: 16px 12px; position: relative; z-index: 20; }
+.loom-sticky-true { position: sticky; top: 0; z-index: 50; }
+.loom-header-bar { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px; min-height: 56px; }
+.loom-logo { justify-self: start; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding-inline: 18px; border-radius: var(--loom-pill); background: var(--hk-color-soft); color: var(--hk-color-text); font-weight: 700; font-size: 16px; }
+.loom-scheme-primary .loom-logo, .loom-scheme-accent .loom-logo { background: transparent; padding-inline: 0; color: inherit; }
+.loom-logo-img { width: auto; height: auto; max-width: 180px; }
+.loom-logo-h-24 { height: 24px; } .loom-logo-h-32 { height: 32px; } .loom-logo-h-40 { height: 40px; } .loom-logo-h-48 { height: 48px; } .loom-logo-h-64 { height: 64px; }
+.loom-nav { display: flex; align-items: center; gap: 8px 28px; font-weight: 600; }
+.loom-nav-item { position: relative; }
+.loom-nav-link { display: inline-flex; align-items: center; min-height: 44px; }
+.loom-nav-link:hover, .loom-nav-link[aria-current='true'], .loom-icon-button:hover { color: var(--loom-wood); }
+.loom-scheme-primary .loom-nav-link:hover, .loom-scheme-accent .loom-nav-link:hover, .loom-scheme-primary .loom-icon-button:hover { color: inherit; opacity: 0.8; }
+.loom-subnav { display: none; position: absolute; inset-inline-start: 0; top: 100%; z-index: 60; min-width: 220px; padding: 8px; border-radius: 16px; background: var(--hk-color-surface); color: var(--hk-color-text); box-shadow: var(--loom-shadow-hover); }
+.loom-nav-item:hover .loom-subnav, .loom-nav-item:focus-within .loom-subnav { display: grid; }
+.loom-subnav-link { display: flex; align-items: center; min-height: 44px; padding-inline: 12px; border-radius: 12px; font-weight: 500; }
+.loom-subnav-link:hover, .loom-subnav-link[aria-current='true'] { background: var(--hk-color-soft); color: var(--loom-wood); }
+.loom-subnav-deep { padding-inline-start: 28px; }
+.loom-header-actions { justify-self: end; display: flex; align-items: center; gap: 4px; }
+.loom-icon-button { position: relative; display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; border-radius: 12px; background: transparent; border: 0; color: inherit; cursor: pointer; list-style: none; }
+.loom-icon-button::-webkit-details-marker { display: none; }
+.loom-icon-button .sn-icon { width: 26px; height: 26px; }
+.loom-cart-link .sn-cart-count { position: absolute; top: 2px; inset-inline-end: 0; min-width: 18px; padding-inline: 4px; border-radius: var(--loom-pill); background: var(--loom-wood); color: var(--hk-color-on-accent, var(--hk-color-background)); font-size: 11px; font-weight: 700; line-height: 18px; text-align: center; }
+.loom-search-toggle { position: relative; }
+.loom-search-panel { position: absolute; inset-inline-end: 0; top: 100%; z-index: 60; width: min(360px, 90vw); padding: 12px; border-radius: 16px; background: var(--hk-color-surface); color: var(--hk-color-text); box-shadow: var(--loom-shadow-hover); }
+.sn-locale-switch { display: inline-flex; align-items: center; min-height: 44px; padding-inline: 10px; font-size: 14px; font-weight: 600; }
+
+/* Search pill: header bar, search page, 404 and the panel */
+.loom-search-bar { max-width: 480px; margin: 20px auto 0; }
+.loom-search-bar .sn-search, .loom-search-page-form .sn-search, .loom-search-panel .sn-search { display: flex; flex-wrap: nowrap; align-items: center; gap: 12px; width: 100%; min-height: 52px; padding-inline: 20px 6px; border-radius: var(--loom-pill); border: 1px solid var(--hk-color-line); background: var(--hk-color-surface); box-shadow: 0 1px 2px color-mix(in srgb, var(--hk-color-text) 5%, transparent); color: var(--hk-color-text); }
+.loom-search-bar .sn-search:focus-within, .loom-search-page-form .sn-search:focus-within, .loom-search-panel .sn-search:focus-within { border-color: var(--loom-wood); }
+.loom-search-bar input, .loom-search-page-form input, .loom-search-panel input { flex: 1; min-width: 0; min-height: 48px; padding: 0; border: 0; outline: 0; background: transparent; color: var(--hk-color-text); font: inherit; font-size: 15px; }
+.loom-search-bar input::placeholder, .loom-search-page-form input::placeholder, .loom-search-panel input::placeholder { color: var(--hk-color-muted); }
+.loom-search-bar .sn-search-button, .loom-search-page-form .sn-search-button, .loom-search-panel .sn-search-button { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; border: 0; border-radius: var(--loom-pill); background: transparent; color: var(--loom-wood); }
+.loom-search-page-form { max-width: 520px; margin: 20px auto; }
+
+/* Trust strip */
+.loom-trust-list { list-style: none; margin: 0 auto; padding: 0; display: flex; justify-content: center; gap: 12px 36px; flex-wrap: wrap; }
+.loom-trust-item { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; color: var(--hk-color-muted); }
+.loom-trust-icon { display: inline-flex; color: var(--loom-wood); }
+.loom-trust-icon .ic, .loom-trust-icon .sn-icon { width: 20px; height: 20px; }
+
+/* Product cards and grids */
+.loom-row-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.loom-more, .loom-view-all { display: inline-flex; align-items: center; min-height: 44px; font-size: 14px; font-weight: 600; color: var(--loom-wood); }
+.loom-grid { display: grid; gap: 16px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 760px) {
+  .loom-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .loom-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .loom-cols-4 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .loom-cols-5 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (min-width: 1040px) {
+  .loom-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .loom-cols-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
+.loom-card { padding: 12px 12px 16px; border-radius: 20px; background: var(--hk-color-surface); box-shadow: var(--loom-shadow); transition: transform 0.15s, box-shadow 0.15s; }
+.loom-card-bordered { box-shadow: none; border: 1px solid var(--hk-color-line); }
+.loom-card-plain { box-shadow: none; padding: 0; background: transparent; }
+.loom-card:hover { transform: translateY(-2px); box-shadow: var(--loom-shadow-hover); }
+.loom-card-link { display: grid; gap: 6px; align-content: start; height: 100%; }
+.loom-card-media { position: relative; overflow: hidden; border-radius: 14px; background: var(--hk-color-soft); }
+.loom-card-media img { display: block; width: 100%; height: auto; }
+.loom-card-media .loom-badge { position: absolute; inset-block-start: 8px; inset-inline-start: 8px; }
+.loom-card-title { font-size: 15px; font-weight: 600; padding-inline: 2px; margin-top: 6px; }
+.loom-card-note { display: inline-flex; align-items: center; gap: 4px; padding-inline: 2px; font-size: 12px; font-weight: 500; color: var(--loom-wood); }
+.loom-card-note .sn-icon { width: 14px; height: 14px; }
+.loom-card .sn-price { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 6px; font-weight: 700; padding-inline: 2px; }
+.loom-empty { display: grid; justify-items: center; gap: 12px; padding-block: 48px; text-align: center; color: var(--hk-color-muted); }
+.loom-empty-title, .loom-empty h1 { color: var(--hk-color-text); }
+
+/* Collection and search */
+.loom-collection-head { display: grid; justify-items: center; gap: 8px; margin-bottom: 24px; text-align: center; }
+.loom-collection-head > p.loom-muted { display: inline-block; padding: 4px 14px; border-radius: var(--loom-pill); background: var(--hk-color-soft); font-size: 13px; }
+.loom-toolbar, .loom-filter { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; margin-bottom: 16px; }
+.loom-filters { margin-bottom: 16px; text-align: center; }
+.loom-filters summary { display: inline-flex; align-items: center; min-height: 44px; padding-inline: 20px; border-radius: var(--loom-pill); background: var(--hk-color-soft); cursor: pointer; font-weight: 600; }
+.loom-filter-name { font-size: 14px; }
+.loom-chip { display: inline-flex; align-items: center; min-height: 44px; padding-inline: 18px; border-radius: var(--loom-pill); border: 1px solid var(--hk-color-line); background: var(--hk-color-surface); font-weight: 500; font-size: 14px; }
+.loom-chip:hover { border-color: var(--loom-wood); color: var(--loom-wood); }
+.loom-chip[aria-current='true'] { background: var(--loom-wood); border-color: var(--loom-wood); color: var(--hk-color-on-accent, var(--hk-color-background)); }
+.loom-main > [data-hk-section] > p.loom-muted { text-align: center; }
+.sn-pagination { display: flex; justify-content: center; gap: 8px; margin-top: 28px; }
+.sn-pagination a, .sn-pagination span { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; padding-inline: 12px; border-radius: var(--loom-pill); border: 1px solid var(--hk-color-line); }
+.sn-pagination [aria-current] { background: var(--loom-wood); border-color: var(--loom-wood); color: var(--hk-color-on-accent, var(--hk-color-background)); }
+
+/* Product page */
+.loom-breadcrumb { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 16px; font-size: 14px; color: var(--hk-color-muted); }
+.loom-breadcrumb a { display: inline-flex; align-items: center; min-height: 44px; }
+.loom-breadcrumb a:hover { color: var(--loom-wood); }
+.loom-product { display: grid; gap: 24px; }
+@media (min-width: 900px) {
+  .loom-product { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); align-items: start; }
+  .loom-gallery-end .loom-product-gallery { order: 2; }
+  .loom-sticky-true.loom-product .loom-product-info { position: sticky; top: 24px; }
+}
+.loom-product-gallery { padding: 16px; border-radius: 24px; background: var(--hk-color-surface); box-shadow: var(--loom-shadow); }
+.sn-gallery-main img, .loom-product-gallery img { border-radius: 16px; background: var(--hk-color-soft); }
+.sn-gallery-thumbs { gap: 8px; margin-top: 8px; }
+.loom-product-info { display: grid; gap: 16px; align-content: start; padding: 28px; border-radius: 24px; background: var(--hk-color-surface); box-shadow: var(--loom-shadow); }
+.loom-price-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 26px; font-weight: 700; color: var(--loom-wood); }
+.loom-block-title { margin: 0 0 8px; font-size: 18px; }
+.loom-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.loom-category { color: var(--hk-color-muted); font-size: 14px; }
+.loom-note { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 14px; font-size: 14px; }
+.loom-note-muted { background: var(--hk-color-glow); }
+.loom-note .sn-icon { color: var(--loom-wood); flex: none; }
+.sn-vp-option { display: grid; justify-items: start; margin: 0; padding: 0; border: 0; }
+.sn-vp-option legend { padding: 0; margin-bottom: 8px; font-weight: 600; font-size: 14px; }
+.sn-vp-values { display: inline-flex; flex-wrap: wrap; gap: 4px; padding: 5px; border-radius: var(--loom-pill); border: 1px solid var(--hk-color-line); background: var(--hk-color-surface); box-shadow: var(--loom-shadow); }
+.sn-vp-value span { min-width: 64px; padding-inline: 18px; border: 0; border-radius: var(--loom-pill); font-weight: 600; }
+.sn-vp-value:hover span { color: var(--loom-wood); }
+.sn-vp-value input:checked + span { background: var(--loom-wood); border-color: var(--loom-wood); color: var(--hk-color-on-accent, var(--hk-color-background)); }
+.sn-variant-picker select { min-height: 48px; padding-inline: 16px; border-radius: var(--loom-pill); border: 1px solid var(--hk-color-line); background: var(--hk-color-surface); font: inherit; }
+.sn-qty { display: inline-flex; align-items: center; border: 1px solid var(--hk-color-line); border-radius: var(--loom-pill); overflow: hidden; }
+.sn-qty-btn { min-width: 44px; min-height: 44px; border: 0; background: transparent; color: inherit; font-size: 20px; cursor: pointer; }
+.sn-qty-input { width: 48px; min-height: 44px; border: 0; background: transparent; color: inherit; text-align: center; font: inherit; }
+.sn-add-to-cart { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.sn-atc-button { min-height: 52px; min-width: 180px; flex: 1; }
+
+/* Cart */
+.loom-cart { display: grid; gap: 24px; margin-top: 16px; }
+@media (min-width: 900px) { .loom-cart-side { grid-template-columns: minmax(0, 2fr) minmax(300px, 1fr); align-items: start; } }
+.loom-cart-aside { display: grid; gap: 12px; padding: 24px; border-radius: 24px; background: var(--hk-color-surface); box-shadow: var(--loom-shadow); }
+.loom-cart-aside .sn-cart-subtotal { display: flex; justify-content: space-between; font-weight: 700; font-size: 18px; }
+.loom-cart-aside .sn-cart-checkout { width: 100%; }
+.loom-cart-aside > p.loom-muted { padding: 10px 14px; border-radius: 14px; background: var(--hk-color-soft); font-size: 13px; }
+.sn-cart-list .sn-cart-item { grid-template-columns: 80px minmax(0, 1fr) auto; grid-template-areas: 'img title price' 'img variant variant' 'img qty remove'; column-gap: 16px; row-gap: 4px; align-items: center; padding: 16px; margin-bottom: 12px; border-radius: 20px; background: var(--hk-color-surface); box-shadow: var(--loom-shadow); }
+.sn-cart-list .sn-cart-item:not(:has(.sn-cart-item-image)) { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: 'title price' 'variant variant' 'qty remove'; }
+.sn-cart-list .sn-cart-item-image { grid-area: img; align-self: start; border-radius: 12px; }
+.sn-cart-list .sn-cart-item-title { grid-area: title; display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; }
+.sn-cart-list .sn-cart-item-variant { grid-area: variant; unicode-bidi: plaintext; text-align: start; color: var(--hk-color-muted); font-size: 13px; }
+.sn-cart-list .sn-cart-item-price { grid-area: price; justify-self: end; font-weight: 700; white-space: nowrap; }
+.sn-cart-list .sn-cart-item-qty { grid-area: qty; justify-self: start; display: inline-flex; align-items: center; border: 1px solid var(--hk-color-line); border-radius: var(--loom-pill); }
+.sn-cart-list .sn-cart-item-qty button { min-width: 44px; min-height: 44px; border: 0; background: transparent; color: inherit; font-size: 18px; }
+.sn-cart-list .sn-cart-item-remove { grid-area: remove; justify-self: end; min-width: 44px; min-height: 44px; border: 0; background: transparent; color: var(--hk-color-muted); font-size: 20px; }
+.sn-cart-list .sn-cart-item-remove:hover { color: var(--loom-wood); }
+.sn-cart-fallback { display: inline-flex; align-items: center; min-height: 44px; color: var(--loom-wood); }
+
+/* Page */
+.loom-page { margin-inline: auto; }
+.loom-width-narrow { max-width: 720px; } .loom-width-normal { max-width: 960px; } .loom-width-wide { max-width: none; }
+.loom-align-center { text-align: center; }
+.loom-page > h1 { margin-bottom: 16px; }
+.sn-rich-text { color: var(--hk-color-text); }
+.sn-rich-text a { color: var(--loom-wood); text-decoration: underline; }
+
+/* Footer */
+.loom-footer { margin-top: 48px; padding-block: 40px 20px; border-top: 1px solid var(--hk-color-line); }
+.loom-footer.loom-scheme-primary, .loom-footer.loom-scheme-accent { border-top: 0; }
+.loom-newsletter { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 32px; padding: 24px 28px; border-radius: 24px; background: var(--hk-color-soft); color: var(--hk-color-text); }
+.loom-newsletter p { color: var(--hk-color-muted); font-size: 14px; }
+.loom-footer-grid { display: flex; flex-wrap: wrap; gap: 24px 40px; }
+.loom-footer-grid > * { flex: 1 1 150px; min-width: 0; }
+.loom-footer-grid > .loom-footer-about { flex: 2 1 280px; }
+.loom-footer-brand { font-weight: 700; font-size: 18px; margin-bottom: 8px; }
+.loom-footer-about p:not(.loom-footer-brand) { font-size: 14px; color: var(--hk-color-muted); max-width: 380px; }
+.loom-scheme-primary .loom-footer-about p, .loom-scheme-accent .loom-footer-about p { color: inherit; opacity: 0.85; }
+.loom-footer-title { margin: 0 0 8px; font-size: 15px; }
+.loom-footer-links { display: grid; }
+.loom-footer-menu-col:not(:has(a)) { display: none; }
+.loom-footer-links a, .loom-contact-line a, .loom-social { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-size: 14px; color: var(--hk-color-muted); }
+.loom-scheme-primary .loom-footer-links a, .loom-scheme-accent .loom-footer-links a, .loom-scheme-primary .loom-social, .loom-scheme-accent .loom-social { color: inherit; }
+.loom-footer-links a:hover, .loom-contact-line a:hover, .loom-social:hover { color: var(--loom-wood); }
+.loom-footer-deep { padding-inline-start: 16px; }
+.loom-contact-line { display: flex; align-items: center; gap: 8px; min-height: 44px; font-size: 14px; color: var(--hk-color-muted); }
+.loom-contact-line .sn-icon { color: var(--loom-wood); }
+.loom-social-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.loom-social { padding-inline: 14px; border-radius: var(--loom-pill); background: var(--hk-color-soft); }
+.loom-social span { font-size: 13px; }
+.loom-payments { display: flex; flex-wrap: wrap; gap: 8px; }
+.loom-payment { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding-inline: 14px; border-radius: var(--loom-pill); background: var(--hk-color-surface); border: 1px solid var(--hk-color-line); color: var(--hk-color-text); font-size: 13px; font-weight: 500; }
+.loom-footer-bottom { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-top: 28px; padding-top: 16px; border-top: 1px solid var(--hk-color-line); font-size: 13px; color: var(--hk-color-muted); }
+.loom-scheme-primary .loom-footer-bottom, .loom-scheme-accent .loom-footer-bottom { color: inherit; }
+.loom-copyright { margin: 0; }
+
+@media (max-width: 1023px) {
+  .loom-nav { display: none; }
+  .loom-header-bar { grid-template-columns: 1fr auto; }
+}
+@media (max-width: 639px) {
+  .loom-header { padding-top: 8px; }
+  .loom-logo { padding-inline: 14px; font-size: 15px; }
+  .loom-search-bar { margin-top: 12px; max-width: none; }
+  .loom-search-bar .sn-search { min-height: 46px; }
+  .sn-was { margin-inline-start: 0; font-size: 12px; }
+  .loom-trust-list { flex-direction: column; align-items: center; gap: 10px; }
+  .loom-product-info { padding: 20px; }
+  .loom-product-gallery { padding: 10px; }
+  .loom-price-row { font-size: 22px; }
+  .loom-footer-grid > * { flex-basis: 100%; }
+  .loom-newsletter { padding: 20px; }
+  .sn-vp-values { border-radius: 24px; }
+  .sn-cart-list .sn-cart-item { grid-template-columns: 64px minmax(0, 1fr) auto; column-gap: 12px; padding: 12px; }
+}
+.loom-empty .loom-search-page-form { width: 100%; max-width: 520px; margin: 4px 0; box-sizing: border-box; }
+.loom-empty { min-width: 0; }
+.loom-empty { grid-template-columns: minmax(0, 1fr); }
+.loom-skip { inset-inline-start: 0; transform: translateY(-200%); }
+.loom-skip:focus { transform: none; }
+
+
+
+/* ---- Loom: surfaces and shapes ---- */
+[data-hk-theme='loom'] {
+  --loom-shadow: none;
+  --loom-shadow-hover: 0 8px 24px color-mix(in srgb, var(--hk-color-charcoal) 10%, transparent);
+  background: var(--hk-color-background);
+  font-weight: 400;
+}
+[data-hk-theme='loom'] :where(h1, h2, h3) { font-weight: 500; letter-spacing: 0; }
+.loom-scheme-light { background: var(--hk-color-background); }
+.loom-announcement { font-size: 13px; }
+.sn-btn { background: var(--loom-wood); border-color: var(--loom-wood); color: var(--hk-color-surface); border-radius: var(--loom-pill); font-weight: 500; }
+.sn-btn:hover { box-shadow: none; transform: none; background: var(--hk-color-charcoal); border-color: var(--hk-color-charcoal); }
+.sn-btn-outline { background: transparent; color: var(--loom-wood); }
+.sn-btn-ghost { background: transparent; border-color: transparent; color: var(--loom-wood); }
+.sn-btn-outline:hover { color: var(--hk-color-surface); }
+.sn-qty, .sn-cart-list .sn-cart-item-qty, .sn-vp-values, .sn-variant-picker select { border-radius: var(--loom-pill); }
+.sn-vp-values { box-shadow: none; }
+.sn-vp-value span { border-radius: 6px; }
+.sn-vp-value input:checked + span { background: var(--loom-wood); border-color: var(--loom-wood); color: var(--hk-color-surface); }
+.loom-badge { background: var(--hk-color-charcoal); color: var(--hk-color-surface); border-radius: 6px; font-weight: 500; }
+.loom-badge-muted { background: var(--hk-color-surface); color: var(--hk-color-text); }
+.loom-chip[aria-current='true'], .sn-pagination [aria-current] { background: var(--loom-wood); border-color: var(--loom-wood); color: var(--hk-color-surface); }
+
+/* Header: wordmark, nav, search, cart, thin rule */
+.loom-header { padding-block: 14px; background: var(--hk-color-background); color: var(--hk-color-text); border-bottom: 1px solid var(--hk-color-line); }
+.loom-header-bar { display: flex; align-items: center; gap: 28px; min-height: 52px; }
+.loom-logo { padding-inline: 0; background: transparent; font-family: var(--hk-font-heading); font-size: 22px; font-weight: 600; color: var(--loom-wood); }
+.loom-nav { flex: 1; justify-content: flex-start; gap: 4px 24px; font-weight: 400; font-size: 14px; }
+.loom-nav-link:hover, .loom-nav-link[aria-current='true'] { color: var(--loom-wood); }
+.loom-header-actions { gap: 6px; }
+.loom-search-inline { width: 200px; }
+.loom-search-inline .sn-search, .loom-search-bar .sn-search { display: flex; flex-wrap: nowrap; align-items: center; gap: 6px; width: 100%; min-height: 40px; padding-inline: 14px 4px; border-radius: 999px; border: 1px solid var(--hk-color-line); background: var(--hk-color-surface); color: var(--hk-color-text); box-shadow: none; }
+.loom-search-inline input, .loom-search-bar input { flex: 1; min-width: 0; min-height: 36px; padding: 0; border: 0; outline: 0; background: transparent; color: var(--hk-color-text); font: inherit; font-size: 14px; }
+.loom-search-inline input::placeholder, .loom-search-bar input::placeholder { color: var(--hk-color-muted); }
+.loom-search-inline .sn-search-button, .loom-search-bar .sn-search-button { min-width: 36px; min-height: 36px; border: 0; background: transparent; color: var(--hk-color-text); }
+.loom-search-bar { max-width: none; margin: 10px 0 0; }
+.loom-cart-link .sn-cart-count { background: var(--loom-wood); color: var(--hk-color-surface); }
+.loom-icon-button:hover { color: var(--loom-wood); }
+.sn-locale-switch { color: var(--hk-color-text); }
+.loom-only-mobile { display: block; }
+.loom-only-desktop { display: none; }
+@media (min-width: 1024px) { .loom-only-mobile { display: none; } .loom-only-desktop { display: block; } }
+@media (max-width: 1023px) { .loom-header-actions { margin-inline-start: auto; } .loom-header-bar { gap: 12px; } }
+
+/* Hero: text and button beside one photo */
+.loom-hero { background: var(--hk-color-background); padding-block: 28px 20px; }
+.loom-hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr); align-items: center; gap: 32px; }
+.loom-hero-text { display: grid; gap: 16px; justify-items: start; }
+.loom-hero-text h1 { line-height: 1.35; font-weight: 600; color: var(--loom-wood); }
+.loom-hero-sub { font-size: 16px; color: var(--hk-color-muted); max-width: 44ch; }
+.loom-hero-media { border-radius: 8px; overflow: hidden; background: var(--hk-color-linen); max-height: 340px; }
+.loom-hero-media img { display: block; width: 100%; height: 340px; object-fit: cover; }
+.loom-pill { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding-inline: 28px; border: 1px solid var(--loom-wood); border-radius: 6px; background: var(--loom-wood); font-size: 15px; font-weight: 500; color: var(--hk-color-surface); }
+.loom-pill:hover { background: var(--hk-color-charcoal); border-color: var(--hk-color-charcoal); }
+.loom-pill:focus-visible, .loom-cat:focus-visible, .loom-step-link:focus-visible { outline: 2px solid var(--loom-wood); outline-offset: 3px; }
+
+/* Category tiles: wide linen blocks, one filled in clay */
+.loom-cats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-top: 8px; }
+.loom-cat { display: grid; place-items: center; min-height: 96px; border-radius: 6px; background: var(--hk-color-linen); color: var(--hk-color-text); transition: background 0.15s; }
+.loom-cat:hover { background: var(--hk-color-accent); }
+.loom-cat-filled { background: var(--loom-wood); color: var(--hk-color-surface); }
+.loom-cat-filled:hover { background: var(--hk-color-charcoal); }
+.loom-cat-label { padding: 12px 16px; font-size: 18px; font-weight: 500; text-align: center; }
+.loom-main > [data-hk-section] > h2 { margin-bottom: 0; }
+
+/* Steps: three photos with a caption */
+.loom-steps { list-style: none; margin: 20px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.loom-step-link { display: grid; gap: 10px; text-align: center; }
+.loom-step-media { display: block; border-radius: 6px; overflow: hidden; background: var(--hk-color-linen); }
+.loom-step-media img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.loom-step-label { display: block; font-size: 16px; font-weight: 500; }
+.loom-step-link:hover .loom-step-label { color: var(--loom-wood); }
+
+/* Product cards: calm, centred name and price, no frame */
+.loom-section-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 12px; }
+.loom-section-head h2 { color: var(--hk-color-text); }
+.loom-card, .loom-card-plain { padding: 0; border-radius: 0; background: transparent; box-shadow: none; transition: none; }
+.loom-card:hover { transform: none; box-shadow: none; }
+.loom-card-link { display: flex; flex-direction: column; align-items: center; gap: 4px; height: 100%; text-align: center; }
+.loom-card-media { width: 100%; border-radius: 6px; background: var(--hk-color-linen); }
+.loom-card-media img { mix-blend-mode: multiply; transition: transform 0.25s; }
+.loom-card:hover .loom-card-media img { transform: scale(1.03); }
+.loom-card-media .loom-badge { inset-inline-start: 10px; }
+.loom-card-title { margin: 10px 0 0; padding: 0; font-size: 15px; font-weight: 400; }
+.loom-card-opts { display: flex; flex-wrap: wrap; justify-content: center; gap: 2px 10px; font-size: 12px; color: var(--hk-color-muted); }
+.loom-card .sn-price { display: flex; flex-wrap: wrap; justify-content: center; align-items: baseline; gap: 0 6px; padding: 0; font-size: 14px; font-weight: 600; color: var(--hk-color-text); }
+.loom-card .sn-was { margin: 0; }
+.loom-card-link:focus-visible { outline: 2px solid var(--loom-wood); outline-offset: 3px; }
+.loom-grid { gap: 28px 20px; }
+
+/* Trust: a ruled strip, icon beside the label */
+.loom-trust { border-block: 1px solid var(--hk-color-line); margin-top: 24px; }
+.loom-trust-list { gap: 12px 56px; }
+.loom-trust-item { gap: 10px; color: var(--hk-color-text); }
+.loom-trust-icon { color: var(--hk-color-charcoal); }
+.loom-trust-label { font-size: 14px; font-weight: 500; }
+@media (max-width: 639px) { .loom-trust-list { flex-direction: column; align-items: flex-start; gap: 4px; padding-inline: 8px; } }
+
+/* Footer: linen, thin rule, calm links */
+.loom-footer { margin-top: 32px; padding-block: 40px 20px; background: var(--hk-color-background); color: var(--hk-color-text); border-top: 1px solid var(--hk-color-line); }
+.loom-footer-brand { font-family: var(--hk-font-heading); font-weight: 600; }
+.loom-footer-title { font-weight: 600; }
+.loom-social { border-radius: 999px; background: var(--hk-color-soft); }
+.loom-payment { border-radius: 999px; }
+.loom-newsletter { background: var(--hk-color-soft); border-radius: 14px; }
+.loom-contact-line .sn-icon { color: var(--loom-wood); }
+
+/* Product page and cart: quiet surfaces */
+.loom-product-gallery, .loom-product-info, .loom-cart-aside, .sn-cart-list .sn-cart-item { background: var(--hk-color-surface); box-shadow: none; border: 1px solid var(--hk-color-line); border-radius: 14px; }
+.loom-product-gallery { padding: 12px; }
+.sn-gallery-main img, .loom-product-gallery img { border-radius: 10px; background: var(--hk-color-linen); }
+.loom-price-row { color: var(--hk-color-text); font-weight: 600; }
+.loom-note { border-radius: 10px; }
+.loom-note-muted { background: var(--hk-color-soft); }
+.loom-note .sn-icon { color: var(--loom-wood); }
+.sn-cart-list .sn-cart-item-image { border-radius: 8px; }
+.loom-search-page-form .sn-search, .loom-search-panel .sn-search { border-radius: 999px; border: 1px solid var(--hk-color-line); background: var(--hk-color-surface); }
+.loom-collection-head > p.loom-muted { border-radius: 999px; }
+.loom-empty .loom-tile { display: inline-flex; color: var(--loom-wood); }
+
+@media (max-width: 1023px) {
+  .loom-cats { gap: 12px; }
+  .loom-cat-label { font-size: 16px; }
+}
+@media (max-width: 639px) {
+  .loom-hero { padding-block: 16px 20px; }
+  .loom-hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr); gap: 16px; }
+  .loom-hero-media, .loom-hero-media img { max-height: 200px; height: 200px; }
+  .loom-hero-text { gap: 10px; }
+  .loom-hero-sub { font-size: 14px; }
+  .loom-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .loom-step-label { font-size: 13px; }
+  .loom-cat { min-height: 72px; }
+  .loom-cats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .loom-grid { gap: 20px 12px; }
+}
+.loom-main h2 + .loom-grid { margin-top: 16px; }
+
+/* Scale pass: closer to the mockup's weight */
+.loom-announcement { font-size: 14px; }
+.loom-announcement a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; }
+.loom-logo { min-width: 44px; }
+.loom-hero { padding-block: 40px 32px; }
+.loom-hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; }
+.loom-hero-text { gap: 24px; }
+.loom-hero-text h1 { font-size: 56px !important; line-height: 1.3; }
+.loom-hero-sub { font-size: 18px; }
+.loom-pill { min-height: 52px; padding-inline: 36px; font-size: 17px; }
+.loom-hero-media, .loom-hero-media img { max-height: 440px; height: 440px; }
+.loom-cat { min-height: 120px; }
+.loom-cat-label { font-size: 22px; }
+.loom-card-title { font-size: 17px; }
+.loom-card .sn-price { font-size: 17px; }
+.loom-steps { gap: 24px; }
+.loom-step-label { font-size: 18px; }
+.loom-trust { padding-block: 16px; }
+.loom-trust-list { gap: 16px 64px; }
+.loom-trust-label { font-size: 18px; }
+.loom-trust-icon .ic, .loom-trust-icon .sn-icon, .loom-trust-icon svg { width: 36px; height: 36px; }
+.loom-footer-about p:not(.loom-footer-brand), .loom-footer-links a, .loom-contact-line a, .loom-social, .loom-footer-bottom, .loom-payment { font-size: 15px; }
+.loom-footer-title { font-size: 17px; }
+.loom-footer-brand { font-size: 22px; }
+@media (max-width: 639px) {
+  .loom-hero { padding-block: 20px 20px; }
+  .loom-hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr); gap: 16px; }
+  .loom-hero-text { gap: 12px; }
+  .loom-hero-text h1 { font-size: 30px !important; }
+  .loom-hero-sub { font-size: 14px; }
+  .loom-pill { min-height: 44px; padding-inline: 20px; font-size: 15px; }
+  .loom-hero-media, .loom-hero-media img { max-height: 240px; height: 240px; }
+  .loom-cat { min-height: 76px; }
+  .loom-cat-label { font-size: 16px; }
+  .loom-step-label { font-size: 14px; }
+  .loom-trust-label { font-size: 16px; }
+  .loom-trust-icon .ic, .loom-trust-icon .sn-icon, .loom-trust-icon svg { width: 28px; height: 28px; }
+  .loom-trust-list { align-items: center; }
+}
+@media (min-width: 640px) and (max-width: 1023px) { .loom-hero-text h1 { font-size: 40px !important; } .loom-hero-grid { gap: 24px; } }

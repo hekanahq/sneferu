@@ -1,0 +1,120 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="16">
+  <div class="ik-hero ik-hero-{{ section.settings.shape }}">
+    {% if section.settings.image %}
+      <hk-image
+        src="{{ section.settings.image }}"
+        alt="{{ section.settings.image_alt }}"
+        loading="eager"
+        aspect-ratio="5/2"
+        sizes="(min-width: 1200px) 1120px, 100vw"
+      />
+    {% endif %}
+    {% if section.settings.title %}
+      <h1 class="ik-hero-title">{{ section.settings.title }}</h1>
+    {% endif %}
+  </div>
+  <div class="ik-caption">
+    {% if section.settings.caption %}
+      <p class="ik-caption-text">{{ section.settings.caption }}</p>
+    {% endif %}
+    {% if section.settings.link_label %}
+      <a class="ik-line-link" href="{{ url(section.settings.link) }}">{{ section.settings.link_label }}</a>
+    {% endif %}
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Hero image",
+      "ar": "صورة رئيسية"
+    },
+    "version": 1,
+    "settings": {
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "Image",
+          "ar": "الصورة"
+        },
+        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/ink/ink-hero.webp"
+      },
+      "image_alt": {
+        "type": "text",
+        "label": {
+          "en": "Image description",
+          "ar": "وصف الصورة"
+        },
+        "default": {
+          "ar": "هودي رمادي على خلفية سوداء",
+          "en": "Grey hoodie on a black background"
+        },
+        "localized": true,
+        "maxLength": 120
+      },
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading on the image (optional)",
+          "ar": "عنوان فوق الصورة (اختياري)"
+        },
+        "default": "",
+        "localized": true,
+        "maxLength": 60
+      },
+      "caption": {
+        "type": "text",
+        "label": {
+          "en": "Caption under the image",
+          "ar": "سطر تحت الصورة"
+        },
+        "default": {
+          "ar": "تشكيلة بسيطة بالأبيض والأسود",
+          "en": "A plain black and white selection"
+        },
+        "localized": true,
+        "maxLength": 80
+      },
+      "link_label": {
+        "type": "text",
+        "label": {
+          "en": "Link text",
+          "ar": "نص الرابط"
+        },
+        "default": {
+          "ar": "تسوق الكل",
+          "en": "Shop all"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      },
+      "shape": {
+        "type": "select",
+        "label": {
+          "en": "Banner shape",
+          "ar": "شكل البانر"
+        },
+        "options": ["wide", "tall"],
+        "default": "wide"
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 160,
+        "step": 8,
+        "default": 32
+      }
+    }
+  }
+</hk-schema>

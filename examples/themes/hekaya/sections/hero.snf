@@ -1,0 +1,127 @@
+<hk-section full-bleed="true" padding-y="0">
+  <div class="hy-hero">
+    <div class="hy-hero-text">
+      {% if section.settings.eyebrow %}
+        <p class="hy-eyebrow">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+      {% if section.settings.title %}
+        <hk-heading text="{{ section.settings.title }}" level="h1" size="52" mobile-size="34" class="hy-hero-title" />
+      {% endif %}
+      {% if section.settings.subtitle %}
+        <hk-text text="{{ section.settings.subtitle }}" size="16" class="hy-hero-sub" />
+      {% endif %}
+      {% render 'button', label: section.settings.button_label, href: section.settings.button_link, style: section.settings.button_style %}
+    </div>
+    <div class="hy-hero-media">
+      <hk-image
+        src="{{ section.settings.image }}"
+        alt="{{ section.settings.image_alt }}"
+        loading="eager"
+        fit="contain"
+        sizes="(min-width: 1024px) 60vw, 100vw"
+      />
+    </div>
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Campaign hero",
+      "ar": "البانر الرئيسي"
+    },
+    "version": 1,
+    "templates": ["index"],
+    "settings": {
+      "eyebrow": {
+        "type": "text",
+        "label": {
+          "en": "Small line above the heading",
+          "ar": "سطر صغير فوق العنوان"
+        },
+        "localized": true,
+        "default": {
+          "en": "Independent bookshop",
+          "ar": "مكتبة مستقلة"
+        },
+        "maxLength": 40
+      },
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "localized": true,
+        "default": {
+          "en": "Books worth the evening",
+          "ar": "كتب تستحق سهرة هادئة"
+        },
+        "maxLength": 80
+      },
+      "subtitle": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "localized": true,
+        "default": {
+          "en": "Novels, essays, children's books and stationery, picked for readers.",
+          "ar": "روايات ومقالات وكتب أطفال وقرطاسية، نختارها للقرّاء."
+        },
+        "maxLength": 160
+      },
+      "button_label": {
+        "type": "text",
+        "label": {
+          "en": "Button text",
+          "ar": "نص الزر"
+        },
+        "localized": true,
+        "default": {
+          "en": "Browse the books",
+          "ar": "تصفح الكتب"
+        },
+        "maxLength": 30
+      },
+      "button_link": {
+        "type": "link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/products"
+      },
+      "button_style": {
+        "type": "select",
+        "label": {
+          "en": "Button look",
+          "ar": "شكل الزر"
+        },
+        "options": ["solid", "outline", "ghost"],
+        "default": "solid"
+      },
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "Image",
+          "ar": "الصورة"
+        },
+        "default": ""
+      },
+      "image_alt": {
+        "type": "text",
+        "label": {
+          "en": "Image description",
+          "ar": "وصف الصورة"
+        },
+        "localized": true,
+        "default": {
+          "en": "A stack of hardcover books",
+          "ar": "كومة كتب بغلاف مقوّى"
+        },
+        "maxLength": 100
+      }
+    }
+  }
+</hk-schema>

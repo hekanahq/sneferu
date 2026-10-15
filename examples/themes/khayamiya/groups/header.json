@@ -1,0 +1,76 @@
+{
+  "sections": [
+    {
+      "id": "header",
+      "type": "header",
+      "settings": {
+        "menu": "main",
+        "scheme": "light",
+        "show_search": true,
+        "search_style": "icon",
+        "show_account": true,
+        "show_language": true,
+        "show_cart": true,
+        "drawer_on_add": true,
+        "show_band": true
+      },
+      "blocks": [
+        {
+          "id": "nav-all",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "كل المنتجات",
+              "en": "All products"
+            },
+            "url": "/products"
+          }
+        },
+        {
+          "id": "nav-textiles",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "كليم وخيامية",
+              "en": "Kilim and khayamiya"
+            },
+            "url": "/category/textiles"
+          }
+        },
+        {
+          "id": "nav-brass0",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "نحاس وفوانيس",
+              "en": "Brass and lanterns"
+            },
+            "url": "/category/brass"
+          }
+        },
+        {
+          "id": "nav-baskets",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "سلال ومعلقات",
+              "en": "Baskets and hangings"
+            },
+            "url": "/category/baskets"
+          }
+        },
+        {
+          "id": "nav-about",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "عن المتجر",
+              "en": "About"
+            },
+            "url": "/about"
+          }
+        }
+      ]
+    }
+  ]
+}

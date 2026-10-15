@@ -1,0 +1,3 @@
+{% if name == 'leaf' or name == 'milk' or name == 'jar' or name == 'cup' or name == 'spray' %}{% render 'glyph', name: name %}{% else %}<hk-icon
+    name="{{ name }}"
+  />{% endif %}

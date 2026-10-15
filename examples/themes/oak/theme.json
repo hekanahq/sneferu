@@ -1,7 +1,7 @@
 {
   "id": "oak",
   "name": "Oak",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "author": "Hekana",
   "description": "A warm Scandinavian home and furniture store: oat, linen and light oak with charcoal text, a calm room-scene hero with shop-the-room dots, square category tiles, quiet product cards and a three-point trust strip, on every page.",
   "category": "home",
@@ -33,7 +33,7 @@
       "contentWidth": "1080px"
     },
     "fonts": {
-      "heading": "Readex Pro",
+      "heading": "El Messiri",
       "body": "IBM Plex Sans Arabic"
     },
     "radius": {

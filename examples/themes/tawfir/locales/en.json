@@ -1,0 +1,20 @@
+{
+  "skip_to_content": "Skip to content",
+  "menu": "Menu",
+  "search": "Search",
+  "search_placeholder": "Search for a product",
+  "cart": "Cart",
+  "account": "My account",
+  "home": "Home",
+  "breadcrumb": "Breadcrumb",
+  "offer": "Offer",
+  "sold_out_badge": "Sold out",
+  "view_product": "View product",
+  "view_all": "View all",
+  "products_label": "products",
+  "sort_by": "Sort by",
+  "filters": "Filters",
+  "results_for": "Results for",
+  "results_label": "results",
+  "product_info": "Product details"
+}

@@ -1,0 +1,62 @@
+<a class="ik-tile" href="{{ url(block.settings.link) }}">
+  {% if block.settings.image %}
+    <hk-image
+      src="{{ block.settings.image }}"
+      alt="{{ block.settings.label }}"
+      aspect-ratio="16/6"
+      sizes="(min-width: 1024px) 560px, 100vw"
+    />
+  {% endif %}
+  <span class="ik-tile-label">{{ block.settings.label }}</span>
+  {% if block.settings.note %}<span class="ik-tile-note">{{ block.settings.note }}</span>{% endif %}
+</a>
+<hk-schema>
+  {
+    "name": {
+      "en": "Tile",
+      "ar": "مربع"
+    },
+    "version": 1,
+    "settings": {
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Title",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "ملابس",
+          "en": "Clothing"
+        },
+        "localized": true,
+        "maxLength": 40
+      },
+      "note": {
+        "type": "text",
+        "label": {
+          "en": "Small line",
+          "ar": "سطر صغير"
+        },
+        "default": "",
+        "localized": true,
+        "maxLength": 60
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      },
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "Image (black tile when empty)",
+          "ar": "صورة (مربع أسود لو فاضية)"
+        },
+        "default": ""
+      }
+    }
+  }
+</hk-schema>

@@ -1,0 +1,40 @@
+{
+  "id": "ink",
+  "name": "Ink",
+  "version": "1.0.4",
+  "author": "Hekana",
+  "description": "A pure monochrome store: black, white and light grey, one wide photo, thin lines, square corners and a plain product grid. Built for clothing and accessories.",
+  "category": "minimal",
+  "engine": "hk2",
+  "engineCompatibility": "^2.0.0",
+  "defaultLocale": "ar",
+  "locales": ["ar", "en"],
+  "settings": {},
+  "tokens": {
+    "colors": {
+      "primary": "#0A0A0A",
+      "secondary": "#0A0A0A",
+      "accent": "#0A0A0A",
+      "background": "#FFFFFF",
+      "text": "#0A0A0A",
+      "muted": "#5A5A5A",
+      "line": "#E2E2E2",
+      "soft": "#F4F4F4",
+      "surface": "#FFFFFF",
+      "glow": "#EDEDED"
+    },
+    "layout": {
+      "contentWidth": "1120px"
+    },
+    "fonts": {
+      "heading": "IBM Plex Sans Arabic",
+      "body": "IBM Plex Sans Arabic"
+    },
+    "radius": {
+      "md": "0px"
+    }
+  },
+  "money": {
+    "format": "whole"
+  }
+}

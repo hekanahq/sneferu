@@ -1,0 +1,168 @@
+{
+  "sections": [
+    {
+      "id": "footer",
+      "type": "footer",
+      "settings": {
+        "about_text": {
+          "en": "Everyday groceries and household items, ordered online.",
+          "ar": "بقالة ومنتجات بيت يومية، اطلبها أونلاين."
+        },
+        "contact_label": {
+          "en": "Contact us on WhatsApp",
+          "ar": "تواصل معنا على واتساب"
+        },
+        "contact_link": "/pages/about",
+        "bottom_text": {
+          "en": "All prices in Egyptian pounds",
+          "ar": "كل الأسعار بالجنيه المصري"
+        },
+        "copyright": {
+          "en": "All rights reserved",
+          "ar": "جميع الحقوق محفوظة"
+        }
+      },
+      "blocks": [
+        {
+          "id": "col-shop",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "en": "Shop",
+              "ar": "التسوق"
+            }
+          },
+          "blocks": [
+            {
+              "id": "col-shop-0",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "en": "Fruit and vegetables",
+                  "ar": "خضار وفاكهة"
+                },
+                "url": "/category/produce"
+              }
+            },
+            {
+              "id": "col-shop-1",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "en": "Dairy and bakery",
+                  "ar": "ألبان ومخبوزات"
+                },
+                "url": "/category/dairy-bakery"
+              }
+            },
+            {
+              "id": "col-shop-2",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "en": "Pantry",
+                  "ar": "بقالة"
+                },
+                "url": "/category/pantry"
+              }
+            }
+          ],
+          "block_order": ["col-shop-0", "col-shop-1", "col-shop-2"]
+        },
+        {
+          "id": "col-more",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "en": "More",
+              "ar": "المزيد"
+            }
+          },
+          "blocks": [
+            {
+              "id": "col-more-0",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "en": "Drinks",
+                  "ar": "مشروبات"
+                },
+                "url": "/category/drinks"
+              }
+            },
+            {
+              "id": "col-more-1",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "en": "Cleaning and care",
+                  "ar": "منظفات وعناية"
+                },
+                "url": "/category/household"
+              }
+            },
+            {
+              "id": "col-more-2",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "en": "All products",
+                  "ar": "كل المنتجات"
+                },
+                "url": "/products"
+              }
+            }
+          ],
+          "block_order": ["col-more-0", "col-more-1", "col-more-2"]
+        },
+        {
+          "id": "col-store",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "en": "Store",
+              "ar": "المتجر"
+            }
+          },
+          "blocks": [
+            {
+              "id": "col-store-0",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "en": "About",
+                  "ar": "عن المتجر"
+                },
+                "url": "/pages/about"
+              }
+            },
+            {
+              "id": "col-store-1",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "en": "Cart",
+                  "ar": "السلة"
+                },
+                "url": "/cart"
+              }
+            },
+            {
+              "id": "col-store-2",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "en": "Search",
+                  "ar": "البحث"
+                },
+                "url": "/search"
+              }
+            }
+          ],
+          "block_order": ["col-store-0", "col-store-1", "col-store-2"]
+        }
+      ],
+      "block_order": ["col-shop", "col-more", "col-store"]
+    }
+  ]
+}

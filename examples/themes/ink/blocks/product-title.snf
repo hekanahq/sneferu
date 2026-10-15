@@ -1,0 +1,46 @@
+<hk-heading
+  text="{{ product.title }}"
+  level="{{ block.settings.level }}"
+  size="{{ block.settings.size }}"
+  mobile-size="{{ block.settings.mobile_size }}"
+/>
+<hk-schema>
+  {
+    "name": {
+      "en": "Title",
+      "ar": "العنوان"
+    },
+    "version": 1,
+    "settings": {
+      "level": {
+        "type": "select",
+        "label": {
+          "en": "Heading level",
+          "ar": "مستوى العنوان"
+        },
+        "options": ["h1", "h2", "h3"],
+        "default": "h1"
+      },
+      "size": {
+        "type": "range",
+        "label": {
+          "en": "Size",
+          "ar": "الحجم"
+        },
+        "min": 18,
+        "max": 64,
+        "default": 32
+      },
+      "mobile_size": {
+        "type": "range",
+        "label": {
+          "en": "Size on phones",
+          "ar": "الحجم على الموبايل"
+        },
+        "min": 16,
+        "max": 48,
+        "default": 26
+      }
+    }
+  }
+</hk-schema>

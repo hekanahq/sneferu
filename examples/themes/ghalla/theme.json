@@ -1,0 +1,41 @@
+{
+  "id": "ghalla",
+  "name": "Ghalla",
+  "version": "1.0.1",
+  "author": "Hekana",
+  "description": "A fresh-market grocery store: white and leaf green with a warm yellow accent, a centred hero, round produce category photos, product cards on soft green tiles with a round add button, and a trust strip.",
+  "category": "grocery",
+  "engine": "hk2",
+  "engineCompatibility": "^2.0.0",
+  "defaultLocale": "ar",
+  "locales": ["ar", "en"],
+  "settings": {},
+  "tokens": {
+    "colors": {
+      "primary": "#0B7D52",
+      "secondary": "#0F3D2B",
+      "accent": "#F5C542",
+      "background": "#FFFFFF",
+      "text": "#1A2B22",
+      "muted": "#55655C",
+      "line": "#E1EAE4",
+      "soft": "#EFF6F1",
+      "surface": "#FFFFFF",
+      "sun": "#F5C542",
+      "mint": "#DDEFE4"
+    },
+    "layout": {
+      "contentWidth": "1200px"
+    },
+    "fonts": {
+      "heading": "Cairo",
+      "body": "Cairo"
+    },
+    "radius": {
+      "md": "16px"
+    }
+  },
+  "money": {
+    "format": "whole"
+  }
+}
