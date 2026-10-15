@@ -1,0 +1,20 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "search-main"
+      },
+      {
+        "type": "product-grid",
+        "settings": {
+          "heading": {
+            "ar": "مختارات",
+            "en": "Selected"
+          },
+          "count": 4
+        }
+      }
+    ]
+  }
+</hk-schema>

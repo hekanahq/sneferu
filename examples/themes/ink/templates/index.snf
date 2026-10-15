@@ -1,0 +1,73 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "hero"
+      },
+      {
+        "type": "tiles",
+        "blocks": [
+          {
+            "type": "tile",
+            "settings": {
+              "label": {
+                "ar": "ملابس",
+                "en": "Clothing"
+              },
+              "link": "/products"
+            }
+          },
+          {
+            "type": "tile",
+            "settings": {
+              "label": {
+                "ar": "إكسسوارات",
+                "en": "Accessories"
+              },
+              "link": "/products"
+            }
+          }
+        ]
+      },
+      {
+        "type": "product-grid"
+      },
+      {
+        "type": "trust-strip",
+        "blocks": [
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "banknote",
+              "label": {
+                "ar": "الدفع عند الاستلام",
+                "en": "Cash on delivery"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "truck",
+              "label": {
+                "ar": "توصيل لكل المحافظات",
+                "en": "Delivery across Egypt"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "package",
+              "label": {
+                "ar": "استبدال سهل",
+                "en": "Easy exchange"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

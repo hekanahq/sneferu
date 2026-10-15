@@ -1,0 +1,97 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="24" class="ik-products">
+  <div class="ik-row-head">
+    {% if section.settings.heading %}
+      <h2 class="ik-h2">{{ section.settings.heading }}</h2>
+    {% endif %}
+    {% if section.settings.link_label %}
+      <a class="ik-line-link" href="{{ url('/products') }}">{{ section.settings.link_label }}</a>
+    {% endif %}
+  </div>
+  {% if collection(section.settings.list).products %}
+    <div class="ik-grid ik-cols-{{ section.settings.columns }}">
+      {% for p in collection(section.settings.list).products limit: section.settings.count %}
+        {% render 'product-card', product: p, card_style: 'plain', image_ratio: '4/5', show_price: true, show_badge: true %}
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="ik-empty">{{ t('empty_products') }}</p>
+  {% endif %}
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Product grid",
+      "ar": "شبكة المنتجات"
+    },
+    "version": 1,
+    "settings": {
+      "heading": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "localized": true,
+        "default": {
+          "ar": "مختارات",
+          "en": "Selected"
+        },
+        "maxLength": 60
+      },
+      "link_label": {
+        "type": "text",
+        "label": {
+          "en": "Link text",
+          "ar": "نص الرابط"
+        },
+        "localized": true,
+        "default": {
+          "ar": "عرض الكل",
+          "en": "View all"
+        },
+        "maxLength": 30
+      },
+      "list": {
+        "type": "collection",
+        "label": {
+          "en": "Collection",
+          "ar": "القسم"
+        },
+        "default": "featured"
+      },
+      "columns": {
+        "type": "range",
+        "label": {
+          "en": "Columns",
+          "ar": "الأعمدة"
+        },
+        "default": 4,
+        "min": 2,
+        "max": 5,
+        "step": 1
+      },
+      "count": {
+        "type": "range",
+        "label": {
+          "en": "Products",
+          "ar": "عدد المنتجات"
+        },
+        "default": 8,
+        "min": 2,
+        "max": 24,
+        "step": 1
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 160,
+        "step": 8,
+        "default": 40
+      }
+    }
+  }
+</hk-schema>
