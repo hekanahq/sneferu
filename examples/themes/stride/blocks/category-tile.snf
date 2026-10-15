@@ -1,4 +1,4 @@
-<a class="st-cat" href="{{ url(block.settings.link) }}">
+<a class="st-cat st-cat-{{ block.settings.tone }}" href="{{ url(block.settings.link) }}">
   <span class="st-cat-icon"><hk-icon name="{{ block.settings.icon }}" size="26" class="ic" /></span>
   <span class="st-cat-label">{{ block.settings.label }}</span>
 </a>
@@ -39,6 +39,15 @@
           "en": "Link"
         },
         "default": "/category/leggings"
+      },
+      "tone": {
+        "type": "select",
+        "label": {
+          "ar": "اللون",
+          "en": "Colour"
+        },
+        "options": ["primary", "accent"],
+        "default": "primary"
       }
     }
   }

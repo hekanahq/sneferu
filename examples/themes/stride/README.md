@@ -6,6 +6,12 @@ A bright activewear and yoga store theme for the Sneferu SDK: white ground, an o
 | - | - | - | - | - |
 | ![](docs/live-home-desktop-ar.webp) | ![](docs/live-home-desktop-en.webp) | ![](docs/live-product-desktop-ar.webp) | ![](docs/live-cart-desktop-ar.webp) | ![](docs/live-home-phone-ar.webp) |
 
+The mockup it was built from:
+
+| Mockup desktop | Mockup phone |
+| - | - |
+| ![](docs/mockup-desktop.webp) | ![](docs/mockup-phone.webp) |
+
 ## What is in the folder
 
 - `sections/stride-hero`, `stride-categories` (+ `category-tile` block), `stride-products`, `stride-trust`: the home page.
@@ -17,4 +23,5 @@ A bright activewear and yoga store theme for the Sneferu SDK: white ground, an o
 ## Notes
 
 - Tokens: primary ocean blue, accent orange, extra `lime`, `teal`, `photo` for the grey photo ground.
+- Category cards take a `tone` select (primary or accent). Related rows use `collection('related')`.
 - Money is `whole`; fonts come from the catalogue (Readex Pro headings, Cairo body).

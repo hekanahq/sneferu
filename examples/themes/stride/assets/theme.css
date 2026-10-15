@@ -299,10 +299,10 @@
 .st-cats-section { margin-top: 24px; }
 .st-cats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
 .st-cat { display: grid; justify-items: center; gap: 12px; padding: 24px 12px 20px; border-radius: 18px; border: 1.5px solid var(--hk-color-primary); background: var(--hk-color-surface); text-align: center; transition: box-shadow 0.15s; }
-.st-cat:nth-child(even) { border-color: var(--hk-color-accent); }
+.st-cat-accent { border-color: var(--hk-color-accent); }
 .st-cat:hover { box-shadow: var(--st-shadow-hover); }
 .st-cat-icon { display: inline-flex; color: var(--hk-color-primary); }
-.st-cat:nth-child(even) .st-cat-icon { color: var(--hk-color-accent); }
+.st-cat-accent .st-cat-icon { color: var(--hk-color-accent); }
 .st-cat-icon .ic, .st-cat-icon .sn-icon { width: 30px; height: 30px; }
 .st-cat-label { display: flex; align-items: center; justify-content: center; min-height: 44px; font-size: 14px; font-weight: 700; color: var(--hk-color-muted); }
 

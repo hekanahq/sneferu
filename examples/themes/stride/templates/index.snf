@@ -16,7 +16,8 @@
                 "ar": "ليجنز",
                 "en": "Leggings"
               },
-              "link": "/category/leggings"
+              "link": "/category/leggings",
+              "tone": "primary"
             }
           },
           {
@@ -27,7 +28,8 @@
                 "ar": "تيشيرتات وجاكيتات",
                 "en": "Tops and jackets"
               },
-              "link": "/category/tops"
+              "link": "/category/tops",
+              "tone": "accent"
             }
           },
           {
@@ -38,7 +40,8 @@
                 "ar": "أحذية",
                 "en": "Shoes"
               },
-              "link": "/category/shoes"
+              "link": "/category/shoes",
+              "tone": "primary"
             }
           },
           {
@@ -49,7 +52,8 @@
                 "ar": "يوجا",
                 "en": "Yoga"
               },
-              "link": "/category/yoga"
+              "link": "/category/yoga",
+              "tone": "accent"
             }
           }
         ]

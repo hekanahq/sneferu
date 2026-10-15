@@ -27,6 +27,8 @@
     {% endif %}
     {% if show_price %}{% render 'price', product: product, bind: false %}{% endif %}
     {% if note %}<span class="st-card-note">{{ note }}</span>{% endif %}
-    <span class="st-card-cta">{{ t('choose_options') }}</span>
+    <span
+      class="st-card-cta"
+    >{% if product.options %}{{ t('choose_options') }}{% else %}{{ t('view_product') }}{% endif %}</span>
   </a>
 </article>

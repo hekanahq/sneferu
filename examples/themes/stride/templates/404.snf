@@ -11,56 +11,49 @@
           {
             "type": "category-tile",
             "settings": {
-              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/stride/stride-smartphone-black.webp",
+              "icon": "shopping-bag",
               "label": {
-                "ar": "موبايلات",
-                "en": "Phones"
+                "ar": "ليجنز",
+                "en": "Leggings"
               },
-              "link": "/category/phones"
+              "link": "/category/leggings",
+              "tone": "primary"
             }
           },
           {
             "type": "category-tile",
             "settings": {
-              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/stride/stride-laptop-silver.webp",
+              "icon": "tag",
               "label": {
-                "ar": "لابتوبات",
-                "en": "Laptops"
+                "ar": "تيشيرتات وجاكيتات",
+                "en": "Tops and jackets"
               },
-              "link": "/category/laptops"
+              "link": "/category/tops",
+              "tone": "accent"
             }
           },
           {
             "type": "category-tile",
             "settings": {
-              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/stride/stride-headphones-black.webp",
+              "icon": "zap",
               "label": {
-                "ar": "سماعات",
-                "en": "Audio"
+                "ar": "أحذية",
+                "en": "Shoes"
               },
-              "link": "/category/audio"
+              "link": "/category/shoes",
+              "tone": "primary"
             }
           },
           {
             "type": "category-tile",
             "settings": {
-              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/stride/stride-smartwatch-black.webp",
+              "icon": "heart",
               "label": {
-                "ar": "ساعات",
-                "en": "Watches"
+                "ar": "يوجا",
+                "en": "Yoga"
               },
-              "link": "/category/watches"
-            }
-          },
-          {
-            "type": "category-tile",
-            "settings": {
-              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/stride/stride-power-bank-black.webp",
-              "label": {
-                "ar": "إكسسوارات",
-                "en": "Accessories"
-              },
-              "link": "/category/accessories"
+              "link": "/category/yoga",
+              "tone": "accent"
             }
           }
         ]
