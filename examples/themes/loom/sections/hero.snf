@@ -1,0 +1,110 @@
+<hk-section full-bleed="true" padding-y="0" mobile-padding-y="0">
+  <div class="loom-hero">
+    <hk-container>
+      <div class="loom-hero-grid">
+        <div class="loom-hero-text">
+          {% if section.settings.title %}
+            <hk-heading text="{{ section.settings.title }}" level="h1" size="40" mobile-size="26" />
+          {% endif %}
+          {% if section.settings.subtitle %}
+            <p class="loom-hero-sub">{{ section.settings.subtitle }}</p>
+          {% endif %}
+          {% if section.settings.button_label %}
+            <a class="loom-pill" href="{{ url(section.settings.button_link) }}">{{ section.settings.button_label }}</a>
+          {% endif %}
+        </div>
+        {% if section.settings.image %}
+          <div class="loom-hero-media">
+            <hk-image
+              src="{{ section.settings.image }}"
+              alt="{{ section.settings.image_alt }}"
+              aspect-ratio="4/5"
+              sizes="(min-width: 1024px) 40vw, 45vw"
+              loading="eager"
+            />
+          </div>
+        {% endif %}
+      </div>
+    </hk-container>
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Hero",
+      "ar": "الواجهة الرئيسية"
+    },
+    "version": 1,
+    "templates": ["index"],
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "en": "Handmade pieces for your home",
+          "ar": "شغل يدوي لبيتك"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "subtitle": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "en": "Pottery, macrame and baskets, from the studio to your door.",
+          "ar": "فخار ومكرمية وسلال، من الاستوديو لحد باب بيتك."
+        },
+        "localized": true,
+        "maxLength": 120
+      },
+      "button_label": {
+        "type": "text",
+        "label": {
+          "en": "Button",
+          "ar": "الزر"
+        },
+        "default": {
+          "en": "Shop now",
+          "ar": "تسوق الآن"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "button_link": {
+        "type": "link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/products"
+      },
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "Photo",
+          "ar": "الصورة"
+        },
+        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-home/pool-home-terracotta-vase.webp"
+      },
+      "image_alt": {
+        "type": "text",
+        "label": {
+          "en": "Photo description",
+          "ar": "وصف الصورة"
+        },
+        "default": {
+          "en": "Terracotta vase with two handles",
+          "ar": "فازة تيراكوتا بمقبضين"
+        },
+        "localized": true,
+        "maxLength": 100
+      }
+    }
+  }
+</hk-schema>

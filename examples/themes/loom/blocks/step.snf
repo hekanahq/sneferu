@@ -1,0 +1,68 @@
+<li class="loom-step">
+  <a class="loom-step-link" href="{{ url(block.settings.link) }}">
+    {% if block.settings.image %}
+      <span class="loom-step-media">
+        <hk-image
+          src="{{ block.settings.image }}"
+          alt="{{ block.settings.alt }}"
+          aspect-ratio="4/3"
+          sizes="(min-width: 1024px) 33vw, 100vw"
+        />
+      </span>
+    {% endif %}
+    <span class="loom-step-label">{{ block.settings.label }}</span>
+  </a>
+</li>
+<hk-schema>
+  {
+    "name": {
+      "en": "Step",
+      "ar": "خطوة"
+    },
+    "version": 1,
+    "settings": {
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "Photo",
+          "ar": "الصورة"
+        },
+        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-home/pool-home-knit-throw-cream.webp"
+      },
+      "alt": {
+        "type": "text",
+        "label": {
+          "en": "Photo description",
+          "ar": "وصف الصورة"
+        },
+        "default": {
+          "en": "Folded knit throw",
+          "ar": "بطانية تريكو مطوية"
+        },
+        "localized": true,
+        "maxLength": 100
+      },
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "en": "Pick your piece",
+          "ar": "اختار قطعتك"
+        },
+        "localized": true,
+        "maxLength": 40
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      }
+    }
+  }
+</hk-schema>

@@ -1,0 +1,88 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "product-main",
+        "blocks": [
+          {
+            "type": "product-title"
+          },
+          {
+            "type": "product-price"
+          },
+          {
+            "type": "product-excerpt"
+          },
+          {
+            "type": "product-variants"
+          },
+          {
+            "type": "product-buy"
+          },
+          {
+            "type": "product-text"
+          },
+          {
+            "type": "product-text",
+            "settings": {
+              "icon": "package",
+              "text": {
+                "en": "Colours may look slightly different on your screen.",
+                "ar": "الألوان ممكن تختلف شوية حسب الشاشة."
+              },
+              "tone": "plain"
+            }
+          },
+          {
+            "type": "product-description"
+          },
+          {
+            "type": "product-tags"
+          }
+        ]
+      },
+      {
+        "type": "loom-trust",
+        "blocks": [
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "banknote",
+              "label": {
+                "en": "Cash on delivery",
+                "ar": "الدفع عند الاستلام"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "truck",
+              "label": {
+                "en": "Delivery across Egypt",
+                "ar": "توصيل لكل المحافظات"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "package",
+              "label": {
+                "en": "Easy exchange",
+                "ar": "استبدال سهل"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "related-products",
+        "settings": {
+          "collection": "featured"
+        }
+      }
+    ]
+  }
+</hk-schema>
