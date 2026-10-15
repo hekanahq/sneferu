@@ -1,0 +1,121 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="24">
+  <div class="dk-section-head">
+    {% if section.settings.title %}
+      <hk-heading text="{{ section.settings.title }}" level="h2" size="28" mobile-size="22" />
+    {% endif %}
+    {% if section.settings.link_label %}<a
+        class="dk-view-all"
+        href="{{ url(section.settings.link) }}"
+      >{{ section.settings.link_label }}</a>{% endif %}
+  </div>
+  {% if collection(section.settings.collection).products %}
+    <div class="dk-grid dk-feed-{{ section.settings.layout }} dk-cols-{{ section.settings.columns }}">
+      {% for p in collection(section.settings.collection).products limit: section.settings.limit %}
+        {% render 'product-card', product: p, layout: section.settings.layout, cta: section.settings.show_cta, card_style: 'plain', image_ratio: '1/1', show_price: true, show_badge: true %}
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="dk-muted">{{ t('empty_products') }}</p>
+  {% endif %}
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Product feed",
+      "ar": "منتجات المتجر"
+    },
+    "version": 1,
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "أحدث المنتجات",
+          "en": "Latest products"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "collection": {
+        "type": "collection",
+        "label": {
+          "en": "Collection",
+          "ar": "القسم"
+        },
+        "default": "clothes"
+      },
+      "layout": {
+        "type": "select",
+        "label": {
+          "en": "Layout (row: photo beside text, grid: square photos)",
+          "ar": "الشكل (صف: الصورة جنب النص، شبكة: صور مربعة)"
+        },
+        "options": ["row", "grid"],
+        "default": "row"
+      },
+      "limit": {
+        "type": "range",
+        "label": {
+          "en": "Number of products",
+          "ar": "عدد المنتجات"
+        },
+        "min": 1,
+        "max": 24,
+        "default": 4
+      },
+      "columns": {
+        "type": "range",
+        "label": {
+          "en": "Columns (grid layout)",
+          "ar": "الأعمدة (شكل الشبكة)"
+        },
+        "min": 2,
+        "max": 4,
+        "default": 4
+      },
+      "show_cta": {
+        "type": "boolean",
+        "label": {
+          "en": "Show the order button on each row",
+          "ar": "إظهار زر الطلب على كل صف"
+        },
+        "default": true
+      },
+      "link_label": {
+        "type": "text",
+        "label": {
+          "en": "Link text (empty hides it)",
+          "ar": "نص الرابط (فاضي يخفيه)"
+        },
+        "default": {
+          "ar": "عرض الكل",
+          "en": "View all"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 160,
+        "step": 8,
+        "default": 40
+      }
+    }
+  }
+</hk-schema>

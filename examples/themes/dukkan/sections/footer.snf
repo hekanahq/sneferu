@@ -1,0 +1,207 @@
+<footer class="dk-footer dk-scheme-{{ section.settings.scheme }}">
+  <hk-container>
+    <div class="dk-footer-grid">
+      <div class="dk-footer-about">
+        <p class="dk-footer-brand">{{ store.name }}</p>
+        {% if section.settings.about_text %}
+          <p>{{ section.settings.about_text }}</p>
+        {% endif %}
+        <div class="dk-social-list" aria-label="{{ t('social_links') }}">
+          {% for block in section.blocks %}{% if block.type == 'social-link' %}<hk-block of="{{ block }}" />{% endif %}{% endfor %}
+        </div>
+      </div>
+      {% if menu(section.settings.menu).items %}
+        <div class="dk-footer-col dk-footer-menu-col">
+          {% if menu(section.settings.menu).title %}
+            <h3 class="dk-footer-title">{{ menu(section.settings.menu).title }}</h3>
+          {% endif %}
+          <div class="dk-footer-links">
+            {% for item in menu(section.settings.menu).items %}
+              {% if not item.children %}
+                <a href="{{ item.url }}" aria-current="{{ item.active }}">{{ item.title }}</a>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+        {% for item in menu(section.settings.menu).items %}
+          {% if item.children %}
+            <div class="dk-footer-col">
+              <h3 class="dk-footer-title">{{ item.title }}</h3>
+              <div class="dk-footer-links">
+                {% for sub in item.children %}
+                  <a href="{{ sub.url }}" aria-current="{{ sub.active }}">{{ sub.title }}</a>
+                  {% for leaf in sub.children %}
+                    <a
+                      class="dk-footer-deep"
+                      href="{{ leaf.url }}"
+                      aria-current="{{ leaf.active }}"
+                    >{{ leaf.title }}</a>
+                  {% endfor %}
+                {% endfor %}
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% else %}{% for block in section.blocks %}{% if block.type == 'footer-column' %}<hk-block of="{{ block }}" />{% endif %}{% endfor %}{% endif %}
+      {% if section.settings.show_contact %}
+        <div class="dk-footer-contact">
+          {% if section.settings.contact_title %}
+            <h3 class="dk-footer-title">{{ section.settings.contact_title }}</h3>
+          {% endif %}
+          {% if section.settings.contact_text %}
+            <p>{{ section.settings.contact_text }}</p>
+          {% endif %}
+          {% if section.settings.contact_link %}
+            <a class="dk-contact-btn" href="{{ url(section.settings.contact_link) }}">
+              <hk-icon name="message-circle" />
+              <span>{{ section.settings.contact_label | default: t('contact_box') }}</span>
+            </a>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+    <div class="dk-footer-bottom">
+      <p class="dk-copyright">
+        {% if store.name %}© {{ store.name }}{% if section.settings.copyright %}. {{ section.settings.copyright }}{% endif %}{% elsif section.settings.copyright %}©
+          {{ section.settings.copyright }}{% endif %}
+      </p>
+
+      {% if section.settings.show_language %}<hk-locale-switch />{% endif %}
+    </div>
+  </hk-container>
+</footer>
+<hk-schema>
+  {
+    "name": {
+      "en": "Footer",
+      "ar": "الفوتر"
+    },
+    "version": 1,
+    "templates": ["footer"],
+    "blocks": {
+      "allowed": ["footer-column", "social-link"],
+      "max": 16
+    },
+    "settings": {
+      "menu": {
+        "type": "menu",
+        "label": {
+          "en": "Menu (the link columns show when none is picked or it has no links)",
+          "ar": "القائمة (أعمدة الروابط بتظهر لو مفيش قائمة أو مفيهاش روابط)"
+        },
+        "default": ""
+      },
+      "about_text": {
+        "type": "textarea",
+        "label": {
+          "en": "About text",
+          "ar": "نبذة عن المتجر"
+        },
+        "default": "",
+        "localized": true,
+        "maxLength": 300
+      },
+      "copyright": {
+        "type": "text",
+        "label": {
+          "en": "Copyright line (after the store name)",
+          "ar": "سطر الحقوق (بعد اسم المتجر)"
+        },
+        "default": {
+          "ar": "جميع الحقوق محفوظة",
+          "en": "All rights reserved"
+        },
+        "localized": true,
+        "maxLength": 100
+      },
+      "scheme": {
+        "type": "select",
+        "label": {
+          "en": "Colour scheme",
+          "ar": "ألوان الفوتر"
+        },
+        "options": ["light", "olive", "dark"],
+        "default": "olive"
+      },
+      "show_language": {
+        "type": "boolean",
+        "label": {
+          "en": "Show language switch",
+          "ar": "إظهار تبديل اللغة"
+        },
+        "default": false
+      },
+      "show_contact": {
+        "type": "boolean",
+        "label": {
+          "en": "Show the contact box",
+          "ar": "إظهار صندوق التواصل"
+        },
+        "default": true
+      },
+      "contact_title": {
+        "type": "text",
+        "label": {
+          "en": "Contact box title",
+          "ar": "عنوان صندوق التواصل"
+        },
+        "default": {
+          "ar": "اطلب بسهولة",
+          "en": "Order with ease"
+        },
+        "localized": true,
+        "maxLength": 60,
+        "visible_if": {
+          "setting": "show_contact",
+          "equals": true
+        }
+      },
+      "contact_text": {
+        "type": "textarea",
+        "label": {
+          "en": "Contact box text",
+          "ar": "نص صندوق التواصل"
+        },
+        "default": {
+          "ar": "اختار منتجك وكمّل الطلب من صفحته، أو كلمنا لو محتاج تسأل عن حاجة.",
+          "en": "Pick a product and finish the order from its page, or message us if you have a question."
+        },
+        "localized": true,
+        "maxLength": 200,
+        "visible_if": {
+          "setting": "show_contact",
+          "equals": true
+        }
+      },
+      "contact_label": {
+        "type": "text",
+        "label": {
+          "en": "Contact button text",
+          "ar": "نص زر التواصل"
+        },
+        "default": {
+          "ar": "تواصل معنا على واتساب",
+          "en": "Message us on WhatsApp"
+        },
+        "localized": true,
+        "maxLength": 40,
+        "visible_if": {
+          "setting": "show_contact",
+          "equals": true
+        }
+      },
+      "contact_link": {
+        "type": "link",
+        "label": {
+          "en": "Contact link (WhatsApp or chat link; the button is hidden when empty)",
+          "ar": "رابط التواصل (واتساب أو شات؛ الزر بيختفي لو فاضي)"
+        },
+        "default": "",
+        "visible_if": {
+          "setting": "show_contact",
+          "equals": true
+        }
+      }
+    }
+  }
+</hk-schema>

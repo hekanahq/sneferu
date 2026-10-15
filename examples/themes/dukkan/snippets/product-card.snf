@@ -1,0 +1,26 @@
+<article class="dk-card dk-card-{{ card_style }} dk-card-{{ layout }}">
+  <a class="dk-card-link" href="{{ product.url }}">
+    <div class="dk-card-media">
+      <hk-image
+        src="{{ product.image }}"
+        alt="{{ product.title }}"
+        aspect-ratio="{{ image_ratio }}"
+        sizes="(min-width: 1024px) 25vw, 50vw"
+      />
+      {% if show_badge %}
+        {% if product.available %}
+          {% if product.compare_at > product.price %}
+            <span class="dk-badge">{{ t('sale') }}</span>
+          {% endif %}
+        {% else %}
+          <span class="dk-badge dk-badge-muted">{{ t('sold_out_badge') }}</span>
+        {% endif %}
+      {% endif %}
+    </div>
+    <div class="dk-card-body">
+      <h3 class="dk-card-title">{{ product.title }}</h3>
+      {% if show_price %}{% render 'price', product: product, bind: false %}{% endif %}
+      {% if cta %}<span class="dk-card-cta">{{ t('order_now') }}</span>{% endif %}
+    </div>
+  </a>
+</article>

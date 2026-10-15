@@ -1,0 +1,48 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "not-found"
+      },
+      {
+        "type": "dk-tiles",
+        "blocks": [
+          {
+            "type": "tile",
+            "settings": {
+              "icon": "shopping-bag",
+              "label": {
+                "ar": "ملابس",
+                "en": "Clothing"
+              },
+              "link": "/category/clothes"
+            }
+          },
+          {
+            "type": "tile",
+            "settings": {
+              "icon": "gift",
+              "label": {
+                "ar": "إكسسوارات",
+                "en": "Accessories"
+              },
+              "link": "/category/accessories"
+            }
+          },
+          {
+            "type": "tile",
+            "settings": {
+              "icon": "sparkles",
+              "label": {
+                "ar": "عناية وجمال",
+                "en": "Beauty"
+              },
+              "link": "/category/beauty"
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>
