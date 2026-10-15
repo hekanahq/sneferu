@@ -279,7 +279,7 @@ image, link, collection`.
 | `shopify theme push` | have | Uploads source; server compiles; version `in_review` | - | https://shopify.dev/docs/api/shopify-cli/theme/theme-push |
 | `shopify theme pull` | missing | Cannot download a theme version (or a merchant's settings) back | P2 | https://shopify.dev/docs/api/shopify-cli/theme/theme-pull |
 | `shopify theme share` / preview link | partial | `push --dev-store` publishes on the developer's dev store; no shareable preview link of a version on any store (spec §14 `preview`) | P1 | https://shopify.dev/docs/api/shopify-cli/theme/theme-share |
-| `shopify theme list` / `info` / versions | missing | Spec §14 lists `versions`; review status is visible only in the partner portal | P2 | https://shopify.dev/docs/api/shopify-cli/theme/theme-list |
+| `shopify theme list` / `info` / versions | missing | Spec §14 lists `versions`; review status is visible only on hekana.dev/account/themes | P2 | https://shopify.dev/docs/api/shopify-cli/theme/theme-list |
 | `shopify theme publish` | partial | Dev store only; merchants publish from the builder | - | https://shopify.dev/docs/api/shopify-cli/theme/theme-publish |
 | `shopify theme package` (zip for Theme Store submission) | partial | `sneferu build` produces the compiled artifact; submission is `push` | - | https://shopify.dev/docs/api/shopify-cli/theme/theme-package |
 | `shopify theme check` (Theme Check linter) | partial | `sneferu validate`: 77 diagnostics, all syntax/safety/limits. No lint rules for performance, accessibility or translations | P1 | https://shopify.dev/docs/storefronts/themes/tools/theme-check |

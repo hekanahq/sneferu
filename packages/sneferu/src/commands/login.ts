@@ -116,7 +116,7 @@ export async function runLogin(o: LoginOptions = {}): Promise<CommandResult> {
     // One saved key per API: the key this login replaced is revoked (best-effort).
     if (previous && previous.key !== key && previous.apiUrl.replace(/\/+$/, '') === api) {
       const r = await callApi(o.fetchImpl, api, '/developer/keys/current/revoke', { method: 'POST', token: previous.key, body: {} });
-      lines.push(r.reached && r.ok ? 'Note: previous key revoked.' : 'Note: could not revoke previous key. Revoke it in the partner portal if it is still listed.');
+      lines.push(r.reached && r.ok ? 'Note: previous key revoked.' : 'Note: could not revoke previous key. Revoke it at https://hekana.dev/account/keys if it is still listed.');
     }
     if (env.HEKANA_TOKEN) lines.push('Note: HEKANA_TOKEN is set in this shell and takes precedence over the saved key. Unset it to use the key.');
     return { ok: true, output: redact(lines.join('\n')) };
