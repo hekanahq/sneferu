@@ -1,9 +1,9 @@
 {
   "id": "bunn",
   "name": "Bunn",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Hekana",
-  "description": "A specialty coffee roaster store: espresso brown and copper on cream, a bean-photo hero with a copper banner, round category tiles, product cards with roast-level dots and a subscription banner, on every page.",
+  "description": "A coffee store: espresso brown and copper on cream, a bean-photo hero with a copper banner, round category tiles, product cards with roast-level dots and a feature banner, on every page.",
   "category": "cafe",
   "engine": "hk2",
   "engineCompatibility": "^2.0.0",

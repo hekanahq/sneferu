@@ -1,4 +1,4 @@
-/* Bunn: specialty coffee. Espresso brown and copper on white and stone, round tiles, pill buttons. Colours come from the theme tokens. */
+/* Bunn: coffee. Espresso brown and copper on white and stone, round tiles, pill buttons. Colours come from the theme tokens. */
 [data-hk-theme='bunn'] {
   --bn-green: var(--hk-color-primary);
   --bn-gold: var(--hk-color-accent);
@@ -337,7 +337,7 @@
 .bn-card:hover .bn-card-cta { background: var(--hk-color-secondary); }
 .bn-card-link:focus-visible { outline: 2px solid var(--bn-green); outline-offset: 3px; }
 
-/* Subscription banner: copper gradient bar */
+/* Feature banner: copper gradient bar */
 .bn-subscribe { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 32px; padding: 28px 36px; border-radius: 28px; background: var(--bn-copper-grad); color: var(--hk-color-background); }
 .bn-subscribe-text { display: grid; gap: 6px; max-width: 560px; }
 .bn-subscribe-title { font-size: 24px; line-height: 1.4; font-weight: 700; }

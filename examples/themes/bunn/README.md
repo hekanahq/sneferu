@@ -1,9 +1,9 @@
-# Tutorial: Bunn, a specialty coffee store
+# Tutorial: Bunn, a coffee store
 
 Bunn is a full store theme for a coffee roaster: beans, brewing gear, cups and
 pastries. It is white and stone with espresso brown and copper: a hero with a
 copper banner card, round category tiles, soft product cards with roast-level
-dots, a copper subscription banner and a three-icon trust strip. It is
+dots, a copper feature banner and a three-icon trust strip. It is
 right-to-left in Arabic and left-to-right in English from the same files.
 
 It writes **every page type itself** (home, product, collection, search, cart,

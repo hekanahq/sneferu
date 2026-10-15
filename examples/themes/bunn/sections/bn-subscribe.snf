@@ -19,8 +19,8 @@
 <hk-schema>
   {
     "name": {
-      "en": "Subscription banner",
-      "ar": "بانر الاشتراك"
+      "en": "Feature banner",
+      "ar": "بانر مميز"
     },
     "version": 1,
     "settings": {
@@ -31,8 +31,8 @@
           "ar": "العنوان"
         },
         "default": {
-          "ar": "اشتراك القهوة الشهري",
-          "en": "Monthly coffee subscription"
+          "ar": "حبوب القهوة",
+          "en": "Coffee beans"
         },
         "localized": true,
         "maxLength": 70
@@ -44,8 +44,8 @@
           "ar": "النص"
         },
         "default": {
-          "ar": "اختار الحبوب اللي تناسبك واطلبها كل شهر.",
-          "en": "Choose the beans you like and order them every month."
+          "ar": "اختار الحبوب اللي تناسبك كاملة أو مطحونة.",
+          "en": "Choose the beans you like, whole or ground."
         },
         "localized": true,
         "maxLength": 140
@@ -57,8 +57,8 @@
           "ar": "الزر"
         },
         "default": {
-          "ar": "اختار حبوبك",
-          "en": "Choose your beans"
+          "ar": "تسوق الحبوب",
+          "en": "Shop the beans"
         },
         "localized": true,
         "maxLength": 30
