@@ -4,7 +4,7 @@
       "id": "header",
       "type": "header",
       "settings": {
-        "menu": "main-menu",
+        "menu": "",
         "show_search": true,
         "search_style": "icon",
         "show_account": false,

@@ -31,10 +31,10 @@
           {
             "type": "trust",
             "settings": {
-              "icon": "gift",
+              "icon": "package",
               "label": {
-                "ar": "تغليف هدايا",
-                "en": "Gift packaging"
+                "ar": "استبدال سهل",
+                "en": "Easy exchange"
               }
             }
           }
