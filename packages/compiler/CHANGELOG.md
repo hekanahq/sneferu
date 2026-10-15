@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.9.1
+
+### Patch Changes
+
+- @hekana/sneferu-core@0.9.1
+- @hekana/sneferu-templates-default@0.9.1
+
 ## 0.9.0
 
 0.8.0 was the reverted checkout-template release (#63, #67) and stays on npm under the `next` tag only; this release supersedes it.
