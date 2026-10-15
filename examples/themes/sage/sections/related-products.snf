@@ -1,11 +1,15 @@
-{% if collection(section.settings.collection).products %}
+{% if collection('related').products or collection(section.settings.collection).products %}
   <section class="sg-sec sg-related sg-pad-{{ section.settings.padding_y }}">
     <div class="sg-wrap">
       {% if section.settings.title %}
         <h2 class="sg-h2">{{ section.settings.title }}</h2>
       {% endif %}
       <div class="sg-grid sg-cols-{{ section.settings.columns }}">
-        {% for p in collection(section.settings.collection).products limit: section.settings.limit %}{% if p.handle != product.handle %}{% render 'card', p: p %}{% endif %}{% endfor %}
+        {% if collection('related').products %}
+          {% for p in collection('related').products limit: section.settings.limit %}{% if p.handle != product.handle %}{% render 'card', p: p %}{% endif %}{% endfor %}
+        {% else %}
+          {% for p in collection(section.settings.collection).products limit: section.settings.limit %}{% if p.handle != product.handle %}{% render 'card', p: p %}{% endif %}{% endfor %}
+        {% endif %}
       </div>
     </div>
   </section>
