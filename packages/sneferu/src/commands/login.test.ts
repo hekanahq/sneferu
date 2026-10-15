@@ -15,8 +15,8 @@ let clock: number;
 
 const code = (extra: Record<string, unknown> = {}) => ok({
   deviceCode: 'dc-secret', userCode: 'BCDF-GHJK',
-  verificationUri: 'https://partners.hekana.com/developers/device',
-  verificationUriComplete: 'https://partners.hekana.com/developers/device?code=BCDF-GHJK',
+  verificationUri: 'https://hekana.dev/device',
+  verificationUriComplete: 'https://hekana.dev/device?code=BCDF-GHJK',
   expiresIn: 600, interval: 5, ...extra,
 }, 201);
 
@@ -45,9 +45,9 @@ describe('sneferu login', () => {
       n < 3 ? ok({ status: 'authorization_pending' }) : ok({ status: 'ok', key: DEV_KEY, keyPrefix: 'hk_dev_A1b2C3d4', email: 'dev@example.com' }));
     const r = await runLogin(baseOpts());
     expect(r.ok).toBe(true);
-    expect(logs.join('\n')).toContain('Open https://partners.hekana.com/developers/device?code=BCDF-GHJK');
+    expect(logs.join('\n')).toContain('Open https://hekana.dev/device?code=BCDF-GHJK');
     expect(logs.join('\n')).toContain('Code: BCDF-GHJK');
-    expect(opened).toEqual(['https://partners.hekana.com/developers/device?code=BCDF-GHJK']);
+    expect(opened).toEqual(['https://hekana.dev/device?code=BCDF-GHJK']);
     expect(slept).toEqual([5000, 5000, 5000]);
     const path = credentialsPath(env);
     expect(r.output).toBe(`Logged in as dev@example.com. Key hk_dev_A1b2C3d4… saved to ${path}`);
@@ -145,7 +145,7 @@ describe('sneferu login', () => {
 
 describe('browserCommand (no shell, https only)', () => {
   it('builds the exact argv per platform', () => {
-    const u = 'https://partners.hekana.com/developers/device?code=BCDF-GHJK';
+    const u = 'https://hekana.dev/device?code=BCDF-GHJK';
     expect(browserCommand(u, 'linux')).toEqual({ cmd: 'xdg-open', args: [u] });
     expect(browserCommand(u, 'darwin')).toEqual({ cmd: 'open', args: [u] });
     expect(browserCommand(u, 'win32')).toEqual({ cmd: 'rundll32', args: ['url.dll,FileProtocolHandler', u] });
@@ -229,6 +229,7 @@ describe('sneferu login hardening', () => {
     const r = await runLogin(baseOpts());
     expect(r.ok).toBe(true);
     expect(r.output).toContain('could not revoke previous key');
+    expect(r.output).toContain('https://hekana.dev/account/keys');
     expect(allText(r)).not.toContain(OLD);
     expect(readCredentials(env)!.key).toBe(DEV_KEY);
   });

@@ -14,17 +14,16 @@ Sign in once with `npx sneferu login`, or set `HEKANA_TOKEN` to a
 developer key. Getting a key, turning on your dev store and using a key in CI are
 covered in [Get an API key](09-get-an-api-key.mdx). You need a Hekana account:
 if you do not have one, create it at
-[dashboard.hekana.com/signup](https://dashboard.hekana.com/signup) (the partner
-portal has no sign-up of its own), then sign in at
-[partners.hekana.com/developers](https://partners.hekana.com/developers) and turn
-on developer access. In short:
+[dashboard.hekana.com/signup](https://dashboard.hekana.com/signup), then sign in at
+[hekana.dev/login](https://hekana.dev/login) and turn on developer access on
+[hekana.dev/account](https://hekana.dev/account). In short:
 
 ```bash
 npx sneferu login
 ```
 
 ```
-Open https://partners.hekana.com/developers/device?code=BCDF-GHJK
+Open https://hekana.dev/device?code=BCDF-GHJK
 Code: BCDF-GHJK
 Waiting for approval in the browser…
 Logged in as you@example.com. Key hk_dev_Ab12Cd34… saved to /home/you/.config/sneferu/credentials.json
@@ -32,8 +31,8 @@ Logged in as you@example.com. Key hk_dev_Ab12Cd34… saved to /home/you/.config/
 
 1. The CLI asks Hekana for a one-time code, prints it with a link, and tries to
    open the link in your browser (if it cannot, open it yourself).
-2. Sign in to Hekana in the browser, check that the code matches the one in your
-   terminal, and press Approve. Deny if you did not start this login.
+2. On hekana.dev/device (sign in there first if you are not), check that the
+   code matches the one in your terminal, and press Approve. Deny if you did not start this login.
 3. The CLI receives a new developer key and saves it. The key is shown only to
    the CLI, never printed; the terminal shows its prefix (`hk_dev_Ab12Cd34…`).
 
@@ -44,7 +43,7 @@ The key is saved to `~/.config/sneferu/credentials.json` (or
 `$XDG_CONFIG_HOME/sneferu/credentials.json`), readable only by you (file mode
 `0600`, folder `0700`), together with the API URL you logged in to. Each login
 creates a new key, named `CLI login (sneferu-cli on <host>) <date>`; you can see
-and revoke your keys in the partner portal under Developers. The CLI keeps one
+and revoke your keys on [hekana.dev/account/keys](https://hekana.dev/account/keys). The CLI keeps one
 saved key: when `login` saves a new one, it revokes the key it replaces if that
 key was saved for the same API. A key can only push
 themes and publish them on your dev store.
@@ -53,7 +52,7 @@ themes and publish them on your dev store.
 | - | - |
 | `login [--api-url <url>]` | device login as above; revokes the previously saved key for the same API. `--api-url` (or `HEKANA_API_URL`) for staging or local; default `https://api.hekana.com/api/v1` |
 | `whoami` | prints your email, the key prefix and your dev store URL |
-| `logout` | revokes the saved key on Hekana, then deletes the file. If Hekana cannot be reached the file is still deleted and the CLI says so: revoke the key in the partner portal |
+| `logout` | revokes the saved key on Hekana, then deletes the file. If Hekana cannot be reached the file is still deleted and the CLI says so: revoke the key on hekana.dev/account/keys |
 
 ## Push a version
 
@@ -91,7 +90,7 @@ What `push` does, in order:
 
 ## Try it on your dev store
 
-Turning on developer access in the partner portal gives you a dev store: a
+Turning on developer access on hekana.dev gives you a dev store: a
 private store at `devstore-xxxxxxxx.hekana.com` with sample products, used only
 for testing. It takes no orders or payments and is not indexed by search engines.
 

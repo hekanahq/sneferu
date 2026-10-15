@@ -22,7 +22,7 @@ export async function runWhoami(o: { fetchImpl?: typeof fetch; env?: NodeJS.Proc
   const lines = [
     `Email: ${sanitize(d.email)}`,
     `Key: ${sanitize(d.keyPrefix)}…${typeof d.keyName === 'string' && sanitize(d.keyName) ? ` (${sanitize(d.keyName)})` : ''}`,
-    `Dev store: ${store ?? 'none (enable developer access in the partner portal)'}`,
+    `Dev store: ${store ?? 'none (turn on developer access at https://hekana.dev/account)'}`,
   ];
   if (auth.source === 'env') lines.push('(key from HEKANA_TOKEN)');
   return { ok: true, output: redact(lines.join('\n')) };

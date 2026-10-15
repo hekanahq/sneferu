@@ -22,9 +22,9 @@ Or install it once with `npm i -g @hekana/sneferu` for the `sneferu` and `snf` c
 Commands: `init`, `dev`, `validate`, `build`, `format` (`--check` for CI), `login`,
 `logout`, `whoami`, `push` (with a developer key; `--dev-store` publishes on your dev store).
 
-To push you need a Hekana account (create one at https://dashboard.hekana.com/signup; the
-partner portal has no sign-up of its own), then turn on developer access at
-https://partners.hekana.com/developers. `sneferu login` saves a developer key and revokes
+To push you need a Hekana account (create one at https://dashboard.hekana.com/signup), then
+sign in at https://hekana.dev/login and turn on developer access at https://hekana.dev/account
+(keys, dev store and the review status of your themes live there too). `sneferu login` saves a developer key and revokes
 the previously saved key for the same API. The server allows 30 pushes per hour per key and
 60 per developer, at most 5 versions waiting for review and at most 20 theme packages per
 developer. Reserved slugs: `starter`, `hekana`, `default`, `admin`, `official`, `theme`, `themes`, `test`, `demo`, `preview`, and anything starting with `hekana-`.

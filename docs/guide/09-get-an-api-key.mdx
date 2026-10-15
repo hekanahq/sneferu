@@ -1,7 +1,8 @@
 # 9. Get an API key
 
 To push a theme you need a developer key. Any Hekana account can get one. You do
-not need to be a partner, and you do not need a store.
+not need to be a partner, and you do not need a store. Everything below happens on
+[hekana.dev/account](https://hekana.dev/account), the developer portal.
 
 A developer key looks like `hk_dev_` followed by 43 characters. It can push theme
 versions and publish them on your dev store. It cannot do anything else on your
@@ -11,17 +12,22 @@ account.
 
 <Steps>
   1. If you do not have a Hekana account, create one at
-     [dashboard.hekana.com/signup](https://dashboard.hekana.com/signup). The
-     partner portal has no sign-up of its own.
-  2. Open [partners.hekana.com/developers](https://partners.hekana.com/developers)
-     and sign in with your Hekana account.
-  3. Turn on developer access. Hekana creates your **dev store** at once.
+     [dashboard.hekana.com/signup](https://dashboard.hekana.com/signup).
+     hekana.dev has no sign-up of its own.
+  2. Open [hekana.dev/login](https://hekana.dev/login) and sign in with your
+     Hekana account: email and password, or a one-time code sent to your email.
+  3. On [hekana.dev/account](https://hekana.dev/account), turn on developer
+     access. Hekana creates your **dev store** at once.
 </Steps>
 
 Your dev store is a free store at `https://devstore-xxxxxxxx.hekana.com` (the
 `xxxxxxxx` is specific to you), with sample products, used only for testing your
 theme. It takes no orders, accepts no payments, and search engines are told not to
-index it. The page shows its address.
+index it. [hekana.dev/account/dev-store](https://hekana.dev/account/dev-store)
+shows its address.
+
+hekana.dev keeps its own session, separate from hekana.com: signing in on one
+does not sign you in or out of the other. The session lasts at most 12 hours.
 
 ## Get a key
 
@@ -34,7 +40,7 @@ npx sneferu login
 ```
 
 ```
-Open https://partners.hekana.com/developers/device?code=BCDF-GHJK
+Open https://hekana.dev/device?code=BCDF-GHJK
 Code: BCDF-GHJK
 Waiting for approval in the browser…
 Logged in as you@example.com. Key hk_dev_Ab12Cd34… saved to /home/you/.config/sneferu/credentials.json
@@ -43,7 +49,8 @@ Logged in as you@example.com. Key hk_dev_Ab12Cd34… saved to /home/you/.config/
 <Steps>
   1. The CLI prints a code in the form `XXXX-XXXX` and opens the link in your
      browser. If it cannot, open the link yourself.
-  2. In the browser, check that the code is the one in your terminal, then press
+  2. The link opens [hekana.dev/device](https://hekana.dev/device) (sign in first
+     if you are not). Check that the code is the one in your terminal, then press
      Approve. Press Deny if you did not start this login.
   3. The CLI saves the new key to `~/.config/sneferu/credentials.json` (or
      `$XDG_CONFIG_HOME/sneferu/credentials.json`). The file is readable only by
@@ -58,10 +65,10 @@ replaces if that key was saved for the same API. A key saved for another API is
 left alone. Use `npx sneferu whoami` to check which account and dev store the
 CLI is using.
 
-### Create a key in the portal
+### Create a key on hekana.dev
 
-On [partners.hekana.com/developers](https://partners.hekana.com/developers),
-create a key and give it a name. The full key is **shown once**. Copy it then:
+On [hekana.dev/account/keys](https://hekana.dev/account/keys), create a key
+and give it a name (for example `CI on GitHub`). The full key is **shown once**. Copy it then:
 Hekana keeps only a hash and cannot show it again.
 
 - You can have up to 10 active keys.
@@ -97,7 +104,7 @@ Hekana enforces these per developer:
 | Pushes | 30 per hour per key, 60 per hour per developer | `429` |
 | Versions waiting for review | at most 5 | `409 HK2_REVIEW_QUEUE_FULL` |
 | Theme packages | at most 20 | `409 HK2_PACKAGE_LIMIT` |
-| Active keys | at most 10 | the portal refuses a new key |
+| Active keys | at most 10 | hekana.dev refuses a new key |
 
 Reserved package slugs, which nobody outside Hekana can push: `starter`, `hekana`, `default`, `admin`, `official`, `theme`, `themes`, `test`, `demo`, `preview`, and anything starting with `hekana-`.
 
@@ -108,8 +115,9 @@ npx sneferu logout
 ```
 
 `logout` revokes the saved key on Hekana and deletes the file. If Hekana cannot be
-reached, the file is still deleted and the CLI tells you to revoke the key on the
-portal. A key that leaked is revoked from the portal; you do not need the CLI.
+reached, the file is still deleted and the CLI tells you to revoke the key on
+[hekana.dev/account/keys](https://hekana.dev/account/keys). A key that leaked is
+revoked there; you do not need the CLI.
 
 ## Next
 
