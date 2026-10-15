@@ -107,6 +107,7 @@ repo's [AGENTS.md](AGENTS.md) has the full workflow. Prompts to start from:
 20. [Menus](docs/guide/20-menus.mdx): `menu('main')` and the `menu` setting: the store's navigation in the header and footer, with the active link marked
 21. [Updating a theme: migrations](docs/guide/21-updating-a-theme-migrations.mdx): `migrations/*.json` renames and removals, and `applyMigrations` for hosts
 22. [Build themes with AI agents](docs/guide/22-build-with-ai-agents.mdx): the `AGENTS.md` that `init` writes, `llms.txt`, and prompts to start from
+23. [Checkout branding](docs/guide/23-checkout-branding.mdx): the `checkout` block in `theme.json`: colours, font, radius, button shape, logo, header and footer and a trust note for Hekana's own checkout
 
 ## Reference
 

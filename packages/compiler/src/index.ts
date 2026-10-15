@@ -1,6 +1,7 @@
 export { compileTheme, withDefaults, snippetCycles, hash64, placedGroups, type Artifact, type CompileOptions, type SectionSchema, type TemplateSectionEntry, type ThemeFile } from './compile';
 export { DEFAULT_PAGE_TYPES, collectLocaleKeys, collectTags } from './defaults';
 export { validateManifest, satisfies, type Manifest } from './manifest';
+export { validateCheckout, checkReservedSettings } from './checkout';
 export { parseTemplate } from './parser';
 export { parseExpr } from './expr';
 export { validateTemplate, propOf } from './validate';

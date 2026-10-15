@@ -1,5 +1,6 @@
 import { closest } from './validate';
-import { ENGINE_VERSION, FONTS, err, isMoneyFormat, normalizeFieldLabels, normalizeLabel, warn, type Diagnostic, type FieldSchema } from '@hekana/sneferu-core';
+import { checkReservedSettings, validateCheckout } from './checkout';
+import { ENGINE_VERSION, FONTS, err, isMoneyFormat, normalizeFieldLabels, normalizeLabel, warn, type Diagnostic, type FieldSchema, type ThemeCheckout } from '@hekana/sneferu-core';
 
 export interface Manifest {
   id: string; name: { ar: string; en: string }; version: string; author: string;
@@ -9,6 +10,8 @@ export interface Manifest {
   previews?: string[];
   /** Default money format for the `money` filter, `hk-price` and `hk-product-card`. */
   money?: { format?: 'decimal' | 'whole' };
+  /** Checkout branding (theme.json `checkout`): only valid, normalised values; absent when empty. */
+  checkout?: ThemeCheckout;
 }
 
 const SEMVER = /^(\d+)\.(\d+)\.(\d+)$/;
@@ -76,8 +79,12 @@ export function validateManifest(json: unknown): { manifest?: Manifest; diagnost
     if (!ok) out.push(err('SN3033', 'money must be { "format": "decimal" } or { "format": "whole" }', at));
   }
   if (typeof m.settings !== 'object' || m.settings === null) out.push(err('SN3021', 'settings must be an object', at));
+  else out.push(...checkReservedSettings(m.settings));
   if (out.length) return { diagnostics: out };
+  const co = validateCheckout((m as { checkout?: unknown }).checkout);
+  out.push(...co.diagnostics);
   const settings = normalizeFieldLabels(m.settings);
   for (const k of settings.bad) out.push(warn('SN3031', `settings.${k}: label must be a string or { en } (ar is optional)`, at));
-  return { manifest: { ...(m as Manifest), name: name!, description: description!, settings: settings.schema }, diagnostics: out };
+  const { checkout: _raw, ...rest } = m as Manifest;
+  return { manifest: { ...rest, name: name!, description: description!, settings: settings.schema, ...(co.checkout ? { checkout: co.checkout } : {}) }, diagnostics: out };
 }

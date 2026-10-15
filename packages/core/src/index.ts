@@ -18,3 +18,4 @@ export * from './paginate';
 export * from './tokens';
 export * from './extensions';
 export * from './migrations';
+export * from './checkout';

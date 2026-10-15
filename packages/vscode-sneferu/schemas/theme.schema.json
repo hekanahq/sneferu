@@ -222,7 +222,13 @@
       }
      }
     },
-    "description": "Theme settings, read in templates as settings.<key>"
+    "description": "Theme settings, read in templates as settings.<key>",
+    "propertyNames": {
+     "not": {
+      "const": "checkout"
+     },
+     "description": "\"checkout\" is reserved for the merchant's checkout branding (SN3048)"
+    }
    },
    "tokens": {
     "type": "object",
@@ -317,6 +323,95 @@
     "items": {
      "type": "string"
     }
+   },
+   "checkout": {
+    "type": "object",
+    "description": "Checkout branding: settings that become CSS custom properties on Hekana's own checkout. Colours, font and radius default to the tokens. https://hekana.dev/guide/checkout-branding",
+    "properties": {
+     "color_accent": {
+      "type": "string",
+      "pattern": "^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$",
+      "description": "#rgb or #rrggbb"
+     },
+     "color_button": {
+      "type": "string",
+      "pattern": "^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$",
+      "description": "#rgb or #rrggbb"
+     },
+     "color_button_text": {
+      "type": "string",
+      "pattern": "^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$",
+      "description": "#rgb or #rrggbb"
+     },
+     "color_background": {
+      "type": "string",
+      "pattern": "^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$",
+      "description": "#rgb or #rrggbb"
+     },
+     "color_surface": {
+      "type": "string",
+      "pattern": "^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$",
+      "description": "#rgb or #rrggbb"
+     },
+     "color_border": {
+      "type": "string",
+      "pattern": "^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$",
+      "description": "#rgb or #rrggbb"
+     },
+     "color_text": {
+      "type": "string",
+      "pattern": "^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$",
+      "description": "#rgb or #rrggbb"
+     },
+     "font": {
+      "type": "string",
+      "description": "\"default\" (the body font) or a family from the font catalogue (SN3053)"
+     },
+     "radius": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 24,
+      "description": "Corner radius in px, 0-24 (SN3054)"
+     },
+     "button_shape": {
+      "enum": [
+       "square",
+       "rounded",
+       "pill"
+      ]
+     },
+     "logo": {
+      "enum": [
+       "store",
+       "custom",
+       "none"
+      ],
+      "description": "custom uses the logo the merchant uploads in the builder"
+     },
+     "chrome": {
+      "enum": [
+       "theme",
+       "minimal"
+      ],
+      "description": "theme: the header and footer groups around the checkout; minimal: a minimal Hekana header"
+     },
+     "trust_note": {
+      "type": "object",
+      "properties": {
+       "ar": {
+        "type": "string",
+        "maxLength": 140
+       },
+       "en": {
+        "type": "string",
+        "maxLength": 140
+       }
+      },
+      "additionalProperties": false,
+      "description": "A short plain-text note on the checkout, at most 140 characters per language"
+     }
+    },
+    "additionalProperties": false
    }
   }
  }

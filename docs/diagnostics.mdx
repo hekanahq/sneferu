@@ -104,6 +104,16 @@ Every problem Sneferu reports has a stable code. The format is `file:line:col se
 | SN3045 | A `migrations/*.json` file is malformed: not JSON, unknown keys, bad names, a rename to itself, two names renamed to one, or a name both renamed and removed | Use `{ "from", "to", "settings"?, "sections"?, "blocks"? }`, each with `rename` (old: new) and `remove` (list). |
 | SN3046 | A migration's versions are wrong: `from` is not older than `to`, `to` is newer than the theme's `version`, two files cover the same step, or the steps form a cycle | Fix the versions; each file carries one step, with `from < to <= version`. |
 | SN3047 | A migration renames to a setting, section or block the current theme does not have, or removes one it still has | Rename only to names that exist now; remove only what is gone. |
+| SN3048 | `settings` in `theme.json` declares a setting with the id `checkout`; the store keeps the merchant's checkout branding under that key | Rename the setting. Brand the checkout with the top-level `checkout` block (see [Checkout branding](guide/23-checkout-branding.mdx)). |
+| SN3049 | Warning: `checkout` in `theme.json` is not an object; it is ignored | Write `"checkout": { … }` with the [checkout settings](guide/23-checkout-branding.mdx#settings), or remove it. |
+| SN3050 | Warning: `checkout` has a key that is not a checkout setting; it is dropped | Use `color_accent`, `color_button`, `color_button_text`, `color_background`, `color_surface`, `color_border`, `color_text`, `font`, `radius`, `button_shape`, `logo`, `chrome` or `trust_note`. |
+| SN3051 | Warning: `checkout.logo_image` is set; the checkout logo image is the merchant's to upload, so it is dropped | Remove it. Set `"logo": "store"` to show the store's logo. |
+| SN3052 | Warning: a `checkout` colour is not `#rgb` or `#rrggbb`; it is dropped | Write the colour as hex, such as `#0f766e`. |
+| SN3053 | Warning: `checkout.font` is not `"default"` or a family in the font catalogue; it is dropped | Use `"default"` (the body font) or a catalogue family exactly as written (see [Fonts](guide/05-styling-and-responsive.mdx#fonts)). |
+| SN3054 | Warning: `checkout.radius` is outside 0–24 or not a whole number (it is clamped and rounded), or is not a number (it is dropped) | Use a whole number of pixels from 0 to 24. |
+| SN3055 | Warning: `checkout.button_shape`, `logo` or `chrome` is not one of its values; it is dropped | `button_shape`: `square`, `rounded`, `pill`. `logo`: `store`, `custom`, `none`. `chrome`: `theme`, `minimal`. |
+| SN3056 | Warning: `checkout.trust_note` is not `{ "ar": text, "en": text }`, or has another language or a non-text value; that part is dropped | Write plain text for `ar` and `en`. |
+| SN3057 | Warning: a `checkout.trust_note` text is over 140 characters; it is cut to 140 | Shorten the note. |
 
 ## SN4xxx Rendering
 

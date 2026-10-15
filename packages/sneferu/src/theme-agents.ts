@@ -91,6 +91,8 @@ The compiler enforces most of these; \`validate\` names the rule you broke.
 12. **Names.** Section, block and snippet names never start with \`hk-\` (SN3043).
     One name exists once per folder: not \`hero.snf\` next to \`hero.sneferu\` (SN3044).
 13. **Versions are immutable.** Bump \`version\` in \`theme.json\` before every push.
+14. **Checkout is Hekana's.** There is no checkout template or tag; brand it only with
+    the \`checkout\` block in \`theme.json\` (colours, font, radius, logo, header and footer, trust note).
 
 ## Done means
 
