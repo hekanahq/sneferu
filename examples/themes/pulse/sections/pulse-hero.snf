@@ -1,0 +1,164 @@
+<hk-section padding-y="0" mobile-padding-y="0" class="pl-hero-section">
+  <div class="pl-hero-stage">
+    <div class="pl-hero-art">
+      {% if section.settings.image %}
+        <hk-image
+          src="{{ section.settings.image }}"
+          alt="{{ section.settings.image_alt }}"
+          aspect-ratio="4/3"
+          fit="cover"
+          loading="eager"
+          sizes="(min-width: 1024px) 620px, 78vw"
+        />
+      {% endif %}
+    </div>
+    <div class="pl-hero-copy">
+      {% if section.settings.eyebrow %}
+        <p class="pl-eyebrow">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+      <hk-heading
+        text="{{ section.settings.heading }}"
+        level="h1"
+        size="60"
+        mobile-size="34"
+        align="start"
+        class="pl-hero-title"
+      />
+      {% if section.settings.text %}
+        <hk-text
+          text="{{ section.settings.text }}"
+          size="17"
+          mobile-size="15"
+          align="start"
+          class="pl-muted pl-hero-text"
+        />
+      {% endif %}
+      <div class="pl-hero-actions">
+        {% if section.settings.button_label %}<hk-button
+            label="{{ section.settings.button_label }}"
+            href="{{ url(section.settings.button_link) }}"
+            size="lg"
+          />{% endif %}
+        {% if section.settings.button2_label %}<hk-button
+            label="{{ section.settings.button2_label }}"
+            href="{{ url(section.settings.button2_link) }}"
+            variant="outline"
+            size="lg"
+          />{% endif %}
+      </div>
+    </div>
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "ar": "البانر الرئيسي",
+      "en": "Hero"
+    },
+    "version": 1,
+    "settings": {
+      "image": {
+        "type": "image",
+        "label": {
+          "ar": "صورة الهيرو",
+          "en": "Hero image"
+        },
+        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pulse/hero-kettlebell.webp"
+      },
+      "image_alt": {
+        "type": "text",
+        "label": {
+          "ar": "وصف الصورة",
+          "en": "Image description"
+        },
+        "localized": true,
+        "default": {
+          "ar": "كيتل بيل أسود",
+          "en": "A black kettlebell"
+        },
+        "maxLength": 100
+      },
+      "eyebrow": {
+        "type": "text",
+        "label": {
+          "ar": "سطر صغير فوق العنوان",
+          "en": "Small line above the heading"
+        },
+        "localized": true,
+        "default": {
+          "ar": "",
+          "en": ""
+        },
+        "maxLength": 40
+      },
+      "heading": {
+        "type": "text",
+        "label": {
+          "ar": "العنوان",
+          "en": "Heading"
+        },
+        "localized": true,
+        "default": {
+          "ar": "جهّز تمرينك من هنا",
+          "en": "Gear up for training"
+        },
+        "maxLength": 80
+      },
+      "text": {
+        "type": "textarea",
+        "label": {
+          "ar": "النص",
+          "en": "Text"
+        },
+        "localized": true,
+        "default": {
+          "ar": "أوزان وملابس وشنط وأحذية للجيم، بالسعر بالجنيه والدفع عند الاستلام.",
+          "en": "Weights, apparel, bags and shoes for the gym, priced in pounds, cash on delivery."
+        },
+        "maxLength": 160
+      },
+      "button_label": {
+        "type": "text",
+        "label": {
+          "ar": "الزر",
+          "en": "Button"
+        },
+        "localized": true,
+        "default": {
+          "ar": "تسوق المعدات",
+          "en": "Shop gear"
+        },
+        "maxLength": 24
+      },
+      "button_link": {
+        "type": "link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/products"
+      },
+      "button2_label": {
+        "type": "text",
+        "label": {
+          "ar": "الزر التاني (فاضي يخفيه)",
+          "en": "Second button (empty hides it)"
+        },
+        "localized": true,
+        "default": {
+          "ar": "",
+          "en": ""
+        },
+        "maxLength": 24
+      },
+      "button2_link": {
+        "type": "link",
+        "label": {
+          "ar": "رابط الزر التاني",
+          "en": "Second button link"
+        },
+        "default": "/category/apparel"
+      }
+    }
+  }
+</hk-schema>

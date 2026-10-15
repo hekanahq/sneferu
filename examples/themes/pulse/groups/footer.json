@@ -1,0 +1,229 @@
+{
+  "sections": [
+    {
+      "id": "footer",
+      "type": "footer",
+      "settings": {
+        "menu": "footer",
+        "about_text": {
+          "ar": "معدات وملابس تمرين بأسعار بالجنيه المصري. الدفع عند الاستلام والتوصيل لكل المحافظات.",
+          "en": "Training gear and apparel, priced in Egyptian pounds. Cash on delivery, delivery across Egypt."
+        },
+        "copyright": {
+          "ar": "جميع الحقوق محفوظة",
+          "en": "All rights reserved"
+        },
+        "show_newsletter": false,
+        "newsletter_title": {
+          "ar": "تابع الجديد",
+          "en": "Stay in the loop"
+        },
+        "newsletter_text": {
+          "ar": "جديد المتجر وعروضه على واتساب.",
+          "en": "New arrivals and offers on WhatsApp."
+        },
+        "newsletter_label": {
+          "ar": "كلمنا على واتساب",
+          "en": "Message us on WhatsApp"
+        },
+        "newsletter_link": "/pages/contact",
+        "show_language": true
+      },
+      "blocks": [
+        {
+          "id": "col-shop",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "تسوق",
+              "en": "Shop"
+            }
+          },
+          "blocks": [
+            {
+              "id": "col-shop-weights",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "أوزان",
+                  "en": "Weights"
+                },
+                "url": "/category/weights"
+              }
+            },
+            {
+              "id": "col-shop-apparel",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "ملابس",
+                  "en": "Apparel"
+                },
+                "url": "/category/apparel"
+              }
+            },
+            {
+              "id": "col-shop-bags",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "شنط وإكسسوارات",
+                  "en": "Bags and accessories"
+                },
+                "url": "/category/bags"
+              }
+            },
+            {
+              "id": "col-shop-shoes",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "أحذية",
+                  "en": "Shoes"
+                },
+                "url": "/category/shoes"
+              }
+            },
+            {
+              "id": "col-shop-search",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "بحث",
+                  "en": "Search"
+                },
+                "url": "/search"
+              }
+            }
+          ]
+        },
+        {
+          "id": "col-help",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "مساعدة",
+              "en": "Help"
+            }
+          },
+          "blocks": [
+            {
+              "id": "col-help-delivery",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "الشحن والتوصيل",
+                  "en": "Shipping and delivery"
+                },
+                "url": "/pages/delivery"
+              }
+            },
+            {
+              "id": "col-help-about",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "عنّا",
+                  "en": "About us"
+                },
+                "url": "/pages/about"
+              }
+            },
+            {
+              "id": "col-help-contact",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "تواصل معنا",
+                  "en": "Contact"
+                },
+                "url": "/pages/contact"
+              }
+            }
+          ]
+        },
+        {
+          "id": "social-whatsapp",
+          "type": "social-link",
+          "settings": {
+            "label": {
+              "ar": "واتساب",
+              "en": "WhatsApp"
+            },
+            "url": "/pages/contact",
+            "icon": "message-circle"
+          }
+        },
+        {
+          "id": "social-mail",
+          "type": "social-link",
+          "settings": {
+            "label": {
+              "ar": "الإيميل",
+              "en": "Email"
+            },
+            "url": "/pages/contact",
+            "icon": "mail"
+          }
+        },
+        {
+          "id": "contact-mail",
+          "type": "contact-line",
+          "settings": {
+            "icon": "message-circle",
+            "text": {
+              "ar": "تواصل معنا على واتساب",
+              "en": "Message us on WhatsApp"
+            },
+            "url": ""
+          }
+        },
+        {
+          "id": "contact-hours",
+          "type": "contact-line",
+          "settings": {
+            "icon": "banknote",
+            "text": {
+              "ar": "الدفع عند الاستلام",
+              "en": "Cash on delivery"
+            },
+            "url": ""
+          }
+        },
+        {
+          "id": "pay-card",
+          "type": "payment-method",
+          "settings": {
+            "label": {
+              "ar": "الدفع عند الاستلام",
+              "en": "Cash on delivery"
+            },
+            "icon": "banknote"
+          }
+        },
+        {
+          "id": "pay-wallet",
+          "type": "payment-method",
+          "settings": {
+            "label": {
+              "ar": "محفظة موبايل",
+              "en": "Mobile wallet"
+            },
+            "icon": "smartphone"
+          }
+        },
+        {
+          "id": "pay-other",
+          "type": "payment-method",
+          "settings": {
+            "label": {
+              "ar": "كارت بنكي",
+              "en": "Bank card"
+            },
+            "icon": "credit-card"
+          }
+        }
+      ]
+    }
+  ]
+}

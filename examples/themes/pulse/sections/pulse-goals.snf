@@ -1,0 +1,40 @@
+<hk-section padding-y="0" mobile-padding-y="0" class="pl-goals-section">
+  <hk-container>
+    <div class="pl-goals">
+      {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+    </div>
+  </hk-container>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "ar": "أقسام بأيقونات",
+      "en": "Icon tiles"
+    },
+    "version": 1,
+    "settings": {},
+    "blocks": {
+      "allowed": ["goal-tile"],
+      "max": 4
+    },
+    "presets": [
+      {
+        "name": {
+          "ar": "ثلاثة أقسام",
+          "en": "Three tiles"
+        },
+        "blocks": [
+          {
+            "type": "goal-tile"
+          },
+          {
+            "type": "goal-tile"
+          },
+          {
+            "type": "goal-tile"
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

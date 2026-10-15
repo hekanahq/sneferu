@@ -1,0 +1,45 @@
+<a class="pl-goal" href="{{ url(block.settings.link) }}">
+  <span class="pl-goal-icon"><hk-icon name="{{ block.settings.icon }}" size="32" /></span>
+  <span class="pl-goal-label">{{ block.settings.label }}</span>
+</a>
+<hk-schema>
+  {
+    "name": {
+      "ar": "قسم",
+      "en": "Tile"
+    },
+    "version": 1,
+    "settings": {
+      "icon": {
+        "type": "select",
+        "label": {
+          "ar": "الأيقونة",
+          "en": "Icon"
+        },
+        "options": ["zap", "flame", "trophy", "tag", "shopping-bag", "package", "layers", "star", "sparkles", "heart"],
+        "default": "zap"
+      },
+      "label": {
+        "type": "text",
+        "label": {
+          "ar": "النص",
+          "en": "Label"
+        },
+        "localized": true,
+        "default": {
+          "ar": "أوزان",
+          "en": "Weights"
+        },
+        "maxLength": 24
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "ar": "الرابط",
+          "en": "Link"
+        },
+        "default": "/category/weights"
+      }
+    }
+  }
+</hk-schema>

@@ -1,0 +1,40 @@
+{
+  "id": "pulse",
+  "name": "Pulse",
+  "version": "1.0.1",
+  "author": "Hekana",
+  "description": "A dark performance gym store: black and charcoal with one lime accent, a framed gear photo hero, outlined icon tiles and charcoal photo cards, on every page.",
+  "category": "fitness",
+  "engine": "hk2",
+  "engineCompatibility": "^2.0.0",
+  "defaultLocale": "ar",
+  "locales": ["ar", "en"],
+  "settings": {},
+  "money": {
+    "format": "whole"
+  },
+  "tokens": {
+    "colors": {
+      "primary": "#C6F432",
+      "secondary": "#1A1A1A",
+      "accent": "#C6F432",
+      "background": "#0A0A0A",
+      "text": "#F2F2F2",
+      "muted": "#B0B0B0",
+      "line": "#333333",
+      "soft": "#3C3C3C",
+      "surface": "#141414",
+      "glow": "#1B2108"
+    },
+    "layout": {
+      "contentWidth": "1160px"
+    },
+    "fonts": {
+      "heading": "Noto Kufi Arabic",
+      "body": "Cairo"
+    },
+    "radius": {
+      "md": "4px"
+    }
+  }
+}
