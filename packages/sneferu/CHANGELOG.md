@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.10.0
+
+### Minor Changes
+
+- cbf0f2d: `<hk-variant-picker display="swatches|auto">`: photo tiles and colour dots from the option's swatches and presentation. New `<hk-inline-checkout>`: the store's own checkout in a frame on a themed page (no fields from the theme), with the `inline-checkout` controller (`MSG_CHECKOUT_*`), and a placeholder in `sneferu dev`.
+
+### Patch Changes
+
+- Updated dependencies [e317d94]
+- Updated dependencies [cbf0f2d]
+  - @hekana/sneferu-components@0.10.0
+  - @hekana/sneferu-controllers@0.10.0
+  - @hekana/prettier-plugin-sneferu@0.10.0
+  - @hekana/sneferu-compiler@0.10.0
+  - @hekana/sneferu-core@0.10.0
+  - @hekana/sneferu-runtime@0.10.0
+  - @hekana/sneferu-templates-default@0.10.0
+
 ## 0.9.1
 
 ### Patch Changes
