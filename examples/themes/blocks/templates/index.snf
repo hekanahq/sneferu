@@ -55,6 +55,18 @@
               },
               "link": "/category/wear"
             }
+          },
+          {
+            "type": "circle",
+            "settings": {
+              "tone": "blue",
+              "icon": "heart",
+              "label": {
+                "ar": "دباديب ومحشو",
+                "en": "Plush"
+              },
+              "link": "/category/plush"
+            }
           }
         ]
       },

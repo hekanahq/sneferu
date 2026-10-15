@@ -69,7 +69,7 @@
       {
         "type": "related-products",
         "settings": {
-          "collection": "featured",
+          "collection": "related",
           "limit": 5,
           "columns": 4
         }

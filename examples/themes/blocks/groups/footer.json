@@ -71,6 +71,17 @@
                 },
                 "url": "/category/vehicles"
               }
+            },
+            {
+              "id": "f5",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "دباديب ومحشو",
+                  "en": "Plush"
+                },
+                "url": "/category/plush"
+              }
             }
           ]
         },

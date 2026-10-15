@@ -58,9 +58,20 @@
             },
             "url": "/category/wear"
           }
+        },
+        {
+          "id": "nav-plush",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "دباديب ومحشو",
+              "en": "Plush"
+            },
+            "url": "/category/plush"
+          }
         }
       ],
-      "block_order": ["nav-school", "nav-toys", "nav-vehicles", "nav-wear"]
+      "block_order": ["nav-school", "nav-toys", "nav-vehicles", "nav-wear", "nav-plush"]
     }
   ]
 }
