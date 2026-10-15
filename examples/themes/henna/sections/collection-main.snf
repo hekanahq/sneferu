@@ -1,0 +1,179 @@
+<section class="hn-sec hn-pad-{{ section.settings.padding_y }}">
+  <div class="hn-wrap">
+    <header class="hn-pagehead">
+      {% if section.settings.kicker %}
+        <p class="hn-eyebrow">{{ section.settings.kicker }}</p>
+      {% endif %}
+      {% if section.settings.show_title %}
+        <h1 class="hn-title hn-title-xl">{{ collection.title }}</h1>
+      {% endif %}
+      {% if section.settings.show_description %}{% if collection.description %}
+          <div class="hn-lead"><hk-rich-text html="{{ collection.description }}" /></div>
+        {% endif %}{% endif %}
+      {% if section.settings.show_count %}
+        <p class="hn-count">{{ collection.products_count }} {{ t('products_label') }}</p>
+      {% endif %}
+    </header>
+    {% if section.settings.show_sort %}{% if collection.sort_options %}
+        <div class="hn-toolbar">
+          <span class="hn-toolbar-label">{{ t('sort_by') }}</span>{% for o in collection.sort_options %}<a
+              class="hn-chip"
+              href="{{ o.url }}"
+              aria-current="{{ o.active }}"
+            >{{ o.label }}</a>{% endfor %}
+        </div>
+      {% endif %}{% endif %}
+    {% if section.settings.show_filters %}{% if collection.filters %}
+        <details class="hn-filters">
+          <summary>{{ t('filters') }}<hk-icon name="chevron-down" size="18" /></summary>
+          {% for f in collection.filters %}
+            <div class="hn-toolbar">
+              <span class="hn-toolbar-label">{{ f.name }}</span>{% for v in f.values %}<a
+                  class="hn-chip"
+                  href="{{ v.url }}"
+                  aria-current="{{ v.active }}"
+                >{{ v.label }}</a>{% endfor %}
+            </div>
+          {% endfor %}
+        </details>
+      {% endif %}{% endif %}
+    {% if collection.products %}
+      <div class="hn-grid hn-cols-{{ section.settings.columns }}">
+        {% for p in collection.products limit: 48 %}{% render 'card', p: p %}{% endfor %}
+      </div>
+      <hk-pagination paginate="{{ paginate }}" />
+    {% else %}
+      {% render 'empty', title: section.settings.empty_title, text: section.settings.empty_text, label: section.settings.empty_button_label, href: section.settings.empty_button_link %}
+    {% endif %}
+  </div>
+</section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Collection",
+      "ar": "القسم"
+    },
+    "version": 1,
+    "templates": ["collection"],
+    "settings": {
+      "kicker": {
+        "type": "text",
+        "label": {
+          "en": "Small line above the title",
+          "ar": "سطر صغير فوق العنوان"
+        },
+        "default": {
+          "ar": "المتجر",
+          "en": "Shop"
+        },
+        "localized": true,
+        "maxLength": 40
+      },
+      "show_title": {
+        "type": "boolean",
+        "label": {
+          "en": "Show title",
+          "ar": "إظهار العنوان"
+        },
+        "default": true
+      },
+      "show_description": {
+        "type": "boolean",
+        "label": {
+          "en": "Show description",
+          "ar": "إظهار الوصف"
+        },
+        "default": true
+      },
+      "show_count": {
+        "type": "boolean",
+        "label": {
+          "en": "Show product count",
+          "ar": "إظهار عدد المنتجات"
+        },
+        "default": true
+      },
+      "show_sort": {
+        "type": "boolean",
+        "label": {
+          "en": "Show sorting",
+          "ar": "إظهار الترتيب"
+        },
+        "default": true
+      },
+      "show_filters": {
+        "type": "boolean",
+        "label": {
+          "en": "Show filters",
+          "ar": "إظهار الفلاتر"
+        },
+        "default": true
+      },
+      "columns": {
+        "type": "select",
+        "label": {
+          "en": "Columns",
+          "ar": "الأعمدة"
+        },
+        "options": ["2", "3", "4"],
+        "default": "4"
+      },
+      "empty_title": {
+        "type": "text",
+        "label": {
+          "en": "Empty title",
+          "ar": "عنوان القسم الفاضي"
+        },
+        "default": {
+          "ar": "القسم ده لسه فاضي",
+          "en": "Nothing here yet"
+        },
+        "localized": true,
+        "maxLength": 80
+      },
+      "empty_text": {
+        "type": "textarea",
+        "label": {
+          "en": "Empty text",
+          "ar": "نص القسم الفاضي"
+        },
+        "default": {
+          "ar": "جرّب قسم تاني، أو ارجع لكل المنتجات.",
+          "en": "Try another category, or go back to all products."
+        },
+        "localized": true,
+        "maxLength": 160
+      },
+      "empty_button_label": {
+        "type": "text",
+        "label": {
+          "en": "Empty button",
+          "ar": "زر القسم الفاضي"
+        },
+        "default": {
+          "ar": "كل المنتجات",
+          "en": "All products"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "empty_button_link": {
+        "type": "link",
+        "label": {
+          "en": "Empty button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/products"
+      },
+      "padding_y": {
+        "type": "select",
+        "label": {
+          "en": "Vertical spacing",
+          "ar": "المسافة الرأسية"
+        },
+        "options": ["compact", "normal", "roomy"],
+        "default": "normal"
+      }
+    }
+  }
+</hk-schema>

@@ -44,7 +44,7 @@ developer. Reserved slugs: `starter`, `hekana`, `default`, `admin`, `official`, 
 
 ## Example themes
 
-Twelve complete themes in [examples/themes](examples/themes), each with a README,
+Twenty-four complete themes in [examples/themes](examples/themes), each with a README,
 screenshots and a live demo store:
 [Arcade](examples/themes/arcade), [Console](examples/themes/console) and
 [Esports](examples/themes/esports) (gaming top-ups and gift cards);
@@ -52,7 +52,13 @@ screenshots and a live demo store:
 [License](examples/themes/license) (digital products);
 [Torque](examples/themes/torque) and [Odda](examples/themes/odda) (hardware),
 [Dawa](examples/themes/dawa) and [Aafia](examples/themes/aafia) (health),
-[Ivory](examples/themes/ivory) and [Asphalt](examples/themes/asphalt) (fashion). The
+[Ivory](examples/themes/ivory) and [Asphalt](examples/themes/asphalt) (fashion);
+[Sage](examples/themes/sage) and [Henna](examples/themes/henna) (beauty),
+[Volt](examples/themes/volt) and [Bazaar](examples/themes/bazaar) (electronics),
+[Konafa](examples/themes/konafa) and [Tabkha](examples/themes/tabkha) (food),
+[Oak](examples/themes/oak) and [Mashrabiya](examples/themes/mashrabiya) (home),
+[Cloud](examples/themes/cloud) and [Blocks](examples/themes/blocks) (kids),
+[Velvet](examples/themes/velvet) and [Halo](examples/themes/halo) (jewelry). The
 [gaming](https://hekana.dev/guide/tutorial-gaming-store) and
 [digital store](https://hekana.dev/guide/tutorial-digital-store) tutorials walk
 through Arcade and Bento.

@@ -1,0 +1,12 @@
+<article class="hn-cover">
+  <hk-product-card product="{{ p }}" class="hn-card">
+    <hk-part name="badge">
+      {% if p.compare_at > p.price %}<span class="hn-flag">{{ t('sale') }}</span>{% endif %}
+    </hk-part>
+  </hk-product-card>
+  {% for o in p.options limit: 1 %}
+    <p class="hn-swatches" role="list" aria-label="{{ t('shades') }}">
+      {% for v in o.values limit: 6 %}<span class="hn-sw" role="listitem" data-shade="{{ v }}" title="{{ v }}"></span>{% endfor %}
+    </p>
+  {% endfor %}
+</article>

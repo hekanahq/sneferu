@@ -1,0 +1,52 @@
+{% if section.settings.text %}
+  <div class="bz-announcement bz-scheme-{{ section.settings.scheme }}">
+    <hk-container>
+      <p class="bz-announcement-text">
+        {% if section.settings.link %}
+          <a href="{{ url(section.settings.link) }}">{{ section.settings.text }}</a>
+        {% else %}
+          {{ section.settings.text }}
+        {% endif %}
+      </p>
+    </hk-container>
+  </div>
+{% endif %}
+<hk-schema>
+  {
+    "name": {
+      "en": "Announcement bar",
+      "ar": "شريط الإعلان"
+    },
+    "version": 1,
+    "templates": ["announcement"],
+    "settings": {
+      "text": {
+        "type": "text",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": "",
+        "localized": true,
+        "maxLength": 140
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": ""
+      },
+      "scheme": {
+        "type": "select",
+        "label": {
+          "en": "Colour scheme",
+          "ar": "ألوان الشريط"
+        },
+        "options": ["accent", "primary", "light"],
+        "default": "accent"
+      }
+    }
+  }
+</hk-schema>

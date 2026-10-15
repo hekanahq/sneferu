@@ -1,0 +1,24 @@
+{% if product.excerpt %}
+  <hk-text text="{{ product.excerpt }}" size="{{ block.settings.size }}" />
+{% endif %}
+<hk-schema>
+  {
+    "name": {
+      "en": "Short description",
+      "ar": "وصف مختصر"
+    },
+    "version": 1,
+    "settings": {
+      "size": {
+        "type": "range",
+        "label": {
+          "en": "Text size",
+          "ar": "حجم النص"
+        },
+        "min": 12,
+        "max": 28,
+        "default": 16
+      }
+    }
+  }
+</hk-schema>

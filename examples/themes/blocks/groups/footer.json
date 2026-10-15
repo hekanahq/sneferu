@@ -1,0 +1,171 @@
+{
+  "sections": [
+    {
+      "id": "footer",
+      "type": "footer",
+      "settings": {
+        "menu": "",
+        "scheme": "primary",
+        "about_text": {
+          "ar": "ألعاب ومستلزمات مدرسة للأطفال بالجنيه المصري، والدفع عند الاستلام.",
+          "en": "Toys and school supplies for kids in Egyptian pounds, with cash on delivery."
+        },
+        "copyright": {
+          "ar": "جميع الحقوق محفوظة",
+          "en": "All rights reserved"
+        },
+        "show_newsletter": false,
+        "show_language": false
+      },
+      "blocks": [
+        {
+          "id": "col-shop",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "تسوق",
+              "en": "Shop"
+            }
+          },
+          "blocks": [
+            {
+              "id": "f1",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "كل المنتجات",
+                  "en": "All products"
+                },
+                "url": "/products"
+              }
+            },
+            {
+              "id": "f2",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "مستلزمات المدرسة",
+                  "en": "School"
+                },
+                "url": "/category/school"
+              }
+            },
+            {
+              "id": "f3",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "ألعاب",
+                  "en": "Toys"
+                },
+                "url": "/category/toys"
+              }
+            },
+            {
+              "id": "f4",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "عربيات",
+                  "en": "Vehicles"
+                },
+                "url": "/category/vehicles"
+              }
+            },
+            {
+              "id": "f5",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "دباديب ومحشو",
+                  "en": "Plush"
+                },
+                "url": "/category/plush"
+              }
+            }
+          ]
+        },
+        {
+          "id": "col-help",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "مساعدة",
+              "en": "Help"
+            }
+          },
+          "blocks": [
+            {
+              "id": "h1",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "من نحن",
+                  "en": "About us"
+                },
+                "url": "/pages/about"
+              }
+            },
+            {
+              "id": "h2",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "التوصيل والدفع",
+                  "en": "Delivery and payment"
+                },
+                "url": "/pages/delivery"
+              }
+            },
+            {
+              "id": "h3",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "بحث",
+                  "en": "Search"
+                },
+                "url": "/search"
+              }
+            }
+          ]
+        },
+        {
+          "id": "social-whatsapp",
+          "type": "social-link",
+          "settings": {
+            "label": {
+              "ar": "واتساب",
+              "en": "WhatsApp"
+            },
+            "url": "/pages/about",
+            "icon": "message-circle"
+          }
+        },
+        {
+          "id": "contact-line",
+          "type": "contact-line",
+          "settings": {
+            "icon": "message-circle",
+            "text": {
+              "ar": "تواصل معنا على واتساب",
+              "en": "Contact us on WhatsApp"
+            },
+            "url": ""
+          }
+        },
+        {
+          "id": "pay-cod",
+          "type": "payment-method",
+          "settings": {
+            "label": {
+              "ar": "الدفع عند الاستلام",
+              "en": "Cash on delivery"
+            },
+            "icon": "banknote"
+          }
+        }
+      ]
+    }
+  ]
+}

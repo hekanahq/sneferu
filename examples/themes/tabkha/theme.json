@@ -1,0 +1,33 @@
+{
+  "id": "tabkha",
+  "name": "Tabkha",
+  "version": "1.0.3",
+  "author": "Hekana",
+  "description": "A fresh home-kitchen food store: tomato red and cream with olive accents, a bold red hero, today's dishes as rounded cards with quick add buttons, and a calm trust strip.",
+  "category": "food",
+  "engine": "hk2",
+  "engineCompatibility": "^2.0.0",
+  "defaultLocale": "ar",
+  "locales": ["ar", "en"],
+  "settings": {},
+  "money": { "format": "whole" },
+  "tokens": {
+    "colors": {
+      "primary": "#D2352A",
+      "secondary": "#5C6B2E",
+      "accent": "#5C6B2E",
+      "background": "#FFF8EE",
+      "text": "#2D1F17",
+      "muted": "#6B5A4E",
+      "line": "#EADBC6",
+      "soft": "#FBEEDB",
+      "surface": "#FFFFFF",
+      "tomato-deep": "#A92319",
+      "olive-soft": "#E8EDD3",
+      "shade": "#3A2B21"
+    },
+    "layout": { "contentWidth": "1120px" },
+    "fonts": { "heading": "Baloo Bhaijaan 2", "body": "Cairo" },
+    "radius": { "md": "18px" }
+  }
+}

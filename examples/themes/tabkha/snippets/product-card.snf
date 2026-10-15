@@ -1,0 +1,47 @@
+<article class="tk-card tk-card-{{ card_style }}">
+  <a class="tk-card-link" href="{{ product.url }}">
+    <div class="tk-card-media">
+      <hk-image
+        src="{{ product.image }}"
+        alt="{{ product.title }}"
+        aspect-ratio="{{ image_ratio }}"
+        sizes="(min-width: 1024px) 25vw, 40vw"
+      />
+      {% if show_badge %}
+        {% if product.available %}
+          {% if product.compare_at > product.price %}
+            <span class="tk-badge">{{ t('sale') }}</span>
+          {% endif %}
+        {% else %}
+          <span class="tk-badge tk-badge-muted">{{ t('sold_out_badge') }}</span>
+        {% endif %}
+      {% endif %}
+    </div>
+    <h3 class="tk-card-title">{{ product.title }}</h3>
+    {% if product.options %}
+      <ul class="tk-card-chips">
+        {% for o in product.options limit: 1 %}
+          {% for v in o.values limit: 3 %}
+            <li>{{ v }}</li>
+          {% endfor %}
+        {% endfor %}
+      </ul>
+    {% endif %}
+    {% if show_price %}
+      <span class="tk-card-price">{% render 'price', product: product, bind: false %}</span>
+    {% endif %}
+  </a>
+  {% if show_add %}
+    <div class="tk-card-add">
+      {% if product.available %}
+        {% if product.has_variants %}
+          <hk-button label="{{ t('choose_option') }}" href="{{ product.url }}" variant="outline" size="sm" />
+        {% else %}
+          <hk-add-to-cart product="{{ product }}" label="{{ t('quick_add') }}" quantity="false" />
+        {% endif %}
+      {% else %}
+        <span class="tk-card-soldout">{{ t('sold_out_short') }}</span>
+      {% endif %}
+    </div>
+  {% endif %}
+</article>

@@ -1,0 +1,13 @@
+{% if product.category %}
+  <p class="sg-eyebrow"><a href="{{ product.category.url }}">{{ product.category.title }}</a></p>
+{% endif %}
+<hk-schema>
+  {
+    "name": {
+      "en": "Category label",
+      "ar": "اسم القسم"
+    },
+    "version": 1,
+    "settings": {}
+  }
+</hk-schema>

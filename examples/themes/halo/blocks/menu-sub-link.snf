@@ -1,0 +1,33 @@
+<a class="hl-subnav-link" href="{{ url(block.settings.url) }}">{{ block.settings.label }}</a>
+<hk-schema>
+  {
+    "name": {
+      "en": "Dropdown link",
+      "ar": "رابط فرعي"
+    },
+    "version": 1,
+    "settings": {
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Label",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "رابط",
+          "en": "Link"
+        },
+        "localized": true,
+        "maxLength": 40
+      },
+      "url": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/"
+      }
+    }
+  }
+</hk-schema>

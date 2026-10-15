@@ -166,7 +166,13 @@ groups, locales and settings: [arcade](examples/themes/arcade),
 [bento](examples/themes/bento) (digital products),
 [torque](examples/themes/torque), [odda](examples/themes/odda) (hardware),
 [dawa](examples/themes/dawa), [aafia](examples/themes/aafia) (health),
-[ivory](examples/themes/ivory), [asphalt](examples/themes/asphalt) (fashion). The SDK's own default store
+[ivory](examples/themes/ivory), [asphalt](examples/themes/asphalt) (fashion),
+[sage](examples/themes/sage), [henna](examples/themes/henna) (beauty),
+[volt](examples/themes/volt), [bazaar](examples/themes/bazaar) (electronics),
+[konafa](examples/themes/konafa), [tabkha](examples/themes/tabkha) (food),
+[oak](examples/themes/oak), [mashrabiya](examples/themes/mashrabiya) (home),
+[cloud](examples/themes/cloud), [blocks](examples/themes/blocks) (kids),
+[velvet](examples/themes/velvet), [halo](examples/themes/halo) (jewelry). The SDK's own default store
 is [packages/templates-default/theme](packages/templates-default/theme).
 
 ## Work on this repo

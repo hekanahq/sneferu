@@ -1,0 +1,208 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="24">
+  {% if section.settings.title %}
+    <hk-heading text="{{ section.settings.title }}" level="h1" size="32" mobile-size="26" />
+  {% endif %}
+  {% if section.settings.show_form %}
+    <div class="vt-search-page-form"><hk-search-form placeholder="{{ t('search_placeholder') }}" /></div>
+  {% endif %}
+  {% if search.terms %}
+    <p class="vt-muted">
+      {{ t('results_for') }} “{{ search.terms }}” · {{ search.results_count }} {{ t('results_label') }}
+    </p>
+    {% if search.results %}
+      <div class="vt-grid vt-cols-{{ section.settings.columns }}">
+        {% for p in search.results limit: 48 %}
+          {% render 'product-card', product: p, card_style: section.settings.card_style, image_ratio: section.settings.image_ratio, show_price: section.settings.show_price, show_badge: section.settings.show_badge, note: section.settings.card_note %}
+        {% endfor %}
+      </div>
+      <hk-pagination paginate="{{ paginate }}" />
+    {% else %}
+      <div class="vt-empty">
+        <span class="vt-tile" aria-hidden="true"><hk-icon name="search" /></span>
+        {% if section.settings.no_results_image %}
+          <hk-image src="{{ section.settings.no_results_image }}" alt="" width="240" />
+        {% endif %}
+        {% if section.settings.no_results_title %}
+          <h2 class="vt-empty-title">{{ section.settings.no_results_title }}</h2>
+        {% endif %}
+        {% if section.settings.no_results_text %}
+          <p>{{ section.settings.no_results_text }}</p>
+        {% endif %}
+        {% render 'button', label: section.settings.no_results_button_label, href: section.settings.no_results_button_link, style: 'outline' %}
+      </div>
+    {% endif %}
+  {% else %}
+    {% if section.settings.prompt_text %}
+      <p class="vt-muted">{{ section.settings.prompt_text }}</p>
+    {% endif %}
+  {% endif %}
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Search results",
+      "ar": "نتائج البحث"
+    },
+    "version": 1,
+    "templates": ["search"],
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "البحث",
+          "en": "Search"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "show_form": {
+        "type": "boolean",
+        "label": {
+          "en": "Show the search box",
+          "ar": "إظهار خانة البحث"
+        },
+        "default": true
+      },
+      "prompt_text": {
+        "type": "text",
+        "label": {
+          "en": "Text before searching",
+          "ar": "نص قبل البحث"
+        },
+        "default": {
+          "ar": "اكتب اسم المنتج اللي بتدور عليه.",
+          "en": "Type the name of what you are looking for."
+        },
+        "localized": true,
+        "maxLength": 120
+      },
+      "columns": {
+        "type": "range",
+        "label": {
+          "en": "Columns",
+          "ar": "الأعمدة"
+        },
+        "min": 2,
+        "max": 5,
+        "default": 4
+      },
+      "card_style": {
+        "type": "select",
+        "label": {
+          "en": "Card style",
+          "ar": "شكل الكارت"
+        },
+        "options": ["plain", "bordered", "shadow"],
+        "default": "shadow"
+      },
+      "image_ratio": {
+        "type": "select",
+        "label": {
+          "en": "Image shape",
+          "ar": "شكل الصورة"
+        },
+        "options": ["1/1", "4/5", "3/4"],
+        "default": "1/1"
+      },
+      "show_price": {
+        "type": "boolean",
+        "label": {
+          "en": "Show price",
+          "ar": "إظهار السعر"
+        },
+        "default": true
+      },
+      "show_badge": {
+        "type": "boolean",
+        "label": {
+          "en": "Show sale and sold out badge",
+          "ar": "إظهار شارة الخصم ونفاد المخزون"
+        },
+        "default": true
+      },
+      "no_results_image": {
+        "type": "image",
+        "label": {
+          "en": "No results image",
+          "ar": "صورة عدم وجود نتائج"
+        },
+        "default": ""
+      },
+      "no_results_title": {
+        "type": "text",
+        "label": {
+          "en": "No results title",
+          "ar": "عنوان عدم وجود نتائج"
+        },
+        "default": {
+          "ar": "ملقيناش نتايج",
+          "en": "No results found"
+        },
+        "localized": true,
+        "maxLength": 80
+      },
+      "no_results_text": {
+        "type": "textarea",
+        "label": {
+          "en": "No results text",
+          "ar": "نص عدم وجود نتائج"
+        },
+        "default": {
+          "ar": "جرب كلمة تانية أو تصفح كل المنتجات.",
+          "en": "Try another word or browse all products."
+        },
+        "localized": true,
+        "maxLength": 200
+      },
+      "no_results_button_label": {
+        "type": "text",
+        "label": {
+          "en": "No results button",
+          "ar": "زر عدم وجود نتائج"
+        },
+        "default": {
+          "ar": "كل المنتجات",
+          "en": "All products"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "no_results_button_link": {
+        "type": "link",
+        "label": {
+          "en": "No results button link",
+          "ar": "رابط زر عدم وجود نتائج"
+        },
+        "default": "/products"
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 160,
+        "step": 8,
+        "default": 40
+      },
+      "card_note": {
+        "type": "text",
+        "label": {
+          "en": "Line under the price (empty hides it)",
+          "ar": "سطر تحت السعر (فاضي يخفيه)"
+        },
+        "localized": true,
+        "default": {
+          "ar": "الدفع عند الاستلام",
+          "en": "Cash on delivery"
+        },
+        "maxLength": 60
+      }
+    }
+  }
+</hk-schema>

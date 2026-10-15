@@ -1,0 +1,54 @@
+<a class="vt-cat" href="{{ url(block.settings.link) }}">
+  <span class="vt-cat-art">
+    {% if block.settings.image %}
+      <hk-image
+        src="{{ block.settings.image }}"
+        alt="{{ block.settings.label }}"
+        aspect-ratio="1/1"
+        fit="cover"
+        sizes="(min-width: 1024px) 160px, 30vw"
+      />
+    {% endif %}
+  </span>
+  <span class="vt-cat-label">{{ block.settings.label }}</span>
+</a>
+<hk-schema>
+  {
+    "name": {
+      "ar": "قسم",
+      "en": "Category tile"
+    },
+    "version": 1,
+    "settings": {
+      "image": {
+        "type": "image",
+        "label": {
+          "ar": "الصورة",
+          "en": "Image"
+        },
+        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/volt/volt-smartphone-black.webp"
+      },
+      "label": {
+        "type": "text",
+        "label": {
+          "ar": "النص",
+          "en": "Label"
+        },
+        "localized": true,
+        "default": {
+          "ar": "موبايلات",
+          "en": "Phones"
+        },
+        "maxLength": 24
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "ar": "الرابط",
+          "en": "Link"
+        },
+        "default": "/category/phones"
+      }
+    }
+  }
+</hk-schema>

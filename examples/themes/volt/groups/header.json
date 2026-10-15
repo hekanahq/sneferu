@@ -1,0 +1,63 @@
+{
+  "sections": [
+    {
+      "id": "header",
+      "type": "header",
+      "settings": {
+        "menu": "main-menu",
+        "show_search": true,
+        "search_style": "bar",
+        "show_account": true,
+        "show_language": true,
+        "show_cart": true,
+        "drawer_on_add": true
+      },
+      "blocks": [
+        {
+          "id": "nav-phones",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "موبايلات",
+              "en": "Phones"
+            },
+            "url": "/category/phones"
+          }
+        },
+        {
+          "id": "nav-laptops",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "لابتوبات",
+              "en": "Laptops"
+            },
+            "url": "/category/laptops"
+          }
+        },
+        {
+          "id": "nav-audio",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "صوتيات",
+              "en": "Audio"
+            },
+            "url": "/category/audio"
+          }
+        },
+        {
+          "id": "nav-watches",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "ساعات",
+              "en": "Watches"
+            },
+            "url": "/category/watches"
+          }
+        }
+      ]
+    }
+  ]
+}

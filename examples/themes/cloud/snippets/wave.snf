@@ -1,0 +1,4 @@
+<svg class="cl-wave-svg" viewBox="0 0 1440 64" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+  <path class="cl-wave-fill" d="M0 32 C120 0 240 0 360 32 S600 64 720 32 S960 0 1080 32 S1320 64 1440 32 V64 H0 Z" />
+  <path class="cl-wave-line" d="M0 32 C120 0 240 0 360 32 S600 64 720 32 S960 0 1080 32 S1320 64 1440 32" />
+</svg>

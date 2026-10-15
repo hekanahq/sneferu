@@ -1,0 +1,176 @@
+<hk-section
+  background="{{ section.settings.background }}"
+  padding-y="{{ section.settings.padding_y }}"
+  mobile-padding-y="28"
+  class="tk-hero-band"
+>
+  <div class="tk-hero tk-align-{{ section.settings.align }}">
+    {% if section.settings.image %}
+      <div class="tk-hero-media">
+        <hk-image
+          src="{{ section.settings.image }}"
+          alt="{{ section.settings.image_alt }}"
+          loading="eager"
+          aspect-ratio="1/1"
+          sizes="(min-width: 1024px) 380px, 40vw"
+        />
+      </div>
+    {% endif %}
+    <div class="tk-hero-text">
+      {% if section.settings.eyebrow %}
+        <p class="tk-eyebrow">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+      {% if section.settings.title %}
+        <hk-heading
+          text="{{ section.settings.title }}"
+          level="h1"
+          size="56"
+          mobile-size="32"
+          color="{{ section.settings.text_color }}"
+        />
+      {% endif %}
+      {% if section.settings.subtitle %}
+        <hk-text text="{{ section.settings.subtitle }}" size="18" color="{{ section.settings.text_color }}" />
+      {% endif %}
+      {% render 'button', label: section.settings.button_label, href: section.settings.button_link, style: section.settings.button_style %}
+    </div>
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Hero",
+      "ar": "البانر الرئيسي"
+    },
+    "version": 1,
+    "templates": ["index"],
+    "settings": {
+      "eyebrow": {
+        "type": "text",
+        "label": {
+          "en": "Small line above",
+          "ar": "سطر صغير فوق العنوان"
+        },
+        "default": {
+          "ar": "أكل بيت",
+          "en": "Home cooking"
+        },
+        "localized": true,
+        "maxLength": 40
+      },
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "وجبات البيت",
+          "en": "Home meals"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "subtitle": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "كشري ومحشي وملوخية، بنطبخها طازة ونوصلها لحد بابك.",
+          "en": "Koshari, mahshi and molokhia, cooked fresh and delivered to your door."
+        },
+        "localized": true,
+        "maxLength": 200
+      },
+      "button_label": {
+        "type": "text",
+        "label": {
+          "en": "Button",
+          "ar": "الزر"
+        },
+        "default": {
+          "ar": "شوف الأطباق",
+          "en": "See the dishes"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "button_link": {
+        "type": "link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/products"
+      },
+      "button_style": {
+        "type": "select",
+        "label": {
+          "en": "Button style",
+          "ar": "شكل الزر"
+        },
+        "options": ["solid", "outline", "ghost"],
+        "default": "outline"
+      },
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "Image",
+          "ar": "الصورة"
+        },
+        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-food/pool-food-taameya-plate.webp"
+      },
+      "image_alt": {
+        "type": "text",
+        "label": {
+          "en": "Image description",
+          "ar": "وصف الصورة"
+        },
+        "default": {
+          "ar": "طبق طعمية",
+          "en": "A plate of taameya"
+        },
+        "localized": true,
+        "maxLength": 120
+      },
+      "align": {
+        "type": "select",
+        "label": {
+          "en": "Text alignment",
+          "ar": "محاذاة النص"
+        },
+        "options": ["start", "center"],
+        "default": "start"
+      },
+      "background": {
+        "type": "color",
+        "label": {
+          "en": "Background",
+          "ar": "الخلفية"
+        },
+        "default": "theme:primary"
+      },
+      "text_color": {
+        "type": "color",
+        "label": {
+          "en": "Text colour",
+          "ar": "لون النص"
+        },
+        "default": "theme:surface"
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 200,
+        "step": 8,
+        "default": 48
+      }
+    }
+  }
+</hk-schema>

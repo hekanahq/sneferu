@@ -1,0 +1,48 @@
+{% if block.settings.text %}
+  <p class="tk-note tk-note-{{ block.settings.tone }}">
+    {% if block.settings.icon != 'none' %}<hk-icon name="{{ block.settings.icon }}" />{% endif %}
+    <span>{{ block.settings.text }}</span>
+  </p>
+{% endif %}
+<hk-schema>
+  {
+    "name": {
+      "en": "Text note",
+      "ar": "ملاحظة"
+    },
+    "version": 1,
+    "settings": {
+      "text": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "الدفع عند الاستلام.",
+          "en": "Pay when your order arrives."
+        },
+        "localized": true,
+        "maxLength": 200
+      },
+      "icon": {
+        "type": "select",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
+        "options": ["none", "truck", "package", "shield-check", "clock", "gift", "lock", "mail"],
+        "default": "truck"
+      },
+      "tone": {
+        "type": "select",
+        "label": {
+          "en": "Look",
+          "ar": "الشكل"
+        },
+        "options": ["plain", "muted"],
+        "default": "muted"
+      }
+    }
+  }
+</hk-schema>

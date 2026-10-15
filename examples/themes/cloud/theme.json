@@ -1,0 +1,35 @@
+{
+  "id": "cloud",
+  "name": "Cloud",
+  "version": "1.0.5",
+  "author": "Hekana",
+  "description": "A soft, playful kids store: butter-yellow hero with a wavy edge, age chips, pastel product tiles, mint, sky and peach accents and a blue wavy footer, on every page.",
+  "category": "kids",
+  "engine": "hk2",
+  "engineCompatibility": "^2.0.0",
+  "defaultLocale": "ar",
+  "locales": ["ar", "en"],
+  "settings": {},
+  "money": { "format": "whole" },
+  "tokens": {
+    "colors": {
+      "primary": "#FFD470",
+      "secondary": "#7DB7EA",
+      "accent": "#7DB7EA",
+      "background": "#FFFFFF",
+      "text": "#25324A",
+      "muted": "#55627A",
+      "ink": "#25324A",
+      "butter": "#FFD470",
+      "sky": "#7DB7EA",
+      "mint": "#BDE8D8",
+      "peach": "#F6DEC4",
+      "cream": "#FFF9EE",
+      "surface": "#FFFFFF",
+      "soft": "#F3F8FD"
+    },
+    "layout": { "contentWidth": "1120px" },
+    "fonts": { "heading": "Baloo Bhaijaan 2", "body": "Cairo" },
+    "radius": { "md": "18px" }
+  }
+}

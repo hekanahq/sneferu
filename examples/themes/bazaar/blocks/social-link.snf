@@ -1,0 +1,45 @@
+<a class="bz-social" href="{{ url(block.settings.url) }}" aria-label="{{ block.settings.label }}">
+  <hk-icon name="{{ block.settings.icon }}" />
+  <span>{{ block.settings.label }}</span>
+</a>
+<hk-schema>
+  {
+    "name": {
+      "en": "Social link",
+      "ar": "رابط تواصل اجتماعي"
+    },
+    "version": 1,
+    "settings": {
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Name",
+          "ar": "الاسم"
+        },
+        "default": {
+          "ar": "فيسبوك",
+          "en": "Facebook"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "url": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": ""
+      },
+      "icon": {
+        "type": "select",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
+        "options": ["share-2", "link", "message-circle", "globe", "mail", "external-link"],
+        "default": "share-2"
+      }
+    }
+  }
+</hk-schema>

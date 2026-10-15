@@ -1,0 +1,129 @@
+<hk-section full-bleed="true" padding-y="0">
+  <hk-container>
+    <div class="vl-hero">
+      <div class="vl-hero-text">
+        {% if section.settings.eyebrow %}
+          <p class="vl-eyebrow">{{ section.settings.eyebrow }}</p>
+        {% endif %}
+        {% if section.settings.title %}
+          <hk-heading text="{{ section.settings.title }}" level="h1" size="46" mobile-size="30" class="vl-hero-title" />
+        {% endif %}
+        {% if section.settings.subtitle %}
+          <hk-text text="{{ section.settings.subtitle }}" size="16" class="vl-hero-sub" />
+        {% endif %}
+        {% render 'button', label: section.settings.button_label, href: section.settings.button_link, style: section.settings.button_style %}
+      </div>
+      <div class="vl-hero-media">
+        <hk-image
+          src="{{ section.settings.image }}"
+          alt="{{ section.settings.image_alt }}"
+          loading="eager"
+          fit="cover"
+          sizes="(min-width: 1024px) 50vw, 100vw"
+        />
+      </div>
+    </div>
+  </hk-container>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Hero",
+      "ar": "البانر الرئيسي"
+    },
+    "version": 1,
+    "templates": ["index"],
+    "settings": {
+      "eyebrow": {
+        "type": "text",
+        "label": {
+          "en": "Small line above the heading",
+          "ar": "سطر صغير فوق العنوان"
+        },
+        "localized": true,
+        "default": {
+          "en": "Fine gold",
+          "ar": "ذهب راقٍ"
+        },
+        "maxLength": 40
+      },
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "localized": true,
+        "default": {
+          "en": "Gold that stays with you",
+          "ar": "ذهب يرافقك طويلًا"
+        },
+        "maxLength": 80
+      },
+      "subtitle": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "localized": true,
+        "default": {
+          "en": "Chains, rings and bracelets, shown close up so you can see every link.",
+          "ar": "سلاسل وخواتم وأساور، بصور قريبة تُظهر كل تفصيلة."
+        },
+        "maxLength": 160
+      },
+      "button_label": {
+        "type": "text",
+        "label": {
+          "en": "Button text",
+          "ar": "نص الزر"
+        },
+        "localized": true,
+        "default": {
+          "en": "View the collection",
+          "ar": "تصفح المجموعة"
+        },
+        "maxLength": 30
+      },
+      "button_link": {
+        "type": "link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/products"
+      },
+      "button_style": {
+        "type": "select",
+        "label": {
+          "en": "Button look",
+          "ar": "شكل الزر"
+        },
+        "options": ["solid", "outline", "ghost"],
+        "default": "outline"
+      },
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "Image",
+          "ar": "الصورة"
+        },
+        "default": ""
+      },
+      "image_alt": {
+        "type": "text",
+        "label": {
+          "en": "Image description",
+          "ar": "وصف الصورة"
+        },
+        "localized": true,
+        "default": {
+          "en": "A gold bracelet on dark velvet",
+          "ar": "سوار ذهبي على مخمل داكن"
+        },
+        "maxLength": 100
+      }
+    }
+  }
+</hk-schema>

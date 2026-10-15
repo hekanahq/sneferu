@@ -1,0 +1,27 @@
+<div class="sg-price-row">
+  <hk-price amount="{{ product.price }}" compare-at="{{ product.compare_at }}" product="{{ product }}" />
+  {% if block.settings.show_badge %}
+    {% if product.available %}{% if product.compare_at > product.price %}<span
+          class="sg-tag sg-tag-accent"
+        >{{ t('sale') }}</span>{% endif %}{% else %}<span class="sg-tag">{{ t('sold_out_badge') }}</span>{% endif %}
+  {% endif %}
+</div>
+<hk-schema>
+  {
+    "name": {
+      "en": "Price",
+      "ar": "السعر"
+    },
+    "version": 1,
+    "settings": {
+      "show_badge": {
+        "type": "boolean",
+        "label": {
+          "en": "Show sale and sold out tags",
+          "ar": "إظهار شارة التخفيض"
+        },
+        "default": true
+      }
+    }
+  }
+</hk-schema>

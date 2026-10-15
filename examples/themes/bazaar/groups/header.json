@@ -1,0 +1,77 @@
+{
+  "sections": [
+    {
+      "id": "header",
+      "type": "header",
+      "settings": {
+        "menu": "",
+        "show_nav": true,
+        "show_search": true,
+        "show_account": true,
+        "show_language": true,
+        "show_cart": true,
+        "drawer_on_add": true,
+        "scheme": "primary",
+        "logo_height": "32"
+      },
+      "blocks": [
+        {
+          "id": "nav-phones",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "موبايلات",
+              "en": "Phones"
+            },
+            "url": "/category/phones"
+          }
+        },
+        {
+          "id": "nav-audio",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "سماعات",
+              "en": "Headphones"
+            },
+            "url": "/category/audio"
+          }
+        },
+        {
+          "id": "nav-chargers",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "شواحن",
+              "en": "Chargers"
+            },
+            "url": "/category/chargers"
+          }
+        },
+        {
+          "id": "nav-app",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "أجهزة منزلية",
+              "en": "Appliances"
+            },
+            "url": "/category/appliances"
+          }
+        },
+        {
+          "id": "nav-acc",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "إكسسوارات",
+              "en": "Accessories"
+            },
+            "url": "/category/accessories"
+          }
+        }
+      ],
+      "block_order": ["nav-phones", "nav-audio", "nav-chargers", "nav-app", "nav-acc"]
+    }
+  ]
+}

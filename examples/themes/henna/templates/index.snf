@@ -1,0 +1,198 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "hero",
+        "blocks": [
+          {
+            "type": "hero-shot",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-beauty/pool-beauty-lipstick-nude-brown.webp",
+              "alt": {
+                "ar": "أحمر شفايف بني نيود",
+                "en": "Nude brown lipstick"
+              },
+              "label": {
+                "ar": "أحمر شفايف بني نيود",
+                "en": "Nude brown lipstick"
+              },
+              "link": "/category/lips"
+            }
+          },
+          {
+            "type": "hero-shot",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-beauty/pool-beauty-eyeshadow-palette-bronze.webp",
+              "alt": {
+                "ar": "باليت ظلال برونزي",
+                "en": "Bronze eyeshadow palette"
+              },
+              "label": {
+                "ar": "باليت ظلال برونزي",
+                "en": "Bronze eyeshadow palette"
+              },
+              "link": "/category/eyes"
+            }
+          },
+          {
+            "type": "hero-shot",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-beauty/pool-beauty-foundation-pump-beige.webp",
+              "alt": {
+                "ar": "فاونديشن بيج",
+                "en": "Beige foundation"
+              },
+              "label": {
+                "ar": "فاونديشن بيج",
+                "en": "Beige foundation"
+              },
+              "link": "/category/face"
+            }
+          }
+        ]
+      },
+      {
+        "type": "concerns",
+        "blocks": [
+          {
+            "type": "concern",
+            "settings": {
+              "label": {
+                "ar": "لمعة البشرة",
+                "en": "Skin glow"
+              },
+              "icon": "sparkles",
+              "link": "/category/face",
+              "tone": "1"
+            }
+          },
+          {
+            "type": "concern",
+            "settings": {
+              "label": {
+                "ar": "ألوان الشفايف",
+                "en": "Lip colour"
+              },
+              "icon": "heart",
+              "link": "/category/lips",
+              "tone": "2"
+            }
+          },
+          {
+            "type": "concern",
+            "settings": {
+              "label": {
+                "ar": "نظرة العيون",
+                "en": "Eye looks"
+              },
+              "icon": "star",
+              "link": "/category/eyes",
+              "tone": "3"
+            }
+          },
+          {
+            "type": "concern",
+            "settings": {
+              "label": {
+                "ar": "عناية الشعر",
+                "en": "Hair care"
+              },
+              "icon": "gift",
+              "link": "/category/hair",
+              "tone": "4"
+            }
+          }
+        ]
+      },
+      {
+        "type": "shelf"
+      },
+      {
+        "type": "trust-strip",
+        "blocks": [
+          {
+            "type": "trust-item",
+            "settings": {
+              "icon": "truck",
+              "text": {
+                "ar": "توصيل لكل المحافظات",
+                "en": "Delivery across Egypt"
+              }
+            }
+          },
+          {
+            "type": "trust-item",
+            "settings": {
+              "icon": "banknote",
+              "text": {
+                "ar": "الدفع عند الاستلام",
+                "en": "Cash on delivery"
+              }
+            }
+          },
+          {
+            "type": "trust-item",
+            "settings": {
+              "icon": "package",
+              "text": {
+                "ar": "استبدال سهل",
+                "en": "Easy exchange"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "look-strip",
+        "blocks": [
+          {
+            "type": "look-item",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-beauty/pool-beauty-compact-powder-beige.webp",
+              "alt": {
+                "ar": "بودرة مضغوطة بيج",
+                "en": "Beige compact powder"
+              },
+              "label": {
+                "ar": "لوك النهار",
+                "en": "Day look"
+              },
+              "link": "/category/face"
+            }
+          },
+          {
+            "type": "look-item",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-beauty/pool-beauty-eyeshadow-palette-bronze.webp",
+              "alt": {
+                "ar": "باليت ظلال برونزي",
+                "en": "Bronze eyeshadow palette"
+              },
+              "label": {
+                "ar": "لوك السهرة",
+                "en": "Evening look"
+              },
+              "link": "/category/eyes"
+            }
+          },
+          {
+            "type": "look-item",
+            "settings": {
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-beauty/pool-beauty-lipstick-nude-brown.webp",
+              "alt": {
+                "ar": "أحمر شفايف نيود",
+                "en": "Nude lipstick"
+              },
+              "label": {
+                "ar": "لوك نيود",
+                "en": "Nude look"
+              },
+              "link": "/category/lips"
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

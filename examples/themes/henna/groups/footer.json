@@ -1,0 +1,168 @@
+{
+  "sections": [
+    {
+      "id": "footer",
+      "type": "hn-footer",
+      "settings": {
+        "menu": "footer",
+        "scheme": "sand",
+        "show_language": true,
+        "show_newsletter": false,
+        "copyright": {
+          "ar": "جميع الحقوق محفوظة",
+          "en": "All rights reserved"
+        }
+      },
+      "blocks": [
+        {
+          "id": "col-shop",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "تسوّقي",
+              "en": "Shop"
+            }
+          },
+          "blocks": [
+            {
+              "id": "s1",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "الوجه",
+                  "en": "Face"
+                },
+                "url": "/category/face"
+              }
+            },
+            {
+              "id": "s2",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "الشفايف",
+                  "en": "Lips"
+                },
+                "url": "/category/lips"
+              }
+            },
+            {
+              "id": "s3",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "العيون",
+                  "en": "Eyes"
+                },
+                "url": "/category/eyes"
+              }
+            },
+            {
+              "id": "s4",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "الشعر",
+                  "en": "Hair"
+                },
+                "url": "/category/hair"
+              }
+            }
+          ]
+        },
+        {
+          "id": "col-help",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "مساعدة",
+              "en": "Help"
+            }
+          },
+          "blocks": [
+            {
+              "id": "h1",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "بحث",
+                  "en": "Search"
+                },
+                "url": "/search"
+              }
+            },
+            {
+              "id": "h2",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "السلة",
+                  "en": "Cart"
+                },
+                "url": "/cart"
+              }
+            },
+            {
+              "id": "h3",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "عن المتجر",
+                  "en": "About the store"
+                },
+                "url": "/pages/about"
+              }
+            }
+          ]
+        },
+        {
+          "id": "contact-wa",
+          "type": "contact-line",
+          "settings": {
+            "icon": "message-circle",
+            "text": {
+              "ar": "تواصلي معنا على واتساب",
+              "en": "Chat with us on WhatsApp"
+            },
+            "url": ""
+          }
+        },
+        {
+          "id": "social-1",
+          "type": "social-link",
+          "settings": {
+            "label": {
+              "ar": "إنستجرام",
+              "en": "Instagram"
+            },
+            "url": "",
+            "icon": "share-2"
+          }
+        },
+        {
+          "id": "social-2",
+          "type": "social-link",
+          "settings": {
+            "label": {
+              "ar": "تيك توك",
+              "en": "TikTok"
+            },
+            "url": "",
+            "icon": "play"
+          }
+        },
+        {
+          "id": "pay-cod",
+          "type": "payment-method",
+          "settings": {
+            "label": {
+              "ar": "الدفع عند الاستلام",
+              "en": "Cash on delivery"
+            },
+            "icon": "banknote"
+          }
+        }
+      ]
+    }
+  ]
+}

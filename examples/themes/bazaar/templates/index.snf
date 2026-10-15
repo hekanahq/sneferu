@@ -1,0 +1,207 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "deals-hero",
+        "blocks": [
+          {
+            "type": "side-link",
+            "settings": {
+              "icon": "smartphone",
+              "label": {
+                "ar": "موبايلات",
+                "en": "Phones"
+              },
+              "url": "/category/phones"
+            }
+          },
+          {
+            "type": "side-link",
+            "settings": {
+              "icon": "headphones",
+              "label": {
+                "ar": "سماعات",
+                "en": "Headphones"
+              },
+              "url": "/category/audio"
+            }
+          },
+          {
+            "type": "side-link",
+            "settings": {
+              "icon": "zap",
+              "label": {
+                "ar": "شواحن وباور بانك",
+                "en": "Chargers and power banks"
+              },
+              "url": "/category/chargers"
+            }
+          },
+          {
+            "type": "side-link",
+            "settings": {
+              "icon": "home",
+              "label": {
+                "ar": "أجهزة منزلية",
+                "en": "Appliances"
+              },
+              "url": "/category/appliances"
+            }
+          },
+          {
+            "type": "side-link",
+            "settings": {
+              "icon": "monitor",
+              "label": {
+                "ar": "لابتوب وشاشات",
+                "en": "Laptops and screens"
+              },
+              "url": "/category/computers"
+            }
+          },
+          {
+            "type": "side-link",
+            "settings": {
+              "icon": "tag",
+              "label": {
+                "ar": "إكسسوارات",
+                "en": "Accessories"
+              },
+              "url": "/category/accessories"
+            }
+          }
+        ]
+      },
+      {
+        "type": "category-tiles",
+        "blocks": [
+          {
+            "type": "tile",
+            "settings": {
+              "icon": "smartphone",
+              "label": {
+                "ar": "موبايلات",
+                "en": "Phones"
+              },
+              "url": "/category/phones"
+            }
+          },
+          {
+            "type": "tile",
+            "settings": {
+              "icon": "headphones",
+              "label": {
+                "ar": "سماعات",
+                "en": "Headphones"
+              },
+              "url": "/category/audio"
+            }
+          },
+          {
+            "type": "tile",
+            "settings": {
+              "icon": "zap",
+              "label": {
+                "ar": "شواحن",
+                "en": "Chargers"
+              },
+              "url": "/category/chargers"
+            }
+          },
+          {
+            "type": "tile",
+            "settings": {
+              "icon": "home",
+              "label": {
+                "ar": "أجهزة منزلية",
+                "en": "Appliances"
+              },
+              "url": "/category/appliances"
+            }
+          }
+        ]
+      },
+      {
+        "type": "deals-grid",
+        "settings": {
+          "collection": "featured",
+          "limit": 8,
+          "columns": 4,
+          "title": {
+            "ar": "عروض مختارة",
+            "en": "Selected deals"
+          }
+        }
+      },
+      {
+        "type": "deals-grid",
+        "settings": {
+          "collection": "appliances",
+          "limit": 4,
+          "columns": 4,
+          "title": {
+            "ar": "إضاءة وأدوات",
+            "en": "Lighting and tools"
+          },
+          "link": "/category/appliances"
+        }
+      },
+      {
+        "type": "trust-strip",
+        "blocks": [
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "truck",
+              "label": {
+                "ar": "توصيل لكل المحافظات",
+                "en": "Delivery across Egypt"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "banknote",
+              "label": {
+                "ar": "الدفع عند الاستلام",
+                "en": "Cash on delivery"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "package",
+              "label": {
+                "ar": "استبدال سهل",
+                "en": "Easy exchange"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "message-circle",
+              "label": {
+                "ar": "تواصل على واتساب",
+                "en": "Chat on WhatsApp"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "shield-check",
+              "label": {
+                "ar": "تسوق بأمان",
+                "en": "Shop with confidence"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

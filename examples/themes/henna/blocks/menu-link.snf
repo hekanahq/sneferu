@@ -1,0 +1,44 @@
+<div class="hn-nav-item">
+  <a class="hn-link" href="{{ url(block.settings.url) }}">{{ block.settings.label }}</a>
+  {% if block.blocks %}
+    <div class="hn-sub">
+      {% for sub in block.blocks %}<a href="{{ url(sub.settings.url) }}">{{ sub.settings.label }}</a>{% endfor %}
+    </div>
+  {% endif %}
+</div>
+<hk-schema>
+  {
+    "name": {
+      "en": "Menu link",
+      "ar": "رابط في القائمة"
+    },
+    "version": 1,
+    "blocks": {
+      "allowed": ["menu-sub-link"],
+      "max": 8
+    },
+    "settings": {
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Label",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "رابط",
+          "en": "Link"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "url": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/"
+      }
+    }
+  }
+</hk-schema>

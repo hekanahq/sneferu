@@ -1,0 +1,78 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "not-found"
+      },
+      {
+        "type": "category-tiles",
+        "settings": {
+          "columns": "4"
+        },
+        "blocks": [
+          {
+            "type": "category-tile",
+            "settings": {
+              "icon": "lantern",
+              "label": {
+                "ar": "فوانيس وإضاءة",
+                "en": "Lanterns and lighting"
+              },
+              "caption": {
+                "ar": "",
+                "en": ""
+              },
+              "link": "/category/lighting"
+            }
+          },
+          {
+            "type": "category-tile",
+            "settings": {
+              "icon": "kilim",
+              "label": {
+                "ar": "كليم ووسائد",
+                "en": "Kilims and cushions"
+              },
+              "caption": {
+                "ar": "",
+                "en": ""
+              },
+              "link": "/category/textiles"
+            }
+          },
+          {
+            "type": "category-tile",
+            "settings": {
+              "icon": "vessel",
+              "label": {
+                "ar": "نحاس وتقديم",
+                "en": "Brass and copper"
+              },
+              "caption": {
+                "ar": "",
+                "en": ""
+              },
+              "link": "/category/brass-copper"
+            }
+          },
+          {
+            "type": "category-tile",
+            "settings": {
+              "icon": "lattice",
+              "label": {
+                "ar": "خشب ومشربية",
+                "en": "Wood and mashrabiya"
+              },
+              "caption": {
+                "ar": "",
+                "en": ""
+              },
+              "link": "/category/wood"
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

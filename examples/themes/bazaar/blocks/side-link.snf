@@ -1,0 +1,46 @@
+<li class="bz-side-item">
+  <a class="bz-side-link" href="{{ url(block.settings.url) }}">
+    <hk-icon name="{{ block.settings.icon }}" size="22" class="bz-side-icon" />
+    <span>{{ block.settings.label }}</span>
+  </a>
+</li>
+<hk-schema>
+  {
+    "name": {
+      "en": "Category link",
+      "ar": "رابط قسم"
+    },
+    "version": 1,
+    "settings": {
+      "icon": {
+        "type": "icon",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
+        "default": "smartphone"
+      },
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Label",
+          "ar": "النص"
+        },
+        "localized": true,
+        "default": {
+          "ar": "قسم",
+          "en": "Category"
+        },
+        "maxLength": 30
+      },
+      "url": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      }
+    }
+  }
+</hk-schema>

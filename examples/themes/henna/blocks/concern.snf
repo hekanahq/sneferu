@@ -1,0 +1,53 @@
+<a class="hn-tile hn-tone-{{ block.settings.tone }}" href="{{ url(block.settings.link) }}">
+  <hk-icon name="{{ block.settings.icon }}" size="28" />
+  <span>{{ block.settings.label }}</span>
+</a>
+<hk-schema>
+  {
+    "name": {
+      "en": "Concern tile",
+      "ar": "بلاطة احتياج"
+    },
+    "version": 1,
+    "settings": {
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Label",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "لمعة البشرة",
+          "en": "Skin glow"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "icon": {
+        "type": "icon",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
+        "default": "sparkles"
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      },
+      "tone": {
+        "type": "select",
+        "label": {
+          "en": "Colour",
+          "ar": "اللون"
+        },
+        "options": ["1", "2", "3", "4"],
+        "default": "1"
+      }
+    }
+  }
+</hk-schema>

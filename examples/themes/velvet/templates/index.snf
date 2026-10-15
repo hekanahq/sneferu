@@ -1,0 +1,64 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "hero",
+        "settings": {
+          "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-jewelry/pool-jewelry-gold-tennis-bracelet.webp"
+        }
+      },
+      {
+        "type": "collection-chips"
+      },
+      {
+        "type": "featured-products",
+        "settings": {
+          "title": {
+            "ar": "أحدث القطع",
+            "en": "New pieces"
+          },
+          "limit": 6,
+          "columns": 3,
+          "image_ratio": "1/1",
+          "card_style": "bordered"
+        }
+      },
+      {
+        "type": "trust-strip",
+        "blocks": [
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "banknote",
+              "label": {
+                "ar": "الدفع عند الاستلام",
+                "en": "Cash on delivery"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "truck",
+              "label": {
+                "ar": "توصيل لكل المحافظات",
+                "en": "Delivery across Egypt"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "package",
+              "label": {
+                "ar": "استبدال سهل",
+                "en": "Easy exchange"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

@@ -1,0 +1,75 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="24">
+  {% if section.settings.title %}
+    <hk-heading text="{{ section.settings.title }}" level="h2" size="26" mobile-size="20" align="center" />
+  {% endif %}
+  <ul class="hl-features hl-features-{{ section.settings.style }}" aria-label="{{ t('features_label') }}">
+    {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+  </ul>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Feature strip",
+      "ar": "شريط المميزات"
+    },
+    "version": 1,
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading (empty hides it)",
+          "ar": "العنوان (فاضي يخفيه)"
+        },
+        "default": {
+          "en": "",
+          "ar": ""
+        },
+        "localized": true,
+        "maxLength": 50
+      },
+      "style": {
+        "type": "select",
+        "label": {
+          "en": "Style",
+          "ar": "الشكل"
+        },
+        "default": "strip",
+        "options": ["strip", "cards"]
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "default": 40,
+        "min": 0,
+        "max": 160,
+        "step": 8
+      }
+    },
+    "blocks": {
+      "allowed": ["feature"],
+      "max": 6
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "Three features",
+          "ar": "ثلاث مميزات"
+        },
+        "blocks": [
+          {
+            "type": "feature"
+          },
+          {
+            "type": "feature"
+          },
+          {
+            "type": "feature"
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

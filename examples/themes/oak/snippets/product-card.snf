@@ -1,0 +1,28 @@
+<article class="oak-card">
+  <a class="oak-card-link" href="{{ product.url }}">
+    <div class="oak-card-media">
+      <hk-image
+        src="{{ product.image }}"
+        alt="{{ product.title }}"
+        aspect-ratio="{{ image_ratio }}"
+        sizes="(min-width: 1024px) 25vw, 50vw"
+      />
+      {% if show_badge %}
+        {% if product.available %}
+          {% if product.compare_at > product.price %}
+            <span class="oak-badge">{{ t('sale') }}</span>
+          {% endif %}
+        {% else %}
+          <span class="oak-badge oak-badge-muted">{{ t('sold_out_badge') }}</span>
+        {% endif %}
+      {% endif %}
+    </div>
+    <h3 class="oak-card-title">{{ product.title }}</h3>
+    {% if show_price %}{% render 'price', product: product, bind: false %}{% endif %}
+    {% if product.options %}
+      <p class="oak-card-opts">
+        {% for v in product.options[0].values limit: 4 %}<span>{{ v }}</span>{% endfor %}
+      </p>
+    {% endif %}
+  </a>
+</article>

@@ -1,0 +1,9 @@
+<div class="sg-empty">
+  {% if title %}
+    <h2 class="sg-h2">{{ title }}</h2>
+  {% endif %}
+  {% if text %}
+    <p class="sg-lead">{{ text }}</p>
+  {% endif %}
+  {% if label %}<hk-button label="{{ label }}" href="{{ href }}" class="sg-cta" />{% endif %}
+</div>
