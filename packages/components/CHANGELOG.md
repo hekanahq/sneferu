@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.10.0
+
+### Minor Changes
+
+- e317d94: `<hk-add-to-cart>` on a list card for a product with variants and no selected variant now renders a link to the product page (new `choose-label` prop, default "Choose options" / «اختر») instead of a button that cannot add.
+- cbf0f2d: `<hk-variant-picker display="swatches|auto">`: photo tiles and colour dots from the option's swatches and presentation. New `<hk-inline-checkout>`: the store's own checkout in a frame on a themed page (no fields from the theme), with the `inline-checkout` controller (`MSG_CHECKOUT_*`), and a placeholder in `sneferu dev`.
+
+### Patch Changes
+
+- @hekana/sneferu-core@0.10.0
+
 ## 0.9.1
 
 ### Patch Changes
