@@ -94,8 +94,8 @@
         },
         "localized": true,
         "default": {
-          "ar": "أزياء وأجهزة ومستلزمات البيت والعناية، بأسعار مخفضة على أصناف مختارة والدفع عند الاستلام.",
-          "en": "Fashion, devices, home and personal care, with reduced prices on selected items and pay on delivery."
+          "ar": "أزياء وأجهزة ومستلزمات البيت والعناية في مكان واحد، والدفع عند الاستلام.",
+          "en": "Fashion, devices, home and personal care in one place, pay on delivery."
         },
         "maxLength": 160
       },

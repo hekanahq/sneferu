@@ -26,7 +26,7 @@
           "ar": "تواصل على واتساب",
           "en": "Chat on WhatsApp"
         },
-        "newsletter_link": "/pages/contact",
+        "newsletter_link": "",
         "scheme": "primary",
         "show_language": true
       },
@@ -116,7 +116,7 @@
                   "ar": "من نحن",
                   "en": "About us"
                 },
-                "url": "/pages/about"
+                "url": "/about"
               }
             },
             {
@@ -127,7 +127,7 @@
                   "ar": "تواصل معنا",
                   "en": "Contact us"
                 },
-                "url": "/pages/contact"
+                "url": "/contact"
               }
             },
             {
@@ -151,7 +151,7 @@
               "ar": "واتساب",
               "en": "WhatsApp"
             },
-            "url": "/pages/contact",
+            "url": "",
             "icon": "message-circle"
           }
         },

@@ -1,6 +1,6 @@
 <footer class="wk-footer wk-scheme-{{ section.settings.scheme }}">
   <hk-container>
-    {% if section.settings.show_newsletter %}
+    {% if section.settings.show_newsletter and section.settings.newsletter_link %}
       <div class="wk-newsletter">
         <div>
           {% if section.settings.newsletter_title %}
