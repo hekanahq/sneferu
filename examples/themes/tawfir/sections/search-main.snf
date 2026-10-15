@@ -1,0 +1,90 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="16">
+  <h1 class="tw-h1">{{ section.settings.title }}</h1>
+  <div class="tw-search tw-search-page"><hk-search-form placeholder="{{ t('search_placeholder') }}" /></div>
+  {% if search.terms %}
+    <p class="tw-muted">
+      {{ t('results_for') }} “{{ search.terms }}” · {{ search.results_count }} {{ t('results_label') }}
+    </p>
+    {% if search.results %}
+      <div class="tw-grid tw-cols-{{ section.settings.columns }}">
+        {% for p in search.results limit: 48 %}{% render 'product-card', product: p %}{% endfor %}
+      </div>
+      <hk-pagination paginate="{{ paginate }}" />
+    {% else %}
+      <p class="tw-empty">{{ section.settings.no_results }}</p>
+    {% endif %}
+  {% else %}
+    <p class="tw-muted">{{ section.settings.prompt }}</p>
+  {% endif %}
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Search",
+      "ar": "البحث"
+    },
+    "version": 1,
+    "templates": ["search"],
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Title",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "البحث",
+          "en": "Search"
+        },
+        "maxLength": 40,
+        "localized": true
+      },
+      "columns": {
+        "type": "select",
+        "label": {
+          "en": "Columns",
+          "ar": "الأعمدة"
+        },
+        "options": ["3", "4", "5", "6"],
+        "default": "5"
+      },
+      "no_results": {
+        "type": "text",
+        "label": {
+          "en": "No results text",
+          "ar": "نص عدم وجود نتائج"
+        },
+        "default": {
+          "ar": "لا توجد منتجات تطابق بحثك.",
+          "en": "No products match your search."
+        },
+        "maxLength": 80,
+        "localized": true
+      },
+      "prompt": {
+        "type": "text",
+        "label": {
+          "en": "Prompt text",
+          "ar": "نص التمهيد"
+        },
+        "default": {
+          "ar": "اكتب اسم المنتج للبحث.",
+          "en": "Type a product name to search."
+        },
+        "maxLength": 80,
+        "localized": true
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 120,
+        "step": 8,
+        "default": 24
+      }
+    }
+  }
+</hk-schema>

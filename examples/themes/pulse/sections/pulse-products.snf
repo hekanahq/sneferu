@@ -1,0 +1,87 @@
+<hk-section padding-y="40" mobile-padding-y="28" class="pl-products">
+  <hk-stack gap="20">
+    <div class="pl-row-head">
+      <div class="pl-head">
+        <span class="pl-dash" aria-hidden="true"></span>
+        <hk-heading text="{{ section.settings.heading }}" level="h2" size="26" mobile-size="20" class="pl-h2" />
+      </div>
+      <a class="pl-more" href="{{ url('/products') }}">{{ t('view_all') }}</a>
+    </div>
+    {% if collection(section.settings.list).products %}
+      <div class="pl-grid pl-cols-{{ section.settings.columns }}">
+        {% for p in collection(section.settings.list).products limit: section.settings.count %}
+          {% render 'product-card', product: p, card_style: 'plain', image_ratio: '1/1', show_price: true, show_badge: true, note: section.settings.card_note %}
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="pl-empty">{{ t('empty_products') }}</p>
+    {% endif %}
+  </hk-stack>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "ar": "شبكة المنتجات",
+      "en": "Product grid"
+    },
+    "version": 1,
+    "settings": {
+      "heading": {
+        "type": "text",
+        "label": {
+          "ar": "العنوان",
+          "en": "Heading"
+        },
+        "localized": true,
+        "default": {
+          "ar": "معدات مختارة",
+          "en": "Featured gear"
+        },
+        "maxLength": 60
+      },
+      "list": {
+        "type": "collection",
+        "label": {
+          "ar": "القسم",
+          "en": "Collection"
+        },
+        "default": "featured"
+      },
+      "columns": {
+        "type": "range",
+        "label": {
+          "ar": "الأعمدة",
+          "en": "Columns"
+        },
+        "default": 4,
+        "min": 2,
+        "max": 5,
+        "step": 1
+      },
+      "count": {
+        "type": "range",
+        "label": {
+          "ar": "عدد المنتجات",
+          "en": "Products"
+        },
+        "default": 8,
+        "min": 2,
+        "max": 24,
+        "step": 1
+      },
+      "card_note": {
+        "type": "text",
+        "label": {
+          "en": "Line under the price (empty hides it)",
+          "ar": "سطر تحت السعر (فاضي يخفيه)"
+        },
+        "localized": true,
+        "default": {
+          "ar": "الدفع عند الاستلام",
+          "en": "Cash on delivery"
+        },
+        "maxLength": 60
+      }
+    }
+  }
+</hk-schema>

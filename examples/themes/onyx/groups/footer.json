@@ -1,0 +1,207 @@
+{
+  "sections": [
+    {
+      "id": "footer",
+      "type": "footer",
+      "settings": {
+        "menu": "footer",
+        "about_text": {
+          "ar": "عطور وساعات ومجوهرات وإكسسوارات مختارة، بالجنيه المصري.",
+          "en": "Fragrance, watches, jewellery and accessories, priced in Egyptian pounds."
+        },
+        "copyright": {
+          "ar": "جميع الحقوق محفوظة",
+          "en": "All rights reserved"
+        },
+        "show_newsletter": false,
+        "newsletter_title": {
+          "ar": "تابع جديد المتجر",
+          "en": "Follow new arrivals"
+        },
+        "newsletter_text": {
+          "ar": "كلمنا على واتساب ونبلغك بالجديد.",
+          "en": "Message us on WhatsApp and we will tell you what is new."
+        },
+        "newsletter_label": {
+          "ar": "واتساب",
+          "en": "WhatsApp"
+        },
+        "newsletter_link": "/contact",
+        "show_language": true,
+        "scheme": "primary"
+      },
+      "blocks": [
+        {
+          "id": "col-shop",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "تسوق",
+              "en": "Shop"
+            }
+          },
+          "blocks": [
+            {
+              "id": "col-shop-all",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "كل المنتجات",
+                  "en": "All products"
+                },
+                "url": "/products"
+              }
+            },
+            {
+              "id": "col-shop-gift",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "عطور وساعات",
+                  "en": "Fragrance and watches"
+                },
+                "url": "/category/fragrance-watches"
+              }
+            },
+            {
+              "id": "col-shop-currency",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "مجوهرات",
+                  "en": "Jewellery"
+                },
+                "url": "/category/jewellery"
+              }
+            },
+            {
+              "id": "col-shop-search",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "بحث",
+                  "en": "Search"
+                },
+                "url": "/search"
+              }
+            }
+          ]
+        },
+        {
+          "id": "col-help",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "مساعدة",
+              "en": "Help"
+            }
+          },
+          "blocks": [
+            {
+              "id": "col-help-about",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "عنّا",
+                  "en": "About us"
+                },
+                "url": "/about"
+              }
+            },
+            {
+              "id": "col-help-delivery",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "الشحن والدفع",
+                  "en": "Shipping and payment"
+                },
+                "url": "/shipping"
+              }
+            },
+            {
+              "id": "col-help-contact",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "تواصل معنا",
+                  "en": "Contact"
+                },
+                "url": "/contact"
+              }
+            }
+          ]
+        },
+        {
+          "id": "social-whatsapp",
+          "type": "social-link",
+          "settings": {
+            "label": {
+              "ar": "واتساب",
+              "en": "WhatsApp"
+            },
+            "url": "/contact",
+            "icon": "message-circle"
+          }
+        },
+        {
+          "id": "social-mail",
+          "type": "social-link",
+          "settings": {
+            "label": {
+              "ar": "الإيميل",
+              "en": "Email"
+            },
+            "url": "/contact",
+            "icon": "mail"
+          }
+        },
+        {
+          "id": "pay-card",
+          "type": "payment-method",
+          "settings": {
+            "label": {
+              "ar": "الدفع عند الاستلام",
+              "en": "Cash on delivery"
+            },
+            "icon": "banknote"
+          }
+        },
+        {
+          "id": "pay-wallet",
+          "type": "payment-method",
+          "settings": {
+            "label": {
+              "ar": "محفظة موبايل",
+              "en": "Mobile wallet"
+            },
+            "icon": "smartphone"
+          }
+        },
+        {
+          "id": "pay-other",
+          "type": "payment-method",
+          "settings": {
+            "label": {
+              "ar": "كارت بنكي",
+              "en": "Bank card"
+            },
+            "icon": "credit-card"
+          }
+        },
+        {
+          "id": "contact-wa",
+          "type": "contact-line",
+          "settings": {
+            "icon": "message-circle",
+            "text": {
+              "ar": "تواصل معنا على واتساب",
+              "en": "Contact us on WhatsApp"
+            },
+            "url": ""
+          }
+        }
+      ]
+    }
+  ]
+}

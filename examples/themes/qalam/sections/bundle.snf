@@ -1,0 +1,162 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="24">
+  <hk-container>
+    <div class="ql-bundle">
+      <div class="ql-bundle-text">
+        {% if section.settings.tag %}<span class="ql-bundle-tag">{{ section.settings.tag }}</span>{% endif %}
+        {% if section.settings.title %}
+          <hk-heading text="{{ section.settings.title }}" level="h2" size="34" mobile-size="24" />
+        {% endif %}
+        {% if section.settings.text %}
+          <hk-text text="{{ section.settings.text }}" size="16" />
+        {% endif %}
+        {% render 'button', label: section.settings.button_label, href: section.settings.button_link, style: 'solid' %}
+      </div>
+      {% if section.settings.image %}
+        <div class="ql-bundle-art">
+          <hk-image
+            src="{{ section.settings.image }}"
+            alt="{{ section.settings.image_alt }}"
+            aspect-ratio="1/1"
+            fit="contain"
+            sizes="(min-width: 1024px) 280px, 50vw"
+          />
+        </div>
+      {% endif %}
+      {% if section.settings.image2 %}
+        <div class="ql-bundle-art ql-bundle-art-2">
+          <hk-image
+            src="{{ section.settings.image2 }}"
+            alt="{{ section.settings.image2_alt }}"
+            aspect-ratio="1/1"
+            fit="contain"
+            sizes="(min-width: 1024px) 280px, 50vw"
+          />
+        </div>
+      {% endif %}
+    </div>
+  </hk-container>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Feature banner",
+      "ar": "بانر مميز"
+    },
+    "version": 1,
+    "settings": {
+      "tag": {
+        "type": "text",
+        "label": {
+          "en": "Small tag (empty hides it)",
+          "ar": "وسم صغير (فاضي يخفيه)"
+        },
+        "default": {
+          "ar": "",
+          "en": ""
+        },
+        "localized": true,
+        "maxLength": 20
+      },
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "مستلزمات المدرسة",
+          "en": "School supplies"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "text": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "دفاتر وأقلام وحقائب أقلام في مكان واحد.",
+          "en": "Notebooks, pens and pencil cases in one place."
+        },
+        "localized": true,
+        "maxLength": 160
+      },
+      "button_label": {
+        "type": "text",
+        "label": {
+          "en": "Button",
+          "ar": "الزر"
+        },
+        "default": {
+          "ar": "تسوّق المستلزمات",
+          "en": "Shop supplies"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "button_link": {
+        "type": "link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/products"
+      },
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "First photo",
+          "ar": "الصورة الأولى"
+        },
+        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/pencil-case.webp"
+      },
+      "image_alt": {
+        "type": "text",
+        "label": {
+          "en": "First photo description",
+          "ar": "وصف الصورة الأولى"
+        },
+        "default": {
+          "ar": "حقيبة أقلام صفراء",
+          "en": "A yellow pencil case"
+        },
+        "localized": true,
+        "maxLength": 120
+      },
+      "image2": {
+        "type": "image",
+        "label": {
+          "en": "Second photo",
+          "ar": "الصورة الثانية"
+        },
+        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/markers.webp"
+      },
+      "image2_alt": {
+        "type": "text",
+        "label": {
+          "en": "Second photo description",
+          "ar": "وصف الصورة الثانية"
+        },
+        "default": {
+          "ar": "أقلام ماركر ملونة",
+          "en": "A set of coloured markers"
+        },
+        "localized": true,
+        "maxLength": 120
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 120,
+        "step": 8,
+        "default": 24
+      }
+    }
+  }
+</hk-schema>

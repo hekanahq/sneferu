@@ -1,0 +1,150 @@
+{
+  "sections": [
+    {
+      "id": "footer",
+      "type": "footer",
+      "settings": {
+        "menu": "",
+        "about_text": {
+          "ar": "متجر صغير بنعرض فيه منتجاتنا بالصور. اختار اللي يعجبك واطلبه من صفحته.",
+          "en": "A small shop where we show our products in photos. Pick what you like and order it from its page."
+        },
+        "copyright": {
+          "ar": "جميع الحقوق محفوظة",
+          "en": "All rights reserved"
+        },
+        "scheme": "olive",
+        "show_language": false,
+        "show_contact": true
+      },
+      "blocks": [
+        {
+          "id": "col-shop",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "تسوق",
+              "en": "Shop"
+            }
+          },
+          "blocks": [
+            {
+              "id": "l1",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "كل المنتجات",
+                  "en": "All products"
+                },
+                "url": "/products"
+              }
+            },
+            {
+              "id": "l2",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "ملابس",
+                  "en": "Clothing"
+                },
+                "url": "/category/clothes"
+              }
+            },
+            {
+              "id": "l3",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "إكسسوارات",
+                  "en": "Accessories"
+                },
+                "url": "/category/accessories"
+              }
+            },
+            {
+              "id": "l4",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "بحث",
+                  "en": "Search"
+                },
+                "url": "/search"
+              }
+            }
+          ]
+        },
+        {
+          "id": "col-help",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "المتجر",
+              "en": "The shop"
+            }
+          },
+          "blocks": [
+            {
+              "id": "l5",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "عنّا",
+                  "en": "About us"
+                },
+                "url": "/pages/about"
+              }
+            },
+            {
+              "id": "l6",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "السلة",
+                  "en": "Cart"
+                },
+                "url": "/cart"
+              }
+            }
+          ]
+        },
+        {
+          "id": "s-ig",
+          "type": "social-link",
+          "settings": {
+            "label": {
+              "ar": "إنستجرام",
+              "en": "Instagram"
+            },
+            "url": "",
+            "icon": "share-2"
+          }
+        },
+        {
+          "id": "s-fb",
+          "type": "social-link",
+          "settings": {
+            "label": {
+              "ar": "فيسبوك",
+              "en": "Facebook"
+            },
+            "url": "",
+            "icon": "globe"
+          }
+        },
+        {
+          "id": "s-wa",
+          "type": "social-link",
+          "settings": {
+            "label": {
+              "ar": "واتساب",
+              "en": "WhatsApp"
+            },
+            "url": "",
+            "icon": "message-circle"
+          }
+        }
+      ]
+    }
+  ]
+}

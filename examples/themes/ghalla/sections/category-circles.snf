@@ -1,0 +1,63 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="12">
+  <hk-container>
+    <ul class="gh-circles">
+      {% for block in section.blocks %}
+        <hk-block of="{{ block }}" />
+      {% endfor %}
+    </ul>
+  </hk-container>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Category circles",
+      "ar": "دواير الأقسام"
+    },
+    "version": 1,
+    "settings": {
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 120,
+        "step": 4,
+        "default": 24
+      }
+    },
+    "blocks": {
+      "allowed": ["category-circle"],
+      "max": 8
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "Six circles",
+          "ar": "ست دواير"
+        },
+        "blocks": [
+          {
+            "type": "category-circle"
+          },
+          {
+            "type": "category-circle"
+          },
+          {
+            "type": "category-circle"
+          },
+          {
+            "type": "category-circle"
+          },
+          {
+            "type": "category-circle"
+          },
+          {
+            "type": "category-circle"
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

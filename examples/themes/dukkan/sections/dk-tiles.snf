@@ -1,0 +1,50 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="24">
+  <div class="dk-tiles">
+    {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Category tiles",
+      "ar": "مربعات الأقسام"
+    },
+    "version": 1,
+    "blocks": {
+      "allowed": ["tile"],
+      "max": 6
+    },
+    "settings": {
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 160,
+        "step": 8,
+        "default": 32
+      }
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "Three tiles",
+          "ar": "ثلاث مربعات"
+        },
+        "blocks": [
+          {
+            "type": "tile"
+          },
+          {
+            "type": "tile"
+          },
+          {
+            "type": "tile"
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

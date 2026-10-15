@@ -1,0 +1,16 @@
+{
+  "sections": [
+    {
+      "id": "announcement",
+      "type": "announcement-bar",
+      "settings": {
+        "text": {
+          "ar": "الدفع عند الاستلام وتوصيل لكل المحافظات",
+          "en": "Cash on delivery, delivery across Egypt"
+        },
+        "link": "/products",
+        "scheme": "primary"
+      }
+    }
+  ]
+}

@@ -1,7 +1,9 @@
+{% if block.settings.url %}
 <a class="hn-social" href="{{ url(block.settings.url) }}" aria-label="{{ block.settings.label }}"><hk-icon
     name="{{ block.settings.icon }}"
     size="20"
   /><span>{{ block.settings.label }}</span></a>
+{% endif %}
 <hk-schema>
   {
     "name": {

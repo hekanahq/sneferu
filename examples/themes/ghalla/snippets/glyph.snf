@@ -1,0 +1,12 @@
+<svg
+  class="gh-glyph"
+  viewBox="0 0 32 32"
+  width="32"
+  height="32"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+><path d="M7 25C5 15 11 7 25 6c1 12-5 19-15 19" /><path d="M7 25c4-7 8-11 13-14" /></svg>

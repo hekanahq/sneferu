@@ -1,0 +1,116 @@
+{
+  "sections": [
+    {
+      "id": "footer",
+      "type": "footer",
+      "settings": {
+        "menu": "",
+        "scheme": "primary",
+        "about_text": {
+          "ar": "ملابس وإكسسوارات بخطوط بسيطة بالأبيض والأسود.",
+          "en": "Clothing and accessories in plain black and white lines."
+        },
+        "copyright": {
+          "ar": "جميع الحقوق محفوظة",
+          "en": "All rights reserved"
+        },
+        "show_newsletter": false,
+        "show_language": true
+      },
+      "blocks": [
+        {
+          "id": "col-shop",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "تسوق",
+              "en": "Shop"
+            }
+          },
+          "blocks": [
+            {
+              "id": "f-all",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "كل المنتجات",
+                  "en": "All products"
+                },
+                "url": "/products"
+              }
+            },
+            {
+              "id": "f-search",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "بحث",
+                  "en": "Search"
+                },
+                "url": "/search"
+              }
+            },
+            {
+              "id": "f-cart",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "السلة",
+                  "en": "Cart"
+                },
+                "url": "/cart"
+              }
+            }
+          ]
+        },
+        {
+          "id": "col-info",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "المتجر",
+              "en": "Store"
+            }
+          },
+          "blocks": [
+            {
+              "id": "f-about",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "عن المتجر",
+                  "en": "About"
+                },
+                "url": "/pages/about"
+              }
+            }
+          ]
+        },
+        {
+          "id": "social-whatsapp",
+          "type": "social-link",
+          "settings": {
+            "label": {
+              "ar": "واتساب",
+              "en": "WhatsApp"
+            },
+            "url": "",
+            "icon": "message-circle"
+          }
+        },
+        {
+          "id": "contact-wa",
+          "type": "contact-line",
+          "settings": {
+            "icon": "message-circle",
+            "text": {
+              "ar": "تواصل معنا على واتساب",
+              "en": "Message us on WhatsApp"
+            },
+            "url": ""
+          }
+        }
+      ]
+    }
+  ]
+}

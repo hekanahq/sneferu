@@ -1,0 +1,74 @@
+{
+  "sections": [
+    {
+      "id": "header",
+      "type": "header",
+      "settings": {
+        "menu": "main-menu",
+        "show_search": true,
+        "show_account": true,
+        "show_language": true,
+        "show_cart": true,
+        "drawer_on_add": true,
+        "scheme": "light"
+      },
+      "blocks": [
+        {
+          "id": "nav-all",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "en": "All products",
+              "ar": "كل المنتجات"
+            },
+            "url": "/products"
+          }
+        },
+        {
+          "id": "nav-pottery",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "en": "Pottery and ceramics",
+              "ar": "الفخار والسيراميك"
+            },
+            "url": "/category/pottery"
+          }
+        },
+        {
+          "id": "nav-weaving",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "en": "Weaving and macrame",
+              "ar": "النسيج والمكرمية"
+            },
+            "url": "/category/weaving"
+          }
+        },
+        {
+          "id": "nav-baskets",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "en": "Baskets and decor",
+              "ar": "السلال والديكور"
+            },
+            "url": "/category/baskets"
+          }
+        },
+        {
+          "id": "nav-accessories",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "en": "Accessories",
+              "ar": "إكسسوارات وأدوات"
+            },
+            "url": "/category/accessories"
+          }
+        }
+      ]
+    }
+  ]
+}

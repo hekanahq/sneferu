@@ -1,0 +1,76 @@
+{
+  "sections": [
+    {
+      "id": "header",
+      "type": "header",
+      "settings": {
+        "menu": "main-menu",
+        "show_search": true,
+        "search_style": "bar",
+        "show_account": false,
+        "show_language": true,
+        "show_cart": true,
+        "drawer_on_add": true,
+        "sticky": true,
+        "scheme": "accent"
+      },
+      "blocks": [
+        {
+          "id": "nav-all",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "كل المنتجات",
+              "en": "All products"
+            },
+            "url": "/products"
+          }
+        },
+        {
+          "id": "nav-notebooks",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "دفاتر",
+              "en": "Notebooks"
+            },
+            "url": "/category/notebooks"
+          }
+        },
+        {
+          "id": "nav-planners",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "مفكرات",
+              "en": "Planners"
+            },
+            "url": "/category/planners"
+          }
+        },
+        {
+          "id": "nav-pens",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "أقلام وحقائب",
+              "en": "Pens and cases"
+            },
+            "url": "/category/pens-cases"
+          }
+        },
+        {
+          "id": "nav-desk",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "المكتب",
+              "en": "Desk"
+            },
+            "url": "/category/desk"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+<li class="dk-trust-item">
+  <span class="dk-trust-icon"><hk-icon name="{{ block.settings.icon }}" size="22" /></span>
+  <span class="dk-trust-label">{{ block.settings.label }}</span>
+</li>
+<hk-schema>
+  {
+    "name": {
+      "en": "Trust point",
+      "ar": "نقطة ثقة"
+    },
+    "version": 1,
+    "settings": {
+      "icon": {
+        "type": "icon",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
+        "default": "banknote"
+      },
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "الدفع عند الاستلام",
+          "en": "Cash on delivery"
+        },
+        "localized": true,
+        "maxLength": 60
+      }
+    }
+  }
+</hk-schema>

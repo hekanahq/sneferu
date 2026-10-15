@@ -1,0 +1,54 @@
+<a class="hy-genre hy-genre-{{ block.settings.tone }}" href="{{ url(block.settings.link) }}">
+  <span class="hy-genre-icon"><hk-icon name="{{ block.settings.icon }}" class="ic" /></span>
+  <span class="hy-genre-title">{{ block.settings.title }}</span>
+</a>
+<hk-schema>
+  {
+    "name": {
+      "en": "Genre",
+      "ar": "نوع"
+    },
+    "version": 1,
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Name",
+          "ar": "الاسم"
+        },
+        "localized": true,
+        "default": {
+          "en": "Novels",
+          "ar": "روايات"
+        },
+        "maxLength": 40
+      },
+      "icon": {
+        "type": "select",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
+        "options": ["book-open", "file-text", "graduation-cap", "sparkles", "gift", "heart", "globe", "layers"],
+        "default": "book-open"
+      },
+      "tone": {
+        "type": "select",
+        "label": {
+          "en": "Look",
+          "ar": "الشكل"
+        },
+        "options": ["navy", "outline", "brick", "forest"],
+        "default": "navy"
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      }
+    }
+  }
+</hk-schema>

@@ -1,0 +1,124 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="16">
+  <h1 class="tw-h1">{{ section.settings.title }}</h1>
+  <div class="tw-cart">
+    <hk-cart-items checkout-label="{{ section.settings.checkout_label }}">
+      <hk-part name="empty">
+        <div class="tw-empty-box">
+          <span class="tw-empty-icon" aria-hidden="true"><hk-icon name="shopping-cart" /></span>
+          <h2 class="tw-h2">{{ section.settings.empty_title }}</h2>
+          <hk-button label="{{ section.settings.empty_label }}" href="/products" />
+        </div>
+      </hk-part>
+    </hk-cart-items>
+    <aside class="tw-cart-aside">
+      <hk-cart-summary
+        subtotal-label="{{ section.settings.subtotal_label }}"
+        checkout-label="{{ section.settings.checkout_label }}"
+      />
+      {% if section.settings.note %}
+        <p class="tw-muted">{{ section.settings.note }}</p>
+      {% endif %}
+    </aside>
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Cart",
+      "ar": "السلة"
+    },
+    "version": 1,
+    "templates": ["cart"],
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Title",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "السلة",
+          "en": "Cart"
+        },
+        "maxLength": 40,
+        "localized": true
+      },
+      "checkout_label": {
+        "type": "text",
+        "label": {
+          "en": "Checkout button",
+          "ar": "زر إتمام الطلب"
+        },
+        "default": {
+          "ar": "إتمام الطلب",
+          "en": "Checkout"
+        },
+        "maxLength": 30,
+        "localized": true
+      },
+      "subtotal_label": {
+        "type": "text",
+        "label": {
+          "en": "Subtotal label",
+          "ar": "عنوان الإجمالي"
+        },
+        "default": {
+          "ar": "الإجمالي",
+          "en": "Subtotal"
+        },
+        "maxLength": 30,
+        "localized": true
+      },
+      "empty_title": {
+        "type": "text",
+        "label": {
+          "en": "Empty cart title",
+          "ar": "عنوان السلة الفاضية"
+        },
+        "default": {
+          "ar": "السلة فاضية",
+          "en": "Your cart is empty"
+        },
+        "maxLength": 50,
+        "localized": true
+      },
+      "empty_label": {
+        "type": "text",
+        "label": {
+          "en": "Empty cart button",
+          "ar": "زر السلة الفاضية"
+        },
+        "default": {
+          "ar": "تابع التسوق",
+          "en": "Continue shopping"
+        },
+        "maxLength": 30,
+        "localized": true
+      },
+      "note": {
+        "type": "text",
+        "label": {
+          "en": "Note under the summary",
+          "ar": "ملاحظة تحت الملخص"
+        },
+        "default": {
+          "ar": "الدفع عند الاستلام",
+          "en": "Payment is cash on delivery"
+        },
+        "maxLength": 80,
+        "localized": true
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 120,
+        "step": 8,
+        "default": 24
+      }
+    }
+  }
+</hk-schema>

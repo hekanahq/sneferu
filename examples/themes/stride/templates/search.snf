@@ -1,0 +1,20 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "search-main"
+      },
+      {
+        "type": "stride-products",
+        "settings": {
+          "heading": {
+            "ar": "الأكثر طلبًا",
+            "en": "Most wanted"
+          },
+          "count": 4
+        }
+      }
+    ]
+  }
+</hk-schema>

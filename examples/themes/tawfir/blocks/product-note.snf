@@ -1,0 +1,55 @@
+<li class="tw-note">
+  <span class="tw-note-icon">{% render 'icon', name: block.settings.icon %}</span><span>{{ block.settings.text }}</span>
+</li>
+<hk-schema>
+  {
+    "name": {
+      "en": "Product note",
+      "ar": "ملاحظة على المنتج"
+    },
+    "version": 1,
+    "settings": {
+      "icon": {
+        "type": "select",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
+        "options": [
+          "percent",
+          "leaf",
+          "milk",
+          "jar",
+          "cup",
+          "spray",
+          "tag",
+          "truck",
+          "banknote",
+          "shield-check",
+          "package",
+          "store",
+          "heart",
+          "gift",
+          "star",
+          "home",
+          "zap",
+          "flame"
+        ],
+        "default": "truck"
+      },
+      "text": {
+        "type": "text",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "توصيل لكل المحافظات",
+          "en": "Delivery across Egypt"
+        },
+        "maxLength": 60,
+        "localized": true
+      }
+    }
+  }
+</hk-schema>

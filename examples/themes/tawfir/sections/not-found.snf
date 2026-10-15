@@ -1,0 +1,81 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="24">
+  <div class="tw-empty-box">
+    <span class="tw-empty-icon" aria-hidden="true"><hk-icon name="search" /></span>
+    <h1 class="tw-h1">{{ section.settings.title }}</h1>
+    {% if section.settings.text %}
+      <p class="tw-muted">{{ section.settings.text }}</p>
+    {% endif %}
+    <div class="tw-search tw-search-page"><hk-search-form placeholder="{{ t('search_placeholder') }}" /></div>
+    <hk-button label="{{ section.settings.button_label }}" href="{{ section.settings.button_link }}" />
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Page not found",
+      "ar": "صفحة غير موجودة"
+    },
+    "version": 1,
+    "templates": ["404"],
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Title",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "الصفحة غير موجودة",
+          "en": "Page not found"
+        },
+        "maxLength": 50,
+        "localized": true
+      },
+      "text": {
+        "type": "text",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "الصفحة اللي بتدور عليها مش موجودة.",
+          "en": "The page you are looking for is not here."
+        },
+        "maxLength": 100,
+        "localized": true
+      },
+      "button_label": {
+        "type": "text",
+        "label": {
+          "en": "Button",
+          "ar": "الزر"
+        },
+        "default": {
+          "ar": "الرجوع للمتجر",
+          "en": "Back to the store"
+        },
+        "maxLength": 30,
+        "localized": true
+      },
+      "button_link": {
+        "type": "link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/"
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 120,
+        "step": 8,
+        "default": 48
+      }
+    }
+  }
+</hk-schema>

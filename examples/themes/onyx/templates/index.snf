@@ -1,0 +1,89 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "hero"
+      },
+      {
+        "type": "onyx-pills",
+        "blocks": [
+          {
+            "type": "pill",
+            "settings": {
+              "label": {
+                "ar": "عطور وساعات",
+                "en": "Fragrance and watches"
+              },
+              "link": "/category/fragrance-watches"
+            }
+          },
+          {
+            "type": "pill",
+            "settings": {
+              "label": {
+                "ar": "مجوهرات",
+                "en": "Jewellery"
+              },
+              "link": "/category/jewellery"
+            }
+          }
+        ]
+      },
+      {
+        "type": "featured-products",
+        "settings": {
+          "title": {
+            "ar": "مختارات",
+            "en": "Selected pieces"
+          },
+          "collection": "featured",
+          "limit": 4,
+          "columns": 4,
+          "card_style": "plain",
+          "image_ratio": "1/1",
+          "link_label": {
+            "ar": "",
+            "en": ""
+          },
+          "link": "/products"
+        }
+      },
+      {
+        "type": "onyx-trust",
+        "blocks": [
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "banknote",
+              "label": {
+                "ar": "الدفع عند الاستلام",
+                "en": "Cash on delivery"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "truck",
+              "label": {
+                "ar": "توصيل لكل المحافظات",
+                "en": "Delivery across Egypt"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "package",
+              "label": {
+                "ar": "استبدال سهل",
+                "en": "Easy exchange"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

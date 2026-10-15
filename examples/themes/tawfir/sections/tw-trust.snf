@@ -1,0 +1,55 @@
+<div class="tw-trust">
+  <hk-container>
+    <div class="tw-trust-row">
+      {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+    </div>
+  </hk-container>
+</div>
+<hk-schema>
+  {
+    "name": {
+      "en": "Trust strip",
+      "ar": "شريط الثقة"
+    },
+    "version": 1,
+    "blocks": {
+      "allowed": ["trust"],
+      "max": 5
+    },
+    "settings": {
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 120,
+        "step": 8,
+        "default": 24
+      }
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "Trust strip",
+          "ar": "شريط الثقة"
+        },
+        "blocks": [
+          {
+            "type": "trust"
+          },
+          {
+            "type": "trust"
+          },
+          {
+            "type": "trust"
+          },
+          {
+            "type": "trust"
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

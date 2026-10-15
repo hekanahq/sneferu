@@ -1,0 +1,25 @@
+<li class="ca-craft-point"><hk-icon name="check" size="18" stroke="1.5" /><span>{{ block.settings.text }}</span></li>
+<hk-schema>
+  {
+    "name": {
+      "en": "Detail line",
+      "ar": "سطر تفصيل"
+    },
+    "version": 1,
+    "settings": {
+      "text": {
+        "type": "text",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "غرز متقنة على الحواف",
+          "en": "Neat stitching along the edges"
+        },
+        "localized": true,
+        "maxLength": 80
+      }
+    }
+  }
+</hk-schema>

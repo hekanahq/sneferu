@@ -1,0 +1,22 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "search-main"
+      },
+      {
+        "type": "dk-feed",
+        "settings": {
+          "title": {
+            "ar": "منتجات مختارة",
+            "en": "Featured products"
+          },
+          "collection": "new-in",
+          "layout": "grid",
+          "limit": 4
+        }
+      }
+    ]
+  }
+</hk-schema>

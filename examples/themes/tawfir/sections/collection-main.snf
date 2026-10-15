@@ -1,0 +1,116 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="16">
+  <div class="tw-page-head">
+    <h1 class="tw-h1">{{ collection.title }}</h1>
+    {% if section.settings.show_description %}{% if collection.description %}<hk-rich-text
+          html="{{ collection.description }}"
+        />{% endif %}{% endif %}
+    {% if section.settings.show_count %}
+      <p class="tw-muted">{{ collection.products_count }} {{ t('products_label') }}</p>
+    {% endif %}
+  </div>
+  {% if section.settings.show_sort %}{% if collection.sort_options %}
+      <div class="tw-toolbar">
+        <span class="tw-muted">{{ t('sort_by') }}</span>{% for o in collection.sort_options %}<a
+            class="tw-chip"
+            href="{{ o.url }}"
+            aria-current="{{ o.active }}"
+          >{{ o.label }}</a>{% endfor %}
+      </div>
+    {% endif %}{% endif %}
+  {% if section.settings.show_filters %}{% if collection.filters %}
+      <details class="tw-filters">
+        <summary>{{ t('filters') }}</summary>
+        {% for f in collection.filters %}
+          <div class="tw-filter">
+            <h2 class="tw-filter-name">{{ f.name }}</h2>
+            {% for v in f.values %}<a class="tw-chip" href="{{ v.url }}" aria-current="{{ v.active }}">{{ v.label }}</a>{% endfor %}
+          </div>
+        {% endfor %}
+      </details>
+    {% endif %}{% endif %}
+  {% if collection.products %}
+    <div class="tw-grid tw-cols-{{ section.settings.columns }}">
+      {% for p in collection.products limit: 48 %}{% render 'product-card', product: p %}{% endfor %}
+    </div>
+    <hk-pagination paginate="{{ paginate }}" />
+  {% else %}
+    <p class="tw-empty">{{ section.settings.empty_text }}</p>
+  {% endif %}
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Collection",
+      "ar": "القسم"
+    },
+    "version": 1,
+    "templates": ["collection"],
+    "settings": {
+      "show_description": {
+        "type": "boolean",
+        "label": {
+          "en": "Show description",
+          "ar": "إظهار الوصف"
+        },
+        "default": true
+      },
+      "show_count": {
+        "type": "boolean",
+        "label": {
+          "en": "Show product count",
+          "ar": "إظهار عدد المنتجات"
+        },
+        "default": true
+      },
+      "show_sort": {
+        "type": "boolean",
+        "label": {
+          "en": "Show sorting",
+          "ar": "إظهار الترتيب"
+        },
+        "default": true
+      },
+      "show_filters": {
+        "type": "boolean",
+        "label": {
+          "en": "Show filters",
+          "ar": "إظهار الفلاتر"
+        },
+        "default": true
+      },
+      "columns": {
+        "type": "select",
+        "label": {
+          "en": "Columns",
+          "ar": "الأعمدة"
+        },
+        "options": ["3", "4", "5", "6"],
+        "default": "5"
+      },
+      "empty_text": {
+        "type": "text",
+        "label": {
+          "en": "Empty text",
+          "ar": "نص القسم الفاضي"
+        },
+        "default": {
+          "ar": "لا توجد منتجات هنا بعد.",
+          "en": "No products here yet."
+        },
+        "maxLength": 80,
+        "localized": true
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 120,
+        "step": 8,
+        "default": 24
+      }
+    }
+  }
+</hk-schema>

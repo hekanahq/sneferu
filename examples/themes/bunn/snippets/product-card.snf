@@ -1,0 +1,53 @@
+<article class="bn-card bn-card-{{ card_style }}">
+  <a class="bn-card-link" href="{{ product.url }}">
+    <div class="bn-card-media">
+      <hk-image
+        src="{{ product.image }}"
+        alt="{{ product.title }}"
+        aspect-ratio="{{ image_ratio }}"
+        sizes="(min-width: 1024px) 25vw, 50vw"
+      />
+      {% if show_badge %}
+        {% if product.available %}
+          {% if product.compare_at > product.price %}
+            <span class="bn-badge">{{ t('sale') }}</span>
+          {% endif %}
+        {% else %}
+          <span class="bn-badge bn-badge-muted">{{ t('sold_out_badge') }}</span>
+        {% endif %}
+      {% endif %}
+    </div>
+    <div class="bn-card-row">
+      <h3 class="bn-card-title">{{ product.title }}</h3>
+      {% for tag in product.tags limit: 12 %}
+        {% if tag == 'roast-1' %}<span
+            class="bn-roast bn-roast-1"
+            role="img"
+            aria-label="{{ t('roast_level') }}"
+          ><i></i><i></i><i></i><i></i><i></i></span>{% endif %}
+        {% if tag == 'roast-2' %}<span
+            class="bn-roast bn-roast-2"
+            role="img"
+            aria-label="{{ t('roast_level') }}"
+          ><i></i><i></i><i></i><i></i><i></i></span>{% endif %}
+        {% if tag == 'roast-3' %}<span
+            class="bn-roast bn-roast-3"
+            role="img"
+            aria-label="{{ t('roast_level') }}"
+          ><i></i><i></i><i></i><i></i><i></i></span>{% endif %}
+        {% if tag == 'roast-4' %}<span
+            class="bn-roast bn-roast-4"
+            role="img"
+            aria-label="{{ t('roast_level') }}"
+          ><i></i><i></i><i></i><i></i><i></i></span>{% endif %}
+        {% if tag == 'roast-5' %}<span
+            class="bn-roast bn-roast-5"
+            role="img"
+            aria-label="{{ t('roast_level') }}"
+          ><i></i><i></i><i></i><i></i><i></i></span>{% endif %}
+      {% endfor %}
+    </div>
+    {% if show_price %}{% render 'price', product: product, bind: false %}{% endif %}
+    <span class="bn-card-cta">{{ t('view_product') }}</span>
+  </a>
+</article>

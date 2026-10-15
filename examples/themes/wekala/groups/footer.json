@@ -1,0 +1,174 @@
+{
+  "sections": [
+    {
+      "id": "footer",
+      "type": "footer",
+      "settings": {
+        "menu": "",
+        "about_text": {
+          "ar": "أزياء وأجهزة ومستلزمات المنزل والعناية في متجر واحد، والدفع عند الاستلام.",
+          "en": "Fashion, devices, home and personal care in one store, pay on delivery."
+        },
+        "copyright": {
+          "ar": "جميع الحقوق محفوظة",
+          "en": "All rights reserved"
+        },
+        "show_newsletter": true,
+        "newsletter_title": {
+          "ar": "عندك سؤال عن منتج؟",
+          "en": "A question about a product?"
+        },
+        "newsletter_text": {
+          "ar": "تواصل معنا على واتساب.",
+          "en": "Message us on WhatsApp."
+        },
+        "newsletter_label": {
+          "ar": "تواصل على واتساب",
+          "en": "Chat on WhatsApp"
+        },
+        "newsletter_link": "",
+        "scheme": "primary",
+        "show_language": true
+      },
+      "blocks": [
+        {
+          "id": "col-shop",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "تسوق",
+              "en": "Shop"
+            }
+          },
+          "blocks": [
+            {
+              "id": "shop-fashion",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "أزياء",
+                  "en": "Fashion"
+                },
+                "url": "/category/fashion"
+              }
+            },
+            {
+              "id": "shop-home",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "المنزل",
+                  "en": "Home"
+                },
+                "url": "/category/home"
+              }
+            },
+            {
+              "id": "shop-electronics",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "إلكترونيات",
+                  "en": "Electronics"
+                },
+                "url": "/category/electronics"
+              }
+            },
+            {
+              "id": "shop-beauty",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "العناية والجمال",
+                  "en": "Beauty"
+                },
+                "url": "/category/beauty"
+              }
+            },
+            {
+              "id": "shop-kids",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "الأطفال",
+                  "en": "Kids"
+                },
+                "url": "/category/kids"
+              }
+            }
+          ]
+        },
+        {
+          "id": "col-help",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "مساعدة",
+              "en": "Help"
+            }
+          },
+          "blocks": [
+            {
+              "id": "help-about",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "من نحن",
+                  "en": "About us"
+                },
+                "url": "/about"
+              }
+            },
+            {
+              "id": "help-contact",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "تواصل معنا",
+                  "en": "Contact us"
+                },
+                "url": "/contact"
+              }
+            },
+            {
+              "id": "help-all",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "كل المنتجات",
+                  "en": "All products"
+                },
+                "url": "/products"
+              }
+            }
+          ]
+        },
+        {
+          "id": "social-wa",
+          "type": "social-link",
+          "settings": {
+            "label": {
+              "ar": "واتساب",
+              "en": "WhatsApp"
+            },
+            "url": "",
+            "icon": "message-circle"
+          }
+        },
+        {
+          "id": "contact-wa",
+          "type": "contact-line",
+          "settings": {
+            "icon": "message-circle",
+            "text": {
+              "ar": "تواصل معنا على واتساب",
+              "en": "Contact us on WhatsApp"
+            },
+            "url": ""
+          }
+        }
+      ],
+      "block_order": ["col-shop", "col-help", "social-wa", "contact-wa"]
+    }
+  ]
+}

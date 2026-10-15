@@ -1,0 +1,76 @@
+{
+  "sections": [
+    {
+      "id": "header",
+      "type": "header",
+      "settings": {
+        "menu": "main-menu",
+        "show_search": true,
+        "search_style": "bar",
+        "show_account": true,
+        "show_language": true,
+        "show_cart": true,
+        "drawer_on_add": true,
+        "sticky": true,
+        "scheme": "light"
+      },
+      "blocks": [
+        {
+          "id": "nav-all",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "كل المنتجات",
+              "en": "All products"
+            },
+            "url": "/products"
+          }
+        },
+        {
+          "id": "nav-produce",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "خضار وفاكهة",
+              "en": "Vegetables and fruit"
+            },
+            "url": "/category/produce"
+          }
+        },
+        {
+          "id": "nav-bakery",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "مخبوزات",
+              "en": "Bakery"
+            },
+            "url": "/category/bakery"
+          }
+        },
+        {
+          "id": "nav-dairy",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "ألبان وبيض",
+              "en": "Dairy and eggs"
+            },
+            "url": "/category/dairy"
+          }
+        },
+        {
+          "id": "nav-pantry",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "المؤن",
+              "en": "Pantry"
+            },
+            "url": "/category/pantry"
+          }
+        }
+      ]
+    }
+  ]
+}

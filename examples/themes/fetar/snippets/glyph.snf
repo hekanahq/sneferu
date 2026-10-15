@@ -1,0 +1,59 @@
+{% if name == 'cup' %}
+  <svg
+    class="ft-glyph"
+    viewBox="0 0 32 32"
+    width="32"
+    height="32"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.8"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  ><path d="M5 12h17v6a7 7 0 0 1-7 7h-3a7 7 0 0 1-7-7z" /><path d="M22 14h2.5a3 3 0 0 1 0 6H21" /><path
+      d="M10 5v3M15 5v3"
+    /></svg>
+{% elsif name == 'glass' %}
+  <svg
+    class="ft-glyph"
+    viewBox="0 0 32 32"
+    width="32"
+    height="32"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.8"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  ><path d="M9 5h14l-2 21a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1z" /><path d="M9.6 12h12.8" /><path d="M20 3l-3 7" /></svg>
+{% elsif name == 'croissant' %}
+  <svg
+    class="ft-glyph"
+    viewBox="0 0 32 32"
+    width="32"
+    height="32"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.8"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  ><path d="M4 21c0-7 5-13 12-13s12 6 12 13c0 1-1 2-2 2h-3l-2-5-3 6h-4l-3-6-2 5H6c-1 0-2-1-2-2z" /><path
+      d="M12 9l2 8M20 9l-2 8"
+    /></svg>
+{% else %}
+  <svg
+    class="ft-glyph"
+    viewBox="0 0 32 32"
+    width="32"
+    height="32"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.8"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  ><circle cx="16" cy="17" r="9" /><circle cx="16" cy="17" r="4.5" /><path
+      d="M5 7v8M3 7v3a2 2 0 0 0 4 0V7M27 7c-2 2-2 5 0 8V7z"
+    /></svg>
+{% endif %}

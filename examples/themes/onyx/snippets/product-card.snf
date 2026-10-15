@@ -1,0 +1,26 @@
+<article class="on-card on-card-{{ card_style }}">
+  <a class="on-card-link" href="{{ product.url }}">
+    <div class="on-card-media">
+      <hk-image
+        src="{{ product.image }}"
+        alt="{{ product.title }}"
+        aspect-ratio="{{ image_ratio }}"
+        sizes="(min-width: 1024px) 25vw, 50vw"
+      />
+      {% if show_badge %}
+        {% if product.available %}
+          {% if product.compare_at > product.price %}
+            <span class="on-badge">{{ t('sale') }}</span>
+          {% endif %}
+        {% else %}
+          <span class="on-badge on-badge-muted">{{ t('sold_out_badge') }}</span>
+        {% endif %}
+      {% endif %}
+    </div>
+    <h3 class="on-card-title">{{ product.title }}</h3>
+    <div class="on-card-foot">
+      {% if show_price %}{% render 'price', product: product, bind: false %}{% endif %}
+      <span class="on-card-bag" aria-hidden="true"><hk-icon name="shopping-bag" /></span>
+    </div>
+  </a>
+</article>

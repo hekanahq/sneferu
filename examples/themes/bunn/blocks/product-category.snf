@@ -1,0 +1,30 @@
+{% if product.category %}
+  <p class="bn-category">
+    {% if block.settings.label %}<span class="bn-muted">{{ block.settings.label }}</span>{% endif %}
+    <a href="{{ product.category.url }}">{{ product.category.title }}</a>
+  </p>
+{% endif %}
+<hk-schema>
+  {
+    "name": {
+      "en": "Category link",
+      "ar": "رابط القسم"
+    },
+    "version": 1,
+    "settings": {
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Text before the link",
+          "ar": "نص قبل الرابط"
+        },
+        "default": {
+          "ar": "القسم:",
+          "en": "Category:"
+        },
+        "localized": true,
+        "maxLength": 30
+      }
+    }
+  }
+</hk-schema>

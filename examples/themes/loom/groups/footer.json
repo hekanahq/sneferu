@@ -1,0 +1,185 @@
+{
+  "sections": [
+    {
+      "id": "footer",
+      "type": "footer",
+      "settings": {
+        "menu": "",
+        "about_text": {
+          "en": "Handmade pottery, macrame, baskets and more, priced in Egyptian pounds.",
+          "ar": "فخار ومكرمية وسلال وقطع يدوية، بالجنيه المصري."
+        },
+        "copyright": {
+          "ar": "جميع الحقوق محفوظة",
+          "en": "All rights reserved"
+        },
+        "show_newsletter": false,
+        "newsletter_title": {
+          "en": "Questions about a piece?",
+          "ar": "عايز تسأل عن قطعة؟"
+        },
+        "newsletter_text": {
+          "en": "Message us on WhatsApp.",
+          "ar": "كلمنا على واتساب."
+        },
+        "newsletter_label": {
+          "ar": "تواصل معنا",
+          "en": "Contact us"
+        },
+        "newsletter_link": "/pages/contact",
+        "show_language": true,
+        "scheme": "light"
+      },
+      "blocks": [
+        {
+          "id": "col-shop",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "تسوق",
+              "en": "Shop"
+            }
+          },
+          "blocks": [
+            {
+              "id": "f0",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "en": "All products",
+                  "ar": "كل المنتجات"
+                },
+                "url": "/products"
+              }
+            },
+            {
+              "id": "f1",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "en": "Pottery and ceramics",
+                  "ar": "الفخار والسيراميك"
+                },
+                "url": "/category/pottery"
+              }
+            },
+            {
+              "id": "f2",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "en": "Weaving and macrame",
+                  "ar": "النسيج والمكرمية"
+                },
+                "url": "/category/weaving"
+              }
+            },
+            {
+              "id": "f3",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "en": "Search",
+                  "ar": "بحث"
+                },
+                "url": "/search"
+              }
+            }
+          ]
+        },
+        {
+          "id": "col-help",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "مساعدة",
+              "en": "Help"
+            }
+          },
+          "blocks": [
+            {
+              "id": "h1",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "التوصيل والدفع",
+                  "en": "Delivery and payment"
+                },
+                "url": "/pages/delivery"
+              }
+            },
+            {
+              "id": "h2",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "تواصل معنا",
+                  "en": "Contact us"
+                },
+                "url": "/pages/contact"
+              }
+            },
+            {
+              "id": "h3",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "من نحن",
+                  "en": "About us"
+                },
+                "url": "/pages/about"
+              }
+            }
+          ]
+        },
+        {
+          "id": "social-whatsapp",
+          "type": "social-link",
+          "settings": {
+            "label": {
+              "ar": "واتساب",
+              "en": "WhatsApp"
+            },
+            "url": "/pages/contact",
+            "icon": "message-circle"
+          }
+        },
+        {
+          "id": "social-mail",
+          "type": "social-link",
+          "settings": {
+            "label": {
+              "ar": "الإيميل",
+              "en": "Email"
+            },
+            "url": "/pages/contact",
+            "icon": "mail"
+          }
+        },
+        {
+          "id": "contact-wa",
+          "type": "contact-line",
+          "settings": {
+            "icon": "message-circle",
+            "text": {
+              "ar": "تواصل معنا على واتساب",
+              "en": "Contact us on WhatsApp"
+            },
+            "url": "/pages/contact"
+          }
+        },
+        {
+          "id": "pay-cod",
+          "type": "payment-method",
+          "settings": {
+            "label": {
+              "ar": "الدفع عند الاستلام",
+              "en": "Cash on delivery"
+            },
+            "icon": "banknote"
+          }
+        }
+      ]
+    }
+  ]
+}

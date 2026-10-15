@@ -1,0 +1,5 @@
+{% if bind %}
+  <hk-price amount="{{ product.price }}" compare-at="{{ product.compare_at }}" product="{{ product }}" />
+{% else %}
+  <hk-price amount="{{ product.price }}" compare-at="{{ product.compare_at }}" />
+{% endif %}

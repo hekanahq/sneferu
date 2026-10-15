@@ -44,7 +44,7 @@ developer. Reserved slugs: `starter`, `hekana`, `default`, `admin`, `official`, 
 
 ## Example themes
 
-Twenty-four complete themes in [examples/themes](examples/themes), each with a README,
+Forty complete themes in [examples/themes](examples/themes), each with a README,
 screenshots and a live demo store:
 [Arcade](examples/themes/arcade), [Console](examples/themes/console) and
 [Esports](examples/themes/esports) (gaming top-ups and gift cards);
@@ -58,7 +58,13 @@ screenshots and a live demo store:
 [Konafa](examples/themes/konafa) and [Tabkha](examples/themes/tabkha) (food),
 [Oak](examples/themes/oak) and [Mashrabiya](examples/themes/mashrabiya) (home),
 [Cloud](examples/themes/cloud) and [Blocks](examples/themes/blocks) (kids),
-[Velvet](examples/themes/velvet) and [Halo](examples/themes/halo) (jewelry). The
+[Velvet](examples/themes/velvet) and [Halo](examples/themes/halo) (jewelry);
+[Onyx](examples/themes/onyx) and [Cashmere](examples/themes/cashmere) (luxury),
+[Pulse](examples/themes/pulse) and [Stride](examples/themes/stride) (sports),
+[Hekaya](examples/themes/hekaya) and [Qalam](examples/themes/qalam) (books, stationery),
+[Bunn](examples/themes/bunn), [Fetar](examples/themes/fetar), [Ghalla](examples/themes/ghalla) and [Tawfir](examples/themes/tawfir) (coffee, bakery, grocery),
+[Loom](examples/themes/loom) and [Khayamiya](examples/themes/khayamiya) (crafts),
+[Wekala](examples/themes/wekala), [Dukkan](examples/themes/dukkan), [Ink](examples/themes/ink) and [Sukoon](examples/themes/sukoon) (general). The
 [gaming](https://hekana.dev/guide/tutorial-gaming-store) and
 [digital store](https://hekana.dev/guide/tutorial-digital-store) tutorials walk
 through Arcade and Bento.

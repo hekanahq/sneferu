@@ -1,0 +1,41 @@
+<hk-section padding-y="0" mobile-padding-y="0" class="st-cats-section">
+  <div class="st-cats">
+    {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "ar": "أقسام بأيقونات",
+      "en": "Category cards"
+    },
+    "version": 1,
+    "settings": {},
+    "blocks": {
+      "allowed": ["category-tile"],
+      "max": 6
+    },
+    "presets": [
+      {
+        "name": {
+          "ar": "أربعة أقسام",
+          "en": "Four cards"
+        },
+        "blocks": [
+          {
+            "type": "category-tile"
+          },
+          {
+            "type": "category-tile"
+          },
+          {
+            "type": "category-tile"
+          },
+          {
+            "type": "category-tile"
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

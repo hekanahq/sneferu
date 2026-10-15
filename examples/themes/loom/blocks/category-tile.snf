@@ -1,0 +1,44 @@
+<a class="loom-cat loom-cat-{{ block.settings.tone }}" href="{{ url(block.settings.link) }}">
+  <span class="loom-cat-label">{{ block.settings.label }}</span>
+</a>
+<hk-schema>
+  {
+    "name": {
+      "en": "Category tile",
+      "ar": "مربع قسم"
+    },
+    "version": 1,
+    "settings": {
+      "tone": {
+        "type": "select",
+        "label": {
+          "en": "Fill",
+          "ar": "التلوين"
+        },
+        "default": "plain",
+        "options": ["plain", "filled"]
+      },
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "en": "Pottery and ceramics",
+          "ar": "الفخار والسيراميك"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      }
+    }
+  }
+</hk-schema>

@@ -1,0 +1,54 @@
+<a class="st-cat st-cat-{{ block.settings.tone }}" href="{{ url(block.settings.link) }}">
+  <span class="st-cat-icon"><hk-icon name="{{ block.settings.icon }}" size="26" class="ic" /></span>
+  <span class="st-cat-label">{{ block.settings.label }}</span>
+</a>
+<hk-schema>
+  {
+    "name": {
+      "ar": "قسم",
+      "en": "Category tile"
+    },
+    "version": 1,
+    "settings": {
+      "icon": {
+        "type": "select",
+        "label": {
+          "ar": "الأيقونة",
+          "en": "Icon"
+        },
+        "options": ["shopping-bag", "package", "tag", "star", "zap", "heart", "flame", "sparkles", "gift", "store"],
+        "default": "shopping-bag"
+      },
+      "label": {
+        "type": "text",
+        "label": {
+          "ar": "النص",
+          "en": "Label"
+        },
+        "localized": true,
+        "default": {
+          "ar": "ليجنز",
+          "en": "Leggings"
+        },
+        "maxLength": 24
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "ar": "الرابط",
+          "en": "Link"
+        },
+        "default": "/category/leggings"
+      },
+      "tone": {
+        "type": "select",
+        "label": {
+          "ar": "اللون",
+          "en": "Colour"
+        },
+        "options": ["primary", "accent"],
+        "default": "primary"
+      }
+    }
+  }
+</hk-schema>

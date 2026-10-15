@@ -1,0 +1,38 @@
+{% if block.settings.link %}
+  <a class="dk-pill dk-pill-outline dk-chat" href="{{ url(block.settings.link) }}">
+    <hk-icon name="message-circle" />
+    <span>{{ block.settings.label }}</span>
+  </a>
+{% endif %}
+<hk-schema>
+  {
+    "name": {
+      "en": "Order on chat button",
+      "ar": "زر الطلب على الشات"
+    },
+    "version": 1,
+    "settings": {
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Button text",
+          "ar": "نص الزر"
+        },
+        "default": {
+          "ar": "اطلب على واتساب",
+          "en": "Order on WhatsApp"
+        },
+        "localized": true,
+        "maxLength": 40
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Chat link (hidden when empty)",
+          "ar": "رابط الشات (بيختفي لو فاضي)"
+        },
+        "default": ""
+      }
+    }
+  }
+</hk-schema>

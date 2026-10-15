@@ -1,0 +1,57 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="24">
+  <div class="ql-page ql-width-{{ section.settings.width }} ql-align-{{ section.settings.align }}">
+    {% if section.settings.show_title %}
+      <hk-heading text="{{ page.title }}" level="h1" size="36" mobile-size="28" />
+    {% endif %}
+    <hk-rich-text html="{{ page.body_html }}" />
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Page content",
+      "ar": "محتوى الصفحة"
+    },
+    "version": 1,
+    "templates": ["page"],
+    "settings": {
+      "show_title": {
+        "type": "boolean",
+        "label": {
+          "en": "Show title",
+          "ar": "إظهار العنوان"
+        },
+        "default": true
+      },
+      "width": {
+        "type": "select",
+        "label": {
+          "en": "Text width",
+          "ar": "عرض النص"
+        },
+        "options": ["narrow", "normal", "wide"],
+        "default": "narrow"
+      },
+      "align": {
+        "type": "select",
+        "label": {
+          "en": "Alignment",
+          "ar": "المحاذاة"
+        },
+        "options": ["start", "center"],
+        "default": "start"
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 160,
+        "step": 8,
+        "default": 48
+      }
+    }
+  }
+</hk-schema>

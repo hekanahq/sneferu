@@ -1,0 +1,96 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "product-main",
+        "blocks": [
+          {
+            "type": "product-note",
+            "settings": {
+              "icon": "banknote",
+              "text": {
+                "en": "Cash on delivery",
+                "ar": "الدفع عند الاستلام"
+              }
+            }
+          },
+          {
+            "type": "product-note",
+            "settings": {
+              "icon": "truck",
+              "text": {
+                "en": "Delivery across Egypt",
+                "ar": "توصيل لكل المحافظات"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "related-products"
+      },
+      {
+        "type": "tw-trust",
+        "blocks": [
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "truck",
+              "label": {
+                "en": "Delivery",
+                "ar": "توصيل"
+              },
+              "text": {
+                "en": "Across Egypt",
+                "ar": "لكل المحافظات"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "banknote",
+              "label": {
+                "en": "Payment",
+                "ar": "الدفع"
+              },
+              "text": {
+                "en": "Cash on delivery",
+                "ar": "عند الاستلام"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "tag",
+              "label": {
+                "en": "Prices",
+                "ar": "الأسعار"
+              },
+              "text": {
+                "en": "In Egyptian pounds",
+                "ar": "بالجنيه المصري"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "message-circle",
+              "label": {
+                "en": "Support",
+                "ar": "الدعم"
+              },
+              "text": {
+                "en": "Message us on WhatsApp",
+                "ar": "تواصل معنا على واتساب"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

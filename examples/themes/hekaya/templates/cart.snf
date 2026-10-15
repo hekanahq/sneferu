@@ -1,0 +1,45 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "cart-main"
+      },
+      {
+        "type": "trust-strip",
+        "blocks": [
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "truck",
+              "label": {
+                "ar": "توصيل لكل المحافظات",
+                "en": "Delivery across Egypt"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "banknote",
+              "label": {
+                "ar": "الدفع عند الاستلام",
+                "en": "Cash on delivery"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "package",
+              "label": {
+                "ar": "استبدال سهل",
+                "en": "Easy exchange"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

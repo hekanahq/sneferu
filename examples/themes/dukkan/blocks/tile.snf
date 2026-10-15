@@ -1,0 +1,44 @@
+<a class="dk-tile" href="{{ url(block.settings.link) }}">
+  <span class="dk-tile-icon"><hk-icon name="{{ block.settings.icon }}" size="24" /></span>
+  <span class="dk-tile-label">{{ block.settings.label }}</span>
+</a>
+<hk-schema>
+  {
+    "name": {
+      "en": "Tile",
+      "ar": "مربع"
+    },
+    "version": 1,
+    "settings": {
+      "icon": {
+        "type": "icon",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
+        "default": "tag"
+      },
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "قسم",
+          "en": "Category"
+        },
+        "localized": true,
+        "maxLength": 40
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      }
+    }
+  }
+</hk-schema>

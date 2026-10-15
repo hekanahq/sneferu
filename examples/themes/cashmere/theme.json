@@ -1,0 +1,38 @@
+{
+  "id": "cashmere",
+  "name": "Cashmere",
+  "version": "1.0.4",
+  "author": "Hekana",
+  "description": "A quiet luxury leather goods store: cream and taupe ground, one cognac accent, hairline frames, wide whitespace, a two-column editorial product row and a craftsmanship section.",
+  "category": "luxury",
+  "engine": "hk2",
+  "engineCompatibility": "^2.0.0",
+  "defaultLocale": "ar",
+  "locales": ["ar", "en"],
+  "settings": {},
+  "money": { "format": "whole" },
+  "tokens": {
+    "colors": {
+      "primary": "#2B241F",
+      "secondary": "#5A4A3E",
+      "accent": "#8B4A2B",
+      "background": "#EFEBE4",
+      "text": "#2B241F",
+      "muted": "#6B5F55",
+      "line": "#CFC6BA",
+      "soft": "#E4DED4",
+      "surface": "#F7F4EF",
+      "taupe": "#B3A290"
+    },
+    "layout": {
+      "contentWidth": "1080px"
+    },
+    "fonts": {
+      "heading": "Noto Naskh Arabic",
+      "body": "Tajawal"
+    },
+    "radius": {
+      "md": "0px"
+    }
+  }
+}

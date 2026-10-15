@@ -1,0 +1,57 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="40">
+  <figure class="hy-quote">
+    <blockquote class="hy-quote-text">{{ section.settings.text }}</blockquote>
+    {% if section.settings.caption %}
+      <figcaption class="hy-quote-caption">{{ section.settings.caption }}</figcaption>
+    {% endif %}
+  </figure>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Quote",
+      "ar": "اقتباس"
+    },
+    "version": 1,
+    "templates": ["index"],
+    "settings": {
+      "text": {
+        "type": "textarea",
+        "label": {
+          "en": "Quote",
+          "ar": "الاقتباس"
+        },
+        "localized": true,
+        "default": {
+          "en": "A good shelf is not the one with the most books, but the one you keep coming back to.",
+          "ar": "الرف الجيد ليس الأكثر كتبًا، بل الذي تعود إليه كل مرة."
+        },
+        "maxLength": 200
+      },
+      "caption": {
+        "type": "text",
+        "label": {
+          "en": "Caption (empty hides it)",
+          "ar": "التعليق (فاضي يخفيه)"
+        },
+        "localized": true,
+        "default": {
+          "en": "From the shop",
+          "ar": "من المكتبة"
+        },
+        "maxLength": 60
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 160,
+        "step": 8,
+        "default": 72
+      }
+    }
+  }
+</hk-schema>

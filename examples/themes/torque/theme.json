@@ -1,7 +1,7 @@
 {
   "id": "torque",
   "name": "Torque",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "author": "Hekana",
   "description": "A professional tools and hardware store: charcoal and safety yellow, flat square cards on dark photos, a category icon row, quantity and add buttons on every card, and a bulk price table.",
   "category": "hardware",
@@ -32,7 +32,7 @@
       "contentWidth": "1200px"
     },
     "fonts": {
-      "heading": "Tajawal",
+      "heading": "Oswald",
       "body": "Tajawal"
     },
     "radius": {

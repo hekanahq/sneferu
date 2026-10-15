@@ -1,0 +1,98 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "not-found"
+      },
+      {
+        "type": "stride-categories",
+        "blocks": [
+          {
+            "type": "category-tile",
+            "settings": {
+              "icon": "shopping-bag",
+              "label": {
+                "ar": "ليجنز",
+                "en": "Leggings"
+              },
+              "link": "/category/leggings",
+              "tone": "primary"
+            }
+          },
+          {
+            "type": "category-tile",
+            "settings": {
+              "icon": "tag",
+              "label": {
+                "ar": "تيشيرتات وجاكيتات",
+                "en": "Tops and jackets"
+              },
+              "link": "/category/tops",
+              "tone": "accent"
+            }
+          },
+          {
+            "type": "category-tile",
+            "settings": {
+              "icon": "zap",
+              "label": {
+                "ar": "أحذية",
+                "en": "Shoes"
+              },
+              "link": "/category/shoes",
+              "tone": "primary"
+            }
+          },
+          {
+            "type": "category-tile",
+            "settings": {
+              "icon": "heart",
+              "label": {
+                "ar": "يوجا",
+                "en": "Yoga"
+              },
+              "link": "/category/yoga",
+              "tone": "accent"
+            }
+          }
+        ]
+      },
+      {
+        "type": "stride-trust",
+        "blocks": [
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "banknote",
+              "label": {
+                "ar": "الدفع عند الاستلام",
+                "en": "Cash on delivery"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "truck",
+              "label": {
+                "ar": "توصيل لكل المحافظات",
+                "en": "Delivery across Egypt"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "package",
+              "label": {
+                "ar": "استبدال سهل",
+                "en": "Easy exchange"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>
