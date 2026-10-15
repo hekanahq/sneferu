@@ -37,6 +37,7 @@ markup still works as links and plain forms.
 ## Rules the tags follow
 
 - A product whose options are malformed or missing shows a flat list of variants; add to cart still adds the default variant.
+- On a list card, a product with `has_variants` true and no `selected_variant` gets a link to its product page labelled by `choose-label` (default "Choose options" / «اختر»), with the same classes as the button, because adding needs a variant. Single-variant products keep the add button.
 - A sold-out product (or variant) shows a disabled button with the sold out label.
 - `min_quantity: 500, quantity_step: 50` starts the quantity at 500 and steps by 50; the cap is dropped when it is below the minimum.
 - A product with no safe `url` gets a link to the cart page, styled as the button, instead of a form.

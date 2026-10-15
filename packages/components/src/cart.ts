@@ -79,6 +79,7 @@ export const hkAddToCart: HkTag = {
   props: {
     product: { type: 'data', label: L('المنتج', 'Product') },
     label: { type: 'text', label: L('نص الزر', 'Button label') },
+    chooseLabel: { type: 'text', label: L('نص اختيار الخيارات', 'Choose options label') },
     soldOutLabel: { type: 'text', label: L('نص نفاد المخزون', 'Sold out label') },
     quantity: { type: 'boolean', label: L('اختيار الكمية', 'Quantity picker'), default: true },
     variant: { type: 'select', label: L('نمط الزر', 'Button style'), options: ['solid', 'outline'], default: 'solid' },
@@ -103,6 +104,13 @@ export const hkAddToCart: HkTag = {
     if (target === '#') {
       return `<div class="sn-${c.id} sn-add-to-cart${x.cls}"${x.attrs}>`
         + (available ? `<a class="sn-btn sn-btn-${style} sn-atc-button" href="${escapeAttr(link(c, '/cart'))}">${escapeText(str(c, 'view_cart'))}</a>`
+          : `<button type="button" class="sn-btn sn-btn-${style} sn-atc-button" disabled>${escapeText(out)}</button>`)
+        + '</div>';
+    }
+    // a list card for a product with variants and none picked: the host needs a variant id, so link to the product page
+    if (prod.has_variants === true && !(typeof prod.selected_variant === 'object' && prod.selected_variant !== null)) {
+      return `<div class="sn-${c.id} sn-add-to-cart${x.cls}"${x.attrs}>`
+        + (available ? `<a class="sn-btn sn-btn-${style} sn-atc-button" href="${escapeAttr(target)}">${escapeText(label(c, p.chooseLabel, 'choose_options'))}</a>`
           : `<button type="button" class="sn-btn sn-btn-${style} sn-atc-button" disabled>${escapeText(out)}</button>`)
         + '</div>';
     }

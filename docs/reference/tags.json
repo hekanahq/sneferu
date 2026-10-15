@@ -1252,6 +1252,15 @@
           }
         },
         {
+          "name": "chooseLabel",
+          "attr": "choose-label",
+          "type": "text",
+          "responsive": false,
+          "label": {
+            "en": "Choose options label"
+          }
+        },
+        {
           "name": "soldOutLabel",
           "attr": "sold-out-label",
           "type": "text",
