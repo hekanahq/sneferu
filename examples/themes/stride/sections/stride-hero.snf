@@ -1,0 +1,159 @@
+<hk-section padding-y="24" mobile-padding-y="16" class="st-hero-section">
+  <div class="st-hero-grid">
+    <div class="st-hero-panel">
+      {% if section.settings.eyebrow %}
+        <p class="st-eyebrow">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+      <hk-heading text="{{ section.settings.heading }}" level="h1" size="40" mobile-size="26" class="st-hero-title" />
+      {% if section.settings.text %}
+        <hk-text text="{{ section.settings.text }}" size="16" mobile-size="14" class="st-hero-text" />
+      {% endif %}
+      {% if section.settings.button_label %}
+        <div class="st-hero-actions">
+          <hk-button
+            label="{{ section.settings.button_label }}"
+            href="{{ url(section.settings.button_link) }}"
+            size="lg"
+          />
+        </div>
+      {% endif %}
+    </div>
+    <div class="st-hero-photo">
+      {% if section.settings.image_1 %}
+        <hk-image
+          src="{{ section.settings.image_1 }}"
+          alt="{{ section.settings.image_1_alt }}"
+          aspect-ratio="4/5"
+          fit="cover"
+          loading="eager"
+          sizes="(min-width: 1024px) 380px, 50vw"
+        />
+      {% endif %}
+    </div>
+    <div class="st-hero-photo st-hero-photo-2">
+      {% if section.settings.image_2 %}
+        <hk-image
+          src="{{ section.settings.image_2 }}"
+          alt="{{ section.settings.image_2_alt }}"
+          aspect-ratio="4/5"
+          fit="cover"
+          loading="eager"
+          sizes="(min-width: 1024px) 380px, 50vw"
+        />
+      {% endif %}
+    </div>
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "ar": "البانر الرئيسي",
+      "en": "Hero"
+    },
+    "version": 1,
+    "settings": {
+      "eyebrow": {
+        "type": "text",
+        "label": {
+          "ar": "سطر صغير فوق العنوان",
+          "en": "Small line above the heading"
+        },
+        "localized": true,
+        "default": {
+          "ar": "ملابس وأدوات رياضة",
+          "en": "Activewear and gear"
+        },
+        "maxLength": 40
+      },
+      "heading": {
+        "type": "text",
+        "label": {
+          "ar": "العنوان",
+          "en": "Heading"
+        },
+        "localized": true,
+        "default": {
+          "ar": "خطوة جديدة كل يوم",
+          "en": "A fresh start every day"
+        },
+        "maxLength": 80
+      },
+      "text": {
+        "type": "textarea",
+        "label": {
+          "ar": "النص",
+          "en": "Text"
+        },
+        "localized": true,
+        "default": {
+          "ar": "ليجنز وتيشيرتات وأحذية وأدوات يوجا بالسعر بالجنيه والدفع عند الاستلام.",
+          "en": "Leggings, tops, shoes and yoga gear, priced in pounds, cash on delivery."
+        },
+        "maxLength": 160
+      },
+      "button_label": {
+        "type": "text",
+        "label": {
+          "ar": "الزر",
+          "en": "Button"
+        },
+        "localized": true,
+        "default": {
+          "ar": "تسوق الآن",
+          "en": "Shop now"
+        },
+        "maxLength": 24
+      },
+      "button_link": {
+        "type": "link",
+        "label": {
+          "ar": "رابط الزر",
+          "en": "Button link"
+        },
+        "default": "/products"
+      },
+      "image_1": {
+        "type": "image",
+        "label": {
+          "ar": "الصورة الأولى",
+          "en": "First image"
+        },
+        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-fitness/pool-fitness-yoga-mat-teal.webp"
+      },
+      "image_1_alt": {
+        "type": "text",
+        "label": {
+          "ar": "وصف الصورة الأولى",
+          "en": "First image description"
+        },
+        "localized": true,
+        "default": {
+          "ar": "سجادة يوجا بلون أزرق مخضر",
+          "en": "A rolled teal yoga mat"
+        },
+        "maxLength": 100
+      },
+      "image_2": {
+        "type": "image",
+        "label": {
+          "ar": "الصورة التانية",
+          "en": "Second image"
+        },
+        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-fitness/pool-fitness-sneakers-lime.webp"
+      },
+      "image_2_alt": {
+        "type": "text",
+        "label": {
+          "ar": "وصف الصورة التانية",
+          "en": "Second image description"
+        },
+        "localized": true,
+        "default": {
+          "ar": "حذاء رياضي بلون أخضر فاتح",
+          "en": "Light green running shoes"
+        },
+        "maxLength": 100
+      }
+    }
+  }
+</hk-schema>

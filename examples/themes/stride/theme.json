@@ -1,0 +1,44 @@
+{
+  "id": "stride",
+  "name": "Stride",
+  "version": "1.0.0",
+  "author": "Hekana",
+  "description": "Bright activewear and yoga store: white ground, ocean-blue hero panel, warm orange buttons, icon category cards, clean product grid with size chips and a soft trust band.",
+  "category": "fitness",
+  "engine": "hk2",
+  "engineCompatibility": "^2.0.0",
+  "defaultLocale": "ar",
+  "locales": ["ar", "en"],
+  "settings": {},
+  "money": {
+    "format": "whole"
+  },
+  "tokens": {
+    "colors": {
+      "primary": "#0B5CAD",
+      "secondary": "#0A3A6B",
+      "accent": "#CC4A08",
+      "background": "#FFFFFF",
+      "text": "#12263A",
+      "muted": "#566678",
+      "line": "#DCE5EE",
+      "soft": "#EEF4FA",
+      "surface": "#FFFFFF",
+      "glow": "#E3EEF9",
+      "photo": "#E9E7E6",
+      "lime": "#A6D61F",
+      "teal": "#0F766E",
+      "ink": "#FFFFFF"
+    },
+    "layout": {
+      "contentWidth": "1160px"
+    },
+    "fonts": {
+      "heading": "Readex Pro",
+      "body": "Cairo"
+    },
+    "radius": {
+      "md": "16px"
+    }
+  }
+}
