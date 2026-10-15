@@ -125,8 +125,8 @@
           "ar": "وصف الصورة الرئيسية"
         },
         "default": {
-          "ar": "دفتر مفتوح على مكتب",
-          "en": "An open notebook"
+          "ar": "كتاب مفتوح",
+          "en": "An open book"
         },
         "localized": true,
         "maxLength": 120

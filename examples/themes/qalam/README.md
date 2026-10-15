@@ -1,6 +1,6 @@
 # Qalam (قلم)
 
-A stationery and school supplies store theme for Sneferu: sunny yellow and black, rounded yellow product cards with a black price pill, a split hero (photo and yellow panel), a bundle banner and a trust strip. Category `books`, Arabic first with English, whole-pound prices.
+A stationery and school supplies store theme for Sneferu: sunny yellow and black, rounded yellow product cards with a black price pill, a split hero (photo and yellow panel), a feature banner and a trust strip. Category `books`, Arabic first with English, whole-pound prices.
 
 | | Arabic | English |
 | - | - | - |
@@ -16,7 +16,7 @@ Mockup: ![](docs/mockup-desktop.webp) ![](docs/mockup-phone.webp)
 
 - `theme.json`: tokens (yellow, black, teal), fonts Baloo Bhaijaan 2 and Cairo, `money.format: whole`.
 - `layout/theme.snf`, `groups/` (announcement, header, footer), `templates/` for all seven page types.
-- `sections/`: `hero`, `featured-products`, `bundle`, `trust-strip`, the page mains, `header`, `footer`.
+- `sections/`: `hero`, `featured-products`, `bundle` (feature banner), `trust-strip`, the page mains, `header`, `footer`.
 - `snippets/product-card.snf`: the yellow card with the black price pill.
 - `assets/theme.css`: all colours come from tokens (`var(--hk-color-*)`).
 

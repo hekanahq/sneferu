@@ -33,31 +33,6 @@
       "variants": []
      },
      {
-      "id": "ruled-notebook",
-      "handle": "ruled-notebook",
-      "url": "/products/ruled-notebook",
-      "title": "دفتر ملاحظات مسطر",
-      "price": 7000,
-      "compare_at": null,
-      "available": true,
-      "image": {
-       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-open.webp"
-      },
-      "images": [
-       {
-        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-open.webp"
-       }
-      ],
-      "description": "<p>دفتر بصفحات مسطرة للملاحظات اليومية. غلاف سميك.</p>",
-      "category": {
-       "title": "دفاتر",
-       "url": "/category/notebooks"
-      },
-      "tags": [],
-      "has_variants": false,
-      "variants": []
-     },
-     {
       "id": "blue-notebook",
       "handle": "blue-notebook",
       "url": "/products/blue-notebook",
@@ -254,31 +229,6 @@
        }
       ],
       "description": "<p>دفتر بغلاف كريمي وصفحات سادة. مناسب للرسم والكتابة.</p>",
-      "category": {
-       "title": "دفاتر",
-       "url": "/category/notebooks"
-      },
-      "tags": [],
-      "has_variants": false,
-      "variants": []
-     },
-     {
-      "id": "ruled-notebook",
-      "handle": "ruled-notebook",
-      "url": "/products/ruled-notebook",
-      "title": "دفتر ملاحظات مسطر",
-      "price": 7000,
-      "compare_at": null,
-      "available": true,
-      "image": {
-       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-open.webp"
-      },
-      "images": [
-       {
-        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-open.webp"
-       }
-      ],
-      "description": "<p>دفتر بصفحات مسطرة للملاحظات اليومية. غلاف سميك.</p>",
       "category": {
        "title": "دفاتر",
        "url": "/category/notebooks"
@@ -598,31 +548,6 @@
      }
     ],
     "description": "<p>دفتر بغلاف كريمي وصفحات سادة. مناسب للرسم والكتابة.</p>",
-    "category": {
-     "title": "دفاتر",
-     "url": "/category/notebooks"
-    },
-    "tags": [],
-    "has_variants": false,
-    "variants": []
-   },
-   "ruled-notebook": {
-    "id": "ruled-notebook",
-    "handle": "ruled-notebook",
-    "url": "/products/ruled-notebook",
-    "title": "دفتر ملاحظات مسطر",
-    "price": 7000,
-    "compare_at": null,
-    "available": true,
-    "image": {
-     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-open.webp"
-    },
-    "images": [
-     {
-      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-open.webp"
-     }
-    ],
-    "description": "<p>دفتر بصفحات مسطرة للملاحظات اليومية. غلاف سميك.</p>",
     "category": {
      "title": "دفاتر",
      "url": "/category/notebooks"
@@ -1006,31 +931,6 @@
       "variants": []
      },
      {
-      "id": "ruled-notebook",
-      "handle": "ruled-notebook",
-      "url": "/products/ruled-notebook",
-      "title": "Ruled notebook",
-      "price": 7000,
-      "compare_at": null,
-      "available": true,
-      "image": {
-       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-open.webp"
-      },
-      "images": [
-       {
-        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-open.webp"
-       }
-      ],
-      "description": "<p>A notebook with ruled pages for daily notes. Hard cover.</p>",
-      "category": {
-       "title": "Notebooks",
-       "url": "/en/category/notebooks"
-      },
-      "tags": [],
-      "has_variants": false,
-      "variants": []
-     },
-     {
       "id": "blue-notebook",
       "handle": "blue-notebook",
       "url": "/products/blue-notebook",
@@ -1227,31 +1127,6 @@
        }
       ],
       "description": "<p>A notebook with a cream cover and plain pages. Suits sketching and writing.</p>",
-      "category": {
-       "title": "Notebooks",
-       "url": "/en/category/notebooks"
-      },
-      "tags": [],
-      "has_variants": false,
-      "variants": []
-     },
-     {
-      "id": "ruled-notebook",
-      "handle": "ruled-notebook",
-      "url": "/products/ruled-notebook",
-      "title": "Ruled notebook",
-      "price": 7000,
-      "compare_at": null,
-      "available": true,
-      "image": {
-       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-open.webp"
-      },
-      "images": [
-       {
-        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-open.webp"
-       }
-      ],
-      "description": "<p>A notebook with ruled pages for daily notes. Hard cover.</p>",
       "category": {
        "title": "Notebooks",
        "url": "/en/category/notebooks"
@@ -1571,31 +1446,6 @@
      }
     ],
     "description": "<p>A notebook with a cream cover and plain pages. Suits sketching and writing.</p>",
-    "category": {
-     "title": "Notebooks",
-     "url": "/en/category/notebooks"
-    },
-    "tags": [],
-    "has_variants": false,
-    "variants": []
-   },
-   "ruled-notebook": {
-    "id": "ruled-notebook",
-    "handle": "ruled-notebook",
-    "url": "/products/ruled-notebook",
-    "title": "Ruled notebook",
-    "price": 7000,
-    "compare_at": null,
-    "available": true,
-    "image": {
-     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-open.webp"
-    },
-    "images": [
-     {
-      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-open.webp"
-     }
-    ],
-    "description": "<p>A notebook with ruled pages for daily notes. Hard cover.</p>",
     "category": {
      "title": "Notebooks",
      "url": "/en/category/notebooks"

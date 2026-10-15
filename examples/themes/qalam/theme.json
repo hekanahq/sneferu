@@ -1,9 +1,9 @@
 {
   "id": "qalam",
   "name": "Qalam",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Hekana",
-  "description": "A stationery and school supplies store, bold and young: sunny yellow and black, rounded yellow product cards with a black price pill, a split hero, a bundle banner and a trust strip.",
+  "description": "A stationery and school supplies store, bold and young: sunny yellow and black, rounded yellow product cards with a black price pill, a split hero, a feature banner and a trust strip.",
   "category": "books",
   "engine": "hk2",
   "engineCompatibility": "^2.0.0",
