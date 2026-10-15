@@ -1,0 +1,35 @@
+<article class="ql-card ql-card-{{ card_style }}">
+  <a class="ql-card-link" href="{{ product.url }}">
+    <div class="ql-card-media">
+      <hk-image
+        src="{{ product.image }}"
+        alt="{{ product.title }}"
+        aspect-ratio="{{ image_ratio }}"
+        fit="contain"
+        sizes="(min-width: 1024px) 25vw, 50vw"
+      />
+      {% if show_badge %}
+        {% if product.available %}
+          {% if product.compare_at > product.price %}
+            <span class="ql-badge">{{ t('sale') }}</span>
+          {% endif %}
+        {% else %}
+          <span class="ql-badge ql-badge-muted">{{ t('sold_out_badge') }}</span>
+        {% endif %}
+      {% endif %}
+    </div>
+    <div class="ql-card-foot">
+      <h3 class="ql-card-title">{{ product.title }}</h3>
+      {% if show_price %}<span class="ql-card-price">{% render 'price', product: product, bind: false %}</span>{% endif %}
+    </div>
+  </a>
+  {% if show_buy %}
+    <div class="ql-card-buy">
+      {% if product.has_variants %}
+        <hk-button label="{{ t('choose_options') }}" href="{{ product.url }}" variant="solid" size="sm" />
+      {% else %}
+        <hk-add-to-cart product="{{ product }}" />
+      {% endif %}
+    </div>
+  {% endif %}
+</article>

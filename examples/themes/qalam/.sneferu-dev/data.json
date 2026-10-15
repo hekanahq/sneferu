@@ -1,0 +1,1948 @@
+{
+ "ar": {
+  "store": {
+   "name": "قلم"
+  },
+  "collections": {
+   "featured": {
+    "title": "Featured",
+    "products": [
+     {
+      "id": "cream-notebook",
+      "handle": "cream-notebook",
+      "url": "/products/cream-notebook",
+      "title": "دفتر سادة غلاف كريمي",
+      "price": 8500,
+      "compare_at": null,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-cream.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-cream.webp"
+       }
+      ],
+      "description": "<p>دفتر بغلاف كريمي وصفحات سادة. مناسب للرسم والكتابة.</p>",
+      "category": {
+       "title": "دفاتر",
+       "url": "/category/notebooks"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     },
+     {
+      "id": "ruled-notebook",
+      "handle": "ruled-notebook",
+      "url": "/products/ruled-notebook",
+      "title": "دفتر ملاحظات مسطر",
+      "price": 7000,
+      "compare_at": null,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-open.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-open.webp"
+       }
+      ],
+      "description": "<p>دفتر بصفحات مسطرة للملاحظات اليومية. غلاف سميك.</p>",
+      "category": {
+       "title": "دفاتر",
+       "url": "/category/notebooks"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     },
+     {
+      "id": "blue-notebook",
+      "handle": "blue-notebook",
+      "url": "/products/blue-notebook",
+      "title": "دفتر غلاف أزرق",
+      "price": 12000,
+      "compare_at": 14000,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/notebook-blue.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/notebook-blue.webp"
+       }
+      ],
+      "description": "<p>دفتر بغلاف أزرق وحواف مستديرة. يتحمل الشنطة والمكتب.</p>",
+      "category": {
+       "title": "دفاتر",
+       "url": "/category/notebooks"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     },
+     {
+      "id": "red-spiral-notebook",
+      "handle": "red-spiral-notebook",
+      "url": "/products/red-spiral-notebook",
+      "title": "دفتر سلك أحمر",
+      "price": 6500,
+      "compare_at": null,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/notebook-red.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/notebook-red.webp"
+       }
+      ],
+      "description": "<p>دفتر بسلك معدني وغلاف أحمر. يفتح على الوش بسهولة.</p>",
+      "category": {
+       "title": "دفاتر",
+       "url": "/category/notebooks"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     },
+     {
+      "id": "green-planner",
+      "handle": "green-planner",
+      "url": "/products/green-planner",
+      "title": "مفكرة غلاف أخضر",
+      "price": 15000,
+      "compare_at": null,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-green.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-green.webp"
+       }
+      ],
+      "description": "<p>مفكرة بغلاف أخضر لتنظيم المذاكرة والمواعيد.</p>",
+      "category": {
+       "title": "مفكرات",
+       "url": "/category/planners"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     },
+     {
+      "id": "markers-set",
+      "handle": "markers-set",
+      "url": "/products/markers-set",
+      "title": "طقم أقلام ماركر ملونة",
+      "price": 9500,
+      "compare_at": 11000,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/markers.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/markers.webp"
+       }
+      ],
+      "description": "<p>طقم أقلام ماركر بستة ألوان للتلوين والتعليم.</p>",
+      "category": {
+       "title": "أقلام وحقائب",
+       "url": "/category/pens-cases"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     },
+     {
+      "id": "yellow-pencil-case",
+      "handle": "yellow-pencil-case",
+      "url": "/products/yellow-pencil-case",
+      "title": "حقيبة أقلام صفراء",
+      "price": 8000,
+      "compare_at": null,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/pencil-case.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/pencil-case.webp"
+       }
+      ],
+      "description": "<p>حقيبة أقلام بسوستة وجيب واحد. لون أصفر زاهي.</p>",
+      "category": {
+       "title": "أقلام وحقائب",
+       "url": "/category/pens-cases"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     },
+     {
+      "id": "pen-organiser",
+      "handle": "pen-organiser",
+      "url": "/products/pen-organiser",
+      "title": "منظم أقلام للمكتب",
+      "price": 17500,
+      "compare_at": null,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/organiser.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/organiser.webp"
+       }
+      ],
+      "description": "<p>منظم معدني أزرق بثلاثة أدوار لحفظ الأقلام على المكتب.</p>",
+      "category": {
+       "title": "المكتب",
+       "url": "/category/desk"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     },
+     {
+      "id": "sticky-notes",
+      "handle": "sticky-notes",
+      "url": "/products/sticky-notes",
+      "title": "ورق ملاحظات لاصق أصفر",
+      "price": 2500,
+      "compare_at": null,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/sticky.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/sticky.webp"
+       }
+      ],
+      "description": "<p>بلوك ورق ملاحظات لاصق باللون الأصفر.</p>",
+      "category": {
+       "title": "المكتب",
+       "url": "/category/desk"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     }
+    ]
+   },
+   "notebooks": {
+    "title": "دفاتر",
+    "products": [
+     {
+      "id": "cream-notebook",
+      "handle": "cream-notebook",
+      "url": "/products/cream-notebook",
+      "title": "دفتر سادة غلاف كريمي",
+      "price": 8500,
+      "compare_at": null,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-cream.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-cream.webp"
+       }
+      ],
+      "description": "<p>دفتر بغلاف كريمي وصفحات سادة. مناسب للرسم والكتابة.</p>",
+      "category": {
+       "title": "دفاتر",
+       "url": "/category/notebooks"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     },
+     {
+      "id": "ruled-notebook",
+      "handle": "ruled-notebook",
+      "url": "/products/ruled-notebook",
+      "title": "دفتر ملاحظات مسطر",
+      "price": 7000,
+      "compare_at": null,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-open.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-open.webp"
+       }
+      ],
+      "description": "<p>دفتر بصفحات مسطرة للملاحظات اليومية. غلاف سميك.</p>",
+      "category": {
+       "title": "دفاتر",
+       "url": "/category/notebooks"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     },
+     {
+      "id": "blue-notebook",
+      "handle": "blue-notebook",
+      "url": "/products/blue-notebook",
+      "title": "دفتر غلاف أزرق",
+      "price": 12000,
+      "compare_at": 14000,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/notebook-blue.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/notebook-blue.webp"
+       }
+      ],
+      "description": "<p>دفتر بغلاف أزرق وحواف مستديرة. يتحمل الشنطة والمكتب.</p>",
+      "category": {
+       "title": "دفاتر",
+       "url": "/category/notebooks"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     },
+     {
+      "id": "red-spiral-notebook",
+      "handle": "red-spiral-notebook",
+      "url": "/products/red-spiral-notebook",
+      "title": "دفتر سلك أحمر",
+      "price": 6500,
+      "compare_at": null,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/notebook-red.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/notebook-red.webp"
+       }
+      ],
+      "description": "<p>دفتر بسلك معدني وغلاف أحمر. يفتح على الوش بسهولة.</p>",
+      "category": {
+       "title": "دفاتر",
+       "url": "/category/notebooks"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     }
+    ]
+   },
+   "planners": {
+    "title": "مفكرات",
+    "products": [
+     {
+      "id": "green-planner",
+      "handle": "green-planner",
+      "url": "/products/green-planner",
+      "title": "مفكرة غلاف أخضر",
+      "price": 15000,
+      "compare_at": null,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-green.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-green.webp"
+       }
+      ],
+      "description": "<p>مفكرة بغلاف أخضر لتنظيم المذاكرة والمواعيد.</p>",
+      "category": {
+       "title": "مفكرات",
+       "url": "/category/planners"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     },
+     {
+      "id": "mustard-planner",
+      "handle": "mustard-planner",
+      "url": "/products/mustard-planner",
+      "title": "مفكرة غلاف أصفر",
+      "price": 15000,
+      "compare_at": null,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-mustard.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-mustard.webp"
+       }
+      ],
+      "description": "<p>مفكرة بغلاف أصفر داكن. صفحات للأسابيع والملاحظات.</p>",
+      "category": {
+       "title": "مفكرات",
+       "url": "/category/planners"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     },
+     {
+      "id": "terracotta-planner",
+      "handle": "terracotta-planner",
+      "url": "/products/terracotta-planner",
+      "title": "مفكرة غلاف برتقالي",
+      "price": 15000,
+      "compare_at": 18000,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-terracotta.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-terracotta.webp"
+       }
+      ],
+      "description": "<p>مفكرة بغلاف برتقالي ترابي لتسجيل المهام.</p>",
+      "category": {
+       "title": "مفكرات",
+       "url": "/category/planners"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     }
+    ]
+   },
+   "pens-cases": {
+    "title": "أقلام وحقائب",
+    "products": [
+     {
+      "id": "blue-pen",
+      "handle": "blue-pen",
+      "url": "/products/blue-pen",
+      "title": "قلم حبر أزرق",
+      "price": 1500,
+      "compare_at": null,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/pen-blue.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/pen-blue.webp"
+       }
+      ],
+      "description": "<p>قلم أزرق بغطاء ضغط. حبر أزرق للكتابة اليومية.</p>",
+      "category": {
+       "title": "أقلام وحقائب",
+       "url": "/category/pens-cases"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     },
+     {
+      "id": "markers-set",
+      "handle": "markers-set",
+      "url": "/products/markers-set",
+      "title": "طقم أقلام ماركر ملونة",
+      "price": 9500,
+      "compare_at": 11000,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/markers.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/markers.webp"
+       }
+      ],
+      "description": "<p>طقم أقلام ماركر بستة ألوان للتلوين والتعليم.</p>",
+      "category": {
+       "title": "أقلام وحقائب",
+       "url": "/category/pens-cases"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     },
+     {
+      "id": "yellow-pencil-case",
+      "handle": "yellow-pencil-case",
+      "url": "/products/yellow-pencil-case",
+      "title": "حقيبة أقلام صفراء",
+      "price": 8000,
+      "compare_at": null,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/pencil-case.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/pencil-case.webp"
+       }
+      ],
+      "description": "<p>حقيبة أقلام بسوستة وجيب واحد. لون أصفر زاهي.</p>",
+      "category": {
+       "title": "أقلام وحقائب",
+       "url": "/category/pens-cases"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     }
+    ]
+   },
+   "desk": {
+    "title": "المكتب",
+    "products": [
+     {
+      "id": "pen-organiser",
+      "handle": "pen-organiser",
+      "url": "/products/pen-organiser",
+      "title": "منظم أقلام للمكتب",
+      "price": 17500,
+      "compare_at": null,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/organiser.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/organiser.webp"
+       }
+      ],
+      "description": "<p>منظم معدني أزرق بثلاثة أدوار لحفظ الأقلام على المكتب.</p>",
+      "category": {
+       "title": "المكتب",
+       "url": "/category/desk"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     },
+     {
+      "id": "red-stapler",
+      "handle": "red-stapler",
+      "url": "/products/red-stapler",
+      "title": "دباسة حمراء",
+      "price": 5500,
+      "compare_at": null,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/stapler.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/stapler.webp"
+       }
+      ],
+      "description": "<p>دباسة مكتب حمراء بقاعدة ثابتة.</p>",
+      "category": {
+       "title": "المكتب",
+       "url": "/category/desk"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     },
+     {
+      "id": "sticky-notes",
+      "handle": "sticky-notes",
+      "url": "/products/sticky-notes",
+      "title": "ورق ملاحظات لاصق أصفر",
+      "price": 2500,
+      "compare_at": null,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/sticky.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/sticky.webp"
+       }
+      ],
+      "description": "<p>بلوك ورق ملاحظات لاصق باللون الأصفر.</p>",
+      "category": {
+       "title": "المكتب",
+       "url": "/category/desk"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     }
+    ]
+   }
+  },
+  "products": {
+   "cream-notebook": {
+    "id": "cream-notebook",
+    "handle": "cream-notebook",
+    "url": "/products/cream-notebook",
+    "title": "دفتر سادة غلاف كريمي",
+    "price": 8500,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-cream.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-cream.webp"
+     }
+    ],
+    "description": "<p>دفتر بغلاف كريمي وصفحات سادة. مناسب للرسم والكتابة.</p>",
+    "category": {
+     "title": "دفاتر",
+     "url": "/category/notebooks"
+    },
+    "tags": [],
+    "has_variants": false,
+    "variants": []
+   },
+   "ruled-notebook": {
+    "id": "ruled-notebook",
+    "handle": "ruled-notebook",
+    "url": "/products/ruled-notebook",
+    "title": "دفتر ملاحظات مسطر",
+    "price": 7000,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-open.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-open.webp"
+     }
+    ],
+    "description": "<p>دفتر بصفحات مسطرة للملاحظات اليومية. غلاف سميك.</p>",
+    "category": {
+     "title": "دفاتر",
+     "url": "/category/notebooks"
+    },
+    "tags": [],
+    "has_variants": false,
+    "variants": []
+   },
+   "blue-notebook": {
+    "id": "blue-notebook",
+    "handle": "blue-notebook",
+    "url": "/products/blue-notebook",
+    "title": "دفتر غلاف أزرق",
+    "price": 12000,
+    "compare_at": 14000,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/notebook-blue.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/notebook-blue.webp"
+     }
+    ],
+    "description": "<p>دفتر بغلاف أزرق وحواف مستديرة. يتحمل الشنطة والمكتب.</p>",
+    "category": {
+     "title": "دفاتر",
+     "url": "/category/notebooks"
+    },
+    "tags": [],
+    "has_variants": false,
+    "variants": []
+   },
+   "red-spiral-notebook": {
+    "id": "red-spiral-notebook",
+    "handle": "red-spiral-notebook",
+    "url": "/products/red-spiral-notebook",
+    "title": "دفتر سلك أحمر",
+    "price": 6500,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/notebook-red.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/notebook-red.webp"
+     }
+    ],
+    "description": "<p>دفتر بسلك معدني وغلاف أحمر. يفتح على الوش بسهولة.</p>",
+    "category": {
+     "title": "دفاتر",
+     "url": "/category/notebooks"
+    },
+    "tags": [],
+    "has_variants": false,
+    "variants": []
+   },
+   "green-planner": {
+    "id": "green-planner",
+    "handle": "green-planner",
+    "url": "/products/green-planner",
+    "title": "مفكرة غلاف أخضر",
+    "price": 15000,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-green.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-green.webp"
+     }
+    ],
+    "description": "<p>مفكرة بغلاف أخضر لتنظيم المذاكرة والمواعيد.</p>",
+    "category": {
+     "title": "مفكرات",
+     "url": "/category/planners"
+    },
+    "tags": [],
+    "has_variants": false,
+    "variants": []
+   },
+   "mustard-planner": {
+    "id": "mustard-planner",
+    "handle": "mustard-planner",
+    "url": "/products/mustard-planner",
+    "title": "مفكرة غلاف أصفر",
+    "price": 15000,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-mustard.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-mustard.webp"
+     }
+    ],
+    "description": "<p>مفكرة بغلاف أصفر داكن. صفحات للأسابيع والملاحظات.</p>",
+    "category": {
+     "title": "مفكرات",
+     "url": "/category/planners"
+    },
+    "tags": [],
+    "has_variants": false,
+    "variants": []
+   },
+   "terracotta-planner": {
+    "id": "terracotta-planner",
+    "handle": "terracotta-planner",
+    "url": "/products/terracotta-planner",
+    "title": "مفكرة غلاف برتقالي",
+    "price": 15000,
+    "compare_at": 18000,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-terracotta.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-terracotta.webp"
+     }
+    ],
+    "description": "<p>مفكرة بغلاف برتقالي ترابي لتسجيل المهام.</p>",
+    "category": {
+     "title": "مفكرات",
+     "url": "/category/planners"
+    },
+    "tags": [],
+    "has_variants": false,
+    "variants": []
+   },
+   "blue-pen": {
+    "id": "blue-pen",
+    "handle": "blue-pen",
+    "url": "/products/blue-pen",
+    "title": "قلم حبر أزرق",
+    "price": 1500,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/pen-blue.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/pen-blue.webp"
+     }
+    ],
+    "description": "<p>قلم أزرق بغطاء ضغط. حبر أزرق للكتابة اليومية.</p>",
+    "category": {
+     "title": "أقلام وحقائب",
+     "url": "/category/pens-cases"
+    },
+    "tags": [],
+    "has_variants": false,
+    "variants": []
+   },
+   "markers-set": {
+    "id": "markers-set",
+    "handle": "markers-set",
+    "url": "/products/markers-set",
+    "title": "طقم أقلام ماركر ملونة",
+    "price": 9500,
+    "compare_at": 11000,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/markers.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/markers.webp"
+     }
+    ],
+    "description": "<p>طقم أقلام ماركر بستة ألوان للتلوين والتعليم.</p>",
+    "category": {
+     "title": "أقلام وحقائب",
+     "url": "/category/pens-cases"
+    },
+    "tags": [],
+    "has_variants": false,
+    "variants": []
+   },
+   "yellow-pencil-case": {
+    "id": "yellow-pencil-case",
+    "handle": "yellow-pencil-case",
+    "url": "/products/yellow-pencil-case",
+    "title": "حقيبة أقلام صفراء",
+    "price": 8000,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/pencil-case.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/pencil-case.webp"
+     }
+    ],
+    "description": "<p>حقيبة أقلام بسوستة وجيب واحد. لون أصفر زاهي.</p>",
+    "category": {
+     "title": "أقلام وحقائب",
+     "url": "/category/pens-cases"
+    },
+    "tags": [],
+    "has_variants": false,
+    "variants": []
+   },
+   "pen-organiser": {
+    "id": "pen-organiser",
+    "handle": "pen-organiser",
+    "url": "/products/pen-organiser",
+    "title": "منظم أقلام للمكتب",
+    "price": 17500,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/organiser.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/organiser.webp"
+     }
+    ],
+    "description": "<p>منظم معدني أزرق بثلاثة أدوار لحفظ الأقلام على المكتب.</p>",
+    "category": {
+     "title": "المكتب",
+     "url": "/category/desk"
+    },
+    "tags": [],
+    "has_variants": false,
+    "variants": []
+   },
+   "red-stapler": {
+    "id": "red-stapler",
+    "handle": "red-stapler",
+    "url": "/products/red-stapler",
+    "title": "دباسة حمراء",
+    "price": 5500,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/stapler.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/stapler.webp"
+     }
+    ],
+    "description": "<p>دباسة مكتب حمراء بقاعدة ثابتة.</p>",
+    "category": {
+     "title": "المكتب",
+     "url": "/category/desk"
+    },
+    "tags": [],
+    "has_variants": false,
+    "variants": []
+   },
+   "sticky-notes": {
+    "id": "sticky-notes",
+    "handle": "sticky-notes",
+    "url": "/products/sticky-notes",
+    "title": "ورق ملاحظات لاصق أصفر",
+    "price": 2500,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/sticky.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/sticky.webp"
+     }
+    ],
+    "description": "<p>بلوك ورق ملاحظات لاصق باللون الأصفر.</p>",
+    "category": {
+     "title": "المكتب",
+     "url": "/category/desk"
+    },
+    "tags": [],
+    "has_variants": false,
+    "variants": []
+   }
+  },
+  "menus": {
+   "main": {
+    "handle": "main",
+    "title": "Main",
+    "items": [
+     {
+      "title": "كل المنتجات",
+      "url": "/products",
+      "children": []
+     },
+     {
+      "title": "دفاتر",
+      "url": "/category/notebooks",
+      "children": []
+     },
+     {
+      "title": "مفكرات",
+      "url": "/category/planners",
+      "children": []
+     },
+     {
+      "title": "أقلام وحقائب",
+      "url": "/category/pens-cases",
+      "children": []
+     },
+     {
+      "title": "المكتب",
+      "url": "/category/desk",
+      "children": []
+     }
+    ]
+   },
+   "main-menu": {
+    "handle": "main-menu",
+    "title": "Main",
+    "items": [
+     {
+      "title": "كل المنتجات",
+      "url": "/products",
+      "children": []
+     },
+     {
+      "title": "دفاتر",
+      "url": "/category/notebooks",
+      "children": []
+     },
+     {
+      "title": "مفكرات",
+      "url": "/category/planners",
+      "children": []
+     },
+     {
+      "title": "أقلام وحقائب",
+      "url": "/category/pens-cases",
+      "children": []
+     },
+     {
+      "title": "المكتب",
+      "url": "/category/desk",
+      "children": []
+     }
+    ]
+   }
+  }
+ },
+ "en": {
+  "store": {
+   "name": "Qalam"
+  },
+  "collections": {
+   "featured": {
+    "title": "Featured",
+    "products": [
+     {
+      "id": "cream-notebook",
+      "handle": "cream-notebook",
+      "url": "/products/cream-notebook",
+      "title": "Plain notebook, cream cover",
+      "price": 8500,
+      "compare_at": null,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-cream.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-cream.webp"
+       }
+      ],
+      "description": "<p>A notebook with a cream cover and plain pages. Suits sketching and writing.</p>",
+      "category": {
+       "title": "Notebooks",
+       "url": "/en/category/notebooks"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     },
+     {
+      "id": "ruled-notebook",
+      "handle": "ruled-notebook",
+      "url": "/products/ruled-notebook",
+      "title": "Ruled notebook",
+      "price": 7000,
+      "compare_at": null,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-open.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-open.webp"
+       }
+      ],
+      "description": "<p>A notebook with ruled pages for daily notes. Hard cover.</p>",
+      "category": {
+       "title": "Notebooks",
+       "url": "/en/category/notebooks"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     },
+     {
+      "id": "blue-notebook",
+      "handle": "blue-notebook",
+      "url": "/products/blue-notebook",
+      "title": "Blue hardcover notebook",
+      "price": 12000,
+      "compare_at": 14000,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/notebook-blue.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/notebook-blue.webp"
+       }
+      ],
+      "description": "<p>A notebook with a blue cover and rounded corners. Fits in a bag or on a desk.</p>",
+      "category": {
+       "title": "Notebooks",
+       "url": "/en/category/notebooks"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     },
+     {
+      "id": "red-spiral-notebook",
+      "handle": "red-spiral-notebook",
+      "url": "/products/red-spiral-notebook",
+      "title": "Red spiral notebook",
+      "price": 6500,
+      "compare_at": null,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/notebook-red.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/notebook-red.webp"
+       }
+      ],
+      "description": "<p>A notebook with a metal spiral and a red cover. Opens flat.</p>",
+      "category": {
+       "title": "Notebooks",
+       "url": "/en/category/notebooks"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     },
+     {
+      "id": "green-planner",
+      "handle": "green-planner",
+      "url": "/products/green-planner",
+      "title": "Planner, green cover",
+      "price": 15000,
+      "compare_at": null,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-green.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-green.webp"
+       }
+      ],
+      "description": "<p>A planner with a green cover for study and appointments.</p>",
+      "category": {
+       "title": "Planners",
+       "url": "/en/category/planners"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     },
+     {
+      "id": "markers-set",
+      "handle": "markers-set",
+      "url": "/products/markers-set",
+      "title": "Coloured markers set",
+      "price": 9500,
+      "compare_at": 11000,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/markers.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/markers.webp"
+       }
+      ],
+      "description": "<p>A set of six coloured markers for colouring and highlighting.</p>",
+      "category": {
+       "title": "Pens and cases",
+       "url": "/en/category/pens-cases"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     },
+     {
+      "id": "yellow-pencil-case",
+      "handle": "yellow-pencil-case",
+      "url": "/products/yellow-pencil-case",
+      "title": "Yellow pencil case",
+      "price": 8000,
+      "compare_at": null,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/pencil-case.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/pencil-case.webp"
+       }
+      ],
+      "description": "<p>A pencil case with a zip and one pocket. Bright yellow.</p>",
+      "category": {
+       "title": "Pens and cases",
+       "url": "/en/category/pens-cases"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     },
+     {
+      "id": "pen-organiser",
+      "handle": "pen-organiser",
+      "url": "/products/pen-organiser",
+      "title": "Desk pen organiser",
+      "price": 17500,
+      "compare_at": null,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/organiser.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/organiser.webp"
+       }
+      ],
+      "description": "<p>A blue metal organiser with three tiers for keeping pens on the desk.</p>",
+      "category": {
+       "title": "Desk",
+       "url": "/en/category/desk"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     },
+     {
+      "id": "sticky-notes",
+      "handle": "sticky-notes",
+      "url": "/products/sticky-notes",
+      "title": "Yellow sticky notes",
+      "price": 2500,
+      "compare_at": null,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/sticky.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/sticky.webp"
+       }
+      ],
+      "description": "<p>A block of yellow sticky notes.</p>",
+      "category": {
+       "title": "Desk",
+       "url": "/en/category/desk"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     }
+    ]
+   },
+   "notebooks": {
+    "title": "Notebooks",
+    "products": [
+     {
+      "id": "cream-notebook",
+      "handle": "cream-notebook",
+      "url": "/products/cream-notebook",
+      "title": "Plain notebook, cream cover",
+      "price": 8500,
+      "compare_at": null,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-cream.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-cream.webp"
+       }
+      ],
+      "description": "<p>A notebook with a cream cover and plain pages. Suits sketching and writing.</p>",
+      "category": {
+       "title": "Notebooks",
+       "url": "/en/category/notebooks"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     },
+     {
+      "id": "ruled-notebook",
+      "handle": "ruled-notebook",
+      "url": "/products/ruled-notebook",
+      "title": "Ruled notebook",
+      "price": 7000,
+      "compare_at": null,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-open.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-open.webp"
+       }
+      ],
+      "description": "<p>A notebook with ruled pages for daily notes. Hard cover.</p>",
+      "category": {
+       "title": "Notebooks",
+       "url": "/en/category/notebooks"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     },
+     {
+      "id": "blue-notebook",
+      "handle": "blue-notebook",
+      "url": "/products/blue-notebook",
+      "title": "Blue hardcover notebook",
+      "price": 12000,
+      "compare_at": 14000,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/notebook-blue.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/notebook-blue.webp"
+       }
+      ],
+      "description": "<p>A notebook with a blue cover and rounded corners. Fits in a bag or on a desk.</p>",
+      "category": {
+       "title": "Notebooks",
+       "url": "/en/category/notebooks"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     },
+     {
+      "id": "red-spiral-notebook",
+      "handle": "red-spiral-notebook",
+      "url": "/products/red-spiral-notebook",
+      "title": "Red spiral notebook",
+      "price": 6500,
+      "compare_at": null,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/notebook-red.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/notebook-red.webp"
+       }
+      ],
+      "description": "<p>A notebook with a metal spiral and a red cover. Opens flat.</p>",
+      "category": {
+       "title": "Notebooks",
+       "url": "/en/category/notebooks"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     }
+    ]
+   },
+   "planners": {
+    "title": "Planners",
+    "products": [
+     {
+      "id": "green-planner",
+      "handle": "green-planner",
+      "url": "/products/green-planner",
+      "title": "Planner, green cover",
+      "price": 15000,
+      "compare_at": null,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-green.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-green.webp"
+       }
+      ],
+      "description": "<p>A planner with a green cover for study and appointments.</p>",
+      "category": {
+       "title": "Planners",
+       "url": "/en/category/planners"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     },
+     {
+      "id": "mustard-planner",
+      "handle": "mustard-planner",
+      "url": "/products/mustard-planner",
+      "title": "Planner, mustard cover",
+      "price": 15000,
+      "compare_at": null,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-mustard.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-mustard.webp"
+       }
+      ],
+      "description": "<p>A planner with a mustard cover. Pages for weeks and notes.</p>",
+      "category": {
+       "title": "Planners",
+       "url": "/en/category/planners"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     },
+     {
+      "id": "terracotta-planner",
+      "handle": "terracotta-planner",
+      "url": "/products/terracotta-planner",
+      "title": "Planner, terracotta cover",
+      "price": 15000,
+      "compare_at": 18000,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-terracotta.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-terracotta.webp"
+       }
+      ],
+      "description": "<p>A planner with a terracotta cover for tracking tasks.</p>",
+      "category": {
+       "title": "Planners",
+       "url": "/en/category/planners"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     }
+    ]
+   },
+   "pens-cases": {
+    "title": "Pens and cases",
+    "products": [
+     {
+      "id": "blue-pen",
+      "handle": "blue-pen",
+      "url": "/products/blue-pen",
+      "title": "Blue pen",
+      "price": 1500,
+      "compare_at": null,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/pen-blue.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/pen-blue.webp"
+       }
+      ],
+      "description": "<p>A blue click pen with blue ink for everyday writing.</p>",
+      "category": {
+       "title": "Pens and cases",
+       "url": "/en/category/pens-cases"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     },
+     {
+      "id": "markers-set",
+      "handle": "markers-set",
+      "url": "/products/markers-set",
+      "title": "Coloured markers set",
+      "price": 9500,
+      "compare_at": 11000,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/markers.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/markers.webp"
+       }
+      ],
+      "description": "<p>A set of six coloured markers for colouring and highlighting.</p>",
+      "category": {
+       "title": "Pens and cases",
+       "url": "/en/category/pens-cases"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     },
+     {
+      "id": "yellow-pencil-case",
+      "handle": "yellow-pencil-case",
+      "url": "/products/yellow-pencil-case",
+      "title": "Yellow pencil case",
+      "price": 8000,
+      "compare_at": null,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/pencil-case.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/pencil-case.webp"
+       }
+      ],
+      "description": "<p>A pencil case with a zip and one pocket. Bright yellow.</p>",
+      "category": {
+       "title": "Pens and cases",
+       "url": "/en/category/pens-cases"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     }
+    ]
+   },
+   "desk": {
+    "title": "Desk",
+    "products": [
+     {
+      "id": "pen-organiser",
+      "handle": "pen-organiser",
+      "url": "/products/pen-organiser",
+      "title": "Desk pen organiser",
+      "price": 17500,
+      "compare_at": null,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/organiser.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/organiser.webp"
+       }
+      ],
+      "description": "<p>A blue metal organiser with three tiers for keeping pens on the desk.</p>",
+      "category": {
+       "title": "Desk",
+       "url": "/en/category/desk"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     },
+     {
+      "id": "red-stapler",
+      "handle": "red-stapler",
+      "url": "/products/red-stapler",
+      "title": "Red stapler",
+      "price": 5500,
+      "compare_at": null,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/stapler.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/stapler.webp"
+       }
+      ],
+      "description": "<p>A red desk stapler with a steady base.</p>",
+      "category": {
+       "title": "Desk",
+       "url": "/en/category/desk"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     },
+     {
+      "id": "sticky-notes",
+      "handle": "sticky-notes",
+      "url": "/products/sticky-notes",
+      "title": "Yellow sticky notes",
+      "price": 2500,
+      "compare_at": null,
+      "available": true,
+      "image": {
+       "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/sticky.webp"
+      },
+      "images": [
+       {
+        "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/sticky.webp"
+       }
+      ],
+      "description": "<p>A block of yellow sticky notes.</p>",
+      "category": {
+       "title": "Desk",
+       "url": "/en/category/desk"
+      },
+      "tags": [],
+      "has_variants": false,
+      "variants": []
+     }
+    ]
+   }
+  },
+  "products": {
+   "cream-notebook": {
+    "id": "cream-notebook",
+    "handle": "cream-notebook",
+    "url": "/products/cream-notebook",
+    "title": "Plain notebook, cream cover",
+    "price": 8500,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-cream.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-cream.webp"
+     }
+    ],
+    "description": "<p>A notebook with a cream cover and plain pages. Suits sketching and writing.</p>",
+    "category": {
+     "title": "Notebooks",
+     "url": "/en/category/notebooks"
+    },
+    "tags": [],
+    "has_variants": false,
+    "variants": []
+   },
+   "ruled-notebook": {
+    "id": "ruled-notebook",
+    "handle": "ruled-notebook",
+    "url": "/products/ruled-notebook",
+    "title": "Ruled notebook",
+    "price": 7000,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-open.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-open.webp"
+     }
+    ],
+    "description": "<p>A notebook with ruled pages for daily notes. Hard cover.</p>",
+    "category": {
+     "title": "Notebooks",
+     "url": "/en/category/notebooks"
+    },
+    "tags": [],
+    "has_variants": false,
+    "variants": []
+   },
+   "blue-notebook": {
+    "id": "blue-notebook",
+    "handle": "blue-notebook",
+    "url": "/products/blue-notebook",
+    "title": "Blue hardcover notebook",
+    "price": 12000,
+    "compare_at": 14000,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/notebook-blue.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/notebook-blue.webp"
+     }
+    ],
+    "description": "<p>A notebook with a blue cover and rounded corners. Fits in a bag or on a desk.</p>",
+    "category": {
+     "title": "Notebooks",
+     "url": "/en/category/notebooks"
+    },
+    "tags": [],
+    "has_variants": false,
+    "variants": []
+   },
+   "red-spiral-notebook": {
+    "id": "red-spiral-notebook",
+    "handle": "red-spiral-notebook",
+    "url": "/products/red-spiral-notebook",
+    "title": "Red spiral notebook",
+    "price": 6500,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/notebook-red.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/notebook-red.webp"
+     }
+    ],
+    "description": "<p>A notebook with a metal spiral and a red cover. Opens flat.</p>",
+    "category": {
+     "title": "Notebooks",
+     "url": "/en/category/notebooks"
+    },
+    "tags": [],
+    "has_variants": false,
+    "variants": []
+   },
+   "green-planner": {
+    "id": "green-planner",
+    "handle": "green-planner",
+    "url": "/products/green-planner",
+    "title": "Planner, green cover",
+    "price": 15000,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-green.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-green.webp"
+     }
+    ],
+    "description": "<p>A planner with a green cover for study and appointments.</p>",
+    "category": {
+     "title": "Planners",
+     "url": "/en/category/planners"
+    },
+    "tags": [],
+    "has_variants": false,
+    "variants": []
+   },
+   "mustard-planner": {
+    "id": "mustard-planner",
+    "handle": "mustard-planner",
+    "url": "/products/mustard-planner",
+    "title": "Planner, mustard cover",
+    "price": 15000,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-mustard.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-mustard.webp"
+     }
+    ],
+    "description": "<p>A planner with a mustard cover. Pages for weeks and notes.</p>",
+    "category": {
+     "title": "Planners",
+     "url": "/en/category/planners"
+    },
+    "tags": [],
+    "has_variants": false,
+    "variants": []
+   },
+   "terracotta-planner": {
+    "id": "terracotta-planner",
+    "handle": "terracotta-planner",
+    "url": "/products/terracotta-planner",
+    "title": "Planner, terracotta cover",
+    "price": 15000,
+    "compare_at": 18000,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-terracotta.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/book-terracotta.webp"
+     }
+    ],
+    "description": "<p>A planner with a terracotta cover for tracking tasks.</p>",
+    "category": {
+     "title": "Planners",
+     "url": "/en/category/planners"
+    },
+    "tags": [],
+    "has_variants": false,
+    "variants": []
+   },
+   "blue-pen": {
+    "id": "blue-pen",
+    "handle": "blue-pen",
+    "url": "/products/blue-pen",
+    "title": "Blue pen",
+    "price": 1500,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/pen-blue.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/pen-blue.webp"
+     }
+    ],
+    "description": "<p>A blue click pen with blue ink for everyday writing.</p>",
+    "category": {
+     "title": "Pens and cases",
+     "url": "/en/category/pens-cases"
+    },
+    "tags": [],
+    "has_variants": false,
+    "variants": []
+   },
+   "markers-set": {
+    "id": "markers-set",
+    "handle": "markers-set",
+    "url": "/products/markers-set",
+    "title": "Coloured markers set",
+    "price": 9500,
+    "compare_at": 11000,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/markers.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/markers.webp"
+     }
+    ],
+    "description": "<p>A set of six coloured markers for colouring and highlighting.</p>",
+    "category": {
+     "title": "Pens and cases",
+     "url": "/en/category/pens-cases"
+    },
+    "tags": [],
+    "has_variants": false,
+    "variants": []
+   },
+   "yellow-pencil-case": {
+    "id": "yellow-pencil-case",
+    "handle": "yellow-pencil-case",
+    "url": "/products/yellow-pencil-case",
+    "title": "Yellow pencil case",
+    "price": 8000,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/pencil-case.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/pencil-case.webp"
+     }
+    ],
+    "description": "<p>A pencil case with a zip and one pocket. Bright yellow.</p>",
+    "category": {
+     "title": "Pens and cases",
+     "url": "/en/category/pens-cases"
+    },
+    "tags": [],
+    "has_variants": false,
+    "variants": []
+   },
+   "pen-organiser": {
+    "id": "pen-organiser",
+    "handle": "pen-organiser",
+    "url": "/products/pen-organiser",
+    "title": "Desk pen organiser",
+    "price": 17500,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/organiser.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/organiser.webp"
+     }
+    ],
+    "description": "<p>A blue metal organiser with three tiers for keeping pens on the desk.</p>",
+    "category": {
+     "title": "Desk",
+     "url": "/en/category/desk"
+    },
+    "tags": [],
+    "has_variants": false,
+    "variants": []
+   },
+   "red-stapler": {
+    "id": "red-stapler",
+    "handle": "red-stapler",
+    "url": "/products/red-stapler",
+    "title": "Red stapler",
+    "price": 5500,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/stapler.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/stapler.webp"
+     }
+    ],
+    "description": "<p>A red desk stapler with a steady base.</p>",
+    "category": {
+     "title": "Desk",
+     "url": "/en/category/desk"
+    },
+    "tags": [],
+    "has_variants": false,
+    "variants": []
+   },
+   "sticky-notes": {
+    "id": "sticky-notes",
+    "handle": "sticky-notes",
+    "url": "/products/sticky-notes",
+    "title": "Yellow sticky notes",
+    "price": 2500,
+    "compare_at": null,
+    "available": true,
+    "image": {
+     "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/sticky.webp"
+    },
+    "images": [
+     {
+      "url": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/qalam/sticky.webp"
+     }
+    ],
+    "description": "<p>A block of yellow sticky notes.</p>",
+    "category": {
+     "title": "Desk",
+     "url": "/en/category/desk"
+    },
+    "tags": [],
+    "has_variants": false,
+    "variants": []
+   }
+  },
+  "menus": {
+   "main": {
+    "handle": "main",
+    "title": "Main",
+    "items": [
+     {
+      "title": "All products",
+      "url": "/en/products",
+      "children": []
+     },
+     {
+      "title": "Notebooks",
+      "url": "/en/category/notebooks",
+      "children": []
+     },
+     {
+      "title": "Planners",
+      "url": "/en/category/planners",
+      "children": []
+     },
+     {
+      "title": "Pens and cases",
+      "url": "/en/category/pens-cases",
+      "children": []
+     },
+     {
+      "title": "Desk",
+      "url": "/en/category/desk",
+      "children": []
+     }
+    ]
+   },
+   "main-menu": {
+    "handle": "main-menu",
+    "title": "Main",
+    "items": [
+     {
+      "title": "All products",
+      "url": "/en/products",
+      "children": []
+     },
+     {
+      "title": "Notebooks",
+      "url": "/en/category/notebooks",
+      "children": []
+     },
+     {
+      "title": "Planners",
+      "url": "/en/category/planners",
+      "children": []
+     },
+     {
+      "title": "Pens and cases",
+      "url": "/en/category/pens-cases",
+      "children": []
+     },
+     {
+      "title": "Desk",
+      "url": "/en/category/desk",
+      "children": []
+     }
+    ]
+   }
+  }
+ }
+}
