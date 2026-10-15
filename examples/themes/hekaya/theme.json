@@ -1,10 +1,10 @@
 {
   "id": "hekaya",
   "name": "Hekaya",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Hekana",
   "description": "A bookshop editorial store: paper cream ground, ink navy headings, brick red accents, a split reading-corner hero, a staff picks row of covers, a large quote, genre tiles and a grid of books.",
-  "category": "fashion",
+  "category": "books",
   "engine": "hk2",
   "engineCompatibility": "^2.0.0",
   "defaultLocale": "ar",

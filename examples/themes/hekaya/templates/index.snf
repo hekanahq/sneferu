@@ -87,7 +87,7 @@
           },
           "collection": "novels",
           "limit": 6,
-          "columns": 4,
+          "columns": 3,
           "image_ratio": "1/1",
           "show_atc": true,
           "head_align": "start",

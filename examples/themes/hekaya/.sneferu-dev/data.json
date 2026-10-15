@@ -32,9 +32,9 @@
       "options": []
      },
      {
-      "handle": "first-words",
-      "title": "أول ألف كلمة",
-      "url": "/products/first-words",
+      "handle": "picture-words",
+      "title": "كتاب الكلمات المصوّر",
+      "url": "/products/picture-words",
       "price": 9900,
       "compare_at": null,
       "image": {
@@ -121,9 +121,9 @@
       "options": []
      },
      {
-      "handle": "city-trilogy",
-      "title": "ثلاثية المدينة",
-      "url": "/products/city-trilogy",
+      "handle": "three-book-set",
+      "title": "مجموعة ثلاثة كتب",
+      "url": "/products/three-book-set",
       "price": 39000,
       "compare_at": 45000,
       "image": {
@@ -222,9 +222,9 @@
       "options": []
      },
      {
-      "handle": "city-trilogy",
-      "title": "ثلاثية المدينة",
-      "url": "/products/city-trilogy",
+      "handle": "three-book-set",
+      "title": "مجموعة ثلاثة كتب",
+      "url": "/products/three-book-set",
       "price": 39000,
       "compare_at": 45000,
       "image": {
@@ -292,9 +292,9 @@
       "options": []
      },
      {
-      "handle": "first-words",
-      "title": "أول ألف كلمة",
-      "url": "/products/first-words",
+      "handle": "picture-words",
+      "title": "كتاب الكلمات المصوّر",
+      "url": "/products/picture-words",
       "price": 9900,
       "compare_at": null,
       "image": {
@@ -537,11 +537,11 @@
      "url": "/category/novels"
     }
    },
-   "city-trilogy": {
-    "id": "city-trilogy",
-    "handle": "city-trilogy",
-    "url": "/products/city-trilogy",
-    "title": "ثلاثية المدينة",
+   "three-book-set": {
+    "id": "three-book-set",
+    "handle": "three-book-set",
+    "url": "/products/three-book-set",
+    "title": "مجموعة ثلاثة كتب",
     "price": 39000,
     "compare_at": 45000,
     "available": true,
@@ -558,7 +558,7 @@
     "has_variants": false,
     "variants": [
      {
-      "id": "city-trilogy-d",
+      "id": "three-book-set-d",
       "title": "Default",
       "price": 39000,
       "available": true,
@@ -702,11 +702,11 @@
      "url": "/category/kids"
     }
    },
-   "first-words": {
-    "id": "first-words",
-    "handle": "first-words",
-    "url": "/products/first-words",
-    "title": "أول ألف كلمة",
+   "picture-words": {
+    "id": "picture-words",
+    "handle": "picture-words",
+    "url": "/products/picture-words",
+    "title": "كتاب الكلمات المصوّر",
     "price": 9900,
     "compare_at": null,
     "available": true,
@@ -723,7 +723,7 @@
     "has_variants": false,
     "variants": [
      {
-      "id": "first-words-d",
+      "id": "picture-words-d",
       "title": "Default",
       "price": 9900,
       "available": true,
@@ -1039,9 +1039,9 @@
       "options": []
      },
      {
-      "handle": "first-words",
-      "title": "First Thousand Words",
-      "url": "/en/products/first-words",
+      "handle": "picture-words",
+      "title": "Picture Words Book",
+      "url": "/en/products/picture-words",
       "price": 9900,
       "compare_at": null,
       "image": {
@@ -1128,9 +1128,9 @@
       "options": []
      },
      {
-      "handle": "city-trilogy",
-      "title": "The City Trilogy",
-      "url": "/en/products/city-trilogy",
+      "handle": "three-book-set",
+      "title": "Three-book set",
+      "url": "/en/products/three-book-set",
       "price": 39000,
       "compare_at": 45000,
       "image": {
@@ -1229,9 +1229,9 @@
       "options": []
      },
      {
-      "handle": "city-trilogy",
-      "title": "The City Trilogy",
-      "url": "/en/products/city-trilogy",
+      "handle": "three-book-set",
+      "title": "Three-book set",
+      "url": "/en/products/three-book-set",
       "price": 39000,
       "compare_at": 45000,
       "image": {
@@ -1299,9 +1299,9 @@
       "options": []
      },
      {
-      "handle": "first-words",
-      "title": "First Thousand Words",
-      "url": "/en/products/first-words",
+      "handle": "picture-words",
+      "title": "Picture Words Book",
+      "url": "/en/products/picture-words",
       "price": 9900,
       "compare_at": null,
       "image": {
@@ -1544,11 +1544,11 @@
      "url": "/en/category/novels"
     }
    },
-   "city-trilogy": {
-    "id": "city-trilogy",
-    "handle": "city-trilogy",
-    "url": "/en/products/city-trilogy",
-    "title": "The City Trilogy",
+   "three-book-set": {
+    "id": "three-book-set",
+    "handle": "three-book-set",
+    "url": "/en/products/three-book-set",
+    "title": "Three-book set",
     "price": 39000,
     "compare_at": 45000,
     "available": true,
@@ -1565,7 +1565,7 @@
     "has_variants": false,
     "variants": [
      {
-      "id": "city-trilogy-d",
+      "id": "three-book-set-d",
       "title": "Default",
       "price": 39000,
       "available": true,
@@ -1709,11 +1709,11 @@
      "url": "/en/category/kids"
     }
    },
-   "first-words": {
-    "id": "first-words",
-    "handle": "first-words",
-    "url": "/en/products/first-words",
-    "title": "First Thousand Words",
+   "picture-words": {
+    "id": "picture-words",
+    "handle": "picture-words",
+    "url": "/en/products/picture-words",
+    "title": "Picture Words Book",
     "price": 9900,
     "compare_at": null,
     "available": true,
@@ -1730,7 +1730,7 @@
     "has_variants": false,
     "variants": [
      {
-      "id": "first-words-d",
+      "id": "picture-words-d",
       "title": "Default",
       "price": 9900,
       "available": true,

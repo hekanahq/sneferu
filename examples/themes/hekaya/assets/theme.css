@@ -128,7 +128,8 @@
 .hy-card-link { display: grid; gap: 8px; align-content: start; flex: 1; }
 .hy-card-bordered { border: var(--hy-hair); padding: 12px; }
 .hy-card-shadow { padding: 12px; background: var(--hk-color-surface); box-shadow: 0 6px 24px color-mix(in srgb, var(--hk-color-text) 8%, transparent); }
-.hy-card-media { position: relative; overflow: hidden; background: var(--hk-color-surface); border: var(--hy-hair); }
+.hy-card-media { position: relative; overflow: hidden; background: var(--hk-color-soft); border: var(--hy-hair); }
+.hy-card-media img { mix-blend-mode: multiply; }
 .hy-card-media img { display: block; width: 100%; height: auto; transition: transform 0.4s; }
 .hy-card:hover .hy-card-media img { transform: scale(1.03); }
 .hy-card-media .hy-badge { position: absolute; inset-block-start: 8px; inset-inline-start: 8px; }

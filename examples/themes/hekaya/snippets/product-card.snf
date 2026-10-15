@@ -21,12 +21,6 @@
     {% if show_price %}{% render 'price', product: product, bind: false %}{% endif %}
   </a>
   {% if show_atc %}
-    <div class="hy-card-cta">
-      {% if product.has_variants %}
-        <a class="hy-card-view" href="{{ product.url }}">{{ t('view_book') }}</a>
-      {% else %}
-        <hk-add-to-cart product="{{ product }}" quantity="false" />
-      {% endif %}
-    </div>
+    <div class="hy-card-cta"><a class="hy-card-view" href="{{ product.url }}">{{ t('view_book') }}</a></div>
   {% endif %}
 </article>
