@@ -1,0 +1,59 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "not-found"
+      },
+      {
+        "type": "bn-categories",
+        "blocks": [
+          {
+            "type": "tile",
+            "settings": {
+              "icon": "bean",
+              "label": {
+                "ar": "حبوب القهوة",
+                "en": "Coffee beans"
+              },
+              "link": "/category/beans"
+            }
+          },
+          {
+            "type": "tile",
+            "settings": {
+              "icon": "dripper",
+              "label": {
+                "ar": "أدوات التحضير",
+                "en": "Brewing gear"
+              },
+              "link": "/category/brewing"
+            }
+          },
+          {
+            "type": "tile",
+            "settings": {
+              "icon": "cup",
+              "label": {
+                "ar": "الأكواب",
+                "en": "Cups"
+              },
+              "link": "/category/cups"
+            }
+          },
+          {
+            "type": "tile",
+            "settings": {
+              "icon": "bag",
+              "label": {
+                "ar": "مخبوزات وحلويات",
+                "en": "Pastries"
+              },
+              "link": "/category/pastries"
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

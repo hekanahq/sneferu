@@ -1,0 +1,46 @@
+{
+  "id": "bunn",
+  "name": "Bunn",
+  "version": "1.0.0",
+  "author": "Hekana",
+  "description": "A specialty coffee roaster store: espresso brown and copper on cream, a bean-photo hero with a copper banner, round category tiles, product cards with roast-level dots and a subscription banner, on every page.",
+  "category": "cafe",
+  "engine": "hk2",
+  "engineCompatibility": "^2.0.0",
+  "defaultLocale": "ar",
+  "locales": ["ar", "en"],
+  "settings": {},
+  "money": {
+    "format": "whole"
+  },
+  "tokens": {
+    "colors": {
+      "primary": "#6B3F2A",
+      "secondary": "#2B1A12",
+      "accent": "#A5602A",
+      "background": "#FFFFFF",
+      "text": "#2B1A12",
+      "muted": "#6B5E55",
+      "line": "#E5DFD6",
+      "soft": "#F3F0EA",
+      "surface": "#FFFFFF",
+      "cream": "#FBF8F3",
+      "stone": "#E9E6DE",
+      "copper": "#A5602A",
+      "copper-deep": "#6F3F22",
+      "peach": "#F6E7DA",
+      "glow": "#F3F0EA",
+      "espresso": "#2B1A12"
+    },
+    "layout": {
+      "contentWidth": "1120px"
+    },
+    "fonts": {
+      "heading": "Readex Pro",
+      "body": "Tajawal"
+    },
+    "radius": {
+      "md": "12px"
+    }
+  }
+}

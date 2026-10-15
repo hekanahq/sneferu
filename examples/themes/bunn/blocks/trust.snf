@@ -1,0 +1,37 @@
+<li class="bn-trust-item">
+  <span class="bn-trust-icon"><hk-icon name="{{ block.settings.icon }}" size="30" stroke="1.5" /></span>
+  <span class="bn-trust-label">{{ block.settings.label }}</span>
+</li>
+<hk-schema>
+  {
+    "name": {
+      "en": "Trust badge",
+      "ar": "شارة ثقة"
+    },
+    "version": 1,
+    "settings": {
+      "icon": {
+        "type": "select",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
+        "default": "banknote",
+        "options": ["banknote", "truck", "shield-check", "heart", "package", "message-circle", "gift", "lock"]
+      },
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "en": "Cash on delivery",
+          "ar": "الدفع عند الاستلام"
+        },
+        "localized": true,
+        "maxLength": 40
+      }
+    }
+  }
+</hk-schema>

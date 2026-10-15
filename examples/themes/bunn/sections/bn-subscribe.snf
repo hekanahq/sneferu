@@ -1,0 +1,87 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="24">
+  <div class="bn-subscribe">
+    <div class="bn-subscribe-text">
+      {% if section.settings.title %}
+        <h2 class="bn-subscribe-title">{{ section.settings.title }}</h2>
+      {% endif %}
+      {% if section.settings.text %}
+        <p>{{ section.settings.text }}</p>
+      {% endif %}
+    </div>
+    {% if section.settings.button_label %}
+      <a
+        class="bn-pill bn-pill-light"
+        href="{{ url(section.settings.button_link) }}"
+      >{{ section.settings.button_label }}</a>
+    {% endif %}
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Subscription banner",
+      "ar": "بانر الاشتراك"
+    },
+    "version": 1,
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "اشتراك القهوة الشهري",
+          "en": "Monthly coffee subscription"
+        },
+        "localized": true,
+        "maxLength": 70
+      },
+      "text": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "اختار الحبوب اللي تناسبك واطلبها كل شهر.",
+          "en": "Choose the beans you like and order them every month."
+        },
+        "localized": true,
+        "maxLength": 140
+      },
+      "button_label": {
+        "type": "text",
+        "label": {
+          "en": "Button",
+          "ar": "الزر"
+        },
+        "default": {
+          "ar": "اختار حبوبك",
+          "en": "Choose your beans"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "button_link": {
+        "type": "link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/category/beans"
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "default": 32,
+        "min": 0,
+        "max": 160,
+        "step": 8
+      }
+    }
+  }
+</hk-schema>

@@ -1,0 +1,125 @@
+<hk-section full-bleed="true" padding-y="0" mobile-padding-y="0">
+  <div class="bn-hero">
+    <hk-container>
+      <div class="bn-hero-inner">
+        <div class="bn-hero-card">
+          {% if section.settings.kicker %}<span class="bn-hero-kicker">{{ section.settings.kicker }}</span>{% endif %}
+          {% if section.settings.title %}
+            <hk-heading text="{{ section.settings.title }}" level="h1" size="28" mobile-size="22" />
+          {% endif %}
+          {% if section.settings.subtitle %}
+            <p class="bn-hero-sub">{{ section.settings.subtitle }}</p>
+          {% endif %}
+          {% if section.settings.button_label %}
+            <a class="bn-pill" href="{{ url(section.settings.button_link) }}">{{ section.settings.button_label }}</a>
+          {% endif %}
+        </div>
+        {% if section.settings.image %}
+          <div class="bn-hero-media">
+            <hk-image
+              src="{{ section.settings.image }}"
+              alt="{{ section.settings.image_alt }}"
+              aspect-ratio="1/1"
+              fit="contain"
+              loading="eager"
+              sizes="(min-width: 760px) 360px, 60vw"
+            />
+          </div>
+        {% endif %}
+      </div>
+    </hk-container>
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Hero banner",
+      "ar": "البانر الرئيسي"
+    },
+    "version": 1,
+    "templates": ["index"],
+    "settings": {
+      "kicker": {
+        "type": "text",
+        "label": {
+          "en": "Small label",
+          "ar": "الشارة الصغيرة"
+        },
+        "default": {
+          "ar": "محمصة قهوة",
+          "en": "Coffee roaster"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "حبوب قهوة وأدوات تحضير",
+          "en": "Coffee beans and brewing gear"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "subtitle": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "اختار حبوبك واطلبها كاملة أو مطحونة على مزاجك.",
+          "en": "Pick your beans and order them whole or ground."
+        },
+        "localized": true,
+        "maxLength": 120
+      },
+      "button_label": {
+        "type": "text",
+        "label": {
+          "en": "Button",
+          "ar": "الزر"
+        },
+        "default": {
+          "ar": "تسوق الحبوب",
+          "en": "Shop the beans"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "button_link": {
+        "type": "link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/category/beans"
+      },
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "Image",
+          "ar": "الصورة"
+        },
+        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-cafe/pool-cafe-pour-over-set.webp"
+      },
+      "image_alt": {
+        "type": "text",
+        "label": {
+          "en": "Image description",
+          "ar": "وصف الصورة"
+        },
+        "default": {
+          "ar": "طقم تحضير قهوة مقطرة بدريبر زجاجي وإبريق",
+          "en": "A pour-over coffee set with a glass dripper and carafe"
+        },
+        "localized": true,
+        "maxLength": 120
+      }
+    }
+  }
+</hk-schema>
