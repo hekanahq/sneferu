@@ -23,8 +23,6 @@
       "hk-product-title": "product-title",
       "hk-product-variants": "product-variants"
     },
-    "remove": [
-      "hk-product-text"
-    ]
+    "remove": ["hk-product-text"]
   }
 }
