@@ -1,0 +1,140 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="32">
+  <div class="ca-hero">
+    {% if section.settings.image %}
+      <div class="ca-hero-media">
+        <hk-image
+          src="{{ section.settings.image }}"
+          alt="{{ section.settings.image_alt }}"
+          loading="eager"
+          aspect-ratio="1/1"
+          sizes="(min-width: 1024px) 50vw, 100vw"
+        />
+      </div>
+    {% endif %}
+    <div class="ca-hero-text">
+      {% if section.settings.kicker %}
+        <p class="ca-kicker">{{ section.settings.kicker }}</p>
+      {% endif %}
+      {% if section.settings.title %}
+        <hk-heading text="{{ section.settings.title }}" level="h1" size="44" mobile-size="30" />
+      {% endif %}
+      {% if section.settings.subtitle %}
+        <hk-text text="{{ section.settings.subtitle }}" size="17" />
+      {% endif %}
+      {% render 'button', label: section.settings.button_label, href: section.settings.button_link, style: section.settings.button_style %}
+    </div>
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Hero",
+      "ar": "البانر الرئيسي"
+    },
+    "version": 1,
+    "templates": ["index"],
+    "settings": {
+      "kicker": {
+        "type": "text",
+        "label": {
+          "en": "Small line above the heading",
+          "ar": "سطر صغير فوق العنوان"
+        },
+        "default": {
+          "ar": "جلود طبيعية",
+          "en": "Natural leather"
+        },
+        "localized": true,
+        "maxLength": 40
+      },
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "حقائب ومحافظ بخطوط هادئة",
+          "en": "Bags and wallets in quiet lines"
+        },
+        "localized": true,
+        "maxLength": 80
+      },
+      "subtitle": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "قطع جلدية قليلة الزخرفة، مختارة بعناية لتبقى معاك سنين.",
+          "en": "Leather pieces with little ornament, chosen with care to stay with you for years."
+        },
+        "localized": true,
+        "maxLength": 200
+      },
+      "button_label": {
+        "type": "text",
+        "label": {
+          "en": "Button",
+          "ar": "الزر"
+        },
+        "default": {
+          "ar": "اكتشف المجموعة",
+          "en": "View the collection"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "button_link": {
+        "type": "link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/products"
+      },
+      "button_style": {
+        "type": "select",
+        "label": {
+          "en": "Button style",
+          "ar": "شكل الزر"
+        },
+        "options": ["solid", "outline", "ghost"],
+        "default": "outline"
+      },
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "Image",
+          "ar": "الصورة"
+        },
+        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-luxury/pool-luxury-handbag-black.webp"
+      },
+      "image_alt": {
+        "type": "text",
+        "label": {
+          "en": "Image description",
+          "ar": "وصف الصورة"
+        },
+        "default": {
+          "ar": "حقيبة يد جلد سوداء",
+          "en": "Black leather handbag"
+        },
+        "localized": true,
+        "maxLength": 120
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 200,
+        "step": 8,
+        "default": 56
+      }
+    }
+  }
+</hk-schema>

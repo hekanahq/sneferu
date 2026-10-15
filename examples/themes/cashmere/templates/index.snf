@@ -1,0 +1,133 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "hero"
+      },
+      {
+        "type": "category-tiles",
+        "blocks": [
+          {
+            "type": "category-tile",
+            "settings": {
+              "icon": "shopping-bag",
+              "label": {
+                "ar": "جلديات",
+                "en": "Leather goods"
+              },
+              "link": "/category/leather"
+            }
+          },
+          {
+            "type": "category-tile",
+            "settings": {
+              "icon": "sparkles",
+              "label": {
+                "ar": "إكسسوارات",
+                "en": "Accessories"
+              },
+              "link": "/category/accessories"
+            }
+          },
+          {
+            "type": "category-tile",
+            "settings": {
+              "icon": "home",
+              "label": {
+                "ar": "للبيت",
+                "en": "Home"
+              },
+              "link": "/category/home"
+            }
+          }
+        ]
+      },
+      {
+        "type": "featured-products",
+        "settings": {
+          "title": {
+            "ar": "مختارات الموسم",
+            "en": "Selected pieces"
+          },
+          "collection": "featured",
+          "limit": 2,
+          "columns": 2,
+          "card_style": "plain",
+          "image_ratio": "1/1",
+          "link_label": {
+            "ar": "عرض الكل",
+            "en": "View all"
+          }
+        }
+      },
+      {
+        "type": "trust-strip",
+        "blocks": [
+          {
+            "type": "trust-item",
+            "settings": {
+              "icon": "banknote",
+              "label": {
+                "ar": "الدفع عند الاستلام",
+                "en": "Cash on delivery"
+              }
+            }
+          },
+          {
+            "type": "trust-item",
+            "settings": {
+              "icon": "truck",
+              "label": {
+                "ar": "توصيل لكل المحافظات",
+                "en": "Delivery across Egypt"
+              }
+            }
+          },
+          {
+            "type": "trust-item",
+            "settings": {
+              "icon": "package",
+              "label": {
+                "ar": "استبدال سهل",
+                "en": "Easy exchange"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "craft",
+        "blocks": [
+          {
+            "type": "craft-point",
+            "settings": {
+              "text": {
+                "ar": "جلد طبيعي مختار بعناية",
+                "en": "Natural leather, chosen with care"
+              }
+            }
+          },
+          {
+            "type": "craft-point",
+            "settings": {
+              "text": {
+                "ar": "خياطة متقنة على الحواف",
+                "en": "Neat stitching along the edges"
+              }
+            }
+          },
+          {
+            "type": "craft-point",
+            "settings": {
+              "text": {
+                "ar": "معدن بلون هادئ بلا لمعة زائدة",
+                "en": "Quiet metal fittings, no loud shine"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

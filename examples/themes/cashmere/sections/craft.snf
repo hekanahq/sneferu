@@ -1,0 +1,155 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="40">
+  <div class="ca-craft">
+    {% if section.settings.image %}
+      <div class="ca-craft-media">
+        <hk-image
+          src="{{ section.settings.image }}"
+          alt="{{ section.settings.image_alt }}"
+          aspect-ratio="4/5"
+          sizes="(min-width: 1024px) 40vw, 100vw"
+        />
+      </div>
+    {% endif %}
+    <div class="ca-craft-text">
+      {% if section.settings.kicker %}
+        <p class="ca-kicker">{{ section.settings.kicker }}</p>
+      {% endif %}
+      {% if section.settings.title %}
+        <hk-heading text="{{ section.settings.title }}" level="h2" size="32" mobile-size="24" />
+      {% endif %}
+      {% if section.settings.text %}
+        <hk-text text="{{ section.settings.text }}" size="16" />
+      {% endif %}
+      <ul class="ca-craft-list">
+        {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+      </ul>
+      {% render 'button', label: section.settings.button_label, href: section.settings.button_link, style: 'outline' %}
+    </div>
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Craftsmanship",
+      "ar": "تفاصيل الصنعة"
+    },
+    "version": 1,
+    "blocks": {
+      "allowed": ["craft-point"],
+      "max": 6
+    },
+    "settings": {
+      "kicker": {
+        "type": "text",
+        "label": {
+          "en": "Small line above the heading",
+          "ar": "سطر صغير فوق العنوان"
+        },
+        "default": {
+          "ar": "الصنعة",
+          "en": "Craft"
+        },
+        "localized": true,
+        "maxLength": 40
+      },
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "تفاصيل صغيرة تصنع الفرق",
+          "en": "Small details that make the difference"
+        },
+        "localized": true,
+        "maxLength": 80
+      },
+      "text": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "نختار الجلد بعناية ونراجع كل قطعة قبل أن تصل إليك: الحواف، الخياطة، والملمس.",
+          "en": "We choose the leather with care and check every piece before it reaches you: the edges, the stitching and the feel."
+        },
+        "localized": true,
+        "maxLength": 300
+      },
+      "button_label": {
+        "type": "text",
+        "label": {
+          "en": "Button (empty hides it)",
+          "ar": "الزر (فاضي يخفيه)"
+        },
+        "default": {
+          "ar": "تعرف علينا",
+          "en": "About us"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "button_link": {
+        "type": "link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/about"
+      },
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "Image",
+          "ar": "الصورة"
+        },
+        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-luxury/pool-luxury-belt-black-gold.webp"
+      },
+      "image_alt": {
+        "type": "text",
+        "label": {
+          "en": "Image description",
+          "ar": "وصف الصورة"
+        },
+        "default": {
+          "ar": "حزام جلد بإبزيم معدني",
+          "en": "Leather belt with a metal buckle"
+        },
+        "localized": true,
+        "maxLength": 120
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 200,
+        "step": 8,
+        "default": 72
+      }
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "With three detail lines",
+          "ar": "بثلاثة أسطر تفصيل"
+        },
+        "blocks": [
+          {
+            "type": "craft-point"
+          },
+          {
+            "type": "craft-point"
+          },
+          {
+            "type": "craft-point"
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

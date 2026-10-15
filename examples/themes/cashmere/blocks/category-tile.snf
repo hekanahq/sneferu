@@ -1,0 +1,44 @@
+<a class="ca-cat" href="{{ url(block.settings.link) }}">
+  <hk-icon name="{{ block.settings.icon }}" size="28" stroke="1.25" />
+  <span class="ca-cat-label">{{ block.settings.label }}</span>
+</a>
+<hk-schema>
+  {
+    "name": {
+      "en": "Category tile",
+      "ar": "مربع قسم"
+    },
+    "version": 1,
+    "settings": {
+      "icon": {
+        "type": "icon",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
+        "default": "shopping-bag"
+      },
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Name",
+          "ar": "الاسم"
+        },
+        "default": {
+          "ar": "الحقائب",
+          "en": "Handbags"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      }
+    }
+  }
+</hk-schema>

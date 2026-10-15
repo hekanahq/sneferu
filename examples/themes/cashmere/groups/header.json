@@ -1,0 +1,54 @@
+{
+  "sections": [
+    {
+      "id": "header",
+      "type": "header",
+      "settings": {
+        "menu": "main-menu",
+        "show_search": true,
+        "search_style": "icon",
+        "show_account": false,
+        "show_language": true,
+        "show_cart": true,
+        "drawer_on_add": true,
+        "scheme": "light"
+      },
+      "blocks": [
+        {
+          "id": "nav-bags",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "جلديات",
+              "en": "Leather goods"
+            },
+            "url": "/category/leather"
+          }
+        },
+        {
+          "id": "nav-acc",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "إكسسوارات",
+              "en": "Accessories"
+            },
+            "url": "/category/accessories"
+          }
+        },
+        {
+          "id": "nav-about",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "عنّا",
+              "en": "About"
+            },
+            "url": "/about"
+          }
+        }
+      ],
+      "block_order": ["nav-bags", "nav-acc", "nav-about"]
+    }
+  ]
+}

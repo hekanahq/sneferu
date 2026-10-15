@@ -1,0 +1,69 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="24">
+  {% if section.settings.title %}
+    <h2 class="ca-sr-only">{{ section.settings.title }}</h2>
+  {% endif %}
+  <div class="ca-cats">
+    {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Category tiles",
+      "ar": "مربعات الأقسام"
+    },
+    "version": 1,
+    "blocks": {
+      "allowed": ["category-tile"],
+      "max": 6
+    },
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Hidden heading for screen readers",
+          "ar": "عنوان مخفي لقارئات الشاشة"
+        },
+        "default": {
+          "ar": "الأقسام",
+          "en": "Categories"
+        },
+        "localized": true,
+        "maxLength": 40
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 160,
+        "step": 8,
+        "default": 24
+      }
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "Four tiles",
+          "ar": "أربعة مربعات"
+        },
+        "blocks": [
+          {
+            "type": "category-tile"
+          },
+          {
+            "type": "category-tile"
+          },
+          {
+            "type": "category-tile"
+          },
+          {
+            "type": "category-tile"
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

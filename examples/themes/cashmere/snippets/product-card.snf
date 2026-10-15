@@ -1,0 +1,23 @@
+<article class="ca-card ca-card-{{ card_style }}">
+  <a class="ca-card-link" href="{{ product.url }}">
+    <div class="ca-card-media">
+      <hk-image
+        src="{{ product.image }}"
+        alt="{{ product.title }}"
+        aspect-ratio="{{ image_ratio }}"
+        sizes="(min-width: 1024px) 25vw, 50vw"
+      />
+      {% if show_badge %}
+        {% if product.available %}
+          {% if product.compare_at > product.price %}
+            <span class="ca-badge">{{ t('sale') }}</span>
+          {% endif %}
+        {% else %}
+          <span class="ca-badge ca-badge-muted">{{ t('sold_out_badge') }}</span>
+        {% endif %}
+      {% endif %}
+    </div>
+    <h3 class="ca-card-title">{{ product.title }}</h3>
+    {% if show_price %}{% render 'price', product: product, bind: false %}{% endif %}
+  </a>
+</article>
