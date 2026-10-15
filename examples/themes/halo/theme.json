@@ -1,7 +1,7 @@
 {
   "id": "halo",
   "name": "Halo",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "author": "Hekana",
   "description": "A bright silver jewelry store: white and stone-grey grounds, soft-black type, a wide banner, rounded category tiles and cards, and a quiet feature strip.",
   "category": "jewelry",
@@ -32,7 +32,7 @@
       "contentWidth": "1160px"
     },
     "fonts": {
-      "heading": "Readex Pro",
+      "heading": "Manrope",
       "body": "Tajawal"
     },
     "radius": {
