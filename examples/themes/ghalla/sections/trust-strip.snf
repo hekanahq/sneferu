@@ -1,0 +1,23 @@
+<hk-section padding-y="36" mobile-padding-y="24" class="gh-trust">
+  <hk-container>
+    <ul class="gh-trust-list">
+      {% for block in section.blocks %}
+        <hk-block of="{{ block }}" />
+      {% endfor %}
+    </ul>
+  </hk-container>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Trust strip",
+      "ar": "شريط الثقة"
+    },
+    "version": 1,
+    "settings": {},
+    "blocks": {
+      "allowed": ["trust"],
+      "max": 4
+    }
+  }
+</hk-schema>

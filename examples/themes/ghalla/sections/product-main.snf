@@ -1,0 +1,92 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="24">
+  {% if section.settings.show_breadcrumb %}
+    <nav class="gh-breadcrumb" aria-label="{{ t('breadcrumb') }}">
+      <a href="{{ url('/') }}">{{ t('home') }}</a>
+      {% if product.category %}
+        <span aria-hidden="true">/</span>
+        <a href="{{ product.category.url }}">{{ product.category.title }}</a>
+      {% endif %}
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">{{ product.title }}</span>
+    </nav>
+  {% endif %}
+  <div class="gh-product gh-gallery-{{ section.settings.gallery_side }} gh-sticky-{{ section.settings.sticky_info }}">
+    <div class="gh-product-gallery">
+      <hk-product-gallery product="{{ product }}" layout="{{ section.settings.gallery_layout }}" />
+    </div>
+    <div class="gh-product-info" role="group" aria-label="{{ t('product_info') }}">
+      {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+    </div>
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Product",
+      "ar": "المنتج"
+    },
+    "version": 1,
+    "templates": ["product"],
+    "blocks": {
+      "allowed": [
+        "product-title",
+        "product-price",
+        "product-excerpt",
+        "product-variants",
+        "product-buy",
+        "product-description",
+        "product-tags",
+        "product-category",
+        "product-text"
+      ],
+      "max": 20
+    },
+    "settings": {
+      "gallery_layout": {
+        "type": "select",
+        "label": {
+          "en": "Gallery layout",
+          "ar": "شكل المعرض"
+        },
+        "options": ["thumbs-below", "thumbs-side", "stacked"],
+        "default": "thumbs-below"
+      },
+      "gallery_side": {
+        "type": "select",
+        "label": {
+          "en": "Gallery position",
+          "ar": "مكان الصور"
+        },
+        "options": ["start", "end"],
+        "default": "start"
+      },
+      "sticky_info": {
+        "type": "boolean",
+        "label": {
+          "en": "Keep the details in view while scrolling",
+          "ar": "تثبيت التفاصيل أثناء التمرير"
+        },
+        "default": false
+      },
+      "show_breadcrumb": {
+        "type": "boolean",
+        "label": {
+          "en": "Show breadcrumb",
+          "ar": "إظهار مسار الصفحة"
+        },
+        "default": true
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 160,
+        "step": 8,
+        "default": 40
+      }
+    }
+  }
+</hk-schema>

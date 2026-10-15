@@ -1,0 +1,84 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="20">
+  <hk-container>
+    <div class="gh-hero">
+      {% if section.settings.title %}
+        <h1 class="gh-hero-title">{{ section.settings.title }}</h1>
+      {% endif %}
+      {% if section.settings.subtitle %}
+        <p class="gh-hero-sub">{{ section.settings.subtitle }}</p>
+      {% endif %}
+      <div class="gh-hero-actions">
+        {% render 'button', label: section.settings.button_label, href: section.settings.button_link, style: 'solid' %}
+      </div>
+    </div>
+  </hk-container>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Hero",
+      "ar": "البانر الرئيسي"
+    },
+    "version": 1,
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "بقالة بيتك في مكان واحد",
+          "en": "Your groceries in one place"
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "subtitle": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "خضار وفاكهة ومخبوزات وأساسيات المطبخ، بالأسعار بالجنيه.",
+          "en": "Vegetables, fruit, bakery and pantry basics, priced in pounds."
+        },
+        "localized": true,
+        "maxLength": 140
+      },
+      "button_label": {
+        "type": "text",
+        "label": {
+          "en": "Button",
+          "ar": "الزر"
+        },
+        "default": {
+          "ar": "تسوق دلوقتي",
+          "en": "Shop now"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "button_link": {
+        "type": "link",
+        "label": {
+          "en": "Button link",
+          "ar": "رابط الزر"
+        },
+        "default": "/products"
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 120,
+        "step": 8,
+        "default": 40
+      }
+    }
+  }
+</hk-schema>
