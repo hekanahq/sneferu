@@ -5,10 +5,12 @@
     aspect-ratio="1/1"
     sizes="(min-width: 1024px) 25vw, 50vw"
   />
-  {% if block.settings.link %}
-    <a class="oak-dot" href="{{ url(block.settings.link) }}" aria-label="{{ block.settings.dot_label }}">
-      <span class="oak-dot-ring" aria-hidden="true"></span>
-      <span class="oak-dot-label">{{ block.settings.dot_label }}</span>
+  {% if block.settings.product %}
+    <a class="oak-dot" href="{{ product(block.settings.product).url }}">
+      <span class="oak-dot-mark" aria-hidden="true"></span>
+      <span class="oak-dot-label"><span class="oak-dot-name">{{ product(block.settings.product).title }}</span><span
+          class="oak-dot-price"
+        ><hk-price amount="{{ product(block.settings.product).price }}" /></span></span>
     </a>
   {% endif %}
 </div>
@@ -41,27 +43,6 @@
         "localized": true,
         "maxLength": 100
       },
-      "dot_label": {
-        "type": "text",
-        "label": {
-          "en": "Dot label",
-          "ar": "نص النقطة"
-        },
-        "default": {
-          "en": "Floor lamp",
-          "ar": "أباجورة أرضية"
-        },
-        "localized": true,
-        "maxLength": 40
-      },
-      "link": {
-        "type": "link",
-        "label": {
-          "en": "Dot link (empty hides the dot)",
-          "ar": "رابط النقطة (فاضي يخفيها)"
-        },
-        "default": "/products"
-      },
       "dot_x": {
         "type": "select",
         "label": {
@@ -79,6 +60,14 @@
         },
         "options": ["20", "35", "50", "65", "80"],
         "default": "35"
+      },
+      "product": {
+        "type": "product",
+        "label": {
+          "en": "Product (empty hides the pin)",
+          "ar": "المنتج (فاضي يخفي الدبوس)"
+        },
+        "default": "floor-lamp"
       }
     }
   }

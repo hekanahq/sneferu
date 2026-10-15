@@ -13,11 +13,7 @@
                 "en": "Floor lamp",
                 "ar": "أباجورة أرضية"
               },
-              "dot_label": {
-                "en": "Floor lamp",
-                "ar": "أباجورة أرضية"
-              },
-              "link": "/products/floor-lamp",
+              "product": "floor-lamp",
               "dot_x": "50",
               "dot_y": "20"
             }
@@ -30,11 +26,7 @@
                 "en": "Oak shelf",
                 "ar": "رف من البلوط"
               },
-              "dot_label": {
-                "en": "Oak shelf",
-                "ar": "رف من البلوط"
-              },
-              "link": "/products/oak-shelf",
+              "product": "oak-shelf",
               "dot_x": "50",
               "dot_y": "35"
             }
@@ -47,11 +39,7 @@
                 "en": "Oak stool",
                 "ar": "كرسي صغير من البلوط"
               },
-              "dot_label": {
-                "en": "Oak stool",
-                "ar": "كرسي صغير من البلوط"
-              },
-              "link": "/products/oak-stool",
+              "product": "oak-stool",
               "dot_x": "50",
               "dot_y": "35"
             }
@@ -64,11 +52,7 @@
                 "en": "Ceramic vase",
                 "ar": "فازة سيراميك"
               },
-              "dot_label": {
-                "en": "Ceramic vase",
-                "ar": "فازة سيراميك"
-              },
-              "link": "/products/ceramic-vase",
+              "product": "ceramic-vase",
               "dot_x": "50",
               "dot_y": "35"
             }

@@ -308,10 +308,11 @@
 .oak-y-65 .oak-dot { inset-block-start: calc(65% - 22px); }
 .oak-x-80 .oak-dot { inset-inline-start: calc(80% - 22px); }
 .oak-y-80 .oak-dot { inset-block-start: calc(80% - 22px); }
-.oak-dot-ring { position: absolute; inset: 15px; border-radius: 50%; background: var(--hk-color-surface); border: 0; box-shadow: 0 0 0 4px color-mix(in srgb, var(--hk-color-surface) 70%, transparent), 0 0 0 5px var(--hk-color-charcoal); }
-.oak-dot-label { position: absolute; inset-inline-start: 50%; inset-block-start: 100%; translate: -50% 0; white-space: nowrap; padding: 4px 10px; border-radius: 6px; background: var(--hk-color-charcoal); color: var(--hk-color-surface); font-size: 12px; opacity: 0; pointer-events: none; }
+.oak-dot-mark { position: absolute; inset: 16px; border-radius: 50%; background: var(--hk-color-charcoal); border: 2px solid var(--hk-color-surface); }
+.oak-dot-label { position: absolute; inset-inline-start: 50%; inset-block-start: calc(100% - 6px); translate: -50% 0; display: grid; justify-items: center; gap: 0; white-space: nowrap; padding: 3px 10px; border-radius: 6px; background: var(--hk-color-surface); color: var(--hk-color-text); font-size: 12px; line-height: 1.4; box-shadow: 0 1px 3px color-mix(in srgb, var(--hk-color-charcoal) 18%, transparent); }
 [dir='rtl'] .oak-dot-label { translate: 50% 0; }
-.oak-dot:hover .oak-dot-label, .oak-dot:focus-visible .oak-dot-label { opacity: 1; }
+.oak-dot-price { font-weight: 600; }
+.oak-dot-price .sn-price { font-size: 12px; }
 
 /* Category tiles: square-ish, outlined, photo above the label */
 .oak-cats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; margin-top: 16px; }
@@ -319,7 +320,7 @@
 .oak-cat:hover { background: var(--hk-color-soft); border-color: var(--oak-wood); }
 .oak-cat-media { display: block; aspect-ratio: 4 / 3; overflow: hidden; background: var(--hk-color-oat); }
 .oak-cat-media img { display: block; width: 100%; height: 100%; object-fit: cover; mix-blend-mode: multiply; }
-.oak-cat-label { display: flex; align-items: center; justify-content: center; min-height: 88px; padding-inline: 12px; font-size: 15px; font-weight: 500; text-align: center; }
+.oak-cat-label { display: flex; align-items: center; justify-content: center; min-height: 56px; padding-inline: 12px; font-size: 15px; font-weight: 500; text-align: center; }
 .oak-main > [data-hk-section] > h2 { margin-bottom: 0; }
 
 /* Product cards: calm, centred name and price, no frame */
@@ -379,5 +380,4 @@
   .oak-cats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .oak-grid { gap: 20px 12px; }
 }
-.oak-related > :nth-child(n+5) { display: none; }
 .oak-main h2 + .oak-grid { margin-top: 16px; }
