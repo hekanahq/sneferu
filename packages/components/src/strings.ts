@@ -5,6 +5,7 @@ type S = Record<string, { ar: string; en: string }>;
 /** The built-in words of the commerce tags (see HkTag.strings). */
 export const COMMERCE_STRINGS: S = {
   add_to_cart: { ar: 'أضف للسلة', en: 'Add to cart' },
+  choose_options: { ar: 'اختر الخيارات', en: 'Choose options' },
   sold_out: { ar: 'نفد المخزون', en: 'Sold out' },
   quantity: { ar: 'الكمية', en: 'Quantity' },
   quantity_decrease: { ar: 'تقليل الكمية', en: 'Decrease quantity' },

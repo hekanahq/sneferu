@@ -210,6 +210,24 @@ describe('hk-add-to-cart', () => {
     }
     expect(run('hk-add-to-cart', { product: product({ url: undefined }), variant: 'outline' }, { locale: 'ar' }).html).toContain('<a class="sn-btn sn-btn-outline sn-atc-button" href="/cart">عرض السلة</a>');
   });
+  it('a list card for a product with variants and no selected variant links to the product page instead of a form', () => {
+    const card = { has_variants: true, selected_variant: undefined };
+    const en = run('hk-add-to-cart', { product: product(card) }).html;
+    expect(en).not.toContain('<form');
+    expect(en).toContain('<a class="sn-btn sn-btn-solid sn-atc-button" href="/en/products/card" aria-label="Choose options: Card &quot;Pro&quot;">Choose options</a>');
+    expect(run('hk-add-to-cart', { product: product(card) }, { locale: 'ar' }).html).toContain('>اختر الخيارات</a>');
+    expect(run('hk-add-to-cart', { product: product(card), chooseLabel: 'Pick', variant: 'outline' }).html).toContain('<a class="sn-btn sn-btn-outline sn-atc-button" href="/en/products/card" aria-label="Pick: Card &quot;Pro&quot;">Pick</a>');
+    expect(run('hk-add-to-cart', { product: product({ ...card, available: false }) }).html).toContain(' disabled>Sold out</button>');
+  });
+  it('real list-card shape: empty variants, null selected_variant, has_variants true', () => {
+    const html = run('hk-add-to-cart', { product: product({ variants: [], selected_variant: null, has_variants: true }) }).html;
+    expect(html).not.toContain('<form');
+    expect(html).toContain('>Choose options</a>');
+  });
+  it('keeps the add button for single-variant products and when a variant is selected', () => {
+    expect(run('hk-add-to-cart', { product: product({ has_variants: false, selected_variant: undefined, variants: undefined }) }).html).toContain('<form');
+    expect(run('hk-add-to-cart', { product: product({ has_variants: true }) }).html).toContain('<form');
+  });
   it('escapes everything and bounds labels', () => {
     const { html } = run('hk-add-to-cart', { product: product({ id: '"><b>', url: '/p?a="x"' }), label: '<i>x</i>'.repeat(40) });
     expect(html).not.toContain('<b>');
