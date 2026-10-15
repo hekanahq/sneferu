@@ -279,3 +279,71 @@ describe('hk-price with a product', () => {
     expect(run('hk-price', { amount: 1000 }).html).not.toContain('data-hk-bind');
   });
 });
+
+describe('hk-variant-picker swatches', () => {
+  const swatchProduct = (extra: Record<string, unknown> = {}) => product({
+    options: [
+      { name: 'Size', values: ['S', 'M'], presentation: 'buttons' },
+      { name: 'Colour', values: ['Red', 'Blue'], presentation: 'image', swatches: [
+        { value: 'Red', color: '#cc0000', image: { url: 'https://cdn.x/red-swatch.png' } },
+        { value: 'Blue', color: '#0000CC', image: null },
+      ] },
+    ],
+    ...extra,
+  });
+
+  it('display="swatches": swatch photo, else a variant photo of that value, else the colour, else text', () => {
+    const { html, css } = run('hk-variant-picker', { product: swatchProduct(), display: 'swatches' });
+    expect(html).toContain('<input type="radio" name="hk-c1-1" value="Red" checked><span class="sn-vp-tile"><img src="https://cdn.x/red-swatch.png" alt="" width="64" height="64" loading="lazy" decoding="async"><span class="sn-vp-tile-name">Red</span></span>');
+    // Blue: no swatch photo and no variant photo (v2 has image null) -> its colour, lower-cased
+    expect(html).toContain('value="Blue"><span class="sn-vp-dot-wrap"><span class="sn-vp-dot" style="background:#0000cc" aria-hidden="true"></span>Blue</span>');
+    // Size S: no swatch, variant v1 (S / Red) has photo 1
+    expect(html).toContain('value="S" checked><span class="sn-vp-tile"><img src="https://cdn.x/1.png"');
+    expect(css).toContain('.sn-vp-tile img{');
+  });
+
+  it('display="auto" follows each option: Size stays buttons, Colour becomes photo tiles', () => {
+    const { html } = run('hk-variant-picker', { product: swatchProduct(), display: 'auto' });
+    expect(html).toContain('value="S" checked><span>S</span>');
+    expect(html).toContain('<span class="sn-vp-tile-name">Red</span>');
+  });
+
+  it('display="auto" turns a dropdown option into a select and a colour option into dots', () => {
+    const p = swatchProduct({ options: [
+      { name: 'Size', values: ['S', 'M'], presentation: 'dropdown' },
+      { name: 'Colour', values: ['Red', 'Blue'], presentation: 'color', swatches: [{ value: 'Red', color: '#cc0000' }, { value: 'Blue', color: '#0000cc' }] },
+    ] });
+    const { html } = run('hk-variant-picker', { product: p, display: 'auto' });
+    expect(html).toContain('<select name="hk-c1-0"><option value="S" selected>S</option>');
+    expect(html).toContain('<span class="sn-vp-dot" style="background:#cc0000" aria-hidden="true"></span>Red');
+    expect(html).not.toContain('sn-vp-tile');
+  });
+
+  it('drops unsafe swatch images and malformed colours, and falls back to text', () => {
+    const p = product({
+      options: [
+        { name: 'Size', values: ['S', 'M'] },
+        { name: 'Colour', values: ['Red', 'Blue'], presentation: 'color', swatches: [
+          { value: 'Red', color: 'red;background:url(x)', image: { url: 'javascript:alert(1)' } },
+          { value: 'Blue', color: '#00f', image: '//evil.test/a.png' },
+        ] },
+      ],
+      variants: [{ id: 'v1', options: ['S', 'Red'] }, { id: 'v2', options: ['M', 'Blue'] }],
+      selected_variant: { id: 'v1' },
+    });
+    const { html } = run('hk-variant-picker', { product: p, display: 'swatches' });
+    expect(html).not.toContain('javascript:');
+    expect(html).not.toContain('url(x)');
+    expect(html).not.toContain('evil.test');
+    expect(html).toContain('value="Red" checked><span>Red</span>');
+    expect(html).toContain('value="Blue"><span>Blue</span>');
+  });
+
+  it('keeps the config shape the controller reads, with the display used', () => {
+    const { html } = run('hk-variant-picker', { product: swatchProduct(), display: 'swatches' });
+    const cfg = config(html) as { style: string; options: { presentation: string; swatches: unknown[] }[] };
+    expect(cfg.style).toBe('swatches');
+    expect(cfg.options[1]!.presentation).toBe('image');
+    expect(cfg.options[1]!.swatches).toHaveLength(2);
+  });
+});

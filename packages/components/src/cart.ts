@@ -16,18 +16,24 @@ const VP_CSS = [
   '.sn-vp-option .sn-vp-values{display:flex;flex-wrap:wrap;gap:8px}',
   '.sn-vp-value{position:relative;display:inline-flex}',
   '.sn-vp-value input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}',
-  '.sn-vp-value span{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;padding:8px 16px;border:1px solid color-mix(in srgb,var(--hk-color-text) 25%,transparent);border-radius:var(--hk-radius-sm,6px)}',
+  '.sn-vp-value>span{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;padding:8px 16px;border:1px solid color-mix(in srgb,var(--hk-color-text) 25%,transparent);border-radius:var(--hk-radius-sm,6px)}',
   '.sn-vp-value input:checked+span{background:var(--hk-color-text);border-color:var(--hk-color-text);color:var(--hk-color-background)}',
   '.sn-vp-value input:focus-visible+span{outline:2px solid var(--hk-color-accent);outline-offset:2px}',
   'label.sn-vp-option{display:grid;gap:6px;margin-bottom:16px}',
   'label.sn-vp-option select{min-height:44px;font:inherit;padding-inline:12px}',
+  '.sn-vp-value>span.sn-vp-tile{flex-direction:column;gap:6px;padding:6px}',
+  '.sn-vp-tile img{display:block;width:64px;height:64px;object-fit:cover;border-radius:var(--hk-radius-sm,6px)}',
+  '.sn-vp-tile-name{font-size:.875em;line-height:1.2}',
+  '.sn-vp-value input:checked+span.sn-vp-tile{background:transparent;color:inherit;border-color:var(--hk-color-text);box-shadow:0 0 0 1px var(--hk-color-text)}',
+  '.sn-vp-value>span.sn-vp-dot-wrap{gap:8px}',
+  '.sn-vp-dot{flex:none;width:20px;height:20px;border-radius:50%;border:1px solid color-mix(in srgb,var(--hk-color-text) 25%,transparent)}',
 ].join('');
 
 export const hkVariantPicker: HkTag = {
   name: 'hk-variant-picker', version: 1, category: 'commerce',
   props: {
     product: { type: 'data', label: L('المنتج', 'Product') },
-    display: { type: 'select', label: L('شكل الاختيار', 'Picker style'), options: ['buttons', 'select'], default: 'buttons' },
+    display: { type: 'select', label: L('شكل الاختيار', 'Picker style'), options: ['buttons', 'select', 'swatches', 'auto'], default: 'buttons' },
   },
   allowedParents: '*', allowedChildren: [], responsive: [], bindable: '*', controller: 'variant-picker', strings: COMMERCE_STRINGS,
   editor: ed('اختيار النوع', 'Variant picker'),
@@ -39,23 +45,48 @@ export const hkVariantPicker: HkTag = {
     // one variant and no options to choose: nothing to pick
     if (variants.length === 0 || (variants.length <= 1 && (options === null || options.every((o) => o.values.length <= 1)))) return '';
     (c.cssOnce ?? c.css)(VP_CSS);
-    const select = p.display === 'select';
+    type Mode = 'buttons' | 'select' | 'image' | 'color';
+    const display = p.display === 'select' || p.display === 'swatches' || p.display === 'auto' ? p.display : 'buttons';
+    const modeOf = (g: { presentation?: string }): Mode => {
+      if (display === 'select') return 'select';
+      if (display === 'swatches') return 'image';
+      if (display === 'auto') {
+        if (g.presentation === 'dropdown') return 'select';
+        if (g.presentation === 'image') return 'image';
+        if (g.presentation === 'color') return 'color';
+      }
+      return 'buttons';
+    };
     const sel = selectedVariant(prod, variants);
     const pid = productId(prod);
-    const groups = options ?? [{ name: str(c, 'variant'), values: variants.map((v) => v.id), titles: variants.map((v, k) => v.title.trim() || `${str(c, 'option')} ${k + 1}`) }];
+    const groups: Array<{ name: string; values: string[]; titles?: string[]; presentation?: string; swatches?: { color: string | null; image: string | null }[] }> =
+      options ?? [{ name: str(c, 'variant'), values: variants.map((v) => v.id), titles: variants.map((v, k) => v.title.trim() || `${str(c, 'option')} ${k + 1}`) }];
     const checked = (i: number, value: string): boolean => (options ? sel?.options[i] === value : sel?.id === value);
+    // A value's photo: its swatch, else the first variant carrying that value that has one.
+    const photoOf = (i: number, value: string, k: number, g: (typeof groups)[number]): string | null =>
+      g.swatches?.[k]?.image ?? (options ? variants.find((v) => v.options[i] === value && v.image)?.image : variants.find((v) => v.id === value)?.image) ?? null;
+    const face = (mode: Mode, i: number, value: string, k: number, g: (typeof groups)[number], label: string): string => {
+      if (mode === 'image') {
+        const src = photoOf(i, value, k, g);
+        if (src) return `<span class="sn-vp-tile"><img src="${escapeAttr(src)}" alt="" width="64" height="64" loading="lazy" decoding="async"><span class="sn-vp-tile-name">${label}</span></span>`;
+      }
+      const color = g.swatches?.[k]?.color;
+      if ((mode === 'image' || mode === 'color') && color) return `<span class="sn-vp-dot-wrap"><span class="sn-vp-dot" style="background:${color}" aria-hidden="true"></span>${label}</span>`;
+      return `<span>${label}</span>`;
+    };
     const html = groups.map((g, i) => {
       const name = `hk-${c.id}-${i}`;
-      const titles = (g as { titles?: string[] }).titles ?? g.values;
-      if (select) {
+      const titles = g.titles ?? g.values;
+      const mode = modeOf(g);
+      if (mode === 'select') {
         const opts = g.values.map((v, k) => `<option value="${escapeAttr(v)}"${checked(i, v) ? ' selected' : ''}>${escapeText(titles[k] ?? v)}</option>`).join('');
         return `<label class="sn-vp-option" data-hk-option="${i}"><span>${escapeText(g.name)}</span><select name="${name}">${opts}</select></label>`;
       }
-      const inputs = g.values.map((v, k) => `<label class="sn-vp-value"><input type="radio" name="${name}" value="${escapeAttr(v)}"${checked(i, v) ? ' checked' : ''}><span>${escapeText(titles[k] ?? v)}</span></label>`).join('');
+      const inputs = g.values.map((v, k) => `<label class="sn-vp-value"><input type="radio" name="${name}" value="${escapeAttr(v)}"${checked(i, v) ? ' checked' : ''}>${face(mode, i, v, k, g, escapeText(titles[k] ?? v))}</label>`).join('');
       return `<fieldset class="sn-vp-option" data-hk-option="${i}"><legend>${escapeText(g.name)}</legend><div class="sn-vp-values">${inputs}</div></fieldset>`;
     }).join('');
     const config = {
-      productId: pid, options: options ?? [], selected: sel?.id ?? null, style: select ? 'select' : 'buttons',
+      productId: pid, options: options ?? [], selected: sel?.id ?? null, style: display,
       variants: variants.map((v) => ({ id: v.id, options: v.options, price: v.price, compare_at: v.compare_at, available: v.available, image: v.image })),
     };
     const x = passthrough(p);

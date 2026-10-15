@@ -1215,7 +1215,9 @@
           "default": "buttons",
           "options": [
             "buttons",
-            "select"
+            "select",
+            "swatches",
+            "auto"
           ],
           "responsive": false,
           "label": {

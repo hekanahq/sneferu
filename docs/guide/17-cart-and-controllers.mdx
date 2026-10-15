@@ -34,6 +34,21 @@ markup still works as links and plain forms.
 
 </Example>
 
+### Picker styles
+
+`hk-variant-picker` takes a `display` prop.
+
+| `display` | Result |
+| --- | --- |
+| `buttons` | Text buttons (default). |
+| `select` | One dropdown per option. |
+| `swatches` | A 64px photo tile per value (the value's swatch photo, else a variant photo of that value), else a colour dot, else text. |
+| `auto` | Follows the option style the merchant chose in the product editor: photo shows tiles, colour shows dots, dropdown shows a select, anything else shows buttons. |
+
+```html
+<hk-variant-picker product="{{ product }}" display="auto" />
+```
+
 ## Rules the tags follow
 
 - A product whose options are malformed or missing shows a flat list of variants; add to cart still adds the default variant.
