@@ -1,0 +1,170 @@
+{
+  "sections": [
+    {
+      "id": "footer",
+      "type": "footer",
+      "settings": {
+        "menu": "footer",
+        "about_text": {
+          "ar": "مجوهرات فضية بسيطة للاستخدام اليومي: خواتم وأقراط وسلاسل وأساور.",
+          "en": "Plain silver jewelry for every day: rings, earrings, necklaces and bracelets."
+        },
+        "copyright": {
+          "ar": "جميع الحقوق محفوظة",
+          "en": "All rights reserved"
+        },
+        "show_newsletter": false,
+        "show_language": true
+      },
+      "blocks": [
+        {
+          "id": "col-shop",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "تسوق",
+              "en": "Shop"
+            }
+          },
+          "blocks": [
+            {
+              "id": "s-all",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "كل القطع",
+                  "en": "All pieces"
+                },
+                "url": "/products"
+              }
+            },
+            {
+              "id": "s-rings",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "الخواتم",
+                  "en": "Rings"
+                },
+                "url": "/category/rings"
+              }
+            },
+            {
+              "id": "s-earrings",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "الأقراط",
+                  "en": "Earrings"
+                },
+                "url": "/category/earrings"
+              }
+            },
+            {
+              "id": "s-necklaces",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "السلاسل",
+                  "en": "Necklaces"
+                },
+                "url": "/category/necklaces"
+              }
+            },
+            {
+              "id": "s-bracelets",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "الأساور",
+                  "en": "Bracelets"
+                },
+                "url": "/category/bracelets"
+              }
+            }
+          ]
+        },
+        {
+          "id": "col-help",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "مساعدة",
+              "en": "Help"
+            }
+          },
+          "blocks": [
+            {
+              "id": "h-about",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "عنّا",
+                  "en": "About us"
+                },
+                "url": "/pages/about"
+              }
+            },
+            {
+              "id": "h-contact",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "تواصل معنا",
+                  "en": "Contact"
+                },
+                "url": "/pages/contact"
+              }
+            },
+            {
+              "id": "h-search",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "بحث",
+                  "en": "Search"
+                },
+                "url": "/search"
+              }
+            }
+          ]
+        },
+        {
+          "id": "social-wa",
+          "type": "social-link",
+          "settings": {
+            "label": {
+              "ar": "واتساب",
+              "en": "WhatsApp"
+            },
+            "url": "/pages/contact",
+            "icon": "message-circle"
+          }
+        },
+        {
+          "id": "social-mail",
+          "type": "social-link",
+          "settings": {
+            "label": {
+              "ar": "الإيميل",
+              "en": "Email"
+            },
+            "url": "/pages/contact",
+            "icon": "mail"
+          }
+        },
+        {
+          "id": "pay-cod",
+          "type": "payment-method",
+          "settings": {
+            "label": {
+              "ar": "الدفع عند الاستلام",
+              "en": "Cash on delivery"
+            },
+            "icon": "banknote"
+          }
+        }
+      ]
+    }
+  ]
+}

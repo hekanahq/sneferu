@@ -1,0 +1,145 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "hero"
+      },
+      {
+        "type": "category-tiles",
+        "blocks": [
+          {
+            "type": "tile",
+            "settings": {
+              "label": {
+                "en": "Rings",
+                "ar": "الخواتم"
+              },
+              "link": "/category/rings",
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-jewelry/pool-jewelry-silver-solitaire-ring.webp"
+            }
+          },
+          {
+            "type": "tile",
+            "settings": {
+              "label": {
+                "en": "Earrings",
+                "ar": "الأقراط"
+              },
+              "link": "/category/earrings",
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-jewelry/pool-jewelry-silver-hoop-earrings.webp"
+            }
+          },
+          {
+            "type": "tile",
+            "settings": {
+              "label": {
+                "en": "Necklaces",
+                "ar": "السلاسل"
+              },
+              "link": "/category/necklaces",
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-jewelry/pool-jewelry-silver-pendant-necklace.webp"
+            }
+          },
+          {
+            "type": "tile",
+            "settings": {
+              "label": {
+                "en": "Bracelets",
+                "ar": "الأساور"
+              },
+              "link": "/category/bracelets",
+              "image": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pool-jewelry/pool-jewelry-silver-cuff-bracelet.webp"
+            }
+          }
+        ]
+      },
+      {
+        "type": "featured-products"
+      },
+      {
+        "type": "feature-strip",
+        "blocks": [
+          {
+            "type": "feature",
+            "settings": {
+              "icon": "banknote",
+              "label": {
+                "en": "Cash on delivery",
+                "ar": "الدفع عند الاستلام"
+              },
+              "text": {
+                "en": "",
+                "ar": ""
+              }
+            }
+          },
+          {
+            "type": "feature",
+            "settings": {
+              "icon": "truck",
+              "label": {
+                "en": "Delivery across Egypt",
+                "ar": "توصيل لكل المحافظات"
+              },
+              "text": {
+                "en": "",
+                "ar": ""
+              }
+            }
+          },
+          {
+            "type": "feature",
+            "settings": {
+              "icon": "package",
+              "label": {
+                "en": "Easy exchange",
+                "ar": "استبدال سهل"
+              },
+              "text": {
+                "en": "",
+                "ar": ""
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "feature-strip",
+        "settings": {
+          "style": "cards"
+        },
+        "blocks": [
+          {
+            "type": "feature",
+            "settings": {
+              "icon": "gift",
+              "label": {
+                "en": "Gift wrap",
+                "ar": "تغليف للهدايا"
+              },
+              "text": {
+                "en": "Ask for a gift wrap on your order",
+                "ar": "اطلب تغليف هدية مع طلبك"
+              }
+            }
+          },
+          {
+            "type": "feature",
+            "settings": {
+              "icon": "sparkles",
+              "label": {
+                "en": "Engraving",
+                "ar": "نقش على القطعة"
+              },
+              "text": {
+                "en": "Add a short engraving to selected pieces",
+                "ar": "نقش اسم أو كلمة على قطع مختارة"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

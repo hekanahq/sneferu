@@ -1,0 +1,33 @@
+{
+  "id": "halo",
+  "name": "Halo",
+  "version": "1.0.0",
+  "author": "Hekana",
+  "description": "A bright silver jewelry store: white and stone-grey grounds, soft-black type, a wide banner, rounded category tiles and cards, and a quiet feature strip.",
+  "category": "jewelry",
+  "engine": "hk2",
+  "engineCompatibility": "^2.0.0",
+  "defaultLocale": "ar",
+  "locales": ["ar", "en"],
+  "settings": {},
+  "money": { "format": "whole" },
+  "tokens": {
+    "colors": {
+      "primary": "#1C1C1E",
+      "secondary": "#8A8F96",
+      "accent": "#1C1C1E",
+      "background": "#FFFFFF",
+      "text": "#1C1C1E",
+      "muted": "#5C6168",
+      "line": "#E3E3E1",
+      "soft": "#F4F4F3",
+      "surface": "#FFFFFF",
+      "glow": "#ECECEA",
+      "silver": "#B9BDC3",
+      "stone": "#EDEDEB"
+    },
+    "layout": { "contentWidth": "1160px" },
+    "fonts": { "heading": "Readex Pro", "body": "Tajawal" },
+    "radius": { "md": "18px" }
+  }
+}

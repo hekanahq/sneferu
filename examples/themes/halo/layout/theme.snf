@@ -1,0 +1,5 @@
+<a class="hl-skip" href="#main">{{ t('skip_to_content') }}</a>
+<hk-section-group name="announcement" />
+<hk-section-group name="header" />
+<main id="main" class="hl-main"><hk-slot name="content" /></main>
+<hk-section-group name="footer" />

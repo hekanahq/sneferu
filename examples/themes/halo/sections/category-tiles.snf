@@ -1,0 +1,69 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="24">
+  {% if section.settings.title %}
+    <hk-heading text="{{ section.settings.title }}" level="h2" size="26" mobile-size="20" align="center" />
+  {% endif %}
+  <div class="hl-cats" aria-label="{{ t('categories_label') }}">
+    {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Category tiles",
+      "ar": "بلاطات الأقسام"
+    },
+    "version": 1,
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading (empty hides it)",
+          "ar": "العنوان (فاضي يخفيه)"
+        },
+        "default": {
+          "en": "",
+          "ar": ""
+        },
+        "localized": true,
+        "maxLength": 50
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "default": 32,
+        "min": 0,
+        "max": 160,
+        "step": 8
+      }
+    },
+    "blocks": {
+      "allowed": ["tile"],
+      "max": 8
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "Four categories",
+          "ar": "أربعة أقسام"
+        },
+        "blocks": [
+          {
+            "type": "tile"
+          },
+          {
+            "type": "tile"
+          },
+          {
+            "type": "tile"
+          },
+          {
+            "type": "tile"
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>
