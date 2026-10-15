@@ -1,0 +1,28 @@
+{
+  "from": "1.2.0",
+  "to": "2.0.1",
+  "sections": {
+    "rename": {
+      "hk-cart-main": "esports-cart",
+      "hk-collection-main": "esports-collection",
+      "hk-not-found": "esports-not-found",
+      "hk-page-main": "esports-page",
+      "hk-product-main": "esports-product",
+      "hk-related-products": "esports-related",
+      "hk-search-main": "esports-search"
+    }
+  },
+  "blocks": {
+    "rename": {
+      "hk-product-buy": "product-buy",
+      "hk-product-category": "product-category",
+      "hk-product-description": "product-description",
+      "hk-product-excerpt": "product-excerpt",
+      "hk-product-price": "product-price",
+      "hk-product-tags": "product-tags",
+      "hk-product-text": "product-text",
+      "hk-product-title": "product-title",
+      "hk-product-variants": "product-variants"
+    }
+  }
+}

@@ -26,7 +26,7 @@ renders are in `docs/live-*-phone-en.webp`.
 ## What is in the folder
 
 ```
-theme.json                 id, version 2.0.0, colour / font / radius / width tokens
+theme.json                 id, version 2.0.1, colour / font / radius / width tokens
 layout/theme.snf           skip link, announcement, header, <main>, footer
 groups/                    announcement.json, header.json, footer.json (default content)
 templates/                 index, product, product.digital, collection, search, cart, 404, page
@@ -94,7 +94,7 @@ Open `http://127.0.0.1:4301/`, add `?locale=en` for English, and
 ## Migrating from 1.x to 2.0
 
 Nothing was renamed in the home sections, so saved home content keeps working
-and no migration file is needed. New in 2.0: the announcement group and
+and no migration is needed for them (the borrowed `hk-*` page sections are renamed by `migrations/1.2.0-2.0.1.json`). New in 2.0: the announcement group and
 section, header settings (logo, scheme, sticky, search, language, cart),
 footer content (about text, columns, contact, social, payments, newsletter),
 the product / collection / search / cart / 404 / page templates, the

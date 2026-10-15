@@ -20,7 +20,7 @@ More renders: [product](docs/live-product-desktop-ar.webp), [cart](docs/live-car
 ## Structure
 
 ```
-theme.json            id, version 2.0.0, tokens (colours, fonts, radius, content width)
+theme.json            id, version 2.0.1, tokens (colours, fonts, radius, content width)
 layout/theme.snf      announcement, header, <main>, footer groups
 groups/               announcement.json, header.json, footer.json
 templates/            index, product, product.digital, collection, search, cart, 404, page
@@ -54,4 +54,4 @@ npx sneferu push .         # needs an API key (see the Sneferu guide)
 
 ## Migrating from 1.x to 2.0
 
-2.0 adds the missing page types and keeps every 1.x home setting name (`shelf`, `band`, `bento`, `tabs`), so no migration file is needed. Changes to know about: the header menu is now the tab row on every page (the home template no longer includes the `tabs` section, which still works if you add it), the footer says its note in the `about_text` setting, and the pastel colours are tokens instead of fixed values.
+2.0 adds the missing page types and keeps every 1.x home setting name (`shelf`, `band`, `bento`, `tabs`), so the home needs no migration (the borrowed `hk-*` page sections are renamed by `migrations/1.2.0-2.0.1.json`). Changes to know about: the header menu is now the tab row on every page (the home template no longer includes the `tabs` section, which still works if you add it), the footer says its note in the `about_text` setting, and the pastel colours are tokens instead of fixed values.

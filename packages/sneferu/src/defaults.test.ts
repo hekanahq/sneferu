@@ -107,7 +107,11 @@ describe('the example themes are complete stores of their own', () => {
     const a = artifact as unknown as ArtifactLike & { locales: Record<string, Record<string, string>>; manifest: { defaultLocale?: string; locales: ('ar' | 'en')[] } };
     it(`${name}: validates clean and ships its own template for every page type`, () => {
       expect(diagnostics.filter((d) => d.severity === 'error').map(formatDiagnostic)).toEqual([]);
-      expect(a.manifest).toMatchObject({ version: '2.0.0' });
+      expect(a.manifest).toMatchObject({ version: '2.0.1' });
+      // 1.2.0 stores saved the SDK's borrowed hk-* page sections; the migration carries them to this theme's own
+      const m = (artifact as unknown as { migrations?: { from: string; to: string; sections?: { rename?: Record<string, string> } }[] }).migrations ?? [];
+      expect(m.map((x) => `${x.from}>${x.to}`)).toEqual(['1.2.0>2.0.1']);
+      for (const to of Object.values(m[0]!.sections?.rename ?? {})) expect(Object.keys(artifact!.sections), `${name} migration target ${to}`).toContain(to);
       for (const t of own) expect(readdirSync(join(dir, 'templates')), `${name} templates`).toContain(`${t}.snf`);
       // nothing is filled in from the SDK's default store: the theme overrides every page type and group
       expect(artifact!.defaults?.templates ?? []).toEqual([]);

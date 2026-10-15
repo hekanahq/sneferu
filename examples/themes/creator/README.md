@@ -51,7 +51,7 @@ which is never part of the theme.
 
 ```
 creator/
-  theme.json                 id, version 2.0.0, tokens (colours, fonts, radius, width)
+  theme.json                 id, version 2.0.1, tokens (colours, fonts, radius, width)
   layout/theme.snf           skip link, the three groups, <main>
   groups/                    what a new store starts with
     announcement.json  header.json  footer.json
@@ -134,7 +134,8 @@ English text inside a template.
 Version 2.0.0 adds the missing page types, the announcement group and many new
 settings. No setting, section or block that 1.3.0 used was renamed or removed
 (`creator-header`, `creator-footer`, `covers`, `what-you-get`, `author`,
-`get-item` keep their ids and setting names), so no migration file is needed and
-saved values carry over. The footer's old fixed sentence is now the footer
+`get-item` keep their ids and setting names), so saved values carry over. The
+borrowed `hk-*` page sections and blocks are renamed to this theme's own by
+`migrations/1.2.0-2.0.1.json` (`hk-product-text` is dropped: the theme has no such block). The footer's old fixed sentence is now the footer
 section's `about_text` setting; the locale key behind it is gone, so a store that
 had overridden that key sets the new setting instead.
