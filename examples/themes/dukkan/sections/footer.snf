@@ -43,7 +43,7 @@
           {% endif %}
         {% endfor %}
       {% else %}{% for block in section.blocks %}{% if block.type == 'footer-column' %}<hk-block of="{{ block }}" />{% endif %}{% endfor %}{% endif %}
-      {% if section.settings.show_contact %}
+      {% if section.settings.show_contact and section.settings.contact_link %}
         <div class="dk-footer-contact">
           {% if section.settings.contact_title %}
             <h3 class="dk-footer-title">{{ section.settings.contact_title }}</h3>
