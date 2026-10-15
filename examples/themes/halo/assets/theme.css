@@ -253,12 +253,15 @@
 .hl-cart-link .sn-cart-count { background: var(--hk-color-text); }
 
 /* Banner */
-.hl-banner { position: relative; display: grid; min-height: 380px; align-items: center; background: var(--hk-color-stone); overflow: hidden; }
-.hl-banner-media { position: absolute; inset: 0; }
-.hl-banner-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.hl-banner-text { position: relative; display: grid; justify-items: center; gap: 10px; padding: 32px 16px; text-align: center; }
-.hl-banner-text .sn-btn { margin-top: 8px; }
+.hl-banner { background: var(--hk-color-stone); overflow: hidden; }
+.hl-banner-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: 24px; min-height: 460px; }
+.hl-banner-text { display: grid; justify-items: start; gap: 14px; padding-block: 40px; }
+.hl-banner-text .sn-btn { margin-top: 10px; min-width: 180px; }
 .hl-banner-text p { color: var(--hk-color-muted); }
+.hl-banner-text h1 { font-weight: 800; line-height: 1.2; }
+.hl-banner-media { align-self: stretch; display: grid; place-items: center; }
+.hl-banner-media img { display: block; width: 100%; max-height: 460px; object-fit: cover; }
+.hl-align-center .hl-banner-text { justify-items: center; text-align: center; }
 
 /* Category tiles */
 .hl-cats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; max-width: 880px; margin-inline: auto; }
@@ -320,9 +323,10 @@
   .hl-header-bar { grid-template-columns: minmax(0, 1fr) auto; gap: 8px 12px; }
   .hl-search-bar { grid-column: 1 / -1; grid-row: 2; max-width: none; margin: 0 0 8px; }
   .hl-logo { font-size: 20px; }
-  .hl-banner { min-height: 0; align-content: start; }
-  .hl-banner-media { position: static; height: 150px; }
-  .hl-banner-text { padding: 20px 16px 28px; }
+  .hl-banner-grid { grid-template-columns: 1fr; min-height: 0; gap: 0; }
+  .hl-banner-text { order: 2; padding: 20px 0 28px; }
+  .hl-banner-media { order: 1; margin-inline: -16px; }
+  .hl-banner-media img { max-height: 240px; }
   .hl-cats { gap: 10px; }
   .hl-cat-media { border-radius: 16px; }
   .hl-cat-label { font-size: 13px; }

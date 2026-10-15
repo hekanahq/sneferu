@@ -103,42 +103,6 @@
             }
           }
         ]
-      },
-      {
-        "type": "feature-strip",
-        "settings": {
-          "style": "cards"
-        },
-        "blocks": [
-          {
-            "type": "feature",
-            "settings": {
-              "icon": "gift",
-              "label": {
-                "en": "Gift wrap",
-                "ar": "تغليف للهدايا"
-              },
-              "text": {
-                "en": "Ask for a gift wrap on your order",
-                "ar": "اطلب تغليف هدية مع طلبك"
-              }
-            }
-          },
-          {
-            "type": "feature",
-            "settings": {
-              "icon": "sparkles",
-              "label": {
-                "en": "Engraving",
-                "ar": "نقش على القطعة"
-              },
-              "text": {
-                "en": "Add a short engraving to selected pieces",
-                "ar": "نقش اسم أو كلمة على قطع مختارة"
-              }
-            }
-          }
-        ]
       }
     ]
   }

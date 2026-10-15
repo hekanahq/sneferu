@@ -1,25 +1,29 @@
 <div class="hl-banner hl-align-{{ section.settings.align }}">
-  {% if section.settings.image %}
-    <div class="hl-banner-media">
-      <hk-image
-        src="{{ section.settings.image }}"
-        alt="{{ section.settings.image_alt }}"
-        loading="eager"
-        width="1600"
-        height="480"
-        sizes="100vw"
-      />
+  <hk-container>
+    <div class="hl-banner-grid">
+      <div class="hl-banner-text">
+        {% if section.settings.title %}
+          <hk-heading text="{{ section.settings.title }}" level="h1" size="54" mobile-size="32" />
+        {% endif %}
+        {% if section.settings.subtitle %}
+          <hk-text text="{{ section.settings.subtitle }}" size="18" mobile-size="16" />
+        {% endif %}
+        {% render 'button', label: section.settings.button_label, href: url(section.settings.button_link), style: section.settings.button_style %}
+      </div>
+      {% if section.settings.image %}
+        <div class="hl-banner-media">
+          <hk-image
+            src="{{ section.settings.image }}"
+            alt="{{ section.settings.image_alt }}"
+            loading="eager"
+            width="1400"
+            height="1000"
+            sizes="(min-width: 1024px) 560px, 100vw"
+          />
+        </div>
+      {% endif %}
     </div>
-  {% endif %}
-  <div class="hl-banner-text">
-    {% if section.settings.title %}
-      <hk-heading text="{{ section.settings.title }}" level="h1" size="40" mobile-size="26" />
-    {% endif %}
-    {% if section.settings.subtitle %}
-      <hk-text text="{{ section.settings.subtitle }}" size="17" mobile-size="15" />
-    {% endif %}
-    {% render 'button', label: section.settings.button_label, href: url(section.settings.button_link), style: section.settings.button_style %}
-  </div>
+  </hk-container>
 </div>
 <hk-schema>
   {
@@ -91,7 +95,7 @@
           "en": "Banner image",
           "ar": "صورة البانر"
         },
-        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/halo/halo-banner.webp"
+        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/halo/halo-banner-v5.webp"
       },
       "image_alt": {
         "type": "text",
@@ -100,8 +104,8 @@
           "ar": "وصف الصورة"
         },
         "default": {
-          "en": "Silver ring and hoop earrings on a light stone background",
-          "ar": "خاتم وحلق فضي على خلفية حجرية فاتحة"
+          "en": "Silver chain necklace with a pearl drop on a soft stone background",
+          "ar": "سلسلة فضية بلؤلؤة على خلفية حجرية ناعمة"
         },
         "localized": true,
         "maxLength": 120
@@ -112,7 +116,7 @@
           "en": "Text alignment",
           "ar": "محاذاة النص"
         },
-        "default": "center",
+        "default": "start",
         "options": ["start", "center"]
       }
     }
