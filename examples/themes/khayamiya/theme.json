@@ -1,7 +1,7 @@
 {
   "id": "khayamiya",
   "name": "Khayamiya",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "author": "Hekana",
   "description": "A store for Egyptian heritage crafts: indigo and rust khayamiya diamond bands under the header and above the footer, a photo hero, photo category tiles with captions, joined bordered product cards and a three-icon strip.",
   "category": "handmade",
@@ -38,7 +38,7 @@
       "contentWidth": "1180px"
     },
     "fonts": {
-      "heading": "Noto Kufi Arabic",
+      "heading": "El Messiri",
       "body": "Cairo"
     },
     "radius": {
