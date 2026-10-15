@@ -45,10 +45,10 @@
               "type": "footer-link",
               "settings": {
                 "label": {
-                  "ar": "أوزان",
-                  "en": "Weights"
+                  "ar": "معدات",
+                  "en": "Gear"
                 },
-                "url": "/category/weights"
+                "url": "/category/gear"
               }
             },
             {
@@ -56,32 +56,10 @@
               "type": "footer-link",
               "settings": {
                 "label": {
-                  "ar": "ملابس",
-                  "en": "Apparel"
+                  "ar": "ملابس وشنط",
+                  "en": "Apparel and bags"
                 },
-                "url": "/category/apparel"
-              }
-            },
-            {
-              "id": "col-shop-bags",
-              "type": "footer-link",
-              "settings": {
-                "label": {
-                  "ar": "شنط وإكسسوارات",
-                  "en": "Bags and accessories"
-                },
-                "url": "/category/bags"
-              }
-            },
-            {
-              "id": "col-shop-shoes",
-              "type": "footer-link",
-              "settings": {
-                "label": {
-                  "ar": "أحذية",
-                  "en": "Shoes"
-                },
-                "url": "/category/shoes"
+                "url": "/category/wear"
               }
             },
             {

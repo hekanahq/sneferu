@@ -19,8 +19,8 @@
       <hk-heading
         text="{{ section.settings.heading }}"
         level="h1"
-        size="60"
-        mobile-size="34"
+        size="76"
+        mobile-size="40"
         align="start"
         class="pl-hero-title"
       />
@@ -63,7 +63,7 @@
           "ar": "صورة الهيرو",
           "en": "Hero image"
         },
-        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pulse/hero-kettlebell.webp"
+        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/pulse/hero2.webp"
       },
       "image_alt": {
         "type": "text",
@@ -157,7 +157,7 @@
           "ar": "رابط الزر التاني",
           "en": "Second button link"
         },
-        "default": "/category/apparel"
+        "default": "/category/wear"
       }
     }
   }
