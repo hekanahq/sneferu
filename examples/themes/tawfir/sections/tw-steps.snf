@@ -1,0 +1,55 @@
+<div class="tw-steps tw-dir-{{ dir }}">
+  <hk-container>
+    <div class="tw-steps-row">
+      {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+    </div>
+  </hk-container>
+</div>
+<hk-schema>
+  {
+    "name": {
+      "en": "Offer band",
+      "ar": "شريط العروض"
+    },
+    "version": 1,
+    "blocks": {
+      "allowed": ["step"],
+      "max": 5
+    },
+    "settings": {
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 48,
+        "step": 4,
+        "default": 0
+      }
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "Offer band",
+          "ar": "شريط العروض"
+        },
+        "blocks": [
+          {
+            "type": "step"
+          },
+          {
+            "type": "step"
+          },
+          {
+            "type": "step"
+          },
+          {
+            "type": "step"
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

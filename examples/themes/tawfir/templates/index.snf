@@ -1,0 +1,232 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "tw-steps",
+        "blocks": [
+          {
+            "type": "step",
+            "settings": {
+              "tone": "red",
+              "icon": "percent",
+              "title": {
+                "en": "Weekly offers",
+                "ar": "عروض الأسبوع"
+              },
+              "text": {
+                "en": "Reduced prices on selected items",
+                "ar": "أسعار مخفضة على منتجات مختارة"
+              },
+              "link": "/products"
+            }
+          },
+          {
+            "type": "step",
+            "settings": {
+              "tone": "yellow",
+              "icon": "jar",
+              "title": {
+                "en": "Pantry",
+                "ar": "البقالة"
+              },
+              "text": {
+                "en": "Rice, oil, dates and honey",
+                "ar": "أرز وزيت وتمر وعسل"
+              },
+              "link": "/category/pantry"
+            }
+          },
+          {
+            "type": "step",
+            "settings": {
+              "tone": "red",
+              "icon": "milk",
+              "title": {
+                "en": "Dairy and bakery",
+                "ar": "ألبان ومخبوزات"
+              },
+              "text": {
+                "en": "Eggs, cheese and bread",
+                "ar": "بيض وجبنة وعيش"
+              },
+              "link": "/category/dairy-bakery"
+            }
+          },
+          {
+            "type": "step",
+            "settings": {
+              "tone": "yellow",
+              "icon": "spray",
+              "title": {
+                "en": "Cleaning and care",
+                "ar": "منظفات وعناية"
+              },
+              "text": {
+                "en": "For the home every day",
+                "ar": "للبيت كل يوم"
+              },
+              "link": "/category/household"
+            }
+          }
+        ]
+      },
+      {
+        "type": "tw-shop",
+        "blocks": [
+          {
+            "type": "aisle",
+            "settings": {
+              "icon": "tag",
+              "label": {
+                "en": "All products",
+                "ar": "كل المنتجات"
+              },
+              "link": "/products"
+            }
+          },
+          {
+            "type": "aisle",
+            "settings": {
+              "icon": "leaf",
+              "label": {
+                "en": "Fruit and vegetables",
+                "ar": "خضار وفاكهة"
+              },
+              "link": "/category/produce"
+            }
+          },
+          {
+            "type": "aisle",
+            "settings": {
+              "icon": "milk",
+              "label": {
+                "en": "Dairy and bakery",
+                "ar": "ألبان ومخبوزات"
+              },
+              "link": "/category/dairy-bakery"
+            }
+          },
+          {
+            "type": "aisle",
+            "settings": {
+              "icon": "jar",
+              "label": {
+                "en": "Pantry",
+                "ar": "بقالة"
+              },
+              "link": "/category/pantry"
+            }
+          },
+          {
+            "type": "aisle",
+            "settings": {
+              "icon": "cup",
+              "label": {
+                "en": "Drinks",
+                "ar": "مشروبات"
+              },
+              "link": "/category/drinks"
+            }
+          },
+          {
+            "type": "aisle",
+            "settings": {
+              "icon": "spray",
+              "label": {
+                "en": "Cleaning and care",
+                "ar": "منظفات وعناية"
+              },
+              "link": "/category/household"
+            }
+          }
+        ]
+      },
+      {
+        "type": "tw-shelf",
+        "settings": {
+          "title": {
+            "en": "Dairy and bakery",
+            "ar": "ألبان ومخبوزات"
+          },
+          "collection": "dairy-bakery",
+          "link": "/category/dairy-bakery",
+          "tone": "soft"
+        }
+      },
+      {
+        "type": "tw-shelf",
+        "settings": {
+          "title": {
+            "en": "Pantry",
+            "ar": "البقالة"
+          },
+          "collection": "pantry",
+          "link": "/category/pantry",
+          "tone": "white"
+        }
+      },
+      {
+        "type": "tw-trust",
+        "blocks": [
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "truck",
+              "label": {
+                "en": "Delivery",
+                "ar": "توصيل"
+              },
+              "text": {
+                "en": "Across Egypt",
+                "ar": "لكل المحافظات"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "banknote",
+              "label": {
+                "en": "Payment",
+                "ar": "الدفع"
+              },
+              "text": {
+                "en": "Cash on delivery",
+                "ar": "عند الاستلام"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "tag",
+              "label": {
+                "en": "Prices",
+                "ar": "الأسعار"
+              },
+              "text": {
+                "en": "In Egyptian pounds",
+                "ar": "بالجنيه المصري"
+              }
+            }
+          },
+          {
+            "type": "trust",
+            "settings": {
+              "icon": "message-circle",
+              "label": {
+                "en": "Support",
+                "ar": "الدعم"
+              },
+              "text": {
+                "en": "Message us on WhatsApp",
+                "ar": "تواصل معنا على واتساب"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

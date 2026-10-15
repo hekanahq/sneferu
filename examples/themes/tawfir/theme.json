@@ -1,0 +1,42 @@
+{
+  "id": "tawfir",
+  "name": "Tawfir",
+  "version": "1.0.0",
+  "author": "Hekana",
+  "description": "A dense discount supermarket: red and yellow offer banners, an aisle sidebar with icons, a weekly-offers banner and tight product grids with discount badges that show only where a compare-at price exists.",
+  "category": "grocery",
+  "engine": "hk2",
+  "engineCompatibility": "^2.0.0",
+  "defaultLocale": "ar",
+  "locales": ["ar", "en"],
+  "money": {
+    "format": "whole"
+  },
+  "settings": {},
+  "tokens": {
+    "colors": {
+      "primary": "#C8102E",
+      "secondary": "#2B2B2B",
+      "accent": "#FFC72C",
+      "background": "#FFFFFF",
+      "text": "#262626",
+      "muted": "#5F5F5F",
+      "line": "#E3E0DA",
+      "soft": "#F6F4EF",
+      "surface": "#FFFFFF",
+      "deep": "#9E0C24",
+      "sun": "#FFF1C2",
+      "ink": "#1F1F1F"
+    },
+    "layout": {
+      "contentWidth": "1280px"
+    },
+    "fonts": {
+      "heading": "Cairo",
+      "body": "Cairo"
+    },
+    "radius": {
+      "md": "10px"
+    }
+  }
+}

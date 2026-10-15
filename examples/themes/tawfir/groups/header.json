@@ -1,0 +1,40 @@
+{
+  "sections": [
+    {
+      "id": "header",
+      "type": "header",
+      "settings": {
+        "show_search": true,
+        "show_language": true,
+        "show_account": true,
+        "show_cart": true,
+        "drawer_on_add": true
+      },
+      "blocks": [
+        {
+          "id": "top-offers",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "en": "Offers",
+              "ar": "العروض"
+            },
+            "url": "/products"
+          }
+        },
+        {
+          "id": "top-about",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "en": "About",
+              "ar": "عن المتجر"
+            },
+            "url": "/pages/about"
+          }
+        }
+      ],
+      "block_order": ["top-offers", "top-about"]
+    }
+  ]
+}

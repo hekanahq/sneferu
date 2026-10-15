@@ -1,0 +1,38 @@
+{% if section.settings.text %}
+  <div class="tw-announce">
+    {% if section.settings.link %}<a href="{{ url(section.settings.link) }}">{{ section.settings.text }}</a>{% else %}<span>{{ section.settings.text }}</span>{% endif %}
+  </div>
+{% endif %}
+<hk-schema>
+  {
+    "name": {
+      "en": "Announcement bar",
+      "ar": "شريط الإعلان"
+    },
+    "version": 1,
+    "templates": ["announcement"],
+    "settings": {
+      "text": {
+        "type": "text",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "الدفع عند الاستلام · توصيل لكل المحافظات",
+          "en": "Cash on delivery · delivery across Egypt"
+        },
+        "maxLength": 100,
+        "localized": true
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link (optional)",
+          "ar": "الرابط (اختياري)"
+        },
+        "default": ""
+      }
+    }
+  }
+</hk-schema>

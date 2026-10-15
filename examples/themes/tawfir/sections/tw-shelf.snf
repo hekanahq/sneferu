@@ -1,0 +1,98 @@
+{% if collection(section.settings.collection).products %}
+  <div class="tw-shelf tw-tone-{{ section.settings.tone }}">
+    <hk-container>
+      <hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="16">
+        <div class="tw-shelf-head">
+          <h2 class="tw-h2">{{ section.settings.title }}</h2>
+          {% if section.settings.link %}<a
+              class="tw-viewall"
+              href="{{ url(section.settings.link) }}"
+            >{{ t('view_all') }}</a>{% endif %}
+        </div>
+        <div class="tw-grid tw-cols-{{ section.settings.columns }}">
+          {% for p in collection(section.settings.collection).products limit: section.settings.limit %}{% render 'product-card', product: p %}{% endfor %}
+        </div>
+      </hk-section>
+    </hk-container>
+  </div>
+{% endif %}
+<hk-schema>
+  {
+    "name": {
+      "en": "Product shelf",
+      "ar": "رف منتجات"
+    },
+    "version": 1,
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "عروض البقالة",
+          "en": "Pantry offers"
+        },
+        "maxLength": 50,
+        "localized": true
+      },
+      "collection": {
+        "type": "collection",
+        "label": {
+          "en": "Collection",
+          "ar": "القسم"
+        },
+        "default": "pantry"
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "View all link",
+          "ar": "رابط عرض الكل"
+        },
+        "default": "/products"
+      },
+      "limit": {
+        "type": "range",
+        "label": {
+          "en": "Products",
+          "ar": "عدد المنتجات"
+        },
+        "min": 5,
+        "max": 20,
+        "step": 5,
+        "default": 10
+      },
+      "columns": {
+        "type": "select",
+        "label": {
+          "en": "Columns",
+          "ar": "الأعمدة"
+        },
+        "options": ["4", "5", "6"],
+        "default": "5"
+      },
+      "tone": {
+        "type": "select",
+        "label": {
+          "en": "Background",
+          "ar": "الخلفية"
+        },
+        "options": ["white", "soft", "sun"],
+        "default": "soft"
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 120,
+        "step": 8,
+        "default": 24
+      }
+    }
+  }
+</hk-schema>

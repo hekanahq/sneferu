@@ -1,0 +1,102 @@
+<footer class="tw-footer">
+  <hk-container>
+    <div class="tw-footer-grid">
+      <div class="tw-fabout">
+        <p class="tw-footer-brand">{{ store.name }}</p>
+        {% if section.settings.about_text %}
+          <p>{{ section.settings.about_text }}</p>
+        {% endif %}
+        {% if section.settings.contact_link %}<hk-button
+            label="{{ section.settings.contact_label }}"
+            href="{{ section.settings.contact_link }}"
+            variant="outline"
+            icon="message-circle"
+          />{% endif %}
+      </div>
+      {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+    </div>
+  </hk-container>
+  <div class="tw-footer-bar">
+    <hk-container>
+      <div class="tw-footer-bar-in">
+        <span>{{ section.settings.bottom_text }}</span><span>{{ store.name }} · {{ section.settings.copyright }}</span>
+      </div>
+    </hk-container>
+  </div>
+</footer>
+<hk-schema>
+  {
+    "name": {
+      "en": "Footer",
+      "ar": "الفوتر"
+    },
+    "version": 1,
+    "templates": ["footer"],
+    "blocks": {
+      "allowed": ["footer-column"],
+      "max": 4
+    },
+    "settings": {
+      "about_text": {
+        "type": "textarea",
+        "label": {
+          "en": "About text",
+          "ar": "نص عن المتجر"
+        },
+        "default": {
+          "ar": "بقالة ومنتجات بيت يومية، اطلبها أونلاين.",
+          "en": "Everyday groceries and household items, ordered online."
+        },
+        "localized": true,
+        "maxLength": 200
+      },
+      "contact_label": {
+        "type": "text",
+        "label": {
+          "en": "Contact button",
+          "ar": "زر التواصل"
+        },
+        "default": {
+          "ar": "تواصل معنا على واتساب",
+          "en": "Contact us on WhatsApp"
+        },
+        "maxLength": 40,
+        "localized": true
+      },
+      "contact_link": {
+        "type": "link",
+        "label": {
+          "en": "Contact link",
+          "ar": "رابط التواصل"
+        },
+        "default": "/pages/about"
+      },
+      "bottom_text": {
+        "type": "text",
+        "label": {
+          "en": "Bottom bar text",
+          "ar": "نص الشريط السفلي"
+        },
+        "default": {
+          "ar": "كل الأسعار بالجنيه المصري",
+          "en": "All prices in Egyptian pounds"
+        },
+        "maxLength": 80,
+        "localized": true
+      },
+      "copyright": {
+        "type": "text",
+        "label": {
+          "en": "Copyright",
+          "ar": "حقوق النشر"
+        },
+        "default": {
+          "ar": "جميع الحقوق محفوظة",
+          "en": "All rights reserved"
+        },
+        "maxLength": 40,
+        "localized": true
+      }
+    }
+  }
+</hk-schema>

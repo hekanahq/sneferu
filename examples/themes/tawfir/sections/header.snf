@@ -1,0 +1,120 @@
+<header class="tw-header">
+  <hk-container>
+    <div class="tw-header-bar">
+      <a class="tw-logo" href="{{ url('/') }}">
+        {% if section.settings.logo %}
+          <img class="tw-logo-img" src="{{ section.settings.logo }}" alt="{{ store.name }}" width="160" height="40">
+        {% else %}
+          <span class="tw-logo-mark" aria-hidden="true"><hk-icon name="shopping-bag" /></span>
+          <span
+            class="tw-logo-text"
+          >{% if section.settings.logo_text %}{{ section.settings.logo_text }}{% else %}{{ store.name }}{% endif %}</span>
+        {% endif %}
+      </a>
+      {% if section.settings.show_search %}
+        <div class="tw-search"><hk-search-form placeholder="{{ t('search_placeholder') }}" /></div>
+      {% endif %}
+      <nav class="tw-toplinks" aria-label="{{ t('menu') }}">
+        {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+      </nav>
+      <div class="tw-header-actions">
+        {% if section.settings.show_language %}<hk-locale-switch />{% endif %}
+        {% if section.settings.show_account %}<a
+            class="tw-icon-btn"
+            href="{{ url('/account') }}"
+            aria-label="{{ t('account') }}"
+          ><hk-icon name="user" /></a>{% endif %}
+        {% if section.settings.show_cart %}
+          <a
+            class="tw-icon-btn tw-cart-link"
+            href="{{ url('/cart') }}"
+            data-hk-open="cart-drawer"
+            aria-label="{{ t('cart') }}"
+          ><hk-icon name="shopping-cart" /><hk-cart-count /></a>
+        {% endif %}
+      </div>
+    </div>
+  </hk-container>
+  {% if section.settings.show_cart %}
+    <hk-cart-drawer
+      open-on-add="{{ section.settings.drawer_on_add }}"
+    ><hk-cart-items /><hk-cart-summary /></hk-cart-drawer>
+  {% endif %}
+</header>
+<hk-schema>
+  {
+    "name": {
+      "en": "Header",
+      "ar": "الهيدر"
+    },
+    "version": 1,
+    "templates": ["header"],
+    "blocks": {
+      "allowed": ["menu-link"],
+      "max": 5
+    },
+    "settings": {
+      "logo": {
+        "type": "image",
+        "label": {
+          "en": "Logo image",
+          "ar": "صورة الشعار"
+        },
+        "default": ""
+      },
+      "logo_text": {
+        "type": "text",
+        "label": {
+          "en": "Logo text (store name when empty)",
+          "ar": "نص الشعار (اسم المتجر لو فاضي)"
+        },
+        "default": {
+          "ar": "",
+          "en": ""
+        },
+        "maxLength": 40,
+        "localized": true
+      },
+      "show_search": {
+        "type": "boolean",
+        "label": {
+          "en": "Show search",
+          "ar": "إظهار البحث"
+        },
+        "default": true
+      },
+      "show_language": {
+        "type": "boolean",
+        "label": {
+          "en": "Show language switch",
+          "ar": "إظهار تبديل اللغة"
+        },
+        "default": true
+      },
+      "show_account": {
+        "type": "boolean",
+        "label": {
+          "en": "Show account",
+          "ar": "إظهار الحساب"
+        },
+        "default": true
+      },
+      "show_cart": {
+        "type": "boolean",
+        "label": {
+          "en": "Show cart",
+          "ar": "إظهار السلة"
+        },
+        "default": true
+      },
+      "drawer_on_add": {
+        "type": "boolean",
+        "label": {
+          "en": "Open the cart drawer on add",
+          "ar": "فتح السلة عند الإضافة"
+        },
+        "default": true
+      }
+    }
+  }
+</hk-schema>

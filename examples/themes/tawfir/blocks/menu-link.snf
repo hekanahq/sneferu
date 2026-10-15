@@ -1,0 +1,33 @@
+<a class="tw-toplink" href="{{ url(block.settings.url) }}">{{ block.settings.label }}</a>
+<hk-schema>
+  {
+    "name": {
+      "en": "Menu link",
+      "ar": "رابط في القائمة"
+    },
+    "version": 1,
+    "settings": {
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Label",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "رابط",
+          "en": "Link"
+        },
+        "maxLength": 40,
+        "localized": true
+      },
+      "url": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/"
+      }
+    }
+  }
+</hk-schema>

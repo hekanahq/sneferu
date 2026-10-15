@@ -1,0 +1,206 @@
+<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="16">
+  <div class="tw-shop">
+    <aside class="tw-aisles" aria-label="{{ section.settings.aisles_title }}">
+      <h2 class="tw-aisles-title">{{ section.settings.aisles_title }}</h2>
+      <div class="tw-aisles-list">
+        {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+      </div>
+    </aside>
+    <div class="tw-shop-main">
+      <div class="tw-banner">
+        <div class="tw-banner-text">
+          <h2>{{ section.settings.banner_title }}</h2>
+          {% if section.settings.banner_text %}
+            <p>{{ section.settings.banner_text }}</p>
+          {% endif %}
+          {% if section.settings.banner_link %}<hk-button
+              label="{{ section.settings.banner_label }}"
+              href="{{ section.settings.banner_link }}"
+            />{% endif %}
+        </div>
+        {% if section.settings.banner_image %}
+          <div class="tw-banner-photo">
+            <hk-image
+              src="{{ section.settings.banner_image }}"
+              alt="{{ section.settings.banner_title }}"
+              aspect-ratio="1/1"
+              width="320"
+              height="320"
+              loading="eager"
+              sizes="(min-width: 1024px) 240px, 40vw"
+            />
+          </div>
+        {% endif %}
+      </div>
+      {% if section.settings.grid_title %}
+        <h2 class="tw-h2">{{ section.settings.grid_title }}</h2>
+      {% endif %}
+      <div class="tw-grid tw-cols-{{ section.settings.columns }}">
+        {% for p in collection(section.settings.collection).products limit: section.settings.count %}{% render 'product-card', product: p %}{% endfor %}
+      </div>
+    </div>
+  </div>
+</hk-section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Aisles and offers",
+      "ar": "الأقسام والعروض"
+    },
+    "version": 1,
+    "blocks": {
+      "allowed": ["aisle"],
+      "max": 10
+    },
+    "settings": {
+      "aisles_title": {
+        "type": "text",
+        "label": {
+          "en": "Aisles heading",
+          "ar": "عنوان الأقسام"
+        },
+        "default": {
+          "ar": "الأقسام",
+          "en": "Aisles"
+        },
+        "maxLength": 30,
+        "localized": true
+      },
+      "banner_title": {
+        "type": "text",
+        "label": {
+          "en": "Banner title",
+          "ar": "عنوان البانر"
+        },
+        "default": {
+          "ar": "عروض الأسبوع",
+          "en": "Weekly offers"
+        },
+        "maxLength": 40,
+        "localized": true
+      },
+      "banner_text": {
+        "type": "text",
+        "label": {
+          "en": "Banner text",
+          "ar": "نص البانر"
+        },
+        "default": {
+          "ar": "أسعار مخفضة على منتجات مختارة من البقالة والمنزل",
+          "en": "Reduced prices on selected groceries and household items"
+        },
+        "maxLength": 100,
+        "localized": true
+      },
+      "banner_label": {
+        "type": "text",
+        "label": {
+          "en": "Banner button",
+          "ar": "زر البانر"
+        },
+        "default": {
+          "ar": "تسوّق الآن",
+          "en": "Shop now"
+        },
+        "maxLength": 24,
+        "localized": true
+      },
+      "banner_link": {
+        "type": "link",
+        "label": {
+          "en": "Banner link",
+          "ar": "رابط البانر"
+        },
+        "default": "/products"
+      },
+      "banner_image": {
+        "type": "image",
+        "label": {
+          "en": "Banner image",
+          "ar": "صورة البانر"
+        },
+        "default": "https://api.hekana.com/api/v1/uploads/file/demo/themes34/tawfir/banner.webp"
+      },
+      "grid_title": {
+        "type": "text",
+        "label": {
+          "en": "Grid heading",
+          "ar": "عنوان الشبكة"
+        },
+        "default": {
+          "ar": "منتجات مختارة",
+          "en": "Selected for you"
+        },
+        "maxLength": 40,
+        "localized": true
+      },
+      "collection": {
+        "type": "collection",
+        "label": {
+          "en": "Collection",
+          "ar": "القسم"
+        },
+        "default": "featured"
+      },
+      "count": {
+        "type": "range",
+        "label": {
+          "en": "Products",
+          "ar": "عدد المنتجات"
+        },
+        "min": 5,
+        "max": 30,
+        "step": 5,
+        "default": 15
+      },
+      "columns": {
+        "type": "select",
+        "label": {
+          "en": "Columns",
+          "ar": "الأعمدة"
+        },
+        "options": ["4", "5", "6"],
+        "default": "5"
+      },
+      "padding_y": {
+        "type": "range",
+        "label": {
+          "en": "Vertical padding",
+          "ar": "المسافة الرأسية"
+        },
+        "min": 0,
+        "max": 120,
+        "step": 8,
+        "default": 24
+      }
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "Aisles and offers",
+          "ar": "الأقسام والعروض"
+        },
+        "blocks": [
+          {
+            "type": "aisle"
+          },
+          {
+            "type": "aisle"
+          },
+          {
+            "type": "aisle"
+          },
+          {
+            "type": "aisle"
+          },
+          {
+            "type": "aisle"
+          },
+          {
+            "type": "aisle"
+          }
+        ]
+      }
+    ]
+  }
+</hk-schema>

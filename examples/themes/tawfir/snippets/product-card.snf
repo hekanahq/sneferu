@@ -1,0 +1,21 @@
+<article class="tw-card">
+  <a class="tw-card-link" href="{{ product.url }}">
+    <div class="tw-card-media">
+      <hk-image
+        src="{{ product.image }}"
+        alt="{{ product.title }}"
+        aspect-ratio="1/1"
+        fit="contain"
+        sizes="(min-width: 1024px) 20vw, 50vw"
+      />
+      {% if product.available %}
+        {% if product.compare_at > product.price %}<span class="tw-badge">{{ t('offer') }}</span>{% endif %}
+      {% else %}
+        <span class="tw-badge tw-badge-muted">{{ t('sold_out_badge') }}</span>
+      {% endif %}
+    </div>
+    <h3 class="tw-card-title">{{ product.title }}</h3>
+    <hk-price amount="{{ product.price }}" compare-at="{{ product.compare_at }}" />
+    <span class="tw-card-cta">{{ t('view_product') }}</span>
+  </a>
+</article>
