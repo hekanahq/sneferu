@@ -1,6 +1,10 @@
 import { coerceSetting, err, escapeAttr, isGroupName, isMoneyFormat, parseTemplateName, safeToken, sectionAllowedOn, safeUrl, toStr, validateIR, type Diagnostic, type FieldSchema, type GroupName, type IRNode, type LocaleOverrides, type PageNode, type SectionGroups, type TagRegistry, type ThemeLocalization, type ThemeRequest } from '@hekana/sneferu-core';
 import type { RenderContext, Scope } from './context';
 import { Budget, own, renderNodes, type Env } from './render';
+import { resolveUrl } from './url';
+
+/** The fallback cart link: a round button at the inline end, in the theme's own colours. */
+const CART_FAB_CSS = '.sn-cart-fab{position:fixed;inset-block-end:16px;inset-inline-end:16px;z-index:40;display:inline-flex;align-items:center;justify-content:center;gap:4px;min-width:48px;min-height:48px;padding:0 12px;border-radius:999px;background:var(--hk-color-primary,#111);color:var(--hk-color-background,#fff);text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,.2)}.sn-cart-fab svg{width:20px;height:20px}';
 import type { Limits } from './budget';
 import { checkArtifactShape } from './shape';
 import { themeTokenCss } from './tokens';
@@ -56,6 +60,12 @@ export interface RenderOptions {
   request?: { path?: string };
   /** The same page in the other language: `alternateUrl` becomes `localization.alternate_url` (checked with safeUrl). */
   localization?: { alternateUrl?: string };
+  /**
+   * Keep the cart working when the page rendered no cart drawer (a header removed, hidden or
+   * customised without one): append the standard drawer, and a small cart link when the page
+   * has no cart opener either. Off by default; hosts turn it on for store pages.
+   */
+  cartFallback?: boolean | { label?: string };
 }
 
 const isObj = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v);
@@ -254,7 +264,22 @@ function render(artifact: ArtifactLike, opts: RenderOptions): RenderResult {
   const content = () => renderNodes(template, base, { ...env, slots: { sections: () => sections.filter((s) => !(isObj(s) && s.hidden)).map((s) => renderSection(s)).join('') } });
   // only the layout places section groups; sections, templates and snippets rendered from here get no group renderer
   const inner = renderNodes(artifact.layout, base, { ...env, slots: { content }, group: renderGroup });
-  const html = `<div data-hk-theme="${escapeAttr(artifact.manifest.id)}" dir="${escapeAttr(dir)}" lang="${escapeAttr(locale)}">${inner}</div>`;
+  const cartFallback = (rendered: string): string => {
+    if (!opts.cartFallback || env.controllers.has('cart-drawer') || !opts.registry.get('hk-cart-drawer')) return '';
+    const comp = (tag: string, props: Record<string, string> = {}, children: IRNode[] = []): IRNode =>
+      ({ k: 'comp', tag, props: Object.fromEntries(Object.entries(props).map(([k, v]) => [k, { k: 'static', v }])), children });
+    const label = typeof opts.cartFallback === 'object' && typeof opts.cartFallback.label === 'string' && opts.cartFallback.label ? opts.cartFallback.label : 'Cart';
+    const opener: IRNode[] = rendered.includes('data-hk-open="cart-drawer"') ? [] : [
+      { k: 'html', s: `<a class="sn-cart-fab" href="${escapeAttr(resolveUrl(ctx, '/cart'))}" data-hk-open="cart-drawer" aria-label="${escapeAttr(label)}">` },
+      ...(opts.registry.get('hk-icon') ? [comp('hk-icon', { name: 'shopping-cart' })] : []),
+      ...(opts.registry.get('hk-cart-count') ? [comp('hk-cart-count')] : []),
+      { k: 'html', s: '</a>' },
+    ];
+    if (opener.length) env.css.push(CART_FAB_CSS);
+    const drawer = comp('hk-cart-drawer', {}, ['hk-cart-items', 'hk-cart-summary'].filter((t) => opts.registry.get(t)).map((t) => comp(t)));
+    return `<div data-hk-cart-fallback>${renderNodes([...opener, drawer], base, { ...env, slots: {} })}</div>`;
+  };
+  const html = `<div data-hk-theme="${escapeAttr(artifact.manifest.id)}" dir="${escapeAttr(dir)}" lang="${escapeAttr(locale)}">${inner}${cartFallback(inner)}</div>`;
   const css = env.css.join('\n');
   const ownsPage = Array.isArray(artifact.defaults?.templates) && artifact.defaults!.templates.includes(opts.template);
   const manifestLike = artifact.manifest as { id: string; tokens?: unknown };
