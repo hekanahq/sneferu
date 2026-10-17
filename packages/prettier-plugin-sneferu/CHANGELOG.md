@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.10.2
+
+### Patch Changes
+
+- @hekana/sneferu-compiler@0.10.2
+
 ## 0.10.1
 
 ### Patch Changes

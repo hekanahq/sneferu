@@ -1,6 +1,6 @@
 {
   "name": "sneferu",
-  "version": "0.10.1",
+  "version": "0.10.2",
   "description": "Sneferu: build Hekana themes. The short name for @hekana/sneferu. npx sneferu init",
   "type": "module",
   "bin": {
@@ -11,7 +11,7 @@
     "bin"
   ],
   "dependencies": {
-    "@hekana/sneferu": "0.10.1"
+    "@hekana/sneferu": "0.10.2"
   },
   "engines": {
     "node": ">=20"

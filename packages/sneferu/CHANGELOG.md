@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.10.2
+
+### Patch Changes
+
+- Updated dependencies [124763f]
+  - @hekana/sneferu-components@0.10.2
+  - @hekana/sneferu-compiler@0.10.2
+  - @hekana/sneferu-controllers@0.10.2
+  - @hekana/sneferu-core@0.10.2
+  - @hekana/sneferu-runtime@0.10.2
+  - @hekana/sneferu-templates-default@0.10.2
+  - @hekana/prettier-plugin-sneferu@0.10.2
+
 ## 0.10.1
 
 ### Patch Changes
