@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.10.2
+
+### Patch Changes
+
+- @hekana/sneferu-core@0.10.2
+- @hekana/sneferu-templates-default@0.10.2
+
 ## 0.10.1
 
 ### Patch Changes
