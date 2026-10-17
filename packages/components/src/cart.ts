@@ -9,6 +9,24 @@ const L = (ar: string, en: string) => ({ ar, en });
 const ed = (ar: string, en: string, insertable = false) => ({ label: L(ar, en), group: 'commerce', insertable });
 const text = (v: unknown, max = 80): string => toStr(v).trim().slice(0, max);
 const label = (c: TagRenderContext, v: unknown, key: string): string => text(v) || str(c, key);
+/** A path for comparison: no query or hash, no trailing slash, percent-decoding applied when well formed. */
+const pathKey = (u: string): string => {
+  const bare = u.split(/[?#]/, 1)[0]!.replace(/\/+$/, '');
+  try { return decodeURIComponent(bare); } catch { return bare; }
+};
+/**
+ * True when this is the product page of this very product, where a link to the product page links to itself.
+ * Matched on the page's path, not on the scope's `product`: a related-products loop may name its variable `product` too.
+ */
+const onOwnPage = (c: TagRenderContext, target: string, url: unknown): boolean => {
+  const req = c.data.request;
+  if (typeof req !== 'object' || req === null) return false;
+  const { page_type: type, path } = req as { page_type?: unknown; path?: unknown };
+  if (type !== 'product' || typeof path !== 'string' || path === '') return false;
+  const here = pathKey(path);
+  const own = typeof url === 'string' ? pathKey(url) : '';
+  return here === pathKey(target) || (own.startsWith('/') && own.length > 1 && here.endsWith(own));
+};
 
 const VP_CSS = [
   '.sn-vp-option{border:0;margin:0 0 16px;padding:0;min-width:0}',
@@ -138,8 +156,10 @@ export const hkAddToCart: HkTag = {
           : `<button type="button" class="sn-btn sn-btn-${style} sn-atc-button" disabled>${escapeText(out)}</button>`)
         + '</div>';
     }
-    // a list card for a product with variants and none picked: the host needs a variant id, so link to the product page
-    if (prod.has_variants === true && !(typeof prod.selected_variant === 'object' && prod.selected_variant !== null)) {
+    // a list card for a product with variants and none picked: the host needs a variant id, so link to the product page.
+    // Never on that product's own page: a link there points at itself and leaves no way to buy (a product flagged
+    // has_variants with no variants left is sold as a plain product, so it gets the form with no variant id).
+    if (prod.has_variants === true && !(typeof prod.selected_variant === 'object' && prod.selected_variant !== null) && !onOwnPage(c, target, prod.url)) {
       const chooseText = label(c, p.chooseLabel, 'choose_options');
       const title = text(prod.title, 120);
       const chooseName = title ? ` aria-label="${escapeAttr(`${chooseText}: ${title}`)}"` : '';

@@ -224,6 +224,31 @@ describe('hk-add-to-cart', () => {
     expect(html).not.toContain('<form');
     expect(html).toContain('>Choose options</a>');
   });
+  it('on the product\'s own page never links to itself: a stale has_variants with no variants still gets the add button', () => {
+    // a product flagged has_variants whose variants were never created (or all deleted) is sold as a plain product
+    const stale = product({ variants: [], options: [], selected_variant: null, has_variants: true });
+    const own = { request: { path: '/products/card', page_type: 'product', locale: 'en' }, product: stale };
+    const html = run('hk-add-to-cart', { product: stale }, { data: own }).html;
+    expect(html).not.toContain('Choose options');
+    expect(html).not.toContain('href="/en/products/card"');
+    expect(html).toContain('data-hk-controller="add-to-cart"');
+    expect(config(html)).toMatchObject({ productId: 'p1', variantId: null, available: true });
+    expect(run('hk-add-to-cart', { product: stale }, { data: own, locale: 'ar' }).html).toContain('>أضف للسلة</button>');
+    // sold out still shows as sold out
+    expect(run('hk-add-to-cart', { product: { ...stale, available: false } }, { data: own }).html).toContain(' disabled>Sold out</button>');
+    // a card for ANOTHER product on a product page (related products) still links to that product
+    const other = product({ id: 'p2', url: '/products/other', variants: [], selected_variant: null, has_variants: true });
+    expect(run('hk-add-to-cart', { product: other }, { data: own }).html).toContain('href="/en/products/other"');
+    // the real path may carry the locale/store prefix, a query or a trailing slash
+    for (const path of ['/en/products/card', '/store/x/products/card/', '/products/card?variant=1']) {
+      expect(run('hk-add-to-cart', { product: stale }, { data: { request: { path, page_type: 'product' } } }).html, path).toContain('data-hk-controller="add-to-cart"');
+    }
+    // a related card whose loop variable shadows `product` on another product's page still links
+    expect(run('hk-add-to-cart', { product: stale }, { data: { request: { path: '/products/other', page_type: 'product' }, product: stale } }).html).toContain('>Choose options</a>');
+    expect(run('hk-add-to-cart', { product: stale }, { data: { request: { path: '/products/xcard', page_type: 'product' } } }).html).toContain('>Choose options</a>');
+    // and a list page keeps the choose-options link
+    expect(run('hk-add-to-cart', { product: stale }, { data: { request: { path: '/products', page_type: 'collection' } } }).html).toContain('>Choose options</a>');
+  });
   it('keeps the add button for single-variant products and when a variant is selected', () => {
     expect(run('hk-add-to-cart', { product: product({ has_variants: false, selected_variant: undefined, variants: undefined }) }).html).toContain('<form');
     expect(run('hk-add-to-cart', { product: product({ has_variants: true }) }).html).toContain('<form');
