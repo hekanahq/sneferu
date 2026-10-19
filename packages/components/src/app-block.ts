@@ -5,7 +5,7 @@ import { productObject } from './product-view';
 const L = (ar: string, en: string) => ({ ar, en });
 /** A product handle as the platform issues it: letters (any script), digits, '-' and '_'. */
 const HANDLE = /^[\p{L}\p{N}_-]{1,120}$/u;
-export const APP_BLOCK_PATH = '/apps/embed';
+export const APP_BLOCK_PATH = '/hk2/app-block';
 
 /**
  * The blocks an app can put in a themed page. A closed list kept by the platform: a theme

@@ -8,7 +8,7 @@ afterEach(() => { current?.(); current = null; vi.restoreAllMocks(); });
 
 function setup() {
   current?.();
-  document.body.innerHTML = '<div data-hk-controller="app-block"><iframe src="/apps/embed/subscriptions/portal"></iframe></div>';
+  document.body.innerHTML = '<div data-hk-controller="app-block"><iframe src="/hk2/app-block/subscriptions/portal"></iframe></div>';
   current = startControllers(document.body, makeHost().host);
   const el = document.querySelector('[data-hk-controller="app-block"]') as HTMLElement;
   const frame = document.querySelector('iframe')!;
