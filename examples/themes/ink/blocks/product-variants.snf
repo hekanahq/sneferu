@@ -13,8 +13,8 @@
           "en": "Style",
           "ar": "الشكل"
         },
-        "options": ["buttons", "select"],
-        "default": "buttons"
+        "options": ["auto", "swatches", "buttons", "select"],
+        "default": "auto"
       }
     }
   }

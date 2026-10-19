@@ -344,6 +344,32 @@ describe('hk-variant-picker swatches', () => {
     expect(html).not.toContain('sn-vp-tile');
   });
 
+  it('defaults to auto: no display prop behaves like display="auto"', () => {
+    const a = run('hk-variant-picker', { product: swatchProduct() }).html;
+    expect(a).toBe(run('hk-variant-picker', { product: swatchProduct(), display: 'auto' }).html);
+    expect(a).toContain('sn-vp-tile-name');
+  });
+
+  it('display="buttons" keeps plain buttons even when the option has photos', () => {
+    const { html } = run('hk-variant-picker', { product: swatchProduct(), display: 'buttons' });
+    expect(html).not.toContain('sn-vp-tile');
+    expect(html).toContain('value="Red" checked><span>Red</span>');
+  });
+
+  it('auto reads the data: photos make tiles, colours make dots, neither stays buttons', () => {
+    const p = (colour: Record<string, unknown>) => swatchProduct({ options: [{ name: 'Size', values: ['S', 'M'], presentation: 'buttons' }, { name: 'Colour', values: ['Red', 'Blue'], ...colour }] });
+    const noPresentation = { swatches: [{ value: 'Red', color: null, image: { url: 'https://cdn.x/r.png' } }, { value: 'Blue', color: null, image: null }] };
+    expect(run('hk-variant-picker', { product: p(noPresentation) }).html).toContain('sn-vp-tile');
+    const colourWithPhotos = { presentation: 'color', ...noPresentation };
+    expect(run('hk-variant-picker', { product: p(colourWithPhotos) }).html).toContain('<span class="sn-vp-tile-name">Red</span>');
+    const dotsOnly = { swatches: [{ value: 'Red', color: '#cc0000', image: null }, { value: 'Blue', color: '#0000cc', image: null }] };
+    const dots = run('hk-variant-picker', { product: p(dotsOnly) }).html;
+    expect(dots).toContain('sn-vp-dot');
+    expect(dots).not.toContain('sn-vp-tile');
+    expect(run('hk-variant-picker', { product: p({ presentation: 'dropdown', ...noPresentation }) }).html).toContain('<select name="hk-c1-1">');
+    expect(run('hk-variant-picker', { product: p({}) }).html).not.toContain('sn-vp-dot');
+  });
+
   it('drops unsafe swatch images and malformed colours, and falls back to text', () => {
     const p = product({
       options: [
