@@ -51,7 +51,7 @@ export const hkVariantPicker: HkTag = {
   name: 'hk-variant-picker', version: 1, category: 'commerce',
   props: {
     product: { type: 'data', label: L('المنتج', 'Product') },
-    display: { type: 'select', label: L('شكل الاختيار', 'Picker style'), options: ['buttons', 'select', 'swatches', 'auto'], default: 'buttons' },
+    display: { type: 'select', label: L('شكل الاختيار', 'Picker style'), options: ['auto', 'swatches', 'buttons', 'select'], default: 'auto' },
   },
   allowedParents: '*', allowedChildren: [], responsive: [], bindable: '*', controller: 'variant-picker', strings: COMMERCE_STRINGS,
   editor: ed('اختيار النوع', 'Variant picker'),
@@ -64,14 +64,17 @@ export const hkVariantPicker: HkTag = {
     if (variants.length === 0 || (variants.length <= 1 && (options === null || options.every((o) => o.values.length <= 1)))) return '';
     (c.cssOnce ?? c.css)(VP_CSS);
     type Mode = 'buttons' | 'select' | 'image' | 'color';
-    const display = p.display === 'select' || p.display === 'swatches' || p.display === 'auto' ? p.display : 'buttons';
-    const modeOf = (g: { presentation?: string }): Mode => {
+    const display = p.display === 'select' || p.display === 'swatches' || p.display === 'buttons' ? p.display : 'auto';
+    const modeOf = (g: { presentation?: string; swatches?: { color: string | null; image: string | null }[] }): Mode => {
       if (display === 'select') return 'select';
       if (display === 'swatches') return 'image';
       if (display === 'auto') {
-        if (g.presentation === 'dropdown') return 'select';
-        if (g.presentation === 'image') return 'image';
-        if (g.presentation === 'color') return 'color';
+        // Dropdown is the merchant's explicit choice. Otherwise the option's data
+        // decides: photos make tiles, colours make dots, nothing stays buttons.
+        const pr = g.presentation;
+        if (pr === 'dropdown') return 'select';
+        if (pr === 'image' || g.swatches?.some((s) => s.image)) return 'image';
+        if (pr === 'color' || g.swatches?.some((s) => s.color)) return 'color';
       }
       return 'buttons';
     };

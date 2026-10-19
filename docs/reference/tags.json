@@ -1212,12 +1212,12 @@
           "name": "display",
           "attr": "display",
           "type": "select",
-          "default": "buttons",
+          "default": "auto",
           "options": [
-            "buttons",
-            "select",
+            "auto",
             "swatches",
-            "auto"
+            "buttons",
+            "select"
           ],
           "responsive": false,
           "label": {
