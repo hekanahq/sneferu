@@ -9,9 +9,10 @@ import { hkPagination, hkLocaleSwitch } from './pagination';
 import { hkVariantPicker, hkAddToCart, hkCartCount, hkCartItems, hkCartSummary, hkCartDrawer } from './cart';
 import { hkSectionGroup } from './group';
 import { hkInlineCheckout } from './inline-checkout';
+import { hkAppBlock } from './app-block';
 
 export const BASE_TAGS = [hkSection, hkContainer, hkStack, hkGrid, hkHeading, hkText, hkRichText, hkImage, hkButton, hkCard, hkBadge, hkIcon, hkSearchForm, hkPrice, hkProductCard, hkProductGrid,
-  hkProductGallery, hkPagination, hkLocaleSwitch, hkVariantPicker, hkAddToCart, hkCartCount, hkCartItems, hkCartSummary, hkCartDrawer, hkInlineCheckout, hkSectionGroup];
+  hkProductGallery, hkPagination, hkLocaleSwitch, hkVariantPicker, hkAddToCart, hkCartCount, hkCartItems, hkCartSummary, hkCartDrawer, hkInlineCheckout, hkAppBlock, hkSectionGroup];
 export function createDefaultRegistry(): TagRegistry {
   const r = new TagRegistry();
   for (const t of BASE_TAGS) r.register(t);
@@ -33,5 +34,6 @@ export { hkPagination, hkLocaleSwitch, PAGINATION_CSS } from './pagination';
 export { hkVariantPicker, hkAddToCart, hkCartCount, hkCartItems, hkCartSummary, hkCartDrawer } from './cart';
 export { hkSectionGroup } from './group';
 export { hkInlineCheckout, CHECKOUT_EMBED_PATH } from './inline-checkout';
+export { hkAppBlock, APP_BLOCK_PATH, APP_BLOCKS } from './app-block';
 export { COMMERCE_STRINGS } from './strings';
 export { imagesOf, variantsOf, optionsOf, selectedVariant, qtyRules } from './product-view';
