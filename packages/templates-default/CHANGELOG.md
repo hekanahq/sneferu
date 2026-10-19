@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.11.0
+
+### Minor Changes
+
+- a31fdeb: `<hk-variant-picker>` defaults to `display="auto"`: photo tiles when an option's values have images, colour dots when they have colours, plain buttons otherwise (an option set to buttons or dropdown stays that way). The default theme's variant-picker block and every example theme offer auto, swatches, buttons and select, with auto as the default.
+
 ## 0.10.2
 
 ## 0.10.1
