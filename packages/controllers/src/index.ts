@@ -6,6 +6,7 @@ import { cartSummary } from './cart-summary';
 import { all, type Ctl } from './dom';
 import { gallery } from './gallery';
 import { inlineCheckout } from './inline-checkout';
+import { newsletter } from './newsletter';
 import type { CartHost } from './host';
 import { variantPicker } from './variant-picker';
 
@@ -22,6 +23,7 @@ const controllers: Array<[string, Ctl]> = [
   ['cart-drawer', cartDrawer],
   ['gallery', gallery],
   ['inline-checkout', inlineCheckout],
+  ['newsletter', newsletter],
 ];
 
 const started = new WeakMap<object, () => void>();

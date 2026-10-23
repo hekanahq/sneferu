@@ -1013,6 +1013,63 @@
       ]
     },
     {
+      "name": "hk-newsletter-form",
+      "category": "ui",
+      "label": {
+        "en": "Newsletter signup"
+      },
+      "allowedChildren": [],
+      "responsive": [],
+      "props": [
+        {
+          "name": "label",
+          "attr": "label",
+          "type": "text",
+          "responsive": false,
+          "label": {
+            "en": "Field label"
+          }
+        },
+        {
+          "name": "placeholder",
+          "attr": "placeholder",
+          "type": "text",
+          "responsive": false,
+          "label": {
+            "en": "Placeholder"
+          }
+        },
+        {
+          "name": "buttonLabel",
+          "attr": "button-label",
+          "type": "text",
+          "responsive": false,
+          "label": {
+            "en": "Button text"
+          }
+        },
+        {
+          "name": "successMessage",
+          "attr": "success-message",
+          "type": "text",
+          "responsive": false,
+          "label": {
+            "en": "Success message"
+          }
+        },
+        {
+          "name": "showLabel",
+          "attr": "show-label",
+          "type": "boolean",
+          "default": false,
+          "responsive": false,
+          "label": {
+            "en": "Show label"
+          }
+        }
+      ]
+    },
+    {
       "name": "hk-price",
       "category": "commerce",
       "label": {

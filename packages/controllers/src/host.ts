@@ -39,6 +39,8 @@ export interface CartHost {
   remove(key: string): void;
   subscribe(fn: (lines: CartLine[]) => void): () => void;
   checkoutUrl: string;
+  /** Adds an email to the store's newsletter list. Optional: a host without it makes the signup form report a failure. */
+  subscribeEmail?(email: string): Promise<{ ok: boolean; message?: string }>;
   t(key: CartText): string;
 }
 
