@@ -74,7 +74,7 @@ The compiler enforces most of these, and `validate` names the one you broke.
    `<style>`, `<link>`, `<iframe>`, `<form>`, no `on*` attributes, no `{{ }}`
    inside `style="…"`, no `style` on `hk-*` tags.
 2. **No JavaScript, no form controls.** Behaviour comes from tags:
-   `hk-search-form` (the only form), `hk-variant-picker`, `hk-add-to-cart`,
+   `hk-search-form` (the only form), `hk-variant-picker`, `hk-combined-listing`, `hk-add-to-cart`,
    `hk-cart-count`, `hk-cart-items`, `hk-cart-summary`, `hk-cart-drawer`,
    `hk-product-gallery`, `hk-pagination`, `hk-locale-switch`. Menus and
    questions open with `<details>`; carousels are CSS scroll-snap.

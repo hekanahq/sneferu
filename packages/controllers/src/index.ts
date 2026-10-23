@@ -8,6 +8,7 @@ import { gallery } from './gallery';
 import { inlineCheckout } from './inline-checkout';
 import type { CartHost } from './host';
 import { variantPicker } from './variant-picker';
+import { combinedListing } from './combined-listing';
 
 export type { CartHost, CartLine, CartText } from './host';
 export { EVENT_CART_ADDED, EVENT_VARIANT_CHANGE } from './host';
@@ -15,6 +16,7 @@ export { MSG_CHECKOUT_HEIGHT, MSG_CHECKOUT_LINE, MSG_CHECKOUT_READY } from './in
 
 const controllers: Array<[string, Ctl]> = [
   ['variant-picker', variantPicker],
+  ['combined-listing', combinedListing],
   ['add-to-cart', addToCart],
   ['cart-count', cartCount],
   ['cart-items', cartItems],

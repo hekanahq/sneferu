@@ -6,12 +6,13 @@ import { hkIcon } from './icon';
 import { hkSearchForm } from './search';
 import { hkProductGallery } from './gallery';
 import { hkPagination, hkLocaleSwitch } from './pagination';
+import { hkCombinedListing } from './combined-listing';
 import { hkVariantPicker, hkAddToCart, hkCartCount, hkCartItems, hkCartSummary, hkCartDrawer } from './cart';
 import { hkSectionGroup } from './group';
 import { hkInlineCheckout } from './inline-checkout';
 
 export const BASE_TAGS = [hkSection, hkContainer, hkStack, hkGrid, hkHeading, hkText, hkRichText, hkImage, hkButton, hkCard, hkBadge, hkIcon, hkSearchForm, hkPrice, hkProductCard, hkProductGrid,
-  hkProductGallery, hkPagination, hkLocaleSwitch, hkVariantPicker, hkAddToCart, hkCartCount, hkCartItems, hkCartSummary, hkCartDrawer, hkInlineCheckout, hkSectionGroup];
+  hkProductGallery, hkPagination, hkLocaleSwitch, hkVariantPicker, hkCombinedListing, hkAddToCart, hkCartCount, hkCartItems, hkCartSummary, hkCartDrawer, hkInlineCheckout, hkSectionGroup];
 export function createDefaultRegistry(): TagRegistry {
   const r = new TagRegistry();
   for (const t of BASE_TAGS) r.register(t);
@@ -30,6 +31,7 @@ export { hkSearchForm, VISUALLY_HIDDEN_CSS } from './search';
 export { pickVariant, srcsetOf, candidatesOf, type ImageRef, type ImageCandidate } from './image-src';
 export { hkProductGallery, GALLERY_CSS } from './gallery';
 export { hkPagination, hkLocaleSwitch, PAGINATION_CSS } from './pagination';
+export { hkCombinedListing } from './combined-listing';
 export { hkVariantPicker, hkAddToCart, hkCartCount, hkCartItems, hkCartSummary, hkCartDrawer } from './cart';
 export { hkSectionGroup } from './group';
 export { hkInlineCheckout, CHECKOUT_EMBED_PATH } from './inline-checkout';

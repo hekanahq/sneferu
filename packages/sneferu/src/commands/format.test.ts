@@ -13,7 +13,7 @@ beforeEach(() => { dir = join(mkdtempSync(join(tmpdir(), 'snf-fmt-')), 'my-shop'
 describe('sneferu format', () => {
   it('init writes a starter that is already formatted', async () => {
     const r = await runFormat(dir, { check: true });
-    expect(r.output).toContain('✔ all 46 files are formatted');
+    expect(r.output).toContain('✔ all 47 files are formatted');
     expect(r.ok).toBe(true);
     expect(JSON.parse(readFileSync(join(dir, 'theme.json'), 'utf8'))).toMatchObject({ id: 'my-shop', version: '0.1.0' });
   });
