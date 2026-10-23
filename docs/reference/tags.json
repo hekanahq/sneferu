@@ -1227,6 +1227,42 @@
       ]
     },
     {
+      "name": "hk-combined-listing",
+      "category": "commerce",
+      "label": {
+        "en": "Combined listing"
+      },
+      "allowedChildren": [],
+      "responsive": [],
+      "props": [
+        {
+          "name": "product",
+          "attr": "product",
+          "type": "data",
+          "responsive": false,
+          "label": {
+            "en": "Product"
+          }
+        },
+        {
+          "name": "display",
+          "attr": "display",
+          "type": "select",
+          "default": "auto",
+          "options": [
+            "auto",
+            "swatches",
+            "buttons",
+            "select"
+          ],
+          "responsive": false,
+          "label": {
+            "en": "Display"
+          }
+        }
+      ]
+    },
+    {
       "name": "hk-add-to-cart",
       "category": "commerce",
       "label": {

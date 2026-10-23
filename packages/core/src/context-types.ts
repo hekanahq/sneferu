@@ -14,6 +14,15 @@ export interface ThemeVariant {
   image: ThemeImage | null;
 }
 
+export interface ThemeCombinedListingMember {
+  product_id: string; title: string; label: string; handle: string; url: string;
+  image: string | null; swatch_color: string | null; swatch_image: string | null;
+  available: boolean; current: boolean;
+}
+export interface ThemeCombinedListing {
+  id: string; option_label: string; display: string; members: ThemeCombinedListingMember[];
+}
+
 export interface ThemeProduct {
   id: string; title: string; handle: string; url: string;
   price: number; compare_at: number | null; price_min: number; price_max: number; available: boolean;
@@ -26,6 +35,8 @@ export interface ThemeProduct {
   variants: ThemeVariant[];
   selected_variant: ThemeVariant | null; has_variants: boolean;
   min_quantity: number; quantity_step: number; max_quantity: number | null;
+  /** Sibling products of a combined listing; null or absent when the product is not in one. */
+  combined_listing?: ThemeCombinedListing | null;
 }
 
 export interface ThemePaginatePart { page: number; url: string; current: boolean }
