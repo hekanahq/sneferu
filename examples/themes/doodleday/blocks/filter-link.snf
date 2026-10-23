@@ -1,0 +1,33 @@
+<a class="dd-tab" href="{{ url(block.settings.link) }}">{{ block.settings.label }}</a>
+<hk-schema>
+  {
+    "name": {
+      "en": "Filter link",
+      "ar": "رابط تصنيف"
+    },
+    "version": 1,
+    "settings": {
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Label",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "كل المنتجات",
+          "en": "All"
+        },
+        "localized": true,
+        "maxLength": 24
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      }
+    }
+  }
+</hk-schema>

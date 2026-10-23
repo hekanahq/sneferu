@@ -1,0 +1,96 @@
+<section class="dd-story">
+  <div class="dd-story-media">
+    <hk-image
+      src="{{ section.settings.image | default: asset_url('mascot-bunny.webp') }}"
+      alt="{{ section.settings.image_alt }}"
+      aspect-ratio="1/1"
+      sizes="(min-width: 1024px) 30vw, 60vw"
+    />
+  </div>
+  <div class="dd-story-copy">
+    <h2 class="dd-h2">{{ section.settings.title }}</h2>
+    <p>{{ section.settings.text }}</p>
+    <a class="dd-more" href="{{ url(section.settings.link) }}">{{ section.settings.link_label }}<hk-icon
+        name="arrow-right"
+        size="16"
+      /></a>
+  </div>
+</section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Brand story",
+      "ar": "قصة العلامة"
+    },
+    "version": 1,
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "مختلفة شوية. وكتير منك.",
+          "en": "A Little Different. A Lot of You."
+        },
+        "localized": true,
+        "maxLength": 60
+      },
+      "text": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "في أيام صاخبة وأيام حالمة. مهما كان مزاجك، فيه دودل داي مناسب له.",
+          "en": "Some days are loud. Some days are dreamy. Whatever mood you're in, there's a DoodleDay for it."
+        },
+        "localized": true,
+        "maxLength": 220
+      },
+      "link_label": {
+        "type": "text",
+        "label": {
+          "en": "Link text",
+          "ar": "نص الرابط"
+        },
+        "default": {
+          "ar": "قصتنا",
+          "en": "Shop Our Story"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/about"
+      },
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "Image",
+          "ar": "الصورة"
+        }
+      },
+      "image_alt": {
+        "type": "text",
+        "label": {
+          "en": "Image description",
+          "ar": "وصف الصورة"
+        },
+        "default": {
+          "ar": "شخصية الأرنب الخاصة بدودل داي",
+          "en": "The DoodleDay bunny mascot"
+        },
+        "localized": true,
+        "maxLength": 100
+      }
+    }
+  }
+</hk-schema>

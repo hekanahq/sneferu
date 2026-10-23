@@ -1,0 +1,241 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "hero",
+        "blocks": [
+          {
+            "id": "vp1",
+            "type": "value-point",
+            "settings": {
+              "icon": "sparkles",
+              "label": {
+                "ar": "تصاميم كرتون أصلية",
+                "en": "Original cartoon designs"
+              }
+            }
+          },
+          {
+            "id": "vp2",
+            "type": "value-point",
+            "settings": {
+              "icon": "heart",
+              "label": {
+                "ar": "ناعمة ومريحة",
+                "en": "Soft and comfy"
+              }
+            }
+          },
+          {
+            "id": "vp3",
+            "type": "value-point",
+            "settings": {
+              "icon": "star",
+              "label": {
+                "ar": "لعشاق الأحلام",
+                "en": "Made for daydreamers"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "collection-cards",
+        "blocks": [
+          {
+            "id": "cc1",
+            "type": "collection-card",
+            "settings": {
+              "tone": "pink",
+              "title": {
+                "ar": "كيوت كاوس",
+                "en": "Cute Chaos"
+              },
+              "text": {
+                "ar": "شوية فوضى وكتير لطافة",
+                "en": "A little messy. A lot of cute."
+              },
+              "button": {
+                "ar": "تسوق المجموعة",
+                "en": "Shop Collection"
+              },
+              "link": "/products",
+              "image_alt": {
+                "ar": "كيوت كاوس",
+                "en": "Cute Chaos"
+              }
+            }
+          },
+          {
+            "id": "cc2",
+            "type": "collection-card",
+            "settings": {
+              "tone": "blue",
+              "title": {
+                "ar": "دريم بوب",
+                "en": "Dream Pop"
+              },
+              "text": {
+                "ar": "ألوان هادية وأحلام أكبر",
+                "en": "Soft colors. Bigger dreams."
+              },
+              "button": {
+                "ar": "تسوق المجموعة",
+                "en": "Shop Collection"
+              },
+              "link": "/products",
+              "image_alt": {
+                "ar": "دريم بوب",
+                "en": "Dream Pop"
+              }
+            }
+          },
+          {
+            "id": "cc3",
+            "type": "collection-card",
+            "settings": {
+              "tone": "yellow",
+              "title": {
+                "ar": "ريترو مود",
+                "en": "Retro Mood"
+              },
+              "text": {
+                "ar": "ستايل كلاسيك وحكايات جديدة",
+                "en": "Classic vibes. New stories."
+              },
+              "button": {
+                "ar": "تسوق المجموعة",
+                "en": "Shop Collection"
+              },
+              "link": "/products",
+              "image_alt": {
+                "ar": "ريترو مود",
+                "en": "Retro Mood"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "best-sellers",
+        "blocks": [
+          {
+            "id": "f1",
+            "type": "filter-link",
+            "settings": {
+              "label": {
+                "ar": "الكل",
+                "en": "All"
+              },
+              "link": "/products"
+            }
+          },
+          {
+            "id": "f2",
+            "type": "filter-link",
+            "settings": {
+              "label": {
+                "ar": "تيشيرتات كم طويل",
+                "en": "Long sleeves"
+              },
+              "link": "/products"
+            }
+          },
+          {
+            "id": "f3",
+            "type": "filter-link",
+            "settings": {
+              "label": {
+                "ar": "سويتشيرتات",
+                "en": "Sweatshirts"
+              },
+              "link": "/products"
+            }
+          },
+          {
+            "id": "f4",
+            "type": "filter-link",
+            "settings": {
+              "label": {
+                "ar": "هودي",
+                "en": "Hoodies"
+              },
+              "link": "/products"
+            }
+          },
+          {
+            "id": "f5",
+            "type": "filter-link",
+            "settings": {
+              "label": {
+                "ar": "إكسسوارات",
+                "en": "Accessories"
+              },
+              "link": "/products"
+            }
+          }
+        ]
+      },
+      {
+        "type": "story"
+      },
+      {
+        "type": "benefits",
+        "blocks": [
+          {
+            "id": "b1",
+            "type": "benefit",
+            "settings": {
+              "icon": "sparkles",
+              "tone": "blue",
+              "title": {
+                "ar": "خامة ناعمة",
+                "en": "Soft fabric"
+              },
+              "text": {
+                "ar": "مقاسات مريحة للبس اليومي",
+                "en": "Comfortable fits for every day"
+              }
+            }
+          },
+          {
+            "id": "b2",
+            "type": "benefit",
+            "settings": {
+              "icon": "heart",
+              "tone": "pink",
+              "title": {
+                "ar": "تصاميم أصلية",
+                "en": "Original designs"
+              },
+              "text": {
+                "ar": "رسومات معمولة للتعبير عن نفسك",
+                "en": "Artwork made for self-expression"
+              }
+            }
+          },
+          {
+            "id": "b3",
+            "type": "benefit",
+            "settings": {
+              "icon": "star",
+              "tone": "yellow",
+              "title": {
+                "ar": "بتتعمل عند الطلب",
+                "en": "Made on demand"
+              },
+              "text": {
+                "ar": "بتتجهز بعد ما تطلبها",
+                "en": "Produced after you order"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "club-band"
+      }
+    ]
+  }
+</hk-schema>

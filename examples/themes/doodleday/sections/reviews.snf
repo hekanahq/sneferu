@@ -1,0 +1,44 @@
+{% if section.blocks.size > 0 %}
+  <section class="dd-section">
+    <h2 class="dd-h2">{{ section.settings.title }}</h2>
+    <div class="dd-reviews">
+      {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+    </div>
+  </section>
+{% endif %}
+<hk-schema>
+  {
+    "name": {
+      "en": "Customer reviews",
+      "ar": "آراء العملاء"
+    },
+    "version": 1,
+    "blocks": {
+      "allowed": ["testimonial"],
+      "max": 6
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "Customer reviews",
+          "ar": "آراء العملاء"
+        }
+      }
+    ],
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "ناس حقيقية، حب حقيقي",
+          "en": "Real People, Real Love"
+        },
+        "localized": true,
+        "maxLength": 40
+      }
+    }
+  }
+</hk-schema>

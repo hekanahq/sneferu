@@ -1,0 +1,180 @@
+<footer class="sf-footer sf-scheme-{{ section.settings.scheme }}">
+  <hk-container>
+    {% if section.settings.show_newsletter %}
+      <div class="sf-newsletter">
+        <div>
+          {% if section.settings.newsletter_title %}
+            <h2 class="sf-footer-title">{{ section.settings.newsletter_title }}</h2>
+          {% endif %}
+          {% if section.settings.newsletter_text %}
+            <p>{{ section.settings.newsletter_text }}</p>
+          {% endif %}
+        </div>
+        {% if section.settings.newsletter_link %}
+          <hk-button
+            label="{{ section.settings.newsletter_label | default: t('newsletter_cta') }}"
+            href="{{ section.settings.newsletter_link }}"
+            variant="outline"
+          />
+        {% endif %}
+      </div>
+    {% endif %}
+    <div class="sf-footer-grid">
+      <div class="sf-footer-about">
+        <p class="sf-footer-brand">{{ store.name }}</p>
+        {% if section.settings.about_text %}
+          <p>{{ section.settings.about_text }}</p>
+        {% endif %}
+        <div class="sf-social-list">
+          {% for block in section.blocks %}{% if block.type == 'social-link' %}<hk-block of="{{ block }}" />{% endif %}{% endfor %}
+        </div>
+      </div>
+      {% for block in section.blocks %}{% if block.type == 'footer-column' %}<hk-block of="{{ block }}" />{% endif %}{% endfor %}
+      <div class="sf-footer-contact">
+        {% for block in section.blocks %}{% if block.type == 'contact-line' %}<hk-block of="{{ block }}" />{% endif %}{% endfor %}
+      </div>
+    </div>
+    <div class="sf-footer-bottom">
+      <p class="sf-copyright">
+        {% if store.name %}© {{ store.name }}{% if section.settings.copyright %}. {{ section.settings.copyright }}{% endif %}{% elsif section.settings.copyright %}©
+          {{ section.settings.copyright }}{% endif %}
+      </p>
+      <div class="sf-payments" aria-label="{{ t('payment_methods') }}">
+        {% for block in section.blocks %}{% if block.type == 'payment-method' %}<hk-block of="{{ block }}" />{% endif %}{% endfor %}
+      </div>
+      {% if section.settings.show_language %}<hk-locale-switch />{% endif %}
+    </div>
+  </hk-container>
+</footer>
+<hk-schema>
+  {
+    "name": {
+      "en": "Footer",
+      "ar": "الفوتر"
+    },
+    "version": 1,
+    "templates": ["footer"],
+    "blocks": {
+      "allowed": ["footer-column", "social-link", "contact-line", "payment-method"],
+      "max": 24
+    },
+    "settings": {
+      "menu": {
+        "type": "menu",
+        "label": {
+          "en": "Menu (the link columns show when none is picked or it has no links)",
+          "ar": "القائمة (أعمدة الروابط بتظهر لو مفيش قائمة أو مفيهاش روابط)"
+        },
+        "default": ""
+      },
+      "about_text": {
+        "type": "textarea",
+        "label": {
+          "en": "About text",
+          "ar": "نبذة عن المتجر"
+        },
+        "default": "",
+        "localized": true,
+        "maxLength": 300
+      },
+      "copyright": {
+        "type": "text",
+        "label": {
+          "en": "Copyright line (after the store name)",
+          "ar": "سطر الحقوق (بعد اسم المتجر)"
+        },
+        "default": {
+          "ar": "جميع الحقوق محفوظة",
+          "en": "All rights reserved"
+        },
+        "localized": true,
+        "maxLength": 100
+      },
+      "scheme": {
+        "type": "select",
+        "label": {
+          "en": "Colour scheme",
+          "ar": "ألوان الفوتر"
+        },
+        "options": ["light", "primary", "accent"],
+        "default": "light"
+      },
+      "show_language": {
+        "type": "boolean",
+        "label": {
+          "en": "Show language switch",
+          "ar": "إظهار تبديل اللغة"
+        },
+        "default": false
+      },
+      "show_newsletter": {
+        "type": "boolean",
+        "label": {
+          "en": "Show newsletter box",
+          "ar": "إظهار صندوق النشرة"
+        },
+        "default": false
+      },
+      "newsletter_title": {
+        "type": "text",
+        "label": {
+          "en": "Newsletter title",
+          "ar": "عنوان النشرة"
+        },
+        "default": {
+          "ar": "خليك على اطلاع",
+          "en": "Stay in the loop"
+        },
+        "localized": true,
+        "maxLength": 80,
+        "visible_if": {
+          "setting": "show_newsletter",
+          "equals": true
+        }
+      },
+      "newsletter_text": {
+        "type": "textarea",
+        "label": {
+          "en": "Newsletter text",
+          "ar": "نص النشرة"
+        },
+        "default": {
+          "ar": "عروض وجديد المتجر على الإيميل.",
+          "en": "Offers and news from the store, by email."
+        },
+        "localized": true,
+        "maxLength": 160,
+        "visible_if": {
+          "setting": "show_newsletter",
+          "equals": true
+        }
+      },
+      "newsletter_label": {
+        "type": "text",
+        "label": {
+          "en": "Newsletter button",
+          "ar": "زر النشرة"
+        },
+        "default": "",
+        "localized": true,
+        "maxLength": 30,
+        "visible_if": {
+          "setting": "show_newsletter",
+          "equals": true
+        }
+      },
+      "newsletter_link": {
+        "type": "link",
+        "label": {
+          "en": "Newsletter link",
+          "ar": "رابط الاشتراك"
+        },
+        "default": "",
+        "visible_if": {
+          "setting": "show_newsletter",
+          "equals": true
+        }
+      }
+    }
+  }
+</hk-schema>

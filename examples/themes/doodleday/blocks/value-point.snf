@@ -1,0 +1,36 @@
+<li class="dd-point">
+  <hk-icon name="{{ block.settings.icon }}" size="28" stroke="2" /><span>{{ block.settings.label }}</span>
+</li>
+<hk-schema>
+  {
+    "name": {
+      "en": "Value point",
+      "ar": "ميزة"
+    },
+    "version": 1,
+    "settings": {
+      "icon": {
+        "type": "select",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
+        "options": ["sparkles", "heart", "star", "check", "gift"],
+        "default": "sparkles"
+      },
+      "label": {
+        "type": "text",
+        "label": {
+          "en": "Label",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "تصاميم كرتون أصلية",
+          "en": "Original cartoon designs"
+        },
+        "localized": true,
+        "maxLength": 40
+      }
+    }
+  }
+</hk-schema>

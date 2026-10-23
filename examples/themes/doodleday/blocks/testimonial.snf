@@ -1,0 +1,41 @@
+<figure class="dd-review">
+  <blockquote>{{ block.settings.quote }}</blockquote>
+  <figcaption>{{ block.settings.name }}</figcaption>
+</figure>
+<hk-schema>
+  {
+    "name": {
+      "en": "Review",
+      "ar": "رأي عميل"
+    },
+    "version": 1,
+    "settings": {
+      "quote": {
+        "type": "textarea",
+        "label": {
+          "en": "Review text",
+          "ar": "نص الرأي"
+        },
+        "default": {
+          "ar": "",
+          "en": ""
+        },
+        "localized": true,
+        "maxLength": 200
+      },
+      "name": {
+        "type": "text",
+        "label": {
+          "en": "Customer name",
+          "ar": "اسم العميل"
+        },
+        "default": {
+          "ar": "",
+          "en": ""
+        },
+        "localized": true,
+        "maxLength": 40
+      }
+    }
+  }
+</hk-schema>

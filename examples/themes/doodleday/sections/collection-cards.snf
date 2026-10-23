@@ -1,0 +1,69 @@
+<section class="dd-section">
+  <div class="dd-head">
+    <h2 class="dd-h2">{{ section.settings.title }}</h2>
+    {% if section.settings.link_label %}<a
+        class="dd-more"
+        href="{{ url(section.settings.link) }}"
+      >{{ section.settings.link_label }}<hk-icon name="arrow-right" size="16" /></a>{% endif %}
+  </div>
+  <div class="dd-ccards">
+    {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+  </div>
+</section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Collection cards",
+      "ar": "بطاقات المجموعات"
+    },
+    "version": 1,
+    "blocks": {
+      "allowed": ["collection-card"],
+      "max": 6
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "Collection cards",
+          "ar": "بطاقات المجموعات"
+        }
+      }
+    ],
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "مجموعات مميزة",
+          "en": "Featured Collections"
+        },
+        "localized": true,
+        "maxLength": 40
+      },
+      "link_label": {
+        "type": "text",
+        "label": {
+          "en": "Link text",
+          "ar": "نص الرابط"
+        },
+        "default": {
+          "ar": "كل المجموعات",
+          "en": "View all collections"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      }
+    }
+  }
+</hk-schema>
