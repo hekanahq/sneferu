@@ -1,0 +1,40 @@
+{
+  "id": "doodleday",
+  "name": "DoodleDay",
+  "version": "0.2.1",
+  "author": "Hekana",
+  "description": "Cartoon streetwear store: pink, cream and pastel colour blocks, illustrated collections and a soft playful tone.",
+  "category": "fashion",
+  "engine": "hk2",
+  "engineCompatibility": "^2.0.0",
+  "defaultLocale": "ar",
+  "locales": ["ar", "en"],
+  "settings": {},
+  "tokens": {
+    "colors": {
+      "primary": "#F44F85",
+      "secondary": "#FFB8CD",
+      "accent": "#F44F85",
+      "background": "#FFF9F2",
+      "text": "#191919",
+      "blue": "#A8D8F5",
+      "yellow": "#FFE27A",
+      "lavender": "#C9A7EB",
+      "gray": "#F5F3F1",
+      "surface": "#FFFFFF"
+    },
+    "fonts": {
+      "heading": "Baloo Bhaijaan 2",
+      "body": "Cairo"
+    },
+    "radius": {
+      "md": "14px"
+    },
+    "layout": {
+      "contentWidth": "1200px"
+    }
+  },
+  "money": {
+    "format": "whole"
+  }
+}

@@ -1,0 +1,224 @@
+<section class="dd-hero">
+  <div class="dd-hero-panel">
+    <div class="dd-hero-media">
+      <hk-image
+        src="{{ section.settings.image | default: asset_url('hero.webp') }}"
+        alt="{{ section.settings.image_alt }}"
+        loading="eager"
+        aspect-ratio="4/5"
+        sizes="(min-width: 1024px) 50vw, 100vw"
+      />
+    </div>
+    <div class="dd-hero-copy">
+      <h1 class="dd-hero-title">
+        <span>{{ section.settings.title_1 }}</span> <span class="dd-pink">{{ section.settings.title_pink }}</span>
+        <span>{{ section.settings.title_2 }}</span>
+      </h1>
+      <p class="dd-hero-sub">{{ section.settings.subtitle }}</p>
+      <div class="dd-hero-cta">
+        <a
+          class="dd-pill dd-pill-primary"
+          href="{{ url(section.settings.primary_link) }}"
+        >{{ section.settings.primary_label }}<hk-icon name="arrow-right" size="18" /></a>
+        <a
+          class="dd-pill dd-pill-outline"
+          href="{{ url(section.settings.secondary_link) }}"
+        >{{ section.settings.secondary_label }}</a>
+      </div>
+      <ul class="dd-points">
+        {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+      </ul>
+    </div>
+    <div class="dd-hero-mascot">
+      <hk-image
+        src="{{ section.settings.mascot | default: asset_url('mascot-cutout.webp') }}"
+        alt="{{ section.settings.mascot_alt }}"
+        aspect-ratio="1/1"
+        sizes="220px"
+        fit="contain"
+      />
+    </div>
+    <span class="dd-note dd-note-1">{{ section.settings.note_1 }}</span>
+    <span class="dd-note dd-note-2">{{ section.settings.note_2 }}</span>
+    <span class="dd-star dd-star-1"><hk-icon name="star" size="48" stroke="2.5" /></span>
+    <span class="dd-star dd-star-2"><hk-icon name="sparkles" size="34" stroke="2.5" /></span>
+    <span class="dd-star dd-star-3"><hk-icon name="star" size="30" stroke="2.5" /></span>
+    <span class="dd-heart dd-heart-1"><hk-icon name="heart" size="30" stroke="2.5" /></span>
+    <span class="dd-heart dd-heart-2"><hk-icon name="heart" size="22" stroke="2.5" /></span>
+  </div>
+</section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Hero",
+      "ar": "البانر الرئيسي"
+    },
+    "version": 1,
+    "blocks": {
+      "allowed": ["value-point"],
+      "max": 4
+    },
+    "settings": {
+      "title_1": {
+        "type": "text",
+        "label": {
+          "en": "Headline line 1",
+          "ar": "السطر الأول"
+        },
+        "default": {
+          "ar": "ارتدي",
+          "en": "Wear Your"
+        },
+        "localized": true,
+        "maxLength": 20
+      },
+      "title_pink": {
+        "type": "text",
+        "label": {
+          "en": "Headline pink word",
+          "ar": "الكلمة الوردية"
+        },
+        "default": {
+          "ar": "طاقة الكرتون",
+          "en": "Cartoon"
+        },
+        "localized": true,
+        "maxLength": 20
+      },
+      "title_2": {
+        "type": "text",
+        "label": {
+          "en": "Headline line 2",
+          "ar": "السطر الأخير"
+        },
+        "default": {
+          "ar": "بتاعتك",
+          "en": "Energy"
+        },
+        "localized": true,
+        "maxLength": 20
+      },
+      "subtitle": {
+        "type": "textarea",
+        "label": {
+          "en": "Subtitle",
+          "ar": "النص الفرعي"
+        },
+        "default": {
+          "ar": "هدوم لعشاق الأحلام والمشاعر الكبيرة والأيام الأحلى.",
+          "en": "Playful apparel for daydreamers, big feelings, and brighter days."
+        },
+        "localized": true,
+        "maxLength": 120
+      },
+      "primary_label": {
+        "type": "text",
+        "label": {
+          "en": "Primary button",
+          "ar": "الزر الرئيسي"
+        },
+        "default": {
+          "ar": "تسوق التشكيلة",
+          "en": "Shop the Drop"
+        },
+        "localized": true,
+        "maxLength": 24
+      },
+      "primary_link": {
+        "type": "link",
+        "label": {
+          "en": "Primary link",
+          "ar": "رابط الزر الرئيسي"
+        },
+        "default": "/products"
+      },
+      "secondary_label": {
+        "type": "text",
+        "label": {
+          "en": "Secondary button",
+          "ar": "الزر الثانوي"
+        },
+        "default": {
+          "ar": "اكتشف التصاميم",
+          "en": "Explore Designs"
+        },
+        "localized": true,
+        "maxLength": 24
+      },
+      "secondary_link": {
+        "type": "link",
+        "label": {
+          "en": "Secondary link",
+          "ar": "رابط الزر الثانوي"
+        },
+        "default": "/products"
+      },
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "Image",
+          "ar": "الصورة"
+        }
+      },
+      "image_alt": {
+        "type": "text",
+        "label": {
+          "en": "Image description",
+          "ar": "وصف الصورة"
+        },
+        "default": {
+          "ar": "موديل ترتدي سويتشيرت وردي بطبعة كرتونية",
+          "en": "Model wearing a pink sweatshirt with a cartoon print"
+        },
+        "localized": true,
+        "maxLength": 120
+      },
+      "note_1": {
+        "type": "text",
+        "label": {
+          "en": "Handwritten note 1",
+          "ar": "ملاحظة بخط اليد 1"
+        },
+        "default": {
+          "ar": "أيام أحلى مع هدوم أحلى",
+          "en": "Good outfits, brighter days"
+        },
+        "localized": true,
+        "maxLength": 40
+      },
+      "note_2": {
+        "type": "text",
+        "label": {
+          "en": "Handwritten note 2",
+          "ar": "ملاحظة بخط اليد 2"
+        },
+        "default": {
+          "ar": "نفس الطاقة، يوم مختلف",
+          "en": "Same energy, different day"
+        },
+        "localized": true,
+        "maxLength": 40
+      },
+      "mascot": {
+        "type": "image",
+        "label": {
+          "en": "Mascot (cut-out)",
+          "ar": "الشخصية (بدون خلفية)"
+        }
+      },
+      "mascot_alt": {
+        "type": "text",
+        "label": {
+          "en": "Mascot description",
+          "ar": "وصف الشخصية"
+        },
+        "default": {
+          "ar": "",
+          "en": ""
+        },
+        "localized": true,
+        "maxLength": 80
+      }
+    }
+  }
+</hk-schema>

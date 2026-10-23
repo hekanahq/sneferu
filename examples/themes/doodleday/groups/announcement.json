@@ -1,0 +1,9 @@
+{
+  "sections": [
+    {
+      "id": "announcement",
+      "type": "announcement-bar",
+      "settings": { "text": "", "scheme": "accent" }
+    }
+  ]
+}

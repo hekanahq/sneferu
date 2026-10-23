@@ -1,0 +1,66 @@
+<li class="dd-benefit">
+  <span class="dd-benefit-icon dd-tone-{{ block.settings.tone }}"><hk-icon
+      name="{{ block.settings.icon }}"
+      size="30"
+      stroke="2"
+    /></span>
+  <div>
+    <h3 class="dd-benefit-title">{{ block.settings.title }}</h3>
+    <p class="dd-benefit-text">{{ block.settings.text }}</p>
+  </div>
+</li>
+<hk-schema>
+  {
+    "name": {
+      "en": "Benefit",
+      "ar": "ميزة"
+    },
+    "version": 1,
+    "settings": {
+      "icon": {
+        "type": "select",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
+        "options": ["sparkles", "heart", "star", "truck", "package", "shield-check", "gift"],
+        "default": "heart"
+      },
+      "tone": {
+        "type": "select",
+        "label": {
+          "en": "Colour",
+          "ar": "اللون"
+        },
+        "options": ["pink", "blue", "yellow"],
+        "default": "pink"
+      },
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Title",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "خامة ناعمة",
+          "en": "Soft fabric"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "text": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "مقاسات مريحة للبس اليومي",
+          "en": "Comfortable fits for every day"
+        },
+        "localized": true,
+        "maxLength": 90
+      }
+    }
+  }
+</hk-schema>

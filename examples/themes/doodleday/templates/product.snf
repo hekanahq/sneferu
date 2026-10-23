@@ -1,0 +1,99 @@
+<hk-sections />
+<hk-schema>
+  {
+    "sections": [
+      {
+        "type": "product-main",
+        "blocks": [
+          {
+            "type": "product-title"
+          },
+          {
+            "type": "product-price"
+          },
+          {
+            "type": "product-excerpt"
+          },
+          {
+            "type": "product-variants"
+          },
+          {
+            "type": "product-buy"
+          },
+          {
+            "id": "acc1",
+            "type": "accordion",
+            "settings": {
+              "title": {
+                "ar": "الخامة والعناية",
+                "en": "Fabric and care"
+              },
+              "text": {
+                "ar": "اغسلها بماء بارد من الداخل، ولا تستخدم مبيّض، وكويها على حرارة منخفضة.",
+                "en": "Machine wash cold, inside out. Do not bleach. Iron on low heat."
+              }
+            }
+          },
+          {
+            "id": "acc2",
+            "type": "accordion",
+            "settings": {
+              "title": {
+                "ar": "دليل المقاسات",
+                "en": "Size guide"
+              },
+              "text": {
+                "ar": "",
+                "en": ""
+              }
+            }
+          },
+          {
+            "id": "acc3",
+            "type": "accordion",
+            "settings": {
+              "title": {
+                "ar": "الشحن",
+                "en": "Shipping"
+              },
+              "text": {
+                "ar": "",
+                "en": ""
+              }
+            }
+          },
+          {
+            "id": "acc4",
+            "type": "accordion",
+            "settings": {
+              "title": {
+                "ar": "الاستبدال والاسترجاع",
+                "en": "Returns"
+              },
+              "text": {
+                "ar": "",
+                "en": ""
+              }
+            }
+          },
+          {
+            "type": "product-description"
+          },
+          {
+            "type": "product-tags"
+          }
+        ]
+      },
+      {
+        "type": "related-products",
+        "settings": {
+          "collection": "related",
+          "title": {
+            "ar": "ممكن يعجبك كمان",
+            "en": "You may also like"
+          }
+        }
+      }
+    ]
+  }
+</hk-schema>

@@ -1,0 +1,47 @@
+{% if block.settings.text %}
+  <details class="dd-acc">
+    <summary class="dd-acc-head">
+      <span>{{ block.settings.title }}</span><hk-icon name="chevron-down" size="18" />
+    </summary>
+    <div class="dd-acc-body">
+      <p>{{ block.settings.text }}</p>
+    </div>
+  </details>
+{% endif %}
+<hk-schema>
+  {
+    "name": {
+      "en": "Accordion item",
+      "ar": "قسم قابل للفتح"
+    },
+    "version": 1,
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Title",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "",
+          "en": ""
+        },
+        "localized": true,
+        "maxLength": 40
+      },
+      "text": {
+        "type": "textarea",
+        "label": {
+          "en": "Text (empty hides the item)",
+          "ar": "النص (فاضي يخفي القسم)"
+        },
+        "default": {
+          "ar": "",
+          "en": ""
+        },
+        "localized": true,
+        "maxLength": 600
+      }
+    }
+  }
+</hk-schema>

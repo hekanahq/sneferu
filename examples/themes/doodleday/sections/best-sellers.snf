@@ -1,0 +1,66 @@
+<section class="dd-section">
+  <div class="dd-head">
+    <h2 class="dd-h2">{{ section.settings.title }}</h2>
+    <nav class="dd-tabs" aria-label="{{ section.settings.title }}">
+      {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+    </nav>
+  </div>
+  <div class="dd-grid">
+    {% for p in collection(section.settings.collection).products limit: section.settings.limit %}{% render 'product-card', product: p, card_style: 'plain', image_ratio: '4/5', show_price: true, show_badge: true %}{% endfor %}
+  </div>
+</section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Best sellers",
+      "ar": "الأكثر مبيعاً"
+    },
+    "version": 1,
+    "blocks": {
+      "allowed": ["filter-link"],
+      "max": 6
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "Best sellers",
+          "ar": "الأكثر مبيعاً"
+        }
+      }
+    ],
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "الأكثر مبيعاً",
+          "en": "Best Sellers"
+        },
+        "localized": true,
+        "maxLength": 40
+      },
+      "collection": {
+        "type": "collection",
+        "label": {
+          "en": "Collection",
+          "ar": "القسم"
+        },
+        "default": "featured"
+      },
+      "limit": {
+        "type": "range",
+        "label": {
+          "en": "Products",
+          "ar": "عدد المنتجات"
+        },
+        "min": 2,
+        "max": 10,
+        "step": 1,
+        "default": 5
+      }
+    }
+  }
+</hk-schema>

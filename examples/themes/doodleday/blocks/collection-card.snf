@@ -1,0 +1,120 @@
+<article class="dd-ccard dd-tone-{{ block.settings.tone }}">
+  <a class="dd-ccard-link" href="{{ url(block.settings.link) }}" aria-label="{{ block.settings.title }}">
+    <div class="dd-ccard-text">
+      <h3 class="dd-ccard-title">{{ block.settings.title }}</h3>
+      <p class="dd-ccard-sub">{{ block.settings.text }}</p>
+      <span class="dd-pill dd-pill-white">{{ block.settings.button }}</span>
+    </div>
+    <div class="dd-ccard-media">
+      {% if block.settings.tone == 'blue' %}
+        <hk-image
+          src="{{ block.settings.image | default: asset_url('collection-dream-pop.webp') }}"
+          alt="{{ block.settings.image_alt }}"
+          aspect-ratio="1/1"
+          sizes="(min-width: 1024px) 33vw, 80vw"
+        />
+      {% elsif block.settings.tone == 'yellow' %}
+        <hk-image
+          src="{{ block.settings.image | default: asset_url('collection-retro-mood.webp') }}"
+          alt="{{ block.settings.image_alt }}"
+          aspect-ratio="1/1"
+          sizes="(min-width: 1024px) 33vw, 80vw"
+        />
+      {% else %}
+        <hk-image
+          src="{{ block.settings.image | default: asset_url('collection-cute-chaos.webp') }}"
+          alt="{{ block.settings.image_alt }}"
+          aspect-ratio="1/1"
+          sizes="(min-width: 1024px) 33vw, 80vw"
+        />
+      {% endif %}
+    </div>
+  </a>
+</article>
+<hk-schema>
+  {
+    "name": {
+      "en": "Collection card",
+      "ar": "بطاقة مجموعة"
+    },
+    "version": 1,
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Title",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "كيوت كاوس",
+          "en": "Cute Chaos"
+        },
+        "localized": true,
+        "maxLength": 30
+      },
+      "text": {
+        "type": "text",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "شوية فوضى وكتير لطافة",
+          "en": "A little messy. A lot of cute."
+        },
+        "localized": true,
+        "maxLength": 70
+      },
+      "button": {
+        "type": "text",
+        "label": {
+          "en": "Button text",
+          "ar": "نص الزر"
+        },
+        "default": {
+          "ar": "تسوق المجموعة",
+          "en": "Shop Collection"
+        },
+        "localized": true,
+        "maxLength": 24
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/products"
+      },
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "Image",
+          "ar": "الصورة"
+        }
+      },
+      "image_alt": {
+        "type": "text",
+        "label": {
+          "en": "Image description",
+          "ar": "وصف الصورة"
+        },
+        "default": {
+          "ar": "",
+          "en": ""
+        },
+        "localized": true,
+        "maxLength": 120
+      },
+      "tone": {
+        "type": "select",
+        "label": {
+          "en": "Colour",
+          "ar": "اللون"
+        },
+        "options": ["pink", "blue", "yellow"],
+        "default": "pink"
+      }
+    }
+  }
+</hk-schema>

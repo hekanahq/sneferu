@@ -1,0 +1,96 @@
+<section class="dd-club">
+  <div>
+    <h2 class="dd-h2">{{ section.settings.title }}</h2>
+    <p>{{ section.settings.text }}</p>
+  </div>
+  <a class="dd-pill dd-pill-primary" href="{{ url(section.settings.link) }}">{{ section.settings.button }}<hk-icon
+      name="arrow-right"
+      size="18"
+    /></a>
+  <div class="dd-club-media">
+    <hk-image
+      src="{{ section.settings.image | default: asset_url('mascot-bunny.webp') }}"
+      alt="{{ section.settings.image_alt }}"
+      aspect-ratio="1/1"
+      sizes="160px"
+    />
+  </div>
+</section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Club band",
+      "ar": "شريط النادي"
+    },
+    "version": 1,
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "انضم لنادي دودل داي",
+          "en": "Join the DoodleDay Club"
+        },
+        "localized": true,
+        "maxLength": 40
+      },
+      "text": {
+        "type": "textarea",
+        "label": {
+          "en": "Text",
+          "ar": "النص"
+        },
+        "default": {
+          "ar": "كن أول من يعرف بالتشكيلات الجديدة والعروض.",
+          "en": "Get first access to new drops, exclusive offers, and cute stuff."
+        },
+        "localized": true,
+        "maxLength": 120
+      },
+      "button": {
+        "type": "text",
+        "label": {
+          "en": "Button text",
+          "ar": "نص الزر"
+        },
+        "default": {
+          "ar": "اقرأ قصتنا",
+          "en": "Read our story"
+        },
+        "localized": true,
+        "maxLength": 24
+      },
+      "link": {
+        "type": "link",
+        "label": {
+          "en": "Link",
+          "ar": "الرابط"
+        },
+        "default": "/about"
+      },
+      "image": {
+        "type": "image",
+        "label": {
+          "en": "Image",
+          "ar": "الصورة"
+        }
+      },
+      "image_alt": {
+        "type": "text",
+        "label": {
+          "en": "Image description",
+          "ar": "وصف الصورة"
+        },
+        "default": {
+          "ar": "الأرنب",
+          "en": "The bunny mascot"
+        },
+        "localized": true,
+        "maxLength": 80
+      }
+    }
+  }
+</hk-schema>

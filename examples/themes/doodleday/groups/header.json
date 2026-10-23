@@ -1,0 +1,71 @@
+{
+  "sections": [
+    {
+      "id": "header",
+      "type": "header",
+      "settings": {
+        "menu": "",
+        "show_search": true,
+        "show_language": true,
+        "show_cart": true
+      },
+      "blocks": [
+        {
+          "id": "nav-shop",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "تسوق",
+              "en": "Shop"
+            },
+            "url": "/products"
+          }
+        },
+        {
+          "id": "nav-collections",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "المجموعات",
+              "en": "Collections"
+            },
+            "url": "/products"
+          }
+        },
+        {
+          "id": "nav-new",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "وصل حديثاً",
+              "en": "New Arrivals"
+            },
+            "url": "/products"
+          }
+        },
+        {
+          "id": "nav-best",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "الأكثر مبيعاً",
+              "en": "Best Sellers"
+            },
+            "url": "/products"
+          }
+        },
+        {
+          "id": "nav-story",
+          "type": "menu-link",
+          "settings": {
+            "label": {
+              "ar": "قصتنا",
+              "en": "Our Story"
+            },
+            "url": "/about"
+          }
+        }
+      ]
+    }
+  ]
+}

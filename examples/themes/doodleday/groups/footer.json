@@ -1,0 +1,85 @@
+{
+  "sections": [
+    {
+      "id": "footer",
+      "type": "footer",
+      "settings": {
+        "menu": "",
+        "about_text": {
+          "ar": "ارتدي طاقة الكرتون بتاعتك.",
+          "en": "Wear Your Cartoon Energy."
+        }
+      },
+      "blocks": [
+        {
+          "id": "col-shop",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "تسوق",
+              "en": "Shop"
+            }
+          },
+          "blocks": [
+            {
+              "id": "col-shop-all",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "كل المنتجات",
+                  "en": "All products"
+                },
+                "url": "/products"
+              }
+            },
+            {
+              "id": "col-shop-search",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "بحث",
+                  "en": "Search"
+                },
+                "url": "/search"
+              }
+            },
+            {
+              "id": "col-shop-cart",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "السلة",
+                  "en": "Cart"
+                },
+                "url": "/cart"
+              }
+            }
+          ]
+        },
+        {
+          "id": "col-help",
+          "type": "footer-column",
+          "settings": {
+            "title": {
+              "ar": "مساعدة",
+              "en": "Support"
+            }
+          },
+          "blocks": [
+            {
+              "id": "col-help-about",
+              "type": "footer-link",
+              "settings": {
+                "label": {
+                  "ar": "قصتنا",
+                  "en": "Our story"
+                },
+                "url": "/about"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+<section class="dd-benefits">
+  <h2 class="dd-h2">{{ section.settings.title }}</h2>
+  <ul class="dd-benefit-list">
+    {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+  </ul>
+</section>
+<hk-schema>
+  {
+    "name": {
+      "en": "Why choose us",
+      "ar": "ليه تختارنا"
+    },
+    "version": 1,
+    "blocks": {
+      "allowed": ["benefit"],
+      "max": 6
+    },
+    "presets": [
+      {
+        "name": {
+          "en": "Why choose us",
+          "ar": "ليه تختارنا"
+        }
+      }
+    ],
+    "settings": {
+      "title": {
+        "type": "text",
+        "label": {
+          "en": "Heading",
+          "ar": "العنوان"
+        },
+        "default": {
+          "ar": "ليه دودل داي؟",
+          "en": "Why Choose DoodleDay?"
+        },
+        "localized": true,
+        "maxLength": 40
+      }
+    }
+  }
+</hk-schema>
