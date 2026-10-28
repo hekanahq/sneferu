@@ -136,7 +136,7 @@ export function sampleContext(locale: 'ar' | 'en', translations: Record<string, 
     collections: Object.fromEntries((Object.keys(COLLECTION) as (keyof typeof COLLECTION)[]).map((h) => [h, { title: COLLECTION[h][locale], products: MEMBERS[h].map((i) => products[i]!) }])),
     categories: CATEGORIES.map((h) => ({
       handle: h, title: COLLECTION[h][locale], url: `${locale === 'en' ? '/en' : ''}/category/${h}`,
-      image: products[MEMBERS[h][0]!]!.image, count: MEMBERS[h].length,
+      image: products[MEMBERS[h][0]!]!.image, count: MEMBERS[h].length, parent: null, children: [],
     })),
     products: Object.fromEntries(products.map((p) => [p.handle, p])),
     menus: sampleMenus(locale, url),

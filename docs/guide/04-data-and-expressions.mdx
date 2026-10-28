@@ -369,6 +369,20 @@ Pass the setting to `collection()` and the section shows whatever they pick:
 | `url` | `/en/category/gift-cards` (with the language prefix of the page) |
 | `image` | `{ url: "https://…" }`, or nil when the category has no image |
 | `count` | `6` (the number of products) |
+| `parent` | the handle of the parent category, or nil for a top-level one |
+| `children` | the sub-categories of this one (each with the same fields), empty when it has none |
+
+`collections()` lists every category flat, sub-categories included. To show a
+tree, list the top-level ones and walk their `children`:
+
+```html
+{% for c in collections() %}
+  {% if c.parent == nil %}
+    <a href="{{ c.url }}">{{ c.title }}</a>
+    {% for s in c.children %}<a href="{{ s.url }}">{{ s.title }}</a>{% endfor %}
+  {% endif %}
+{% endfor %}
+```
 
 A store with no categories returns an empty list. In `sneferu dev` the sample
 store has three categories: `new`, `gift-cards` and `subscriptions`.

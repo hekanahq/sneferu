@@ -1,5 +1,5 @@
 import type { Menu } from '@hekana/sneferu-core';
-export interface Category { handle: string; title: string; url: string; image: { url: string } | null; count: number }
+export interface Category { handle: string; title: string; url: string; image: { url: string } | null; count: number; parent: string | null; children: Category[] }
 export interface RenderContext {
   locale: 'ar' | 'en';
   dir: 'rtl' | 'ltr';
