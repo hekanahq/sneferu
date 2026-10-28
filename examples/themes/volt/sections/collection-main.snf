@@ -17,7 +17,7 @@
                   >{{ t('all_products') }}</span></a>
               </li>
               {% for c in collections() %}
-                {% if c.parent == nil %}<li>
+                {% if not c.parent %}<li>
                   <a class="vt-side-link" href="{{ c.url }}" aria-current="{{ c.handle == collection.handle }}"><span
                       class="vt-side-ic"
                     ><hk-icon class="vt-ic-def" name="tag" size="20" stroke="1.5" />{% for b in section.blocks %}{% if b.settings.handle == c.handle %}{% render 'cat-icon', icon: b.settings.icon %}{% endif %}{% endfor %}</span><span

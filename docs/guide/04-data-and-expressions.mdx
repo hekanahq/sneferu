@@ -377,7 +377,7 @@ tree, list the top-level ones and walk their `children`:
 
 ```html
 {% for c in collections() %}
-  {% if c.parent == nil %}
+  {% if not c.parent %}
     <a href="{{ c.url }}">{{ c.title }}</a>
     {% for s in c.children %}<a href="{{ s.url }}">{{ s.title }}</a>{% endfor %}
   {% endif %}
