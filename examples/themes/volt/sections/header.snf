@@ -17,29 +17,31 @@
           <span class="vt-logo-text">{{ store.name }}</span>
         {% endif %}
       </a>
-      <nav class="vt-nav" aria-label="{{ t('menu') }}">
-        {% if menu(section.settings.menu).items %}
-          {% for item in menu(section.settings.menu).items %}
-            <div class="vt-nav-item">
-              <a class="vt-nav-link" href="{{ item.url }}" aria-current="{{ item.active }}">{{ item.title }}</a>
-              {% if item.children %}
-                <div class="vt-subnav">
-                  {% for sub in item.children %}
-                    <a class="vt-subnav-link" href="{{ sub.url }}" aria-current="{{ sub.active }}">{{ sub.title }}</a>
-                    {% for leaf in sub.children %}
-                      <a
-                        class="vt-subnav-link vt-subnav-deep"
-                        href="{{ leaf.url }}"
-                        aria-current="{{ leaf.active }}"
-                      >{{ leaf.title }}</a>
+      {% if section.settings.show_nav %}
+        <nav class="vt-nav" aria-label="{{ t('menu') }}">
+          {% if menu(section.settings.menu).items %}
+            {% for item in menu(section.settings.menu).items %}
+              <div class="vt-nav-item">
+                <a class="vt-nav-link" href="{{ item.url }}" aria-current="{{ item.active }}">{{ item.title }}</a>
+                {% if item.children %}
+                  <div class="vt-subnav">
+                    {% for sub in item.children %}
+                      <a class="vt-subnav-link" href="{{ sub.url }}" aria-current="{{ sub.active }}">{{ sub.title }}</a>
+                      {% for leaf in sub.children %}
+                        <a
+                          class="vt-subnav-link vt-subnav-deep"
+                          href="{{ leaf.url }}"
+                          aria-current="{{ leaf.active }}"
+                        >{{ leaf.title }}</a>
+                      {% endfor %}
                     {% endfor %}
-                  {% endfor %}
-                </div>
-              {% endif %}
-            </div>
-          {% endfor %}
-        {% else %}{% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}{% endif %}
-      </nav>
+                  </div>
+                {% endif %}
+              </div>
+            {% endfor %}
+          {% else %}{% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}{% endif %}
+        </nav>
+      {% endif %}
       {% if section.settings.show_search %}{% if section.settings.search_style == 'bar' %}
           <div class="vt-search-bar"><hk-search-form placeholder="{{ t('search_placeholder') }}" /></div>
         {% endif %}{% endif %}
@@ -88,6 +90,14 @@
       "max": 8
     },
     "settings": {
+      "show_nav": {
+        "type": "boolean",
+        "label": {
+          "en": "Show the menu links in the top bar",
+          "ar": "إظهار روابط القائمة في الشريط العلوي"
+        },
+        "default": true
+      },
       "menu": {
         "type": "menu",
         "label": {
