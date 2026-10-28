@@ -1,13 +1,13 @@
 <hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="24">
   <div class="vt-shop vt-shop-{{ section.settings.show_categories }}">
     {% if section.settings.show_categories %}
-      <aside class="vt-cats" aria-label="{{ t('categories') }}">
-        <h2 class="vt-cats-title">{{ t('categories') }}</h2>
-        <nav class="vt-cats-list">
-          <a class="vt-cats-link" href="{{ url('/products') }}">{{ t('all_products') }}</a>
+      <aside class="vt-side" aria-label="{{ t('categories') }}">
+        <h2 class="vt-side-title">{{ t('categories') }}</h2>
+        <nav class="vt-side-list">
+          <a class="vt-side-link" href="{{ url('/products') }}">{{ t('all_products') }}</a>
           {% for c in collections() %}
-            <a class="vt-cats-link" href="{{ c.url }}" aria-current="{{ c.handle == collection.handle }}">
-              <span>{{ c.title }}</span><span class="vt-cats-count">{{ c.count }}</span>
+            <a class="vt-side-link" href="{{ c.url }}" aria-current="{{ c.handle == collection.handle }}">
+              <span>{{ c.title }}</span><span class="vt-side-count">{{ c.count }}</span>
             </a>
           {% endfor %}
         </nav>
