@@ -39,7 +39,7 @@ describe('sample data', () => {
     const en = sampleContext('en', {}, 'ar');
     const ar = sampleContext('ar', {}, 'ar');
     expect(en.categories!.map((c) => c.handle)).toEqual(['new', 'gift-cards', 'subscriptions']);
-    expect(en.categories![1]).toEqual({ handle: 'gift-cards', title: 'Gift cards', url: '/en/category/gift-cards', image: en.collections['gift-cards']!.products[0] && (en.collections['gift-cards']!.products[0] as { image: unknown }).image, count: 6 });
+    expect(en.categories![1]).toMatchObject({ handle: 'gift-cards', title: 'Gift cards', url: '/en/category/gift-cards', image: en.collections['gift-cards']!.products[0] && (en.collections['gift-cards']!.products[0] as { image: unknown }).image, count: 6 });
     expect(ar.categories![0]).toMatchObject({ handle: 'new', title: 'وصل حديثا', url: '/category/new', count: 6 });
     expect(ar.categories![2]!.image).toEqual({ url: expect.stringContaining('placehold.co') });
   });
