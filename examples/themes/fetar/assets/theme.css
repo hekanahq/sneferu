@@ -261,7 +261,7 @@
 }
 
 /* Category colour cards */
-.ft-cat-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.ft-cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
 .ft-cat { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; min-height: 100px; padding: 16px 18px; border-radius: 16px; font-family: var(--hk-font-heading); font-weight: 700; font-size: 18px; transition: transform 0.15s; }
 .ft-cat:hover { transform: translateY(-2px); }
 .ft-cat-green { background: var(--hk-color-leaf-soft); color: var(--ft-k); }
