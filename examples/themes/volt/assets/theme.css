@@ -327,7 +327,7 @@
 .vt-shop { display: grid; gap: 24px; }
 .vt-cats { display: block; align-self: start; justify-self: stretch; box-sizing: border-box; width: 100%; min-width: 0; }
 .vt-cats-title { margin: 0 0 12px; font-size: 15px; font-weight: 700; color: var(--hk-color-text); }
-.vt-cats-list { display: flex; width: 100%; box-sizing: border-box; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+.vt-cats-list { display: flex; width: 100%; box-sizing: border-box; gap: 8px; flex-wrap: wrap; }
 .vt-cats-link { display: inline-flex; flex: none; align-items: center; justify-content: space-between; gap: 12px; min-height: 44px; padding: 8px 16px; border-radius: var(--vt-pill); background: var(--hk-color-soft); color: var(--hk-color-text); font-size: 14px; font-weight: 600; white-space: nowrap; }
 .vt-cats-link:hover { color: var(--vt-blue); }
 .vt-cats-link[aria-current='true'] { background: var(--vt-blue); color: var(--hk-color-on-accent, var(--hk-color-background)); }
@@ -335,7 +335,7 @@
 @media (min-width: 900px) {
   .vt-shop-true { grid-template-columns: 260px minmax(0, 1fr); gap: 32px; }
   .vt-shop-true .vt-cats { position: sticky; top: 96px; padding: 16px; border-radius: 20px; background: var(--hk-color-surface); box-shadow: var(--vt-shadow); }
-  .vt-shop-true .vt-cats-list { flex-direction: column; overflow: visible; gap: 4px; }
+  .vt-shop-true .vt-cats-list { flex-direction: column; flex-wrap: nowrap; gap: 4px; }
   .vt-shop-true .vt-cats-link { box-sizing: border-box; width: 100%; border-radius: 12px; background: transparent; white-space: normal; }
   .vt-shop-true .vt-cats-link:hover { background: var(--hk-color-soft); }
   .vt-shop-true .vt-cats-link[aria-current='true'] { background: var(--hk-color-soft); color: var(--vt-blue); }
