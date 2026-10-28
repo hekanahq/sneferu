@@ -1,77 +1,127 @@
-<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="24">
-  <div class="vt-shop vt-shop-{{ section.settings.show_categories }}">
-    {% if section.settings.show_categories %}
-      <aside class="vt-side" aria-label="{{ t('categories') }}">
-        <h2 class="vt-side-title">{{ t('categories') }}</h2>
-        <nav class="vt-side-list">
-          <a class="vt-side-link" href="{{ url('/products') }}">{{ t('all_products') }}</a>
-          {% for c in collections() %}
-            <a class="vt-side-link" href="{{ c.url }}" aria-current="{{ c.handle == collection.handle }}">
-              <span>{{ c.title }}</span><span class="vt-side-count">{{ c.count }}</span>
-            </a>
-          {% endfor %}
-        </nav>
-      </aside>
-    {% endif %}
-    <div class="vt-shop-main">
-      <div class="vt-collection-head">
-        {% if section.settings.show_title %}
-          <hk-heading text="{{ collection.title }}" level="h1" size="32" mobile-size="26" />
+<hk-section full-bleed="true" padding-y="{{ section.settings.padding_y }}" mobile-padding-y="24">
+  <div class="vt-wide">
+    <div class="vt-shop vt-shop-{{ section.settings.show_categories }}">
+      {% if section.settings.show_categories %}
+        <aside class="vt-side" id="vt-side" aria-label="{{ t('categories') }}">
+          <div class="vt-side-head">
+            <h2 class="vt-side-title">{{ t('categories') }}</h2>
+            <a class="vt-side-close" href="#main" aria-label="{{ t('close') }}"><hk-icon name="x" size="20" /></a>
+          </div>
+          <nav aria-label="{{ t('categories') }}">
+            <ul class="vt-side-list">
+              <li>
+                <a class="vt-side-link" href="{{ url('/products') }}" aria-current="{{ collection.handle == '' }}"><span
+                    class="vt-side-ic"
+                  ><hk-icon name="grid" size="20" stroke="1.5" /></span><span
+                    class="vt-side-name"
+                  >{{ t('all_products') }}</span></a>
+              </li>
+              {% for c in collections() %}
+                <li>
+                  <a class="vt-side-link" href="{{ c.url }}" aria-current="{{ c.handle == collection.handle }}"><span
+                      class="vt-side-ic"
+                    ><hk-icon class="vt-ic-def" name="tag" size="20" stroke="1.5" />{% for b in section.blocks %}{% if b.settings.handle == c.handle %}{% render 'cat-icon', icon: b.settings.icon %}{% endif %}{% endfor %}</span><span
+                      class="vt-side-name"
+                    >{{ c.title }}</span></a>
+                </li>
+              {% endfor %}
+            </ul>
+          </nav>
+          {% if section.settings.show_support %}
+            <div class="vt-support">
+              <span class="vt-support-ic"><hk-icon name="headphones" size="22" stroke="1.5" /></span>
+              <h3 class="vt-support-title">{{ section.settings.support_title }}</h3>
+              <p class="vt-support-text">{{ section.settings.support_text }}</p>
+              {% if section.settings.support_phone %}<a
+                  class="vt-support-btn"
+                  href="tel:{{ section.settings.support_phone }}"
+                ><hk-icon name="phone" size="16" />{{ t('contact_us') }}</a>{% endif %}
+              {% if section.settings.support_whatsapp %}<a
+                  class="vt-support-btn vt-support-wa"
+                  href="{{ section.settings.support_whatsapp }}"
+                ><hk-icon name="message-circle" size="16" />{{ t('whatsapp') }}</a>{% endif %}
+            </div>
+          {% endif %}
+        </aside>
+        <a class="vt-side-backdrop" href="#main" aria-label="{{ t('close') }}"></a>
+      {% endif %}
+      <div class="vt-shop-main">
+        <header class="vt-banner">
+          <nav class="vt-crumbs" aria-label="{{ t('breadcrumb') }}">
+            <a href="{{ url('/') }}">{{ t('home') }}</a><span aria-hidden="true">/</span><a
+              href="{{ url('/products') }}"
+            >{{ t('all_products') }}</a>{% if collection.title %}<span aria-hidden="true">/</span><span
+                aria-current="page"
+              >{{ collection.title }}</span>{% endif %}
+          </nav>
+          {% if section.settings.show_title %}
+            <hk-heading text="{{ collection.title }}" level="h1" size="28" mobile-size="22" />
+          {% endif %}
+          {% if section.settings.show_description %}{% if collection.description %}<hk-rich-text
+                html="{{ collection.description }}"
+              />{% endif %}{% endif %}
+          {% if section.settings.show_count %}
+            <p class="vt-muted">{{ collection.products_count }} {{ t('products_label') }}</p>
+          {% endif %}
+        </header>
+        {% if section.settings.show_sort %}
+          {% if collection.sort_options %}
+            <div class="vt-toolbar">
+              {% if section.settings.show_categories %}<a class="vt-side-open" href="#vt-side"><hk-icon
+                    name="menu"
+                    size="18"
+                  />{{ t('show_categories_btn') }}</a>{% endif %}
+              <details class="vt-sort">
+                <summary>
+                  <span class="vt-muted">{{ t('sort_by') }}</span><hk-icon name="chevron-down" size="16" />
+                </summary>
+                <div class="vt-sort-menu">
+                  {% for o in collection.sort_options %}
+                    <a class="vt-sort-opt" href="{{ o.url }}" aria-current="{{ o.active }}">{{ o.label }}</a>
+                  {% endfor %}
+                </div>
+              </details>
+            </div>
+          {% endif %}
         {% endif %}
-        {% if section.settings.show_description %}
-          {% if collection.description %}<hk-rich-text html="{{ collection.description }}" />{% endif %}
+        {% if section.settings.show_filters %}
+          {% if collection.filters %}
+            <details class="vt-filters">
+              <summary>{{ t('filters') }}</summary>
+              {% for f in collection.filters %}
+                <div class="vt-filter">
+                  <h2 class="vt-filter-name">{{ f.name }}</h2>
+                  {% for v in f.values %}
+                    <a class="vt-chip" href="{{ v.url }}" aria-current="{{ v.active }}">{{ v.label }}</a>
+                  {% endfor %}
+                </div>
+              {% endfor %}
+            </details>
+          {% endif %}
         {% endif %}
-        {% if section.settings.show_count %}
-          <p class="vt-muted">{{ collection.products_count }} {{ t('products_label') }}</p>
-        {% endif %}
-      </div>
-      {% if section.settings.show_sort %}
-        {% if collection.sort_options %}
-          <div class="vt-toolbar">
-            <span class="vt-muted">{{ t('sort_by') }}</span>
-            {% for o in collection.sort_options %}
-              <a class="vt-chip" href="{{ o.url }}" aria-current="{{ o.active }}">{{ o.label }}</a>
+        {% if collection.products %}
+          <div class="vt-grid vt-cols-{{ section.settings.columns }}">
+            {% for p in collection.products limit: 48 %}
+              {% render 'product-card', product: p, card_style: section.settings.card_style, image_ratio: section.settings.image_ratio, show_price: section.settings.show_price, show_badge: section.settings.show_badge, note: section.settings.card_note %}
             {% endfor %}
           </div>
+          <hk-pagination paginate="{{ paginate }}" />
+        {% else %}
+          <div class="vt-empty">
+            <span class="vt-tile" aria-hidden="true"><hk-icon name="gift" /></span>
+            {% if section.settings.empty_image %}
+              <hk-image src="{{ section.settings.empty_image }}" alt="" width="240" />
+            {% endif %}
+            {% if section.settings.empty_title %}
+              <h2 class="vt-empty-title">{{ section.settings.empty_title }}</h2>
+            {% endif %}
+            {% if section.settings.empty_text %}
+              <p>{{ section.settings.empty_text }}</p>
+            {% endif %}
+            {% render 'button', label: section.settings.empty_button_label, href: section.settings.empty_button_link, style: section.settings.empty_button_style %}
+          </div>
         {% endif %}
-      {% endif %}
-      {% if section.settings.show_filters %}
-        {% if collection.filters %}
-          <details class="vt-filters">
-            <summary>{{ t('filters') }}</summary>
-            {% for f in collection.filters %}
-              <div class="vt-filter">
-                <h2 class="vt-filter-name">{{ f.name }}</h2>
-                {% for v in f.values %}
-                  <a class="vt-chip" href="{{ v.url }}" aria-current="{{ v.active }}">{{ v.label }}</a>
-                {% endfor %}
-              </div>
-            {% endfor %}
-          </details>
-        {% endif %}
-      {% endif %}
-      {% if collection.products %}
-        <div class="vt-grid vt-cols-{{ section.settings.columns }}">
-          {% for p in collection.products limit: 48 %}
-            {% render 'product-card', product: p, card_style: section.settings.card_style, image_ratio: section.settings.image_ratio, show_price: section.settings.show_price, show_badge: section.settings.show_badge, note: section.settings.card_note %}
-          {% endfor %}
-        </div>
-        <hk-pagination paginate="{{ paginate }}" />
-      {% else %}
-        <div class="vt-empty">
-          <span class="vt-tile" aria-hidden="true"><hk-icon name="gift" /></span>
-          {% if section.settings.empty_image %}
-            <hk-image src="{{ section.settings.empty_image }}" alt="" width="240" />
-          {% endif %}
-          {% if section.settings.empty_title %}
-            <h2 class="vt-empty-title">{{ section.settings.empty_title }}</h2>
-          {% endif %}
-          {% if section.settings.empty_text %}
-            <p>{{ section.settings.empty_text }}</p>
-          {% endif %}
-          {% render 'button', label: section.settings.empty_button_label, href: section.settings.empty_button_link, style: section.settings.empty_button_style %}
-        </div>
-      {% endif %}
+      </div>
     </div>
   </div>
 </hk-section>
@@ -263,7 +313,63 @@
           "en": "Cash on delivery"
         },
         "maxLength": 60
+      },
+      "show_support": {
+        "type": "boolean",
+        "label": {
+          "en": "Show the help card under the categories",
+          "ar": "إظهار كارت المساعدة تحت الأقسام"
+        },
+        "default": true
+      },
+      "support_title": {
+        "type": "text",
+        "label": {
+          "en": "Help card title",
+          "ar": "عنوان كارت المساعدة"
+        },
+        "localized": true,
+        "default": {
+          "ar": "تحتاج مساعدة؟",
+          "en": "Need help?"
+        },
+        "maxLength": 60
+      },
+      "support_text": {
+        "type": "text",
+        "label": {
+          "en": "Help card text",
+          "ar": "نص كارت المساعدة"
+        },
+        "localized": true,
+        "default": {
+          "ar": "فريقنا جاهز يساعدك في اختيار القطعة المناسبة.",
+          "en": "Our team can help you pick the right part."
+        },
+        "maxLength": 140
+      },
+      "support_phone": {
+        "type": "text",
+        "label": {
+          "en": "Phone number (empty hides the button)",
+          "ar": "رقم الهاتف (فاضي يخفي الزر)"
+        },
+        "default": "",
+        "maxLength": 24
+      },
+      "support_whatsapp": {
+        "type": "text",
+        "label": {
+          "en": "WhatsApp link (empty hides the button)",
+          "ar": "رابط واتساب (فاضي يخفي الزر)"
+        },
+        "default": "",
+        "maxLength": 200
       }
+    },
+    "blocks": {
+      "allowed": ["category-icon"],
+      "max": 50
     }
   }
 </hk-schema>

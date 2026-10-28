@@ -1,0 +1,49 @@
+<hk-schema>
+  {
+    "name": {
+      "en": "Category icon",
+      "ar": "أيقونة قسم"
+    },
+    "version": 1,
+    "settings": {
+      "handle": {
+        "type": "text",
+        "label": {
+          "en": "Category handle",
+          "ar": "معرّف القسم"
+        },
+        "default": "",
+        "maxLength": 120
+      },
+      "icon": {
+        "type": "select",
+        "label": {
+          "en": "Icon",
+          "ar": "الأيقونة"
+        },
+        "options": [
+          "cpu",
+          "cable",
+          "chart",
+          "radio-tower",
+          "battery-charging",
+          "plug",
+          "wrench",
+          "monitor",
+          "settings",
+          "tag",
+          "grid",
+          "zap",
+          "package",
+          "headphones",
+          "smartphone",
+          "layers",
+          "gamepad-2",
+          "code",
+          "key"
+        ],
+        "default": "tag"
+      }
+    }
+  }
+</hk-schema>
