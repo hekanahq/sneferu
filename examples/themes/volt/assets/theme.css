@@ -344,7 +344,6 @@
 /* 1.1.0 storefront refresh: compact sidebar, banner, toolbar, help card */
 .vt-side-ic { display: inline-flex; flex: none; align-items: center; justify-content: center; width: 20px; height: 20px; color: var(--hk-color-muted, #6b7280); }
 .vt-side-ic .vt-ic-def:not(:last-child) { display: none; }
-.vt-side-svg { display: block; width: 20px; height: 20px; }
 .vt-side-name { flex: 1; min-width: 0; }
 .vt-side-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
 .vt-side-link { display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 8px 10px; border-radius: 8px; font-size: 14px; font-weight: 500; color: var(--hk-color-text); background: transparent; border: 0; }
