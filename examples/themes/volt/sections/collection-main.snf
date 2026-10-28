@@ -17,13 +17,14 @@
                   >{{ t('all_products') }}</span></a>
               </li>
               {% for c in collections() %}
-                <li>
+                {% if c.parent == nil %}<li>
                   <a class="vt-side-link" href="{{ c.url }}" aria-current="{{ c.handle == collection.handle }}"><span
                       class="vt-side-ic"
                     ><hk-icon class="vt-ic-def" name="tag" size="20" stroke="1.5" />{% for b in section.blocks %}{% if b.settings.handle == c.handle %}{% render 'cat-icon', icon: b.settings.icon %}{% endif %}{% endfor %}</span><span
                       class="vt-side-name"
                     >{{ c.title }}</span></a>
-                </li>
+                {% if c.children %}<ul class="vt-side-sub">{% for s in c.children %}<li><a class="vt-side-link vt-side-sublink" href="{{ s.url }}" aria-current="{{ s.handle == collection.handle }}"><span class="vt-side-name">{{ s.title }}</span></a></li>{% endfor %}</ul>{% endif %}
+                </li>{% endif %}
               {% endfor %}
             </ul>
           </nav>
