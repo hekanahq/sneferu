@@ -15,9 +15,13 @@ import { productObject } from './product-view';
 const L = (ar: string, en: string) => ({ ar, en });
 const HANDLE = /^[\p{L}\p{N}_-]{1,120}$/u;
 
+// The frame starts at no height and its section stays collapsed until the page reports a height, so a product
+// with nothing to show (no plan, app off) never leaves a gap or a lone heading. The frame loads straight
+// away for the same reason: a collapsed frame would never count as near the viewport.
 const AB_CSS = [
   '.sn-app-block{position:relative;width:100%}',
-  '.sn-app-block iframe{display:block;width:100%;height:200px;border:0;background:transparent}',
+  '.sn-app-block iframe{display:block;width:100%;height:0;border:0;background:transparent}',
+  '[data-hk-app-section]:has(.sn-app-block:not([data-hk-ready])){height:0!important;margin:0!important;padding:0!important;overflow:hidden!important;visibility:hidden!important}',
 ].join('');
 
 /**
@@ -60,7 +64,7 @@ export const hkAppBlock: HkTag = {
     const src = c.url(`${def.path}${params.length ? `?${params.join('&')}` : ''}`);
     return (
       `<div class="sn-${c.id} sn-app-block${x.cls}"${x.attrs} data-hk-controller="app-block" data-hk-app="${escapeAttr(def.app)}" data-hk-block="${escapeAttr(def.block)}">` +
-      `<iframe src="${escapeAttr(src)}" title="${escapeAttr(label)}" loading="lazy" referrerpolicy="same-origin"></iframe></div>`
+      `<iframe src="${escapeAttr(src)}" title="${escapeAttr(label)}" referrerpolicy="same-origin"></iframe></div>`
     );
   },
 };

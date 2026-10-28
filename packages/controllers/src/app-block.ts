@@ -20,10 +20,14 @@ export const appBlock: Ctl = (el) => {
     const d = e.data as { type?: unknown; height?: unknown } | null;
     if (!d || typeof d !== 'object') return;
     if (d.type === MSG_APP_BLOCK_UNAVAILABLE) {
-      el.setAttribute('hidden', '');
-      (el as HTMLElement).style.display = 'none';
+      // the generated editor section wraps the block with its heading and spacing: remove all of it
+      for (const target of [el.closest('[data-hk-app-section]'), el]) {
+        target?.setAttribute('hidden', '');
+        (target as HTMLElement | null)?.style.setProperty('display', 'none');
+      }
     } else if (d.type === MSG_APP_BLOCK_HEIGHT && typeof d.height === 'number' && Number.isFinite(d.height)) {
       frame.style.height = `${Math.min(MAX_H, Math.max(MIN_H, Math.round(d.height)))}px`;
+      el.setAttribute('data-hk-ready', '');
     }
   };
   return join(listen(window, 'message', onMessage));

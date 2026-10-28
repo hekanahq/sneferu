@@ -21,8 +21,9 @@ describe('hk-app-block', () => {
   it('frames the registered page for a product, in the shopper language', () => {
     const { html, css } = run({ app: 'customer_subscriptions', block: 'subscribe', product });
     expect(html).toContain('data-hk-controller="app-block" data-hk-app="customer_subscriptions" data-hk-block="subscribe"');
-    expect(html).toContain('<iframe src="/en/hk2/app-block/subscriptions/subscribe?product=kika-visor" title="Product subscription" loading="lazy" referrerpolicy="same-origin"></iframe>');
+    expect(html).toContain('<iframe src="/en/hk2/app-block/subscriptions/subscribe?product=kika-visor" title="Product subscription" referrerpolicy="same-origin"></iframe>');
     expect(css).toContain('.sn-app-block iframe{');
+    expect(css).toContain('[data-hk-app-section]:has(.sn-app-block:not([data-hk-ready]))');
     expect(run({ app: 'customer_subscriptions', block: 'subscribe', product }, 'ar').html).toContain('src="/hk2/app-block/subscriptions/subscribe?product=kika-visor"');
   });
   it('prints nothing for an unknown app, block or mismatched pair', () => {

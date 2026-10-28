@@ -46,5 +46,7 @@ describe('app block sections in every theme', () => {
     expect(r.html).toContain('src="/hk2/app-block/subscriptions/subscribe?product=kika"');
     expect(r.html).toContain('اشترك');
     expect(r.controllers).toContain('app-block');
+    expect(r.html).toMatch(/<[a-z]+ [^>]*data-hk-app-section="1"/);
+    expect(r.css).toContain('[data-hk-app-section]:has(.sn-app-block:not([data-hk-ready]))');
   });
 });

@@ -17,10 +17,12 @@ export function appBlockSectionSource(d: AppBlockDef): string {
     settings: appBlockSectionSettings(d),
   };
   return [
+    '<div data-hk-app-section="1">',
     '<hk-section padding-y="{{ section.settings.padding_y }}" mobile-padding-y="{{ section.settings.padding_y }}">',
     '  {% if section.settings.heading %}<hk-heading text="{{ section.settings.heading }}" level="h2" size="22" />{% endif %}',
     `  <hk-app-block app="${d.app}" block="${d.block}"${product} settings="{{ section.settings }}" label="{{ section.settings.heading }}" />`,
     '</hk-section>',
+    '</div>',
     '<hk-schema>',
     JSON.stringify(schema, null, 2),
     '</hk-schema>',

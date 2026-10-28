@@ -8,13 +8,14 @@ afterEach(() => { current?.(); current = null; });
 
 function setup() {
   current?.();
-  document.body.innerHTML = '<div data-hk-controller="app-block"><iframe src="/hk2/app-block/subscriptions/subscribe?product=x"></iframe></div>';
+  document.body.innerHTML = '<section data-hk-app-section="1"><div data-hk-controller="app-block"><iframe src="/hk2/app-block/subscriptions/subscribe?product=x"></iframe></div></section><section id="other"><div>keep</div></section>';
   current = startControllers(document.body, makeHost().host);
   const el = document.querySelector('[data-hk-controller]') as HTMLElement;
   const frame = document.querySelector('iframe')!;
   const fromFrame = (data: unknown, origin = location.origin, source: unknown = frame.contentWindow) =>
     window.dispatchEvent(new MessageEvent('message', { data, origin, source: source as Window }));
-  return { el, frame, fromFrame };
+  const section = document.querySelector('[data-hk-app-section]') as HTMLElement;
+  return { el, frame, fromFrame, section };
 }
 
 describe('app-block controller', () => {
@@ -25,6 +26,7 @@ describe('app-block controller', () => {
     const s = setup();
     s.fromFrame({ type: MSG_APP_BLOCK_HEIGHT, height: 251.2 });
     expect(s.frame.style.height).toBe('251px');
+    expect(s.el.hasAttribute('data-hk-ready')).toBe(true);
     s.fromFrame({ type: MSG_APP_BLOCK_HEIGHT, height: 1 });
     expect(s.frame.style.height).toBe('40px');
     s.fromFrame({ type: MSG_APP_BLOCK_HEIGHT, height: 1e9 });
@@ -40,12 +42,16 @@ describe('app-block controller', () => {
     s.fromFrame({ type: MSG_APP_BLOCK_UNAVAILABLE }, location.origin, window);
     expect(s.frame.style.height).toBe('');
     expect(s.el.hidden).toBe(false);
+    expect(s.section.hidden).toBe(false);
+    expect(s.el.hasAttribute('data-hk-ready')).toBe(false);
   });
   it('removes the block when its page says the app is off or has nothing to show', () => {
     const s = setup();
     s.fromFrame({ type: MSG_APP_BLOCK_UNAVAILABLE });
     expect(s.el.hidden).toBe(true);
     expect(s.el.style.display).toBe('none');
+    expect(s.section.hidden).toBe(true);
+    expect((document.getElementById('other') as HTMLElement).hidden).toBe(false);
   });
   it('ignores malformed data', () => {
     const s = setup();
