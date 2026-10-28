@@ -19,3 +19,4 @@ export * from './tokens';
 export * from './extensions';
 export * from './migrations';
 export * from './checkout';
+export * from './app-blocks';

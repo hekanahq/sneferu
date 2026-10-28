@@ -8,6 +8,7 @@ import { checkMigrations, settingKeys } from './migrations';
 import { checkEntries, toNodes, MAX_GROUP_SECTIONS, MAX_TEMPLATE_SECTIONS, type DefaultEntry } from './entries';
 import { applyDefaults, collectLocaleKeys, collectTags, type FragmentSource } from './defaults';
 import { DEFAULT_THEME_FILES } from '@hekana/sneferu-templates-default';
+import { appBlockFiles } from './app-blocks';
 export type { ThemeFile } from './files';
 
 export interface SectionSchema {
@@ -290,10 +291,36 @@ function fragmentOf(registry: TagRegistry, files: ThemeFile[]): FragmentSource |
  * compileTheme adds: the missing page templates and the defaults of the groups its layout places.
  * Returns the artifact unchanged when nothing is missing or the default store does not compile with `registry`.
  */
+const APP_SECTIONS = new WeakMap<TagRegistry, Artifact['sections']>();
+
+/**
+ * The editor sections the SDK generates for the closed list of app blocks, compiled once per registry.
+ * Empty when the registry has no `hk-app-block` tag, so an older registry changes nothing.
+ */
+function appBlockSections(registry: TagRegistry): Artifact['sections'] {
+  const hit = APP_SECTIONS.get(registry);
+  if (hit) return hit;
+  let out: Artifact['sections'] = {};
+  if (registry.get('hk-app-block')) {
+    const generated = appBlockFiles();
+    const r = compileTheme([...DEFAULT_THEME_FILES, ...generated], registry, { defaults: false });
+    if (r.artifact) {
+      const names = generated.map((f) => stripTemplateExtension(f.path.split('/').pop()!));
+      out = Object.fromEntries(names.filter((n) => Object.hasOwn(r.artifact!.sections, n)).map((n) => [n, r.artifact!.sections[n]!]));
+    }
+  }
+  APP_SECTIONS.set(registry, out);
+  return out;
+}
+
 export function withDefaults(artifact: Artifact, registry: TagRegistry, files: ThemeFile[] = DEFAULT_THEME_FILES): Artifact {
   const frag = fragmentOf(registry, files);
   if (!frag) return artifact;
   const { hash: _hash, ...rest } = artifact;
-  const filled = withLocaleKeys(applyDefaults({ ...rest, groups: rest.groups ?? {}, localeKeys: rest.localeKeys ?? [] }, frag), registry);
-  return filled.defaults === undefined && artifact.defaults === undefined && Array.isArray(artifact.localeKeys) ? artifact : { ...filled, hash: hash64(JSON.stringify(filled)) };
+  const base = withLocaleKeys(applyDefaults({ ...rest, groups: rest.groups ?? {}, localeKeys: rest.localeKeys ?? [] }, frag), registry);
+  // app blocks: a theme's own section of the same name wins
+  const extra = Object.fromEntries(Object.entries(appBlockSections(registry)).filter(([n]) => !Object.hasOwn(base.sections, n)));
+  const added = Object.keys(extra).length > 0;
+  const filled = added ? { ...base, sections: { ...base.sections, ...extra } } : base;
+  return !added && filled.defaults === undefined && artifact.defaults === undefined && Array.isArray(artifact.localeKeys) ? artifact : { ...filled, hash: hash64(JSON.stringify(filled)) };
 }

@@ -2,13 +2,13 @@ import { createServer, type Server, type ServerResponse } from 'node:http';
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { extname, join, resolve, sep } from 'node:path';
 import { watch } from 'chokidar';
-import { escapeText, formatDiagnostic } from '@hekana/sneferu-core';
+import { APP_BLOCKS, escapeText, formatDiagnostic } from '@hekana/sneferu-core';
 import { compileTheme, type Artifact } from '@hekana/sneferu-compiler';
 import { renderPage } from '@hekana/sneferu-runtime';
 import { createDefaultRegistry } from '@hekana/sneferu-components';
 import { loadTheme } from '../load';
 import { pickSampleData, sampleContext, withSampleData } from '../sample-data';
-import { checkoutEmbedPlaceholder, devPage } from '../dev-page';
+import { appBlockPlaceholder, checkoutEmbedPlaceholder, devPage } from '../dev-page';
 import { controllersBundle, devHostScript } from '../dev-controllers';
 import { RELATED_COLLECTION, plainNotFound, relatedProducts, resolveDevRoute, splitLocale } from '../dev-routes';
 
@@ -82,6 +82,12 @@ export async function startDev(dir: string, port: number, opts: { data?: string 
       if (rawPath === '/checkout/embed' || rawPath === '/en/checkout/embed' || rawPath === '/ar/checkout/embed') {
         const loc = rawPath.startsWith('/en/') ? 'en' : rawPath.startsWith('/ar/') ? 'ar' : (artifact?.manifest.defaultLocale ?? 'ar');
         res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' }).end(checkoutEmbedPlaceholder(loc)); return;
+      }
+      const framed = /^(?:\/(en|ar))?(\/hk2\/app-block\/[a-z0-9-]+\/[a-z0-9-]+)$/.exec(rawPath);
+      const framedDef = framed ? APP_BLOCKS.find((d) => d.path === framed[2]) : undefined;
+      if (framed && framedDef) {
+        const loc = (framed[1] as 'en' | 'ar' | undefined) ?? artifact?.manifest.defaultLocale ?? 'ar';
+        res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' }).end(appBlockPlaceholder(loc, framedDef.name)); return;
       }
       if (!artifact) { res.writeHead(500, { 'content-type': 'text/html; charset=utf-8' }).end(errorPage(problems)); return; }
       if (rawPath === '/favicon.ico') { res.writeHead(404).end(); return; }
