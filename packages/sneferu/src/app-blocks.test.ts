@@ -50,3 +50,22 @@ describe('app block sections in every theme', () => {
     expect(r.css).toContain('[data-hk-app-section]:has(.sn-app-block:not([data-hk-ready]))');
   });
 });
+
+describe('a theme that names an app block', () => {
+  const themeWith = (tag: string) => {
+    const enc = new TextEncoder();
+    const files = DEFAULT_THEME_FILES.filter((f) => f.path !== 'templates/page.snf');
+    return [...files, { path: 'templates/page.snf', bytes: enc.encode(`${tag}\n<hk-schema>{"sections":[]}</hk-schema>`) }];
+  };
+  it('compiles a pair on the list', () => {
+    const r = compileTheme(themeWith('<hk-app-block app="customer_subscriptions" block="portal" />'), registry, { defaults: false });
+    expect(r.diagnostics.filter((d) => d.severity === 'error')).toEqual([]);
+  });
+  it('refuses an app or block that is not on the list, and has no prop for an address', () => {
+    for (const tag of ['<hk-app-block app="evil" block="portal" />', '<hk-app-block app="customer_subscriptions" block="nope" />', '<hk-app-block app="customer_subscriptions" block="portal" src="https://evil.example" />']) {
+      const r = compileTheme(themeWith(tag), registry, { defaults: false });
+      expect(r.diagnostics.some((d) => d.severity === 'error'), tag).toBe(true);
+      if (!tag.includes('src=')) expect(r.diagnostics.map((d) => d.code)).toContain('SN2021');
+    }
+  });
+});
