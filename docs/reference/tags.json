@@ -627,7 +627,14 @@
             "graduation-cap",
             "code",
             "layers",
-            "key"
+            "key",
+            "cpu",
+            "cable",
+            "chart-no-axes-column",
+            "radio-tower",
+            "battery-charging",
+            "plug",
+            "wrench"
           ],
           "responsive": false,
           "label": {
@@ -804,7 +811,14 @@
             "graduation-cap",
             "code",
             "layers",
-            "key"
+            "key",
+            "cpu",
+            "cable",
+            "chart-no-axes-column",
+            "radio-tower",
+            "battery-charging",
+            "plug",
+            "wrench"
           ],
           "responsive": false,
           "label": {
