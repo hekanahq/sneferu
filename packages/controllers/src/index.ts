@@ -6,12 +6,14 @@ import { cartSummary } from './cart-summary';
 import { all, type Ctl } from './dom';
 import { gallery } from './gallery';
 import { inlineCheckout } from './inline-checkout';
+import { appBlock } from './app-block';
 import type { CartHost } from './host';
 import { variantPicker } from './variant-picker';
 
 export type { CartHost, CartLine, CartText } from './host';
 export { EVENT_CART_ADDED, EVENT_VARIANT_CHANGE } from './host';
 export { MSG_CHECKOUT_HEIGHT, MSG_CHECKOUT_LINE, MSG_CHECKOUT_READY } from './inline-checkout';
+export { MSG_APP_BLOCK_HEIGHT, MSG_APP_BLOCK_UNAVAILABLE } from './app-block';
 
 const controllers: Array<[string, Ctl]> = [
   ['variant-picker', variantPicker],
@@ -22,6 +24,7 @@ const controllers: Array<[string, Ctl]> = [
   ['cart-drawer', cartDrawer],
   ['gallery', gallery],
   ['inline-checkout', inlineCheckout],
+  ['app-block', appBlock],
 ];
 
 const started = new WeakMap<object, () => void>();

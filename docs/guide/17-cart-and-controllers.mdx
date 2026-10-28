@@ -102,6 +102,21 @@ the [checkout branding](23-checkout-branding.mdx) settings.
 - In `sneferu dev` the frame shows a grey placeholder; the real form only
   exists on a Hekana store.
 
+## App blocks
+
+An installed app can put a widget on a page, such as a subscribe form on the product page. A theme does not write that widget; the editor offers it as a section and the section prints `<hk-app-block>`:
+
+```html
+<hk-app-block app="customer_subscriptions" block="subscribe" product="{{ product }}" />
+```
+
+- `app` and `block` must be a pair on the platform's closed list. Any other pair prints nothing, and there is no prop that takes an address.
+- The tag prints a frame of a page on the store's own domain. The theme still has no script and no form control.
+- The block removes itself when the app is not installed or has nothing to show for the page (for example, a product with no plan).
+- The `app-block` controller sets the frame height from the height the page reports. It accepts a message only from the store's own origin and only from that frame.
+- Every theme gets one editor section per block, named `app-<app>-<block>`, shown in the editor only on the page types the block allows. A section of the same name in the theme wins, so a theme can restyle it.
+- `sneferu dev` serves a placeholder for the framed page. A theme editor that previews pages itself can use `createPreviewRegistry()` (components): the same tags, with `hk-app-block` printing a still box with the block's name instead of a frame.
+
 ## Styling hooks
 
 `sn-cart-item`, `sn-cart-item-title`, `sn-cart-item-price`, `sn-cart-item-qty`,

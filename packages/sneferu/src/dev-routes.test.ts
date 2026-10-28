@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { resolveDevRoute, splitLocale, devUrl, plainNotFound, relatedProducts } from './dev-routes';
 import { sampleContext } from './sample-data';
-import { checkoutEmbedPlaceholder } from './dev-page';
+import { appBlockPlaceholder, checkoutEmbedPlaceholder } from './dev-page';
 
 const ctx = sampleContext('en', {}, 'en');
 const route = (path: string, q = '', locale: 'ar' | 'en' = 'en', defaultLocale: 'ar' | 'en' = 'en') =>
@@ -77,5 +77,15 @@ describe('sneferu dev: inline checkout placeholder', () => {
     expect(en).toContain('Hekana order form');
     expect(ar + en).not.toMatch(/<(input|select|textarea|button|form)\b/);
     expect(en).toContain("parent.postMessage({type:'hk:checkout-height',height:document.documentElement.scrollHeight},location.origin)");
+  });
+});
+
+describe('sneferu dev: app block placeholder', () => {
+  it('serves a still box that reports its height, with no form controls and the name escaped', () => {
+    const html = appBlockPlaceholder('ar', { ar: 'اشتراك <b>', en: 'Subscription' });
+    expect(html).toContain('dir="rtl"');
+    expect(html).toContain('&lt;b&gt;');
+    expect(html).toContain("parent.postMessage({type:'hk:app-block-height',height:document.documentElement.scrollHeight},location.origin)");
+    expect(html).not.toMatch(/<(input|select|textarea|button|form)\b/);
   });
 });

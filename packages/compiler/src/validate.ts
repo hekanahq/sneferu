@@ -1,4 +1,4 @@
-import { err, warn, isGroupName, GROUP_NAMES, parseTemplateName, type Expr, isAllowedElement, isForbiddenAttribute, isForbiddenElement, isUrlAttribute, LIMITS, safeUrl, type Diagnostic, type HkTag, type TagRegistry } from '@hekana/sneferu-core';
+import { err, warn, findAppBlock, isGroupName, GROUP_NAMES, parseTemplateName, type Expr, isAllowedElement, isForbiddenAttribute, isForbiddenElement, isUrlAttribute, LIMITS, safeUrl, type Diagnostic, type HkTag, type TagRegistry } from '@hekana/sneferu-core';
 import type { AstNode } from './ast';
 
 const ATTR_NAME = /^[a-z_:][a-z0-9_:.-]*$/;
@@ -170,6 +170,15 @@ export function validateTemplate(
             seen.add(prop);
           }
           for (const [p, f] of Object.entries(tag.props)) if (f.required && !seen.has(p)) out.push(err('SN2005', `<${n.tag}> requires "${kebab(p)}"`, at(n)));
+          if (n.tag === 'hk-app-block') {
+            const literal = (name: string): string | undefined => {
+              const attr = n.attrs.find((x) => x.name === name);
+              return attr && attr.parts.length === 1 && typeof attr.parts[0] === 'string' ? attr.parts[0] : undefined;
+            };
+            const app = literal('app');
+            const block = literal('block');
+            if (app !== undefined && block !== undefined && !findAppBlock(app, block)) out.push(err('SN2021', `<hk-app-block app="${app}" block="${block}"> is not an app block the platform offers. The list is closed; see the app blocks section of the cart and controllers guide`, at(n)));
+          }
           const allowed = tag.allowedChildren;
           if (allowed !== '*') {
             for (const c of n.children) {

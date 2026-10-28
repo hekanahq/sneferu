@@ -1,4 +1,4 @@
-import { DEFAULT_ARABIC_FONT, FONTS, escapeAttr } from '@hekana/sneferu-core';
+import { DEFAULT_ARABIC_FONT, FONTS, escapeAttr, escapeText } from '@hekana/sneferu-core';
 import { themeFontCss, themeTokenCss } from '@hekana/sneferu-runtime';
 
 type ManifestLike = { id: string; tokens?: unknown };
@@ -46,3 +46,12 @@ export function checkoutEmbedPlaceholder(locale: 'ar' | 'en'): string {
     + `<body style="margin:0;font:15px/1.5 system-ui,sans-serif"><div style="min-height:560px;display:grid;place-items:center;background:#f1f1f1;color:#555;border-radius:12px">${text}</div>`
     + `<script>parent.postMessage({type:'hk:checkout-height',height:document.documentElement.scrollHeight},location.origin)</script></body></html>`;
 }
+
+/** Stands in for an app's framed page in `sneferu dev`: a still box that reports its height like the real page does. */
+export function appBlockPlaceholder(locale: 'ar' | 'en', name: { ar: string; en: string }): string {
+  const text = locale === 'ar' ? `${name.ar}: يظهر هنا على المتجر` : `${name.en}: appears here on the store`;
+  return `<!doctype html><html lang="${locale}" dir="${locale === 'ar' ? 'rtl' : 'ltr'}"><meta charset="utf-8">` +
+    `<body style="margin:0;font:15px/1.5 system-ui,sans-serif"><div style="min-height:160px;display:grid;place-items:center;background:#f1f1f1;color:#555;border-radius:12px">${escapeText(text)}</div>` +
+    `<script>parent.postMessage({type:'hk:app-block-height',height:document.documentElement.scrollHeight},location.origin)</script></body></html>`;
+}
+

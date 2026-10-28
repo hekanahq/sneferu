@@ -1434,6 +1434,73 @@
           }
         }
       ]
+    },
+    {
+      "name": "hk-app-block",
+      "category": "commerce",
+      "label": {
+        "en": "App block"
+      },
+      "allowedChildren": [],
+      "responsive": [],
+      "props": [
+        {
+          "name": "app",
+          "attr": "app",
+          "type": "select",
+          "required": true,
+          "options": [
+            "customer_subscriptions"
+          ],
+          "responsive": false,
+          "label": {
+            "en": "App"
+          }
+        },
+        {
+          "name": "block",
+          "attr": "block",
+          "type": "select",
+          "required": true,
+          "options": [
+            "subscribe",
+            "portal"
+          ],
+          "responsive": false,
+          "label": {
+            "en": "Block"
+          }
+        },
+        {
+          "name": "product",
+          "attr": "product",
+          "type": "data",
+          "responsive": false,
+          "label": {
+            "en": "Product"
+          }
+        },
+        {
+          "name": "settings",
+          "attr": "settings",
+          "type": "data",
+          "responsive": false,
+          "label": {
+            "en": "Settings"
+          }
+        },
+        {
+          "name": "label",
+          "attr": "label",
+          "type": "text",
+          "default": "",
+          "maxLength": 80,
+          "responsive": false,
+          "label": {
+            "en": "Block name for screen readers"
+          }
+        }
+      ]
     }
   ]
 }
