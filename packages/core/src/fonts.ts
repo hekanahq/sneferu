@@ -54,6 +54,8 @@ const list = [
   entry('El Messiri', 'sans-serif', AL, [400, 700], true, 'El+Messiri:wght@400..700'),
   entry('Reem Kufi', 'sans-serif', AL, [400, 700], true, 'Reem+Kufi:wght@400..700'),
   entry('Lalezar', 'sans-serif', AL, [400], false, 'Lalezar:wght@400'),
+  entry('Changa', 'sans-serif', AL, [200, 800], true, 'Changa:wght@200..800'),
+  entry('Markazi Text', 'serif', AL, [400, 700], true, 'Markazi+Text:wght@400..700'),
   entry('Inter', 'sans-serif', LA, [100, 900], true, 'Inter:wght@100..900'),
   entry('Martian Mono', 'monospace', LA, [100, 800], true, 'Martian+Mono:wght@100..800'),
   entry('Space Grotesk', 'sans-serif', LA, [300, 700], true, 'Space+Grotesk:wght@300..700'),
