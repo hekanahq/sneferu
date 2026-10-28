@@ -4,6 +4,7 @@ import {
   appBlockIds,
   appBlockSettings,
   escapeAttr,
+  escapeText,
   findAppBlock,
   toStr,
   type HkTag,
@@ -61,5 +62,26 @@ export const hkAppBlock: HkTag = {
       `<div class="sn-${c.id} sn-app-block${x.cls}"${x.attrs} data-hk-controller="app-block" data-hk-app="${escapeAttr(def.app)}" data-hk-block="${escapeAttr(def.block)}">` +
       `<iframe src="${escapeAttr(src)}" title="${escapeAttr(label)}" loading="lazy" referrerpolicy="same-origin"></iframe></div>`
     );
+  },
+};
+
+const PREVIEW_CSS = [
+  '.sn-app-block-preview{box-sizing:border-box;width:100%;padding:var(--hk-space-3,12px) var(--hk-space-4,16px);border:1px dashed currentColor;border-radius:var(--hk-radius,8px);opacity:.7;font-size:14px;line-height:1.6}',
+  '.sn-app-block-preview strong{display:block;font-weight:600}',
+].join('');
+
+/**
+ * The tag for a theme editor's preview: a still box instead of the frame, so the preview needs no
+ * network and no script. It shows the block's name and what it does; the store prints the real frame.
+ */
+const { controller: _controller, ...appBlockBase } = hkAppBlock;
+export const hkAppBlockPreview: HkTag = {
+  ...appBlockBase,
+  render(p, c) {
+    const def = findAppBlock(p.app, p.block);
+    if (!def) return '';
+    (c.cssOnce ?? c.css)(PREVIEW_CSS);
+    const x = passthrough(p);
+    return `<div class="sn-${c.id} sn-app-block-preview${x.cls}"${x.attrs} data-hk-app="${escapeAttr(def.app)}" data-hk-block="${escapeAttr(def.block)}"><strong>${escapeText(def.name[c.locale])}</strong>${escapeText(def.description[c.locale])}</div>`;
   },
 };

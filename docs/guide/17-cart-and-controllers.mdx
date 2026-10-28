@@ -115,7 +115,7 @@ An installed app can put a widget on a page, such as a subscribe form on the pro
 - The block removes itself when the app is not installed or has nothing to show for the page (for example, a product with no plan).
 - The `app-block` controller sets the frame height from the height the page reports. It accepts a message only from the store's own origin and only from that frame.
 - Every theme gets one editor section per block, named `app-<app>-<block>`, shown in the editor only on the page types the block allows. A section of the same name in the theme wins, so a theme can restyle it.
-- `sneferu dev` serves a placeholder for the framed page.
+- `sneferu dev` serves a placeholder for the framed page. A theme editor that previews pages itself can use `createPreviewRegistry()` (components): the same tags, with `hk-app-block` printing a still box with the block's name instead of a frame.
 
 ## Styling hooks
 
