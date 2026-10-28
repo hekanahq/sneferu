@@ -1,9 +1,11 @@
-<hk-section padding-y="20" class="vt-trust">
+<hk-section full-bleed="true" padding-y="20" class="vt-trust">
+  <div class="vt-wide">
   <ul class="vt-trust-list">
     {% for block in section.blocks %}
       <hk-block of="{{ block }}" />
     {% endfor %}
   </ul>
+</div>
 </hk-section>
 <hk-schema>
   {

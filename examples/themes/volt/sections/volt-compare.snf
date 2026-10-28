@@ -1,4 +1,5 @@
-<hk-section padding-y="40" mobile-padding-y="28" class="vt-compare-section">
+<hk-section full-bleed="true" padding-y="40" mobile-padding-y="28" class="vt-compare-section">
+  <div class="vt-wide">
   <hk-stack gap="20">
     <div class="vt-head">
       <span class="vt-dash" aria-hidden="true"></span>
@@ -41,6 +42,7 @@
       </div>
     {% endif %}
   </hk-stack>
+</div>
 </hk-section>
 <hk-schema>
   {

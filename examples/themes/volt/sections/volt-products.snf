@@ -1,4 +1,5 @@
-<hk-section padding-y="40" mobile-padding-y="28" class="vt-products">
+<hk-section full-bleed="true" padding-y="40" mobile-padding-y="28" class="vt-products">
+  <div class="vt-wide">
   <hk-stack gap="20">
     <div class="vt-row-head">
       <div class="vt-head">
@@ -17,6 +18,7 @@
       <p class="vt-empty">{{ t('empty_products') }}</p>
     {% endif %}
   </hk-stack>
+</div>
 </hk-section>
 <hk-schema>
   {
