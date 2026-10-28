@@ -20,5 +20,9 @@
   "payment_methods": "طرق الدفع",
   "product_info": "تفاصيل المنتج",
   "categories": "الأقسام",
-  "all_products": "كل المنتجات"
+  "all_products": "كل المنتجات",
+  "close": "إغلاق",
+  "contact_us": "تواصل معنا",
+  "whatsapp": "واتساب",
+  "show_categories_btn": "الأقسام"
 }

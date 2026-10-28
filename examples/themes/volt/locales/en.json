@@ -20,5 +20,9 @@
   "payment_methods": "Payment methods",
   "product_info": "Product details",
   "categories": "Categories",
-  "all_products": "All products"
+  "all_products": "All products",
+  "close": "Close",
+  "contact_us": "Contact us",
+  "whatsapp": "WhatsApp",
+  "show_categories_btn": "Categories"
 }
