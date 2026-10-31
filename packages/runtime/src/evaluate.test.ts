@@ -74,7 +74,7 @@ describe('evaluate', () => {
     expect(evaluate({ k: 'bogus' } as never, {}, ctx())).toBeUndefined();
   });
   it('collections() lists the store categories, capped at 50; collection() needs a non-empty string handle', () => {
-    const cats = Array.from({ length: 60 }, (_, i) => ({ handle: `c${i}`, title: `C${i}`, url: `/collections/c${i}`, image: null, count: i }));
+    const cats = Array.from({ length: 60 }, (_, i) => ({ handle: `c${i}`, title: `C${i}`, url: `/collections/c${i}`, image: null, count: i, parent: null, children: [] }));
     expect(evaluate({ k: 'lookup', fn: 'collections', args: [] }, {}, ctx())).toEqual([]);
     const listed = evaluate({ k: 'lookup', fn: 'collections', args: [] }, {}, ctx({ categories: cats })) as unknown[];
     expect(listed).toHaveLength(50);
