@@ -1027,6 +1027,39 @@
       ]
     },
     {
+      "name": "hk-custom-html",
+      "category": "ui",
+      "label": {
+        "en": "Custom HTML"
+      },
+      "allowedChildren": [],
+      "responsive": [],
+      "props": [
+        {
+          "name": "html",
+          "attr": "html",
+          "type": "textarea",
+          "default": "",
+          "maxLength": 30000,
+          "responsive": false,
+          "label": {
+            "en": "HTML"
+          }
+        },
+        {
+          "name": "css",
+          "attr": "css",
+          "type": "textarea",
+          "default": "",
+          "maxLength": 10000,
+          "responsive": false,
+          "label": {
+            "en": "CSS"
+          }
+        }
+      ]
+    },
+    {
       "name": "hk-price",
       "category": "commerce",
       "label": {

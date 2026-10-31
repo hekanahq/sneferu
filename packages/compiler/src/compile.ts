@@ -8,7 +8,7 @@ import { checkMigrations, settingKeys } from './migrations';
 import { checkEntries, toNodes, MAX_GROUP_SECTIONS, MAX_TEMPLATE_SECTIONS, type DefaultEntry } from './entries';
 import { applyDefaults, collectLocaleKeys, collectTags, type FragmentSource } from './defaults';
 import { DEFAULT_THEME_FILES } from '@hekana/sneferu-templates-default';
-import { appBlockFiles } from './app-blocks';
+import { appBlockFiles, customHtmlFiles } from './app-blocks';
 export type { ThemeFile } from './files';
 
 export interface SectionSchema {
@@ -301,8 +301,8 @@ function appBlockSections(registry: TagRegistry): Artifact['sections'] {
   const hit = APP_SECTIONS.get(registry);
   if (hit) return hit;
   let out: Artifact['sections'] = {};
-  if (registry.get('hk-app-block')) {
-    const generated = appBlockFiles();
+  const generated = [...(registry.get('hk-app-block') ? appBlockFiles() : []), ...(registry.get('hk-custom-html') ? customHtmlFiles() : [])];
+  if (generated.length > 0) {
     const r = compileTheme([...DEFAULT_THEME_FILES, ...generated], registry, { defaults: false });
     if (r.artifact) {
       const names = generated.map((f) => stripTemplateExtension(f.path.split('/').pop()!));

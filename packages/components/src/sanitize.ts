@@ -27,6 +27,19 @@ const HEADINGS = new Set(['h2', 'h3', 'h4']);
 const LI_BARRIER = new Set(['ul', 'ol', 'blockquote', 'h2', 'h3', 'h4']);
 const MAX_DEPTH = 64;
 const DEFAULT_MAX = 100_000;
+/** Per-profile tag-nesting rules for the Writer. */
+export interface Rules { closesP: ReadonlySet<string>; headings: ReadonlySet<string>; liBarrier: ReadonlySet<string>; voids: ReadonlySet<string> }
+const RICH_RULES: Rules = { closesP: CLOSES_P, headings: HEADINGS, liBarrier: LI_BARRIER, voids: new Set(['br']) };
+
+/** An allow-list profile: which tags survive, how they nest, and the attributes rebuilt for each (null drops the element). */
+export interface Profile {
+  allowed: ReadonlySet<string>;
+  rules: Rules;
+  attrs(t: Tag): string | null;
+  /** When set, a full `<iframe>…</iframe>` string for an accepted embed (null drops it). */
+  iframe?(t: Tag): string | null;
+}
+
 const REL = ' rel="nofollow noopener ugc"';
 
 const NAMED: Record<string, string> = {
@@ -45,7 +58,7 @@ const fromCode = (cp: number): string =>
   !Number.isFinite(cp) || cp === 0 || cp > 0x10ffff || (cp >= 0xd800 && cp <= 0xdfff) ? '\uFFFD' : String.fromCodePoint(cp);
 
 /** Decodes character references once; unknown named references stay as written. NUL is removed. */
-function decode(s: string): string {
+export function decode(s: string): string {
   const out = s.indexOf('&') === -1 ? s : s.replace(ENTITY, (m, hex: string | undefined, dec: string | undefined, name: string | undefined) => {
     if (hex !== undefined) return fromCode(hex.length > 8 ? Infinity : parseInt(hex, 16));
     if (dec !== undefined) return fromCode(dec.length > 8 ? Infinity : parseInt(dec, 10));
@@ -57,7 +70,7 @@ function decode(s: string): string {
 const isWs = (c: string | undefined) => c === ' ' || c === '\n' || c === '\t' || c === '\r' || c === '\f';
 const isAlpha = (c: string | undefined) => c !== undefined && ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
 
-interface Tag { name: string; attrs: [string, string][]; selfClosing: boolean; end: number }
+export interface Tag { name: string; attrs: [string, string][]; selfClosing: boolean; end: number }
 
 /** Reads a tag from `start` (just after `<` or `</`) to its `>`. null when the input ends inside it (the tag is dropped). */
 function readTag(s: string, start: number): Tag | null {
@@ -105,7 +118,7 @@ class Writer {
   stack: string[] = [];
   closeLen = 0;
   done = false;
-  constructor(private readonly max: number) {}
+  constructor(private readonly max: number, private readonly r: Rules = RICH_RULES) {}
 
   private fits(k: number) { return this.out.length + k + this.closeLen <= this.max; }
 
@@ -135,14 +148,14 @@ class Writer {
 
   open(tag: string, attrs: string) {
     if (this.done) return;
-    if (tag === 'br') { if (this.fits(4)) this.out += '<br>'; else this.done = true; return; }
+    if (this.r.voids.has(tag)) { const v = `<${tag}${attrs}>`; if (this.fits(v.length)) this.out += v; else this.done = true; return; }
     const st = this.stack;
-    if (CLOSES_P.has(tag)) { const p = st.lastIndexOf('p'); if (p !== -1) this.closeTo(p); }
-    if (HEADINGS.has(tag) && HEADINGS.has(st[st.length - 1] ?? '')) this.closeTo(st.length - 1);
+    if (this.r.closesP.has(tag)) { const p = st.lastIndexOf('p'); if (p !== -1) this.closeTo(p); }
+    if (this.r.headings.has(tag) && this.r.headings.has(st[st.length - 1] ?? '')) this.closeTo(st.length - 1);
     if (tag === 'li') {
       for (let k = st.length - 1; k >= 0; k--) {
         if (st[k] === 'li') { this.closeTo(k); break; }
-        if (LI_BARRIER.has(st[k]!)) break;
+        if (this.r.liBarrier.has(st[k]!)) break;
       }
     }
     if (tag === 'a') { const a = st.lastIndexOf('a'); if (a !== -1) this.closeTo(a); }
@@ -155,9 +168,16 @@ class Writer {
   }
 
   close(tag: string) {
-    if (this.done || tag === 'br') return;
+    if (this.done || this.r.voids.has(tag)) return;
     const i = this.stack.lastIndexOf(tag);
     if (i !== -1) this.closeTo(i);
+  }
+
+  /** A complete, self-contained element (already escaped, already closed). */
+  atomic(html: string) {
+    if (this.done || this.stack.length >= MAX_DEPTH) return;
+    if (!this.fits(html.length)) { this.done = true; return; }
+    this.out += html;
   }
 
   finish(): string { this.closeTo(0); return this.out; }
@@ -174,11 +194,11 @@ const hrefAttr = (attrs: [string, string][]): string => {
  * Sanitizes merchant or theme rich text for output into a page. See the module
  * comment for the guarantees. Anything that is not a string yields ''.
  */
-export function sanitizeRichText(html: string, opts: { maxChars?: number } = {}): string {
+export function sanitizeWith(html: string, opts: { maxChars?: number } | undefined, P: Profile): string {
   if (typeof html !== 'string' || html === '') return '';
   const m = opts?.maxChars;
   const cap = typeof m === 'number' && Number.isFinite(m) && m >= 0 ? Math.floor(m) : DEFAULT_MAX;
-  const w = new Writer(cap);
+  const w = new Writer(cap, P.rules);
   const s = html.length > cap * 16 ? html.slice(0, cap * 16) : html;
   const n = s.length;
   let drop: { tag: string; depth: number } | null = null;
@@ -206,7 +226,7 @@ export function sanitizeRichText(html: string, opts: { maxChars?: number } = {})
       if (!t) { i = n; break; }
       i = t.end;
       if (drop) { if (t.name === drop.tag && --drop.depth === 0) drop = null; continue; }
-      if (ALLOWED.has(t.name)) w.close(t.name);
+      if (P.allowed.has(t.name)) w.close(t.name);
       continue;
     }
     if (!isAlpha(c)) { text += '<'; i++; continue; } // a lone `<` is text
@@ -214,20 +234,26 @@ export function sanitizeRichText(html: string, opts: { maxChars?: number } = {})
     const t = readTag(s, i + 1);
     if (!t) { i = n; break; }
     i = t.end;
-    if (DROP_RAW.has(t.name)) { // skip to the matching end tag without parsing what is inside
+    if (DROP_RAW.has(t.name)) { const embed = P.iframe && t.name === 'iframe' && !drop ? P.iframe(t) : null; // skip to the matching end tag without parsing what is inside
       const re = RAW_END.get(t.name)!;
       re.lastIndex = i;
       const found = t.name === 'plaintext' ? null : re.exec(s);
       if (!found) { i = n; break; }
       const endTag = readTag(s, found.index + 2);
-      i = endTag ? endTag.end : n;
+      i = endTag ? endTag.end : n; if (embed) w.atomic(embed);
       continue;
     }
     const foreignSelfClosed = t.selfClosing && (t.name === 'svg' || t.name === 'math');
     if (drop) { if (t.name === drop.tag && !foreignSelfClosed) drop.depth++; continue; }
     if (DROP_NESTED.has(t.name)) { if (!foreignSelfClosed) drop = { tag: t.name, depth: 1 }; continue; }
-    if (ALLOWED.has(t.name)) w.open(t.name, t.name === 'a' ? hrefAttr(t.attrs) : '');
+    if (P.allowed.has(t.name)) { const a = P.attrs(t); if (a !== null) w.open(t.name, a); }
   }
   flush();
   return w.finish();
+}
+
+const RICH: Profile = { allowed: ALLOWED, rules: RICH_RULES, attrs: (t) => (t.name === 'a' ? hrefAttr(t.attrs) : '') };
+
+export function sanitizeRichText(html: string, opts: { maxChars?: number } = {}): string {
+  return sanitizeWith(html, opts, RICH);
 }
