@@ -1,24 +1,24 @@
 <hk-section full-bleed="true" padding-y="40" mobile-padding-y="28" class="vt-products">
   <div class="vt-wide">
-  <hk-stack gap="20">
-    <div class="vt-row-head">
-      <div class="vt-head">
-        <span class="vt-dash" aria-hidden="true"></span>
-        <hk-heading text="{{ section.settings.heading }}" level="h2" size="26" mobile-size="20" class="vt-h2" />
+    <hk-stack gap="20">
+      <div class="vt-row-head">
+        <div class="vt-head">
+          <span class="vt-dash" aria-hidden="true"></span>
+          <hk-heading text="{{ section.settings.heading }}" level="h2" size="26" mobile-size="20" class="vt-h2" />
+        </div>
+        <a class="vt-more" href="{{ url('/products') }}">{{ t('view_all') }}</a>
       </div>
-      <a class="vt-more" href="{{ url('/products') }}">{{ t('view_all') }}</a>
-    </div>
-    {% if collection(section.settings.list).products %}
-      <div class="vt-grid vt-cols-{{ section.settings.columns }}">
-        {% for p in collection(section.settings.list).products limit: section.settings.count %}
-          {% render 'product-card', product: p, card_style: 'plain', image_ratio: '1/1', show_price: true, show_badge: true, note: section.settings.card_note %}
-        {% endfor %}
-      </div>
-    {% else %}
-      <p class="vt-empty">{{ t('empty_products') }}</p>
-    {% endif %}
-  </hk-stack>
-</div>
+      {% if collection(section.settings.list).products %}
+        <div class="vt-grid vt-cols-{{ section.settings.columns }}">
+          {% for p in collection(section.settings.list).products limit: section.settings.count %}
+            {% render 'product-card', product: p, card_style: 'plain', image_ratio: '1/1', show_price: true, show_badge: true, note: section.settings.card_note %}
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="vt-empty">{{ t('empty_products') }}</p>
+      {% endif %}
+    </hk-stack>
+  </div>
 </hk-section>
 <hk-schema>
   {

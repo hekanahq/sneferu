@@ -1,56 +1,61 @@
 <hk-section full-bleed="true" padding-y="0" mobile-padding-y="0" class="vt-hero-section">
-  <div class="vt-wide"><div class="vt-shop vt-shop-{{ section.settings.show_categories }}">{% if section.settings.show_categories %}{% render 'cat-sidebar', blocks: section.blocks, current: '-' %}{% endif %}<div class="vt-shop-main">
-  <div class="vt-hero-stage">
-    <span class="vt-hero-glow" aria-hidden="true"></span>
-    <div class="vt-hero-art">
-      {% if section.settings.image %}
-        <hk-image
-          src="{{ section.settings.image }}"
-          alt="{{ section.settings.image_alt }}"
-          aspect-ratio="16/9"
-          fit="cover"
-          loading="eager"
-          sizes="(min-width: 1024px) 900px, 100vw"
-        />
-      {% endif %}
-    </div>
-    <div class="vt-hero-copy">
-      {% if section.settings.eyebrow %}
-        <p class="vt-eyebrow">{{ section.settings.eyebrow }}</p>
-      {% endif %}
-      <hk-heading
-        text="{{ section.settings.heading }}"
-        level="h1"
-        size="44"
-        mobile-size="28"
-        align="center"
-        class="vt-hero-title"
-      />
-      {% if section.settings.text %}
-        <hk-text
-          text="{{ section.settings.text }}"
-          size="17"
-          mobile-size="15"
-          align="center"
-          class="vt-muted vt-hero-text"
-        />
-      {% endif %}
-      <div class="vt-hero-actions">
-        {% if section.settings.button_label %}<hk-button
-            label="{{ section.settings.button_label }}"
-            href="{{ url(section.settings.button_link) }}"
-            size="lg"
-          />{% endif %}
-        {% if section.settings.button2_label %}<hk-button
-            label="{{ section.settings.button2_label }}"
-            href="{{ url(section.settings.button2_link) }}"
-            variant="outline"
-            size="lg"
-          />{% endif %}
+  <div class="vt-wide">
+    <div class="vt-shop vt-shop-{{ section.settings.show_categories }}">
+      {% if section.settings.show_categories %}{% render 'cat-sidebar', blocks: section.blocks, current: '-' %}{% endif %}
+      <div class="vt-shop-main">
+        <div class="vt-hero-stage">
+          <span class="vt-hero-glow" aria-hidden="true"></span>
+          <div class="vt-hero-art">
+            {% if section.settings.image %}
+              <hk-image
+                src="{{ section.settings.image }}"
+                alt="{{ section.settings.image_alt }}"
+                aspect-ratio="16/9"
+                fit="cover"
+                loading="eager"
+                sizes="(min-width: 1024px) 900px, 100vw"
+              />
+            {% endif %}
+          </div>
+          <div class="vt-hero-copy">
+            {% if section.settings.eyebrow %}
+              <p class="vt-eyebrow">{{ section.settings.eyebrow }}</p>
+            {% endif %}
+            <hk-heading
+              text="{{ section.settings.heading }}"
+              level="h1"
+              size="44"
+              mobile-size="28"
+              align="center"
+              class="vt-hero-title"
+            />
+            {% if section.settings.text %}
+              <hk-text
+                text="{{ section.settings.text }}"
+                size="17"
+                mobile-size="15"
+                align="center"
+                class="vt-muted vt-hero-text"
+              />
+            {% endif %}
+            <div class="vt-hero-actions">
+              {% if section.settings.button_label %}<hk-button
+                  label="{{ section.settings.button_label }}"
+                  href="{{ url(section.settings.button_link) }}"
+                  size="lg"
+                />{% endif %}
+              {% if section.settings.button2_label %}<hk-button
+                  label="{{ section.settings.button2_label }}"
+                  href="{{ url(section.settings.button2_link) }}"
+                  variant="outline"
+                  size="lg"
+                />{% endif %}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  </div></div></div>
 </hk-section>
 <hk-schema>
   {
@@ -60,7 +65,14 @@
     },
     "version": 1,
     "settings": {
-    "show_categories": { "type": "boolean", "label": { "ar": "عرض قائمة الأقسام", "en": "Show category sidebar" }, "default": true },
+      "show_categories": {
+        "type": "boolean",
+        "label": {
+          "ar": "عرض قائمة الأقسام",
+          "en": "Show category sidebar"
+        },
+        "default": true
+      },
       "image": {
         "type": "image",
         "label": {
@@ -164,6 +176,9 @@
         "default": "/category/phones"
       }
     },
-  "blocks": { "allowed": ["category-icon"], "max": 50 }
-}
+    "blocks": {
+      "allowed": ["category-icon"],
+      "max": 50
+    }
+  }
 </hk-schema>

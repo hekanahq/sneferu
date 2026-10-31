@@ -129,6 +129,29 @@ part of the theme and are never pushed.
 | `products` | added to the `product('handle')` lookups, keyed by handle; a product has a page at `/products/<handle>` only when it is listed here |
 | `menus` | menus by handle, `{ "handle", "title", "items": [{ "title", "url", "children"? }] }`; they replace the sample `main` and `footer` |
 
+
+#### Local images in sample data
+
+`hk-image` renders only `https://` and store-relative (`/…`) URLs, in `sneferu dev`
+and on a store alike. So that sample data can use pictures you have on disk, the
+dev server also accepts a **relative file path** in any image value of
+`data.json`:
+
+```json title=".sneferu-dev/data.json"
+{ "products": { "notes": { "title": "Notes", "price": 9900, "image": { "url": "images/notes.webp" } } } }
+```
+
+The path is looked up next to `data.json` first (so put pictures in
+`.sneferu-dev/images/`), then from the theme folder. A file found inside the theme
+folder is served under `/__dev-images/<path>` and shown. Only `.png`, `.jpg`,
+`.jpeg`, `.webp`, `.gif`, `.avif` and `.svg` files inside the theme folder are
+served, and only by `sneferu dev`: nothing about `hk-image` or a published theme
+changes, and these files are not part of the package.
+
+A value that would be dropped (an `http://` URL, a `//host/…` URL, a path with no
+file behind it, a path outside the theme folder) is not hidden: `sneferu dev`
+prints a warning naming it, once per value.
+
 For different text per language, split the file by locale:
 `{ "ar": { "store": … }, "en": { "store": … } }`. The file is read on every
 request: save it and reload the page. A file that is not valid JSON shows an

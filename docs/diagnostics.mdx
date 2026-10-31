@@ -59,7 +59,7 @@ Every problem Sneferu reports has a stable code. The format is `file:line:col se
 | Code | Meaning | Fix |
 | - | - | - |
 | SN3001 | `theme.json` is missing | Add it at the theme root. |
-| SN3002 | Invalid file path (absolute, `..`, bad characters, backslash, symlink) | Use lower-case names with letters, digits, `.`, `_`, `-`. |
+| SN3002 | Invalid file path (absolute, `..`, bad characters, backslash, symlink) | Use lower-case names with letters, digits, `.`, `_`, `-`, and start every name with a letter or digit (a folder such as `assets/_old/` is rejected). The message names the segment that failed. A symlink is refused by the CLI when it reads the folder: copy the file instead. |
 | SN3003 | File type or location not allowed | Put files in the allowed folders with the allowed extensions. |
 | SN3004 | Duplicate file | Remove the duplicate. |
 | SN3005 | Too many files (max 400) | Remove unused files. |
@@ -115,6 +115,7 @@ Every problem Sneferu reports has a stable code. The format is `file:line:col se
 | SN3055 | Warning: `checkout.button_shape`, `logo` or `chrome` is not one of its values; it is dropped | `button_shape`: `square`, `rounded`, `pill`. `logo`: `store`, `custom`, `none`. `chrome`: `theme`, `minimal`. |
 | SN3056 | Warning: `checkout.trust_note` is not `{ "ar": text, "en": text }`, or has another language or a non-text value; that part is dropped | Write plain text for `ar` and `en`. |
 | SN3057 | Warning: a `checkout.trust_note` text is over 140 characters; it is cut to 140 | Shorten the note. |
+| SN3058 | Warning: a key in `tokens.colors` is not lower-case letters, digits and dashes (for example `sageSoft`); it is not emitted as a `--hk-color-*` variable | Rename the key to kebab-case, such as `sage-soft`, and use `var(--hk-color-sage-soft)`. |
 
 ## SN4xxx Rendering
 

@@ -1,12 +1,13 @@
 import { createServer, type Server, type ServerResponse } from 'node:http';
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
-import { extname, join, resolve, sep } from 'node:path';
+import { dirname, extname, join, resolve, sep } from 'node:path';
 import { watch } from 'chokidar';
 import { APP_BLOCKS, escapeText, formatDiagnostic } from '@hekana/sneferu-core';
 import { compileTheme, type Artifact } from '@hekana/sneferu-compiler';
 import { renderPage } from '@hekana/sneferu-runtime';
 import { createDefaultRegistry } from '@hekana/sneferu-components';
 import { loadTheme } from '../load';
+import { DEV_IMAGE_ROUTE, DEV_IMAGE_TYPES, localizeDevImages, resolveDevImage } from '../dev-images';
 import { pickSampleData, sampleContext, withSampleData } from '../sample-data';
 import { appBlockPlaceholder, checkoutEmbedPlaceholder, devPage } from '../dev-page';
 import { controllersBundle, devHostScript } from '../dev-controllers';
@@ -53,6 +54,8 @@ export async function startDev(dir: string, port: number, opts: { data?: string 
   let artifact: Artifact | undefined;
   let problems = '';
   const clients = new Set<ServerResponse>();
+  const warned = new Set<string>();
+  const warnOnce = (m: string) => { if (!warned.has(m)) { warned.add(m); console.warn(`Sneferu dev: ${m}`); } };
   const compile = () => {
     try {
       const r = compileTheme(loadTheme(root), registry);
@@ -78,6 +81,11 @@ export async function startDev(dir: string, port: number, opts: { data?: string 
         if (!file || !existsSync(file) || !statSync(file).isFile()) { res.writeHead(404).end(); return; }
         res.writeHead(200, { 'content-type': TYPES[extname(file).toLowerCase()] ?? 'application/octet-stream' }).end(readFileSync(file)); return;
       }
+      if (rawPath.startsWith(DEV_IMAGE_ROUTE)) {
+        const file = resolveDevImage(root, rawPath.slice(DEV_IMAGE_ROUTE.length));
+        if (!file || !existsSync(file) || !statSync(file).isFile()) { res.writeHead(404).end(); return; }
+        res.writeHead(200, { 'content-type': DEV_IMAGE_TYPES[extname(file).toLowerCase()] ?? 'application/octet-stream' }).end(readFileSync(file)); return;
+      }
       if (rawPath === '/__controllers.js') { const js = controllersBundle(); if (!js) { res.writeHead(404).end(); return; } res.writeHead(200, { 'content-type': 'text/javascript' }).end(js); return; }
       if (rawPath === '/checkout/embed' || rawPath === '/en/checkout/embed' || rawPath === '/ar/checkout/embed') {
         const loc = rawPath.startsWith('/en/') ? 'en' : rawPath.startsWith('/ar/') ? 'ar' : (artifact?.manifest.defaultLocale ?? 'ar');
@@ -98,7 +106,7 @@ export async function startDev(dir: string, port: number, opts: { data?: string 
       const locale = pickLocale(explicit ?? cookie ?? null, artifact.manifest);
       const sample = readSampleData(dataPath);
       if (sample.error) { res.writeHead(500, { 'content-type': 'text/html; charset=utf-8' }).end(errorPage(`sample data: ${sample.error}`)); return; }
-      let ctx = withSampleData(sampleContext(locale, artifact.locales, artifact.manifest.defaultLocale, { responsive: true, devLinks: true }), pickSampleData(sample.raw, locale));
+      let ctx = withSampleData(sampleContext(locale, artifact.locales, artifact.manifest.defaultLocale, { responsive: true, devLinks: true }), pickSampleData(dataPath ? localizeDevImages(sample.raw, { root, dataDir: dirname(dataPath) }, warnOnce) : sample.raw, locale));
       let template = 'index';
       let status = 200;
       let scope: Record<string, unknown> = {};

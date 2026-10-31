@@ -18,6 +18,8 @@ describe('font catalogue', () => {
     expect(names).toContain('lalezar-arabic-400.woff2');
     expect(names).toContain('changa-arabic-200_800.woff2');
     expect(names).toContain('markazi-text-latin-400_700.woff2');
+    expect(names).toContain('scheherazade-new-arabic-600.woff2');
+    expect(names).toContain('aref-ruqaa-latin-700.woff2');
     expect(names).toContain('dm-sans-latin-100_1000.woff2');
   });
   it('keys equal the family, scripts match the files, and Cairo is the Arabic default', () => {
@@ -27,11 +29,12 @@ describe('font catalogue', () => {
       expect(e.google).toMatch(/^[A-Za-z0-9+]+:wght@[0-9.;]+$/);
     }
     expect(FONTS[DEFAULT_ARABIC_FONT]!.scripts).toContain('arabic');
-    expect(Object.keys(FONTS)).toHaveLength(28);
+    expect(Object.keys(FONTS)).toHaveLength(30);
     expect(FONTS.Inter!.scripts).toEqual(['latin']);
     expect(FONTS['Playfair Display']!.generic).toBe('serif');
     expect(FONTS['Amiri']!.generic).toBe('serif');
     expect(FONTS['Markazi Text']!.generic).toBe('serif');
+    for (const f of ['Scheherazade New', 'Aref Ruqaa']) { expect(FONTS[f]!.generic).toBe('serif'); expect(FONTS[f]!.scripts).toEqual(['arabic', 'latin']); }
     expect(FONTS['El Messiri']!.scripts).toEqual(['arabic', 'latin']);
   });
 });
