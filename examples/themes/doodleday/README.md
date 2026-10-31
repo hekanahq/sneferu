@@ -1,6 +1,6 @@
 # DoodleDay
 
-A cartoon streetwear store theme: cream and pink panels, pastel collection cards, a bold hero with a bunny mascot, and a product page with collapsible fabric, size, shipping and returns sections. Arabic first (RTL) with English.
+A cartoon streetwear store theme: cream and orange panels, pastel collection cards, a bold hero with a bunny mascot, and a product page with collapsible fabric, size, shipping and returns sections. Arabic first (RTL) with English.
 
 ## Pages
 
@@ -12,7 +12,6 @@ All seven page types are present: `index`, `product`, `collection`, `search`, `c
 
 ## Notes
 
-- Brand pink and lavender are used on purpose for this theme.
 - `reviews` renders nothing until you add real reviews.
 - The club band links to a page; the theme tags have no email form.
 - The size guide, shipping and returns accordions stay hidden until their text is filled in.

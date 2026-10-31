@@ -76,7 +76,8 @@
         "label": {
           "en": "Image",
           "ar": "الصورة"
-        }
+        },
+        "default": ""
       },
       "image_alt": {
         "type": "text",

@@ -32,8 +32,8 @@
           "en": "Colour",
           "ar": "اللون"
         },
-        "options": ["pink", "blue", "yellow"],
-        "default": "pink"
+        "options": ["orange", "blue", "yellow"],
+        "default": "orange"
       },
       "title": {
         "type": "text",
