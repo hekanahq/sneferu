@@ -37,7 +37,7 @@ becomes one rule on the theme's root element:
 | Token | Variable | Use |
 | - | - | - |
 | `colors.<key>` (key: lower-case letters, digits, `-`) | `--hk-color-<key>` | in CSS: `var(--hk-color-accent)`; in colour props and settings: `theme:accent` |
-| `layout.contentWidth` (`"1200px"`, 3-4 digits) | `--hk-content-width` | max width of `hk-section` content and `hk-container` (fallback 1280px) |
+| `layout.contentWidth` (`"1200px"`, 3-4 digits) | `--hk-content-width` | max width of `hk-section` content and `hk-container` (fallback 1280px). `"full"` emits `--hk-content-width:none` and `--hk-gutter:clamp(16px,3vw,56px)`: content spans the viewport with a fluid side gutter (`hk-section` pads with `var(--hk-gutter,16px)`) |
 
 Use tokens instead of hard-coded colours so one change in `theme.json` restyles
 the whole theme:

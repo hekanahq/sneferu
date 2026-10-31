@@ -115,6 +115,7 @@ Every problem Sneferu reports has a stable code. The format is `file:line:col se
 | SN3055 | Warning: `checkout.button_shape`, `logo` or `chrome` is not one of its values; it is dropped | `button_shape`: `square`, `rounded`, `pill`. `logo`: `store`, `custom`, `none`. `chrome`: `theme`, `minimal`. |
 | SN3056 | Warning: `checkout.trust_note` is not `{ "ar": text, "en": text }`, or has another language or a non-text value; that part is dropped | Write plain text for `ar` and `en`. |
 | SN3057 | Warning: a `checkout.trust_note` text is over 140 characters; it is cut to 140 | Shorten the note. |
+| SN3059 | Warning: `tokens.layout.contentWidth` is not `"full"` or `"<3-4 digits>px"`; it is ignored | Use `"full"` or a width such as `"1200px"` |
 | SN3058 | Warning: a key in `tokens.colors` is not lower-case letters, digits and dashes (for example `sageSoft`); it is not emitted as a `--hk-color-*` variable | Rename the key to kebab-case, such as `sage-soft`, and use `var(--hk-color-sage-soft)`. |
 
 ## SN4xxx Rendering

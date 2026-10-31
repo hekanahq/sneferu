@@ -63,6 +63,8 @@ export function validateManifest(json: unknown): { manifest?: Manifest; diagnost
   for (const k of Object.keys(c)) {
     if (!COLOR_KEY.test(k)) out.push(warn('SN3058', `tokens.colors.${k.slice(0, 40)}: colour keys are lower-case letters, digits and dashes, so this one is not emitted as a --hk-color-* variable${/[A-Z_]/.test(k) ? ` (rename it to ${JSON.stringify(k.slice(0, 40).replace(/([a-z0-9])([A-Z])/g, '$1-$2').replace(/_/g, '-').toLowerCase())})` : ''}`, at));
   }
+  const cwv = (m.tokens as { layout?: { contentWidth?: unknown } } | undefined)?.layout?.contentWidth;
+  if (cwv !== undefined && !(typeof cwv === 'string' && /^(\d{3,4}px|full)$/.test(cwv))) out.push(warn('SN3059', `tokens.layout.contentWidth ${typeof cwv === 'string' ? JSON.stringify(cwv.slice(0, 40)) : 'must be a string'} is ignored; use "full" or a width such as "1200px" (3-4 digits)`, at));
   const fonts = (m.tokens as { fonts?: unknown } | undefined)?.fonts;
   if (fonts !== undefined) {
     if (typeof fonts !== 'object' || fonts === null || Array.isArray(fonts)) out.push(err('SN3032', 'tokens.fonts must be an object with optional heading, body and mono', at));

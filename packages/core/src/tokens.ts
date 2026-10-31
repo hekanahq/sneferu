@@ -12,6 +12,7 @@ export interface ManifestTokens {
 export const TOKEN_SPACINGS = ['compact', 'comfortable', 'spacious'] as const;
 export const TOKEN_BUTTON_STYLES = ['solid', 'outline', 'soft'] as const;
 /** Multiplier of the spacing scale (4, 8, 16, 24, 40, 64 px). */
+export const TOKEN_CONTAINER_FITS = ['contained', 'full'] as const;
 export const SPACING_SCALE: Readonly<Record<(typeof TOKEN_SPACINGS)[number], number>> = { compact: 0.75, comfortable: 1, spacious: 1.35 };
 export const SPACING_STEPS = [4, 8, 16, 24, 40, 64] as const;
 
@@ -47,5 +48,6 @@ export function tokenSettings(tokens: ManifestTokens | undefined): FieldSchema {
   out.token_spacing = { type: 'select', label: { ar: 'المسافات', en: 'Spacing' }, options: [...TOKEN_SPACINGS], default: 'comfortable', group: 'layout' };
   out.token_button_style = { type: 'select', label: { ar: 'شكل الأزرار', en: 'Button style' }, options: [...TOKEN_BUTTON_STYLES], default: 'solid', group: 'buttons' };
   out.token_container_width = { type: 'range', label: { ar: 'عرض المحتوى', en: 'Content width (px)' }, min: 960, max: 1600, step: 20, default: px(t.layout?.contentWidth) ?? 1200, group: 'layout' };
+  out.token_container_fit = { type: 'select', label: { ar: 'نمط عرض المحتوى', en: 'Content width mode' }, options: [...TOKEN_CONTAINER_FITS], default: t.layout?.contentWidth === 'full' ? 'full' : 'contained', group: 'layout' };
   return out;
 }
