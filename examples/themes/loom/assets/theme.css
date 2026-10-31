@@ -1,7 +1,7 @@
 /* Loom: craft studio. Terracotta and linen with olive, warm humanist type. Colours come from the theme tokens. */
 [data-hk-theme='loom'] {
   --loom-wood: var(--hk-color-primary);
-  --loom-light: var(--hk-color-clayLight);
+  --loom-light: var(--hk-color-clay-light);
   --loom-cream: var(--hk-color-background);
   --loom-shadow: 0 1px 2px color-mix(in srgb, var(--hk-color-text) 5%, transparent), 0 8px 28px color-mix(in srgb, var(--hk-color-text) 8%, transparent);
   --loom-shadow-hover: 0 2px 4px color-mix(in srgb, var(--hk-color-text) 6%, transparent), 0 14px 36px color-mix(in srgb, var(--hk-color-text) 12%, transparent);

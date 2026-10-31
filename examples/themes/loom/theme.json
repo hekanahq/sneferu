@@ -25,7 +25,7 @@
       "soft": "#F2EBDF",
       "surface": "#FFFFFF",
       "clay": "#A24F2C",
-      "clayLight": "#C98A66",
+      "clay-light": "#C98A66",
       "linen": "#EAE2D4",
       "charcoal": "#3A312A",
       "olive": "#5C6236",
@@ -33,7 +33,7 @@
       "warning": "#9A6A14",
       "danger": "#9B3B2B",
       "border": "#D9CFBE",
-      "onPrimary": "#FFFFFF"
+      "on-primary": "#FFFFFF"
     },
     "layout": {
       "contentWidth": "1100px"

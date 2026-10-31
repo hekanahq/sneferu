@@ -5,6 +5,14 @@ export interface ThemeFile { path: string; bytes: Uint8Array }
 export const IMAGE_ASSET = /\.(png|jpe?g|webp|avif|gif|svg)$/;
 
 const SEGMENT = /^[a-z0-9][a-z0-9._-]*$/;
+/** Why a path fails SN3002, in words an author can act on. */
+function pathProblem(p: string): string {
+  if (p.startsWith('/') || p.includes('\\')) return 'paths are relative and use / separators';
+  const bad = p.split('/').find((x) => x === '..' || x === '.' || !SEGMENT.test(x)) ?? p;
+  if (bad === '..' || bad === '.') return "'.' and '..' segments are not allowed";
+  if (/^[._-]/.test(bad)) return `'${bad}' starts with '${bad[0]}'; every file and folder name must start with a lower-case letter or digit, so drop the leading '${bad[0]}'`;
+  return `'${bad}' may use only lower-case letters, digits, '.', '_' and '-', and must start with a letter or digit`;
+}
 const ALLOWED: Record<string, RegExp> = {
   '': /^theme\.json$/,
   layout: TEMPLATE_FILE, templates: TEMPLATE_FILE, sections: TEMPLATE_FILE, blocks: TEMPLATE_FILE, snippets: TEMPLATE_FILE,
@@ -29,7 +37,7 @@ export function checkFiles(files: ThemeFile[]): Diagnostic[] {
   const stems = new Map<string, string>();
   for (const f of files) {
     const p = f.path;
-    if (p.startsWith('/') || p.includes('\\') || p.split('/').some((s) => s === '..' || s === '.' || !SEGMENT.test(s))) { out.push(err('SN3002', `invalid path '${p}'`, { file: p })); continue; }
+    if (p.startsWith('/') || p.includes('\\') || p.split('/').some((s) => s === '..' || s === '.' || !SEGMENT.test(s))) { out.push(err('SN3002', `invalid path '${p}': ${pathProblem(p)}`, { file: p })); continue; }
     if (seen.has(p)) { out.push(err('SN3004', `duplicate file '${p}'`, { file: p })); continue; }
     seen.add(p);
     const parts = p.split('/');

@@ -45,6 +45,20 @@ describe('compileTheme', () => {
       expect(compileTheme(withFonts(bad), reg).diagnostics.filter((d) => d.severity === 'error').map((d) => d.code)).toEqual(['SN3032']);
     }
   });
+  it('warns when a tokens.colors key would not become a --hk-color-* variable (SN3058)', () => {
+    const withColors = (colors: Record<string, string>) => base().map((x) => (x.path === 'theme.json' ? f(x.path, JSON.stringify({ ...manifest, tokens: { ...manifest.tokens, colors: { ...manifest.tokens.colors, ...colors } } })) : x));
+    const bad = compileTheme(withColors({ sageSoft: '#ABCDEF', 'ok-key': '#ABCDEF' }), reg).diagnostics.filter((d) => d.code === 'SN3058');
+    expect(bad).toHaveLength(1);
+    expect(bad[0]!.severity).toBe('warning');
+    expect(bad[0]!.message).toContain('sage-soft');
+    expect(compileTheme(withColors({ 'sage-soft': '#ABCDEF' }), reg).diagnostics.filter((d) => d.code === 'SN3058')).toEqual([]);
+  });
+  it('explains why a path is invalid (SN3002)', () => {
+    const msg = (path: string) => compileTheme([...base(), f(path, 'x')], reg).diagnostics.find((d) => d.code === 'SN3002')?.message ?? '';
+    expect(msg('assets/_hidden/a.png')).toContain("'_hidden' starts with '_'");
+    expect(msg('assets/Logo.png')).toContain("'Logo.png' may use only lower-case");
+    expect(msg('../evil.sneferu')).toContain('not allowed');
+  });
   it('accepts money.format decimal or whole and rejects anything else (SN3033)', () => {
     const withMoney = (money: unknown) => base().map((x) => (x.path === 'theme.json' ? f(x.path, JSON.stringify({ ...manifest, money })) : x));
     for (const ok of [{ format: 'whole' }, { format: 'decimal' }, {}]) {

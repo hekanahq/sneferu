@@ -2,6 +2,8 @@ import { closest } from './validate';
 import { checkReservedSettings, validateCheckout } from './checkout';
 import { ENGINE_VERSION, FONTS, err, isMoneyFormat, normalizeFieldLabels, normalizeLabel, warn, type Diagnostic, type FieldSchema, type ThemeCheckout } from '@hekana/sneferu-core';
 
+const COLOR_KEY = /^[a-z][a-z0-9-]*$/;
+
 export interface Manifest {
   id: string; name: { ar: string; en: string }; version: string; author: string;
   description: { ar: string; en: string }; category: string; engine: 'hk2'; engineCompatibility: string;
@@ -58,6 +60,9 @@ export function validateManifest(json: unknown): { manifest?: Manifest; diagnost
   else if (m.locales.some((l) => l !== 'ar' && l !== 'en')) out.push(err('SN3018', 'locales may only contain ar and en', at));
   const c = m.tokens?.colors ?? {};
   for (const k of ['primary', 'secondary', 'accent', 'background', 'text']) if (!HEX.test(String(c[k]))) out.push(err('SN3019', `tokens.colors.${k} must be a #RRGGBB colour`, at));
+  for (const k of Object.keys(c)) {
+    if (!COLOR_KEY.test(k)) out.push(warn('SN3058', `tokens.colors.${k.slice(0, 40)}: colour keys are lower-case letters, digits and dashes, so this one is not emitted as a --hk-color-* variable${/[A-Z_]/.test(k) ? ` (rename it to ${JSON.stringify(k.slice(0, 40).replace(/([a-z0-9])([A-Z])/g, '$1-$2').replace(/_/g, '-').toLowerCase())})` : ''}`, at));
+  }
   const fonts = (m.tokens as { fonts?: unknown } | undefined)?.fonts;
   if (fonts !== undefined) {
     if (typeof fonts !== 'object' || fonts === null || Array.isArray(fonts)) out.push(err('SN3032', 'tokens.fonts must be an object with optional heading, body and mono', at));

@@ -1,7 +1,7 @@
 /* Oak: warm Scandinavian home store. Oat, linen and light oak on a linen-white ground, charcoal text, quiet cards. Colours come from the theme tokens. */
 [data-hk-theme='oak'] {
   --oak-wood: var(--hk-color-primary);
-  --oak-light: var(--hk-color-oakLight);
+  --oak-light: var(--hk-color-oak-light);
   --oak-cream: var(--hk-color-background);
   --oak-shadow: 0 1px 2px color-mix(in srgb, var(--hk-color-text) 5%, transparent), 0 8px 28px color-mix(in srgb, var(--hk-color-text) 8%, transparent);
   --oak-shadow-hover: 0 2px 4px color-mix(in srgb, var(--hk-color-text) 6%, transparent), 0 14px 36px color-mix(in srgb, var(--hk-color-text) 12%, transparent);

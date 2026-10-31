@@ -135,7 +135,8 @@ How tokens become CSS variables is in [chapter 5](05-styling-and-responsive.mdx)
 ## Names and paths
 
 - File and folder names: lower-case letters, digits, `.`, `_`, `-`; must start
-  with a letter or digit. No spaces, upper case, `..`, absolute paths,
+  with a letter or digit. A name that starts with `_` or `.` (such as
+  `assets/_old/`) is rejected: rename it. No spaces, upper case, `..`, absolute paths,
   backslashes or symlinks (SN3002).
 - Only the folders above, one level deep (except `assets/`), with the listed
   extensions (SN3003). `sections/hero/hero.snf` is rejected.
