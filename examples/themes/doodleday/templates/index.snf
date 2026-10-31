@@ -47,7 +47,7 @@
             "id": "cc1",
             "type": "collection-card",
             "settings": {
-              "tone": "pink",
+              "tone": "orange",
               "title": {
                 "ar": "كيوت كاوس",
                 "en": "Cute Chaos"
@@ -204,7 +204,7 @@
             "type": "benefit",
             "settings": {
               "icon": "heart",
-              "tone": "pink",
+              "tone": "orange",
               "title": {
                 "ar": "تصاميم أصلية",
                 "en": "Original designs"
