@@ -1,20 +1,20 @@
 <hk-section full-bleed="true" padding-y="{{ section.settings.padding_y }}" mobile-padding-y="32">
   <div class="vt-wide">
-  <div class="vt-section-head">
-    {% if section.settings.title %}
-      <hk-heading text="{{ section.settings.title }}" level="h2" size="32" mobile-size="24" />
-    {% endif %}
-    {% if section.settings.link_label %}<a
-        class="vt-view-all"
-        href="{{ url(section.settings.link) }}"
-      >{{ section.settings.link_label }}</a>{% endif %}
+    <div class="vt-section-head">
+      {% if section.settings.title %}
+        <hk-heading text="{{ section.settings.title }}" level="h2" size="32" mobile-size="24" />
+      {% endif %}
+      {% if section.settings.link_label %}<a
+          class="vt-view-all"
+          href="{{ url(section.settings.link) }}"
+        >{{ section.settings.link_label }}</a>{% endif %}
+    </div>
+    <div class="vt-grid vt-cols-{{ section.settings.columns }}">
+      {% for p in collection(section.settings.collection).products limit: section.settings.limit %}
+        {% render 'product-card', product: p, card_style: section.settings.card_style, image_ratio: section.settings.image_ratio, show_price: section.settings.show_price, show_badge: section.settings.show_badge, note: section.settings.card_note %}
+      {% endfor %}
+    </div>
   </div>
-  <div class="vt-grid vt-cols-{{ section.settings.columns }}">
-    {% for p in collection(section.settings.collection).products limit: section.settings.limit %}
-      {% render 'product-card', product: p, card_style: section.settings.card_style, image_ratio: section.settings.image_ratio, show_price: section.settings.show_price, show_badge: section.settings.show_badge, note: section.settings.card_note %}
-    {% endfor %}
-  </div>
-</div>
 </hk-section>
 <hk-schema>
   {

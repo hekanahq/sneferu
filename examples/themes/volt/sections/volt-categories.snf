@@ -1,9 +1,9 @@
 <hk-section full-bleed="true" padding-y="0" mobile-padding-y="0" class="vt-cats-section">
   <div class="vt-wide">
-  <div class="vt-cats">
-    {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+    <div class="vt-cats">
+      {% for block in section.blocks %}<hk-block of="{{ block }}" />{% endfor %}
+    </div>
   </div>
-</div>
 </hk-section>
 <hk-schema>
   {

@@ -1,13 +1,13 @@
 {% if block.settings.url %}
-<p class="ql-contact-line">
-  <hk-icon name="{{ block.settings.icon }}" />
-  <a href="{{ url(block.settings.url) }}">{{ block.settings.text }}</a>
-</p>
+  <p class="ql-contact-line">
+    <hk-icon name="{{ block.settings.icon }}" />
+    <a href="{{ url(block.settings.url) }}">{{ block.settings.text }}</a>
+  </p>
 {% elsif block.settings.icon == 'banknote' %}
-<p class="ql-contact-line">
-  <hk-icon name="{{ block.settings.icon }}" />
-  <span>{{ block.settings.text }}</span>
-</p>
+  <p class="ql-contact-line">
+    <hk-icon name="{{ block.settings.icon }}" />
+    <span>{{ block.settings.text }}</span>
+  </p>
 {% endif %}
 <hk-schema>
   {

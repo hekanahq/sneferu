@@ -1,29 +1,43 @@
 <a class="vt-side-open" href="#vt-side"><hk-icon name="menu" size="18" />{{ t('show_categories_btn') }}</a>
 <aside class="vt-side" id="vt-side" aria-label="{{ t('categories') }}">
-          <div class="vt-side-head">
-            <h2 class="vt-side-title">{{ t('categories') }}</h2>
-            <a class="vt-side-close" href="#main" aria-label="{{ t('close') }}"><hk-icon name="x" size="20" /></a>
-          </div>
-          <nav aria-label="{{ t('categories') }}">
-            <ul class="vt-side-list">
-              <li>
-                <a class="vt-side-link" href="{{ url('/products') }}" aria-current="{{ current == '' }}"><span
-                    class="vt-side-ic"
-                  ><hk-icon name="grid" size="20" stroke="1.5" /></span><span
-                    class="vt-side-name"
-                  >{{ t('all_products') }}</span></a>
-              </li>
-              {% for c in collections() %}
-                {% if not c.parent %}<li>
-                  <a class="vt-side-link" href="{{ c.url }}" aria-current="{{ c.handle == current }}"><span
-                      class="vt-side-ic"
-                    ><hk-icon class="vt-ic-def" name="tag" size="20" stroke="1.5" />{% for b in blocks %}{% if b.settings.handle == c.handle %}{% render 'cat-icon', icon: b.settings.icon %}{% endif %}{% endfor %}</span><span
-                      class="vt-side-name"
-                    >{{ c.title }}</span></a>
-                {% if c.children %}<ul class="vt-side-sub">{% for s in c.children %}<li><a class="vt-side-link vt-side-sublink" href="{{ s.url }}" aria-current="{{ s.handle == current }}"><span class="vt-side-name">{{ s.title }}</span></a></li>{% endfor %}</ul>{% endif %}
-                </li>{% endif %}
-              {% endfor %}
-            </ul>
-          </nav>
+  <div class="vt-side-head">
+    <h2 class="vt-side-title">{{ t('categories') }}</h2>
+    <a class="vt-side-close" href="#main" aria-label="{{ t('close') }}"><hk-icon name="x" size="20" /></a>
+  </div>
+  <nav aria-label="{{ t('categories') }}">
+    <ul class="vt-side-list">
+      <li>
+        <a class="vt-side-link" href="{{ url('/products') }}" aria-current="{{ current == '' }}"><span
+            class="vt-side-ic"
+          ><hk-icon name="grid" size="20" stroke="1.5" /></span><span
+            class="vt-side-name"
+          >{{ t('all_products') }}</span></a>
+      </li>
+      {% for c in collections() %}
+        {% if not c.parent %}
+          <li>
+            <a class="vt-side-link" href="{{ c.url }}" aria-current="{{ c.handle == current }}"><span
+                class="vt-side-ic"
+              ><hk-icon class="vt-ic-def" name="tag" size="20" stroke="1.5" />{% for b in blocks %}{% if b.settings.handle == c.handle %}{% render 'cat-icon', icon: b.settings.icon %}{% endif %}{% endfor %}</span><span
+                class="vt-side-name"
+              >{{ c.title }}</span></a>
+            {% if c.children %}
+              <ul class="vt-side-sub">
+                {% for s in c.children %}
+                  <li>
+                    <a
+                      class="vt-side-link vt-side-sublink"
+                      href="{{ s.url }}"
+                      aria-current="{{ s.handle == current }}"
+                    ><span class="vt-side-name">{{ s.title }}</span></a>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </nav>
 </aside>
 <a class="vt-side-backdrop" href="#main" aria-label="{{ t('close') }}"></a>
