@@ -80,7 +80,7 @@ URL attributes are `href`, every `*:href` (`xlink:href`), `src`, `action`,
 All `{{ }}` output is escaped for its position (text, attribute, URL), and
 dynamic `class`/`id` values are reduced to safe tokens. Merchant settings and
 product data can never inject markup; HTML from data is output only through
-`hk-rich-text` (see [Rich text](#rich-text)). Comments `<!-- -->` in templates are
+`hk-rich-text` (see [Rich text](#rich-text)) and `hk-custom-html` (see [Custom HTML and CSS](#custom-html-and-css)). Comments `<!-- -->` in templates are
 dropped at compile time.
 
 ## Rich text
@@ -108,6 +108,59 @@ decoded once and escaped again.
 - An empty result renders nothing.
 
 The output is stable: sanitising it again gives the same HTML.
+
+## Custom HTML and CSS
+
+`<hk-custom-html html="{{ … }}" css="{{ … }}" />` is the merchant's own markup and style block. The platform adds
+a **Custom HTML** section (`custom-html`) to every theme's editor, without the theme being edited or re-published,
+on `index`, `product`, `collection`, `search`, `page` and `404` (not `cart`, and never in a group). A theme may
+also place the tag itself. Themes never ship JavaScript, and this block does not change that: no script, no event
+handlers, no form controls.
+
+Both props are sanitised on the server. Like rich text, the HTML is **rebuilt**: nothing from the input is copied
+except text (decoded once, escaped again) and attribute values that passed their own check.
+
+| Kept | Everything else |
+| - | - |
+| `p div span a img br hr ul ol li h1-h6 table thead tbody tfoot tr td th caption strong em b i u s small sub sup mark blockquote figure figcaption code pre cite section article header footer nav aside` | other tags are dropped and their text kept |
+| `class id dir lang title aria-label aria-hidden role` | every other attribute: `on*`, `style`, `srcset`, `name`, `data-*`, `aria-*` other than the two listed |
+| `href` on `a` when safe (`https:`, `mailto:`, `tel:`, site-relative, `#fragment`); links always get `rel="nofollow noopener"`; `target` only when `_blank` | `javascript:`, `data:`, `//host`, `http:` (also written with entities, tabs or control characters) |
+| `src` on `img` when `https:` or site-relative; `alt`, `width`, `height` (1-4000); `loading="lazy"` is forced | an `img` with any other `src` is removed |
+| `colspan`, `rowspan` (1-100) on `td` and `th` | |
+| `<iframe>` only for `https://www.youtube.com/embed/ID`, `https://www.youtube-nocookie.com/embed/ID` and `https://player.vimeo.com/video/ID` (optional plain query string). It is rebuilt with a fixed `sandbox="allow-scripts allow-same-origin allow-presentation"`, `referrerpolicy="strict-origin-when-cross-origin"`, `loading="lazy"` and `allow="fullscreen; picture-in-picture"` | any other iframe, with its content |
+
+- `script style link meta base form input button select textarea object embed svg math template noscript` and
+  `title xmp noembed noframes plaintext` are dropped (the content of the raw-text ones too). There is no inline
+  `style` attribute: put styles in the `css` prop.
+- `id` values are prefixed with the block's id (`id="faq"` becomes `id="n7-faq"`) so they cannot shadow page
+  globals or clash with another block; `href="#faq"` and `#faq` in the CSS are rewritten the same way.
+- The HTML is capped at 30,000 characters in the editor, nesting at 64, and the output at 50,000 characters.
+  Sanitising the output again gives the same HTML.
+- The hosts above must be allowed by the storefront's `frame-src`; embeds are blocked by the browser otherwise.
+
+### The CSS
+
+Every selector is rooted at the block (`.sn-<id>`), so a rule cannot style the rest of the page:
+`.card{…}` becomes `.sn-n7 .card{…}`, and `html`, `body`, `:root` and `:scope` mean the block itself. The result is
+emitted through the same per-page stylesheet as every other tag (`ctx.css`), so no `<style>` element or
+`style` attribute is added to the block's markup and no CSP change is needed beyond what every other tag already relies on. After the merchant's rules, the engine adds
+`position:relative; isolation:isolate; contain:layout paint` with `!important`, which makes the block the
+containing block for `position:absolute` descendants and clips anything that would paint outside it.
+
+| Kept | Dropped |
+| - | - |
+| class, id, type, `*`, attribute selectors, combinators `> + ~`, `:hover :focus :focus-visible :focus-within :active :first-child :last-child :nth-child() …`, `:not() :is() :where()` (one level), `::before ::after ::marker ::placeholder ::selection ::first-line ::first-letter` | the whole rule when any selector is invalid: `:has()`, `:host`, namespaces, escapes, braces, `@` |
+| `@media` (width, height, `prefers-color-scheme`, `prefers-reduced-motion`, `hover`, `orientation`, two levels deep) | `@import @charset @namespace @font-face @page @property @layer @supports @container` and any other at-rule, with the block |
+| `@keyframes`, renamed to `<id>-<name>`; `animation` and `animation-name` are rewritten to match | nested rules |
+| An allow-list of presentational properties (layout, box model, grid, flex, typography, colour, background, border, shadow, transform, transition, animation, filter, `clip-path`, `content` as a string, custom properties `--x`) | `mask`, `mask-image`, `list-style-image`, `behavior`, `-moz-binding`, `-o-link` and every property not on the list |
+| Values built from numbers, keywords, hex colours, quoted strings and the functions `calc min max clamp var env rgb[a] hsl[a] hwb lab lch oklab oklch color-mix`, gradients, transforms, `cubic-bezier steps minmax repeat`, filter functions, shapes | `url()`, `image-set()`, `expression()`, `attr()`, `javascript:`, backslash escapes, `<`, `>`, `@`, unknown functions: the declaration is dropped |
+| `position: static / relative / absolute` | `position: fixed / sticky` |
+| `z-index` between -10 and 10, or `auto` | larger values |
+
+`!important` is removed from the merchant's declarations, so they cannot outrank the page. The CSS is capped at
+10,000 characters in the editor, 150 rules, 60 declarations per rule, 12 selectors per rule and 300 characters per
+value. A rule that is not closed is dropped with everything after it. If the sanitised result still contained
+anything dangerous (it should not), nothing is emitted.
 
 ## Render budgets
 

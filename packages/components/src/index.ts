@@ -10,9 +10,10 @@ import { hkVariantPicker, hkAddToCart, hkCartCount, hkCartItems, hkCartSummary, 
 import { hkSectionGroup } from './group';
 import { hkInlineCheckout } from './inline-checkout';
 import { hkAppBlock, hkAppBlockPreview } from './app-block';
+import { hkCustomHtml } from './custom-html';
 
 export const BASE_TAGS = [hkSection, hkContainer, hkStack, hkGrid, hkHeading, hkText, hkRichText, hkImage, hkButton, hkCard, hkBadge, hkIcon, hkSearchForm, hkPrice, hkProductCard, hkProductGrid,
-  hkProductGallery, hkPagination, hkLocaleSwitch, hkVariantPicker, hkAddToCart, hkCartCount, hkCartItems, hkCartSummary, hkCartDrawer, hkInlineCheckout, hkAppBlock, hkSectionGroup];
+  hkProductGallery, hkPagination, hkLocaleSwitch, hkVariantPicker, hkAddToCart, hkCartCount, hkCartItems, hkCartSummary, hkCartDrawer, hkInlineCheckout, hkAppBlock, hkCustomHtml, hkSectionGroup];
 /** For a theme editor's preview: the same tags, but `hk-app-block` prints a still box instead of a frame. */
 export function createPreviewRegistry(): TagRegistry {
   const r = new TagRegistry();
@@ -32,6 +33,9 @@ export * from './layout';
 export * from './content';
 export * from './commerce';
 export { sanitizeRichText } from './sanitize';
+export { sanitizeCustomHtml, CUSTOM_HTML_EMBED_HOSTS, type CustomHtmlOptions } from './sanitize-custom';
+export { sanitizeScopedCss, CSS_Z_MAX, type ScopedCssOptions } from './sanitize-css';
+export { hkCustomHtml, CUSTOM_HTML_MAX, CUSTOM_CSS_MAX } from './custom-html';
 export { hkIcon, iconSvg, iconSize, iconStroke, isIconName, FLIP_CSS } from './icon';
 export { ICONS, ICON_NAMES, FLIP_ICONS } from './icons';
 export { hkSearchForm, VISUALLY_HIDDEN_CSS } from './search';
