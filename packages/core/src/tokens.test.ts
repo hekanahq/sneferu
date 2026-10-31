@@ -6,7 +6,10 @@ import { sectionAllowedOn } from './page-types';
 describe('tokenSettings', () => {
   it('has a colour per token plus fonts, radius, spacing, buttons and width, all grouped', () => {
     const s = tokenSettings({ colors: { primary: '#111111', 'on-sale': '#ff0000', 'Bad': '#000000', __proto__: '#000000' } as never });
-    expect(Object.keys(s)).toEqual(['token_color_primary', 'token_color_on_sale', 'token_font_heading', 'token_font_body', 'token_font_mono', 'token_radius', 'token_spacing', 'token_button_style', 'token_container_width']);
+    expect(Object.keys(s)).toEqual(['token_color_primary', 'token_color_on_sale', 'token_font_heading', 'token_font_body', 'token_font_mono', 'token_radius', 'token_spacing', 'token_button_style', 'token_container_width', 'token_container_fit']);
+    expect(s.token_container_fit!.default).toBe('contained');
+    expect(s.token_container_fit!.options).toEqual(['contained', 'full']);
+    expect(tokenSettings({ colors: {}, layout: { contentWidth: 'full' } }).token_container_fit!.default).toBe('full');
     for (const f of Object.values(s)) { expect(f.group).toBeTruthy(); expect(f.label.en).toBeTruthy(); expect(f.label.ar).toBeTruthy(); expect(f.default).toBeDefined(); }
     expect(s.token_font_body!.options).toContain('Cairo');
     expect(tokenSettings(undefined).token_radius!.default).toBe(8);

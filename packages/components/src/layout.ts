@@ -17,7 +17,7 @@ export const hkSection: HkTag = {
     const s = `.sn-${c.id}`;
     const bg = colorVar(p.background);
     if (bg) c.css(`${s}{background:${bg}}`);
-    if (p.fullBleed !== true) c.css(`${s}>.sn-inner{max-width:var(--hk-content-width,1280px);margin-inline:auto;padding-inline:16px}`);
+    if (p.fullBleed !== true) c.css(`${s}>.sn-inner{max-width:var(--hk-content-width,1280px);margin-inline:auto;padding-inline:var(--hk-gutter,16px)}`);
     responsiveCss(s, 'padding-block', p.paddingY ?? 64, (v) => px(v, 240)).forEach(c.css);
     const x = passthrough(p);
     return `<section class="sn-${c.id}${x.cls}"${x.attrs}><div class="sn-inner">${c.renderChildren()}</div></section>`;

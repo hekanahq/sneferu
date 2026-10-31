@@ -131,6 +131,19 @@ describe('theme tokens as CSS', () => {
     expect(css).toContain('--hk-color-on-primary:#FFFFFF');
     expect(css).not.toContain('--hk-radius');
   });
+  it('full content width emits none plus a fluid gutter, and px stays unchanged', () => {
+    const full = { ...m, tokens: { ...m.tokens, layout: { contentWidth: 'full' } } };
+    const css = themeTokenCss(full);
+    expect(css).toContain('--hk-content-width:none');
+    expect(css).toContain('--hk-gutter:clamp(16px,3vw,56px)');
+    expect(themeTokenCss(m)).not.toContain('--hk-gutter');
+    expect(themeTokenCss(m, { token_container_fit: 'full' })).toContain('--hk-content-width:none');
+    expect(themeTokenCss(m, { token_container_width: 'full' })).toContain('--hk-content-width:none');
+    const back = themeTokenCss(full, { token_container_fit: 'contained', token_container_width: 1400 });
+    expect(back).toContain('--hk-content-width:1400px');
+    expect(back).not.toContain('--hk-gutter');
+    expect(themeTokenCss({ ...m, tokens: { ...m.tokens, layout: { contentWidth: 'full;}x{' } } })).not.toContain('--hk-content-width');
+  });
   it('applies resolved settings: colours, width, radius, spacing, button style; bad values fall back', () => {
     const css = themeTokenCss(m, { token_color_accent: '#112233', token_container_width: 1400, token_radius: 12, token_spacing: 'spacious', token_button_style: 'outline' });
     expect(css).toContain('--hk-color-accent:#112233');

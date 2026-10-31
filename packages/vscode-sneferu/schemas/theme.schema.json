@@ -298,7 +298,7 @@
       "properties": {
        "contentWidth": {
         "type": "string",
-        "pattern": "^\\d{3,4}px$"
+        "pattern": "^(\\d{3,4}px|full)$"
        }
       }
      }

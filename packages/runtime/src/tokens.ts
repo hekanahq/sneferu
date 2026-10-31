@@ -45,8 +45,13 @@ export function themeTokenCss(manifest: { id: string; tokens?: unknown }, settin
     const value = typeof own === 'string' && CSS_VALUE.test(own) ? own : v;
     if (typeof value === 'string' && CSS_VALUE.test(value)) { decl.push(`--hk-color-${k}:${value}`); resolved[k] = value; }
   }
-  const cw = s.token_container_width !== undefined ? `${int(s.token_container_width, 640, 1920, 1200)}px` : (isObj(tokens.layout) ? tokens.layout.contentWidth : undefined);
-  if (typeof cw === 'string' && /^\d{3,4}px$/.test(cw)) decl.push(`--hk-content-width:${cw}`);
+  const themeCw = isObj(tokens.layout) ? tokens.layout.contentWidth : undefined;
+  const full = s.token_container_fit === 'full' || (s.token_container_fit !== 'contained' && (s.token_container_width === 'full' || (s.token_container_width === undefined && themeCw === 'full')));
+  if (full) decl.push('--hk-content-width:none', '--hk-gutter:clamp(16px,3vw,56px)');
+  else {
+    const cw = s.token_container_width !== undefined ? `${int(s.token_container_width, 640, 1920, 1200)}px` : themeCw;
+    if (typeof cw === 'string' && /^\d{3,4}px$/.test(cw)) decl.push(`--hk-content-width:${cw}`);
+  }
   // a theme's own on-primary / on-accent colour (already declared above) wins over the derived one
   for (const k of ['primary', 'accent']) { if (resolved[`on-${k}`] !== undefined) continue; const on = resolved[k] ? onColor(resolved[k]!) : undefined; if (on) decl.push(`--hk-color-on-${k}:${on}`); }
   if (s.token_radius !== undefined) {

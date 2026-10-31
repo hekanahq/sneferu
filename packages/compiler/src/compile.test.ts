@@ -53,6 +53,15 @@ describe('compileTheme', () => {
     expect(bad[0]!.message).toContain('sage-soft');
     expect(compileTheme(withColors({ 'sage-soft': '#ABCDEF' }), reg).diagnostics.filter((d) => d.code === 'SN3058')).toEqual([]);
   });
+  it('accepts contentWidth full and px, warns on anything else (SN3059)', () => {
+    const withWidth = (w: unknown) => base().map((x) => (x.path === 'theme.json' ? f(x.path, JSON.stringify({ ...manifest, tokens: { ...manifest.tokens, layout: { contentWidth: w } } })) : x));
+    for (const ok of ['full', '1200px', '960px']) expect(compileTheme(withWidth(ok), reg).diagnostics.filter((d) => d.code === 'SN3059')).toEqual([]);
+    for (const bad of ['wide', 'FULL', '12px', 1200, 'none', 'full;}']) {
+      const d = compileTheme(withWidth(bad), reg).diagnostics.filter((x) => x.code === 'SN3059');
+      expect(d).toHaveLength(1);
+      expect(d[0]!.severity).toBe('warning');
+    }
+  });
   it('explains why a path is invalid (SN3002)', () => {
     const msg = (path: string) => compileTheme([...base(), f(path, 'x')], reg).diagnostics.find((d) => d.code === 'SN3002')?.message ?? '';
     expect(msg('assets/_hidden/a.png')).toContain("'_hidden' starts with '_'");
