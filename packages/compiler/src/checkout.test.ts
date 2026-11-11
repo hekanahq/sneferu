@@ -36,7 +36,7 @@ describe('theme.json checkout', () => {
   });
   it('omits the block when it is absent or nothing in it is valid', () => {
     expect(compile({}).artifact!.manifest).not.toHaveProperty('checkout');
-    const r = compile({ checkout: { color_button: 'blue', layout: 'wide' } });
+    const r = compile({ checkout: { color_button: 'blue', columns: 2 } });
     expect(r.artifact!.manifest).not.toHaveProperty('checkout');
     expect(codes(r.diagnostics)).toEqual(['SN3052', 'SN3050']);
     expect(r.diagnostics.every((d) => d.severity === 'warning' && d.file === 'theme.json')).toBe(true);
@@ -82,5 +82,14 @@ describe('theme.json checkout', () => {
     const r = compile({ settings: { checkout: { type: 'text', label: 'Checkout', default: '' } } });
     expect(r.artifact).toBeUndefined();
     expect(r.diagnostics.filter((d) => d.severity === 'error').map((d) => d.code)).toEqual(['SN3048']);
+  });
+
+  it('keeps a valid layout and stepper and drops a value that is not in the list', () => {
+    const ok = validateCheckout({ layout: 'split', stepper: 'line' });
+    expect(ok.checkout).toEqual({ layout: 'split', stepper: 'line' });
+    expect(codes(ok.diagnostics)).toEqual([]);
+    const bad = validateCheckout({ layout: 'wide', stepper: 'dots' });
+    expect(bad.checkout).toBeUndefined();
+    expect(codes(bad.diagnostics)).toEqual(['SN3055', 'SN3055']);
   });
 });

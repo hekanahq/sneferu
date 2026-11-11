@@ -8,7 +8,7 @@ import { FONTS } from './fonts';
 
 describe('CHECKOUT_SETTINGS', () => {
   it('has the platform ids, in order, each with a field of a known type and both labels', () => {
-    expect(CHECKOUT_SETTING_IDS).toEqual(['color_accent', 'color_button', 'color_button_text', 'color_background', 'color_surface', 'color_border', 'color_text', 'font', 'radius', 'button_shape', 'logo', 'logo_image', 'chrome', 'trust_note']);
+    expect(CHECKOUT_SETTING_IDS).toEqual(['color_accent', 'color_button', 'color_button_text', 'color_background', 'color_surface', 'color_border', 'color_text', 'font', 'radius', 'button_shape', 'logo', 'logo_image', 'chrome', 'layout', 'stepper', 'trust_note']);
     expect(Object.keys(CHECKOUT_SETTINGS)).toEqual([...CHECKOUT_SETTING_IDS]);
     for (const f of Object.values(CHECKOUT_SETTINGS)) {
       expect(FIELD_TYPES).toContain(f.type);
@@ -21,13 +21,15 @@ describe('CHECKOUT_SETTINGS', () => {
   it('keeps logo_image merchant-only', () => {
     expect(CHECKOUT_MERCHANT_ONLY_IDS).toEqual(['logo_image']);
     expect(CHECKOUT_THEME_SETTING_IDS).not.toContain('logo_image');
-    expect(CHECKOUT_THEME_SETTING_IDS).toHaveLength(13);
+    expect(CHECKOUT_THEME_SETTING_IDS).toHaveLength(15);
   });
   it('limits radius, enums, fonts and the trust note', () => {
     expect(CHECKOUT_SETTINGS.radius).toMatchObject({ type: 'range', min: 0, max: 24, step: 1 });
     expect(CHECKOUT_SETTINGS.button_shape.options).toEqual(['square', 'rounded', 'pill']);
     expect(CHECKOUT_SETTINGS.logo.options).toEqual(['store', 'custom', 'none']);
     expect(CHECKOUT_SETTINGS.chrome.options).toEqual(['theme', 'minimal']);
+    expect(CHECKOUT_SETTINGS.layout.options).toEqual(['side', 'stacked', 'split']);
+    expect(CHECKOUT_SETTINGS.stepper.options).toEqual(['numbers', 'line', 'none']);
     expect(CHECKOUT_SETTINGS.font.options).toEqual(['default', ...Object.keys(FONTS)]);
     expect(CHECKOUT_SETTINGS.trust_note).toMatchObject({ type: 'textarea', maxLength: 140, localized: true });
   });
@@ -58,7 +60,7 @@ describe('checkoutDefaults', () => {
     expect(d).toEqual({
       color_accent: '#b45309', color_button: '#0f766e', color_button_text: '#ffffff', color_background: '#fafaf9',
       color_surface: '#fafaf9', color_border: '#e5e7eb', color_text: '#1c1917', font: 'Tajawal', radius: 12,
-      button_shape: 'rounded', logo: 'store', logo_image: '', chrome: 'theme', trust_note: { ar: '', en: '' },
+      button_shape: 'rounded', logo: 'store', logo_image: '', chrome: 'theme', layout: 'side', stepper: 'numbers', trust_note: { ar: '', en: '' },
     });
   });
   it('falls back without tokens, clamps the radius and squares a zero radius', () => {

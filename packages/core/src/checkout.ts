@@ -22,6 +22,12 @@ export const CHECKOUT_LOGO_MODES = ['store', 'custom', 'none'] as const;
 export type CheckoutLogoMode = (typeof CHECKOUT_LOGO_MODES)[number];
 export const CHECKOUT_CHROME_MODES = ['theme', 'minimal'] as const;
 export type CheckoutChromeMode = (typeof CHECKOUT_CHROME_MODES)[number];
+/** `side`: the form with the order summary beside it. `stacked`: one centred column. `split`: flat sections beside a tinted summary panel. */
+export const CHECKOUT_LAYOUTS = ['side', 'stacked', 'split'] as const;
+export type CheckoutLayout = (typeof CHECKOUT_LAYOUTS)[number];
+/** The progress indicator above the form: numbered circles, a segmented line, or none. */
+export const CHECKOUT_STEPPERS = ['numbers', 'line', 'none'] as const;
+export type CheckoutStepper = (typeof CHECKOUT_STEPPERS)[number];
 
 /** `font: "default"` is the theme's own body font. */
 export const CHECKOUT_FONT_DEFAULT = 'default';
@@ -44,6 +50,8 @@ export interface CheckoutSettings {
   /** Merchant-only: an uploaded logo for `logo: "custom"`. A theme cannot set it. */
   logo_image: string;
   chrome: CheckoutChromeMode;
+  layout: CheckoutLayout;
+  stepper: CheckoutStepper;
   trust_note: { ar: string; en: string };
 }
 export type CheckoutSettingId = keyof CheckoutSettings;
@@ -52,7 +60,7 @@ export type ThemeCheckout = Partial<Omit<CheckoutSettings, 'logo_image'>>;
 
 /** Every checkout setting, in editor order (the platform's list). */
 export const CHECKOUT_SETTING_IDS: readonly CheckoutSettingId[] = Object.freeze([
-  ...CHECKOUT_COLOR_IDS, 'font', 'radius', 'button_shape', 'logo', 'logo_image', 'chrome', 'trust_note',
+  ...CHECKOUT_COLOR_IDS, 'font', 'radius', 'button_shape', 'logo', 'logo_image', 'chrome', 'layout', 'stepper', 'trust_note',
 ] as CheckoutSettingId[]);
 /** Settings only the merchant sets (in the builder); theme.json `checkout` may not. */
 export const CHECKOUT_MERCHANT_ONLY_IDS: readonly CheckoutSettingId[] = Object.freeze(['logo_image'] as CheckoutSettingId[]);
@@ -79,6 +87,8 @@ export const CHECKOUT_SETTINGS: Readonly<Record<CheckoutSettingId, Field>> = Obj
   logo: { type: 'select', label: { ar: 'الشعار', en: 'Logo' }, options: [...CHECKOUT_LOGO_MODES], default: 'store', group: 'logo' },
   logo_image: { type: 'image', label: { ar: 'صورة الشعار', en: 'Logo image' }, default: '', group: 'logo', visible_if: { setting: 'logo', equals: 'custom' } },
   chrome: { type: 'select', label: { ar: 'رأس وتذييل الصفحة', en: 'Header and footer' }, options: [...CHECKOUT_CHROME_MODES], default: 'theme', group: 'layout' },
+  layout: { type: 'select', label: { ar: 'شكل صفحة الدفع', en: 'Checkout layout' }, options: [...CHECKOUT_LAYOUTS], default: 'side', group: 'layout' },
+  stepper: { type: 'select', label: { ar: 'مؤشر الخطوات', en: 'Progress indicator' }, options: [...CHECKOUT_STEPPERS], default: 'numbers', group: 'layout' },
   trust_note: { type: 'textarea', label: { ar: 'رسالة الثقة', en: 'Trust note' }, maxLength: CHECKOUT_TRUST_NOTE_MAX, localized: true, default: { ar: '', en: '' }, group: 'trust' },
 });
 
@@ -191,6 +201,8 @@ export function checkoutDefaults(tokens: unknown, themeSettings: Record<string, 
     logo: 'store',
     logo_image: '',
     chrome: 'theme',
+    layout: 'side',
+    stepper: 'numbers',
     trust_note: { ar: '', en: '' },
   };
 }
