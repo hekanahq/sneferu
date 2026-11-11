@@ -1,5 +1,5 @@
 import {
-  CHECKOUT_BUTTON_SHAPES, CHECKOUT_CHROME_MODES, CHECKOUT_COLOR_IDS, CHECKOUT_FONT_DEFAULT, CHECKOUT_LOGO_MODES,
+  CHECKOUT_BUTTON_SHAPES, CHECKOUT_CHROME_MODES, CHECKOUT_COLOR_IDS, CHECKOUT_FONT_DEFAULT, CHECKOUT_LAYOUTS, CHECKOUT_LOGO_MODES, CHECKOUT_STEPPERS,
   CHECKOUT_MERCHANT_ONLY_IDS, CHECKOUT_RADIUS_MAX, CHECKOUT_RADIUS_MIN, CHECKOUT_SETTINGS_KEY, CHECKOUT_THEME_SETTING_IDS,
   CHECKOUT_TRUST_NOTE_MAX, FONTS, cleanCheckoutText, err, normalizeCheckoutColor, warn,
   type Diagnostic, type ThemeCheckout,
@@ -52,8 +52,12 @@ export function validateCheckout(raw: unknown): { checkout?: ThemeCheckout; diag
       const r = Math.round(Math.min(CHECKOUT_RADIUS_MAX, Math.max(CHECKOUT_RADIUS_MIN, v)));
       if (r !== v) out.push(warn('SN3054', `${where}: ${v} must be a whole number from ${CHECKOUT_RADIUS_MIN} to ${CHECKOUT_RADIUS_MAX}; it is set to ${r}`, at));
       c.radius = r;
-    } else if (k === 'button_shape' || k === 'logo' || k === 'chrome') {
-      const list: readonly string[] = k === 'button_shape' ? CHECKOUT_BUTTON_SHAPES : k === 'logo' ? CHECKOUT_LOGO_MODES : CHECKOUT_CHROME_MODES;
+    } else if (k === 'button_shape' || k === 'logo' || k === 'chrome' || k === 'layout' || k === 'stepper') {
+      const list: readonly string[] =
+        k === 'button_shape' ? CHECKOUT_BUTTON_SHAPES
+          : k === 'logo' ? CHECKOUT_LOGO_MODES
+            : k === 'chrome' ? CHECKOUT_CHROME_MODES
+              : k === 'layout' ? CHECKOUT_LAYOUTS : CHECKOUT_STEPPERS;
       if (typeof v === 'string' && list.includes(v)) (c as Record<string, unknown>)[k] = v;
       else out.push(warn('SN3055', `${where}: ${shown(v)} must be one of ${list.join(', ')}; it is dropped`, at));
     } else if (k === 'trust_note') {
