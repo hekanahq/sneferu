@@ -1,6 +1,7 @@
 import { escapeAttr, toStr, type HkTag, type TagRenderContext } from '@hekana/sneferu-core';
 import { FLIP_ICONS, ICONS, ICON_NAMES } from './icons';
 import { passthrough } from './attrs';
+import { safeImageSrc } from './css';
 
 const L = (ar: string, en: string) => ({ ar, en });
 export const FLIP_CSS = '[dir=rtl] .sn-flip{transform:scaleX(-1)}';
@@ -27,7 +28,19 @@ export function iconSvg(name: string, size: number, stroke: number, label?: stri
 }
 
 /** iconSvg for a tag: mirrors direction-bearing icons on RTL pages and emits the rule for that. */
+/** Uploaded icons are plain images from the media library. They are only ever emitted as an <img>, never inlined, so an uploaded SVG cannot run script. */
+export const isMediaIcon = (v: unknown): v is string => typeof v === 'string' && v.length <= 2048 && safeImageSrc(v.trim());
+export const MEDIA_ICON_CSS = '.sn-icon-img{display:inline-block;flex:none;object-fit:contain;max-width:100%;vertical-align:middle}';
+export function mediaIconHtml(src: string, size: number, label?: string, opts: { cls?: string; attrs?: string } = {}): string {
+  const s = iconSize(size);
+  const text = typeof label === 'string' ? label.trim() : '';
+  return `<img class="sn-icon-img${opts.cls ?? ''}"${opts.attrs ?? ''} src="${escapeAttr(src.trim())}" width="${s}" height="${s}" alt="${escapeAttr(text)}"${text ? '' : ' aria-hidden="true"'} loading="lazy" decoding="async">`;
+}
 export function tagIcon(c: TagRenderContext, name: unknown, size: unknown, stroke: unknown, label?: string, extra: { cls?: string; attrs?: string } = {}): string {
+  if (isMediaIcon(name) && !isIconName(name)) {
+    (c.cssOnce ?? c.css)(MEDIA_ICON_CSS);
+    return mediaIconHtml(name, iconSize(size), label, extra);
+  }
   if (!isIconName(name)) return '';
   const flip = c.dir === 'rtl' && FLIP_ICONS.has(name);
   if (flip) (c.cssOnce ?? c.css)(FLIP_CSS);
