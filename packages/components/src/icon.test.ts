@@ -109,3 +109,39 @@ describe('hk-button icons', () => {
     expect(plain.css).toEqual([]);
   });
 });
+
+describe('hk-icon media reference', () => {
+  const r2 = createDefaultRegistry();
+  const run = (props: Record<string, unknown>) => {
+    const css: string[] = [];
+    const c: TagRenderContext = { id: 'c1', css: (x: string) => css.push(x), cssOnce: (x: string) => { if (!css.includes(x)) css.push(x); }, controller: () => {}, data: {}, locale: 'ar', dir: 'rtl', t: (k: string) => k } as unknown as TagRenderContext;
+    return { html: r2.get('hk-icon')!.render(props, c), css };
+  };
+  it('renders an uploaded image as a lazy, size-constrained <img>, never inline svg', () => {
+    const { html, css } = run({ name: 'https://cdn.example.com/u/a.svg', size: 30 });
+    expect(html).toContain('<img class="sn-icon-img"');
+    expect(html).toContain('src="https://cdn.example.com/u/a.svg"');
+    expect(html).toContain('width="30" height="30"');
+    expect(html).toContain('loading="lazy"');
+    expect(html).toContain('aria-hidden="true"');
+    expect(html).not.toContain('<svg');
+    expect(css.join('')).toContain('.sn-icon-img');
+  });
+  it('uses the label as alt text and drops aria-hidden', () => {
+    const { html } = run({ name: '/uploads/x.png', label: 'Fast delivery' });
+    expect(html).toContain('alt="Fast delivery"');
+    expect(html).not.toContain('aria-hidden');
+  });
+  it('keeps built-in names as inline svg', () => {
+    expect(run({ name: 'check' }).html).toContain('<svg');
+  });
+  it('rejects unsafe or unknown references', () => {
+    for (const bad of ['javascript:alert(1)', 'data:image/svg+xml,<svg onload=alert(1)>', 'http://x.com/a.png', '//evil.com/a.png', 'no-such-icon', '']) {
+      expect(run({ name: bad }).html, bad).toBe('');
+    }
+  });
+  it('escapes quotes in the reference', () => {
+    const { html } = run({ name: 'https://x.com/a.png"onerror="alert(1)' });
+    expect(html).not.toContain('"onerror=');
+  });
+});

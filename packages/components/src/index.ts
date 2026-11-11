@@ -38,7 +38,7 @@ export { sanitizeCustomHtml, CUSTOM_HTML_EMBED_HOSTS, type CustomHtmlOptions } f
 export { sanitizeScopedCss, CSS_Z_MAX, type ScopedCssOptions } from './sanitize-css';
 export { hkCustomHtml, CUSTOM_HTML_MAX, CUSTOM_CSS_MAX } from './custom-html';
 export { hkAnnouncement, ANNOUNCEMENT_SLOTS } from './announcement';
-export { hkIcon, iconSvg, iconSize, iconStroke, isIconName, FLIP_CSS } from './icon';
+export { hkIcon, iconSvg, iconSize, iconStroke, isIconName, isMediaIcon, mediaIconHtml, FLIP_CSS, MEDIA_ICON_CSS } from './icon';
 export { ICONS, ICON_NAMES, FLIP_ICONS } from './icons';
 export { hkSearchForm, VISUALLY_HIDDEN_CSS } from './search';
 export { pickVariant, srcsetOf, candidatesOf, type ImageRef, type ImageCandidate } from './image-src';
