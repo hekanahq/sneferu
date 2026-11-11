@@ -67,3 +67,43 @@ export function customHtmlSectionSource(): string {
 export function customHtmlFiles(): ThemeFile[] {
   return [{ path: `sections/${CUSTOM_HTML_SECTION}.snf`, bytes: enc.encode(customHtmlSectionSource()) }];
 }
+
+export const ANNOUNCEMENT_SECTION = 'announcement-banner';
+const ANNOUNCEMENT_SLOT_COUNT = 6;
+
+export function announcementSectionSource(): string {
+  const settings: Record<string, unknown> = {};
+  for (let i = 1; i <= ANNOUNCEMENT_SLOT_COUNT; i++) {
+    settings[`m${i}`] = { type: 'text', label: { ar: `الرسالة ${i}`, en: `Message ${i}` }, localized: true, default: '', maxLength: 160 };
+    settings[`l${i}`] = { type: 'link', label: { ar: `رابط الرسالة ${i}`, en: `Message ${i} link` }, default: '' };
+  }
+  settings.motion = { type: 'select', label: { ar: 'الحركة', en: 'Motion' }, options: ['static', 'rotate', 'marquee'], default: 'static' };
+  settings.speed = { type: 'range', label: { ar: 'السرعة', en: 'Speed' }, min: 1, max: 10, step: 1, default: 5 };
+  settings.background = { type: 'color', label: { ar: 'لون الخلفية', en: 'Background colour' }, default: 'theme:text' };
+  settings.color = { type: 'color', label: { ar: 'لون النص', en: 'Text colour' }, default: 'theme:background' };
+  settings.dismissible = { type: 'boolean', label: { ar: 'زر إغلاق', en: 'Close button' }, default: false };
+  const schema = {
+    name: { ar: 'شريط إعلانات', en: 'Announcement bar' },
+    description: {
+      ar: 'حتى ست رسائل قصيرة بروابط، ثابتة أو تتبدل أو تتحرك. بدون أي سكربت.',
+      en: 'Up to six short messages with links: still, fading in turn, or scrolling. No script runs.',
+    },
+    version: 1,
+    templates: [...CUSTOM_HTML_TEMPLATES, 'announcement'],
+    settings,
+  };
+  const attrs = Array.from({ length: ANNOUNCEMENT_SLOT_COUNT }, (_, i) => `m${i + 1}="{{ section.settings.m${i + 1} }}" l${i + 1}="{{ section.settings.l${i + 1} }}"`).join(' ');
+  return [
+    '<hk-section background="{{ section.settings.background }}" padding-y="0" mobile-padding-y="0">',
+    `  <hk-announcement ${attrs} motion="{{ section.settings.motion }}" speed="{{ section.settings.speed }}" color="{{ section.settings.color }}" dismissible="{{ section.settings.dismissible }}" />`,
+    '</hk-section>',
+    '<hk-schema>',
+    JSON.stringify(schema, null, 2),
+    '</hk-schema>',
+    '',
+  ].join('\n');
+}
+
+export function announcementFiles(): ThemeFile[] {
+  return [{ path: `sections/${ANNOUNCEMENT_SECTION}.snf`, bytes: enc.encode(announcementSectionSource()) }];
+}

@@ -26,7 +26,7 @@ const PROD = { title: 'P "1"', url: '/p', price: 1000, compare_at: 1200, image: 
 describe('content and commerce tags', () => {
   it('registers the base set', () => {
     expect([...r.names()].sort()).toEqual(['hk-badge', 'hk-button', 'hk-card', 'hk-container', 'hk-grid', 'hk-heading', 'hk-icon', 'hk-image', 'hk-price', 'hk-product-card', 'hk-product-grid', 'hk-rich-text', 'hk-search-form', 'hk-section', 'hk-stack', 'hk-text',
-      'hk-add-to-cart', 'hk-cart-count', 'hk-cart-drawer', 'hk-cart-items', 'hk-cart-summary', 'hk-locale-switch', 'hk-pagination', 'hk-product-gallery', 'hk-section-group', 'hk-variant-picker', 'hk-inline-checkout', 'hk-app-block', 'hk-custom-html'].sort());
+      'hk-add-to-cart', 'hk-cart-count', 'hk-cart-drawer', 'hk-cart-items', 'hk-cart-summary', 'hk-locale-switch', 'hk-pagination', 'hk-product-gallery', 'hk-section-group', 'hk-variant-picker', 'hk-inline-checkout', 'hk-app-block', 'hk-custom-html', 'hk-announcement'].sort());
   });
   it('heading/text escape and choose level', () => {
     expect(render('hk-heading', { text: '<b>كروت</b>', level: 'h1' }).html).toBe('<h1 class="sn-c1">&lt;b&gt;كروت&lt;/b&gt;</h1>');
@@ -56,6 +56,7 @@ describe('content and commerce tags', () => {
       'hk-locale-switch': { localization: { alternate_locale: 'en', alternate_url: '/en' } }, 'hk-add-to-cart': { product: { id: 'p1', title: 'P', url: '/p', variants: [] } },
       'hk-variant-picker': { product: { id: 'p1', variants: [{ id: 'a', title: 'A', options: [] }, { id: 'b', title: 'B', options: [] }] }  },
       'hk-inline-checkout': { product: { id: 'p1', handle: 'p' } },
+      'hk-announcement': { m1: 'x' },
       'hk-app-block': { app: 'customer_subscriptions', block: 'subscribe', product: { id: 'p1', handle: 'p' } } };
     for (const name of r.names()) {
       if (name === 'hk-section-group') continue; // prints nothing: the runtime fills it
