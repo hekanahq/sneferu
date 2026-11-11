@@ -114,7 +114,7 @@ describe('hk-icon media reference', () => {
   const r2 = createDefaultRegistry();
   const run = (props: Record<string, unknown>) => {
     const css: string[] = [];
-    const c: TagRenderContext = { id: 'c1', css: (x) => css.push(x), cssOnce: (x) => { if (!css.includes(x)) css.push(x); }, controller: () => {}, data: {}, locale: 'ar', dir: 'rtl', t: (k: string) => k } as unknown as TagRenderContext;
+    const c: TagRenderContext = { id: 'c1', css: (x: string) => css.push(x), cssOnce: (x: string) => { if (!css.includes(x)) css.push(x); }, controller: () => {}, data: {}, locale: 'ar', dir: 'rtl', t: (k: string) => k } as unknown as TagRenderContext;
     return { html: r2.get('hk-icon')!.render(props, c), css };
   };
   it('renders an uploaded image as a lazy, size-constrained <img>, never inline svg', () => {
