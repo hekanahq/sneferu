@@ -1060,6 +1060,189 @@
       ]
     },
     {
+      "name": "hk-announcement",
+      "category": "ui",
+      "label": {
+        "en": "Announcement bar"
+      },
+      "allowedChildren": [],
+      "responsive": [],
+      "props": [
+        {
+          "name": "m1",
+          "attr": "m1",
+          "type": "text",
+          "default": "",
+          "maxLength": 160,
+          "responsive": false,
+          "label": {
+            "en": "Message 1"
+          }
+        },
+        {
+          "name": "l1",
+          "attr": "l1",
+          "type": "link",
+          "default": "",
+          "responsive": false,
+          "label": {
+            "en": "Message 1 link"
+          }
+        },
+        {
+          "name": "m2",
+          "attr": "m2",
+          "type": "text",
+          "default": "",
+          "maxLength": 160,
+          "responsive": false,
+          "label": {
+            "en": "Message 2"
+          }
+        },
+        {
+          "name": "l2",
+          "attr": "l2",
+          "type": "link",
+          "default": "",
+          "responsive": false,
+          "label": {
+            "en": "Message 2 link"
+          }
+        },
+        {
+          "name": "m3",
+          "attr": "m3",
+          "type": "text",
+          "default": "",
+          "maxLength": 160,
+          "responsive": false,
+          "label": {
+            "en": "Message 3"
+          }
+        },
+        {
+          "name": "l3",
+          "attr": "l3",
+          "type": "link",
+          "default": "",
+          "responsive": false,
+          "label": {
+            "en": "Message 3 link"
+          }
+        },
+        {
+          "name": "m4",
+          "attr": "m4",
+          "type": "text",
+          "default": "",
+          "maxLength": 160,
+          "responsive": false,
+          "label": {
+            "en": "Message 4"
+          }
+        },
+        {
+          "name": "l4",
+          "attr": "l4",
+          "type": "link",
+          "default": "",
+          "responsive": false,
+          "label": {
+            "en": "Message 4 link"
+          }
+        },
+        {
+          "name": "m5",
+          "attr": "m5",
+          "type": "text",
+          "default": "",
+          "maxLength": 160,
+          "responsive": false,
+          "label": {
+            "en": "Message 5"
+          }
+        },
+        {
+          "name": "l5",
+          "attr": "l5",
+          "type": "link",
+          "default": "",
+          "responsive": false,
+          "label": {
+            "en": "Message 5 link"
+          }
+        },
+        {
+          "name": "m6",
+          "attr": "m6",
+          "type": "text",
+          "default": "",
+          "maxLength": 160,
+          "responsive": false,
+          "label": {
+            "en": "Message 6"
+          }
+        },
+        {
+          "name": "l6",
+          "attr": "l6",
+          "type": "link",
+          "default": "",
+          "responsive": false,
+          "label": {
+            "en": "Message 6 link"
+          }
+        },
+        {
+          "name": "motion",
+          "attr": "motion",
+          "type": "select",
+          "default": "static",
+          "options": [
+            "static",
+            "rotate",
+            "marquee"
+          ],
+          "responsive": false,
+          "label": {
+            "en": "Motion"
+          }
+        },
+        {
+          "name": "speed",
+          "attr": "speed",
+          "type": "number",
+          "default": 5,
+          "min": 1,
+          "max": 10,
+          "responsive": false,
+          "label": {
+            "en": "Speed"
+          }
+        },
+        {
+          "name": "color",
+          "attr": "color",
+          "type": "color",
+          "responsive": false,
+          "label": {
+            "en": "Text colour"
+          }
+        },
+        {
+          "name": "dismissible",
+          "attr": "dismissible",
+          "type": "boolean",
+          "default": false,
+          "responsive": false,
+          "label": {
+            "en": "Close button"
+          }
+        }
+      ]
+    },
+    {
       "name": "hk-price",
       "category": "commerce",
       "label": {
